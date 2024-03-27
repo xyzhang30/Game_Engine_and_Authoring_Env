@@ -23,7 +23,7 @@ public interface InputBindApi{
 
 ### GameEngineExternal (Noah)
 ```java
-interface GameEngineExternal {
+interface GameEngineExternal implements StaticStateListener {
 
   void start(int id);
 
@@ -36,5 +36,49 @@ interface GameEngineExternal {
   void applyForce(double magnitude, double direction, int id);
   
   void reset();
+
+}
+```
+
+### GameEngineInternal(Noah)
+```java
+interface CollidableObjects {
+
+  boolean isStateStatic();
+
+  void update();
+}
+
+interface Collidable {
+  void setVisible();
+  void onForceApplied(double magnitude, double direction);
+  void onCollision(Collidable other);
+  double getX();
+  double getY();
+  double getVelocityx();
+  double getVelocityy();
+  double getMass();
+}
+
+interface StaticStateHandler {
+  isCondition();
+  getNextHandler();
+}
+
+interface PlayerManager {
+  changeTurn(); //will need to incorporate some sort of turn policy ==> not fleshed out yet
+  getPlayer(int id);
+  ObservableList<Integer> getActiveIds();
+}
+
+interface Player {
+  getScore();
+  setScore();
+  getSubturn();
+  setSubturn();
+}
+
+interface Permissions {
+  isAllowed(int playerid, int gameState);
 }
 ```
