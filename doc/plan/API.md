@@ -61,24 +61,24 @@ interface Collidable {
 }
 
 interface StaticStateHandler {
-  isCondition();
-  getNextHandler();
+  boolean isCondition();
+  StaticStateHandler getNextHandler();
 }
 
 interface PlayerManager {
-  changeTurn(); //will need to incorporate some sort of turn policy ==> not fleshed out yet
-  getPlayer(int id);
+  void changeTurn(); //will need to incorporate some sort of turn policy ==> not fleshed out yet
+  Player getPlayer(int id);
   ObservableList<Integer> getActiveIds();
 }
 
 interface Player {
-  getScore();
-  setScore();
-  getSubturn();
-  setSubturn();
+  double getScore();
+  void setScore(double score);
+  int getSubturn();
+  void setSubturn(int subturn);
 }
 
 interface Permissions {
-  isAllowed(int playerid, int gameState);
+  boolean isAllowed(int playerid, int gameState);
 }
 ```
