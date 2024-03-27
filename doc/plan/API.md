@@ -82,3 +82,15 @@ interface Permissions {
   boolean isAllowed(int playerid, int gameState);
 }
 ```
+
+### Database External (Noah)
+```java
+
+public interface DatabaseAPI {
+    void insertGameResult(String gameType, int winnerId, int loserId, int points, int 
+        opponentPoints, Date timeOfMatch);
+    List<Integer> getStandings(String leagueName); // For retrieving standings from the database
+}
+
+
+```
