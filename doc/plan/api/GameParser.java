@@ -7,7 +7,7 @@
 interface GameParser {
 
   /**
-   * parse a given JSON file containing data that defines the game
+   * parse a given JSON file containing data that defines the game and creates the game
    *
    * @param filePath, path to JSON file
    * @return GameInfoRecord representing the JSON data that can be interpreted by the GameEngine
