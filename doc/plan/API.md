@@ -17,3 +17,24 @@ public interface InputBindApi{
   void BindInput();
 }
 ```
+
+
+## Backend
+
+### GameEngineExternal (Noah)
+```java
+interface GameEngineExternal {
+
+  void start(int id);
+
+  void pause();
+
+  void resume();
+
+  void update(int id1, int id2);
+
+  void applyForce(double magnitude, double direction, int id);
+  
+  void reset();
+}
+```
