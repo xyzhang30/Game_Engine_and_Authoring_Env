@@ -5,10 +5,9 @@
 package com.gameengine.factories;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 /**
- * Generic Factory interface for creating instances.
+ * Generic Factory interface for creating instances of a given type.
  *
  * @param <T> the type of object created by the factory
  */
@@ -17,28 +16,14 @@ public interface Factory<T> {
   T create(Object... args);
 }
 
-/**
- * Functional interface for handling collisions between two collidable objects.
- */
-@FunctionalInterface
-public interface CollisionHandler<T extends Collidable> extends BiConsumer<T, T> {
-  // Inherits BiConsumer to accept two collidable objects and perform the collision logic
-}
-
-/**
- * Functional interface for modifying player state.
- */
-@FunctionalInterface
-public interface PlayerModifier<T extends Player> extends Consumer<T> {
-  // Defines a single abstract method to accept a player and modify its state
-}
-
 package com.gameengine.factories;
 
 import java.lang.reflect.Constructor;
 
 /**
- * ReflectiveFactory uses reflection to instantiate objects dynamically.
+ * ReflectiveFactory uses Java reflection to instantiate objects dynamically.
+ *
+ * @param <T> the type of object that this factory creates
  */
 public class ReflectiveFactory<T> implements Factory<T> {
 
@@ -50,20 +35,25 @@ public class ReflectiveFactory<T> implements Factory<T> {
 
   @Override
   public T create(Object... args) {
-    try {
-      Class<?>[] argClasses = new Class<?>[args.length];
-      for (int i = 0; i < args.length; i++) {
-        argClasses[i] = args[i].getClass();
-      }
-      Constructor<T> constructor = typeToken.getConstructor(argClasses);
-      return constructor.newInstance(args);
-    } catch (Exception e) {
-      throw new RuntimeException("Could not instantiate object of type " + typeToken.getName(), e);
-    }
+    // Implementation details here
   }
 }
 
-//LAMBDA FACTORY
+package com.gameengine.factories;
+
+import java.util.function.BiConsumer;
+import com.gameengine.internal.GameManager;
+
+/**
+ * Functional interface for handling collisions between two collidable objects.
+ */
+@FunctionalInterface
+public interface CollisionHandler<T extends Collidable, U extends GameManager> extends
+    TriConsumer<T, T, U> {
+  // Inherits BiConsumer to accept two collidable objects and perform the collision logic
+}
+
+
 package com.gameengine.factories;
 
 /**
@@ -72,26 +62,42 @@ package com.gameengine.factories;
 public class LambdaFactory {
 
   /**
-   * Creates a lambda for handling collisions between collidable objects.
+   * Creates a lambda for handling collisions between collidable objects within a given game
+   * context.
    *
    * @param <T> the type of collidable objects
    * @return a CollisionHandler lambda
    */
-  public static <T extends Collidable> CollisionHandler<T> createCollisionHandler() {
-    return (collidable1, collidable2) -> {
+  public static <T extends Collidable, U extends GameManager> CollisionHandler<T, U> createCollisionHandler() {
+    return (collidable1, collidable2, gameManager) -> {
       // Define collision behavior here
     };
   }
+}
+
+package com.gameengine.factories;
+
+import com.gameengine.internal.GameManager;
+
+/**
+ * Represents an operation that accepts three input arguments and returns no result. This is the
+ * three-arity specialization of Consumer. Unlike most other functional interfaces, TriConsumer is
+ * expected to operate via side-effects.
+ *
+ * @param <T> the type of the first argument to the operation
+ * @param <U> the type of the second argument to the operation
+ * @param <V> the type of the third argument to the operation
+ */
+@FunctionalInterface
+public interface TriConsumer<T, U, V> {
 
   /**
-   * Creates a lambda for modifying the state of a player.
+   * Performs this operation on the given arguments.
    *
-   * @param <T> the type of player
-   * @return a PlayerModifier lambda
+   * @param t the first input argument
+   * @param u the second input argument
+   * @param v the third input argument
    */
-  public static <T extends Player> PlayerModifier<T> createPlayerModifier() {
-    return (player) -> {
-      // Define player modification behavior here
-    };
-  }
+  void accept(T t, U u, V v);
 }
+
