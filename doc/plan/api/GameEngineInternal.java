@@ -69,7 +69,7 @@ interface GameEngineInternal {
     /**
      * Updates the stage of the game based on handlers defined by users.
      */
-    void onUpdateStage();
+    void endStage();
 
     /**
      * Retrieves the current turn number.
@@ -129,6 +129,8 @@ interface GameEngineInternal {
     //WHAT OTHER METHODS WOULD BE HERE? USER DEFINED STUFF????
     //double getUserDefinedVariable(String key)????
     double getScore();
+    void setScore();
+    List<Collidable> getPrimary();
   }
 
   /**
@@ -144,13 +146,6 @@ interface GameEngineInternal {
      */
     Collidable getCollidable(int objectId);
 
-    /**
-     * Retrieves the list of primary collidable objects for a given player.
-     *
-     * @param player The player ID.
-     * @return The list of primary collidable objects.
-     */
-    List<Collidable> getPrimary(int player);
 
     /**
      * Checks if the collidable container is static.
