@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-
 ## Use Cases
 
 ## Doga's Use Cases
@@ -194,9 +192,19 @@ public class LevelProgressionUI {
     - When the `resume` button is clicked, the objects will resume moving with the same
       properties as before the pause.
 
-## 6 Use Cases - Konur Nordberg
+- **Actions**:
+    - When the paused button is clicked, one of two things can happen.
+        - If the player who clicked pause is currently the active player, a splash screen will be
+          shown to the user, with a `resume` option
+        - If an inactive player clicks pause, or the player has used all 3 pauses, nothing will
+          happen.
+    - The objects stop moving while the pause splash screen is displayed
+    - When the `resume` button is clicked, the objects will resume moving with the same
+      properties as before the pause.
 
-# Use Case 1: Loading a Pre-Designed Game
+### 6 Use Cases - Konur Nordberg
+
+## Use Case 1: Loading a Pre-Designed Game
 
 * Title: Load Existing Game from Configuration
 * Actor: Actor: Player
@@ -212,7 +220,7 @@ Steps:
 4. System parses the JSON file and initializes the game state.
 5. System displays the game's initial screen to the player.
 
-# Use Case 2: Creating a New Game Element
+## Use Case 2: Creating a New Game Element
 
 * Title: Design New Game Element
 * Actor: Game Designer
@@ -226,7 +234,7 @@ Steps:
 3. Designer places the element in the game environment.
 4. System updates the game's configuration file with the new element.
 
-# Use Case 3: Defining Game Rules
+## Use Case 3: Defining Game Rules
 
 * Title: Set Custom Game Rules
 * Actor: Game Designer
@@ -240,7 +248,7 @@ Steps:
 3. System validates the rules for consistency and feasibility.
 4. System saves the rules within the game's JSON configuration file.
 
-# Use Case 4: Saving Game Progress
+## Use Case 4: Saving Game Progress
 
 * Title: Save Player Game Progress
 * Actor: Player
@@ -254,7 +262,7 @@ Steps:
 3. System writes the saved state to a persistent storage medium.
 4. Player receives confirmation that the game progress has been saved.
 
-# Use Case 5: Editing Game Environment
+## Use Case 5: Editing Game Environment
 
 * Title: Modify Game Environment
 * Actor: Game Designer
@@ -268,7 +276,7 @@ Steps:
 3. System shows a preview of the new environment.
 4. Designer confirms changes, and the system updates the game configuration.
 
-# Use Case 6: Multiplayer Game Session Initialization
+## Use Case 6: Multiplayer Game Session Initialization
 
 * Title: Initialize Multiplayer Game Session
 * Actor: Player
