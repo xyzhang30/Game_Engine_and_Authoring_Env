@@ -4,105 +4,97 @@
 
 ## Overview:
 
-The API design focuses on simplicity, extensibility, and robustness:
+The Factory and Lambda API is designed to empower developers to innovate within a physics-based game environment by abstracting object creation and behavior definitions. The API adheres to the SOLID principles, particularly:
 
-* Simplicity: The API should be straightforward to understand and use, providing clear
-  abstractions for common tasks.
-* Extensibility: It must support easy extension and customization without the need to alter
-  the existing codebase.
-* Robustness: The API should handle edge cases and errors gracefully, providing clear
-  feedback to the developer.
+* Single Responsibility Principle: Each factory is responsible only for the instantiation of 
+one type of object, ensuring clear and manageable code.
+* Open/Closed Principle: By using interfaces and lambdas, the API remains open for extension 
+but closed for modification. New types of objects and behaviors can be introduced without 
+altering existing code.
+* Dependency Inversion Principle: High-level modules do not depend on low-level modules. 
+Both depend on abstractions (interfaces), not on concretions (classes).
 
-By following the SOLID principles, we can ensure that the API is well-structured and that each
-class has a single, clear purpose. The goal is for developers to think about game design in terms
-of object interactions and behaviors, rather than specific implementations. This approach allows for
-a flexible system that can be easily extended with new functionality.
+The API's design encourages programmers to think in terms of "what" they want to accomplish 
+(create a player, define collision behavior) rather than "how" to implement it (reflection 
+details, lambda syntax). This approach simplifies the learning curve and helps to avoid misuse
+by encapsulating complex creation logic within factory implementations.
+
+
 
 ## Classes:
 
-```java
-package com.gameframework.factories;
+The API's main interfaces are:
 
-import java.util.function.BiConsumer;
+```java
+package com.gameengine.factories;
 
 /**
- * The Factory interface represents a contract for creating instances of a particular type.
- * @param <T> the type of object created by the factory
+ * Factory interface for creating instances of a given type.
  */
 public interface Factory<T> {
-
-  /**
-   * Creates an instance of T using the provided arguments.
-   * @param args the arguments used for instance creation
-   * @return an instance of T
-   */
   T create(Object... args);
 }
-```
-
-```java
-package com.gameframework.factories;
 
 /**
- * ReflectiveFactory uses reflection to create instances of classes dynamically.
- * @param <T> the type of object that this factory creates
+ * ReflectiveFactory uses Java reflection to dynamically create instances of classes.
  */
 public class ReflectiveFactory<T> implements Factory<T> {
-
-  private final Class<T> typeToken;
-
-  public ReflectiveFactory(Class<T> typeToken) {
-    this.typeToken = typeToken;
-  }
-
-  /**
-   * Creates an instance of T using the provided arguments.
-   * @param args the constructor arguments
-   * @return an instance of T
-   */
-  @Override
-  public T create(Object... args) {
-    // Implementation of reflection-based object creation
-  }
+  // ...
 }
-```
-
-```java
-package com.gameframework.behaviors;
 
 /**
- * CollisionBehaviorFactory is responsible for creating lambdas that define collision behaviors.
+ * CollisionHandler functional interface to handle collisions between Collidable entities.
  */
-public class CollisionBehaviorFactory {
-
-  /**
-   * Creates a lambda function that defines the behavior for a collision event.
-   * @param <T> the type of collidable objects
-   * @return a lambda function representing the collision behavior
-   */
-  public static <T> BiConsumer<T, T> createCollisionBehavior() {
-    // Implementation for collision behavior creation
-  }
+@FunctionalInterface
+public interface CollisionHandler<T extends Collidable> {
+  void handleCollision(T collidable1, T collidable2);
 }
+
+/**
+ * PlayerModifier functional interface to modify the state of a Player entity.
+ */
+@FunctionalInterface
+public interface PlayerModifier<T extends Player> {
+  void modifyPlayer(T player);
+}
+
 ```
+
 
 ## Details
 
-* Factories: Factory<T> provides a generic interface for creating objects. ReflectiveFactory<T>
-  is an implementation that uses reflection, allowing for dynamic object creation at runtime.
+The API provides the following use cases:
 
-* Behaviors: CollisionBehaviorFactory provides a method for creating lambdas that define behaviors
-  for collision events between objects. This allows game developers to specify how objects interact
-  when they collide without writing boilerplate code.
+* Creating Entities: Use ReflectiveFactory to instantiate game entities, such as players or 
+collidables.
+* Defining Behaviors: Use CollisionHandler and PlayerModifier to define custom behaviors 
+via lambdas, which can then be applied to entities during the game.
+
+Collaboration with other APIs:
+
+* The Factory<T> interface may utilize parsers from the GameParser API to retrieve 
+configuration details for instantiation.
+* CollisionHandler and PlayerModifier behaviors can be registered with the GameEngineInternal's 
+GameManager to be triggered during game updates.
+
+Plugin Points:
+
+* The ReflectiveFactory provides a plugin point to inject custom creation logic for new entity types.
+* CollisionHandler and PlayerModifier offer points to inject custom game logic, such as special 
+scoring rules or collision effects.
 
 ## Considerations:
 
-* Performance and Reflection: Reflection can introduce performance overhead. Careful consideration
-  and benchmarking are required to ensure that the factory's use of reflection does not negatively
-  impact the game's performance.
-* Type Safety: The factory API should include measures to ensure type safety wherever possible,
-  to prevent runtime errors.
-* Error Handling: The API should provide comprehensive error handling to give developers clear
-  information if object creation fails.
-* Documentation: Each class and method will be documented using Javadoc to ensure clarity and
-  ease of use.
+* Performance Impact: The use of reflection and dynamic lambda creation could impact performance,
+requiring benchmarking and potential optimization.
+* Error Handling: Robust error handling and clear exception messaging are essential to inform 
+the developer of misuse.
+* Documentation: Comprehensive Javadoc documentation will be necessary to ensure developers 
+understand the intended use of each interface and method.
+
+## Potential Issues:
+
+* The balance between reflection-based flexibility and static-type safety.
+* Ensuring that lambda expressions are serialized correctly if the game state needs to be saved 
+and restored.
+* Integration testing with the full suite of APIs to ensure compatibility.
