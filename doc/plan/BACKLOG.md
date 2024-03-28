@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ## Use Cases
 
 ### User Selects a Game Mode (Doga)
@@ -113,3 +114,12 @@ public class LevelProgressionUI {
 
 
 
+=======
+## 6 Use Cases Per Team Member
+
+### Noah's Use Cases (nl190) 
+1. Golf Ball Collides with Hole
+```java
+
+```
+>>>>>>> Stashed changes

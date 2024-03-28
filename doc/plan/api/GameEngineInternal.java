@@ -1,35 +1,177 @@
 /**
+ * Interface representing the internal components of the game engine.
+ *
  * @author Noah Loewy
  */
 interface GameEngineInternal {
 
-  interface CollidableObjects {
+  record GameRecord(List<CollidableRecord> c, List<ScoreboardRecord> s) { }
+  record LogicRecord(List<Player>, int round, int turn, int subturn, int stage) { }
+  record CollidableRecord(int collidableId, double x, double y, double width, double height) { }
+
+  record Rules(int maxRounds, Map<Integer<Integer, Consumer<GameManager>>> collisionHandler,
+               TurnPolicy policy) //TurnPolicy, collisionHandler would need to be able to update
+  // the gamestate properly and would need to be defined in data API
+
+  /**
+   * Interface for managing the game state and logic.
+   */
+  interface GameManager {
 
     /**
-     * Checks if the state is static.
+     * Handles collision between two collidables.
      *
-     * @return True if the state is static, false otherwise.
+     * @param id1 The ID of the first collidable.
+     * @param id2 The ID of the second collidable.
      */
-    boolean isStateStatic();
+    void onCollision(int id1, int id2);
 
     /**
-     * Updates the state of collidable objects.
+     * Applies initial velocity to a collidable object.
+     *
+     * @param magnitude The magnitude of the velocity.
+     * @param direction The direction of the velocity.
+     * @param id        The ID of the collidable.
      */
-    void update();
+    void applyInitialVelocity(double magnitude, double direction, int id);
+
+    /**
+     * Updates the game state and returns the updated record.
+     *
+     * @return The updated game record.
+     */
+    GameRecord update();
+
+    /**
+     * Retrieves the logic manager responsible for game logic.
+     *
+     * @return The logic manager.
+     */
+    LogicManager getLogicManager();
+
+    /**
+     * Retrieves the player manager responsible for managing players.
+     *
+     * @return The player manager.
+     */
+    PlayerManager getPlayerManager();
+
   }
 
   /**
-   * Represents a collidable entity in the game.
+   * Interface for managing game logic.
+   */
+  interface LogicManager {
+  //QUESTION:
+    //does this also need to handle the resetting of everything?
+    //some sort of Turn Policy / user-defined lambdas created
+
+    /**
+     * Updates the stage of the game based on handlers defined by users.
+     */
+    void onUpdateStage();
+
+    /**
+     * Retrieves the current turn number.
+     *
+     * @return The current turn number.
+     */
+    int getTurn();
+
+    /**
+     * Retrieves the current sub-turn number.
+     *
+     * @return The current sub-turn number.
+     */
+    int getSubTurn();
+
+    /**
+     * Retrieves the current stage of the game.
+     *
+     * @return The current stage of the game.
+     */
+    int getStage();
+
+  }
+
+  /**
+   * Interface for managing players in the game.
+   */
+  interface PlayerManager {
+
+    /**
+     * Retrieves the list of active players.
+     *
+     * @return The list of active players.
+     */
+    List<Player> getActivePlayers();
+
+    /**
+     * Sets the active players in the game.
+     */
+    void setActivePlayers();
+
+    /**
+     * Retrieves a player by their ID.
+     *
+     * @param id The ID of the player.
+     * @return The player object.
+     */
+    Player getPlayer(int id);
+
+  }
+
+  /**
+   * Interface representing a player in the game.
+   */
+  interface Player {
+    //QUESTION
+    //WHAT OTHER METHODS WOULD BE HERE? USER DEFINED STUFF????
+    //double getUserDefinedVariable(String key)????
+    double getScore();
+  }
+
+  /**
+   * Interface for managing collidable objects.
+   */
+  interface CollidableContainer {
+
+    /**
+     * Retrieves a collidable object by its ID.
+     *
+     * @param objectId The ID of the collidable object.
+     * @return The collidable object.
+     */
+    Collidable getCollidable(int objectId);
+
+    /**
+     * Retrieves the list of primary collidable objects for a given player.
+     *
+     * @param player The player ID.
+     * @return The list of primary collidable objects.
+     */
+    List<Collidable> getPrimary(int player);
+
+    /**
+     * Checks if the collidable container is static.
+     *
+     * @return True if the container is static, false otherwise.
+     */
+    boolean isStatic();
+  }
+
+  /**
+   * Interface representing a collidable object in the game.
    */
   interface Collidable {
 
     /**
-     * Sets the visibility of the collidable.
+     * Sets the visibility of the collidable object.
      */
     void setVisible();
 
     /**
-     * Handles the application of force on the collidable.
+     * Applies a force to the collidable object.
      *
      * @param magnitude The magnitude of the force.
      * @param direction The direction of the force.
@@ -37,140 +179,61 @@ interface GameEngineInternal {
     void onForceApplied(double magnitude, double direction);
 
     /**
-     * Handles collision with another collidable.
+     * Handles collision with another collidable object.
      *
      * @param other The other collidable object.
      */
     void onCollision(Collidable other);
 
     /**
-     * Retrieves the x-coordinate of the collidable.
+     * Retrieves the x-coordinate of the collidable object.
      *
-     * @return The x-coordinate of the collidable.
+     * @return The x-coordinate of the collidable object.
      */
     double getX();
 
     /**
-     * Retrieves the y-coordinate of the collidable.
+     * Retrieves the y-coordinate of the collidable object.
      *
-     * @return The y-coordinate of the collidable.
+     * @return The y-coordinate of the collidable object.
      */
     double getY();
 
     /**
-     * Retrieves the x-component of the velocity of the collidable.
+     * Retrieves the x-component of the velocity of the collidable object.
      *
      * @return The x-component of the velocity.
      */
     double getVelocityx();
 
     /**
-     * Retrieves the y-component of the velocity of the collidable.
+     * Retrieves the y-component of the velocity of the collidable object.
      *
      * @return The y-component of the velocity.
      */
     double getVelocityy();
 
     /**
-     * Retrieves the mass of the collidable.
+     * Retrieves the mass of the collidable object.
      *
-     * @return The mass of the collidable.
+     * @return The mass of the collidable object.
      */
     double getMass();
   }
 
   /**
-   * Manages static states in the game.
+   * Interface for managing physics-related calculations and interactions.
    */
-  interface StaticStateHandler {
+  interface PhysicsEngine {
 
+    //QUESTION:
+    //IS THERE ANYTHING ELSE WE'D WANT TO ABSTRACT AWAY
     /**
-     * Checks if a condition is met for the static state.
+     * Retrieves the force exerted on this collidable object by another collidable object.
      *
-     * @return True if the condition is met, false otherwise.
+     * @param other The other collidable object.
+     * @return The force exerted.
      */
-    boolean isCondition();
-
-    /**
-     * Retrieves the next handler for the static state.
-     *
-     * @return The next handler for the static state.
-     */
-    StaticStateHandler getNextHandler();
-  }
-
-  /**
-   * Manages players in the game.
-   */
-  interface PlayerManager {
-
-    /**
-     * Changes the turn or incorporates a turn policy.
-     */
-    void changeTurn();
-
-    /**
-     * Retrieves the player with the specified ID.
-     *
-     * @param id The ID of the player to retrieve.
-     * @return The player with the specified ID.
-     */
-    Player getPlayer(int id);
-
-    /**
-     * Retrieves a list of active player IDs.
-     *
-     * @return A list of active player IDs.
-     */
-    ObservableList<Integer> getActiveIds();
-  }
-
-  /**
-   * Represents a player in the game.
-   */
-  interface Player {
-
-    /**
-     * Retrieves the score of the player.
-     *
-     * @return The score of the player.
-     */
-    double getScore();
-
-    /**
-     * Sets the score of the player.
-     *
-     * @param score The score to set.
-     */
-    void setScore(double score);
-
-    /**
-     * Retrieves the subturn of the player.
-     *
-     * @return The subturn of the player.
-     */
-    int getSubturn();
-
-    /**
-     * Sets the subturn of the player.
-     *
-     * @param subturn The subturn to set.
-     */
-    void setSubturn(int subturn);
-  }
-
-  /**
-   * Represents permissions in the game.
-   */
-  interface Permissions {
-
-    /**
-     * Checks if the specified player is allowed in the current game state.
-     *
-     * @param playerId  The ID of the player to check.
-     * @param gameState The current game state.
-     * @return True if the player is allowed, false otherwise.
-     */
-    boolean isAllowed(int playerId, int gameState);
+    double getForceExerted(Collidable other);
   }
 }

@@ -19,20 +19,22 @@ interface GameEngineExternal extends StaticStateListener {
    */
   void resume();
 
+  GameRecord update();
+  void confirmPlacement(double x, double y);
   /**
    * Updates the game state based on the provided IDs.
    * @param id1 The ID of the first entity to update.
    * @param id2 The ID of the second entity to update.
    */
-  void update(int id1, int id2);
+  void collision(int id1, int id2);
 
   /**
-   * Applies a force to the entity with the provided ID.
+   * Applies a velocity to the entity with the provided ID.
    * @param magnitude The magnitude of the force to apply.
    * @param direction The direction of the force to apply.
    * @param id The ID of the entity to apply the force to.
    */
-  void applyForce(double magnitude, double direction, int id);
+  void applyInitialVelocity(double magnitude, double direction, int id);
 
   /**
    * Resets the game to its initial state.
