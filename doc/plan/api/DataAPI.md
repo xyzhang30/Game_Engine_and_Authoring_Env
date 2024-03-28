@@ -46,8 +46,8 @@ public class ReflectiveFactory<T> implements Factory<T> {
  * CollisionHandler functional interface to handle collisions between Collidable entities.
  */
 @FunctionalInterface
-public interface CollisionHandler<T extends Collidable> {
-  void handleCollision(T collidable1, T collidable2);
+public interface CollisionHandler<T extends Collidable, U extends GameManager> extends TriConsumer<T, T, U> {
+  // Inherits the accept method to perform collision logic with game state management
 }
 
 /**
