@@ -290,3 +290,31 @@ Steps:
 3. System establishes a network connection between players' devices.
 4. System synchronizes the game state across all devices.
 5. All players see the game's starting state and begin playing simultaneously.
+
+## 6 Use Cases - Jordan 
+1. When a user places a goal object in the authoring environment
+    * Update the graphic representation of the game environment to show the goal object
+    * Update the pending JSON file to contain the details of the goal object (size, shape, location)
+    * Prompt for what happens post score (does point scoring object disappear, does a new level start)
+2. When a user places a point scoring object in the authoring environment
+    * Update the graphic representation of the game environment to show the point scoring object
+    * Update the pending JSON file to contain the details of the point scoring object (size, shape, location)
+    * Prompt for what forces the object is subject to (gravity, friction, none)
+    * Prompt for how the object is manipulated (mouse or angle/power)
+    * Prompt for 'paddle' object choice
+3. When a user moves their mouse in a mouse controlled game (paddle is mouse controlled in air hockey)
+    * Check that mouse is within game board area
+    * If so, setOnMouseMoved event sets location of paddle to equal location of mouse
+    * If not, setOnMouseMoved event sets location of paddle to edge of game board closest to mouse
+4. When a user quits the program before finishing the game
+    * The progress/high score is not saved because the program quit before save could be initiated
+    * When the program restarts, the progress/high score achieved in the quit game will not be represented in the game stats
+5. When a user finishes a game
+    * The completion of the game triggers a save of the progress/high score
+    * Program prompts user for personal info
+    * Personal info, progress/score, and date/time are written to progress/high score file
+    * When a new game is started, this info will be displayed under game stats
+6. User hovers over game option on selection screen
+    * Using the setOnMouseEntered event, trigger additional info pop-up window when mouse hovers over a game option
+    * Additional info will include game author, rules, difficulty, etc.
+    * Using setOnMouseExited event, close pop up when mouse exits game option
