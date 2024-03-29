@@ -3,7 +3,7 @@ package oogasalad.engine.api;
 /**
  * @author Noah Loewy
  */
-public interface GameEngineExternal {
+public interface ExternalGameEngine {
 
   /**
    * Initiates the game with the given ID.

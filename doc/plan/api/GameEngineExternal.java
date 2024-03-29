@@ -41,11 +41,10 @@ interface GameEngineExternal {
   void reset();
 }
 
-record GameRecord(List<CollidableRecord> c, List<ScoreboardRecord> s) { }
-record LogicRecord(List<Player>, int round, int turn, int subturn, int stage) { }
-record CollidableRecord(int collidableId, double x, double y, double width, double height) { }
+record CollidableRecord(int id, double x, double y, double width, double height) {}
 
-record Rules(int maxRounds, Map<Integer<Integer, Consumer<GameManager>>> collisionHandler,
-             TurnPolicy policy) //TurnPolicy, collisionHandler would need to be able to update
-// the gamestate properly and would need to be defined in data API
+record PlayerRecord(int playerId, double score) {}
+
+record GameRecord(List<CollidableRecord> collidables, List<PlayerRecord> players, int round,
+                       int turn, int subturn, int stage) {}
 
