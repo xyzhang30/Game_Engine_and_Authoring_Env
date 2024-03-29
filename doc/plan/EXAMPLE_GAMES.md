@@ -1,7 +1,5 @@
 # Example Games
 
-### Alisha Zhang
-
 ##### Game 1: air hockey
 * Objects
   * puck
