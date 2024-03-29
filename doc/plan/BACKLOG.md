@@ -180,7 +180,7 @@ public class LevelProgressionUI {
 6. **A User manually clicks the `pause` button and then later resumes the game with the `resume
    button`. The game designer, forseeing this, implemented a rule that the game cannot be paused
    by a user more than 3 times.
-   does this.
+   does this.**
 
 - **Actions**:
     - When the paused button is clicked, one of two things can happen.
@@ -192,15 +192,23 @@ public class LevelProgressionUI {
     - When the `resume` button is clicked, the objects will resume moving with the same
       properties as before the pause.
 
-- **Actions**:
-    - When the paused button is clicked, one of two things can happen.
-        - If the player who clicked pause is currently the active player, a splash screen will be
-          shown to the user, with a `resume` option
-        - If an inactive player clicks pause, or the player has used all 3 pauses, nothing will
-          happen.
-    - The objects stop moving while the pause splash screen is displayed
-    - When the `resume` button is clicked, the objects will resume moving with the same
-      properties as before the pause.
+[//]: # (- **Actions**:)
+
+[//]: # (    - When the paused button is clicked, one of two things can happen.)
+
+[//]: # (        - If the player who clicked pause is currently the active player, a splash screen will be)
+
+[//]: # (          shown to the user, with a `resume` option)
+
+[//]: # (        - If an inactive player clicks pause, or the player has used all 3 pauses, nothing will)
+
+[//]: # (          happen.)
+
+[//]: # (    - The objects stop moving while the pause splash screen is displayed)
+
+[//]: # (    - When the `resume` button is clicked, the objects will resume moving with the same)
+
+[//]: # (      properties as before the pause.)
 
 ### 6 Use Cases - Konur Nordberg
 
@@ -332,3 +340,43 @@ Steps:
    - A check for stagnancy occurs at every update call, at which point various user conditions are checked and the game progresses according to any passing conditions.
 6. The user clicks a button while the game is receiving mouse click input.
    - The mouse click is ignored from the game's perspective and is only received by the buttons. Game input is area locked, so the mouse must be within frame for mouse input to count.
+
+## Alisha's Use Cases 
+
+1. **User runs the authoring program and saves a new game they made**
+- **Steps:**
+    - The authoring frontend calls the builder method for each field of all the game info (collidables, players, rules, etc.)
+    - The builder in the backend serializes the information into JSON.
+    - The backend will be using a builder pattern to build each field of the JSON separately
+
+2. **User saved a new game in the authoring environment with one field left empty**
+- **Steps:**
+    - The authoring frontend calls the builder method for each field of all the game info (collidables, players, rules, etc.) passing the empty field in as the default value according to the game type
+    - The backend builder builds the information into JSON as normal
+
+3. **User runs a game with invalid color rgb values in the data file/json**
+- **Steps:**
+    - (This would only happen when user went in and manually edited the JSON or data files before runnign the game because the authoring environment itself will be restricting the possible values the user could enter to be within the valid rgb value range)
+    - The color information for each object will be read by the parser and into a data/config file for the frontend to access
+    - When the parser reads the data (or when the frontend uses the color data) it would check whether the rgb values are valid 
+    - Throws an error warning the user that the data file has a problem that need to be fixed if it's invalid (too low or too high) and also defaults the invalid value to the closet valid value (negative numbers to 0, numbers that are too large to 255) so that the game frontend could still run
+
+4. **In a game of air hockey, when a player hits the puck into a goal and reaches 10 points (the game was preset to end when one of the players reaches 10 points)**
+- **Steps:**
+    - The game manager's onCollision() method checks in the collision condition map for what needs to happen after the collision of the puck with that goal
+    - The specific rules are made by the parser upon initialization and is saved in the rule record
+    - Adds a point to the player who hit the puck, 
+    - Logic manager checks for whether the turn/game policy is satisfied. 
+    - Since it is, then execute what needs to happen at the end of a game.
+
+5. **When user moved the controller and hits the air hockey puck**
+- **Steps:**
+    - The frontend detects the movement of the controller object
+    - frontend checks coordinates for whether a collision has happened
+    - frontend passes the collision and the object ids that collided to backend game engine.
+    - game engine calls oncollide to handle the collision (the controller gives the ball a velocity to move)
+
+6. **When in pinball the ball travels along a speedup zone on the game scene**
+- **Steps:**
+    - The game scene is abstracted as another collidable object with friction
+    - Upon contact of the speed-up zone and the ball it would be handled by the engine as a collision that increases the ball's velocity
