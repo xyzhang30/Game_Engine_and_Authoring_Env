@@ -37,7 +37,7 @@ to work on extension features.
 ### API Delegation
 
 Front End: Doga, Jordan, Kevin
-Back End: Alicia, Judy, Konur, Noah
+Back End: Alisha, Judy, Konur, Noah
 
 ### Extension Features
 
