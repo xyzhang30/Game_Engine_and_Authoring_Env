@@ -318,3 +318,17 @@ Steps:
     * Using the setOnMouseEntered event, trigger additional info pop-up window when mouse hovers over a game option
     * Additional info will include game author, rules, difficulty, etc.
     * Using setOnMouseExited event, close pop up when mouse exits game option
+
+### Kevin Uses Cases
+1. How does a user load a game? 
+   - Clicking on the play game button from splash screen pulls up a window with a list of existing games as seen in the directory. The user can select one to construct a game window with.
+2. What if the user tries to click on the ball in a game that only uses WASD?
+   - The input is caught by the Game Window manager, and passed into the control scheme class to map to a backend command. If no such command exists, it defaults to null and nothing even goes to backend.
+3. What if the user tries to author a game with a ball clipped into a wall?
+   - The ball will be displayed clipped into the wall because the ball will be inside the wall on the model side. It may be dislodged with a great enough velocity, though.
+4. How does the author specify when a ball is destroyed?
+   - In the authoring environment, the author can select a number of events to occur whenever a specific collision occurs. In the case of a ball hitting a hole of some sort, the author might add the "increase score by one" event as well as the "disable ball" event.
+5. What happens when the ball stops moving?
+   - A check for stagnancy occurs at every update call, at which point various user conditions are checked and the game progresses according to any passing conditions.
+6. The user clicks a button while the game is receiving mouse click input.
+   - The mouse click is ignored from the game's perspective and is only received by the buttons. Game input is area locked, so the mouse must be within frame for mouse input to count.
