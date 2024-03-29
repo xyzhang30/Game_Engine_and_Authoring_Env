@@ -5,13 +5,6 @@
  */
 interface GameEngineInternal {
 
-  record GameRecord(List<CollidableRecord> c, List<ScoreboardRecord> s) { }
-  record LogicRecord(List<Player>, int round, int turn, int subturn, int stage) { }
-  record CollidableRecord(int collidableId, double x, double y, double width, double height) { }
-
-  record Rules(int maxRounds, Map<Integer<Integer, Consumer<GameManager>>> collisionHandler,
-               TurnPolicy policy) //TurnPolicy, collisionHandler would need to be able to update
-  // the gamestate properly and would need to be defined in data API
 
   /**
    * Interface for managing the game state and logic.

@@ -1,7 +1,7 @@
 /**
  * @author Noah Loewy
  */
-interface GameEngineExternal extends StaticStateListener {
+interface GameEngineExternal {
 
   /**
    * Initiates the game with the given ID.
@@ -18,7 +18,6 @@ interface GameEngineExternal extends StaticStateListener {
    * Resumes the paused game.
    */
   void resume();
-
   GameRecord update();
   void confirmPlacement(double x, double y);
   /**
@@ -41,3 +40,12 @@ interface GameEngineExternal extends StaticStateListener {
    */
   void reset();
 }
+
+record GameRecord(List<CollidableRecord> c, List<ScoreboardRecord> s) { }
+record LogicRecord(List<Player>, int round, int turn, int subturn, int stage) { }
+record CollidableRecord(int collidableId, double x, double y, double width, double height) { }
+
+record Rules(int maxRounds, Map<Integer<Integer, Consumer<GameManager>>> collisionHandler,
+             TurnPolicy policy) //TurnPolicy, collisionHandler would need to be able to update
+// the gamestate properly and would need to be defined in data API
+
