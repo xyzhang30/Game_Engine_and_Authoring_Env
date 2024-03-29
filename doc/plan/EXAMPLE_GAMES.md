@@ -18,9 +18,16 @@
 ### Game 2: mini golf
 * Objects
   * ball
-  * 
+  * golf club (the user-controlled object)
+  * goals
+  * course 
+  * hazards (turn-ending objects)
+  * players
 * Functionality
-
+  * The game starts with each player positioned at the starting point of the course; players take turns hitting the ball (one player is set active during each turn).
+  * Player specifies the power and angle of the shot before releasing
+  * Ball collides with obstacles, hazards, etc. on the course, and eventually enters the goal
+  * Game ends when everyone completed the course/when time's up/etc., depending on the user-specified rules
 
 ## Explanation
 #### Commonalities:
