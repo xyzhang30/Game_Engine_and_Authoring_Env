@@ -1,4 +1,4 @@
-# API
+# API ideas (tentative/discarded)
 
 ## Front End
 
@@ -18,4 +18,19 @@ public interface InputBindApi{
 }
 ```
 
-NOTE: Move everything to api folder
+### GameDisplayApi
+Manages a playable game and encapsulates the graphics. //Maybe separate the graphics from the logic for Single Responsibility
+```java
+public interface GameDisplayApi{
+  Pane getDisplayPane();
+  void update();
+}
+```
+
+### AuthoringEnvironmentApi
+Manages the authoring environment window.
+```java
+public interface AuthoringEnvironmentApi{
+  Pane getAuthoringPane();
+}
+```
