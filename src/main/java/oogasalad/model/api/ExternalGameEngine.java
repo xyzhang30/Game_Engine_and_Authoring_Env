@@ -1,10 +1,12 @@
+package oogasalad.model.api;
+
 /**
  * @author Noah Loewy
  */
-interface GameEngineExternal {
+public interface ExternalGameEngine {
 
   /**
-   * Initiates the game.
+   * Initiates the game with the given ID.
    */
   void start();
 
@@ -17,13 +19,26 @@ interface GameEngineExternal {
    * Resumes the paused game.
    */
   void resume();
-  GameRecord update();
-  void confirmPlacement(double x, double y);
+
   /**
-   * Updates the game state based on the provided IDs.
-   * @param id1 The ID of the first entity to update.
-   * @param id2 The ID of the second entity to update.
+   * Provides view with updated GameState as immutable record after each frame
+   * @return GameRecord object representing the current Collidables, Scores, etc
    */
+  GameRecord update();
+
+  /**
+   * Places primary collidable object at location specified by parameters
+   * @param x The x coordinate of new location
+   * @param y The y coordinate of new location
+   */
+  void confirmPlacement(double x, double y);
+
+  /**
+   * Handles collision between Collidables with the provided IDs.
+   * @param id1 The ID of the first collidable in collision.
+   * @param id2 The ID of the second collidable in collision.
+   */
+
   void collision(int id1, int id2);
 
   /**
@@ -39,11 +54,3 @@ interface GameEngineExternal {
    */
   void reset();
 }
-
-record CollidableRecord(int id, double x, double y, double width, double height) {}
-
-record PlayerRecord(int playerId, double score) {}
-
-record GameRecord(List<CollidableRecord> collidables, List<PlayerRecord> players, int round,
-                       int turn, int subturn, int stage) {}
-

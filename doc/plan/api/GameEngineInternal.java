@@ -224,4 +224,8 @@ interface GameEngineInternal {
      */
     double getForceExerted(Collidable other);
   }
+
+  record GameRulesRecord(int maxRounds, Map<Integer, Consumer<GameManager>> collisionHandlers,
+                         TurnPolicy turnPolicy) {}
+
 }
