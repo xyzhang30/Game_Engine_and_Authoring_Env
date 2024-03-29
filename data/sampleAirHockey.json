@@ -105,7 +105,16 @@
     "turn_policy": "unchanged",
     "end_game_condition": "reach_10_points"
   },
-  "collisions":{
-
-  }
+  "collisions":[
+    {
+      "first_id": "01",
+      "second_id": "02",
+      "rule": ["add_point","next_turn"]
+    },
+    {
+      "first_id": "01",
+      "second_id": "03",
+      "rule": ["add_point","next_turn"]
+    }
+  ]
 }
