@@ -1,4 +1,4 @@
-package oogasalad.engine.api;
+package oogasalad.model.api;
 
 import java.util.List;
 

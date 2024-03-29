@@ -1,4 +1,4 @@
-package oogasalad.engine.api;
+package oogasalad.model.api;
 
 /**
  * @author Noah Loewy
@@ -9,31 +9,38 @@ public interface ExternalGameEngine {
    * Initiates the game with the given ID.
    * @param id The ID of the game to start.
    */
-  public void start(int id);
+  void start(int id);
 
   /**
    * Pauses the current game.
    */
-  public void pause();
+  void pause();
 
   /**
    * Resumes the paused game.
    */
-  public void resume();
+  void resume();
 
   /**
    * Provides view with updated GameState as immutable record after each frame
    * @return GameRecord object representing the current Collidables, Scores, etc
    */
-  public GameRecord update();
+  GameRecord update();
 
-  public void confirmPlacement(double x, double y);
   /**
-   * Updates the game state based on the provided IDs.
-   * @param id1 The ID of the first entity to update.
-   * @param id2 The ID of the second entity to update.
+   * Places primary collidable object at location specified by parameters
+   * @param x The x coordinate of new location
+   * @param y The y coordinate of new location
    */
-  public void collision(int id1, int id2);
+  void confirmPlacement(double x, double y);
+
+  /**
+   * Handles collision between Collidables with the provided IDs.
+   * @param id1 The ID of the first collidable in collision.
+   * @param id2 The ID of the second collidable in collision.
+   */
+
+  void collision(int id1, int id2);
 
   /**
    * Applies a velocity to the entity with the provided ID.
@@ -41,10 +48,10 @@ public interface ExternalGameEngine {
    * @param direction The direction of the force to apply.
    * @param id The ID of the entity to apply the force to.
    */
-  public void applyInitialVelocity(double magnitude, double direction, int id);
+  void applyInitialVelocity(double magnitude, double direction, int id);
 
   /**
    * Resets the game to its initial state.
    */
-  public void reset();
+  void reset();
 }
