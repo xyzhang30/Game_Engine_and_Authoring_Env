@@ -23,4 +23,12 @@
 
 
 ## Explanation
-Air hockey and mini golf are both physics-based games that requires players to interact with a controller object that 
+#### Commonalities:
+Air hockey and mini golf are both physics-based games that involves
+* player-controllable object that applies a force/gives an initial velocity to the ball
+* collision detection and event-handling after specific collisions
+* the concept of turn/round/game and switching player permissions according to the current state of the game
+
+#### Functional differences:
+* In air hockey, both users will always have control permissions; in golf, permissions for each player changes according to who's turn it is
+* In air hockey, the order of active players is constant (both players are always active), in mini golf, it is determined during game play based on the game status and state of each player
