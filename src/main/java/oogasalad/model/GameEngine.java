@@ -2,6 +2,7 @@ package oogasalad.model;
 
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
+import oogasalad.model.engine.CollidableObjects;
 import oogasalad.model.engine.LogicManager;
 import oogasalad.model.engine.PlayerManager;
 
@@ -10,14 +11,24 @@ import oogasalad.model.engine.PlayerManager;
  */
 public class GameEngine implements ExternalGameEngine {
 
-  /**
-   * Initiates the game with the given ID.
-   *
-   * @param id The ID of the game to start.
-   */
+  private PlayerManager playerManager;
+  private LogicManager logicManager;
+  private RulesRecord rules;
+  private CollidableObjects collidables;
 
+  public GameEngine(int id) {
+    GameLoader loader = new GameLoader(id);
+    playerManager = gameLoader.getPlayerManager();
+    logicManager = gameLoader.getLogicManager();
+    rules = gameLoader.getRules();
+    collidables = gameLoader.getCollidables();
+  }
+
+  /**
+   * Starts the current game
+   */
   @Override
-  public void start(int id) {
+  public void start() {
 
   }
   /**
@@ -96,7 +107,7 @@ public class GameEngine implements ExternalGameEngine {
    */
 
   LogicManager getLogicManager() {
-    return null;
+    return logicManager;
   }
 
   /**
@@ -105,6 +116,14 @@ public class GameEngine implements ExternalGameEngine {
    * @return The player manager.
    */
   PlayerManager getPlayerManager() {
-    return null;
+    return playerManager;
+  }
+
+  CollidableObjects getCollidables() {
+    return collidables;
+  }
+
+  RulesRecord getRules() {
+    return rules;
   }
 }

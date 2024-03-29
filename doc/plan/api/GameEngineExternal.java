@@ -4,10 +4,9 @@
 interface GameEngineExternal {
 
   /**
-   * Initiates the game with the given ID.
-   * @param id The ID of the game to start.
+   * Initiates the game.
    */
-  void start(int id);
+  void start();
 
   /**
    * Pauses the current game.

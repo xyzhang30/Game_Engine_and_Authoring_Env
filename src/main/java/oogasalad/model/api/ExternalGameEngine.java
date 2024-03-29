@@ -11,6 +11,8 @@ public interface ExternalGameEngine {
    */
   void start(int id);
 
+  void start();
+
   /**
    * Pauses the current game.
    */
