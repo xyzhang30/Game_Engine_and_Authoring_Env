@@ -1,12 +1,12 @@
-package oogasalad.model.engine;
+package oogasalad.model.gameengine;
 
 import java.util.Map;
 
-public class CollidableObjects {
+public class CollidableContainer {
 
   private Map<Integer, Collidable> myCollidables;
 
-  public CollidableObjects(Map<Integer, Collidable> collidables) {
+  public CollidableContainer(Map<Integer, Collidable> collidables) {
     myCollidables = collidables;
   }
   public Collidable getCollidable (int objectId) {

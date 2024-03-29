@@ -7,10 +7,7 @@ public interface ExternalGameEngine {
 
   /**
    * Initiates the game with the given ID.
-   * @param id The ID of the game to start.
    */
-  void start(int id);
-
   void start();
 
   /**

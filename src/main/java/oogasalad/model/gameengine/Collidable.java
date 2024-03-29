@@ -1,4 +1,4 @@
-package oogasalad.model.engine;
+package oogasalad.model.gameengine;
 
 public class Collidable {
 
@@ -10,12 +10,7 @@ public class Collidable {
   private int myId;
 
   public void onCollision(Collidable other) {
-    return null;
   }
 
-  //maybe make primary a decoration?
-  public void onForceApplied(double magnitude, double direction) {
-
-  }
 
 }

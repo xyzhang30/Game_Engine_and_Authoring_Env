@@ -2,19 +2,19 @@ package oogasalad.model;
 
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
-import oogasalad.model.engine.CollidableObjects;
-import oogasalad.model.engine.LogicManager;
-import oogasalad.model.engine.PlayerManager;
+import oogasalad.model.gameengine.CollidableContainer;
+import oogasalad.model.gameengine.LogicManager;
+import oogasalad.model.gameengine.PlayerContainer;
 
 /**
  * @author Noah Loewy
  */
 public class GameEngine implements ExternalGameEngine {
 
-  private PlayerManager playerManager;
+  private PlayerContainer playerContainer;
   private LogicManager logicManager;
   private RulesRecord rules;
-  private CollidableObjects collidables;
+  private CollidableContainer collidables;
 
   public GameEngine(int id) {
     GameLoader loader = new GameLoader(id);
@@ -115,11 +115,11 @@ public class GameEngine implements ExternalGameEngine {
    *
    * @return The player manager.
    */
-  PlayerManager getPlayerManager() {
-    return playerManager;
+  PlayerContainer getPlayerContainer() {
+    return playerContainer;
   }
 
-  CollidableObjects getCollidables() {
+  CollidableContainer getCollidables() {
     return collidables;
   }
 
