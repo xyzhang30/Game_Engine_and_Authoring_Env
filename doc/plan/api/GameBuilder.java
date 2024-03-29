@@ -12,7 +12,7 @@ interface GameBuilder {
    * @param gameInfo, GameInfoRecord for generating a JSON file defining the game
    * @throws InvalidInputException when an input value for a certain game parameter is invalid
    */
-  void createGame(GameInfoRecord gameInfo) throws InvalidInputException
+  void serialize() throws InvalidInputException
 
 
 }
