@@ -1,7 +1,5 @@
 # Example Games
 
-### Alisha Zhang
-
 ##### Game 1: air hockey
 * Objects
   * puck
@@ -15,9 +13,6 @@
 ##### Game 2: mini golf
 * Objects
   * ball
-  * gold club (something that represents the golf club/hand)
-  * 6 goal pockets
-  * "table"
-  * walls
+  * 
 * Functionality
   * 

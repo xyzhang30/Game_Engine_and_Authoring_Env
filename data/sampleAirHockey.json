@@ -1,0 +1,91 @@
+{
+  "gameName": "sampleAirHockey",
+  "collidable_objects": {
+    "collidable01": {
+      "collidable_id": "01",
+      "type": "primary",
+      "player_ids": [],
+      "position": {
+        "x_position": 0,
+        "y_position": 0
+      },
+      "shape": "circle",
+      "dimension": [5],
+      "mass": 10,
+      "color": [255,255,255]
+    },
+    "collidable02": {
+      "collidable_id": "02",
+      "type": "sink",
+      "player_ids": ["01"],
+      "position": {
+        "x_position": 0,
+        "y_position": -100
+      },
+      "shape": "rectangle",
+      "dimension": [2,10],
+      "mass": 0,
+      "color": [0,0,0]
+    },
+    "collidable03": {
+      "collidable_id": "03",
+      "type": "sink",
+      "player_ids": ["02"],
+      "position": {
+        "x_position": 0,
+        "y_position": 100
+      },
+      "shape": "rectangle",
+      "dimension": [2,10],
+      "mass": 0,
+      "color": [0,0,0]
+    },
+    "collidable04": {
+      "collidable_id": "04",
+      "type": "control",
+      "player_ids": ["01"],
+      "position": {
+        "x_position": 0,
+        "y_position": -90
+      },
+      "shape": "circle",
+      "dimension": [5],
+      "mass": 5,
+      "color": [165,165,165]
+    },
+    "collidable05": {
+      "collidable_id": "05",
+      "type": "control",
+      "player_ids": ["02"],
+      "position": {
+        "x_position": 0,
+        "y_position": 90
+      },
+      "shape": "circle",
+      "dimension": [5],
+      "mass": 5,
+      "color": [165,165,165]
+    }
+  },
+  "players": {
+    "player01": {
+      "player_id": "01",
+      "player_start_position": {
+        "x_position": 10,
+        "y_position": 10
+      }
+    },
+    "player02": {
+      "player_id": "02",
+      "player_start_position": {
+        "x_position": 20,
+        "y_position": 20
+      }
+    }
+  },
+  "rules": {
+    "sub_turn_policy": "",
+    "turn_policy": "unchanged",
+    "end_game_condition": "reach_10_points"
+  }
+}
