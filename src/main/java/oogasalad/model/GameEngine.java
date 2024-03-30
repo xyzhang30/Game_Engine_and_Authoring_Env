@@ -12,9 +12,9 @@ import oogasalad.model.gameengine.PlayerContainer;
 public class GameEngine implements ExternalGameEngine {
 
   private PlayerContainer playerContainer;
-  private LogicManager logicManager;
-  private RulesRecord rules;
-  private CollidableContainer collidables;
+  private final LogicManager logicManager;
+  private final RulesRecord rules;
+  private final CollidableContainer collidables;
 
   public GameEngine(int id) {
     GameLoader loader = new GameLoader(id);
@@ -31,6 +31,7 @@ public class GameEngine implements ExternalGameEngine {
   public void start() {
 
   }
+
   /**
    * Pauses the current game.
    */
@@ -39,6 +40,7 @@ public class GameEngine implements ExternalGameEngine {
   public void pause() {
 
   }
+
   /**
    * Resumes the paused game.
    */

@@ -5,8 +5,6 @@ public class Collidable {
   private double myMass;
 
   private double myX;
-
-
   private double myY;
   private double myVelocityX;
   private double myVelocityY;
@@ -20,21 +18,24 @@ public class Collidable {
     return myMass;
   }
 
-  public double getX() { return myX; }
+  public double getX() {
+    return myX;
+  }
 
-  public double getY() { return myY; }
+  public double getY() {
+    return myY;
+  }
 
   public double getVelocityX() {
     return myVelocityX;
   }
+
   public double getMyVelocityY() {
     return myVelocityY;
   }
+
   public int getId() {
     return myId;
-
-
-
-
+  }
 
 }

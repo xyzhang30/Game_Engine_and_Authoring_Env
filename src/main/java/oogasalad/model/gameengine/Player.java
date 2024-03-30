@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Player {
-  private int playerId;
-  private Collidable myCollidable;
-  private Map<String, Double> variables;
+
+  private final int playerId;
+  private final Collidable myCollidable;
+  private final Map<String, Double> variables;
 
   private boolean active;
 
@@ -22,7 +23,7 @@ public class Player {
   }
 
   public double getVariable() {
-    return variables.getOrDefault("score",0.0);
+    return variables.getOrDefault("score", 0.0);
   }
 
   public void setVariable(String key, double value) {

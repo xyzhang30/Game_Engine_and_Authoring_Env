@@ -5,9 +5,9 @@ package oogasalad.model.gameengine;
  */
 public class LogicManager {
 
-  private int stage;
-  private int turn;
-  private int subturn;
+  private final int stage;
+  private final int turn;
+  private final int subturn;
 
   public LogicManager() {
     stage = 0;

@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 public class PlayerContainer {
-  private Map<Integer, Player> myPlayers;
+
+  private final Map<Integer, Player> myPlayers;
 
   public PlayerContainer(Map<Integer, Player> players) {
     myPlayers = players;
   }
-  public Player getPlayer (int playerId) {
+
+  public Player getPlayer(int playerId) {
     return myPlayers.get(playerId);
   }
 
@@ -25,10 +27,6 @@ public class PlayerContainer {
     }
     return activePlayers;
   }
-
-
-
-
 
 
 }
