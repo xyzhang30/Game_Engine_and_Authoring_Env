@@ -1,6 +1,7 @@
 package oogasalad.model.gameengine;
 
 import java.util.Map;
+import oogasalad.model.api.GameRecord;
 
 public class CollidableContainer {
 
@@ -14,5 +15,13 @@ public class CollidableContainer {
   }
   public boolean checkStatic() {
     return false;
+  }
+  public GameRecord update(double dt) {
+    for(Collidable c : myCollidables.values()) {
+      c.update();
+      c.move(dt);
+      c.update();
+    }
+    return null;
   }
 }

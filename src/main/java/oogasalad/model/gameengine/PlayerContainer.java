@@ -10,6 +10,7 @@ public class PlayerContainer {
   public PlayerContainer(Map<Integer, Player> players) {
     myPlayers = players;
   }
+
   public Player getPlayer (int playerId) {
     return myPlayers.get(playerId);
   }

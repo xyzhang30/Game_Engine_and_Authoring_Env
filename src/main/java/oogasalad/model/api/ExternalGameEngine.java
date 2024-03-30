@@ -24,7 +24,8 @@ public interface ExternalGameEngine {
    * Provides view with updated GameState as immutable record after each frame
    * @return GameRecord object representing the current Collidables, Scores, etc
    */
-  GameRecord update();
+
+  GameRecord update(double dt);
 
   /**
    * Places primary collidable object at location specified by parameters

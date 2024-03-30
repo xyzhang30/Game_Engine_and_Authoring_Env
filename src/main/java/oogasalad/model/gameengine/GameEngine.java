@@ -1,10 +1,10 @@
-package oogasalad.model;
+package oogasalad.model.gameengine;
 
+import java.util.Map;
+import oogasalad.model.Pair;
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
-import oogasalad.model.gameengine.CollidableContainer;
-import oogasalad.model.gameengine.LogicManager;
-import oogasalad.model.gameengine.PlayerContainer;
+import oogasalad.model.gameengine.command.Command;
 
 /**
  * @author Noah Loewy
@@ -15,13 +15,15 @@ public class GameEngine implements ExternalGameEngine {
   private LogicManager logicManager;
   private RulesRecord rules;
   private CollidableContainer collidables;
+  private Map<Pair, Command> collisionHandlers;
 
   public GameEngine(int id) {
     GameLoader loader = new GameLoader(id);
-    playerManager = gameLoader.getPlayerManager();
-    logicManager = gameLoader.getLogicManager();
-    rules = gameLoader.getRules();
-    collidables = gameLoader.getCollidables();
+    playerContainer = loader.getPlayerManager();
+    logicManager = loader.getLogicManager();
+    rules = loader.getRules();
+    collidables = loader.getCollidables();
+    collisionHandlers = loader.getCollisionHandlers();
   }
 
   /**
@@ -40,7 +42,7 @@ public class GameEngine implements ExternalGameEngine {
 
   }
   /**
-   * Resumes the paused game.
+   * Resumes the paused game
    */
 
   @Override
@@ -54,8 +56,8 @@ public class GameEngine implements ExternalGameEngine {
    * @return GameRecord object representing the current Collidables, Scores, etc
    */
   @Override
-  public GameRecord update() {
-    return null;
+  public GameRecord update(double dt) {
+    return collidables.update(dt);
   }
 
   /**
@@ -77,7 +79,12 @@ public class GameEngine implements ExternalGameEngine {
    */
   @Override
   public void collision(int id1, int id2) {
-
+    Collidable collidable1 = collidables.getCollidable(id1);
+    Collidable collidable2 = collidables.getCollidable(id2);
+    collidable1.onCollision(collidable2);
+    collidable2.onCollision(collidable1);
+    Command cmd = collisionHandlers.get(new Pair(id1, id2));
+    cmd.execute(this, id1, id2);
   }
 
   /**
@@ -106,7 +113,7 @@ public class GameEngine implements ExternalGameEngine {
    * @return The logic manager.
    */
 
-  LogicManager getLogicManager() {
+  public LogicManager getLogicManager() {
     return logicManager;
   }
 
@@ -115,15 +122,15 @@ public class GameEngine implements ExternalGameEngine {
    *
    * @return The player manager.
    */
-  PlayerContainer getPlayerContainer() {
+  public PlayerContainer getPlayerContainer() {
     return playerContainer;
   }
 
-  CollidableContainer getCollidables() {
+  public CollidableContainer getCollidables() {
     return collidables;
   }
 
-  RulesRecord getRules() {
+  public RulesRecord getRules() {
     return rules;
   }
 }
