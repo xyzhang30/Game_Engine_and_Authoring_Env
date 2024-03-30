@@ -5,9 +5,10 @@ import java.util.Map;
 import oogasalad.model.api.PlayerRecord;
 
 public class Player {
-  private int playerId;
-  private Collidable myCollidable;
-  private Map<String, Double> variables;
+
+  private final int playerId;
+  private final Collidable myCollidable;
+  private final Map<String, Double> variables;
 
   private boolean active;
 

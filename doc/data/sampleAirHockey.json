@@ -3,7 +3,7 @@
   "collidable_objects": [
     {
       "collidable_id": "01",
-      "type": "primary",
+      "properties": ["visible", "primary", "movable"],
       "player_ids": [],
       "position": {
         "x_position": 0,
@@ -16,7 +16,7 @@
     },
     {
       "collidable_id": "02",
-      "type": "sink",
+      "properties": ["visible"],
       "player_ids": ["01"],
       "position": {
         "x_position": 0,
@@ -29,7 +29,7 @@
     },
     {
       "collidable_id": "03",
-      "type": "sink",
+      "properties": ["visible"],
       "player_ids": ["02"],
       "position": {
         "x_position": 0,
@@ -42,7 +42,7 @@
     },
     {
       "collidable_id": "04",
-      "type": "control",
+      "properties": ["visible","tangible","movable"],
       "player_ids": ["01"],
       "position": {
         "x_position": 0,
@@ -55,7 +55,7 @@
     },
     {
       "collidable_id": "05",
-      "type": "control",
+      "properties": ["visible","tangible","movable"],
       "player_ids": ["02"],
       "position": {
         "x_position": 0,
@@ -70,7 +70,7 @@
     },
     {
       "collidable_id": "06",
-      "type": "scene",
+      "properties": ["visible"],
       "player_ids": [],
       "position": {
         "x_position": 0,
@@ -100,21 +100,40 @@
       }
     }
   ],
-  "rules": {
-    "sub_turn_policy": "",
-    "turn_policy": "unchanged",
-    "end_game_condition": "reach_10_points"
-  },
-  "collisions":[
+  "variables": [
     {
-      "first_id": "01",
-      "second_id": "02",
-      "rule": ["add_point","next_turn"]
-    },
-    {
-      "first_id": "01",
-      "second_id": "03",
-      "rule": ["add_point","next_turn"]
+      "global": {
+        "turn": 1
+      }
     }
-  ]
+  ],
+  "rules": {
+    "collisions": [
+      {
+        "first_id": "01",
+        "second_id": "02",
+        "rule": [
+          ["add","point",1]
+        ]
+      },
+      {
+        "first_id": "01",
+        "second_id": "03",
+        "rule": [
+          ["add","point",1]
+        ]
+      }
+    ],
+    "static_checks": [
+      [["=","finished",0],[
+        ["add","strokes",1]
+      ]],
+      [["=","turn","3"],[
+        ["set","turn",1]
+      ]],
+      [["=","finished",1],[
+        ["end_game"]
+      ]]
+    ]
+  }
 }

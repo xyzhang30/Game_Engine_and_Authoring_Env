@@ -33,6 +33,7 @@ public class GameEngine implements ExternalGameEngine {
   public void start() {
 
   }
+
   /**
    * Pauses the current game.
    */
@@ -41,6 +42,7 @@ public class GameEngine implements ExternalGameEngine {
   public void pause() {
 
   }
+
   /**
    * Resumes the paused game
    */

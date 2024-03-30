@@ -4,6 +4,6 @@ import java.util.Map;
 import java.util.function.Consumer;
 import oogasalad.model.gameengine.GameEngine;
 
-public record RulesRecord(int maxRounds, Map<Integer, Consumer<GameEngine>> collisionHandlers
+public record RulesRecord(int maxRounds, Map<Pair, Consumer<GameEngine>> collisionHandlers
                        //, TurnPolicy turnPolicy
 ) {}

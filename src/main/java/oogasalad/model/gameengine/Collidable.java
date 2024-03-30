@@ -6,6 +6,7 @@ import oogasalad.model.gameengine.physicsengine.PhysicsEngine;
 public class Collidable {
 
   private double myMass;
+
   private double myX;
   private double myY;
   private double myVelocityX;
@@ -62,6 +63,11 @@ public class Collidable {
     myNextVelocityY = afterCollide.velocityY();
     myNextX = afterCollide.x();
     myNextY = afterCollide.y();
+    //call physics engine at some point
+  }
+
+  public int getId() {
+    return myId;
   }
 
 }

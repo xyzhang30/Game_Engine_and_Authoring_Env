@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 public class PlayerContainer {
-  private Map<Integer, Player> myPlayers;
+
+  private final Map<Integer, Player> myPlayers;
 
   public PlayerContainer(Map<Integer, Player> players) {
     myPlayers = players;
@@ -26,10 +27,6 @@ public class PlayerContainer {
     }
     return activePlayers;
   }
-
-
-
-
 
 
 }

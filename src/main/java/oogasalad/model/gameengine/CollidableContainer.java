@@ -5,14 +5,16 @@ import oogasalad.model.api.GameRecord;
 
 public class CollidableContainer {
 
-  private Map<Integer, Collidable> myCollidables;
+  private final Map<Integer, Collidable> myCollidables;
 
   public CollidableContainer(Map<Integer, Collidable> collidables) {
     myCollidables = collidables;
   }
-  public Collidable getCollidable (int objectId) {
+
+  public Collidable getCollidable(int objectId) {
     return myCollidables.get(objectId);
   }
+
   public boolean checkStatic() {
     for (Collidable c : myCollidables.values()) {
       if (c.getVelocityX() != 0 || c.getVelocityY() != 0) { //should it be getting current or

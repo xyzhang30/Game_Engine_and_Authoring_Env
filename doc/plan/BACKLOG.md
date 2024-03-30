@@ -356,7 +356,7 @@ Steps:
 
 3. **User runs a game with invalid color rgb values in the data file/json**
 - **Steps:**
-    - (This would only happen when user went in and manually edited the JSON or data files before runnign the game because the authoring environment itself will be restricting the possible values the user could enter to be within the valid rgb value range)
+    - (This would only happen when user went in and manually edited the JSON or data files before running the game because the authoring environment itself will be restricting the possible values the user could enter to be within the valid rgb value range)
     - The color information for each object will be read by the parser and into a data/config file for the frontend to access
     - When the parser reads the data (or when the frontend uses the color data) it would check whether the rgb values are valid 
     - Throws an error warning the user that the data file has a problem that need to be fixed if it's invalid (too low or too high) and also defaults the invalid value to the closet valid value (negative numbers to 0, numbers that are too large to 255) so that the game frontend could still run
@@ -380,3 +380,43 @@ Steps:
 - **Steps:**
     - The game scene is abstracted as another collidable object with friction
     - Upon contact of the speed-up zone and the ball it would be handled by the engine as a collision that increases the ball's velocity
+
+## Judy's Use Cases
+1. Configuring a new game
+- **Steps**
+  1. User defines the parameters of the new game through dropdown menus. 
+  2. User add any objects/obstacles to the new game through a drag/drop mechanism 
+  3. View calls implementations of GameBuilder (following the Builder design pattern) to create JSON objects for policies, conditions, collidables and players. 
+  4. New JSON is created for the new game 
+  5. Model parses the new JSON file to configure new game in the backend 
+2. Mini golf: when golf ball goes into hole
+- **Steps**
+  1. View detects collision between Collidables hole and golf ball, identified by their ids.
+  2. View passes collision and ids of Collidables to GameEngine
+  3. Based on the game configuration, the GameEngine process the activity and returns the correct response to the View
+
+3. Load pre-configured game 
+- Steps
+  1. View calls GameParser to parse existing JSON file for configuring a new game
+  2. GameParser calls GameEngine to configure the backend states for the new game
+
+4. Air hockey: Attempt to move puck pass half line
+- Steps
+  1. View detects "collision" between half line and puck and passes the collision and colliding entities to GameEngine by id. 
+  2. Given collision and types of the Collidables identified by their id, the GameEngine follows pre-defined policies to return the correct response to View.
+  3. View disables functionality for moving the puck further forward pass the half line
+
+5. Mini golf: golf is shot out of bound or into water
+- Steps
+  1. View detects collision between game environment boundary/water and golf ball, passing the collision and colliding entities to GameEngine by id.
+  2. Given collision and types of the Collidables identified by their id, the GameEngine follows pre-defined policies to return the correct response to View. 
+  3. GameEngine resets the game in the backend.
+  4. View resets the game for the frontend (player, golfball back to starting position).
+
+6. Air hockey: Player A scores a goal.
+- Steps 
+  1. View detects collision between player B's goal and air hockey, passing the collision and colliding entities to GameEngine by id.
+  2. Given collision and types of the Collidables identified by their id, the GameEngine follows pre-defined policies to return the correct response to View.
+  3. GameEngine updates player A's score and checks win and turn conditions.  
+  4. GameEngine resets the game in the backend.
+  5. If a win condition has been reached, the View generates new splash screen displaying the game result. Otherwise, View updates player A's score and resets the game for the frontend (pucks, hockey back to starting position).
