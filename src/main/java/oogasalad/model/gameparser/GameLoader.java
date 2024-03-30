@@ -22,4 +22,9 @@ public class GameLoader {
 
 
 
+
+  // should there be a separate parser then for the view stuff since model is calling this one and if
+  // model is holding an instance of it then it probably shouldn't be parsing view stuff (?)
+
+
 }
