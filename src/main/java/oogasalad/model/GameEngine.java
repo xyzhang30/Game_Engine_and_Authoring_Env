@@ -5,6 +5,7 @@ import oogasalad.model.api.GameRecord;
 import oogasalad.model.gameengine.CollidableContainer;
 import oogasalad.model.gameengine.LogicManager;
 import oogasalad.model.gameengine.PlayerContainer;
+import oogasalad.model.gameparser.GameLoader;
 
 /**
  * @author Noah Loewy
