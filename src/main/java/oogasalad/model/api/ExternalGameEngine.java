@@ -25,7 +25,8 @@ public interface ExternalGameEngine {
    *
    * @return GameRecord object representing the current Collidables, Scores, etc
    */
-  GameRecord update();
+
+  GameRecord update(double dt);
 
   /**
    * Places primary collidable object at location specified by parameters

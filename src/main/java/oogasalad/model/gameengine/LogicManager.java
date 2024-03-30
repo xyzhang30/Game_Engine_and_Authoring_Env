@@ -17,7 +17,7 @@ public class LogicManager {
   //QUESTION:
   //does this also need to handle the resetting of everything?
   //some sort of Turn Policy / user-defined lambdas created
-
+ // some sort of map from conditions to commands
   /**
    * Updates the status of the game based on handlers defined by users.
    */
@@ -31,7 +31,7 @@ public class LogicManager {
    * @return The current turn number.
    */
   public int getTurn() {
-    return 0;
+    return turn;
   }
 
   /**
@@ -40,7 +40,7 @@ public class LogicManager {
    * @return The current sub-turn number.
    */
   public int getSubTurn() {
-    return 0;
+    return subturn;
   }
 
   /**
@@ -49,7 +49,7 @@ public class LogicManager {
    * @return The current stage of the game.
    */
   public int getStage() {
-    return 0;
+    return stage;
   }
 
 }

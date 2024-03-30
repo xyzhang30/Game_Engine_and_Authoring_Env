@@ -12,7 +12,7 @@ public class PlayerContainer {
     myPlayers = players;
   }
 
-  public Player getPlayer(int playerId) {
+  public Player getPlayer (int playerId) {
     return myPlayers.get(playerId);
   }
 
