@@ -19,7 +19,7 @@ public class StandardEngine implements PhysicsEngine {
     double newVelocityY = ((myCollidable.mass() - otherCollidable.mass()) * myCollidable.velocityY()
         + 2 * otherCollidable.mass() * otherCollidable.velocityY()) / totalMass;
     return new CollidableRecord(myCollidable.id(), myCollidable.mass(),
-        myCollidable.x(), myCollidable.y(), newVelocityX, newVelocityY);
+        myCollidable.x(), myCollidable.y(), newVelocityX, newVelocityY, myCollidable.visible());
   }
 
   @Override
@@ -35,7 +35,7 @@ public class StandardEngine implements PhysicsEngine {
     //the below is trivial implementation for no friction
     return new CollidableRecord(collidable.id(), collidable.mass(),
         collidable.x()+dt*collidable.velocityX(), collidable.y()+dt*collidable.velocityY(),
-        collidable.velocityX(), collidable.velocityY());
+        collidable.velocityX(), collidable.velocityY(), collidable.visible());
   }
 
 }

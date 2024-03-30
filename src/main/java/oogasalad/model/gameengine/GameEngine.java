@@ -57,7 +57,8 @@ public class GameEngine implements ExternalGameEngine {
    */
   @Override
   public GameRecord update(double dt) {
-    return collidables.update(dt);
+    //handle update in some way
+    return null;
   }
 
   /**

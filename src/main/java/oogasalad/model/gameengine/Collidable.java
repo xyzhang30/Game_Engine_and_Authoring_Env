@@ -11,14 +11,16 @@ public class Collidable {
   private double myVelocityX;
   private double myVelocityY;
   private int myId;
-
   private double myNextX;
   private double myNextY;
   private double myNextVelocityX;
   private double myNextVelocityY;
   private final PhysicsEngine myPhysicsEngine;
 
-  public Collidable(int id, double mass, double x, double y, PhysicsEngine physicsEngine) {
+  private boolean myVisible;
+
+  public Collidable(int id, double mass, double x, double y, PhysicsEngine physicsEngine,
+      boolean visible) {
     myId = id;
     myMass = mass;
     myX = x;
@@ -30,6 +32,7 @@ public class Collidable {
     myNextVelocityX = 0.0;
     myNextVelocityY = 0.0;
     myPhysicsEngine = physicsEngine;
+    myVisible = visible;
   }
   public void onCollision(Collidable other) {
     CollidableRecord otherRecord = other.getCollidableRecord();
@@ -38,10 +41,11 @@ public class Collidable {
   }
 
   public CollidableRecord getCollidableRecord() {
-    return new CollidableRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY);
+    return new CollidableRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible);
   }
 
   public void move(double dt) {
+    update();
     CollidableRecord afterMove = myPhysicsEngine.move(getCollidableRecord(), dt);
     updateFromRecord(afterMove);
   }

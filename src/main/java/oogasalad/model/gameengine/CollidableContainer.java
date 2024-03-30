@@ -14,14 +14,19 @@ public class CollidableContainer {
     return myCollidables.get(objectId);
   }
   public boolean checkStatic() {
-    return false;
+    for (Collidable c : myCollidables.values()) {
+      if (c.getVelocityX() != 0 || c.getVelocityY() != 0) { //should it be getting current or
+        // next velo?
+        return false;
+      }
+    }
+    return true;
   }
-  public GameRecord update(double dt) {
+
+  public void update(double dt) {
     for(Collidable c : myCollidables.values()) {
-      c.update();
       c.move(dt);
       c.update();
     }
-    return null;
   }
 }
