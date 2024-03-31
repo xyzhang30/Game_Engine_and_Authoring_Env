@@ -41,9 +41,10 @@ public interface ExternalGameEngine {
    *
    * @param id1 The ID of the first collidable in collision.
    * @param id2 The ID of the second collidable in collision.
+   * @param dt  The length of the collision
    */
 
-  void collision(int id1, int id2);
+  void collision(int id1, int id2, double dt);
 
   /**
    * Applies a velocity to the entity with the provided ID.

@@ -4,6 +4,8 @@ import java.util.Map;
 import oogasalad.model.Pair;
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
+import oogasalad.model.gameengine.collidable.Collidable;
+import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.Command;
 
 /**
@@ -81,11 +83,11 @@ public class GameEngine implements ExternalGameEngine {
    * @param id2 The ID of the second collidable in collision.
    */
   @Override
-  public void collision(int id1, int id2) {
+  public void collision(int id1, int id2, double dt) {
     Collidable collidable1 = collidables.getCollidable(id1);
     Collidable collidable2 = collidables.getCollidable(id2);
-    collidable1.onCollision(collidable2);
-    collidable2.onCollision(collidable1);
+    collidable1.onCollision(collidable2, dt);
+    collidable2.onCollision(collidable1, dt);
     Command cmd = collisionHandlers.get(new Pair(id1, id2));
     cmd.execute(this, id1, id2);
   }

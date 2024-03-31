@@ -1,7 +1,6 @@
-package oogasalad.model.gameengine;
+package oogasalad.model.gameengine.collidable;
 
 import java.util.Map;
-import oogasalad.model.api.GameRecord;
 
 public class CollidableContainer {
 

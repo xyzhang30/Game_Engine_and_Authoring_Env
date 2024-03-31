@@ -3,6 +3,7 @@ package oogasalad.model.gameengine;
 import java.util.HashMap;
 import java.util.Map;
 import oogasalad.model.api.PlayerRecord;
+import oogasalad.model.gameengine.collidable.Collidable;
 
 public class Player {
 
