@@ -68,8 +68,18 @@ public abstract class Collidable {
   protected double getMass() {
     return myMass;
   }
-  public int getId() {
+  protected int getId() {
     return myId;
+  }
+
+  protected boolean getVisible() {
+    return myVisible;
+  }
+  protected double getX() {
+    return myX;
+  }
+  protected double getY() {
+    return myY;
   }
 
 }

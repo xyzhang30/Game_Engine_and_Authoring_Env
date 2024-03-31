@@ -43,4 +43,8 @@ public class Player {
   public PlayerRecord getPlayerRecord() {
     return new PlayerRecord(playerId, variables.get("score"));
   }
+
+  public int getId() {
+    return playerId;
+  }
 }
