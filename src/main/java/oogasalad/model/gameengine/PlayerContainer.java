@@ -3,13 +3,16 @@ package oogasalad.model.gameengine;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import oogasalad.model.api.PlayerRecord;
 
 public class PlayerContainer {
-  private Map<Integer, Player> myPlayers;
+
+  private final Map<Integer, Player> myPlayers;
 
   public PlayerContainer(Map<Integer, Player> players) {
     myPlayers = players;
   }
+
   public Player getPlayer (int playerId) {
     return myPlayers.get(playerId);
   }
@@ -26,9 +29,13 @@ public class PlayerContainer {
     return activePlayers;
   }
 
-
-
-
+  public List<PlayerRecord> getPlayerRecords() {
+    List<PlayerRecord> ret = new ArrayList<>();
+    for(Player p : myPlayers.values()) {
+      ret.add(new PlayerRecord(p.getId(), p.getVariable("score")));
+    }
+    return ret;
+  }
 
 
 }
