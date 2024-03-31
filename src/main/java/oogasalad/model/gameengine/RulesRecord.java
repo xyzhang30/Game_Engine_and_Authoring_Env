@@ -2,8 +2,6 @@ package oogasalad.model.gameengine;
 
 import java.util.Map;
 import java.util.function.Consumer;
-import oogasalad.model.gameengine.GameEngine;
+import oogasalad.Pair;
 
-public record RulesRecord(int maxRounds, Map<Pair, Consumer<GameEngine>> collisionHandlers
-                       //, TurnPolicy turnPolicy
-) {}
+public record RulesRecord(int maxRounds, Map<Pair, Consumer<GameEngine>> collisionHandlers, TurnPolicy turnPolicy) {}

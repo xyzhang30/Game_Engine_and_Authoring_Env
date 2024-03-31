@@ -1,9 +1,13 @@
 package oogasalad.model.gameengine;
 
+import java.util.List;
 import java.util.Map;
-import oogasalad.model.Pair;
+import java.util.concurrent.locks.Condition;
+import oogasalad.Pair;
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
+import oogasalad.model.gameengine.collidable.Collidable;
+import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.Command;
 
 /**
@@ -59,8 +63,13 @@ public class GameEngine implements ExternalGameEngine {
    */
   @Override
   public GameRecord update(double dt) {
-    //handle update in some way
-    return null;
+    if(collidables.checkStatic()) {
+      //do something with the turn policy / advancing
+    }
+    collidables.update(dt);
+    return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
+        logicManager.getRound(), logicManager.getTurn(), logicManager.getSubTurn(),
+        logicManager.getStage());
   }
 
   /**
@@ -74,20 +83,16 @@ public class GameEngine implements ExternalGameEngine {
 
   }
 
-  /**
-   * Handles collision between Collidables with the provided IDs.
-   *
-   * @param id1 The ID of the first collidable in collision.
-   * @param id2 The ID of the second collidable in collision.
-   */
   @Override
-  public void collision(int id1, int id2) {
-    Collidable collidable1 = collidables.getCollidable(id1);
-    Collidable collidable2 = collidables.getCollidable(id2);
-    collidable1.onCollision(collidable2);
-    collidable2.onCollision(collidable1);
-    Command cmd = collisionHandlers.get(new Pair(id1, id2));
-    cmd.execute(this, id1, id2);
+  public void handleCollisions(List<Pair> collisions, double dt) {
+    for(Pair collision : collisions) {
+      Collidable collidable1 = collidables.getCollidable(collision.getFirst());
+      Collidable collidable2 = collidables.getCollidable(collision.getSecond());
+      collidable1.onCollision(collidable2, dt);
+      collidable2.onCollision(collidable1, dt);
+      Command cmd = collisionHandlers.get(collision);
+      cmd.execute(this, collision.getFirst(), collision.getSecond());
+    }
   }
 
   /**

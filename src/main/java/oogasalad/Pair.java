@@ -1,4 +1,4 @@
-package oogasalad.model;
+package oogasalad;
 
 import static java.util.Objects.hash;
 
