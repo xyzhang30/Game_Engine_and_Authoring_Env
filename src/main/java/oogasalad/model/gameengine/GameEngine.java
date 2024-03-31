@@ -9,6 +9,8 @@ import oogasalad.model.api.GameRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.Command;
+import oogasalad.model.gameparser.GameLoader;
+import oogasalad.model.gameparser.GameLoaderModel;
 
 
 /**
@@ -23,7 +25,7 @@ public class GameEngine implements ExternalGameEngine {
   private Map<Pair, Command> collisionHandlers;
 
   public GameEngine(int id) {
-    GameLoader loader = new GameLoader(id);
+    GameLoader loader = new GameLoaderModel(id);
     playerContainer = loader.getPlayerManager();
     logicManager = loader.getLogicManager();
     rules = loader.getRules();
