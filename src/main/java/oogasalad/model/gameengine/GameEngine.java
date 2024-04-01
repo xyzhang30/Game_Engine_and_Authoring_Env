@@ -2,10 +2,11 @@ package oogasalad.model.gameengine;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.Condition;
+import java.util.stream.IntStream;
 import oogasalad.Pair;
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
+import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.Command;
@@ -19,18 +20,23 @@ import oogasalad.model.gameparser.GameLoaderModel;
 public class GameEngine implements ExternalGameEngine {
 
   private PlayerContainer playerContainer;
-  private LogicManager logicManager;
   private RulesRecord rules;
   private CollidableContainer collidables;
   private Map<Pair, Command> collisionHandlers;
+  private int round;
+  private int turn;
+  private boolean gameOver;
+
 
   public GameEngine(int id) {
-    GameLoader loader = new GameLoaderModel(id);
+    GameLoader loader = new GameLoader(id);
     playerContainer = loader.getPlayerContainer();
-    logicManager = loader.getLogicManager();
     rules = loader.getRulesRecord();
     collidables = loader.getCollidableContainer();
-    collisionHandlers = loader.getCollisionHandlers();
+    collisionHandlers = rules.collisionHandlers();
+    round = 1;
+    turn = 1; //first player ideally should have id 1
+    gameOver = false;
   }
 
   /**
@@ -67,23 +73,11 @@ public class GameEngine implements ExternalGameEngine {
   @Override
   public GameRecord update(double dt) {
     if(collidables.checkStatic()) {
-      //do something with the turn policy / advancing
+      return null;
     }
     collidables.update(dt);
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
-        logicManager.getRound(), logicManager.getTurn(), logicManager.getSubTurn(),
-        logicManager.getStage());
-  }
-
-  /**
-   * Places primary collidable object at location specified by parameters
-   *
-   * @param x The x coordinate of new location
-   * @param y The y coordinate of new location
-   */
-  @Override
-  public void confirmPlacement(double x, double y) {
-
+        round, turn, gameOver);
   }
 
   @Override
@@ -94,7 +88,7 @@ public class GameEngine implements ExternalGameEngine {
       collidable1.onCollision(collidable2, dt);
       collidable2.onCollision(collidable1, dt);
       Command cmd = collisionHandlers.get(collision);
-      cmd.execute(this, collision.getFirst(), collision.getSecond());
+      cmd.execute(this, List.of((double) collision.getFirst(), (double) collision.getSecond()));
     }
   }
 
@@ -107,7 +101,8 @@ public class GameEngine implements ExternalGameEngine {
    */
   @Override
   public void applyInitialVelocity(double magnitude, double direction, int id) {
-
+    Collidable collidable = collidables.getCollidable(id);
+    collidable.applyInitialVelocity(magnitude, direction);
   }
 
   /**
@@ -118,30 +113,39 @@ public class GameEngine implements ExternalGameEngine {
 
   }
 
-  /**
-   * Retrieves the logic manager responsible for game logic.
-   *
-   * @return The logic manager.
-   */
-
-  public LogicManager getLogicManager() {
-    return logicManager;
+  public void advanceRound() {
+    round++;
+    //other stuff
   }
 
-  /**
-   * Retrieves the player manager responsible for managing players.
-   *
-   * @return The player manager.
-   */
-  public PlayerContainer getPlayerContainer() {
-    return playerContainer;
+  public void advanceTurn() {
+    //TODO: ABSTRACT THIS TO A TURN POLICY HANDLER
+    turn = (turn + 1) % playerContainer.getPlayerRecords().size();
+    IntStream.range(0, playerContainer.getPlayerRecords().size())
+        .forEach(i -> playerContainer.getPlayer(i).setActive(i == turn));
   }
 
-  public CollidableContainer getCollidables() {
-    return collidables;
+  public int getRound() {
+    return round;
+  }
+
+  public int getTurn() {
+    return turn;
   }
 
   public RulesRecord getRules() {
     return rules;
+  }
+
+  public List<PlayerRecord> getImmutablePlayers() {
+    return playerContainer.getPlayerRecords();
+  }
+
+  public PlayerContainer getPlayerContainer() {
+    return playerContainer;
+  }
+
+  public void endGame() {
+    gameOver = true;
   }
 }
