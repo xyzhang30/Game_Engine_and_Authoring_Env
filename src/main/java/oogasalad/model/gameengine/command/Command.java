@@ -2,10 +2,10 @@ package oogasalad.model.gameengine.command;
 
 import java.util.List;
 import oogasalad.model.api.ExternalGameEngine;
+import oogasalad.model.gameengine.GameEngine;
 
 public interface Command {
 
-  public void execute(ExternalGameEngine engine, List<Double> arguments);
-
+  public double execute(GameEngine engine, List<Double> arguments);
 
 }

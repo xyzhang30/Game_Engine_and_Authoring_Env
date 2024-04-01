@@ -2,13 +2,15 @@ package oogasalad.model.gameengine;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.Condition;
 import oogasalad.Pair;
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
+import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.Command;
+import oogasalad.model.gameengine.logic.PlayerContainer;
+import oogasalad.model.gameengine.logic.RulesRecord;
 
 /**
  * @author Noah Loewy
@@ -16,18 +18,22 @@ import oogasalad.model.gameengine.command.Command;
 public class GameEngine implements ExternalGameEngine {
 
   private PlayerContainer playerContainer;
-  private LogicManager logicManager;
   private RulesRecord rules;
   private CollidableContainer collidables;
   private Map<Pair, Command> collisionHandlers;
+  private int round;
+  private int turn;
+  private boolean gameOver;
 
   public GameEngine(int id) {
     GameLoader loader = new GameLoader(id);
     playerContainer = loader.getPlayerManager();
-    logicManager = loader.getLogicManager();
     rules = loader.getRules();
     collidables = loader.getCollidables();
-    collisionHandlers = loader.getCollisionHandlers();
+    collisionHandlers = rules.collisionHandlers();
+    round = 1;
+    turn = 1;
+    gameOver = false;
   }
 
   /**
@@ -64,24 +70,11 @@ public class GameEngine implements ExternalGameEngine {
   @Override
   public GameRecord update(double dt) {
     if(collidables.checkStatic()) {
-      logicManager.advance();
+      return null;
     }
     collidables.update(dt);
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
-        logicManager.getRound(), logicManager.getTurn(), logicManager.getSubTurn(),
-        logicManager.getStage());
-  }
-
-  /**
-   * Places primary collidable object at location specified by parameters
-   *
-   * @param x The x coordinate of new location
-   * @param y The y coordinate of new location
-   */
-  @Override
-  public void confirmPlacement(double x, double y) {
-    //CAN ONLY OCCUR PRE-TURN:
-    playerContainer.getActivePlayers().get(0).getPrimary().placeInitial(x,y);
+        round, turn, gameOver);
   }
 
   @Override
@@ -117,4 +110,32 @@ public class GameEngine implements ExternalGameEngine {
 
   }
 
+  public void advanceRound() {
+    round++;
+    //other stuff
+  }
+
+  public void advanceTurn() {
+    turn = (turn + 1) % playerContainer.getPlayerRecords().size();
+  }
+
+  public int getRound() {
+    return round;
+  }
+
+  public int getTurn() {
+    return turn;
+  }
+
+  public RulesRecord getRules() {
+    return rules;
+  }
+
+  public List<PlayerRecord> getImmutablePlayers() {
+    return playerContainer.getPlayerRecords();
+  }
+
+  public void endGame() {
+    gameOver = true;
+  }
 }

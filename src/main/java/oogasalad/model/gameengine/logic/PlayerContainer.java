@@ -1,9 +1,11 @@
-package oogasalad.model.gameengine;
+package oogasalad.model.gameengine.logic;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import oogasalad.model.api.PlayerRecord;
+import oogasalad.model.gameengine.logic.Player;
 
 public class PlayerContainer {
 
@@ -18,16 +20,6 @@ public class PlayerContainer {
   }
 
   //need some sort of set active players function in here??
-
-  public List<Player> getActivePlayers() {
-    List<Player> activePlayers = new ArrayList<>();
-    for (Player player : myPlayers.values()) {
-      if (player.isActive()) {
-        activePlayers.add(player);
-      }
-    }
-    return activePlayers;
-  }
 
   public List<PlayerRecord> getPlayerRecords() {
     List<PlayerRecord> ret = new ArrayList<>();

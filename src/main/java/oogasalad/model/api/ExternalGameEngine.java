@@ -31,15 +31,6 @@ public interface ExternalGameEngine {
 
   GameRecord update(double dt);
 
-  /**
-   * Places primary collidable object at location specified by parameters
-   *
-   * @param x The x coordinate of new location
-   * @param y The y coordinate of new location
-   */
-  void confirmPlacement(double x, double y);
-
-
 
   void handleCollisions(List<Pair> collisions, double dt);
 

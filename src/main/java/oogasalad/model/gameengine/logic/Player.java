@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine;
+package oogasalad.model.gameengine.logic;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ public class Player {
   private final int playerId;
   private final Collidable myCollidable;
   private final Map<String, Double> variables;
-
+  private int turns;
   private boolean active;
 
   public Player(int id, Collidable collidable) {
@@ -18,6 +18,7 @@ public class Player {
     myCollidable = collidable;
     variables = new HashMap<>();
     variables.put("score", 0.0);
+    turns = 1;
   }
 
   public Collidable getPrimary() {
@@ -32,16 +33,24 @@ public class Player {
     variables.put(key, value);
   }
 
-  public boolean isActive() {
+  protected boolean isActive() {
     return active;
   }
 
-  public void setActive(boolean state) {
+  protected void setActive(boolean state) {
     active = state;
   }
 
-  public PlayerRecord getPlayerRecord() {
-    return new PlayerRecord(playerId, variables.get("score"), myCollidable.getId());
+  protected int getTurnsInRound() {
+    return turns;
+  }
+
+  protected void setTurnsInRound(int turns) {
+    this.turns = turns;
+  }
+
+  protected PlayerRecord getPlayerRecord() {
+    return new PlayerRecord(playerId, variables.get("score"), myCollidable.getId(), active);
   }
 
   public int getId() {
