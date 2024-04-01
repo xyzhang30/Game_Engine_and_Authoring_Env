@@ -10,6 +10,9 @@ import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.Command;
+import oogasalad.model.gameparser.GameLoader;
+import oogasalad.model.gameparser.GameLoaderModel;
+
 
 /**
  * @author Noah Loewy
@@ -27,9 +30,9 @@ public class GameEngine implements ExternalGameEngine {
 
   public GameEngine(int id) {
     GameLoader loader = new GameLoader(id);
-    playerContainer = loader.getPlayerManager();
-    rules = loader.getRules();
-    collidables = loader.getCollidables();
+    playerContainer = loader.getPlayerContainer();
+    rules = loader.getRulesRecord();
+    collidables = loader.getCollidableContainer();
     collisionHandlers = rules.collisionHandlers();
     round = 1;
     turn = 1; //first player ideally should have id 1
