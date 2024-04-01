@@ -1,7 +1,6 @@
 package oogasalad.model.gameengine.command;
 
 import java.util.List;
-import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.gameengine.GameEngine;
 
 public interface Command {

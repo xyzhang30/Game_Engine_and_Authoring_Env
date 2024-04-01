@@ -1,11 +1,10 @@
-package oogasalad.model.gameengine.logic;
+package oogasalad.model.gameengine;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.logic.Player;
+import oogasalad.model.gameengine.Player;
 
 public class PlayerContainer {
 

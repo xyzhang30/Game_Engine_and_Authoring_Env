@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine.logic;
+package oogasalad.model.gameengine;
 
 import java.util.Map;
 import oogasalad.Pair;

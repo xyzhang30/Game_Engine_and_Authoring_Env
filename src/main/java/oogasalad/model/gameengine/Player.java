@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine.logic;
+package oogasalad.model.gameengine;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,20 +33,8 @@ public class Player {
     variables.put(key, value);
   }
 
-  protected boolean isActive() {
-    return active;
-  }
-
   protected void setActive(boolean state) {
     active = state;
-  }
-
-  protected int getTurnsInRound() {
-    return turns;
-  }
-
-  protected void setTurnsInRound(int turns) {
-    this.turns = turns;
   }
 
   protected PlayerRecord getPlayerRecord() {

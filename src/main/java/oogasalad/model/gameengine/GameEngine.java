@@ -2,6 +2,7 @@ package oogasalad.model.gameengine;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 import oogasalad.Pair;
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
@@ -9,8 +10,6 @@ import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.Command;
-import oogasalad.model.gameengine.logic.PlayerContainer;
-import oogasalad.model.gameengine.logic.RulesRecord;
 
 /**
  * @author Noah Loewy
@@ -25,6 +24,7 @@ public class GameEngine implements ExternalGameEngine {
   private int turn;
   private boolean gameOver;
 
+
   public GameEngine(int id) {
     GameLoader loader = new GameLoader(id);
     playerContainer = loader.getPlayerManager();
@@ -32,7 +32,7 @@ public class GameEngine implements ExternalGameEngine {
     collidables = loader.getCollidables();
     collisionHandlers = rules.collisionHandlers();
     round = 1;
-    turn = 1;
+    turn = 1; //first player ideally should have id 1
     gameOver = false;
   }
 
@@ -116,7 +116,10 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   public void advanceTurn() {
+    //TODO: ABSTRACT THIS TO A TURN POLICY HANDLER
     turn = (turn + 1) % playerContainer.getPlayerRecords().size();
+    IntStream.range(0, playerContainer.getPlayerRecords().size())
+        .forEach(i -> playerContainer.getPlayer(i).setActive(i == turn));
   }
 
   public int getRound() {
@@ -133,6 +136,10 @@ public class GameEngine implements ExternalGameEngine {
 
   public List<PlayerRecord> getImmutablePlayers() {
     return playerContainer.getPlayerRecords();
+  }
+
+  public PlayerContainer getPlayerContainer() {
+    return playerContainer;
   }
 
   public void endGame() {
