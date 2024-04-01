@@ -32,7 +32,7 @@ public class PlayerContainer {
   public List<PlayerRecord> getPlayerRecords() {
     List<PlayerRecord> ret = new ArrayList<>();
     for(Player p : myPlayers.values()) {
-      ret.add(new PlayerRecord(p.getId(), p.getVariable("score")));
+      ret.add(p.getPlayerRecord());
     }
     return ret;
   }

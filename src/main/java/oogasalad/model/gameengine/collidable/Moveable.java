@@ -1,13 +1,10 @@
 package oogasalad.model.gameengine.collidable;
 
-import oogasalad.model.gameengine.collidable.Collidable;
-import oogasalad.model.gameengine.physicsengine.PhysicsEngine;
-
 public class Moveable extends Collidable {
 
   public Moveable(int id, double mass, double x, double y,
-      PhysicsEngine physicsEngine, boolean visible) {
-    super(id, mass, x, y, physicsEngine, visible);
+       boolean visible) {
+    super(id, mass, x, y, visible);
   }
 
   @Override

@@ -41,7 +41,7 @@ public class Player {
   }
 
   public PlayerRecord getPlayerRecord() {
-    return new PlayerRecord(playerId, variables.get("score"));
+    return new PlayerRecord(playerId, variables.get("score"), myCollidable.getId());
   }
 
   public int getId() {

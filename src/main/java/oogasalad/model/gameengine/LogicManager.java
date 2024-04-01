@@ -9,12 +9,13 @@ public class LogicManager {
   private int turn;
   private int subturn;
   private int round;
+  private final RulesRecord rules;
 
-  public LogicManager() {
-    stage = 0;
+  public LogicManager(RulesRecord rules) {
     turn = 0;
     subturn = 0;
     round = 0;
+    this.rules = rules;
   }
   //QUESTION:
   //does this also need to handle the resetting of everything?
@@ -24,11 +25,28 @@ public class LogicManager {
    * Updates the status of the game based on handlers defined by users.
    */
   public void advance() {
+    if(rules.endGameCondition()) {
+      endGame;
+    }
+    if(rules.endRoundCondition()) {
+      endRound;
+    }
+    else if(rules.endTurnCondition()) {
+      endTurn;
+    }
+    else if(rules.endSubTurnCondition()) {
+      endSubturn;
+    }
+  }
+
+  private void advanceStage() {
 
   }
 
   /**
-   * Retrieves the current turn number.
+   * Retrieves t
+
+   * he current turn number.
    *
    * @return The current turn number.
    */
@@ -50,9 +68,6 @@ public class LogicManager {
    *
    * @return The current stage of the game.
    */
-  public int getStage() {
-    return stage;
-  }
 
   public int getRound() {
     return round;

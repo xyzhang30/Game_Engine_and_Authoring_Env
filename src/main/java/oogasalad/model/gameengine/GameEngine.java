@@ -64,7 +64,7 @@ public class GameEngine implements ExternalGameEngine {
   @Override
   public GameRecord update(double dt) {
     if(collidables.checkStatic()) {
-      //do something with the turn policy / advancing
+      logicManager.advance();
     }
     collidables.update(dt);
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
@@ -80,7 +80,8 @@ public class GameEngine implements ExternalGameEngine {
    */
   @Override
   public void confirmPlacement(double x, double y) {
-
+    //CAN ONLY OCCUR PRE-TURN:
+    playerContainer.getActivePlayers().get(0).getPrimary().placeInitial(x,y);
   }
 
   @Override
@@ -91,7 +92,7 @@ public class GameEngine implements ExternalGameEngine {
       collidable1.onCollision(collidable2, dt);
       collidable2.onCollision(collidable1, dt);
       Command cmd = collisionHandlers.get(collision);
-      cmd.execute(this, collision.getFirst(), collision.getSecond());
+      cmd.execute(this, List.of((double) collision.getFirst(), (double) collision.getSecond()));
     }
   }
 
@@ -104,7 +105,8 @@ public class GameEngine implements ExternalGameEngine {
    */
   @Override
   public void applyInitialVelocity(double magnitude, double direction, int id) {
-
+    Collidable collidable = collidables.getCollidable(id);
+    collidable.applyInitialVelocity(magnitude, direction);
   }
 
   /**
@@ -115,30 +117,4 @@ public class GameEngine implements ExternalGameEngine {
 
   }
 
-  /**
-   * Retrieves the logic manager responsible for game logic.
-   *
-   * @return The logic manager.
-   */
-
-  public LogicManager getLogicManager() {
-    return logicManager;
-  }
-
-  /**
-   * Retrieves the player manager responsible for managing players.
-   *
-   * @return The player manager.
-   */
-  public PlayerContainer getPlayerContainer() {
-    return playerContainer;
-  }
-
-  public CollidableContainer getCollidables() {
-    return collidables;
-  }
-
-  public RulesRecord getRules() {
-    return rules;
-  }
 }

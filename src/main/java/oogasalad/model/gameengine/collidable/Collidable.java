@@ -1,12 +1,9 @@
 package oogasalad.model.gameengine.collidable;
 
 import oogasalad.model.api.CollidableRecord;
-import oogasalad.model.gameengine.physicsengine.PhysicsEngine;
 
 public abstract class Collidable {
-
   private double myMass;
-
   private double myX;
   private double myY;
   private double myVelocityX;
@@ -16,11 +13,9 @@ public abstract class Collidable {
   private double myNextY;
   private double myNextVelocityX;
   private double myNextVelocityY;
-  private final PhysicsEngine myPhysicsEngine;
-
   private boolean myVisible;
 
-  public Collidable(int id, double mass, double x, double y, PhysicsEngine physicsEngine,
+  public Collidable(int id, double mass, double x, double y,
       boolean visible) {
     myId = id;
     myMass = mass;
@@ -32,7 +27,6 @@ public abstract class Collidable {
     myNextY = y;
     myNextVelocityX = 0.0;
     myNextVelocityY = 0.0;
-    myPhysicsEngine = physicsEngine;
     myVisible = visible;
   }
   public void onCollision(Collidable other, double dt) {
@@ -59,6 +53,11 @@ public abstract class Collidable {
     myVelocityY = myNextVelocityY;
   }
 
+  public void applyInitialVelocity(double magnitude, double direction) {
+    myVelocityX = magnitude * Math.cos(direction);
+    myVelocityY = magnitude * Math.sin(direction);
+  }
+
   protected double getVelocityX() {
     return myVelocityX;
   }
@@ -68,7 +67,7 @@ public abstract class Collidable {
   protected double getMass() {
     return myMass;
   }
-  protected int getId() {
+  public int getId() {
     return myId;
   }
 
@@ -82,4 +81,8 @@ public abstract class Collidable {
     return myY;
   }
 
+  public void placeInitial(double x, double y) {
+    myX = x;
+    myY = y;
+  }
 }
