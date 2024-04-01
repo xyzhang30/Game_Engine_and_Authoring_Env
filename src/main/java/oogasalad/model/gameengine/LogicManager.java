@@ -5,14 +5,16 @@ package oogasalad.model.gameengine;
  */
 public class LogicManager {
 
-  private final int stage;
-  private final int turn;
-  private final int subturn;
+  private int stage;
+  private int turn;
+  private int subturn;
+  private int round;
 
   public LogicManager() {
     stage = 0;
     turn = 0;
     subturn = 0;
+    round = 0;
   }
   //QUESTION:
   //does this also need to handle the resetting of everything?
@@ -50,6 +52,10 @@ public class LogicManager {
    */
   public int getStage() {
     return stage;
+  }
+
+  public int getRound() {
+    return round;
   }
 
 }

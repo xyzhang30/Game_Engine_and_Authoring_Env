@@ -1,7 +1,9 @@
-package oogasalad.model.gameengine;
+package oogasalad.model.gameengine.collidable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import oogasalad.model.api.GameRecord;
+import oogasalad.model.api.CollidableRecord;
 
 public class CollidableContainer {
 
@@ -18,7 +20,6 @@ public class CollidableContainer {
   public boolean checkStatic() {
     for (Collidable c : myCollidables.values()) {
       if (c.getVelocityX() != 0 || c.getVelocityY() != 0) { //should it be getting current or
-        // next velo?
         return false;
       }
     }
@@ -30,5 +31,15 @@ public class CollidableContainer {
       c.move(dt);
       c.update();
     }
+  }
+
+  public List<CollidableRecord> getCollidableRecords() {
+    List<CollidableRecord> ret = new ArrayList<>();
+    for(Collidable collidable : myCollidables.values()) {
+      ret.add(new CollidableRecord(collidable.getId(), collidable.getMass(), collidable.getX(),
+          collidable.getY(), collidable.getVelocityX(), collidable.getVelocityY(),
+          collidable.getVisible()));
+    }
+    return ret;
   }
 }

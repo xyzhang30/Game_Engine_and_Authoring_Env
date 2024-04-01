@@ -3,6 +3,7 @@ package oogasalad.model.gameengine;
 import java.util.HashMap;
 import java.util.Map;
 import oogasalad.model.api.PlayerRecord;
+import oogasalad.model.gameengine.collidable.Collidable;
 
 public class Player {
 
@@ -41,5 +42,9 @@ public class Player {
 
   public PlayerRecord getPlayerRecord() {
     return new PlayerRecord(playerId, variables.get("score"));
+  }
+
+  public int getId() {
+    return playerId;
   }
 }
