@@ -7,11 +7,9 @@ public class UIScreen extends Pane {
   void show() {
 
   }
-
   void hide() {
 
   }
-
   void update(double dt) {
 
   }
