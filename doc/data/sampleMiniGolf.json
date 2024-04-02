@@ -139,21 +139,18 @@
         "first_id": "02",
         "second_id": "04",
         "rule": [
-          ["disable",2],
-          ["set","finished",1],
-          ["add","turn",1]
         ]
       },
       {
-        "first_id": "03",
+        "first_id": "3",
         "second_id": "04",
-        "rule": [
-          ["disable",3],
-          ["set","finished",1],
-          ["add","turn",1]
+        "command": [
+          {
+            "XCommand": [4,5]
+          }
         ]
-      }
-    ],
+        }
+      },
     "static_checks": [
       [["=","finished",0],[
         ["add","strokes",1]
