@@ -26,10 +26,18 @@ public class GameEngine implements ExternalGameEngine {
   private int round;
   private int turn;
   private boolean gameOver;
+  private GameLoaderModel loader;
 
 
   public GameEngine(int id) {
-    GameLoaderModel loader = new GameLoaderModel(id);
+    loader = new GameLoaderModel(id);
+  }
+
+  /**
+   * Starts the current game
+   */
+  @Override
+  public void start() {
     playerContainer = loader.getPlayerContainer();
     rules = loader.getRulesRecord();
     collidables = loader.getCollidableContainer();
@@ -39,13 +47,7 @@ public class GameEngine implements ExternalGameEngine {
     gameOver = false;
   }
 
-  /**
-   * Starts the current game
-   */
-  @Override
-  public void start() {
 
-  }
 
   /**
    * Pauses the current game.
