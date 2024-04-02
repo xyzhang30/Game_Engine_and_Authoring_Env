@@ -24,3 +24,11 @@ public class AdjustPointsCommand implements Command {
     return currentPlayer.getVariable(SCORE_VARIABLE);
   }
 }
+
+//Backlog
+//Currently Parameters to Commands required to be defined at Authoring Time
+//Runtime is ideal
+/**
+ * (FIX): Directional Collisions ==> But what if other things
+ *
+ */

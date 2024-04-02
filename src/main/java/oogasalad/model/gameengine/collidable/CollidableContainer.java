@@ -28,11 +28,8 @@ public class CollidableContainer {
 
   public void update(double dt) {
     for(Collidable c : myCollidables.values()) {
-      System.out.println(c.getCollidableRecord());
       c.move(dt);
-      System.out.println(c.getCollidableRecord());
       c.update();
-      System.out.println(c.getCollidableRecord());
     }
   }
 

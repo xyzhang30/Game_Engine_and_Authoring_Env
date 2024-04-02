@@ -23,17 +23,16 @@ public abstract class Collidable {
     myY = y;
     myVelocityX = 0.0;
     myVelocityY = 0.0;
+    oldVelocityX = myVelocityX;
+    oldVelocityY = myVelocityY;
     myNextX = x;
     myNextY = y;
-    myNextVelocityX = 0.0;
-    myNextVelocityY = 0.0;
     myVisible = visible;
   }
   public void onCollision(Collidable other, double dt) {
-    double[] result = other.calculateNewSpeed(other, dt);
-    System.out.println(result[0]);
-    myNextVelocityX = result[0];
-    myNextVelocityY = result[1];
+    double[] result = other.calculateNewSpeed(this, dt);
+    myVelocityX = result[0];
+    myVelocityY = result[1];
   }
 
   public abstract double[] calculateNewSpeed(Collidable other, double dt);
@@ -50,15 +49,14 @@ public abstract class Collidable {
   public void update() {
     myX = myNextX;
     myY = myNextY;
-    myVelocityX = myNextVelocityX;
-    myVelocityY = myNextVelocityY;
-  }
+   }
 
   public void applyInitialVelocity(double magnitude, double direction) {
     myVelocityX = magnitude * Math.cos(direction);
     myNextVelocityX = myVelocityX;
     myVelocityY = magnitude * Math.sin(direction);
     myNextVelocityY = myVelocityY;
+
   }
 
   protected double getVelocityX() {

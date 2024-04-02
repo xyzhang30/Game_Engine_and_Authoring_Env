@@ -25,6 +25,7 @@ public class GameEngine implements ExternalGameEngine {
   private int round;
   private int turn;
   private boolean gameOver;
+  private boolean staticState;
 
 
   public GameEngine(GameLoaderModel loader) {
@@ -35,6 +36,7 @@ public class GameEngine implements ExternalGameEngine {
     round = 1;
     turn = 1; //first player ideally should have id 1
     gameOver = false;
+    staticState = true;
   }
 
   /**
@@ -68,31 +70,30 @@ public class GameEngine implements ExternalGameEngine {
    *
    * @return GameRecord object representing the current Collidables, Scores, etc
    */
-  @Override
-  public GameRecord update(double dt) {
+  private GameRecord update(double dt) {
     if(collidables.checkStatic()) {
-      return null;
+      staticState = true;
     }
+    staticState = false;
     collidables.update(dt);
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
-        round, turn, gameOver);
+        round, turn, gameOver, staticState);
   }
 
   @Override
-  public void handleCollisions(List<Pair> collisions, double dt) {
+  public GameRecord handleCollisions(List<Pair> collisions, double dt) {
     for(Pair collision : collisions) {
       Collidable collidable1 = collidables.getCollidable(collision.getFirst());
       Collidable collidable2 = collidables.getCollidable(collision.getSecond());
       collidable1.onCollision(collidable2, dt);
       collidable2.onCollision(collidable1, dt);
-      System.out.println("");
-      System.out.println(collidable1.getCollidableRecord());
-      System.out.println(collidable2.getCollidableRecord());
       if(collisionHandlers.containsKey(collision)){
         Command cmd = collisionHandlers.get(collision);
         cmd.execute(this);
       }
+
     }
+    return update(dt);
   }
 
   /**
