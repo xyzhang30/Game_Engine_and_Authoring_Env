@@ -1,10 +1,22 @@
 package oogasalad;
 
 
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import oogasalad.view.Screen.TitleScreen;
+
 /**
  * Feel free to completely change this code or delete it entirely.
  */
-public class Main {
+public class Main extends Application {
+
+  @Override
+  public void start(Stage primaryStage) {
+    TitleScreen titleScreen = new TitleScreen();
+    primaryStage.setScene(titleScreen.getScene());
+    primaryStage.show();
+  }
 
   /**
    * Start of the program.
