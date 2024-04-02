@@ -2,6 +2,7 @@ package oogasalad.model.gameparser;
 
 import java.io.PrintWriter;
 import java.io.FileWriter;
+import org.json.simple.JSONArray;
 
 
 public class GameLoaderView extends GameLoader{
@@ -11,12 +12,12 @@ public class GameLoaderView extends GameLoader{
     generateStyleSheet();
   }
 
-
+  //alisha
   private void generateStyleSheet(){
     //writes the color + dimension + filepath (if applicable) into css
     try (PrintWriter writer = new PrintWriter(new FileWriter(defaultFolderPath + gameName))) {
-      for (int i = 0; i < collidables.length(); i++) {
-        JSONObject collidable = collidables.getJSONObject(i);
+      for (int i = 0; i < this.collidables.length(); i++) {
+        String collidable = collidables.getJSONObject(i);
         String id = collidable.getString("collidable_id");
         JSONArray colorArray = collidable.getJSONArray("color");
 
@@ -26,6 +27,7 @@ public class GameLoaderView extends GameLoader{
 
         String rgb = red + "," + green + "," + blue;      writer.println("#collidable_" + id + " {");
         writer.println("    -fx-background-color: rgb(" + rgb + ");");
+        //separate this into method / config for the syntax
         writer.println("}");
       }
     } catch (IOException e){
@@ -33,6 +35,7 @@ public class GameLoaderView extends GameLoader{
     }
   }
 
+  //alisha
   private int validateColorComponent(int value) {
     if (value < 0) {
       return 0; // Set to 0 if value is negative
@@ -43,17 +46,20 @@ public class GameLoaderView extends GameLoader{
     }
   }
 
-  private void writeColor() {
+
+//  private void writeColor() {
+//
+//  }
+//
+//  private void writeDimension() {
+//
+//  }
+
+  //alisha
+  private void generateCollidableShapeConfig() {
 
   }
 
-  private void writeDimension() {
 
-  }
-
-  private void writeCollidables() {
-
-  }
-}
 
 

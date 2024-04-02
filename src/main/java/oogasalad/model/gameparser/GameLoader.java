@@ -42,4 +42,10 @@ public abstract class GameLoader {
   // model is holding an instance of it then it probably shouldn't be parsing view stuff (?)
 
 
+
+
+
+  //make the game area and the rules separate in the json??
+
+
 }
