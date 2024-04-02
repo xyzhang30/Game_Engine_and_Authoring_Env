@@ -12,3 +12,7 @@ handling. The actual details of how the view is updated based on the info receiv
 abstracted behind other classes. Our initial thoughts on class relationships is represented in the
 UML diagram below. ![UML Diagram](Front End UML Diagram.jpg)
 
+### Backend
+
+The backend will support the building, parsing and running of various different turn-based physics games such as air hockey, mini golf, pinball, bowling, etc.
+We plan to abstract the objects and abstract rules/conditions for each game into commands and to use design patterns to ensure its flexibility of handling different games with varied functionalities.
