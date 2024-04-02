@@ -1,12 +1,16 @@
 package oogasalad.view;
 
+import java.util.ArrayList;
 import java.util.List;
+import oogasalad.Pair;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.api.GameRecord;
+import oogasalad.view.Screen.ScreenType;
 
 /**
  * Controller class handles communications between model and view.  This class holds manager class
  * instances to delegate handling the information received from the model.
+ *
  * @author Jordan Haytaian
  */
 public class Controller {
@@ -15,7 +19,7 @@ public class Controller {
   private final CollisionManager collisionManager;
   private final SceneManager sceneManager;
 
-  public Controller(int id){
+  public Controller(int id) {
     gameEngine = new GameEngine(id);
     collisionManager = new CollisionManager();
     sceneManager = new SceneManager();
@@ -24,27 +28,29 @@ public class Controller {
   /**
    * Runs the game by sending and receiving info from scene manager
    */
-  public void runGame(){
-    status = sceneManager.getStatus();
-    while(status != GAMEOVER){
-      if (status == moving){
+  public void runGame() {
+    if()
+    while (sceneManager.getScreenType() == ScreenType.GAME_SCREEN) {
+      GameRecord gameRecord = gameEngine.update();
+      sceneManager.update(record);
+      List<Pair> collisionList = collisionManager.getIntersections();
+      gameEngine.handleCollisions(collisionList);
 
+      if(sceneManager.moving()){
+        //listen for hit
       }
     }
   }
 
-  private void handleCollisions(){
-    List<List<Integer>> collisionList = collisionManager.getIntersections();
-    for (List<Integer> idPair : collisionList) {
-      int id1 = idPair.get(0);
-      int id2 = idPair.get(1);
-      gameEngine.collision(id1, id2);
-    }
-  }
-
-  private void updatePositions(){
-    GameRecord record = gameEngine.update();
-
+  /**
+   * Gets the titles of all available games to play
+   * @return a list of the game titles
+   */
+  public List<String> getGameTitles(){
+    //TODO: Add parsing functionality
+    List<String> gameTitles = new ArrayList<>();
+    gameTitles.add("Mini Golf");
+    return gameTitles;
   }
 
 }
