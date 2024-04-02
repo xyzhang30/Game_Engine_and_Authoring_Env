@@ -356,7 +356,7 @@ Steps:
 
 3. **User runs a game with invalid color rgb values in the data file/json**
 - **Steps:**
-    - (This would only happen when user went in and manually edited the JSON or data files before runnign the game because the authoring environment itself will be restricting the possible values the user could enter to be within the valid rgb value range)
+    - (This would only happen when user went in and manually edited the JSON or data files before running the game because the authoring environment itself will be restricting the possible values the user could enter to be within the valid rgb value range)
     - The color information for each object will be read by the parser and into a data/config file for the frontend to access
     - When the parser reads the data (or when the frontend uses the color data) it would check whether the rgb values are valid 
     - Throws an error warning the user that the data file has a problem that need to be fixed if it's invalid (too low or too high) and also defaults the invalid value to the closet valid value (negative numbers to 0, numbers that are too large to 255) so that the game frontend could still run
