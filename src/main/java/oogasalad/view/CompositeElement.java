@@ -19,10 +19,4 @@ public class CompositeElement {
       shape.setVisible(visible);
     }
   }
-
-  public void addShape(int id, Shape shape) {
-    shapes.put(id, shape);
-  }
-
-  // Method to remove shapes not present in the latest update, if necessary
 }

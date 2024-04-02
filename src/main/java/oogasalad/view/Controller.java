@@ -31,7 +31,7 @@ public class Controller {
   public void runGame() {
       while (sceneManager.getScreenType() == ScreenType.GAME_SCREEN) {
         GameRecord gameRecord = gameEngine.update();
-        sceneManager.update(record);
+        sceneManager.update(gameRecord);
         List<Pair> collisionList = collisionManager.getIntersections();
         gameEngine.handleCollisions(collisionList);
 
