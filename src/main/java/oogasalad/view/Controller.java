@@ -2,6 +2,7 @@ package oogasalad.view;
 
 import java.util.List;
 import oogasalad.model.GameEngine;
+import oogasalad.model.api.GameRecord;
 
 /**
  * Controller class handles communications between model and view.  This class holds manager class
@@ -27,6 +28,11 @@ public class Controller {
       int id2 = idPair.get(1);
       gameEngine.collision(id1, id2);
     }
+  }
+
+  private void updatePositions(){
+    GameRecord record = gameEngine.update();
+
   }
 
 
