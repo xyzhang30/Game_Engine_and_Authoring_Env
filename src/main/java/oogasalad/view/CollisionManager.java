@@ -41,6 +41,14 @@ public class CollisionManager {
     return intersectionList;
   }
 
+  /**
+   * Assigns the composite element to the given composite element
+   * @param newCompositeElement the new composite element
+   */
+  public void setNewCompositeElement(CompositeElement newCompositeElement) {
+    this.compositeElement = newCompositeElement;
+  }
+
   private void createIntersectionMatrix() {
     int maxId = -1;
     for (Integer currId : elementMap.keySet()) {

@@ -21,6 +21,12 @@ public class Controller {
     sceneManager = new SceneManager();
   }
 
+  /**
+   * Runs the game by sending and receiving info from scene manager
+   */
+  public void runGame(){
+  }
+
   private void handleCollisions(){
     List<List<Integer>> collisionList = collisionManager.getIntersections();
     for (List<Integer> idPair : collisionList) {
@@ -34,7 +40,5 @@ public class Controller {
     GameRecord record = gameEngine.update();
 
   }
-
-
 
 }
