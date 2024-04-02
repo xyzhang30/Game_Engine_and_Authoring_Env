@@ -1,5 +1,6 @@
 package oogasalad.view;
 
+import java.util.List;
 import oogasalad.model.GameEngine;
 
 /**
@@ -20,7 +21,12 @@ public class Controller {
   }
 
   private void handleCollisions(){
-
+    List<List<Integer>> collisionList = collisionManager.getIntersections();
+    for (List<Integer> idPair : collisionList) {
+      int id1 = idPair.get(0);
+      int id2 = idPair.get(1);
+      gameEngine.collision(id1, id2);
+    }
   }
 
 
