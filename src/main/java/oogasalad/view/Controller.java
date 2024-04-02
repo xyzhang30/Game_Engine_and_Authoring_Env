@@ -1,7 +1,7 @@
 package oogasalad.view;
 
 import java.util.List;
-import oogasalad.model.GameEngine;
+import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.api.GameRecord;
 
 /**
@@ -25,6 +25,12 @@ public class Controller {
    * Runs the game by sending and receiving info from scene manager
    */
   public void runGame(){
+    status = sceneManager.getStatus();
+    while(status != GAMEOVER){
+      if (status == moving){
+
+      }
+    }
   }
 
   private void handleCollisions(){

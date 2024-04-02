@@ -17,8 +17,7 @@ public class CollisionManager {
   private Shape[][] intersections;
   private CompositeElement compositeElement;
 
-  public CollisionManager() {
-  }
+  public CollisionManager() {}
 
   /**
    * Traverses intersection matrix and to create list of ids that are currently intersecting
