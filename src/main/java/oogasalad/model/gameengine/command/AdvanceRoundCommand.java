@@ -6,8 +6,7 @@ import oogasalad.model.gameengine.GameEngine;
 public class AdvanceRoundCommand implements Command {
 
   @Override
-  public double execute(GameEngine engine, List<Double> arguments) {
+  public void execute(GameEngine engine, List<Double> arguments) {
     engine.advanceRound();
-    return 0.0;
   }
 }
