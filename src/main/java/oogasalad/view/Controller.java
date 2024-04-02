@@ -1,6 +1,6 @@
 package oogasalad.view;
 
-import oogasalad.model.GameEngine;
+import oogasalad.model.gameengine.GameEngine;
 
 /**
  * Controller class handles communications between model and view.  This class holds manager class
