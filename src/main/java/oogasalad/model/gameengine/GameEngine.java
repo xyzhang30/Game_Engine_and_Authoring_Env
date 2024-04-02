@@ -27,8 +27,7 @@ public class GameEngine implements ExternalGameEngine {
   private boolean gameOver;
 
 
-  public GameEngine(int id) {
-    GameLoaderModel loader = new GameLoaderModel(id);
+  public GameEngine(GameLoaderModel loader) {
     playerContainer = loader.getPlayerContainer();
     rules = loader.getRulesRecord();
     collidables = loader.getCollidableContainer();
@@ -86,8 +85,13 @@ public class GameEngine implements ExternalGameEngine {
       Collidable collidable2 = collidables.getCollidable(collision.getSecond());
       collidable1.onCollision(collidable2, dt);
       collidable2.onCollision(collidable1, dt);
-      Command cmd = collisionHandlers.get(collision);
-      cmd.execute(this);
+      System.out.println("");
+      System.out.println(collidable1.getCollidableRecord());
+      System.out.println(collidable2.getCollidableRecord());
+      if(collisionHandlers.containsKey(collision)){
+        Command cmd = collisionHandlers.get(collision);
+        cmd.execute(this);
+      }
     }
   }
 
@@ -142,6 +146,10 @@ public class GameEngine implements ExternalGameEngine {
 
   public PlayerContainer getPlayerContainer() {
     return playerContainer;
+  }
+
+  public CollidableContainer getCollidableContainer() {
+    return collidables;
   }
 
   public void endGame() {

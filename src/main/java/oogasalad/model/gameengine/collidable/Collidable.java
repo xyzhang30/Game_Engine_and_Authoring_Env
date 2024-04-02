@@ -31,6 +31,7 @@ public abstract class Collidable {
   }
   public void onCollision(Collidable other, double dt) {
     double[] result = other.calculateNewSpeed(other, dt);
+    System.out.println(result[0]);
     myNextVelocityX = result[0];
     myNextVelocityY = result[1];
   }
@@ -55,7 +56,9 @@ public abstract class Collidable {
 
   public void applyInitialVelocity(double magnitude, double direction) {
     myVelocityX = magnitude * Math.cos(direction);
+    myNextVelocityX = myVelocityX;
     myVelocityY = magnitude * Math.sin(direction);
+    myNextVelocityY = myVelocityY;
   }
 
   protected double getVelocityX() {

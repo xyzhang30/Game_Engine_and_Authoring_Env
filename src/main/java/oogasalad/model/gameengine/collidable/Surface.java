@@ -13,6 +13,7 @@ public class Surface extends Collidable {
     // resulting speed for OTHER, not itself
     double oldVelocityX = other.getVelocityX();
     double oldVelocityY = other.getVelocityY();
+    if(Math.hypot(oldVelocityX, oldVelocityY) == 0) { return new double [] {0,0};}
     double xv = oldVelocityX - mu * g * oldVelocityX / Math.hypot(oldVelocityX, oldVelocityY);
     double yv = oldVelocityY - mu * g * oldVelocityY / Math.hypot(oldVelocityX, oldVelocityY);
     return new double [] {xv, yv};

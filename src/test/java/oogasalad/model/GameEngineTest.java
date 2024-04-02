@@ -1,11 +1,13 @@
 package oogasalad.model;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
+import oogasalad.Pair;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.junit.jupiter.api.BeforeEach;
-import org.mockito.Mockito;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,29 +18,48 @@ public class GameEngineTest {
 
   @BeforeEach
   public void setUp() {
-    // Create a mock GameLoaderModel
-    loaderMock = mock(GameLoaderModel.class);
-
-    // Mock PlayerContainer
-    PlayerContainer playerContainerMock = mock(PlayerContainer.class);
-    // Set up behavior for playerContainerMock if needed
-
-    // Mock RulesRecord
-    RulesRecord rulesRecordMock = mock(RulesRecord.class);
-    // Set up behavior for rulesRecordMock if needed
-
-    // Mock CollidableContainer
-    CollidableContainer collidableContainerMock = mock(CollidableContainer.class);
-    // Set up behavior for collidableContainerMock if needed
-
-    // Set up predefined behavior for the loaderMock to return the mock objects
-    when(loaderMock.getPlayerContainer()).thenReturn(playerContainerMock);
-    when(loaderMock.getRulesRecord()).thenReturn(rulesRecordMock);
-    when(loaderMock.getCollidableContainer()).thenReturn(collidableContainerMock);
-
-    // Initialize GameEngine with the mock
-    gameEngine = new GameEngine(123, loaderMock);
+    gameEngine = new GameEngine(new GameLoaderMock(1));
   }
 
-  // Write your tests here
+
+  @Test
+  public void testStartAndResetGame() {
+    // Ensure the game starts without errors
+    gameEngine.start();
+
+    // Assert that the initial round and turn are as expected
+    assertEquals(1, gameEngine.getRound());
+    assertEquals(1, gameEngine.getTurn());
+
+    // Reset the game and verify that it's back to initial state
+    gameEngine.reset();
+    assertEquals(1, gameEngine.getRound());
+    assertEquals(1, gameEngine.getTurn());
+  }
+
+
+  @Test
+  public void testOnApplyVelocity() {
+    // Ensure the game starts without errors
+    gameEngine.start();
+    gameEngine.applyInitialVelocity(10, 0, 1);
+    double vel =
+        gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().velocityX();
+    // Assert that the initial round and turn are as expected
+    assertEquals(10, vel);
+  }
+
+  @Test
+  public void testUpdate() {
+    // Ensure the game starts without errors
+    gameEngine.start();
+    gameEngine.applyInitialVelocity(10, 0, 1);
+    // Assert that the initial round and turn are as expected
+    gameEngine.update(1);
+    gameEngine.handleCollisions(List.of(new Pair(1,2)), 1);
+    assertEquals(10,gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().x());
+    assertEquals(   5,
+        gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().velocityX());
+
+  }
 }

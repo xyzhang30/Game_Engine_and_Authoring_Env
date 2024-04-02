@@ -4,7 +4,7 @@ import java.util.List;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.Player;
 
-public class IncreasePointsCommand implements Command {
+public class AdjustPointsCommand implements Command {
 
   private static final int PLAYER_ID = 0;
   private static final int SCORE_INCREASE = 1;
@@ -12,7 +12,7 @@ public class IncreasePointsCommand implements Command {
 
   private List<Double> arguments;
 
-  public IncreasePointsCommand(List<Double> arguments) {
+  public AdjustPointsCommand(List<Double> arguments) {
     this.arguments = arguments;
   }
   @Override

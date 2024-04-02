@@ -1,7 +1,7 @@
 package oogasalad.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import oogasalad.Pair;
 import oogasalad.model.gameengine.GameEngine;
@@ -9,9 +9,8 @@ import oogasalad.model.gameengine.Player;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.Moveable;
 import oogasalad.model.gameengine.collidable.Surface;
-import oogasalad.model.gameengine.command.AdvanceTurnCommand;
+import oogasalad.model.gameengine.command.AdjustPointsCommand;
 import oogasalad.model.gameengine.command.Command;
-import oogasalad.model.gameengine.command.SingleCommand;
 import oogasalad.model.gameparser.GameLoaderModel;
 import oogasalad.model.gameengine.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
@@ -24,11 +23,10 @@ public class GameLoaderMock extends GameLoaderModel {
   private RulesRecord rules;
   private GameEngine engine;
 
-  public GameLoaderMock(int id, GameEngine engine) {
-    super(id, engine);
-    this.engine = engine;
-    createPlayerContainer();
+  public GameLoaderMock(int id) {
+    super(id);
     createCollidableContainer();
+    createPlayerContainer();
     createRulesRecord();
   }
 
@@ -56,7 +54,7 @@ public class GameLoaderMock extends GameLoaderModel {
 
   protected void createRulesRecord() {
     Map <Pair, Command> myMap = new HashMap<>();
-    myMap.put(new Pair(1,4), new AdvanceTurnCommand(engine));
+    myMap.put(new Pair(1,4), new AdjustPointsCommand(List.of(1.0,10.0)));
     this.rules = new RulesRecord(1, Integer.MAX_VALUE, new HashMap<>());
   }
 

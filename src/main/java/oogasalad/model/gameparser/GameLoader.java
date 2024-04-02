@@ -36,6 +36,7 @@ public abstract class GameLoader {
   // judy
   protected List<Map<String, String>> parseCollidables() {
     // TODO
+    return null;
   }
 
   // should there be a separate parser then for the view stuff since model is calling this one and if
