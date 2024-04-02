@@ -16,4 +16,9 @@ public class SceneManager {
       compositeElement.updateShape(collidable.id(), collidable.x(), collidable.y(), collidable.visible());
     }
   }
+
+  public boolean notMoving(){
+    return GameRecord.getStaticState(); //will be added to record eventually
+  }
+
 }

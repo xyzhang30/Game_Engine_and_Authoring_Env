@@ -35,8 +35,9 @@ public class Controller {
         List<Pair> collisionList = collisionManager.getIntersections();
         gameEngine.handleCollisions(collisionList);
 
-        if(sceneManager.moving()){
+        if(sceneManager.notMoving()){
           //listen for hit
+          //true if the ball is not moving
         }
       }
   }
