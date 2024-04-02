@@ -10,7 +10,6 @@ import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.Command;
-import oogasalad.model.gameparser.GameLoader;
 import oogasalad.model.gameparser.GameLoaderModel;
 
 
@@ -88,7 +87,7 @@ public class GameEngine implements ExternalGameEngine {
       collidable1.onCollision(collidable2, dt);
       collidable2.onCollision(collidable1, dt);
       Command cmd = collisionHandlers.get(collision);
-      cmd.execute(this, List.of((double) collision.getFirst(), (double) collision.getSecond()));
+      cmd.execute(this);
     }
   }
 

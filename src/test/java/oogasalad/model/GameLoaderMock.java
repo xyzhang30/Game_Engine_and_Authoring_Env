@@ -56,7 +56,7 @@ public class GameLoaderMock extends GameLoaderModel {
 
   protected void createRulesRecord() {
     Map <Pair, Command> myMap = new HashMap<>();
-    myMap.put(new Pair(1,4), new SingleCommand(new AdvanceTurnCommand(engine, new ArrayList<>())));
+    myMap.put(new Pair(1,4), new AdvanceTurnCommand(engine));
     this.rules = new RulesRecord(1, Integer.MAX_VALUE, new HashMap<>());
   }
 
