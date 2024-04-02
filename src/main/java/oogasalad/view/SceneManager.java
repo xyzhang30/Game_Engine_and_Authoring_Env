@@ -3,6 +3,7 @@ package oogasalad.view;
 import javafx.scene.shape.Shape;
 import oogasalad.model.api.CollidableRecord;
 import oogasalad.model.api.GameRecord;
+import oogasalad.view.Screen.ScreenType;
 
 public class SceneManager {
   private CompositeElement compositeElement;
@@ -24,13 +25,12 @@ public class SceneManager {
 
   private void updateShapeProperties(Shape shape, CollidableRecord collidable) {
     // Assuming shape is a Circle for simplicity, but you would adjust based on your actual shape types
-    if (shape instanceof javafx.scene.shape.Circle) {
-      javafx.scene.shape.Circle circle = (javafx.scene.shape.Circle) shape;
-      circle.setCenterX(collidable.x());
-      circle.setCenterY(collidable.y());
-      // Update other properties based on CollidableRecord as needed
-      circle.setVisible(collidable.visible());
+    shape.setLayoutX(collidable.x());
+    shape.setLayoutY(collidable.y());
+    shape.setVisible(collidable.visible());
     }
-    // Implement similar updates for other shapes/types as needed
+
+  public ScreenType getScreenType() {
+    return null;
   }
 }
