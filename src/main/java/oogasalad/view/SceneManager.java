@@ -1,77 +1,78 @@
 package oogasalad.view;
 
+import java.util.List;
+import oogasalad.model.api.ExternalGameEngine;
+import oogasalad.model.api.GameRecord;
+import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.PlayerRecord;
 import java.util.HashMap;
 import java.util.Map;
-import oogasalad.model.api.CollidableRecord;
-import oogasalad.model.api.GameRecord;
-import oogasalad.model.api.PlayerRecord;
 
+
+// Represents the entire game scene, managing both static and dynamic elements
 public class SceneManager {
-  private Map<Integer, VisualElement> elementsMap; // Maps object IDs to their visual representations
-  private GameController gameController; // Controller to interact with the game logic
-  private AnimationManager animationManager; // Manages animations within the scene
+  private ExternalGameEngine gameEngine; // Reference to the game engine for fetching game state
+  private Map<Integer, VisualElement> elements; // Maps collidable IDs to their visual representations
+  private AnimationManager animationManager;
 
-  /**
-   * Constructor for SceneManager.
-   *
-   * @param gameController The controller for interacting with the game's logic and state.
-   */
-  public SceneManager(GameController gameController) {
-    this.gameController = gameController;
-    this.elementsMap = new HashMap<>();
+  public SceneManager(ExternalGameEngine gameEngine) {
+    this.gameEngine = gameEngine;
+    this.elements = new HashMap<>();
     this.animationManager = new AnimationManager();
   }
 
-  /**
-   * Updates the scene based on the latest game state fetched from the controller.
-   *
-   * @param dt The time delta since the last update, for time-based calculations.
-   */
-  public void updateScene(double dt) {
-    GameRecord gameRecord = gameController.getLatestGameState(dt);
+  // Call this method periodically to update and render the scene based on the game state
+  public void updateAndRender(double dt) {
+    // Fetch the latest game state
+    GameRecord gameRecord = gameEngine.update(dt);
 
-    // Update collidable objects
+    // Handle null gameRecord (e.g., when game is paused or static)
+    if (gameRecord == null) {
+      return;
+    }
+
+    // Update or create visual elements for each collidable
     for (CollidableRecord collidable : gameRecord.collidables()) {
-      VisualElement element = elementsMap.get(collidable.id());
-      if (element != null) {
-        // Update position and visibility based on the collidable's current state
-        element.updatePosition(collidable.x(), collidable.y());
-        element.setVisible(collidable.visible());
-      } else {
-        // Optionally, create a new VisualElement if one does not exist for this ID
-        // This part is for dynamically adding elements to the scene, if applicable
+      VisualElement element = elements.get(collidable.id());
+      if (element == null) {
+        // If no visual element exists for this ID, create it
+        element = createVisualElementFor(collidable);
+        elements.put(collidable.id(), element);
       }
+      element.update(collidable);
     }
 
-    // Update player-specific elements, like scores
-    for (PlayerRecord player : gameRecord.players()) {
-      // Implementation details for updating player scores or other visual elements
-      // This might involve fetching a specific UI element for the score and updating its value
-      updatePlayerScore(player.playerId(), player.score());
+    // Remove any elements not in the current game state
+    elements.keySet().retainAll(
+        gameRecord.collidables().stream().map(CollidableRecord::id).toList()
+    );
+
+    // Update player-specific elements (e.g., scores)
+    updatePlayerElements(gameRecord.players());
+
+    // Render all visual elements
+    elements.values().forEach(VisualElement::render);
+
+    // Handle animations
+    animationManager.renderAnimations();
+
+    // Check for game over or other conditions
+    handleGameConditions(gameRecord.gameOver());
+  }
+
+  private VisualElement createVisualElementFor(CollidableRecord collidable) {
+    // Implement logic to create a visual element based on the collidable's properties
+    return new CompositeElement(collidable);
+  }
+
+  private void updatePlayerElements(List<PlayerRecord> players) {
+    // Implement logic to update player-specific UI elements, like scores or active states
+  }
+
+  private void handleGameConditions(boolean gameOver) {
+    if (gameOver) {
+      // Implement logic to handle game over condition, like showing a game over screen
     }
-
-    // Render the updated scene
-    render();
   }
 
-  /**
-   * Renders all elements and animations on the scene.
-   */
-  private void render() {
-    elementsMap.values().forEach(VisualElement::render); // Render each visual element
-    animationManager.renderAnimations(); // Render animations
-  }
-
-  /**
-   * Updates the player score display.
-   *
-   * @param playerId The ID of the player.
-   * @param score The new score of the player.
-   */
-  private void updatePlayerScore(int playerId, double score) {
-    // Logic to update player scores visually
-    // This could involve finding a specific UI element by player ID and setting its displayed score
-  }
-
-  // Additional methods for scene management, like handling user input, could be added here
 }
