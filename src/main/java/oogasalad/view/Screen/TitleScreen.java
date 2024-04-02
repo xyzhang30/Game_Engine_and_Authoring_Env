@@ -25,6 +25,7 @@ public class TitleScreen extends UIScreen {
     StackPane stackPane = new StackPane();
     createTitle(stackPane);
     createButtons(stackPane);
+    scene = new Scene(stackPane, sceneWidth, sceneHeight);
   }
 
   private void createTitle(StackPane stackPane){

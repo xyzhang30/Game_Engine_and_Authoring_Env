@@ -1,5 +1,6 @@
 package oogasalad.view.Screen;
 
+import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -8,10 +9,19 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 
-public class UIScreen extends Pane {
+public abstract class UIScreen {
   private final Screen screen = Screen.getPrimary();
   final double sceneWidth = getScreenWidth() - 100;
   final double sceneHeight = getScreenHeight() - 100;
+  Scene scene;
+
+  /**
+   * Getter method for scene
+   * @return scene specific to UIScreen subclass
+   */
+  public Scene getScene(){
+    return scene;
+  }
 
   /**
    * Styles text to match theme font
