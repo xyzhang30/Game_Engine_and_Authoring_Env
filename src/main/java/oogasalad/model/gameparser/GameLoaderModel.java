@@ -3,40 +3,59 @@ package oogasalad.model.gameparser;
 import java.util.List;
 import java.util.Map;
 import oogasalad.Pair;
-import oogasalad.model.gameengine.LogicManager;
 import oogasalad.model.gameengine.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
+import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.Command;
 
 public class GameLoaderModel extends GameLoader {
 
+  private PlayerContainer playerContainer;
+  private CollidableContainer collidableContainer;
+  private RulesRecord rulesRecord;
+
   public GameLoaderModel(int id) {
     super(id);
+    createPlayerContainer();
+    createCollidableContainer();
+    createRulesRecord();
   }
 
   // alisha
+  private void createPlayerContainer(){
+
+  }
+
   public PlayerContainer getPlayerContainer(){
-
+    return playerContainer;
   }
 
-  public LogicManager getLogicManager(){
-    return new LogicManager();
-  }
+//  public LogicManager getLogicManager(){
+//    return new LogicManager();
+//  }
 
   // judy
+  private void createCollidableContainer(){}
+
+
   public CollidableContainer getCollidableContainer(){
+    return collidableContainer;
   }
 
   // alisha
+  private void createRulesRecord(){
+
+  }
+
   public RulesRecord getRulesRecord() {
-
+    return rulesRecord;
   }
 
-  // judy
-  public Map<Pair, Command> getCollisionHandlers() {
-
-  }
+//  // judy
+//  public Map<Pair, Command> getCollisionHandlers() {
+//
+//  }
 
 
 //  // getting firstName and lastName
