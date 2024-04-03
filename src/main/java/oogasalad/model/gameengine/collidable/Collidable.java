@@ -23,16 +23,19 @@ public abstract class Collidable {
     myY = y;
     myVelocityX = 0.0;
     myVelocityY = 0.0;
-    oldVelocityX = myVelocityX;
-    oldVelocityY = myVelocityY;
     myNextX = x;
     myNextY = y;
     myVisible = visible;
   }
   public void onCollision(Collidable other, double dt) {
     double[] result = other.calculateNewSpeed(this, dt);
-    myVelocityX = result[0];
-    myVelocityY = result[1];
+    myNextVelocityX = result[0];
+    myNextVelocityY = result[1];
+  }
+
+  public void updatePostCollisionVelocity() {
+    myVelocityY = myNextVelocityY;
+    myVelocityX = myNextVelocityX;
   }
 
   public abstract double[] calculateNewSpeed(Collidable other, double dt);

@@ -168,7 +168,25 @@ public class GameEngineTest {
     assertEquals(58,gameEngine.getCollidableContainer().getCollidable(6).getCollidableRecord().x());
     assertEquals(   8,
         gameEngine.getCollidableContainer().getCollidable(6).getCollidableRecord().velocityX());
-
-
   }
+
+  @Test
+  public void testStop() {
+    // Ensure the game starts without errors
+    gameEngine.start();
+    HashMap<Integer, Integer> map = new HashMap<>(Map.of(0, 5, 1, 3, 2, 1, 3, 0, 4, 0));
+    gameEngine.applyInitialVelocity(7, 0, 5);
+    for (int i = 0; i < 5; i++){
+      gameEngine.handleCollisions(List.of(new Pair(5, 2)), 1);
+
+      System.out.println( gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().velocityX());
+
+      assertEquals((double) map.get(i),
+          gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().velocityX());
+    }
+
+    }
+
+
+
 }

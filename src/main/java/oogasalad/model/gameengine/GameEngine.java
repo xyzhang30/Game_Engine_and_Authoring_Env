@@ -74,8 +74,10 @@ public class GameEngine implements ExternalGameEngine {
     if(collidables.checkStatic()) {
       staticState = true;
     }
-    staticState = false;
-    collidables.update(dt);
+    else {
+      staticState = false;
+      collidables.update(dt);
+    }
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
         round, turn, gameOver, staticState);
   }
@@ -87,6 +89,8 @@ public class GameEngine implements ExternalGameEngine {
       Collidable collidable2 = collidables.getCollidable(collision.getSecond());
       collidable1.onCollision(collidable2, dt);
       collidable2.onCollision(collidable1, dt);
+      collidable1.updatePostCollisionVelocity();
+      collidable2.updatePostCollisionVelocity();
       if(collisionHandlers.containsKey(collision)){
         Command cmd = collisionHandlers.get(collision);
         cmd.execute(this);
