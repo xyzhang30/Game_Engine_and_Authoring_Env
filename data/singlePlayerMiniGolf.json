@@ -146,6 +146,7 @@
           }
         ]
       }
-    ]
+    ],
+    "turn_policy": "standard"
   }
 }

@@ -8,5 +8,5 @@ import java.util.List;
  *
  * @author Judy He
  */
-public record Rules(List<CollisionRule> collisions, @JsonProperty("static_checks") List<StaticCheckRule> staticChecks) {}
+public record Rules(List<CollisionRule> collisions, @JsonProperty("static_checks") List<StaticCheckRule> staticChecks, @JsonProperty("turn_policy") String turnPolicy) {}
 

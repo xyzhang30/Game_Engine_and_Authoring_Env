@@ -10,6 +10,7 @@ import oogasalad.model.api.exception.invalidParameterNumberException;
 import oogasalad.model.gameengine.Player;
 import oogasalad.model.gameengine.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
+import oogasalad.model.gameengine.TurnPolicy;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.collidable.Moveable;
@@ -17,6 +18,7 @@ import oogasalad.model.gameengine.collidable.Surface;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameparser.data.CollidableObject;
 import oogasalad.model.gameparser.data.CollisionRule;
+import oogasalad.model.gameparser.data.GameData;
 import oogasalad.model.gameparser.data.ParserPlayer;
 
 /**
@@ -29,6 +31,7 @@ public class GameLoaderModel extends GameLoader {
   private PlayerContainer playerContainer;
   private CollidableContainer collidableContainer;
   private RulesRecord rulesRecord;
+  private TurnPolicy turnPolicy;
 
   /**
    * Constructs a GameLoaderModel object with the specified ID.
@@ -38,6 +41,7 @@ public class GameLoaderModel extends GameLoader {
     super(id);
     this.createCollidableContainer();
     this.createPlayerContainer();
+    this.createTurnPolicy();
     this.createRulesRecord();
   }
 
@@ -132,9 +136,19 @@ public class GameLoaderModel extends GameLoader {
     }
   }
 
-//  public TurnPolicy getTurnPolicy(){
-//
-//  }
+  public TurnPolicy getTurnPolicy(){
+    return turnPolicy;
+  }
+
+  private void createTurnPolicy(){
+    try {
+      Class<?> cc = Class.forName(gameData.rules().turnPolicy());
+      turnPolicy = (TurnPolicy) cc.getDeclaredConstructor(PlayerContainer.class).newInstance(this.playerContainer);
+    } catch (NoSuchMethodException | IllegalAccessException | InstantiationException |
+             ClassNotFoundException | InvocationTargetException e) {
+      throw new InvalidCommandException(e.getMessage());
+    }
+  }
 
 
   /**
