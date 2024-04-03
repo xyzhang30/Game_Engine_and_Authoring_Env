@@ -1,5 +1,6 @@
 package oogasalad.view.VisualElements;
 
+import javafx.scene.Node;
 import oogasalad.model.api.CollidableRecord;
 
 /**
@@ -13,7 +14,10 @@ interface VisualElement {
    * @param record  Record for this Element's corresponding model object.
    */
   void update(CollidableRecord record);
-//  void render(); // Renders the visual element
-//  void updatePosition(double x, double y); // Updates the element's position
-//  void setVisible(boolean visible); // Sets the element's visibility
+
+  /**
+   * Returns the Node represented by this VisualElement.
+   * @return Node  A javafx Node.
+   */
+  Node getNode();
 }
