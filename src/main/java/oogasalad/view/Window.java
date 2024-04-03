@@ -18,15 +18,4 @@ public class Window {
     Controller controller = new Controller(stage); // Dirty fix. Change once scene swapped by root.
     stage.show();
   }
-
-  /**
-   * Method for changing scene shown on stage
-   *
-   * @param scene new scene to be shown
-   */
-  public void changeScene(Scene scene) {
-    stage.setScene(scene);
-    stage.show();
-  }
-
 }
