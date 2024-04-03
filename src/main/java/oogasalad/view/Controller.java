@@ -20,13 +20,14 @@ public class Controller {
   private final CollisionManager collisionManager;
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
-  private final Window window;
+  private final Stage stage;
 
-  public Controller(Stage stage, int id) {
+  public Controller(Stage stage) {
     sceneManager = new SceneManager();
     animationManager = new AnimationManager();
     Scene title = sceneManager.makeTitleScreen(this);
-    window = new Window(stage, title, id);
+    this.stage = stage;
+    stage.setScene(title);
     collisionManager = new CollisionManager();
 
   }
@@ -36,7 +37,7 @@ public class Controller {
    */
   public void openMenuScreen() {
     Scene menu = sceneManager.makeMenuScreen(getGameTitles(), this);
-    window.changeScene(menu);
+    stage.setScene(menu);
   }
 
   /**
@@ -51,7 +52,7 @@ public class Controller {
     //create compositeElement from css files and pass to sceneManager
     Scene gameScene = sceneManager.makeGameScreen();
     //pass compositeElement to collision manager
-    window.changeScene(gameScene);
+    stage.setScene(gameScene);
     animationManager.runAnimation(this);
   }
 

@@ -10,14 +10,12 @@ import javafx.stage.Stage;
  */
 public class Window {
   private final Stage stage;
-  public Window(int id, Scene scene) {
-    this(new Stage(), scene, id);
+  public Window(int id) {
+    this(new Stage(), id);
   }
-  public Window(Stage stage, Scene scene, int id) {
+  public Window(Stage stage, int id) {
     this.stage = stage;
-//    SceneManager sceneManager = new SceneManager();
-//    stage.setScene(sceneManager.makeTitleScreen(new Controller()));
-    stage.setScene(scene);
+    Controller controller = new Controller(stage); // Dirty fix. Change once scene swapped by root.
     stage.show();
   }
 
