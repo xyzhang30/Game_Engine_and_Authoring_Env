@@ -1,18 +1,23 @@
 package oogasalad.view.Screen;
 
+import java.util.List;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
-import oogasalad.view.VisualElements.CompositeElement;
 
 public class GameScreen extends UIScreen {
 
-  public GameScreen(CompositeElement compositeElement) {
-    super();
+  public GameScreen() {
     root = new Group();
+    createScene();
+  }
+
+  private void createScene() {
     setupControlPane();
     setupPowerBar();
+    scene = new Scene(root, sceneWidth, sceneHeight);
   }
 
   private void setupControlPane() {
@@ -24,27 +29,28 @@ public class GameScreen extends UIScreen {
   }
 
   private void setupPowerBar() {
-    Rectangle outline = new Rectangle(sceneWidth - 250, sceneHeight - 400, 100, 700);
+    Rectangle outline = new Rectangle(sceneWidth - 250, 100, 100, 700);
     outline.setFill(Color.DARKGRAY);
     outline.setEffect(createDropShadow());
 
-    Rectangle powerIndicator = new Rectangle(sceneWidth - 225, sceneHeight - 1075, 100, 10);
+    Rectangle powerIndicator = new Rectangle(sceneWidth - 225, 125, 100, 10);
     powerIndicator.setFill(Color.RED);
+    powerIndicator.toFront();
 
     initiatePowerListening(powerIndicator);
 
     root.getChildren().addAll(outline, powerIndicator);
   }
 
-  private void initiatePowerListening(Rectangle powerIndicator){
+  private void initiatePowerListening(Rectangle powerIndicator) {
     powerIndicator.setOnKeyPressed(event -> {
       if (event.getCode() == KeyCode.UP) {
-        if(powerIndicator.getHeight() < 650){
+        if (powerIndicator.getHeight() < 650) {
           powerIndicator.setLayoutY(powerIndicator.getLayoutY() - 10);
           powerIndicator.setHeight(powerIndicator.getHeight() + 10);
         }
       } else if (event.getCode() == KeyCode.DOWN) {
-        if(powerIndicator.getHeight() > 10){
+        if (powerIndicator.getHeight() > 10) {
           powerIndicator.setLayoutY(powerIndicator.getLayoutY() + 10);
           powerIndicator.setHeight(powerIndicator.getHeight() - 10);
         }

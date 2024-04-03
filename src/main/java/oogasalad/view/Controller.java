@@ -7,7 +7,6 @@ import javafx.stage.Stage;
 import oogasalad.Pair;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.gameengine.GameEngine;
-import oogasalad.model.gameparser.GameLoaderView;
 
 /**
  * Controller class handles communications between model and view.  This class holds manager class
@@ -47,8 +46,8 @@ public class Controller {
    * @param selectedGame the game selected to play
    */
   public void startGamePlay(String selectedGame) {
-    new FrontendParser(selectedGame);
-    gameEngine = new GameEngine(selectedGame);
+    //new FrontendParser(selectedGame);
+    //gameEngine = new GameEngine(selectedGame);
     //create compositeElement from css files and pass to sceneManager
     Scene gameScene = sceneManager.makeGameScreen();
     //pass compositeElement to collision manager
@@ -62,16 +61,17 @@ public class Controller {
    * @return boolean indicating if round is over
    */
   public boolean runGame(double timeStep) {
-    GameRecord gameRecord = gameEngine.update(timeStep);
-    sceneManager.update(gameRecord);
-    List<Pair> collisionList = collisionManager.getIntersections();
-    gameEngine.handleCollisions(collisionList, timeStep);
-
-    if (sceneManager.notMoving(gameRecord)) {
-      //listen for hit
-      //true if the ball is not moving
-    }
-    //return if game is over
+//    GameRecord gameRecord = gameEngine.update(timeStep);
+//    sceneManager.update(gameRecord);
+//    List<Pair> collisionList = collisionManager.getIntersections();
+//    gameEngine.handleCollisions(collisionList, timeStep);
+//
+//    if (sceneManager.notMoving(gameRecord)) {
+//      //listen for hit
+//      //true if the ball is not moving
+//    }
+//    //return if game is over
+    return true;
   }
 
 
