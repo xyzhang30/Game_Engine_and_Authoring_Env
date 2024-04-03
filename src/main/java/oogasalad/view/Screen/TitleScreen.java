@@ -1,23 +1,19 @@
 package oogasalad.view.Screen;
 
 import javafx.scene.Scene;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Screen;
+import oogasalad.view.SceneManager;
 
 /**
  * Introductory screen when player first starts game, offers option to play or author
  * @author Jordan Haytaian
  */
 public class TitleScreen extends UIScreen {
-  private Scene scene;
 
-  public TitleScreen(){
+  public TitleScreen(SceneManager sceneManager){
+    this.sceneManager = sceneManager;
     createScene();
   }
 

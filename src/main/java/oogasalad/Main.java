@@ -13,9 +13,6 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-    TitleScreen titleScreen = new TitleScreen();
-    primaryStage.setScene(titleScreen.getScene());
-    primaryStage.show();
   }
 
   /**

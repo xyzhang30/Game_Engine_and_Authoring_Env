@@ -29,7 +29,6 @@ public class Controller {
    * Runs the game by sending and receiving info from scene manager
    */
   public void runGame() {
-    if()
     while (sceneManager.getScreenType() == ScreenType.GAME_SCREEN) {
       GameRecord gameRecord = gameEngine.update();
       sceneManager.update(record);

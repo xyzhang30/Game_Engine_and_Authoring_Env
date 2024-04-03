@@ -8,11 +8,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
+import oogasalad.view.SceneManager;
 
 public abstract class UIScreen {
   private final Screen screen = Screen.getPrimary();
   final double sceneWidth = getScreenWidth() - 100;
   final double sceneHeight = getScreenHeight() - 100;
+  SceneManager sceneManager;
   Scene scene;
 
   /**
