@@ -36,14 +36,14 @@ public class SceneManager {
 
   public void makeTitleScreen(){
     Platform.runLater(() -> {
-      TitleScreen titleScreen = new TitleScreen();
+      TitleScreen titleScreen = new TitleScreen(this);
       mainScene.setRoot(titleScreen);
       currentScreenType = ScreenType.TITLE_SCREEN;
     });
   }
   public void makeMenuScreen(List<String> titles){
     Platform.runLater(() -> {
-      MenuScreen menuScreen = new MenuScreen(titles);
+      MenuScreen menuScreen = new MenuScreen(titles, this);
       mainScene.setRoot(menuScreen);
       currentScreenType = ScreenType.MENU_SCREEN;
     });
@@ -56,11 +56,18 @@ public class SceneManager {
     });
   }
 
-  public void makeTransitionScreen(){
-    Platform.runLater(() -> {
-      TransitionScreen transitionScreen = new TransitionScreen();
-      mainScene.setRoot(transitionScreen);
-      currentScreenType = ScreenType.TRANSITION_SCREEN;
-    });
+//  public void makeTransitionScreen(){
+//    Platform.runLater(() -> {
+//      TransitionScreen transitionScreen = new TransitionScreen();
+//      mainScene.setRoot(transitionScreen);
+//      currentScreenType = ScreenType.TRANSITION_SCREEN;
+//    });
+//  }
+
+  public void setScreenTypeMenu(){
+    currentScreenType = ScreenType.MENU_SCREEN;
   }
+  public void setScreenTypeGame(){currentScreenType = ScreenType.GAME_SCREEN;}
+  public void setScreenTypeTransition(){currentScreenType = ScreenType.TRANSITION_SCREEN;}
+
 }
