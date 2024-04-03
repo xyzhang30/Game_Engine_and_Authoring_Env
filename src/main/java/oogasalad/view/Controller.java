@@ -82,7 +82,7 @@ public class Controller {
   public List<String> getGameTitles() {
     //TODO: Add parsing functionality
     List<String> gameTitles = new ArrayList<>();
-    gameTitles.add("Mini Golf");
+    gameTitles.add("sampleMiniGolf");
     return gameTitles;
   }
 
