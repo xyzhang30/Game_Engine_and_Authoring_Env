@@ -30,8 +30,8 @@ public class GameEngine implements ExternalGameEngine {
 
   private GameLoaderModel loader;
 
-  public GameEngine(int id) {
-    loader = new GameLoaderModel(id);
+  public GameEngine(String gameTitle) {
+    loader = new GameLoaderModel(gameTitle);
     playerContainer = loader.getPlayerContainer();
     rules = loader.getRulesRecord();
     collidables = loader.getCollidableContainer();

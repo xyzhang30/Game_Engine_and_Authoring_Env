@@ -35,10 +35,10 @@ public class GameLoaderModel extends GameLoader {
 
   /**
    * Constructs a GameLoaderModel object with the specified ID.
-   * @param id The ID of the game data to load.
+   * @param gameTitle The title of the game data to load.
    */
-  public GameLoaderModel(int id) {
-    super(id);
+  public GameLoaderModel(String gameTitle) {
+    super(gameTitle);
     this.createCollidableContainer();
     this.createPlayerContainer();
     this.createTurnPolicy();

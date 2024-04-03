@@ -88,7 +88,7 @@ public class GameEngineTest {
 
   @BeforeEach
   public void setUp() {
-    gameEngine = new GameEngine(1);
+    gameEngine = new GameEngine("1");
   }
 
 

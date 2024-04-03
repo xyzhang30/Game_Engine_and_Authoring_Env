@@ -11,8 +11,8 @@ import org.json.simple.JSONArray;
  */
 public class GameLoaderView extends GameLoader {
 
-  public GameLoaderView(int id) {
-    super(id);
+  public GameLoaderView(String gameName) {
+    super(gameName);
     generateStyleSheet();
   }
 
