@@ -4,7 +4,11 @@ import java.io.PrintWriter;
 import java.io.FileWriter;
 import org.json.simple.JSONArray;
 
-
+/**
+ * Concrete implementation of GameLoader for passing game data necessary for the View.
+ *
+ * @author Judy He, Alisha Zhang
+ */
 public class GameLoaderView extends GameLoader {
 
   public GameLoaderView(int id) {

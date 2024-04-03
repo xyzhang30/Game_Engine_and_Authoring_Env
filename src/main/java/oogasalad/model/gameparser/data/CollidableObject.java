@@ -1,9 +1,14 @@
-package oogasalad.model.gameparser;
+package oogasalad.model.gameparser.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
-record CollidableObject(@JsonProperty("collidable_id") int collidableId,
+/**
+ * Represents the JSON data for a collidable object in the game.
+ *
+ * @author Judy He
+ */
+public record CollidableObject(@JsonProperty("collidable_id") int collidableId,
                         List<String> properties,
                         double mass,
                         Position position,

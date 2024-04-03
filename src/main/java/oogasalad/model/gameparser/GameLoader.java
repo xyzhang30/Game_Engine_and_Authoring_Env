@@ -5,15 +5,31 @@ import java.io.File;
 import java.io.IOException;
 
 import oogasalad.model.api.exception.InvalidFileException;
+import oogasalad.model.gameparser.data.GameData;
 
 
+/**
+ * Abstract class for loading game data from JSON files.
+ *
+ * @author Judy He, Alisha Zhang
+ */
 public abstract class GameLoader {
 
   protected GameData gameData;
 
+  /**
+   * Constructs a GameLoader object with the specified ID.
+   *
+   * @param id The ID of the game data to load.
+   */
   public GameLoader(int id){
     parseJSON("data/singlePlayerMiniGolf.json");
   }
+
+  /**
+   * Constructs a GameLoader object with the specified file path.
+   * @param filePath The file path of the JSON file to parse.
+   */
   public GameLoader(String filePath){
     parseJSON(filePath);
   }
