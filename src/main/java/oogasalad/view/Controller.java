@@ -49,9 +49,9 @@ public class Controller {
   public void startGamePlay(String selectedGame) {
     new GameLoaderView(selectedGame);
     gameEngine = new GameEngine(selectedGame);
-    //create elements from css files and pass to sceneManager
+    //create compositeElement from css files and pass to sceneManager
     Scene gameScene = sceneManager.makeGameScreen();
-    //pass elements to collision manager
+    //pass compositeElement to collision manager
     window.changeScene(gameScene);
     animationManager.runAnimation(this);
   }
