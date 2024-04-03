@@ -3,7 +3,6 @@ package oogasalad;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import oogasalad.view.Controller;
 import oogasalad.view.Window;
 
 /**
