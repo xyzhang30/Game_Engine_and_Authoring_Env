@@ -75,4 +75,14 @@ public class CollisionManager {
 //  }
 
 
+//  public void triggerCollisions(){
+//    Map<Integer,Map<Integer, Command>> collisionMap = null;
+//    for (Integer i : collisionMap.keySet()){
+//      for (Integer j : collisionMap.get(i).keySet()){
+//        if (compositeElement.getNode(i).intersects(compositeElement.getNode(j).getBoundsInLocal())){
+//          collisionMap.get(i).get(j).execute(engine);
+//        }
+//      }
+//    }
+//  }
 }
