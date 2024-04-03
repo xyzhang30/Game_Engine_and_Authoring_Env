@@ -132,7 +132,7 @@ public class GameLoaderModel extends GameLoader {
         }
       }
 
-      Class<?> cc;
+      Class<?> cc = null;
       List<Integer> params = new ArrayList<>();
 
       for (String condition : gameData.rules().winCondition().keySet()){
@@ -140,9 +140,10 @@ public class GameLoaderModel extends GameLoader {
         params = gameData.rules().winCondition().get(condition);
       }
 
+      assert cc != null;
       rulesRecord = new RulesRecord(maxRounds,maxTurns,commandMap, (Command) cc.getDeclaredConstructor(List.class).newInstance(params));
 
-    } catch (NoSuchMethodException | IllegalAccessException | InstantiationException |
+    } catch (AssertionError | NoSuchMethodException | IllegalAccessException | InstantiationException |
              ClassNotFoundException | InvocationTargetException e) {
       throw new InvalidCommandException(e.getMessage());
     }

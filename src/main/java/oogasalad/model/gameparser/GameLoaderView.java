@@ -2,6 +2,7 @@ package oogasalad.model.gameparser;
 
 import java.io.PrintWriter;
 import java.io.FileWriter;
+import oogasalad.model.gameparser.data.CollidableObject;
 import org.json.simple.JSONArray;
 
 /**
@@ -13,11 +14,12 @@ public class GameLoaderView extends GameLoader {
 
   public GameLoaderView(String gameName) {
     super(gameName);
-    generateStyleSheet();
+    generateStyleSheet(gameName);
+    generateCollidableShapeConfig(gameName);
   }
 
   //alisha
-  private void generateStyleSheet() {
+  private void generateStyleSheet(String gameName) {
     //writes the color + dimension + filepath (if applicable) into css
     try (PrintWriter writer = new PrintWriter(new FileWriter(defaultFolderPath + gameName))) {
       for (int i = 0; i < this.collidables.length(); i++) {
@@ -60,8 +62,12 @@ public class GameLoaderView extends GameLoader {
 //  }
 
   //alisha
-  private void generateCollidableShapeConfig() {
+  private void generateCollidableShapeConfig(String gameName) {
+    for (CollidableObject o : gameData.collidableObjects()){
+      int id = o.collidableId();
+      String shape = o.shape();
 
+    }
   }
 }
 
