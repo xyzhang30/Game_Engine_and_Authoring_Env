@@ -9,15 +9,12 @@ import javafx.stage.Stage;
  * @author Jordan Haytaian
  */
 public class Window {
-  final static String TITLE = "FYSICS";
   private final Stage stage;
 
   public Window(int id) {
     stage = new Stage();
-//    Controller controller = new Controller();
-//    stage.setScene(controller.getScene());
-    stage.setTitle(TITLE);
-    stage.setResizable(false);
+//    SceneManager sceneManager = new sceneManager();
+//    stage.setScene(sceneManager.getScene());
     stage.show();
   }
   public Window(Stage stage, Scene scene, int id) {
