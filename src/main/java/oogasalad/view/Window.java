@@ -1,22 +1,31 @@
 package oogasalad.view;
 
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+/**
+ * Class to represent the stage and scene being shown to the user
+ *
+ * @author Jordan Haytaian
+ */
 public class Window {
-  private final Scene scene;
-  private final Controller controller;
+
   private final Stage stage;
-  public Window(Stage stage, int id){
+
+  public Window(Stage stage, Scene scene, int id) {
     this.stage = stage;
-    StackPane root = new StackPane(); //
-    scene = new Scene(root);
     stage.setScene(scene);
-    controller = new Controller(id, scene);
     stage.show();
-    controller.startTitleListening();
   }
 
+  /**
+   * Method for changing scene shown on stage
+   *
+   * @param scene new scene to be shown
+   */
+  public void changeScene(Scene scene) {
+    stage.setScene(scene);
+    stage.show();
+  }
 
 }

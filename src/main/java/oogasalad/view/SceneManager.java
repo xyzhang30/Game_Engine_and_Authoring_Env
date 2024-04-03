@@ -8,15 +8,12 @@ import oogasalad.model.api.CollidableRecord;
 import oogasalad.view.Screen.*;
 
 public class SceneManager {
-  private Scene mainScene;
   private CompositeElement compositeElement;
   private ScreenType currentScreenType;
 
 
-  public SceneManager(Scene mainScene) {
-    this.mainScene = mainScene;
+  public SceneManager() {
     this.compositeElement = new CompositeElement();
-    makeTitleScreen();
 
   }
 
@@ -33,34 +30,28 @@ public class SceneManager {
   public ScreenType getScreenType() {
     return currentScreenType;
   }
-
-  public void makeTitleScreen(){
-    Platform.runLater(() -> {
-      TitleScreen titleScreen = new TitleScreen();
-      mainScene.setRoot(titleScreen);
-      currentScreenType = ScreenType.TITLE_SCREEN;
-    });
+  public Scene makeTitleScreen(Controller controller){
+      TitleScreen titleScreen = new TitleScreen(controller);
+      return titleScreen.getScene();
   }
-  public void makeMenuScreen(List<String> titles){
-    Platform.runLater(() -> {
-      MenuScreen menuScreen = new MenuScreen(titles);
-      mainScene.setRoot(menuScreen);
-      currentScreenType = ScreenType.MENU_SCREEN;
-    });
+
+  public Scene makeMenuScreen(List<String> titles, Controller controller){
+    MenuScreen menuScreen = new MenuScreen(titles, controller);
+    return menuScreen.getScene();
   }
   public void makeGameScreen(){
     Platform.runLater(() -> {
       GameScreen gameScreen = new GameScreen(compositeElement);
-      mainScene.setRoot(gameScreen);
+      //mainScene.setRoot(gameScreen);
       currentScreenType = ScreenType.GAME_SCREEN;
     });
   }
 
-  public void makeTransitionScreen(){
-    Platform.runLater(() -> {
-      TransitionScreen transitionScreen = new TransitionScreen();
-      mainScene.setRoot(transitionScreen);
-      currentScreenType = ScreenType.TRANSITION_SCREEN;
-    });
-  }
+//  public void makeTransitionScreen(){
+//    Platform.runLater(() -> {
+//      TransitionScreen transitionScreen = new TransitionScreen();
+//      mainScene.setRoot(transitionScreen);
+//      currentScreenType = ScreenType.TRANSITION_SCREEN;
+//    });
+//  }
 }
