@@ -2,9 +2,9 @@
   "gameName": "sampleMiniGolf",
   "collidable_objects": [
     {
-      "collidable_id": "01",
-      "properties": ["visible"],
-      "mass": 0,
+      "collidable_id": 1,
+      "properties": ["visible", "surface"],
+      "mass": 1e1000000,
       "position": {
         "x_position": 0,
         "y_position": 0
@@ -14,11 +14,12 @@
         "x_dimension": 500,
         "y_dimension": 500
       },
-      "color": [100,200,100]
+      "color": [100,200,100],
+      "friction": 0.5
     },
     {
-      "collidable_id": "02",
-      "properties": ["visible","tangible","movable","primary"],
+      "collidable_id": 2,
+      "properties": ["visible","movable"],
       "mass": 1,
       "position": {
         "x_position": 250,
@@ -29,26 +30,12 @@
         "x_dimension": 2,
         "y_dimension": 2
       },
-      "color": [255,255,255]
+      "color": [255,255,255],
+      "friction": 0
     },
     {
-      "collidable_id": "03",
-      "properties": ["visible","tangible","movable","primary"],
-      "mass": 1,
-      "position": {
-        "x_position": 250,
-        "y_position": 450
-      },
-      "shape": "circle",
-      "dimension": {
-        "x_dimension": 2,
-        "y_dimension": 2
-      },
-      "color": [255,255,255]
-    },
-    {
-      "collidable_id": "04",
-      "properties": ["visible"],
+      "collidable_id": 3,
+      "properties": ["visible", "surface"],
       "mass": 0,
       "position": {
         "x_position": 250,
@@ -59,11 +46,12 @@
         "x_dimension": 5,
         "y_dimension": 5
       },
-      "color": [0,0,0]
+      "color": [0,0,0],
+      "friction": 0
     },
     {
-      "collidable_id": "05",
-      "properties": ["visible","tangible"],
+      "collidable_id": 4,
+      "properties": ["visible","movable"],
       "mass": 200,
       "position": {
         "x_position": 0,
@@ -74,11 +62,12 @@
         "x_dimension": 500,
         "y_dimension": 10
       },
-      "color": [0,0,0]
+      "color": [0,0,0],
+      "friction": 0
     },
     {
-      "collidable_id": "06",
-      "properties": ["visible","tangible"],
+      "collidable_id": 5,
+      "properties": ["visible","movable"],
       "mass": 200,
       "position": {
         "x_position": 0,
@@ -89,11 +78,12 @@
         "x_dimension": 10,
         "y_dimension": 500
       },
-      "color": [0,0,0]
+      "color": [0,0,0],
+      "friction": 0
     },
     {
-      "collidable_id": "07",
-      "properties": ["visible","tangible"],
+      "collidable_id": 6,
+      "properties": ["visible","movable"],
       "mass": 200,
       "position": {
         "x_position": 490,
@@ -104,11 +94,12 @@
         "x_dimension": 10,
         "y_dimension": 500
       },
-      "color": [0,0,0]
+      "color": [0,0,0],
+      "friction": 0
     },
     {
-      "collidable_id": "08",
-      "properties": ["visible","tangible"],
+      "collidable_id": 7,
+      "properties": ["visible","movable"],
       "mass": 200,
       "position": {
         "x_position": 0,
@@ -119,13 +110,21 @@
         "x_dimension": 500,
         "y_dimension": 10
       },
-      "color": [0,0,0]
+      "color": [0,0,0],
+      "friction": 0
+    }
+  ],
+  "players": [
+    {
+      "player_id": 1,
+      "my_collidable": 2
     }
   ],
   "variables": [
     {
       "global": {
-        "turn": 1
+        "max_turns": 1,
+        "max_rounds": 1
       },
       "player": {
         "strokes": 0,
@@ -136,31 +135,18 @@
   "rules": {
     "collisions": [
       {
-        "first_id": "02",
-        "second_id": "04",
-        "rule": [
-        ]
-      },
-      {
-        "first_id": "3",
-        "second_id": "04",
+        "first_id": 2,
+        "second_id": 3,
         "command": [
           {
-            "XCommand": [4,5]
+            "AdjustPoints": [1,1]
+          },
+          {
+            "AdvanceTurn": []
           }
         ]
-        }
-      },
-    "static_checks": [
-      [["=","finished",0],[
-        ["add","strokes",1]
-      ]],
-      [["=","turn","3"],[
-        ["set","turn",1]
-      ]],
-      [["=","finished",1],[
-        ["end_game"]
-      ]]
-    ]
+      }
+    ],
+    "turn_policy": "standard"
   }
 }

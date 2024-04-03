@@ -22,6 +22,7 @@ public class GameEngine implements ExternalGameEngine {
   private RulesRecord rules;
   private CollidableContainer collidables;
   private Map<Pair, List<Command>> collisionHandlers;
+  private TurnPolicy turnPolicy;
   private int round;
   private int turn;
   private boolean gameOver;
@@ -29,11 +30,14 @@ public class GameEngine implements ExternalGameEngine {
 
   private GameLoaderModel loader;
 
-  public GameEngine(int id) {
+
+  public GameEngine(String gameTitle) {
+    loader = new GameLoaderModel(gameTitle);
     playerContainer = loader.getPlayerContainer();
     rules = loader.getRulesRecord();
     collidables = loader.getCollidableContainer();
     collisionHandlers = rules.collisionHandlers();
+    turnPolicy = loader.getTurnPolicy();
     round = 1;
     turn = 1; //first player ideally should have id 1
     gameOver = false;
@@ -131,9 +135,6 @@ public class GameEngine implements ExternalGameEngine {
 
   public void advanceTurn() {
 
-    turn = (turn + 1) % playerContainer.getPlayerRecords().size() +  playerContainer.getPlayerRecords().size();
-    IntStream.range(1, playerContainer.getPlayerRecords().size()+1)
-        .forEach(i -> playerContainer.getPlayer(i).setActive(i == turn));
   }
 
   public int getRound() {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameparser.GameLoaderView;
 
 /**
  * Controller class handles communications between model and view.  This class holds manager class
@@ -13,8 +15,8 @@ import javafx.stage.Stage;
  */
 public class Controller {
 
-  //private final GameEngine gameEngine;
-  //private final CollisionManager collisionManager;
+  private GameEngine gameEngine = null;
+  private final CollisionManager collisionManager;
   private final SceneManager sceneManager;
   private final Window window;
 
@@ -22,8 +24,7 @@ public class Controller {
     sceneManager = new SceneManager();
     Scene title = sceneManager.makeTitleScreen(this);
     window = new Window(stage, title, id);
-    //gameEngine = new GameEngine(id);
-    //collisionManager = new CollisionManager();
+    collisionManager = new CollisionManager();
 
   }
 
@@ -33,8 +34,11 @@ public class Controller {
   }
 
   public void startGamePlay(String selectedGame){
-    //call backend to get elements for selectedGame and pass to sceneManager
+    new GameLoaderView(selectedGame);
+    gameEngine = new GameEngine(selectedGame);
+    //create elements from css files and pass to sceneManager
     Scene gameScene = sceneManager.makeGameScreen();
+    //pass elements to collision manager
     window.changeScene(gameScene);
     //runGame();
   }
