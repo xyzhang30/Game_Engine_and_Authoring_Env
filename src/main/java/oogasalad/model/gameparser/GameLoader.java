@@ -1,5 +1,4 @@
 package oogasalad.model.gameparser;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 

@@ -8,14 +8,14 @@ import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.Command;
 
-public class GameLoaderModel extends GameLoader {
+public class GameLoaderModel {
 
   private PlayerContainer playerContainer;
   private CollidableContainer collidableContainer;
   private RulesRecord rulesRecord;
 
   public GameLoaderModel(int id) {
-    super(id);
+
     createPlayerContainer();
     createCollidableContainer();
     createRulesRecord();

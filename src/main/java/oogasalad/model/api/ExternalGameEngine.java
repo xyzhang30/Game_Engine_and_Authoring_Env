@@ -29,10 +29,9 @@ public interface ExternalGameEngine {
    * @return GameRecord object representing the current Collidables, Scores, etc
    */
 
-  GameRecord update(double dt);
 
 
-  void handleCollisions(List<Pair> collisions, double dt);
+  GameRecord handleCollisions(List<Pair> collisions, double dt);
 
   /**
    * Applies a velocity to the entity with the provided ID.

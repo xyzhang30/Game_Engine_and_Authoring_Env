@@ -6,7 +6,9 @@ import oogasalad.model.gameengine.GameEngine;
 
 public class ScoreThresholdCommand extends CheckEndConditionCommand {
 
-
+  public ScoreThresholdCommand(List<Double> arguments) {
+    super(arguments);
+  }
 
   @Override
   protected boolean evaluateCondition(GameEngine engine, List<Double> arguments) {

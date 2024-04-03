@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import org.json.simple.JSONArray;
 
 
-public class GameLoaderView extends GameLoader{
+public class GameLoaderView extends GameLoader {
 
   public GameLoaderView(int id) {
     super(id);
@@ -13,7 +13,7 @@ public class GameLoaderView extends GameLoader{
   }
 
   //alisha
-  private void generateStyleSheet(){
+  private void generateStyleSheet() {
     //writes the color + dimension + filepath (if applicable) into css
     try (PrintWriter writer = new PrintWriter(new FileWriter(defaultFolderPath + gameName))) {
       for (int i = 0; i < this.collidables.length(); i++) {
@@ -25,12 +25,13 @@ public class GameLoaderView extends GameLoader{
         int green = validateColorComponent(colorArray.getInt(1));
         int blue = validateColorComponent(colorArray.getInt(2));
 
-        String rgb = red + "," + green + "," + blue;      writer.println("#collidable_" + id + " {");
+        String rgb = red + "," + green + "," + blue;
+        writer.println("#collidable_" + id + " {");
         writer.println("    -fx-background-color: rgb(" + rgb + ");");
         //separate this into method / config for the syntax
         writer.println("}");
       }
-    } catch (IOException e){
+    } catch (IOException e) {
       System.out.println("Error generating CSS file: " + e.getMessage());
     }
   }
@@ -46,7 +47,6 @@ public class GameLoaderView extends GameLoader{
     }
   }
 
-
 //  private void writeColor() {
 //
 //  }
@@ -59,7 +59,7 @@ public class GameLoaderView extends GameLoader{
   private void generateCollidableShapeConfig() {
 
   }
-
+}
 
 
 
