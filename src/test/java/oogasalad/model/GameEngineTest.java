@@ -15,6 +15,7 @@ import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.collidable.Moveable;
 import oogasalad.model.gameengine.collidable.Surface;
 import oogasalad.model.gameengine.command.AdjustPointsCommand;
+import oogasalad.model.gameengine.command.AdvanceTurnCommand;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,9 +41,10 @@ public class GameEngineTest {
     protected void createPlayerContainer() {
       Map<Integer, Player> mockPlayers = new HashMap<>();
       mockPlayers.put(1, new Player(1, collidableContainer.getCollidable(1)));
+      mockPlayers.put(2, new Player(2, collidableContainer.getCollidable(4)));
+
       this.playerContainer = new PlayerContainer(mockPlayers);
     }
-
 
 
     protected void createCollidableContainer() {
@@ -50,8 +52,7 @@ public class GameEngineTest {
       mockCollidables.put(1, new Moveable(1, 50, 0, 0, true));
       mockCollidables.put(2, new Surface(2, Double.MAX_VALUE, 0, 0, true, .2));
       mockCollidables.put(3, new Moveable(3, Double.MAX_VALUE, 100, 100, true));
-      mockCollidables.put(4, new Moveable(4, Double.MAX_VALUE, 70, 70, true));
-
+      mockCollidables.put(4, new Moveable(4, Double.MAX_VALUE, 70, 0, true));
       mockCollidables.put(5, new Moveable(5, 50, 40, 40, true));
       mockCollidables.put(6, new Moveable(6, 50, 60, 40, true));
 
@@ -60,9 +61,10 @@ public class GameEngineTest {
 
 
     protected void createRulesRecord() {
-      Map <Pair, Command> myMap = new HashMap<>();
-      myMap.put(new Pair(1,4), new AdjustPointsCommand(List.of(1.0,10.0)));
-      this.rules = new oogasalad.model.gameengine.RulesRecord(1, Integer.MAX_VALUE, new HashMap<>());
+      Map<Pair, List<Command>> myMap = new HashMap<>();
+      myMap.put(new Pair(1, 4), List.of(new AdjustPointsCommand(List.of(1.0, 10.0)),
+          new AdvanceTurnCommand(List.of())));
+      this.rules = new oogasalad.model.gameengine.RulesRecord(1, Integer.MAX_VALUE, myMap);
     }
 
     @Override
@@ -80,6 +82,7 @@ public class GameEngineTest {
       return rules;
     }
   }
+
   private GameEngine gameEngine;
   private GameLoaderModel loaderMock;
 
@@ -122,10 +125,10 @@ public class GameEngineTest {
     gameEngine.start();
     gameEngine.applyInitialVelocity(10, 0, 1);
 
-    gameEngine.handleCollisions(List.of(new Pair(1,2)), 1);
+    gameEngine.handleCollisions(List.of(new Pair(1, 2)), 1);
     System.out.println(gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord());
-    assertEquals(8,gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().x());
-    assertEquals(   8,
+    assertEquals(8, gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().x());
+    assertEquals(8,
         gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().velocityX());
 
   }
@@ -136,11 +139,12 @@ public class GameEngineTest {
     gameEngine.start();
     gameEngine.applyInitialVelocity(10, 0, 1);
 
-    gameEngine.handleCollisions(List.of(new Pair(1,2)), 1);
-    gameEngine.handleCollisions(List.of(new Pair(1,2)), 1);
+    gameEngine.handleCollisions(List.of(new Pair(1, 2)), 1);
+    gameEngine.handleCollisions(List.of(new Pair(1, 2)), 1);
     System.out.println(gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord());
-    assertEquals(14,gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().x());
-    assertEquals(   6,
+    assertEquals(14,
+        gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().x());
+    assertEquals(6,
         gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().velocityX());
 
   }
@@ -151,22 +155,26 @@ public class GameEngineTest {
     // Ensure the game starts without errors
     gameEngine.start();
     gameEngine.applyInitialVelocity(12, 0, 5);
-    gameEngine.applyInitialVelocity(12, Math.PI , 6);
+    gameEngine.applyInitialVelocity(12, Math.PI, 6);
 
-    gameEngine.handleCollisions(List.of(new Pair(5,2), new Pair(6,2)), 1);
+    gameEngine.handleCollisions(List.of(new Pair(5, 2), new Pair(6, 2)), 1);
 
-    assertEquals(50,gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().x());
-    assertEquals(   10,
+    assertEquals(50,
+        gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().x());
+    assertEquals(10,
         gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().velocityX());
-    assertEquals(50,gameEngine.getCollidableContainer().getCollidable(6).getCollidableRecord().x());
-    assertEquals(   -10,
+    assertEquals(50,
+        gameEngine.getCollidableContainer().getCollidable(6).getCollidableRecord().x());
+    assertEquals(-10,
         gameEngine.getCollidableContainer().getCollidable(6).getCollidableRecord().velocityX());
-    gameEngine.handleCollisions(List.of(new Pair(5,6), new Pair(5,2), new Pair(6,2)), 1);
-    assertEquals(42,gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().x());
-    assertEquals(   -8,
+    gameEngine.handleCollisions(List.of(new Pair(5, 6), new Pair(5, 2), new Pair(6, 2)), 1);
+    assertEquals(42,
+        gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().x());
+    assertEquals(-8,
         gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().velocityX());
-    assertEquals(58,gameEngine.getCollidableContainer().getCollidable(6).getCollidableRecord().x());
-    assertEquals(   8,
+    assertEquals(58,
+        gameEngine.getCollidableContainer().getCollidable(6).getCollidableRecord().x());
+    assertEquals(8,
         gameEngine.getCollidableContainer().getCollidable(6).getCollidableRecord().velocityX());
   }
 
@@ -176,17 +184,29 @@ public class GameEngineTest {
     gameEngine.start();
     HashMap<Integer, Integer> map = new HashMap<>(Map.of(0, 5, 1, 3, 2, 1, 3, 0, 4, 0));
     gameEngine.applyInitialVelocity(7, 0, 5);
-    for (int i = 0; i < 5; i++){
+    System.out.println(gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord());
+    for (int i = 0; i < 5; i++) {
       gameEngine.handleCollisions(List.of(new Pair(5, 2)), 1);
 
-      System.out.println( gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().velocityX());
+      System.out.println(
+          gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord());
+      System.out.println(
+          gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().velocityX());
 
       assertEquals((double) map.get(i),
           gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().velocityX());
     }
 
-    }
+  }
 
-
-
+  @Test
+  public void testAdvanceTurnAndAdjustPoints() {
+    // Ensure the game starts without errors
+    gameEngine.start();
+    gameEngine.applyInitialVelocity(70, 0, 1);
+    gameEngine.handleCollisions(List.of(new Pair(1, 4)), 1);
+    assertEquals(2, gameEngine.getTurn());
+    System.out.println(gameEngine.getPlayerContainer().getPlayerRecords());
+    assertEquals(10, gameEngine.getPlayerContainer().getPlayer(1).getVariable("score"));
+  }
 }
