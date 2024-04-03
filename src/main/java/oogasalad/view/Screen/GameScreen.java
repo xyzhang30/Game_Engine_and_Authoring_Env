@@ -12,6 +12,7 @@ public class GameScreen extends UIScreen {
     super();
     root = new Group();
     setupControlPane();
+    setupPowerBar();
   }
 
   private void setupControlPane() {
@@ -22,7 +23,7 @@ public class GameScreen extends UIScreen {
     root.getChildren().add(controlPane);
   }
 
-  private void createPowerBar() {
+  private void setupPowerBar() {
     Rectangle outline = new Rectangle(sceneWidth - 250, sceneHeight - 400, 100, 700);
     outline.setFill(Color.DARKGRAY);
     outline.setEffect(createDropShadow());
@@ -31,6 +32,8 @@ public class GameScreen extends UIScreen {
     powerIndicator.setFill(Color.RED);
 
     initiatePowerListening(powerIndicator);
+
+    root.getChildren().addAll(outline, powerIndicator);
   }
 
   private void initiatePowerListening(Rectangle powerIndicator){
