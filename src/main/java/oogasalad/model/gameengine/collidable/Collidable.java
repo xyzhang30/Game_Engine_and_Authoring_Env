@@ -1,9 +1,11 @@
 package oogasalad.model.gameengine.collidable;
 
+import java.util.List;
+import java.util.Stack;
 import oogasalad.model.api.CollidableRecord;
 
 public abstract class Collidable {
-  private double myMass;
+  private final double myMass;
   private double myX;
   private double myY;
   private double myVelocityX;
@@ -14,6 +16,7 @@ public abstract class Collidable {
   private double myNextVelocityX;
   private double myNextVelocityY;
   private boolean myVisible;
+  private Stack<List<Integer>> locationHistory;
 
   public Collidable(int id, double mass, double x, double y,
       boolean visible) {
@@ -48,6 +51,18 @@ public abstract class Collidable {
     myNextX = myX + dt * myVelocityX;
     myNextY = myY + dt * myVelocityY;
   }
+
+  /**
+  public void addToLocationHistory(List<Integer> newLocation) {
+    locationHistory.push(newLocation);
+  }
+
+  public void moveToOldLocation(List<Integer> newLocation) {
+    locationHistory.pop();
+    myX = locationHistory.peek().get(0);
+    myY = locationHistory.peek().get(1);
+  }
+  */
 
   public void update() {
     myX = myNextX;
@@ -85,8 +100,4 @@ public abstract class Collidable {
     return myY;
   }
 
-  public void placeInitial(double x, double y) {
-    myX = x;
-    myY = y;
-  }
 }
