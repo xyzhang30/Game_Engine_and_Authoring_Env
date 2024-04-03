@@ -29,12 +29,12 @@ public class GameScreen extends UIScreen {
   }
 
   private void setupPowerBar() {
-    Rectangle outline = new Rectangle(sceneWidth - 250, 100, 100, 700);
+    Rectangle outline = new Rectangle(sceneWidth - 200, 100, 100, 700);
     outline.setFill(Color.DARKGRAY);
     outline.setEffect(createDropShadow());
 
-    Rectangle powerIndicator = new Rectangle(sceneWidth - 225, 125, 100, 10);
-    powerIndicator.setFill(Color.RED);
+    Rectangle powerIndicator = new Rectangle(sceneWidth - 190, 780, 80, 10);
+    powerIndicator.setFill(Color.DARKRED);
     powerIndicator.toFront();
 
     initiatePowerListening(powerIndicator);
