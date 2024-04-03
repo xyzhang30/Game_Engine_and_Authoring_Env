@@ -66,6 +66,7 @@ public class Controller {
 //    sceneManager.update(gameRecord);
 //    List<Pair> collisionList = collisionManager.getIntersections();
 //    gameEngine.handleCollisions(collisionList, timeStep);
+//    gameEngine.update(timeStep);
 //
 //    if (sceneManager.notMoving(gameRecord)) {
 //      //listen for hit
@@ -75,6 +76,9 @@ public class Controller {
     return true;
   }
 
+  public void hitPointScoringObject(double fractionalVelocity){
+    //gameEngine.applyInitialVelocity();
+  }
 
 
   /**

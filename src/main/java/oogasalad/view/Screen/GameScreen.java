@@ -7,32 +7,37 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 import oogasalad.model.api.CollidableRecord;
+import oogasalad.view.Controller;
 import oogasalad.view.VisualElements.CompositeElement;
 
 public class GameScreen extends UIScreen {
-  private final BorderPane root;
-  public GameScreen() {
-    root = new BorderPane();
+  private final int maxPower = 650;
 
+  private final BorderPane root;
+
+  public GameScreen(Controller controller) {
+    root = new BorderPane();
+    this.controller = controller;
     // Hard coded case
     CompositeElement cm = new CompositeElement();
-    cm.update(List.of(new CollidableRecord(1,10,100,100,0,0,true)));
+    cm.update(List.of(new CollidableRecord(1, 10, 100, 100, 0, 0, true)));
     setupFieldComponents(cm); // BIG improvised here. There's a lot of refactoring to do first...
 
     createScene();
   }
+
   @Override
   public Parent getRoot() {
     return root;
   }
 
   private void createScene() {
-    setupControlPane();
-    setupPowerBar();
+    //setupControlPane(); This messes up the power bar key listening
+    Rectangle powerIndicator = setupPowerBar();
     scene = new Scene(root, sceneWidth, sceneHeight);
+    initiateListening(scene, powerIndicator);
   }
 
   private void setupControlPane() {
@@ -44,15 +49,15 @@ public class GameScreen extends UIScreen {
   }
 
   @Deprecated
-  private void setupFieldComponents(CompositeElement cm){
+  private void setupFieldComponents(CompositeElement cm) {
     StackPane sp = new StackPane();
-    for (int i : cm.idList()){
+    for (int i : cm.idList()) {
       sp.getChildren().add(cm.getNode(i));
     }
     root.getChildren().add(sp);
   }
 
-  private void setupPowerBar() {
+  private Rectangle setupPowerBar() {
     Rectangle outline = new Rectangle(sceneWidth - 200, 100, 100, 700);
     outline.setFill(Color.DARKGRAY);
     outline.setEffect(createDropShadow());
@@ -61,25 +66,35 @@ public class GameScreen extends UIScreen {
     powerIndicator.setFill(Color.DARKRED);
     powerIndicator.toFront();
 
-    initiatePowerListening(powerIndicator);
-
     root.getChildren().addAll(outline, powerIndicator);
+    return powerIndicator;
   }
 
-  private void initiatePowerListening(Rectangle powerIndicator) {
-    powerIndicator.setOnKeyPressed(event -> {
-      if (event.getCode() == KeyCode.UP) {
-        if (powerIndicator.getHeight() < 650) {
+  private void initiateListening(Scene scene, Rectangle powerIndicator) {
+    scene.setOnKeyPressed(event -> {
+      handleKeyInput(event.getCode(), powerIndicator);
+    });
+  }
+
+  private void handleKeyInput(KeyCode code, Rectangle powerIndicator) {
+    switch (code) {
+      case UP: {
+        if (powerIndicator.getHeight() < maxPower) {
           powerIndicator.setLayoutY(powerIndicator.getLayoutY() - 10);
           powerIndicator.setHeight(powerIndicator.getHeight() + 10);
         }
-      } else if (event.getCode() == KeyCode.DOWN) {
+      }
+      case DOWN: {
         if (powerIndicator.getHeight() > 10) {
           powerIndicator.setLayoutY(powerIndicator.getLayoutY() + 10);
           powerIndicator.setHeight(powerIndicator.getHeight() - 10);
         }
       }
-    });
+      case ENTER: {
+        double fractionalVelocity = powerIndicator.getHeight() / maxPower;
+        controller.hitPointScoringObject(fractionalVelocity);
+      }
+    }
   }
 
   //this would need to be a for loop and loop through all the ids of elements
