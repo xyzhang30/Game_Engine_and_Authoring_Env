@@ -14,7 +14,8 @@
         "x_dimension": 500,
         "y_dimension": 500
       },
-      "color": [100,200,100]
+      "color": [100,200,100],
+      "friction": 0.5
     },
     {
       "collidable_id": 2,
