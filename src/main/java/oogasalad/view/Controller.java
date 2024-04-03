@@ -26,27 +26,48 @@ public class Controller {
   }
 
   /**
-   * Runs the game by sending and receiving info from scene manager
+   * Waits until status is set to menu screen indicating that the play button has been pressed,
+   * calls sceneManager to make and display a title scene with a given list of titles
    */
-  public void runGame() {
-      while (sceneManager.getScreenType() == ScreenType.GAME_SCREEN) {
-        GameRecord gameRecord = gameEngine.update();
-        sceneManager.update(gameRecord);
-        List<Pair> collisionList = collisionManager.getIntersections();
-        gameEngine.handleCollisions(collisionList);
+  public void startTitleListening() {
+    ScreenType screenType = sceneManager.getScreenType();
+    while (screenType != ScreenType.MENU_SCREEN) {
+      screenType = sceneManager.getScreenType();
+    }
 
-        if(sceneManager.notMoving()){
-          //listen for hit
-          //true if the ball is not moving
-        }
+    sceneManager.makeMenuScreen(getGameTitles());
+
+  }
+
+  private void startMenuListening(){
+    ScreenType screenType = sceneManager.getScreenType();
+    while (screenType != ScreenType.GAME_SCREEN) {
+      screenType = sceneManager.getScreenType();
+    }
+
+    sceneManager.makeGameScreen();
+  }
+
+  private void runGame() {
+    while (sceneManager.getScreenType() == ScreenType.GAME_SCREEN) {
+      GameRecord gameRecord = gameEngine.update();
+      sceneManager.update(gameRecord);
+      List<Pair> collisionList = collisionManager.getIntersections();
+      gameEngine.handleCollisions(collisionList);
+
+      if (sceneManager.notMoving()) {
+        //listen for hit
+        //true if the ball is not moving
       }
+    }
   }
 
   /**
    * Gets the titles of all available games to play
+   *
    * @return a list of the game titles
    */
-  public List<String> getGameTitles(){
+  public List<String> getGameTitles() {
     //TODO: Add parsing functionality
     List<String> gameTitles = new ArrayList<>();
     gameTitles.add("Mini Golf");
