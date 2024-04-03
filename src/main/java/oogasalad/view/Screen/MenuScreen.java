@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import oogasalad.view.SceneManager;
 
 /**
  * Scene allows player to select from list of available games
@@ -14,8 +15,10 @@ import javafx.scene.text.Text;
  */
 public class MenuScreen extends UIScreen {
 
-  public MenuScreen(List<String> titles){
+
+  public MenuScreen(List<String> titles, SceneManager sceneManager){
     createScene(titles);
+    this.sceneManager = sceneManager;
   }
 
   private void createScene(List<String> titles){
