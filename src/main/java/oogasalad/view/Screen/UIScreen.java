@@ -9,7 +9,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 
-public abstract class UIScreen {
+public abstract class UIScreen extends Pane{
   private final Screen screen = Screen.getPrimary();
   final double sceneWidth = getScreenWidth() - 100;
   final double sceneHeight = getScreenHeight() - 100;
@@ -19,9 +19,9 @@ public abstract class UIScreen {
    * Getter method for scene
    * @return scene specific to UIScreen subclass
    */
-  public Scene getScene(){
-    return scene;
-  }
+//  public Scene getScene(){
+//    return scene;
+//  }
 
   /**
    * Styles text to match theme font

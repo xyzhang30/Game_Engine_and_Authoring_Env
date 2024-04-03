@@ -2,6 +2,7 @@ package oogasalad.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.Scene;
 import oogasalad.Pair;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.api.GameRecord;
@@ -19,10 +20,10 @@ public class Controller {
   private final CollisionManager collisionManager;
   private final SceneManager sceneManager;
 
-  public Controller(int id) {
+  public Controller(int id, Scene scene) {
     gameEngine = new GameEngine(id);
     collisionManager = new CollisionManager();
-    sceneManager = new SceneManager();
+    sceneManager = new SceneManager(scene);
   }
 
   /**
@@ -35,7 +36,7 @@ public class Controller {
         List<Pair> collisionList = collisionManager.getIntersections();
         gameEngine.handleCollisions(collisionList);
 
-        if(sceneManager.notMoving()){
+        if(sceneManager.notMoving(gameRecord)){
           //listen for hit
           //true if the ball is not moving
         }
