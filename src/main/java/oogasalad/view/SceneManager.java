@@ -34,7 +34,7 @@ public class SceneManager {
     return menuScreen.getScene();
   }
   public Scene makeGameScreen(){
-      GameScreen gameScreen = new GameScreen(compositeElement);
+      GameScreen gameScreen = new GameScreen();
       return gameScreen.getScene();
   }
 
