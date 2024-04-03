@@ -29,16 +29,17 @@ public class Controller {
    * Runs the game by sending and receiving info from scene manager
    */
   public void runGame() {
-    while (sceneManager.getScreenType() == ScreenType.GAME_SCREEN) {
-      GameRecord gameRecord = gameEngine.update();
-      sceneManager.update(record);
-      List<Pair> collisionList = collisionManager.getIntersections();
-      gameEngine.handleCollisions(collisionList);
+      while (sceneManager.getScreenType() == ScreenType.GAME_SCREEN) {
+        GameRecord gameRecord = gameEngine.update();
+        sceneManager.update(gameRecord);
+        List<Pair> collisionList = collisionManager.getIntersections();
+        gameEngine.handleCollisions(collisionList);
 
-      if(sceneManager.moving()){
-        //listen for hit
+        if(sceneManager.notMoving()){
+          //listen for hit
+          //true if the ball is not moving
+        }
       }
-    }
   }
 
   /**

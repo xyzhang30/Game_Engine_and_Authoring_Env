@@ -59,11 +59,9 @@ public abstract class UIScreen {
   void show() {
 
   }
-
   void hide() {
 
   }
-
   void update(double dt) {
 
   }

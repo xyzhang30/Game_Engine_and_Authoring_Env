@@ -1,29 +1,22 @@
 package oogasalad.view;
 
-import oogasalad.model.api.CollidableRecord;
+import javafx.scene.shape.Shape;
+import java.util.HashMap;
+import java.util.Map;
 
-public class CompositeElement implements VisualElement{
+public class CompositeElement {
+  private Map<Integer, Shape> shapes = new HashMap<>();
 
-  public CompositeElement(CollidableRecord collidable) {
+  public Shape getShape(int id) {
+    return shapes.get(id);
   }
 
-  @Override
-  public void update(CollidableRecord record) {
-    
-  }
-
-  @Override
-  public void render() {
-
-  }
-
-  @Override
-  public void updatePosition(double x, double y) {
-
-  }
-
-  @Override
-  public void setVisible(boolean visible) {
-
+  public void updateShape(int id, double x, double y, boolean visible) {
+    Shape shape = shapes.get(id);
+    if (shape != null) {
+      shape.setLayoutX(x);
+      shape.setLayoutY(y);
+      shape.setVisible(visible);
+    }
   }
 }

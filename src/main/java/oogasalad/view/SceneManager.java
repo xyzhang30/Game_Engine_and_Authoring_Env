@@ -1,19 +1,24 @@
 package oogasalad.view;
 
-import java.util.List;
-import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.CollidableRecord;
-import oogasalad.model.api.PlayerRecord;
-import java.util.HashMap;
-import java.util.Map;
+import oogasalad.view.CompositeElement;
 
-
-// Represents the entire game scene, managing both static and dynamic elements
 public class SceneManager {
-    private Map<Integer, VisualElement> elements; // Maps collidable IDs to their visual representations
-  private AnimationManager animationManager;
+  private CompositeElement compositeElement;
 
+  public SceneManager() {
+    this.compositeElement = new CompositeElement();
+  }
 
+  public void update(GameRecord gameRecord) {
+    for (CollidableRecord collidable : gameRecord.collidables()) {
+      compositeElement.updateShape(collidable.id(), collidable.x(), collidable.y(), collidable.visible());
+    }
+  }
+
+  public boolean notMoving(){
+    return GameRecord.getStaticState(); //will be added to record eventually
+  }
 
 }
