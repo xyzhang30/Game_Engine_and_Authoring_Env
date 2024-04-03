@@ -1,3 +1,5 @@
 package oogasalad.model.gameparser;
 
-record GlobalVariables(int turn) {}
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+record GlobalVariables(@JsonProperty("max_turns") int maxTurns, @JsonProperty("max_rounds")int maxRounds) {}
