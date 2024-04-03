@@ -118,18 +118,30 @@ public class GameLoaderModel extends GameLoader {
       Map<Pair, List<Command>> commandMap = new HashMap<>();
       int maxRounds = gameData.variables().get(0).global().maxRounds();
       int maxTurns = gameData.variables().get(0).global().maxTurns();
+
       for (CollisionRule rule : gameData.rules().collisions()){
         Pair pair = new Pair(rule.firstId(), rule.secondId()); //collision rule is the one with ids and command map
         List<Command> commands = new ArrayList<>();
+
         for (Map<String, List<Integer>> command : rule.command()){ //looping through the list of command maps
-          for(String s : command.keySet()){ //this is a for loop but there's always only going to be 1 command in the map (probably should change the structure of the json afterwards)
+          for(String s : command.keySet()){ //this is a for loop but there's always only going to be 1 command in the map (probably should change the structure of the json afterward)
             Class<?> cc = Class.forName(s);
             commands.add((Command) cc.getDeclaredConstructor(List.class).newInstance(command.get(s)));
             commandMap.put(pair,commands);
           }
         }
       }
-      rulesRecord = new RulesRecord(maxRounds,maxTurns,commandMap);
+
+      Class<?> cc;
+      List<Integer> params = new ArrayList<>();
+
+      for (String condition : gameData.rules().winCondition().keySet()){
+        cc = Class.forName(condition);
+        params = gameData.rules().winCondition().get(condition);
+      }
+
+      rulesRecord = new RulesRecord(maxRounds,maxTurns,commandMap, (Command) cc.getDeclaredConstructor(List.class).newInstance(params));
+
     } catch (NoSuchMethodException | IllegalAccessException | InstantiationException |
              ClassNotFoundException | InvocationTargetException e) {
       throw new InvalidCommandException(e.getMessage());
@@ -158,5 +170,6 @@ public class GameLoaderModel extends GameLoader {
   public RulesRecord getRulesRecord() {
     return rulesRecord;
   }
+
 
 }
