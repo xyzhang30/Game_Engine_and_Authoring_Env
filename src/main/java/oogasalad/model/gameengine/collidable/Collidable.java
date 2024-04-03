@@ -1,9 +1,11 @@
 package oogasalad.model.gameengine.collidable;
 
+import java.util.List;
+import java.util.Stack;
 import oogasalad.model.api.CollidableRecord;
 
 public abstract class Collidable {
-  private double myMass;
+  private final double myMass;
   private double myX;
   private double myY;
   private double myVelocityX;
@@ -14,6 +16,7 @@ public abstract class Collidable {
   private double myNextVelocityX;
   private double myNextVelocityY;
   private boolean myVisible;
+  private Stack<List<Integer>> locationHistory;
 
   public Collidable(int id, double mass, double x, double y,
       boolean visible) {
@@ -25,14 +28,17 @@ public abstract class Collidable {
     myVelocityY = 0.0;
     myNextX = x;
     myNextY = y;
-    myNextVelocityX = 0.0;
-    myNextVelocityY = 0.0;
     myVisible = visible;
   }
   public void onCollision(Collidable other, double dt) {
-    double[] result = other.calculateNewSpeed(other, dt);
+    double[] result = other.calculateNewSpeed(this, dt);
     myNextVelocityX = result[0];
     myNextVelocityY = result[1];
+  }
+
+  public void updatePostCollisionVelocity() {
+    myVelocityY = myNextVelocityY;
+    myVelocityX = myNextVelocityX;
   }
 
   public abstract double[] calculateNewSpeed(Collidable other, double dt);
@@ -46,16 +52,29 @@ public abstract class Collidable {
     myNextY = myY + dt * myVelocityY;
   }
 
+  /**
+  public void addToLocationHistory(List<Integer> newLocation) {
+    locationHistory.push(newLocation);
+  }
+
+  public void moveToOldLocation(List<Integer> newLocation) {
+    locationHistory.pop();
+    myX = locationHistory.peek().get(0);
+    myY = locationHistory.peek().get(1);
+  }
+  */
+
   public void update() {
     myX = myNextX;
     myY = myNextY;
-    myVelocityX = myNextVelocityX;
-    myVelocityY = myNextVelocityY;
-  }
+   }
 
   public void applyInitialVelocity(double magnitude, double direction) {
     myVelocityX = magnitude * Math.cos(direction);
+    myNextVelocityX = myVelocityX;
     myVelocityY = magnitude * Math.sin(direction);
+    myNextVelocityY = myVelocityY;
+
   }
 
   protected double getVelocityX() {
@@ -81,8 +100,4 @@ public abstract class Collidable {
     return myY;
   }
 
-  public void placeInitial(double x, double y) {
-    myX = x;
-    myY = y;
-  }
 }
