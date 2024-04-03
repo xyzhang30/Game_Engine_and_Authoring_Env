@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.FileWriter;
+import java.util.List;
 import oogasalad.model.gameparser.data.CollidableObject;
 import org.json.simple.JSONArray;
 import java.util.Properties;
@@ -16,15 +17,32 @@ import java.util.Properties;
  */
 public class GameLoaderView extends GameLoader {
 
-  private static final String RESOURCE_FOLDER_PATH = "src/main/resources";
+  private static final String RESOURCE_FOLDER_PATH = "src/main/resources/";
   private static final String PROPERTIES_FILE_EXTENSION = ".properties";
   private static final String COLLIDABLE_PROPERTIES_COMMENT = "collidable objects shape";
+  private static final String COLLIDABLE_CSS_ID_PREFIX = "collidable";
 
   public GameLoaderView(String gameName) {
     super(gameName);
 //    generateStyleSheet(gameName);
     generateCollidableShapeConfig(gameName);
   }
+
+  private void generateStyleSheet(String gameName) {
+    for (CollidableObject o : gameData.collidableObjects()){
+      int id = o.collidableId();
+      String cssId = COLLIDABLE_CSS_ID_PREFIX + id;
+
+      List<Integer> color = o.color();
+      int red = validateColorComponent(color.get(0));
+      int green = validateColorComponent(color.get(1));
+      int blue = validateColorComponent(color.get(2));
+
+      
+
+    }
+  }
+
 
   //alisha
 //  private void generateStyleSheet(String gameName) {
@@ -61,14 +79,6 @@ public class GameLoaderView extends GameLoader {
     }
   }
 
-//  private void writeColor() {
-//
-//  }
-//
-//  private void writeDimension() {
-//
-//  }
-
   //alisha
   private void generateCollidableShapeConfig(String gameName) {
     Properties properties = new Properties();
@@ -86,6 +96,3 @@ public class GameLoaderView extends GameLoader {
     }
   }
 }
-
-
-
