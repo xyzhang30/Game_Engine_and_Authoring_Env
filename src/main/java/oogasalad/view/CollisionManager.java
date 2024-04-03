@@ -47,32 +47,32 @@ public class CollisionManager {
     this.compositeElement = newCompositeElement;
   }
 
-  private void createIntersectionMatrix() {
-    int maxId = -1;
-    for (Integer currId : elementMap.keySet()) {
-      if (currId > maxId) {
-        maxId = currId;
-      }
-    }
-
-    intersections = new Shape[maxId][maxId];
-
-    for (Map.Entry<Integer, Node> currEntry : elementMap.entrySet()) {
-      for (Map.Entry<Integer, Node> interEntry : elementMap.entrySet()) {
-
-        int currId = currEntry.getKey();
-        int interId = interEntry.getKey();
-
-        if (currId != interId) {
-          Shape currShape = (Shape) currEntry.getValue();
-          Shape interShape = (Shape) interEntry.getValue();
-          Shape currIntersection = Shape.intersect(currShape, interShape);
-
-          intersections[currId][interId] = currIntersection;
-        }
-      }
-    }
-  }
+//  private void createIntersectionMatrix() {
+//    int maxId = -1;
+//    for (Integer currId : elementMap.keySet()) {
+//      if (currId > maxId) {
+//        maxId = currId;
+//      }
+//    }
+//
+//    intersections = new Shape[maxId][maxId];
+//
+//    for (Map.Entry<Integer, Node> currEntry : elementMap.entrySet()) {
+//      for (Map.Entry<Integer, Node> interEntry : elementMap.entrySet()) {
+//
+//        int currId = currEntry.getKey();
+//        int interId = interEntry.getKey();
+//
+//        if (currId != interId) {
+//          Shape currShape = (Shape) currEntry.getValue();
+//          Shape interShape = (Shape) interEntry.getValue();
+//          Shape currIntersection = Shape.intersect(currShape, interShape);
+//
+//          intersections[currId][interId] = currIntersection;
+//        }
+//      }
+//    }
+//  }
 
 
 }

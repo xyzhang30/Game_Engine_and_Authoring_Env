@@ -3,10 +3,7 @@ package oogasalad.view;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Scene;
-import oogasalad.Pair;
-import oogasalad.model.gameengine.GameEngine;
-import oogasalad.model.api.GameRecord;
-import oogasalad.view.Screen.ScreenType;
+import javafx.stage.Stage;
 
 /**
  * Controller class handles communications between model and view.  This class holds manager class
@@ -16,52 +13,46 @@ import oogasalad.view.Screen.ScreenType;
  */
 public class Controller {
 
-  private final GameEngine gameEngine;
-  private final CollisionManager collisionManager;
+  //private final GameEngine gameEngine;
+  //private final CollisionManager collisionManager;
   private final SceneManager sceneManager;
+  private final Window window;
 
-  public Controller(int id, Scene scene) {
-    gameEngine = new GameEngine(id);
-    collisionManager = new CollisionManager();
-    sceneManager = new SceneManager(scene);
-  }
-
-  /**
-   * Waits until status is set to menu screen indicating that the play button has been pressed,
-   * calls sceneManager to make and display a title scene with a given list of titles
-   */
-  public void startTitleListening() {
-    ScreenType screenType = sceneManager.getScreenType();
-    while (screenType != ScreenType.MENU_SCREEN) {
-      screenType = sceneManager.getScreenType();
-    }
-
-    sceneManager.makeMenuScreen(getGameTitles());
+  public Controller(Stage stage, int id) {
+    sceneManager = new SceneManager();
+    Scene title = sceneManager.makeTitleScreen(this);
+    window = new Window(stage, title, id);
+    //gameEngine = new GameEngine(id);
+    //collisionManager = new CollisionManager();
 
   }
 
-  private void startMenuListening(){
-    ScreenType screenType = sceneManager.getScreenType();
-    while (screenType != ScreenType.GAME_SCREEN) {
-      screenType = sceneManager.getScreenType();
-    }
-
-    sceneManager.makeGameScreen();
+  public void openMenuScreen() {
+    Scene menu = sceneManager.makeMenuScreen(getGameTitles(), this);
+    window.changeScene(menu);
   }
 
-  private void runGame() {
-    while (sceneManager.getScreenType() == ScreenType.GAME_SCREEN) {
-      GameRecord gameRecord = gameEngine.update();
-      sceneManager.update(gameRecord);
-      List<Pair> collisionList = collisionManager.getIntersections();
-      gameEngine.handleCollisions(collisionList);
-
-      if (sceneManager.notMoving(gameRecord)) {
-        //listen for hit
-        //true if the ball is not moving
-      }
-    }
+  public void startGamePlay(String selectedGame){
+    //call backend to get elements for selectedGame and pass to sceneManager
+    Scene gameScene = sceneManager.makeGameScreen();
+    window.changeScene(gameScene);
+    //runGame();
   }
+
+//  private void runGame() {
+//    //while not end game
+//    while () {
+//      GameRecord gameRecord = gameEngine.update();
+//      sceneManager.update(gameRecord);
+//      List<Pair> collisionList = collisionManager.getIntersections();
+//      gameEngine.handleCollisions(collisionList);
+//
+//      if (sceneManager.notMoving(gameRecord)) {
+//        //listen for hit
+//        //true if the ball is not moving
+//      }
+//    }
+//  }
 
   /**
    * Gets the titles of all available games to play

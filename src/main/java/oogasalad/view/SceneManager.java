@@ -9,16 +9,11 @@ import oogasalad.view.Screen.*;
 import oogasalad.view.VisualElements.CompositeElement;
 
 public class SceneManager {
-  private Scene mainScene;
   private CompositeElement compositeElement;
-  private ScreenType currentScreenType;
 
 
-  public SceneManager(Scene mainScene) {
-    this.mainScene = mainScene;
+  public SceneManager() {
     this.compositeElement = new CompositeElement();
-    makeTitleScreen();
-
   }
 
   public void update(GameRecord gameRecord) {
@@ -31,44 +26,21 @@ public class SceneManager {
     return gameRecord.staticState(); //will be added to record eventually
   }
 
-  public ScreenType getScreenType() {
-    return currentScreenType;
+  public Scene makeTitleScreen(Controller controller){
+      TitleScreen titleScreen = new TitleScreen(controller);
+      return titleScreen.getScene();
   }
-
-  public void makeTitleScreen(){
-    Platform.runLater(() -> {
-      TitleScreen titleScreen = new TitleScreen(this);
-      mainScene.setRoot(titleScreen);
-      currentScreenType = ScreenType.TITLE_SCREEN;
-    });
+  public Scene makeMenuScreen(List<String> titles, Controller controller){
+    MenuScreen menuScreen = new MenuScreen(titles, controller);
+    return menuScreen.getScene();
   }
-  public void makeMenuScreen(List<String> titles){
-    Platform.runLater(() -> {
-      MenuScreen menuScreen = new MenuScreen(titles, this);
-      mainScene.setRoot(menuScreen);
-      currentScreenType = ScreenType.MENU_SCREEN;
-    });
-  }
-  public void makeGameScreen(){
-    Platform.runLater(() -> {
+  public Scene makeGameScreen(){
       GameScreen gameScreen = new GameScreen(compositeElement);
-      mainScene.setRoot(gameScreen);
-      currentScreenType = ScreenType.GAME_SCREEN;
-    });
+      return gameScreen.getScene();
   }
 
-//  public void makeTransitionScreen(){
-//    Platform.runLater(() -> {
-//      TransitionScreen transitionScreen = new TransitionScreen();
-//      mainScene.setRoot(transitionScreen);
-//      currentScreenType = ScreenType.TRANSITION_SCREEN;
-//    });
-//  }
-
-  public void setScreenTypeMenu(){
-    currentScreenType = ScreenType.MENU_SCREEN;
+  public void makeTransitionScreen(){
+//    TransitionScreen transitionScreen = new TransitionScreen();
+//    return TransitionScreen.getScene();
   }
-  public void setScreenTypeGame(){currentScreenType = ScreenType.GAME_SCREEN;}
-  public void setScreenTypeTransition(){currentScreenType = ScreenType.TRANSITION_SCREEN;}
-
 }

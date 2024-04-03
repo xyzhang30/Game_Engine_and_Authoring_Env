@@ -3,11 +3,14 @@ package oogasalad.view.Screen;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import oogasalad.view.SceneManager;
+import oogasalad.view.Controller;
 
 /**
  * Scene allows player to select from list of available games
@@ -15,44 +18,59 @@ import oogasalad.view.SceneManager;
  */
 public class MenuScreen extends UIScreen {
 
-
-  public MenuScreen(List<String> titles, SceneManager sceneManager){
+  public MenuScreen(List<String> titles, Controller controller){
+    root = new Group();
     createScene(titles);
-    this.sceneManager = sceneManager;
+    this.controller = controller;
   }
 
   private void createScene(List<String> titles){
-    StackPane stackPane = new StackPane();
-    createTitle(stackPane);
-    createMenu(stackPane, titles);
-    scene = new Scene(stackPane, sceneWidth, sceneHeight);
+    createTitle();
+    createMenu(titles);
+    scene = new Scene(root, sceneWidth, sceneHeight);
   }
 
-  private void createTitle(StackPane stackPane){
-    double titleX = sceneWidth / 2 - 400;
+  private void createTitle(){
+    double titleX = sceneWidth / 2 - 350;
     double titleY = sceneHeight / 5;
     Text title = new Text(titleX, titleY, "Game Options");
 
-    setToThemeFont(title, 50);
+    setToThemeFont(title, 100);
     title.setEffect(createDropShadow());
 
-    stackPane.getChildren().add(title);
+    root.getChildren().add(title);
   }
 
-  private void createMenu(StackPane stackPane, List<String> titles){
+  private void createMenu(List<String> titles){
     ObservableList<String> observableList = FXCollections.observableList(titles);
     ListView<String> listView = new ListView<>(observableList);
-    listView.setPrefSize(sceneWidth - 300, sceneHeight - 400);
-    listView.setLayoutX(100);
+    listView.setPrefSize(sceneWidth - 800, sceneHeight - 400);
+    listView.setLayoutX(400);
     listView.setLayoutY(300);
     addListViewEventHandling(listView);
-    stackPane.getChildren().add(listView);
+    styleMenu(listView);
+    root.getChildren().add(listView);
+  }
+
+  private void styleMenu(ListView<String> listView){
+    listView.setCellFactory(param -> new ListCell<String>() {
+      @Override
+      protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+        } else {
+          setText(item);
+          setFont(Font.font("Arial", 25));
+          setAlignment(Pos.CENTER);
+        }
+      }
+    });
   }
 
   private void addListViewEventHandling(ListView<String> listView){
     listView.setOnMouseClicked(e -> {
-      //TODO: find a way to pass selected option
-      sceneManager.setScreenTypeGame();
+      controller.startGamePlay(listView.getSelectionModel().getSelectedItem());
     });
   }
 
