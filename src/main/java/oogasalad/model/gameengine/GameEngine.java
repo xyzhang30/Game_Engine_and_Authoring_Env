@@ -29,7 +29,7 @@ public class GameEngine implements ExternalGameEngine {
 
   private GameLoaderModel loader;
 
-  public GameEngine(GameLoaderModel loader) {
+  public GameEngine(int id) {
     playerContainer = loader.getPlayerContainer();
     rules = loader.getRulesRecord();
     collidables = loader.getCollidableContainer();
@@ -71,7 +71,7 @@ public class GameEngine implements ExternalGameEngine {
    *
    * @return GameRecord object representing the current Collidables, Scores, etc
    */
-  private GameRecord update(double dt) {
+  public GameRecord update(double dt) {
     if(collidables.checkStatic()) {
       staticState = true;
     }

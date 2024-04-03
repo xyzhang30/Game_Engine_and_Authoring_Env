@@ -34,7 +34,7 @@ public class Controller {
         GameRecord gameRecord = gameEngine.update();
         sceneManager.update(gameRecord);
         List<Pair> collisionList = collisionManager.getIntersections();
-        gameEngine.handleCollisions(collisionList);
+        gameEngine.handleCollisions(collisionList, );
 
         if(sceneManager.notMoving(gameRecord)){
           //listen for hit

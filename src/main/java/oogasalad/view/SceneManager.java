@@ -55,4 +55,12 @@ public class SceneManager {
       currentScreenType = ScreenType.GAME_SCREEN;
     });
   }
+
+  public void makeTransitionScreen(){
+    Platform.runLater(() -> {
+      TransitionScreen transitionScreen = new TransitionScreen();
+      mainScene.setRoot(transitionScreen);
+      currentScreenType = ScreenType.TRANSITION_SCREEN;
+    });
+  }
 }

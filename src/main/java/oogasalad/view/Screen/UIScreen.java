@@ -54,12 +54,6 @@ public abstract class UIScreen extends Pane{
     return screen.getBounds().getHeight();
   }
 
-  void show() {
-
-  }
-  void hide() {
-
-  }
   void update(double dt) {
 
   }
