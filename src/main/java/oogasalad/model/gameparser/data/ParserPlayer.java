@@ -7,4 +7,4 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author Judy He
  */
-record ParserPlayer(@JsonProperty("player_id") int playerId, @JsonProperty("my_collidable") int myCollidable) {}
+public record ParserPlayer(@JsonProperty("player_id") int playerId, @JsonProperty("my_collidable") int myCollidable) {}
