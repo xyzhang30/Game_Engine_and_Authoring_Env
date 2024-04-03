@@ -109,8 +109,8 @@ public class GameEngineTest {
 
   @BeforeEach
   public void setUp() {
-    gameEngine = new GameEngine("data/singlePlayerMiniGolf.json");
-    gameEngine.start(new GameLoaderMock("data/singlePlayerMiniGolf.json"));
+    gameEngine = new GameEngine("singlePlayerMiniGolf");
+    gameEngine.start(new GameLoaderMock("singlePlayerMiniGolf"));
   }
 
 
