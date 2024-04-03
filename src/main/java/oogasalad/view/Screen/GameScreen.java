@@ -83,18 +83,21 @@ public class GameScreen extends UIScreen {
           powerIndicator.setLayoutY(powerIndicator.getLayoutY() - 10);
           powerIndicator.setHeight(powerIndicator.getHeight() + 10);
         }
+        break;
       }
       case DOWN: {
         if (powerIndicator.getHeight() > 10) {
           powerIndicator.setLayoutY(powerIndicator.getLayoutY() + 10);
           powerIndicator.setHeight(powerIndicator.getHeight() - 10);
         }
+        break;
       }
       case LEFT:{} //modify angle
       case RIGHT: {} //modify angle
       case ENTER: {
         double fractionalVelocity = powerIndicator.getHeight() / maxPower;
         controller.hitPointScoringObject(fractionalVelocity);
+        break;
       }
     }
   }
