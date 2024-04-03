@@ -1,27 +1,55 @@
 .collidable1{
   -fx-background-color: rgb(100,200,100);
+  -fx-min-width: 500px;
+  -fx-min-height: 500px;
+  -fx-max-width: 500px;
+  -fx-max-height: 500px;
 }
 
 .collidable2{
   -fx-background-color: rgb(255,255,255);
+  -fx-min-width: 2px;
+  -fx-min-height: 2px;
+  -fx-max-width: 2px;
+  -fx-max-height: 2px;
 }
 
 .collidable3{
   -fx-background-color: rgb(0,0,0);
+  -fx-min-width: 5px;
+  -fx-min-height: 5px;
+  -fx-max-width: 5px;
+  -fx-max-height: 5px;
 }
 
 .collidable4{
   -fx-background-color: rgb(0,0,0);
+  -fx-min-width: 500px;
+  -fx-min-height: 10px;
+  -fx-max-width: 500px;
+  -fx-max-height: 10px;
 }
 
 .collidable5{
   -fx-background-color: rgb(0,0,0);
+  -fx-min-width: 500px;
+  -fx-min-height: 10px;
+  -fx-max-width: 500px;
+  -fx-max-height: 10px;
 }
 
 .collidable6{
   -fx-background-color: rgb(0,0,0);
+  -fx-min-width: 500px;
+  -fx-min-height: 10px;
+  -fx-max-width: 500px;
+  -fx-max-height: 10px;
 }
 
 .collidable7{
   -fx-background-color: rgb(0,0,0);
+  -fx-min-width: 500px;
+  -fx-min-height: 10px;
+  -fx-max-width: 500px;
+  -fx-max-height: 10px;
 }
