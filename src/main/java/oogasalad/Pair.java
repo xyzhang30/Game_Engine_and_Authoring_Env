@@ -20,7 +20,7 @@ public class Pair {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Pair pair = (Pair) o;
-    return first == pair.first && second == pair.second;
+    return (first == pair.first && second == pair.second) || (first==pair.second && second == pair.first);
   }
 
   @Override

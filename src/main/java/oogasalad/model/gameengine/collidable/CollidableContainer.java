@@ -3,19 +3,25 @@ package oogasalad.model.gameengine.collidable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import oogasalad.model.api.CollidableRecord;
 
 public class CollidableContainer {
 
   private final Map<Integer, Collidable> myCollidables;
+  private Stack<List<CollidableRecord>> collidableHistory;
 
   public CollidableContainer(Map<Integer, Collidable> collidables) {
     myCollidables = collidables;
+    collidableHistory = new Stack<>();
+    collidableHistory.add(getCollidableRecords());
+
   }
 
   public Collidable getCollidable(int objectId) {
     return myCollidables.get(objectId);
   }
+
 
   public boolean checkStatic() {
     for (Collidable c : myCollidables.values()) {
@@ -41,5 +47,16 @@ public class CollidableContainer {
           collidable.getVisible()));
     }
     return ret;
+  }
+
+  public void addStaticStateCollidables() {
+    collidableHistory.push(getCollidableRecords());
+  }
+
+  public void toLastStaticStateCollidables() {
+    collidableHistory.pop();
+    for(CollidableRecord record : collidableHistory.peek()) {
+      getCollidable(record.id()).setFromRecord(record);
+    }
   }
 }

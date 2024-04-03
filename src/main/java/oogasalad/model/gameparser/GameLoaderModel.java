@@ -32,6 +32,10 @@ public class GameLoaderModel extends GameLoader {
   private CollidableContainer collidableContainer;
   private RulesRecord rulesRecord;
   private TurnPolicy turnPolicy;
+  private static final String COMMAND_PATH = "oogasalad.model.gameengine.command.";
+  private static final String TURN_POLICY_PATH = "oogasalad.model.gameengine.";
+
+
 
   /**
    * Constructs a GameLoaderModel object with the specified ID.
@@ -46,7 +50,7 @@ public class GameLoaderModel extends GameLoader {
   }
 
   // alisha
-  private void createPlayerContainer() {
+  protected void createPlayerContainer() {
     Map<Integer, Player> playerMap = new HashMap<>();
     for (ParserPlayer p : gameData.players()){
       int id = gameData.players().get(0).playerId();
@@ -65,7 +69,7 @@ public class GameLoaderModel extends GameLoader {
     return playerContainer;
   }
 
-  private void createCollidableContainer() {
+  protected void createCollidableContainer() {
     List<CollidableObject> collidableObjects = gameData.collidableObjects();
     Map<Integer, Collidable> collidables = new HashMap<>();
 
@@ -83,7 +87,7 @@ public class GameLoaderModel extends GameLoader {
 
   }
 
-  private Collidable createMovableCollidable(CollidableObject co) {
+  protected Collidable createMovableCollidable(CollidableObject co) {
     return new Moveable(
         co.collidableId(),
         co.mass(),
@@ -93,7 +97,7 @@ public class GameLoaderModel extends GameLoader {
     );
   }
 
-  private Collidable createSurfaceCollidable(CollidableObject co) {
+  protected Collidable createSurfaceCollidable(CollidableObject co) {
     return new Surface(
         co.collidableId(),
         co.mass(),
@@ -113,24 +117,37 @@ public class GameLoaderModel extends GameLoader {
   }
 
   // alisha
-  private void createRulesRecord() {
+  protected void createRulesRecord() {
     try{
       Map<Pair, List<Command>> commandMap = new HashMap<>();
       int maxRounds = gameData.variables().get(0).global().maxRounds();
       int maxTurns = gameData.variables().get(0).global().maxTurns();
+
       for (CollisionRule rule : gameData.rules().collisions()){
         Pair pair = new Pair(rule.firstId(), rule.secondId()); //collision rule is the one with ids and command map
         List<Command> commands = new ArrayList<>();
+
         for (Map<String, List<Integer>> command : rule.command()){ //looping through the list of command maps
-          for(String s : command.keySet()){ //this is a for loop but there's always only going to be 1 command in the map (probably should change the structure of the json afterwards)
-            Class<?> cc = Class.forName(s);
+          for(String s : command.keySet()){ //this is a for loop but there's always only going to be 1 command in the map (probably should change the structure of the json afterward)
+            Class<?> cc = Class.forName(COMMAND_PATH + s);
             commands.add((Command) cc.getDeclaredConstructor(List.class).newInstance(command.get(s)));
             commandMap.put(pair,commands);
           }
         }
       }
-      rulesRecord = new RulesRecord(maxRounds,maxTurns,commandMap);
-    } catch (NoSuchMethodException | IllegalAccessException | InstantiationException |
+
+      Class<?> cc = null;
+      List<Integer> params = new ArrayList<>();
+
+      for (String condition : gameData.rules().winCondition().keySet()){
+        cc = Class.forName(COMMAND_PATH + condition);
+        params = gameData.rules().winCondition().get(condition);
+      }
+
+      assert cc != null;
+      rulesRecord = new RulesRecord(maxRounds,maxTurns,commandMap, (Command) cc.getDeclaredConstructor(List.class).newInstance(params));
+
+    } catch (AssertionError | NoSuchMethodException | IllegalAccessException | InstantiationException |
              ClassNotFoundException | InvocationTargetException e) {
       throw new InvalidCommandException(e.getMessage());
     }
@@ -140,9 +157,9 @@ public class GameLoaderModel extends GameLoader {
     return turnPolicy;
   }
 
-  private void createTurnPolicy(){
+  protected void createTurnPolicy(){
     try {
-      Class<?> cc = Class.forName(gameData.rules().turnPolicy());
+      Class<?> cc = Class.forName(TURN_POLICY_PATH + gameData.rules().turnPolicy());
       turnPolicy = (TurnPolicy) cc.getDeclaredConstructor(PlayerContainer.class).newInstance(this.playerContainer);
     } catch (NoSuchMethodException | IllegalAccessException | InstantiationException |
              ClassNotFoundException | InvocationTargetException e) {
@@ -158,5 +175,6 @@ public class GameLoaderModel extends GameLoader {
   public RulesRecord getRulesRecord() {
     return rulesRecord;
   }
+
 
 }
