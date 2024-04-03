@@ -114,7 +114,7 @@ public class GameLoaderModel extends GameLoader {
       Pair pair = new Pair(rule.firstId(), rule.secondId());
       for (Map<String, List<Integer>> command : rule.command()){
         for(String s : command.keySet()){
-          commandMap.put(pair,)
+          // commandMap.put(pair,)
         }
       }
     }
