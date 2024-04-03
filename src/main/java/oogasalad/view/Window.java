@@ -16,6 +16,7 @@ public class Window {
   public Window(Stage stage, int id) {
     this.stage = stage;
     Controller controller = new Controller(stage); // Dirty fix. Change once scene swapped by root.
+    stage.setTitle("Fysics Fun"); // Port this hard coding into data.
     stage.show();
   }
 }
