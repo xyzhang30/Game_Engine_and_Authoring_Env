@@ -1,0 +1,137 @@
+{
+  "gameName": "sampleMiniGolf",
+  "collidable_objects": [
+    {
+      "collidable_id": 1,
+      "properties": ["visible, surface"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 0,
+        "y_position": 0
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 500,
+        "y_dimension": 500
+      },
+      "color": [100,200,100]
+    },
+    {
+      "collidable_id": 2,
+      "properties": ["visible","movable"],
+      "mass": 1,
+      "position": {
+        "x_position": 250,
+        "y_position": 450
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 2,
+        "y_dimension": 2
+      },
+      "color": [255,255,255]
+    },
+    {
+      "collidable_id": 3,
+      "properties": ["visible", "surface"],
+      "mass": 0,
+      "position": {
+        "x_position": 250,
+        "y_position": 50
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 5,
+        "y_dimension": 5
+      },
+      "color": [0,0,0]
+    },
+    {
+      "collidable_id": 4,
+      "properties": ["visible","movable"],
+      "mass": 200,
+      "position": {
+        "x_position": 0,
+        "y_position": 0
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 500,
+        "y_dimension": 10
+      },
+      "color": [0,0,0]
+    },
+    {
+      "collidable_id": 5,
+      "properties": ["visible","movable"],
+      "mass": 200,
+      "position": {
+        "x_position": 0,
+        "y_position": 0
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 500
+      },
+      "color": [0,0,0]
+    },
+    {
+      "collidable_id": 6,
+      "properties": ["visible","movable"],
+      "mass": 200,
+      "position": {
+        "x_position": 490,
+        "y_position": 0
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 500
+      },
+      "color": [0,0,0]
+    },
+    {
+      "collidable_id": 7,
+      "properties": ["visible","movable"],
+      "mass": 200,
+      "position": {
+        "x_position": 0,
+        "y_position": 490
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 500,
+        "y_dimension": 10
+      },
+      "color": [0,0,0]
+    }
+  ],
+  "variables": [
+    {
+      "global": {
+        "turn": 1
+      },
+      "player": {
+        "strokes": 0,
+        "finished": 0
+      }
+    }
+  ],
+  "rules": {
+    "collisions": [
+      {
+        "first_id": 2,
+        "second_id": 3,
+        "command": [
+          {
+            "AdjustPoints": [1,1]
+          },
+          {
+            "AdvanceTurn": []
+          }
+        ]
+      }
+    ]
+  }
+}
