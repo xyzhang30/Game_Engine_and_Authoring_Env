@@ -12,13 +12,25 @@ import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.collidable.Moveable;
 import oogasalad.model.gameengine.collidable.Surface;
 import oogasalad.model.gameengine.command.Command;
+import oogasalad.model.gameparser.data.CollidableObject;
+import oogasalad.model.gameparser.data.CollisionRule;
+import oogasalad.model.gameparser.data.ParserPlayer;
 
+/**
+ * Concrete implementation of GameLoader for passing game data necessary for the Model.
+ *
+ * @author Judy He, Alisha Zhang
+ */
 public class GameLoaderModel extends GameLoader {
 
   private PlayerContainer playerContainer;
   private CollidableContainer collidableContainer;
   private RulesRecord rulesRecord;
 
+  /**
+   * Constructs a GameLoaderModel object with the specified ID.
+   * @param id The ID of the game data to load.
+   */
   public GameLoaderModel(int id) {
     super(id);
     this.createCollidableContainer();
@@ -38,11 +50,14 @@ public class GameLoaderModel extends GameLoader {
     this.playerContainer = new PlayerContainer(playerMap);
   }
 
+  /**
+   * Retrieves the player container.
+   * @return The player container.
+   */
   public PlayerContainer getPlayerContainer(){
     return playerContainer;
   }
 
-  // judy
   private void createCollidableContainer() {
     List<CollidableObject> collidableObjects = gameData.collidableObjects();
     Map<Integer, Collidable> collidables = new HashMap<>();
@@ -82,6 +97,10 @@ public class GameLoaderModel extends GameLoader {
     );
   }
 
+  /**
+   * Retrieves the collidable container.
+   * @return The collidable container.
+   */
   public CollidableContainer getCollidableContainer(){
     return collidableContainer;
   }
@@ -102,6 +121,10 @@ public class GameLoaderModel extends GameLoader {
   }
 
 
+  /**
+   * Retrieves the rules record.
+   * @return The rules record.
+   */
   public RulesRecord getRulesRecord() {
     return rulesRecord;
   }
