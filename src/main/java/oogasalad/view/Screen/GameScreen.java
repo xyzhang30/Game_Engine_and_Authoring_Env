@@ -1,6 +1,6 @@
 package oogasalad.view.Screen;
 
-import oogasalad.view.CompositeElement;
+import oogasalad.view.VisualElements.CompositeElement;
 
 public class GameScreen extends UIScreen{
 

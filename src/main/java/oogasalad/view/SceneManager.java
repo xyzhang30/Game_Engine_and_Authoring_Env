@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.CollidableRecord;
 import oogasalad.view.Screen.*;
+import oogasalad.view.VisualElements.CompositeElement;
 
 public class SceneManager {
   private Scene mainScene;

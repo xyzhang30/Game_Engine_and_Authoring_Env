@@ -1,12 +1,12 @@
 package oogasalad.view;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.Node;
 import javafx.scene.shape.Shape;
 import oogasalad.Pair;
+import oogasalad.view.VisualElements.CompositeElement;
 
 /**
  * Class to maintain intersections and detect which collisions are active

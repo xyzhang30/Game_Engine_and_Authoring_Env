@@ -1,4 +1,4 @@
-package oogasalad.view;
+package oogasalad.view.VisualElements;
 
 import javafx.scene.shape.Shape;
 import java.util.HashMap;
