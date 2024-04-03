@@ -30,6 +30,7 @@ public class ControlPane extends Pane {
 
   private void layoutButtons() {
     HBox buttonLayout = new HBox(10); // Horizontal layout with spacing of 10
+    buttonLayout.setStyle("-fx-background-color: #660099"); // Pull format from data
     buttonLayout.getChildren().addAll(pauseButton, saveButton);
     this.getChildren().add(buttonLayout); // Add the layout to the ControlPane
   }
