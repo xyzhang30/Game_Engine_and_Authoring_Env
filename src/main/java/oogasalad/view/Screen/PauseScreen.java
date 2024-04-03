@@ -1,5 +1,10 @@
 package oogasalad.view.Screen;
 
-public class PauseScreen extends UIScreen{
+import javafx.scene.Parent;
 
+public class PauseScreen extends UIScreen{
+  @Override
+  public Parent getRoot() {
+    return null;
+  }
 }

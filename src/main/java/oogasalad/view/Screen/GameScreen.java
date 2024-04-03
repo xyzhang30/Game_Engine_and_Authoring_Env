@@ -1,8 +1,10 @@
 package oogasalad.view.Screen;
 
 import java.util.List;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.Group;
@@ -11,9 +13,9 @@ import oogasalad.model.api.CollidableRecord;
 import oogasalad.view.VisualElements.CompositeElement;
 
 public class GameScreen extends UIScreen {
-
+  private final BorderPane root;
   public GameScreen() {
-    root = new Group();
+    root = new BorderPane();
 
     // Hard coded case
     CompositeElement cm = new CompositeElement();
@@ -21,6 +23,10 @@ public class GameScreen extends UIScreen {
     setupFieldComponents(cm); // BIG improvised here. There's a lot of refactoring to do first...
 
     createScene();
+  }
+  @Override
+  public Parent getRoot() {
+    return root;
   }
 
   private void createScene() {
@@ -34,7 +40,7 @@ public class GameScreen extends UIScreen {
     controlPane.setLayoutX(10); // top of screen?
     controlPane.setLayoutY(10); // top of screen?
 
-    root.getChildren().add(controlPane);
+    root.setTop(controlPane);
   }
 
   @Deprecated

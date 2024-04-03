@@ -1,12 +1,13 @@
 package oogasalad.view.Screen;
 
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.text.Text;
 
 public class TransitionScreen extends UIScreen {
   protected Text title;
   protected Text additionalInfo; // Can be used or updated by subclasses
-
+  private final Group root;
   public TransitionScreen(String titleText) {
     this.title = new Text(titleText);
     this.additionalInfo = new Text();
@@ -14,6 +15,10 @@ public class TransitionScreen extends UIScreen {
     setup();
   }
 
+  @Override
+  public Parent getRoot() {
+    return root;
+  }
   private void setup() {
     setToThemeFont(title, 36);
     title.setEffect(createDropShadow());

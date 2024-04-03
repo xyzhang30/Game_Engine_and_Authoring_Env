@@ -1,5 +1,6 @@
 package oogasalad.view.Screen;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
@@ -28,6 +29,7 @@ public class ControlPane extends HBox {
   }
 
   private void layoutButtons() {
+    this.setPadding(new Insets(5));
     this.setSpacing(10); // Horizontal layout with spacing of 10
     this.setStyle("-fx-background-color: #660099"); // Pull format from data
     this.getChildren().addAll(pauseButton, saveButton);

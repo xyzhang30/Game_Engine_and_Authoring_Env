@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -17,11 +18,15 @@ import oogasalad.view.Controller;
  * @author Jordan Haytaian
  */
 public class MenuScreen extends UIScreen {
-
+  private final Group root;
   public MenuScreen(List<String> titles, Controller controller){
     root = new Group();
     createScene(titles);
     this.controller = controller;
+  }
+  @Override
+  public Parent getRoot() {
+    return root;
   }
 
   private void createScene(List<String> titles){
