@@ -1,6 +1,5 @@
 package oogasalad.model.gameparser;
 
-import java.util.List;
 import java.util.Map;
 import oogasalad.Pair;
 import oogasalad.model.gameengine.PlayerContainer;
@@ -36,7 +35,9 @@ public class GameLoaderModel extends GameLoader {
 //  }
 
   // judy
-  private void createCollidableContainer(){}
+  private void createCollidableContainer(){
+
+  }
 
 
   public CollidableContainer getCollidableContainer(){

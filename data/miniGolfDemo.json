@@ -4,7 +4,7 @@
     {
       "collidable_id": 1,
       "properties": ["visible, surface"],
-      "mass": "Infinity",
+      "mass": 1e1000000,
       "position": {
         "x_position": 0,
         "y_position": 0
@@ -123,8 +123,10 @@
       {
         "first_id": 2,
         "second_id": 4,
-        "rule": [
-
+        "command": [
+          {
+            "XCommand": [4,5]
+          }
         ]
       },
       {
@@ -136,17 +138,6 @@
           }
         ]
       }
-    ],
-    "static_checks": [
-      [["=","finished",0],[
-        ["add","strokes",1]
-      ]],
-      [["=","turn","3"],[
-        ["set","turn",1]
-      ]],
-      [["=","finished",1],[
-        ["end_game"]
-      ]]
     ]
   }
 }
