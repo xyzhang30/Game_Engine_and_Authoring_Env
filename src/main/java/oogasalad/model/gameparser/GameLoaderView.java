@@ -1,4 +1,4 @@
-/**package oogasalad.model.gameparser;
+package oogasalad.model.gameparser;
 
 import java.io.PrintWriter;
 import java.io.FileWriter;
@@ -61,7 +61,5 @@ public class GameLoaderView extends GameLoader {
   }
 }
 
-
- */
 
 

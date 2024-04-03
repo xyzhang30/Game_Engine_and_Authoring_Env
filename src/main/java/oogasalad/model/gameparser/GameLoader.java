@@ -1,52 +1,44 @@
 package oogasalad.model.gameparser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+
 import oogasalad.model.api.exception.InvalidFileException;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+
 
 public abstract class GameLoader {
 
-  protected JSONObject jsonObject;
-  protected List<Map<String, String>> collidables;
+  protected GameData gameData;
 
   public GameLoader(int id){
-    //find the file according to id (for database)
-    parseJSON("id");
+    parseJSON("data/miniGolfDemo.json");
   }
-
   public GameLoader(String filePath){
     parseJSON(filePath);
   }
 
-  public void parseJSON(String filePath) throws InvalidFileException {
-      try {
-        // typecasting obj to JSONObject
-        this.jsonObject = (JSONObject) new JSONParser().parse(new FileReader(filePath));
-      } catch (IOException | ParseException e) {
-        throw new InvalidFileException("FileNotFound", e); // ADD ERROR MESSAGES IN RESOURCE FILES !!!
-      }
+  private void parseJSON(String filePath) throws InvalidFileException {
+    //find the file according to id (for database)
+    try {
+      ObjectMapper objectMapper = new ObjectMapper();
+      this.gameData = objectMapper.readValue(new File(filePath), GameData.class);
+
+    } catch (IOException e) {
+      throw new InvalidFileException("Error: Invalid File", e);
+    }
   }
 
-  // judy
-  protected List<Map<String, String>> parseCollidables() {
-    // TODO
-    return null;
-  }
-
-  // should there be a separate parser then for the view stuff since model is calling this one and if
-  // model is holding an instance of it then it probably shouldn't be parsing view stuff (?)
-
-
-
-
-
-  //make the game area and the rules separate in the json??
-
+  // testing
+//  public static void main(String[] args) {
+//    GameLoader gameLoader = new GameLoaderModel(0);
+//    System.out.println("Game Name: " + gameLoader.gameData.gameName());
+//    System.out.println("Number of Collidable Objects: " + gameLoader.gameData.collidableObjects().size());
+//    for (CollidableObject co: gameLoader.gameData.collidableObjects()) {
+//      System.out.println(co.collidableId());
+//      System.out.println(co.mass());
+//
+//    }
+//  }
 
 }
