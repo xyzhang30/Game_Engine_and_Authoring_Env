@@ -2,6 +2,7 @@ package oogasalad.model.gameengine;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import java.util.stream.IntStream;
 import oogasalad.Pair;
 import oogasalad.model.api.ExternalGameEngine;
@@ -29,12 +30,9 @@ public class GameEngine implements ExternalGameEngine {
   private boolean staticState;
 
   private GameLoaderModel loader;
+  private Stack<GameRecord> staticStateStack;
 
   public GameEngine(String gameTitle) {
-    round = 1;
-    turn = 1; //first player ideally should have id 1
-    gameOver = false;
-    staticState = true;
     loader = new GameLoaderModel(gameTitle);
   }
 
@@ -43,13 +41,18 @@ public class GameEngine implements ExternalGameEngine {
    */
   @Override
   public void start(GameLoaderModel loader) {
-
+    gameOver = false;
+    round = 1;
+    turn = 1; //first player ideally should have id 1
+    staticState = true;
     playerContainer = loader.getPlayerContainer();
     rules = loader.getRulesRecord();
     collidables = loader.getCollidableContainer();
     collisionHandlers = rules.collisionHandlers();
     turnPolicy = loader.getTurnPolicy();
-
+    staticStateStack = new Stack<>();
+    staticStateStack.push(new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
+        round, turn, gameOver, staticState));
   }
 
   /**
@@ -75,14 +78,21 @@ public class GameEngine implements ExternalGameEngine {
    *
    * @return GameRecord object representing the current Collidables, Scores, etc
    */
-  private GameRecord update(double dt) {
+  public GameRecord update(double dt) {
     if(collidables.checkStatic()) {
       staticState = true;
+      playerContainer.addStaticStateVariables();
+      collidables.addStaticStateCollidables();
+      staticStateStack.push(new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
+          round, turn, gameOver, staticState));
+      if(rules.winCondition().execute(this) == 1.0) {
+        endGame();
+      }
     }
     else {
       staticState = false;
+      collidables.update(dt);
     }
-    collidables.update(dt);
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
         round, turn, gameOver, staticState);
   }
@@ -98,12 +108,13 @@ public class GameEngine implements ExternalGameEngine {
       collidable2.updatePostCollisionVelocity();
       if(collisionHandlers.containsKey(collision)){
         for(Command cmd : collisionHandlers.get(collision)) {
-          cmd.execute(this);
+            cmd.execute(this);
         }
       }
 
     }
-    return update(dt);
+    return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
+        round, turn, gameOver, staticState);
   }
 
   /**
@@ -165,4 +176,15 @@ public class GameEngine implements ExternalGameEngine {
   public void endGame() {
     gameOver = true;
   }
+
+  public void toLastStaticState() {
+    GameRecord newCurrentState = staticStateStack.pop();
+    turn = newCurrentState.turn();
+    round = newCurrentState.round();
+    gameOver = newCurrentState.gameOver();
+    collidables.toLastStaticStateCollidables();
+    playerContainer.toLastStaticStateVariables();
+  }
+
+
 }

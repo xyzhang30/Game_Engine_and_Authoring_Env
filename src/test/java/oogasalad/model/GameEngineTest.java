@@ -20,6 +20,7 @@ import oogasalad.model.gameengine.command.AdjustPointsCommand;
 import oogasalad.model.gameengine.command.AdvanceTurnCommand;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.command.NRoundsCompletedCommand;
+import oogasalad.model.gameengine.command.UndoTurnCommand;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -61,6 +62,8 @@ public class GameEngineTest {
       mockCollidables.put(4, new Moveable(4, Double.MAX_VALUE, 70, 0, true));
       mockCollidables.put(5, new Moveable(5, 50, 40, 40, true));
       mockCollidables.put(6, new Moveable(6, 50, 60, 40, true));
+      mockCollidables.put(7, new Surface(7, Double.MAX_VALUE, 50, 50, true, 1));
+      mockCollidables.put(8, new Moveable(8, 10, 48, 48, true));
 
       this.collidableContainer = new CollidableContainer(mockCollidables);
     }
@@ -73,6 +76,9 @@ public class GameEngineTest {
       Map<Pair, List<Command>> myMap = new HashMap<>();
       myMap.put(new Pair(1, 4), List.of(new AdjustPointsCommand(List.of(1.0, 10.0)),
           new AdvanceTurnCommand(List.of())));
+      myMap.put(new Pair(7,8),
+          List.of(new UndoTurnCommand(List.of()), new AdvanceTurnCommand(List.of()),
+              new AdjustPointsCommand(List.of(1.0,1.0))));
       this.rules = new oogasalad.model.gameengine.RulesRecord(1, Integer.MAX_VALUE, myMap,
           new NRoundsCompletedCommand(List.of(3.0)));
     }
@@ -112,7 +118,6 @@ public class GameEngineTest {
   public void testStartAndResetGame() {
     // Ensure the game starts without errors
 
-
     // Assert that the initial round and turn are as expected
     assertEquals(1, gameEngine.getRound());
     assertEquals(1, gameEngine.getTurn());
@@ -140,9 +145,10 @@ public class GameEngineTest {
     // Ensure the game starts without errors
     gameEngine.applyInitialVelocity(10, 0, 1);
 
+    gameEngine.update(1);
     gameEngine.handleCollisions(List.of(new Pair(1, 2)), 1);
-    System.out.println(gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord());
-    assertEquals(8, gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().x());
+    assertEquals(10,
+        gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().x());
     assertEquals(8,
         gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().velocityX());
 
@@ -153,41 +159,43 @@ public class GameEngineTest {
     // Ensure the game starts without errors
     gameEngine.applyInitialVelocity(10, 0, 1);
 
+    gameEngine.update(1);
     gameEngine.handleCollisions(List.of(new Pair(1, 2)), 1);
+    gameEngine.update(1);
     gameEngine.handleCollisions(List.of(new Pair(1, 2)), 1);
-    System.out.println(gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord());
-    assertEquals(14,
+    assertEquals(18,
         gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().x());
     assertEquals(6,
         gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().velocityX());
-
   }
 
 
   @Test
   public void testCollide() {
     // Ensure the game starts without errors
-    gameEngine.applyInitialVelocity(12, 0, 5);
-    gameEngine.applyInitialVelocity(12, Math.PI, 6);
+    gameEngine.applyInitialVelocity(10, 0, 5);
+    gameEngine.applyInitialVelocity(10, Math.PI, 6);
 
-    gameEngine.handleCollisions(List.of(new Pair(5, 2), new Pair(6, 2)), 1);
+    gameEngine.update(1);
+    gameEngine.handleCollisions(List.of(new Pair(5, 2), new Pair(6, 2), new Pair(5,6)), 1);
 
     assertEquals(50,
-        gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().x());
-    assertEquals(10,
-        gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().velocityX());
-    assertEquals(50,
-        gameEngine.getCollidableContainer().getCollidable(6).getCollidableRecord().x());
-    assertEquals(-10,
-        gameEngine.getCollidableContainer().getCollidable(6).getCollidableRecord().velocityX());
-    gameEngine.handleCollisions(List.of(new Pair(5, 6), new Pair(5, 2), new Pair(6, 2)), 1);
-    assertEquals(42,
         gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().x());
     assertEquals(-8,
         gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().velocityX());
-    assertEquals(58,
+    assertEquals(50,
         gameEngine.getCollidableContainer().getCollidable(6).getCollidableRecord().x());
     assertEquals(8,
+        gameEngine.getCollidableContainer().getCollidable(6).getCollidableRecord().velocityX());
+    gameEngine.update(1);
+    gameEngine.handleCollisions(List.of(new Pair(5, 2), new Pair(6, 2)), 1);
+    assertEquals(42,
+        gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().x());
+    assertEquals(-6,
+        gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().velocityX());
+    assertEquals(58,
+        gameEngine.getCollidableContainer().getCollidable(6).getCollidableRecord().x());
+    assertEquals(6,
         gameEngine.getCollidableContainer().getCollidable(6).getCollidableRecord().velocityX());
   }
 
@@ -196,18 +204,13 @@ public class GameEngineTest {
     // Ensure the game starts without errors
 
     HashMap<Integer, Integer> map = new HashMap<>(Map.of(0, 5, 1, 3, 2, 1, 3, 0, 4, 0));
-    gameEngine.applyInitialVelocity(7, 0, 5);
-    System.out.println(gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord());
+    gameEngine.applyInitialVelocity(5, 0, 5);
     for (int i = 0; i < 5; i++) {
-      gameEngine.handleCollisions(List.of(new Pair(5, 2)), 1);
-
-      System.out.println(
-          gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord());
-      System.out.println(
-          gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().velocityX());
-
       assertEquals((double) map.get(i),
           gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord().velocityX());
+
+      gameEngine.update(1);
+      gameEngine.handleCollisions(List.of(new Pair(5, 2)), 1);
     }
 
   }
@@ -217,7 +220,65 @@ public class GameEngineTest {
     // Ensure the game starts without errors
     gameEngine.handleCollisions(List.of(new Pair(1, 4)), 1);
     assertEquals(2, gameEngine.getTurn());
-    System.out.println(gameEngine.getPlayerContainer().getPlayerRecords());
     assertEquals(10, gameEngine.getPlayerContainer().getPlayer(1).getVariable("score"));
   }
+
+  @Test
+  public void testMoveWithoutCollision() {
+    // Ensure the game starts without errors
+    gameEngine.applyInitialVelocity(10.0,0,1);
+    gameEngine.update(1);
+    gameEngine.handleCollisions(List.of(), 1);
+    assertEquals(10,
+        gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().velocityX());
+    assertEquals(10,
+        gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().x());
+  }
+
+
+  @Test
+  public void testUndoCommand() {
+    // Ensure the game starts without errors
+
+    gameEngine.applyInitialVelocity(2,0,8);
+
+    gameEngine.update(1);
+    gameEngine.handleCollisions(List.of(new Pair(8,2)), 1); //move
+    gameEngine.update(1);
+    gameEngine.applyInitialVelocity(2,Math.PI/2,8);
+
+    gameEngine.update(1);
+    gameEngine.handleCollisions(List.of(new Pair(8,2)), 1); //move
+    gameEngine.update(1);
+    gameEngine.handleCollisions(List.of(new Pair(7,8),new Pair(8,2)), 1);
+    assertEquals(0,
+        gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().velocityX());
+
+    assertEquals(0,
+        gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().velocityY());
+    assertEquals(48.0,
+        gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().y());
+    assertEquals(50,
+        gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().x());
+
+    gameEngine.handleCollisions(List.of(new Pair(7,8),new Pair(8,2)), 1);
+
+    assertEquals(0,
+        gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().velocityX());
+
+    assertEquals(0,
+        gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().velocityY());
+    assertEquals(48.0,
+        gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().y());
+    assertEquals(48.0,
+        gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().x());
+
+
+
+
+
+
+
+  }
+
 }
