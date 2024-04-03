@@ -45,7 +45,15 @@ public class MenuScreen extends UIScreen {
     listView.setPrefSize(sceneWidth - 300, sceneHeight - 400);
     listView.setLayoutX(100);
     listView.setLayoutY(300);
+    addListViewEventHandling(listView);
     stackPane.getChildren().add(listView);
+  }
+
+  private void addListViewEventHandling(ListView<String> listView){
+    listView.setOnMouseClicked(e -> {
+      //TODO: find a way to pass selected option
+      sceneManager.setScreenTypeGame();
+    });
   }
 
 }
