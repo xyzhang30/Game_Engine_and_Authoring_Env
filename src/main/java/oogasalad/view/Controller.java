@@ -32,7 +32,8 @@ public class Controller {
     window.changeScene(menu);
   }
 
-  public void startGamePlay(){
+  public void startGamePlay(String selectedGame){
+    //call backend to get elements for selectedGame and pass to sceneManager
     Scene gameScene = sceneManager.makeGameScreen();
     window.changeScene(gameScene);
     //runGame();

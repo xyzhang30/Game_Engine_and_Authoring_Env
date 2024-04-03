@@ -70,8 +70,7 @@ public class MenuScreen extends UIScreen {
 
   private void addListViewEventHandling(ListView<String> listView){
     listView.setOnMouseClicked(e -> {
-      //TODO: find a way to pass selected option
-      controller.startGamePlay();
+      controller.startGamePlay(listView.getSelectionModel().getSelectedItem());
     });
   }
 
