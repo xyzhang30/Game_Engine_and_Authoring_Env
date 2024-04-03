@@ -123,7 +123,8 @@
   "variables": [
     {
       "global": {
-        "turn": 1
+        "maxTurns": 1,
+        "maxRounds": 1
       },
       "player": {
         "strokes": 0,
