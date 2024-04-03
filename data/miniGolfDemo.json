@@ -2,9 +2,9 @@
   "gameName": "sampleMiniGolf",
   "collidable_objects": [
     {
-      "collidable_id": "01",
-      "properties": ["visible"],
-      "mass": 0,
+      "collidable_id": 1,
+      "properties": ["visible, surface"],
+      "mass": "Infinity",
       "position": {
         "x_position": 0,
         "y_position": 0
@@ -17,8 +17,8 @@
       "color": [100,200,100]
     },
     {
-      "collidable_id": "02",
-      "properties": ["visible","tangible","movable","primary"],
+      "collidable_id": 2,
+      "properties": ["visible","movable"],
       "mass": 1,
       "position": {
         "x_position": 250,
@@ -32,23 +32,8 @@
       "color": [255,255,255]
     },
     {
-      "collidable_id": "03",
-      "properties": ["visible","tangible","movable","primary"],
-      "mass": 1,
-      "position": {
-        "x_position": 250,
-        "y_position": 450
-      },
-      "shape": "circle",
-      "dimension": {
-        "x_dimension": 2,
-        "y_dimension": 2
-      },
-      "color": [255,255,255]
-    },
-    {
-      "collidable_id": "04",
-      "properties": ["visible"],
+      "collidable_id": 3,
+      "properties": ["visible", "surface"],
       "mass": 0,
       "position": {
         "x_position": 250,
@@ -62,8 +47,8 @@
       "color": [0,0,0]
     },
     {
-      "collidable_id": "05",
-      "properties": ["visible","tangible"],
+      "collidable_id": 4,
+      "properties": ["visible","movable"],
       "mass": 200,
       "position": {
         "x_position": 0,
@@ -77,8 +62,8 @@
       "color": [0,0,0]
     },
     {
-      "collidable_id": "06",
-      "properties": ["visible","tangible"],
+      "collidable_id": 5,
+      "properties": ["visible","movable"],
       "mass": 200,
       "position": {
         "x_position": 0,
@@ -92,8 +77,8 @@
       "color": [0,0,0]
     },
     {
-      "collidable_id": "07",
-      "properties": ["visible","tangible"],
+      "collidable_id": 6,
+      "properties": ["visible","movable"],
       "mass": 200,
       "position": {
         "x_position": 490,
@@ -107,8 +92,8 @@
       "color": [0,0,0]
     },
     {
-      "collidable_id": "08",
-      "properties": ["visible","tangible"],
+      "collidable_id": 7,
+      "properties": ["visible","movable"],
       "mass": 200,
       "position": {
         "x_position": 0,
@@ -136,21 +121,22 @@
   "rules": {
     "collisions": [
       {
-        "first_id": "02",
-        "second_id": "04",
+        "first_id": 2,
+        "second_id": 4,
         "rule": [
+
         ]
       },
       {
-        "first_id": "3",
-        "second_id": "04",
+        "first_id": 3,
+        "second_id": 4,
         "command": [
           {
             "XCommand": [4,5]
           }
         ]
-        }
-      },
+      }
+    ],
     "static_checks": [
       [["=","finished",0],[
         ["add","strokes",1]
