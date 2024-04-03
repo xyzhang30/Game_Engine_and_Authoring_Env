@@ -33,8 +33,8 @@ public class SceneManager {
     MenuScreen menuScreen = new MenuScreen(titles, controller);
     return menuScreen.getScene();
   }
-  public Scene makeGameScreen(){
-      GameScreen gameScreen = new GameScreen();
+  public Scene makeGameScreen(Controller controller){
+      GameScreen gameScreen = new GameScreen(controller);
       return gameScreen.getScene();
   }
 

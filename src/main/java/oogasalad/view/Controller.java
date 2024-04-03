@@ -50,7 +50,7 @@ public class Controller {
     //new FrontendParser(selectedGame);
     //gameEngine = new GameEngine(selectedGame);
     //create compositeElement from css files and pass to sceneManager
-    Scene gameScene = sceneManager.makeGameScreen();
+    Scene gameScene = sceneManager.makeGameScreen(this);
     //pass compositeElement to collision manager
     stage.setScene(gameScene);
     animationManager.runAnimation(this);

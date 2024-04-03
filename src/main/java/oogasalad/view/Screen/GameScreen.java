@@ -90,6 +90,8 @@ public class GameScreen extends UIScreen {
           powerIndicator.setHeight(powerIndicator.getHeight() - 10);
         }
       }
+      case LEFT:{} //modify angle
+      case RIGHT: {} //modify angle
       case ENTER: {
         double fractionalVelocity = powerIndicator.getHeight() / maxPower;
         controller.hitPointScoringObject(fractionalVelocity);
