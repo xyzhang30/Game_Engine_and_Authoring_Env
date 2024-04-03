@@ -147,6 +147,9 @@
         ]
       }
     ],
-    "turn_policy": "standard"
+    "turn_policy": "standard",
+    "win_condition": {
+      "n_rounds": [2]
+    }
   }
 }
