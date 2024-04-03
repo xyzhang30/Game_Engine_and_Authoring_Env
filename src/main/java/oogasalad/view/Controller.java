@@ -69,8 +69,7 @@ public class Controller {
 //    gameEngine.update(timeStep);
 //
 //    if (sceneManager.notMoving(gameRecord)) {
-//      //listen for hit
-//      //true if the ball is not moving
+//      sceneManger.enableHitting();
 //    }
 //    //return if game is over
     return true;

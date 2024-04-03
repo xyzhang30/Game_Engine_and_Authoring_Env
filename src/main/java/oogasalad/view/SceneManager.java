@@ -11,6 +11,7 @@ import oogasalad.view.VisualElements.CompositeElement;
 
 public class SceneManager {
   private CompositeElement compositeElement;
+  private GameScreen gameScreen;
 
 
   public SceneManager() {
@@ -34,8 +35,12 @@ public class SceneManager {
     return menuScreen.getScene();
   }
   public Scene makeGameScreen(Controller controller){
-      GameScreen gameScreen = new GameScreen(controller);
+      gameScreen = new GameScreen(controller);
       return gameScreen.getScene();
+  }
+
+  public void enableHitting(){
+    gameScreen.enableHitting();
   }
 
 

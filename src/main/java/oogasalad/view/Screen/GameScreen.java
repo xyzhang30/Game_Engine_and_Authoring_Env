@@ -14,18 +14,27 @@ import oogasalad.view.VisualElements.CompositeElement;
 
 public class GameScreen extends UIScreen {
   private final int maxPower = 650;
+  private boolean ableToHit;
 
   private final BorderPane root;
 
   public GameScreen(Controller controller) {
     root = new BorderPane();
     this.controller = controller;
+    ableToHit = true;
     // Hard coded case
     CompositeElement cm = new CompositeElement();
     cm.update(List.of(new CollidableRecord(1, 10, 100, 100, 0, 0, true)));
     setupFieldComponents(cm); // BIG improvised here. There's a lot of refactoring to do first...
 
     createScene();
+  }
+
+  /**
+   * Enable the ability to hit after objects have stopped moving from previous hit
+   */
+  public void enableHitting(){
+    ableToHit = true;
   }
 
   @Override
@@ -72,7 +81,9 @@ public class GameScreen extends UIScreen {
 
   private void initiateListening(Scene scene, Rectangle powerIndicator) {
     scene.setOnKeyPressed(event -> {
-      handleKeyInput(event.getCode(), powerIndicator);
+      if(ableToHit){
+        handleKeyInput(event.getCode(), powerIndicator);
+      }
     });
   }
 
@@ -95,6 +106,7 @@ public class GameScreen extends UIScreen {
       case LEFT:{} //modify angle
       case RIGHT: {} //modify angle
       case ENTER: {
+        ableToHit = false;
         double fractionalVelocity = powerIndicator.getHeight() / maxPower;
         controller.hitPointScoringObject(fractionalVelocity);
         break;
