@@ -15,7 +15,7 @@ import oogasalad.model.gameparser.data.GameData;
  */
 public abstract class GameLoader {
 
-  protected GameData gameData;
+  public GameData gameData;
 
   /**
    * Constructs a GameLoader object with the specified ID.
