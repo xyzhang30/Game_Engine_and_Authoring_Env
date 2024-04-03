@@ -16,7 +16,7 @@ import oogasalad.model.gameengine.GameEngine;
  */
 public class Controller {
 
-  private GameEngine gameEngine = null;
+  private GameEngine gameEngine;
   private final CollisionManager collisionManager;
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
