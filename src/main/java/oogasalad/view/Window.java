@@ -13,7 +13,7 @@ public class Window {
     StackPane root = new StackPane(); //
     scene = new Scene(root);
     stage.setScene(scene);
-    controller = new Controller(id);
+    controller = new Controller(id, scene);
     stage.show();
     controller.startTitleListening();
   }
