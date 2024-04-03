@@ -33,6 +33,21 @@
     },
     {
       "collidable_id": 3,
+      "properties": ["visible", "movable"],
+      "mass": 1,
+      "position": {
+        "x_position": 250,
+        "y_position": 450
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 2,
+        "y_dimension": 2
+      },
+      "color": [255,255,255]
+    },
+    {
+      "collidable_id": 4,
       "properties": ["visible", "surface"],
       "mass": 0,
       "position": {
@@ -47,7 +62,7 @@
       "color": [0,0,0]
     },
     {
-      "collidable_id": 4,
+      "collidable_id": 5,
       "properties": ["visible","movable"],
       "mass": 200,
       "position": {
@@ -62,7 +77,7 @@
       "color": [0,0,0]
     },
     {
-      "collidable_id": 5,
+      "collidable_id": 6,
       "properties": ["visible","movable"],
       "mass": 200,
       "position": {
@@ -77,7 +92,7 @@
       "color": [0,0,0]
     },
     {
-      "collidable_id": 6,
+      "collidable_id": 7,
       "properties": ["visible","movable"],
       "mass": 200,
       "position": {
@@ -92,7 +107,7 @@
       "color": [0,0,0]
     },
     {
-      "collidable_id": 7,
+      "collidable_id": 8,
       "properties": ["visible","movable"],
       "mass": 200,
       "position": {
@@ -125,7 +140,7 @@
         "second_id": 4,
         "command": [
           {
-            "XCommand": [4,5]
+            "AdjustPoints": [4,5]
           }
         ]
       },
