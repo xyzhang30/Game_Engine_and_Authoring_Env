@@ -3,14 +3,19 @@ package oogasalad.view.Screen;
 import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
+import oogasalad.view.VisualElements.CompositeElement;
 
 public class GameScreen extends UIScreen {
 
-  public GameScreen() {
+  public GameScreen(CompositeElement cm) {
     root = new Group();
+
+    setupFieldComponents(cm); // BIG improvised here. There's a lot of refactoring to do first...
+
     createScene();
   }
 
@@ -26,6 +31,15 @@ public class GameScreen extends UIScreen {
     controlPane.setLayoutY(10); // top of screen?
 
     root.getChildren().add(controlPane);
+  }
+
+  @Deprecated
+  private void setupFieldComponents(CompositeElement cm){
+    StackPane sp = new StackPane();
+    for (int i : cm.idList()){
+      sp.getChildren().add(cm.getNode(i));
+    }
+    root.getChildren().add(sp);
   }
 
   private void setupPowerBar() {

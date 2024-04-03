@@ -35,6 +35,11 @@ public class CompositeElement {
     return elementMap.get(id).getNode();
   }
 
+  public List<Integer> idList(){
+    return elementMap.keySet().stream().toList();
+  }
+
+
 
 // THE BELOW ARE TO BE EXCISED UPON ACKNOWLEDGEMENT OF SECOND PARTY
   @Deprecated

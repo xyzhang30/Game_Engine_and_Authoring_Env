@@ -2,6 +2,7 @@ package oogasalad.view;
 
 import java.util.List;
 import javafx.scene.Scene;
+import oogasalad.model.api.CollidableRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.view.Screen.GameScreen;
 import oogasalad.view.Screen.MenuScreen;
@@ -14,6 +15,10 @@ public class SceneManager {
 
   public SceneManager() {
     this.compositeElement = new CompositeElement();
+
+    //Test purposes only! Remove at some point
+    compositeElement.update(List.of(new CollidableRecord(1,10,100,100,0,0,true)));
+
   }
 
   public void update(GameRecord gameRecord) {
@@ -33,7 +38,7 @@ public class SceneManager {
     return menuScreen.getScene();
   }
   public Scene makeGameScreen(){
-      GameScreen gameScreen = new GameScreen();
+      GameScreen gameScreen = new GameScreen(compositeElement);
       return gameScreen.getScene();
   }
 
