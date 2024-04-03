@@ -47,6 +47,7 @@ public class TitleScreen extends UIScreen {
 
     Rectangle playButton = new Rectangle(buttonX, playButtonY, buttonWidth, buttonHeight);
     playButton.setEffect(createDropShadow());
+    addPlayButtonEventHandling(playButton);
 
     Rectangle authorButton = new Rectangle(buttonX, authorButtonY, buttonWidth, buttonHeight);
     authorButton.setEffect(createDropShadow());
@@ -56,6 +57,10 @@ public class TitleScreen extends UIScreen {
 
     Text author = new Text(textX, authorTextY, "Author");
     setToThemeFont(author, 25);
+  }
+
+  private void addPlayButtonEventHandling(Rectangle playButton){
+    playButton.setOnMouseClicked(e -> sceneManager.setScreenTypeMenu());
   }
 
 }
