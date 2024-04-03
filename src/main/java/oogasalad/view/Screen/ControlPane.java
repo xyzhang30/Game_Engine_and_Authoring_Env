@@ -2,14 +2,13 @@ package oogasalad.view.Screen;
 
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 
 /**
  * A pane that contains control buttons for the game such as Pause and Save.
  *
  * @author Doga Ozmen
  */
-public class ControlPane extends Pane {
+public class ControlPane extends HBox {
   private Button pauseButton;
   private Button saveButton;
 
@@ -29,10 +28,9 @@ public class ControlPane extends Pane {
   }
 
   private void layoutButtons() {
-    HBox buttonLayout = new HBox(10); // Horizontal layout with spacing of 10
-    buttonLayout.setStyle("-fx-background-color: #660099"); // Pull format from data
-    buttonLayout.getChildren().addAll(pauseButton, saveButton);
-    this.getChildren().add(buttonLayout); // Add the layout to the ControlPane
+    this.setSpacing(10); // Horizontal layout with spacing of 10
+    this.setStyle("-fx-background-color: #660099"); // Pull format from data
+    this.getChildren().addAll(pauseButton, saveButton);
   }
 
   private void handlePause() {
