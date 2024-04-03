@@ -12,7 +12,7 @@ public abstract class GameLoader {
   protected GameData gameData;
 
   public GameLoader(int id){
-    parseJSON("data/miniGolfDemo.json");
+    parseJSON("data/singlePlayerMiniGolf.json");
   }
   public GameLoader(String filePath){
     parseJSON(filePath);
@@ -34,10 +34,9 @@ public abstract class GameLoader {
 //    GameLoader gameLoader = new GameLoaderModel(0);
 //    System.out.println("Game Name: " + gameLoader.gameData.gameName());
 //    System.out.println("Number of Collidable Objects: " + gameLoader.gameData.collidableObjects().size());
-//    for (CollidableObject co: gameLoader.gameData.collidableObjects()) {
-//      System.out.println(co.collidableId());
-//      System.out.println(co.mass());
-//
+//    for (Player p: gameLoader.gameData.players()) {
+//      System.out.println(p.playerId());
+//      System.out.println(p.myCollidable());
 //    }
 //  }
 
