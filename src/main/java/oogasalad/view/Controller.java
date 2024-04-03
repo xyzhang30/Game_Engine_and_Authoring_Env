@@ -16,7 +16,7 @@ import oogasalad.model.gameengine.GameEngine;
  */
 public class Controller {
 
-  private GameEngine gameEngine = null;
+  private GameEngine gameEngine;
   private final CollisionManager collisionManager;
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
@@ -69,13 +69,16 @@ public class Controller {
 //    gameEngine.update(timeStep);
 //
 //    if (sceneManager.notMoving(gameRecord)) {
-//      //listen for hit
-//      //true if the ball is not moving
+//      sceneManger.enableHitting();
 //    }
 //    //return if game is over
     return true;
   }
 
+  /**
+   * Sends velocity and angle to back end to simulate hitting point scoring object
+   * @param fractionalVelocity velocity as fraction of maxVelocity
+   */
   public void hitPointScoringObject(double fractionalVelocity){
     //gameEngine.applyInitialVelocity();
   }
