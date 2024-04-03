@@ -1,11 +1,11 @@
 package oogasalad.view;
 
 import java.util.List;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import oogasalad.model.api.GameRecord;
-import oogasalad.model.api.CollidableRecord;
-import oogasalad.view.Screen.*;
+import oogasalad.view.Screen.GameScreen;
+import oogasalad.view.Screen.MenuScreen;
+import oogasalad.view.Screen.TitleScreen;
 import oogasalad.view.VisualElements.CompositeElement;
 
 public class SceneManager {
