@@ -10,15 +10,13 @@ import javafx.stage.Stage;
  */
 public class Window {
   private final Stage stage;
-
-  public Window(int id) {
-    stage = new Stage();
-//    SceneManager sceneManager = new sceneManager();
-//    stage.setScene(sceneManager.getScene());
-    stage.show();
+  public Window(int id, Scene scene) {
+    this(new Stage(), scene, id);
   }
   public Window(Stage stage, Scene scene, int id) {
     this.stage = stage;
+//    SceneManager sceneManager = new SceneManager();
+//    stage.setScene(sceneManager.makeTitleScreen(new Controller()));
     stage.setScene(scene);
     stage.show();
   }
