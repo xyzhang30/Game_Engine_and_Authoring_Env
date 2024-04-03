@@ -11,6 +11,15 @@ public class GameScreen extends UIScreen {
   public GameScreen(CompositeElement compositeElement) {
     super();
     root = new Group();
+    setupControlPane();
+  }
+
+  private void setupControlPane() {
+    ControlPane controlPane = new ControlPane();
+    controlPane.setLayoutX(10); // top of screen?
+    controlPane.setLayoutY(10); // top of screen?
+
+    root.getChildren().add(controlPane);
   }
 
   private void createPowerBar() {
