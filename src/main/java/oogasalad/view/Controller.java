@@ -32,10 +32,15 @@ public class Controller {
     window.changeScene(menu);
   }
 
-  public void startGamePlay(){}
+  public void startGamePlay(){
+    Scene gameScene = sceneManager.makeGameScreen();
+    window.changeScene(gameScene);
+    //runGame();
+  }
 
 //  private void runGame() {
-//    while (sceneManager.getScreenType() == ScreenType.GAME_SCREEN) {
+//    //while not end game
+//    while () {
 //      GameRecord gameRecord = gameEngine.update();
 //      sceneManager.update(gameRecord);
 //      List<Pair> collisionList = collisionManager.getIntersections();

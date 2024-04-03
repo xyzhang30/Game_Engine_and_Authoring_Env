@@ -3,10 +3,12 @@ package oogasalad.view.Screen;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oogasalad.view.Controller;
 
@@ -46,7 +48,24 @@ public class MenuScreen extends UIScreen {
     listView.setLayoutX(400);
     listView.setLayoutY(300);
     addListViewEventHandling(listView);
+    styleMenu(listView);
     root.getChildren().add(listView);
+  }
+
+  private void styleMenu(ListView<String> listView){
+    listView.setCellFactory(param -> new ListCell<String>() {
+      @Override
+      protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+        } else {
+          setText(item);
+          setFont(Font.font("Arial", 25));
+          setAlignment(Pos.CENTER);
+        }
+      }
+    });
   }
 
   private void addListViewEventHandling(ListView<String> listView){
