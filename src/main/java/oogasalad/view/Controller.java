@@ -47,7 +47,7 @@ public class Controller {
    * @param selectedGame the game selected to play
    */
   public void startGamePlay(String selectedGame) {
-    new GameLoaderView(selectedGame);
+    new FrontendParser(selectedGame);
     gameEngine = new GameEngine(selectedGame);
     //create elements from css files and pass to sceneManager
     Scene gameScene = sceneManager.makeGameScreen();
@@ -73,6 +73,7 @@ public class Controller {
     }
     //return if game is over
   }
+
 
 
   /**
