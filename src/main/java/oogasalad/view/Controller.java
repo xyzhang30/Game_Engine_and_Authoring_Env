@@ -35,6 +35,7 @@ public class Controller {
   public void startGamePlay(String selectedGame){
     //call backend to get elements for selectedGame and pass to sceneManager
     Scene gameScene = sceneManager.makeGameScreen();
+    //send collidableElement to collision manager
     window.changeScene(gameScene);
     //runGame();
   }
