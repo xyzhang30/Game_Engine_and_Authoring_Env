@@ -15,10 +15,6 @@ public class SceneManager {
 
   public SceneManager() {
     this.compositeElement = new CompositeElement();
-
-    //Test purposes only! Remove at some point
-    compositeElement.update(List.of(new CollidableRecord(1,10,100,100,0,0,true)));
-
   }
 
   public void update(GameRecord gameRecord) {

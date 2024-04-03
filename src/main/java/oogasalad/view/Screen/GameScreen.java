@@ -7,13 +7,17 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
+import oogasalad.model.api.CollidableRecord;
 import oogasalad.view.VisualElements.CompositeElement;
 
 public class GameScreen extends UIScreen {
 
-  public GameScreen(CompositeElement cm) {
+  public GameScreen() {
     root = new Group();
 
+    // Hard coded case
+    CompositeElement cm = new CompositeElement();
+    cm.update(List.of(new CollidableRecord(1,10,100,100,0,0,true)));
     setupFieldComponents(cm); // BIG improvised here. There's a lot of refactoring to do first...
 
     createScene();
