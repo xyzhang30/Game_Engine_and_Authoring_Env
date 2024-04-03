@@ -36,7 +36,7 @@ public class CompositeElement {
   }
 
 
-
+// THE BELOW ARE TO BE EXCISED UPON ACKNOWLEDGEMENT OF SECOND PARTY
   @Deprecated
   public Shape getShape(int id) {
     return shapes.get(id);

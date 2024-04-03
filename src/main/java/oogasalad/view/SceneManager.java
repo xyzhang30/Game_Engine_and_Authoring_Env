@@ -17,9 +17,7 @@ public class SceneManager {
   }
 
   public void update(GameRecord gameRecord) {
-    for (CollidableRecord collidable : gameRecord.collidables()) {
-      compositeElement.updateShape(collidable.id(), collidable.x(), collidable.y(), collidable.visible());
-    }
+    compositeElement.update(gameRecord.collidables());
   }
 
   public boolean notMoving(GameRecord gameRecord){
