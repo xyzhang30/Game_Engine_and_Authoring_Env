@@ -10,19 +10,12 @@ public class Player {
   private final int playerId;
   private final Collidable myCollidable;
   private final Map<String, Double> variables;
-  private int turns;
-  private boolean active;
 
   public Player(int id, Collidable collidable) {
     playerId = id;
     myCollidable = collidable;
     variables = new HashMap<>();
     variables.put("score", 0.0);
-    turns = 1;
-  }
-
-  public Collidable getPrimary() {
-    return myCollidable;
   }
 
   public double getVariable(String variable) {
@@ -33,11 +26,7 @@ public class Player {
     variables.put(key, value);
   }
 
-  protected void setActive(boolean state) {
-    active = state;
-  }
-
-  protected PlayerRecord getPlayerRecord() {
+  protected PlayerRecord getPlayerRecord(boolean active) {
     return new PlayerRecord(playerId, variables.get("score"), myCollidable.getId(), active);
   }
 
