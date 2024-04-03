@@ -21,12 +21,13 @@ public class GameEngine implements ExternalGameEngine {
   private PlayerContainer playerContainer;
   private RulesRecord rules;
   private CollidableContainer collidables;
-  private Map<Pair, Command> collisionHandlers;
+  private Map<Pair, List<Command>> collisionHandlers;
   private int round;
   private int turn;
   private boolean gameOver;
   private boolean staticState;
 
+  private GameLoaderModel loader;
 
   public GameEngine(GameLoaderModel loader) {
     playerContainer = loader.getPlayerContainer();
@@ -76,8 +77,8 @@ public class GameEngine implements ExternalGameEngine {
     }
     else {
       staticState = false;
-      collidables.update(dt);
     }
+    collidables.update(dt);
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
         round, turn, gameOver, staticState);
   }
@@ -92,8 +93,9 @@ public class GameEngine implements ExternalGameEngine {
       collidable1.updatePostCollisionVelocity();
       collidable2.updatePostCollisionVelocity();
       if(collisionHandlers.containsKey(collision)){
-        Command cmd = collisionHandlers.get(collision);
-        cmd.execute(this);
+        for(Command cmd : collisionHandlers.get(collision)) {
+          cmd.execute(this);
+        }
       }
 
     }
@@ -123,13 +125,14 @@ public class GameEngine implements ExternalGameEngine {
 
   public void advanceRound() {
     round++;
-    //other stuff
+    collidables = loader.getCollidableContainer();
+    collisionHandlers = rules.collisionHandlers();
   }
 
   public void advanceTurn() {
-    //TODO: ABSTRACT THIS TO A TURN POLICY HANDLER
-    turn = (turn + 1) % playerContainer.getPlayerRecords().size();
-    IntStream.range(0, playerContainer.getPlayerRecords().size())
+
+    turn = (turn + 1) % playerContainer.getPlayerRecords().size() +  playerContainer.getPlayerRecords().size();
+    IntStream.range(1, playerContainer.getPlayerRecords().size()+1)
         .forEach(i -> playerContainer.getPlayer(i).setActive(i == turn));
   }
 
