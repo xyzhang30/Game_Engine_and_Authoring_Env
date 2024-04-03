@@ -10,7 +10,7 @@ public class Window {
   private final Stage stage;
   public Window(Stage stage, int id){
     this.stage = stage;
-    StackPane root = new StackPane(); //?
+    StackPane root = new StackPane(); //
     scene = new Scene(root);
     stage.setScene(scene);
     controller = new Controller(id);
