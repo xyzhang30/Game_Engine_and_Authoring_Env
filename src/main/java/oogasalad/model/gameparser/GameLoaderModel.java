@@ -1,8 +1,11 @@
 package oogasalad.model.gameparser;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import oogasalad.Pair;
+import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.invalidParameterNumberException;
 import oogasalad.model.gameengine.Player;
 import oogasalad.model.gameengine.PlayerContainer;
@@ -107,18 +110,31 @@ public class GameLoaderModel extends GameLoader {
 
   // alisha
   private void createRulesRecord() {
-    Map<Pair, Command> commandMap = new HashMap<>();
-    int maxRounds = gameData.variables().get(0).global().maxRounds();
-    int maxTurns = gameData.variables().get(0).global().maxTurns();
-    for (CollisionRule rule : gameData.rules().collisions()){
-      Pair pair = new Pair(rule.firstId(), rule.secondId());
-      for (Map<String, List<Integer>> command : rule.command()){
-        for(String s : command.keySet()){
-          commandMap.put(pair,)
+    try{
+      Map<Pair, List<Command>> commandMap = new HashMap<>();
+      int maxRounds = gameData.variables().get(0).global().maxRounds();
+      int maxTurns = gameData.variables().get(0).global().maxTurns();
+      for (CollisionRule rule : gameData.rules().collisions()){
+        Pair pair = new Pair(rule.firstId(), rule.secondId()); //collision rule is the one with ids and command map
+        List<Command> commands = new ArrayList<>();
+        for (Map<String, List<Integer>> command : rule.command()){ //looping through the list of command maps
+          for(String s : command.keySet()){ //this is a for loop but there's always only going to be 1 command in the map (probably should change the structure of the json afterwards)
+            Class<?> cc = Class.forName(s);
+            commands.add((Command) cc.getDeclaredConstructor(List.class).newInstance(command.get(s)));
+            commandMap.put(pair,commands);
+          }
         }
       }
+      rulesRecord = new RulesRecord(maxRounds,maxTurns,commandMap);
+    } catch (NoSuchMethodException | IllegalAccessException | InstantiationException |
+             ClassNotFoundException | InvocationTargetException e) {
+      throw new InvalidCommandException(e.getMessage());
     }
   }
+
+//  public TurnPolicy getTurnPolicy(){
+//
+//  }
 
 
   /**
