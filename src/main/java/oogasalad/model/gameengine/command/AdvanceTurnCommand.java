@@ -13,6 +13,7 @@ public class AdvanceTurnCommand implements Command {
   @Override
   public double execute(GameEngine engine) {
     engine.advanceTurn();
+    System.out.println(engine.getTurn());
     return 0.0;
   }
 

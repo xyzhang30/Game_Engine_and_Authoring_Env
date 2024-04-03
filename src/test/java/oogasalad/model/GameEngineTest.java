@@ -10,6 +10,8 @@ import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.Player;
 import oogasalad.model.gameengine.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
+import oogasalad.model.gameengine.StandardTurnPolicy;
+import oogasalad.model.gameengine.TurnPolicy;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.collidable.Moveable;
@@ -17,6 +19,7 @@ import oogasalad.model.gameengine.collidable.Surface;
 import oogasalad.model.gameengine.command.AdjustPointsCommand;
 import oogasalad.model.gameengine.command.AdvanceTurnCommand;
 import oogasalad.model.gameengine.command.Command;
+import oogasalad.model.gameengine.command.NRoundsCompletedCommand;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -30,15 +33,18 @@ public class GameEngineTest {
     private CollidableContainer collidableContainer;
     private oogasalad.model.gameengine.RulesRecord rules;
     private GameEngine engine;
+    private TurnPolicy turnPolicy;
 
-    public GameLoaderMock(int id) {
+    public GameLoaderMock(String id) {
       super(id);
       createCollidableContainer();
       createPlayerContainer();
       createRulesRecord();
+      createTurnPolicy();
     }
 
-    protected void createPlayerContainer() {
+    @Override
+    public void createPlayerContainer() {
       Map<Integer, Player> mockPlayers = new HashMap<>();
       mockPlayers.put(1, new Player(1, collidableContainer.getCollidable(1)));
       mockPlayers.put(2, new Player(2, collidableContainer.getCollidable(4)));
@@ -60,11 +66,15 @@ public class GameEngineTest {
     }
 
 
+    protected void createTurnPolicy() {
+      turnPolicy = new StandardTurnPolicy(playerContainer);
+    }
     protected void createRulesRecord() {
       Map<Pair, List<Command>> myMap = new HashMap<>();
       myMap.put(new Pair(1, 4), List.of(new AdjustPointsCommand(List.of(1.0, 10.0)),
           new AdvanceTurnCommand(List.of())));
-      this.rules = new oogasalad.model.gameengine.RulesRecord(1, Integer.MAX_VALUE, myMap);
+      this.rules = new oogasalad.model.gameengine.RulesRecord(1, Integer.MAX_VALUE, myMap,
+          new NRoundsCompletedCommand(List.of(3.0)));
     }
 
     @Override
@@ -81,6 +91,11 @@ public class GameEngineTest {
     public RulesRecord getRulesRecord() {
       return rules;
     }
+
+    @Override
+    public TurnPolicy getTurnPolicy() {
+      return turnPolicy;
+    }
   }
 
   private GameEngine gameEngine;
@@ -88,14 +103,15 @@ public class GameEngineTest {
 
   @BeforeEach
   public void setUp() {
-    gameEngine = new GameEngine("1");
+    gameEngine = new GameEngine("data/singlePlayerMiniGolf.json");
+    gameEngine.start(new GameLoaderMock("data/singlePlayerMiniGolf.json"));
   }
 
 
   @Test
   public void testStartAndResetGame() {
     // Ensure the game starts without errors
-    gameEngine.start();
+
 
     // Assert that the initial round and turn are as expected
     assertEquals(1, gameEngine.getRound());
@@ -111,7 +127,7 @@ public class GameEngineTest {
   @Test
   public void testOnApplyVelocity() {
     // Ensure the game starts without errors
-    gameEngine.start();
+
     gameEngine.applyInitialVelocity(10, 0, 1);
     double vel =
         gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().velocityX();
@@ -122,7 +138,6 @@ public class GameEngineTest {
   @Test
   public void testSingularUpdate() {
     // Ensure the game starts without errors
-    gameEngine.start();
     gameEngine.applyInitialVelocity(10, 0, 1);
 
     gameEngine.handleCollisions(List.of(new Pair(1, 2)), 1);
@@ -136,7 +151,6 @@ public class GameEngineTest {
   @Test
   public void testMultipleUpdate() {
     // Ensure the game starts without errors
-    gameEngine.start();
     gameEngine.applyInitialVelocity(10, 0, 1);
 
     gameEngine.handleCollisions(List.of(new Pair(1, 2)), 1);
@@ -153,7 +167,6 @@ public class GameEngineTest {
   @Test
   public void testCollide() {
     // Ensure the game starts without errors
-    gameEngine.start();
     gameEngine.applyInitialVelocity(12, 0, 5);
     gameEngine.applyInitialVelocity(12, Math.PI, 6);
 
@@ -181,7 +194,7 @@ public class GameEngineTest {
   @Test
   public void testStop() {
     // Ensure the game starts without errors
-    gameEngine.start();
+
     HashMap<Integer, Integer> map = new HashMap<>(Map.of(0, 5, 1, 3, 2, 1, 3, 0, 4, 0));
     gameEngine.applyInitialVelocity(7, 0, 5);
     System.out.println(gameEngine.getCollidableContainer().getCollidable(5).getCollidableRecord());
@@ -202,8 +215,6 @@ public class GameEngineTest {
   @Test
   public void testAdvanceTurnAndAdjustPoints() {
     // Ensure the game starts without errors
-    gameEngine.start();
-    gameEngine.applyInitialVelocity(70, 0, 1);
     gameEngine.handleCollisions(List.of(new Pair(1, 4)), 1);
     assertEquals(2, gameEngine.getTurn());
     System.out.println(gameEngine.getPlayerContainer().getPlayerRecords());

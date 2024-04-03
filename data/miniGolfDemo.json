@@ -140,16 +140,7 @@
         "second_id": 4,
         "command": [
           {
-            "AdjustPoints": [4,5]
-          }
-        ]
-      },
-      {
-        "first_id": 3,
-        "second_id": 4,
-        "command": [
-          {
-            "XCommand": [4,5]
+            "AdjustPointsCommand": [4,5]
           }
         ]
       }

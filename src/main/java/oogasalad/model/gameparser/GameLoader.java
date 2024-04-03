@@ -38,6 +38,7 @@ public abstract class GameLoader {
     //find the file according to id (for database)
     try {
       ObjectMapper objectMapper = new ObjectMapper();
+      File f = new File(filePath);
       this.gameData = objectMapper.readValue(new File(filePath), GameData.class);
 
     } catch (IOException e) {

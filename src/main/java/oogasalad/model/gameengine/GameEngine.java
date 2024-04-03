@@ -31,23 +31,24 @@ public class GameEngine implements ExternalGameEngine {
   private GameLoaderModel loader;
 
   public GameEngine(String gameTitle) {
-    loader = new GameLoaderModel(gameTitle);
-    playerContainer = loader.getPlayerContainer();
-    rules = loader.getRulesRecord();
-    collidables = loader.getCollidableContainer();
-    collisionHandlers = rules.collisionHandlers();
-    turnPolicy = loader.getTurnPolicy();
     round = 1;
     turn = 1; //first player ideally should have id 1
     gameOver = false;
     staticState = true;
+    loader = new GameLoaderModel(gameTitle);
   }
 
   /**
    * Starts the current game
    */
   @Override
-  public void start() {
+  public void start(GameLoaderModel loader) {
+
+    playerContainer = loader.getPlayerContainer();
+    rules = loader.getRulesRecord();
+    collidables = loader.getCollidableContainer();
+    collisionHandlers = rules.collisionHandlers();
+    turnPolicy = loader.getTurnPolicy();
 
   }
 
@@ -133,6 +134,7 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   public void advanceTurn() {
+    turn = turnPolicy.getTurn();
 
   }
 
