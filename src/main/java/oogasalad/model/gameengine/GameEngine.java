@@ -3,7 +3,6 @@ package oogasalad.model.gameengine;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
-import java.util.stream.IntStream;
 import oogasalad.Pair;
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
@@ -78,6 +77,8 @@ public class GameEngine implements ExternalGameEngine {
    *
    * @return GameRecord object representing the current Collidables, Scores, etc
    */
+
+  @Override
   public GameRecord update(double dt) {
     if(collidables.checkStatic()) {
       staticState = true;
