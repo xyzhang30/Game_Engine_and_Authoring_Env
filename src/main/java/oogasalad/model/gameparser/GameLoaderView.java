@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.List;
 import oogasalad.model.api.ViewCollidableRecord;
 import oogasalad.model.gameparser.data.CollidableObject;
@@ -31,14 +32,20 @@ public class GameLoaderView extends GameLoader {
   }
 
   private void createViewRecord() {
+    viewCollidableRecords = new ArrayList<>();
     for (CollidableObject o : gameData.collidableObjects()) {
       int id = o.collidableId();
       String shape = o.shape();
-      List<Integer> color = o.color();
+      List<Integer> colorRgb = new ArrayList<>();
+      for (int i : o.color()){
+        colorRgb.add(validateRgbValue(i));
+      }
       double xdimension = o.dimension().xDimension();
       double ydimension = o.dimension().yDimension();
-      ViewCollidableRecord viewCollidable = new ViewCollidableRecord(id, color, shape, xdimension,
-          ydimension);
+      double startXpos = o.position().xPosition();
+      double startYpos = o.position().yPosition();
+      ViewCollidableRecord viewCollidable = new ViewCollidableRecord(id, colorRgb, shape, xdimension,
+          ydimension, startXpos, startYpos);
       viewCollidableRecords.add(viewCollidable);
     }
   }
@@ -47,39 +54,13 @@ public class GameLoaderView extends GameLoader {
     return viewCollidableRecords;
   }
 
-
-  //alisha
-//  private void generateStyleSheet(String gameName) {
-//    //writes the color + dimension + filepath (if applicable) into css
-//    try (PrintWriter writer = new PrintWriter(new FileWriter(defaultFolderPath + gameName))) {
-//      for (int i = 0; i < this.collidables.length(); i++) {
-//        String collidable = collidables.getJSONObject(i);
-//        String id = collidable.getString("collidable_id");
-//        JSONArray colorArray = collidable.getJSONArray("color");
-//
-//        int red = validateColorComponent(colorArray.getI(0));
-//        int green = validateColorComponent(colorArray.getInt(1));
-//        int blue = validateColorComponent(colorArray.getInt(2));
-//
-//        String rgb = red + "," + green + "," + blue;
-//        writer.println("#collidable_" + id + " {");
-//        writer.println("    -fx-background-color: rgb(" + rgb + ");");
-//        //separate this into method / config for the syntax
-//        writer.println("}");
-//      }
-//    } catch (IOException e) {
-//      System.out.println("Error generating CSS file: " + e.getMessage());
-//    }
-//  }
-
-  //alisha
-  private int validateColorComponent(int value) {
-    if (value < 0) {
-      return 0; // Set to 0 if value is negative
-    } else if (value > 255) {
-      return 255; // Set to 255 if value is greater than 255
+  private int validateRgbValue(int colorValue){
+    if (colorValue < 0){
+      return 0;
+    } else if (colorValue > 255) {
+      return 255;
     } else {
-      return value; // Return original value if within valid range
+      return colorValue;
     }
   }
 

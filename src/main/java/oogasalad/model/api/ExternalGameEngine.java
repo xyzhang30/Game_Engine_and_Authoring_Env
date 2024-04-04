@@ -24,6 +24,8 @@ public interface ExternalGameEngine {
    */
   void resume();
 
+  GameRecord update(double dt);
+
   /**
    * Provides view with updated GameState as immutable record after each frame
    *
