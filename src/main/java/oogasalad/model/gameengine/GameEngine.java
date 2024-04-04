@@ -89,6 +89,11 @@ public class GameEngine implements ExternalGameEngine {
       if(rules.winCondition().execute(this) == 1.0) {
         endGame();
       }
+      else {
+        for(Command cmd : rules.advance()) {
+          cmd.execute(this);
+        }
+      }
     }
     else {
       staticState = false;
