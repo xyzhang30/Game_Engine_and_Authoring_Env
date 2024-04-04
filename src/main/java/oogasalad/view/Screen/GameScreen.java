@@ -41,7 +41,8 @@ public class GameScreen extends UIScreen {
 
   private void setupAngleIndicator() {
     // Assume arrow starts at the middle bottom of the scene and points upwards initially
-    angleArrow = new Arrow(sceneWidth - sceneWidth / 5 - 20, 800, sceneWidth - sceneWidth / 5 - 20,
+    angleArrow = new Arrow(
+        SCREEN_WIDTH - SCREEN_WIDTH / 5 - 20, 800, SCREEN_WIDTH - SCREEN_WIDTH / 5 - 20,
         700);
 
     root.getChildren().add(angleArrow.getLine()); // Add the arrow line to the root pane
@@ -92,11 +93,11 @@ public class GameScreen extends UIScreen {
   }
 
   private Rectangle setupPowerBar() {
-    Rectangle outline = new Rectangle(sceneWidth - 200, 100, 100, 700);
+    Rectangle outline = new Rectangle(SCREEN_WIDTH - 200, 100, 100, 700);
     outline.setFill(Color.DARKGRAY);
     outline.setEffect(createDropShadow());
 
-    Rectangle powerIndicator = new Rectangle(sceneWidth - 190, 780, 80, 10);
+    Rectangle powerIndicator = new Rectangle(SCREEN_WIDTH - 190, 780, 80, 10);
     powerIndicator.setFill(Color.DARKRED);
     powerIndicator.toFront();
 

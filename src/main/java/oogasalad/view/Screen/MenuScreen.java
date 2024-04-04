@@ -38,12 +38,12 @@ public class MenuScreen extends UIScreen {
   }
 
   private void createTitle() {
-    double titleX = sceneWidth / 2 - 350;
-    double titleY = sceneHeight / 5;
-    Text title = new Text(titleX, titleY, "Game Options");
-
+    Text title = new Text("Game Options");
     setToThemeFont(title, 100);
     title.setEffect(createDropShadow());
+
+    title.setX(SCREEN_WIDTH/2 - title.getLayoutBounds().getWidth()/2);
+    title.setY(SCREEN_HEIGHT/3 - title.getLayoutBounds().getHeight()/2);
 
     root.getChildren().add(title);
   }
@@ -51,7 +51,7 @@ public class MenuScreen extends UIScreen {
   private void createMenu(List<String> titles) {
     ObservableList<String> observableList = FXCollections.observableList(titles);
     ListView<String> listView = new ListView<>(observableList);
-    listView.setPrefSize(sceneWidth - 800, sceneHeight - 400);
+    listView.setPrefSize(SCREEN_WIDTH - 800, SCREEN_HEIGHT - 400);
     listView.setLayoutX(400);
     listView.setLayoutY(300);
     addListViewEventHandling(listView);
