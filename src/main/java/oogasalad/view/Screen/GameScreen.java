@@ -130,7 +130,7 @@ public class GameScreen extends UIScreen {
       }
       case ENTER: {
         ableToHit = false;
-        double angle = angleArrow.getAngle();
+        double angle = Math.toRadians(angleArrow.getAngle()-90);
         double fractionalVelocity = powerIndicator.getHeight() / maxPower;
         controller.hitPointScoringObject(fractionalVelocity, angle);
         break;
