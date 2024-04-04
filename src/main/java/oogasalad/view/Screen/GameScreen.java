@@ -23,8 +23,8 @@ public class GameScreen extends UIScreen {
   private final int maxPower = 650;
   private final BorderPane root;
   private boolean ableToHit;
-  private Scene scene;
   private Arrow angleArrow;
+  private Rectangle powerIndicator;
 
   private Text scoreboardTxt;
 
@@ -59,18 +59,10 @@ public class GameScreen extends UIScreen {
     return root;
   }
 
-  @Deprecated
-  public Scene getScene() {
-    return scene;
-  }
-
   private void createScene() {
     setupControlPane(); //This messes up the power bar key listening
-    Rectangle powerIndicator = setupPowerBar();
+    powerIndicator = setupPowerBar();
     setupScoreBoard(0);
-    scene = new Scene(root, sceneWidth, sceneHeight);
-    initiateListening(scene, powerIndicator);
-
   }
 
 
@@ -112,15 +104,15 @@ public class GameScreen extends UIScreen {
     return powerIndicator;
   }
 
-  private void initiateListening(Scene scene, Rectangle powerIndicator) {
+  public void initiateListening(Scene scene) {
     scene.setOnKeyPressed(event -> {
       if (ableToHit) {
-        handleKeyInput(event.getCode(), powerIndicator);
+        handleKeyInput(event.getCode());
       }
     });
   }
 
-  private void handleKeyInput(KeyCode code, Rectangle powerIndicator) {
+  private void handleKeyInput(KeyCode code) {
     switch (code) {
       case UP: {
         if (powerIndicator.getHeight() < maxPower) {

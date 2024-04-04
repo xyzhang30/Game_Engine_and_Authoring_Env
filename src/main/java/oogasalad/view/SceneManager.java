@@ -46,9 +46,10 @@ public class SceneManager {
   }
 
   public void makeGameScreen(Controller controller, CompositeElement compositeElement) {
-    gameScreen = new GameScreen(controller, compositeElement);
     this.compositeElement = compositeElement;
-    scene = gameScreen.getScene();
+    gameScreen = new GameScreen(controller, compositeElement);
+    scene.setRoot(gameScreen.getRoot());
+    gameScreen.initiateListening(scene);
   }
 
   public void enableHitting() {

@@ -12,8 +12,8 @@ import oogasalad.view.Controller;
 public abstract class UIScreen {
 
   private final Screen screen = Screen.getPrimary();
-  final double sceneWidth = getScreenWidth() - 100;
-  final double sceneHeight = getScreenHeight() - 100;
+  final double sceneWidth = screen.getBounds().getWidth() - 100;
+  final double sceneHeight = screen.getBounds().getHeight() - 100;
   Controller controller;
 
   public abstract Parent getRoot();
@@ -41,14 +41,6 @@ public abstract class UIScreen {
     dropShadow.setOffsetX(3);
     dropShadow.setOffsetY(3);
     return dropShadow;
-  }
-
-  private double getScreenWidth() {
-    return screen.getBounds().getWidth();
-  }
-
-  private double getScreenHeight() {
-    return screen.getBounds().getHeight();
   }
 
   void update(double dt) {
