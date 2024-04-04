@@ -35,7 +35,7 @@ public abstract class GameLoader {
    * @param id The ID of the game data to load.
    */
   public GameLoader(int id) throws InvalidFileException {
-    this.resourceBundle = ResourceBundle.getBundle(RESOURCE_FOLDER_PATH + ERROR_RESOURCE_FOLDER + ERROR_FILE_PREFIX + language + PROPERTIES_FILE_EXTENSION);
+    //this.resourceBundle = ResourceBundle.getBundle(RESOURCE_FOLDER_PATH + ERROR_RESOURCE_FOLDER + ERROR_FILE_PREFIX + language + PROPERTIES_FILE_EXTENSION);
     parseJSON("/data/singlePlayerMiniGolf.json");
   }
 
@@ -44,7 +44,7 @@ public abstract class GameLoader {
    * @param gameName The name of the game file to parse.
    */
   public GameLoader(String gameName) throws InvalidFileException {
-    this.resourceBundle = ResourceBundle.getBundle(RESOURCE_FOLDER_PATH + ERROR_RESOURCE_FOLDER + ERROR_FILE_PREFIX + language + PROPERTIES_FILE_EXTENSION);
+    //this.resourceBundle = ResourceBundle.getBundle(RESOURCE_FOLDER_PATH + ERROR_RESOURCE_FOLDER + ERROR_FILE_PREFIX + language + PROPERTIES_FILE_EXTENSION);
     parseJSON(DATA_FOLDER_PATH + gameName + JSON_EXTENSION);
   }
 
