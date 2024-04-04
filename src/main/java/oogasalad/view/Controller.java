@@ -64,7 +64,7 @@ public class Controller {
     collisionManager.setNewCompositeElement(compositeElement);
     stage.setScene(sceneManager.getScene());
 
-    //animationManager.runAnimation(this);
+    animationManager.runAnimation(this);
 
   }
 
