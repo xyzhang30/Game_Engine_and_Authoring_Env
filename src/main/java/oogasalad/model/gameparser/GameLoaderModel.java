@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import oogasalad.Pair;
 import oogasalad.model.api.exception.InvalidCommandException;
+import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.api.exception.invalidParameterNumberException;
 import oogasalad.model.gameengine.Player;
 import oogasalad.model.gameengine.PlayerContainer;
@@ -36,12 +37,11 @@ public class GameLoaderModel extends GameLoader {
   private static final String TURN_POLICY_PATH = "oogasalad.model.gameengine.";
 
 
-
   /**
    * Constructs a GameLoaderModel object with the specified ID.
    * @param gameTitle The title of the game data to load.
    */
-  public GameLoaderModel(String gameTitle) {
+  public GameLoaderModel(String gameTitle) throws InvalidFileException {
     super(gameTitle);
     this.createCollidableContainer();
     this.createPlayerContainer();
