@@ -72,7 +72,6 @@ public class GameScreen extends UIScreen {
     root.setTop(new ControlPane());
   }
 
-  @Deprecated
   private void setupFieldComponents(CompositeElement cm) {
     for (int i : cm.idList()) {
       root.getChildren().add(cm.getNode(i));
