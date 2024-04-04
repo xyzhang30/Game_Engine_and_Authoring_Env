@@ -62,7 +62,7 @@ public class Controller {
     stage.setScene(sceneManager.getScene());
     collisionManager.setNewCompositeElement(compositeElement);
 
-    //animationManager.runAnimation(this);
+    animationManager.runAnimation(this);
 
   }
 
@@ -75,10 +75,10 @@ public class Controller {
     GameRecord gameRecord = gameEngine.update(timeStep);
     sceneManager.update(gameRecord);
     List<Pair> collisionList = collisionManager.getIntersections();
-    gameEngine.handleCollisions(collisionList, timeStep);
-    gameEngine.update(timeStep);
+    GameRecord gameRecord2 = gameEngine.handleCollisions(collisionList, timeStep);
+    sceneManager.update(gameRecord2);
 
-    if (sceneManager.notMoving(gameRecord)) {
+    if (sceneManager.notMoving(gameRecord2)) {
       sceneManager.enableHitting();
     }
     //return if game is over
@@ -90,7 +90,7 @@ public class Controller {
    * @param fractionalVelocity velocity as fraction of maxVelocity
    */
   public void hitPointScoringObject(double fractionalVelocity, double angle){
-    //gameEngine.applyInitialVelocity(fractionalVelocity, angle, );
+    gameEngine.applyInitialVelocity(fractionalVelocity, angle, 8); // The 8 has been hard coded!
   }
 
 
