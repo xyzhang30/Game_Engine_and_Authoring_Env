@@ -61,11 +61,9 @@ public class GameScreen extends UIScreen {
 
   @Deprecated
   private void setupFieldComponents(CompositeElement cm) {
-    StackPane sp = new StackPane();
     for (int i : cm.idList()) {
-      sp.getChildren().add(cm.getNode(i));
+      root.getChildren().add(cm.getNode(i));
     }
-    root.getChildren().add(sp);
   }
 
   private Rectangle setupPowerBar() {
