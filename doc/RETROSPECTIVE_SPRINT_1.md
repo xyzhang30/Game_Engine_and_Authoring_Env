@@ -69,10 +69,19 @@
 ### Alisha
 
 * Work done this Sprint
+  * Finished view and model parser
+  * Made JSON files for games
+  * Fixed physics for object collisions 
+  * Made tests for view parser
 
 * Plan for next Sprint?
+  * Finish the game builder (the writing JSON part) for the game authoring environment
+  * Make more game files for different games
+  * Refactor the view parser
+  * Make more tests for view parser, make tests for the game builder
 
 * Blockers/Issues in your way
+  * (for next sprint) finalize how the authoring environment is passing information into the builder.
 
 ### Jordan
 
