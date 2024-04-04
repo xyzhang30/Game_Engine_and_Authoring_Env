@@ -4,12 +4,11 @@ import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.ViewCollidableRecord;
 
 // Temporary imports to be expunged after data dependency established *see Constructor*
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import oogasalad.model.api.ViewCollidableRecord;
-import oogasalad.model.gameparser.GameLoaderView;
 
 /**
  * Class for a single View Element for the Game engine.
