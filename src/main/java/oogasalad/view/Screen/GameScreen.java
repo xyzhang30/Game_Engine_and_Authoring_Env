@@ -25,14 +25,11 @@ public class GameScreen extends UIScreen {
 
   private final BorderPane root;
 
-  public GameScreen(Controller controller) {
+  public GameScreen(Controller controller, CompositeElement compositeElement) {
     root = new BorderPane();
     this.controller = controller;
     ableToHit = true;
-    // Hard coded case
-    CompositeElement cm = new CompositeElement();
-    cm.update(List.of(new CollidableRecord(1, 10, 100, 100, 0, 0, true)));
-    setupFieldComponents(cm); // BIG improvised here. There's a lot of refactoring to do first...
+    setupFieldComponents(compositeElement); // BIG improvised here. There's a lot of refactoring to do first...
 
     createScene();
   }
