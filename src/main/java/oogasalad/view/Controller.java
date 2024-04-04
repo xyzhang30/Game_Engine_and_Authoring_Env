@@ -56,7 +56,7 @@ public class Controller {
     Scene gameScene = sceneManager.makeGameScreen(this, compositeElement);
     collisionManager.setNewCompositeElement(compositeElement);
     stage.setScene(gameScene);
-    animationManager.runAnimation(this);
+    //animationManager.runAnimation(this);
   }
 
   /**
@@ -95,7 +95,7 @@ public class Controller {
   public List<String> getGameTitles() {
     //TODO: Add parsing functionality
     List<String> gameTitles = new ArrayList<>();
-    gameTitles.add("sampleMiniGolf");
+    gameTitles.add("singlePlayerMiniGolf");
     return gameTitles;
   }
 

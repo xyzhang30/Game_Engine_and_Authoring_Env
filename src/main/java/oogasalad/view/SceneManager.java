@@ -15,7 +15,6 @@ public class SceneManager {
 
 
   public SceneManager() {
-    this.compositeElement = new CompositeElement();
   }
 
   public void update(GameRecord gameRecord) {
