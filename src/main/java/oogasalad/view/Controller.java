@@ -30,9 +30,9 @@ public class Controller {
   public Controller(Stage stage) {
     sceneManager = new SceneManager();
     animationManager = new AnimationManager();
-    Scene title = sceneManager.makeTitleScreen(this);
     this.stage = stage;
-    stage.setScene(title);
+    sceneManager.makeTitleScreen(this);
+    stage.setScene(sceneManager.getScene());
     collisionManager = new CollisionManager();
 
   }
@@ -41,13 +41,13 @@ public class Controller {
    * Creates and displays menu screen
    */
   public void openMenuScreen() {
-    Scene menu = sceneManager.makeMenuScreen(getGameTitles(), this);
-    stage.setScene(menu);
+    sceneManager.makeMenuScreen(getGameTitles(), this);
+    stage.setScene(sceneManager.getScene());
   }
 
   public void openTransitionScreen(){
-    Scene transition = sceneManager.makeTransitionScreen();
-    stage.setScene(transition);
+    sceneManager.makeTransitionScreen();
+    stage.setScene(sceneManager.getScene());
   }
 
   /**
@@ -60,9 +60,9 @@ public class Controller {
     gameLoaderView = new GameLoaderView(selectedGame);
     gameEngine = new GameEngine(selectedGame);
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
-    Scene gameScene = sceneManager.makeGameScreen(this, compositeElement);
+    sceneManager.makeGameScreen(this, compositeElement);
     collisionManager.setNewCompositeElement(compositeElement);
-    stage.setScene(gameScene);
+    stage.setScene(sceneManager.getScene());
 
     //animationManager.runAnimation(this);
 
