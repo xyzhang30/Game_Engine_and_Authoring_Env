@@ -32,7 +32,6 @@ public class MenuScreen extends UIScreen {
   private void createScene(List<String> titles){
     createTitle();
     createMenu(titles);
-    scene = new Scene(root, sceneWidth, sceneHeight);
   }
 
   private void createTitle(){

@@ -16,17 +16,8 @@ public abstract class UIScreen {
   final double sceneWidth = getScreenWidth() - 100;
   final double sceneHeight = getScreenHeight() - 100;
   Controller controller;
-  Scene scene;
 
   public abstract Parent getRoot();
-
-  /**
-   * Getter method for scene
-   * @return scene specific to UIScreen subclass
-   */
-  public Scene getScene(){
-    return scene;
-  }
 
   /**
    * Styles text to match theme font

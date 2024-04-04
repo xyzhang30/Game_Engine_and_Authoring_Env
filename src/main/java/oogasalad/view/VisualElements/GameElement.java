@@ -26,19 +26,19 @@ public class GameElement implements VisualElement {
     List<Integer> rgb = data.color();
     Color color = Color.rgb(rgb.get(0),rgb.get(1),rgb.get(2));
 //    return switch (data.shape().toLowerCase()) { // Convert to reflection at later date
-//      case "circle" -> return new Circle(data.startXpos(), data.startYpos(), data.width(), color);
-//      case "rectangle" -> Rectangle rectangle = new Rectangle(data.width(), data.height(), color);
+//      case "circle" -> new Circle(data.width(), color);
+//      case "rectangle" -> new Rectangle(data.width(), data.height(), color);
 //      default -> null; // Throw type not found exception
 //    };
-
-    switch (data.shape().toLowerCase()) {
-      case "circle" -> {return new Circle(data.startXpos(), data.startYpos(), data.width(), color);}
-      case "rectangle" -> {Rectangle rectangle = new Rectangle(data.width(), data.height(), color);
-      rectangle.setX(data.startXpos());
-      rectangle.setY(data.startYpos());
-      return rectangle;}
-    };
-    return null;
+    switch (data.shape().toLowerCase()) { // Convert to reflection at later date
+      case "circle":
+        return new Circle(data.startXpos(), data.startYpos(), data.width(), color);
+      case "rectangle":
+        Rectangle rect = new Rectangle(data.startXpos(),data.startYpos(),data.width(),data.height());
+        rect.setFill(color);
+        return rect;
+      default: return null; // Throw type not found exception
+    }
   }
 
   /**

@@ -1,6 +1,7 @@
 package oogasalad.view;
 
 import java.util.List;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import oogasalad.model.api.GameRecord;
 import oogasalad.view.Screen.GameScreen;
@@ -17,6 +18,7 @@ public class SceneManager {
 
 
   public SceneManager() {
+    scene = new Scene(new Group());
   }
   public Scene getScene(){
     return scene;
@@ -33,11 +35,11 @@ public class SceneManager {
 
   public void makeTitleScreen(Controller controller){
     TitleScreen titleScreen = new TitleScreen(controller);
-    scene = titleScreen.getScene();
+    scene.setRoot(titleScreen.getRoot());
   }
   public void makeMenuScreen(List<String> titles, Controller controller){
     MenuScreen menuScreen = new MenuScreen(titles, controller);
-    scene = menuScreen.getScene();
+    scene.setRoot(menuScreen.getRoot());
   }
   public void makeGameScreen(Controller controller, CompositeElement compositeElement){
     gameScreen = new GameScreen(controller, compositeElement);
@@ -57,8 +59,8 @@ public class SceneManager {
   }
 
 
-  public Scene makeTransitionScreen(){
+  public void makeTransitionScreen(){
     TransitionScreen transitionScreen = new TransitionScreen();
-    return transitionScreen.getScene();
+    scene.setRoot(transitionScreen.getRoot());
   }
 }
