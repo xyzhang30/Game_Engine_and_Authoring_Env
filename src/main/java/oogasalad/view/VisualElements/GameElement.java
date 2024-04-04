@@ -1,5 +1,6 @@
 package oogasalad.view.VisualElements;
 
+import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -69,14 +70,20 @@ public class GameElement implements VisualElement {
       case "rectangle" -> {
         Rectangle rectangle = new Rectangle();
         rectangle.setFill(color);
+        break;
       }
       case "circle" -> {
         Circle circle = new Circle();
         circle.setFill(color);
-      }
-      default -> {
-        return null;
+        break;
       }
     }
+    return null;
   }
+
+  private Color getColorFromRecord(ViewCollidableRecord record){
+    List<Integer> rgbValues = record.color();
+    return Color.rgb(rgbValues.get(0), rgbValues.get(1), rgbValues.get(2));
+  }
+
 }
