@@ -43,11 +43,8 @@ public abstract class GameLoader {
     try {
       ObjectMapper objectMapper = new ObjectMapper();
       File f = new File(filePath);
-      System.out.println(f.getPath()); //prints: \data\singlePlayerMiniGolf.json
       this.gameData = objectMapper.readValue(f, GameData.class);
     } catch (IOException e) {
-      e.printStackTrace();
-      System.out.println("HI");
       throw new InvalidFileException("Error: Invalid File", e);
     }
   }

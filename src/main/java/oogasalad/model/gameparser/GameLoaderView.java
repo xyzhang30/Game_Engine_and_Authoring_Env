@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.FileWriter;
+import java.util.List;
+import oogasalad.model.api.ViewCollidableRecord;
 import oogasalad.model.gameparser.data.CollidableObject;
 import org.json.simple.JSONArray;
 import java.util.Properties;
@@ -16,15 +18,35 @@ import java.util.Properties;
  */
 public class GameLoaderView extends GameLoader {
 
-  private static final String RESOURCE_FOLDER_PATH = "src/main/resources";
+  private static final String RESOURCE_FOLDER_PATH = "src/main/resources/";
   private static final String PROPERTIES_FILE_EXTENSION = ".properties";
   private static final String COLLIDABLE_PROPERTIES_COMMENT = "collidable objects shape";
+  private static final String COLLIDABLE_CSS_ID_PREFIX = "collidable";
+
+  private List<ViewCollidableRecord> viewCollidableRecords;
 
   public GameLoaderView(String gameName) {
     super(gameName);
-//    generateStyleSheet(gameName);
-    generateCollidableShapeConfig(gameName);
+    createViewRecord();
   }
+
+  private void createViewRecord() {
+    for (CollidableObject o : gameData.collidableObjects()) {
+      int id = o.collidableId();
+      String shape = o.shape();
+      List<Integer> color = o.color();
+      double xdimension = o.dimension().xDimension();
+      double ydimension = o.dimension().yDimension();
+      ViewCollidableRecord viewCollidable = new ViewCollidableRecord(id, color, shape, xdimension,
+          ydimension);
+      viewCollidableRecords.add(viewCollidable);
+    }
+  }
+
+  public List<ViewCollidableRecord> getViewCollidableInfo(){
+    return viewCollidableRecords;
+  }
+
 
   //alisha
 //  private void generateStyleSheet(String gameName) {
@@ -61,31 +83,20 @@ public class GameLoaderView extends GameLoader {
     }
   }
 
-//  private void writeColor() {
-//
-//  }
-//
-//  private void writeDimension() {
-//
-//  }
-
   //alisha
-  private void generateCollidableShapeConfig(String gameName) {
-    Properties properties = new Properties();
-    for (CollidableObject o : gameData.collidableObjects()){
-      int id = o.collidableId();
-      String shape = o.shape();
-      properties.setProperty(String.valueOf(id), shape);
-    }
-    String filePath = RESOURCE_FOLDER_PATH + gameName + PROPERTIES_FILE_EXTENSION;
-
-    try (OutputStream output = new FileOutputStream(filePath)) {
-      properties.store(output, COLLIDABLE_PROPERTIES_COMMENT);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
+//  private void generateCollidableShapeConfig(String gameName) {
+//    Properties properties = new Properties();
+//    for (CollidableObject o : gameData.collidableObjects()){
+//      int id = o.collidableId();
+//      String shape = o.shape();
+//      properties.setProperty(String.valueOf(id), shape);
+//    }
+//    String filePath = RESOURCE_FOLDER_PATH + gameName + PROPERTIES_FILE_EXTENSION;
+//
+//    try (OutputStream output = new FileOutputStream(filePath)) {
+//      properties.store(output, COLLIDABLE_PROPERTIES_COMMENT);
+//    } catch (IOException e) {
+//      throw new RuntimeException(e);
+//    }
+//  }
 }
-
-
-
