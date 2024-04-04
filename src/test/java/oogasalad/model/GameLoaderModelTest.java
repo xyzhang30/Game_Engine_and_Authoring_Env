@@ -98,7 +98,11 @@ public class GameLoaderModelTest {
     Map<Pair, java.util.List<Command>> collisionHandlers = Map.of(new Pair(2, 3), List.of(c1, c2));
     Command winCondition = new NRoundsCompletedCommand(List.of(2.0));
 
-    RulesRecord mockRulesRecord = new RulesRecord(1, 1, collisionHandlers, winCondition);
+    Command advanceC1 = new AdvanceTurnCommand(List.of());
+    Command advanceC2 = new AdjustPointsCommand(List.of(1.0, 1.0));
+    List<Command> advanceCs = List.of(advanceC1, advanceC2);
+
+    RulesRecord mockRulesRecord = new RulesRecord(1, 1, collisionHandlers, winCondition, advanceCs);
 
     assertEquals(this.testGameLoaderModel.getRulesRecord(), mockRulesRecord);
   }
