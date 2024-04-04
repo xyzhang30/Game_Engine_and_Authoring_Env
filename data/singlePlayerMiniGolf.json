@@ -47,8 +47,8 @@
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 333,
-        "y_dimension": 700
+        "x_dimension": 667,
+        "y_dimension": 300
       },
       "friction": 0.04,
       "color": [124,252,0]
@@ -95,7 +95,7 @@
         "x_position": 667,
         "y_position": 400
       },
-      "shape": "circle",
+      "shape": "rectangle",
       "dimension": {
         "x_dimension": 333,
         "y_dimension": 300
@@ -126,7 +126,7 @@
       "mass": 100,
       "position": {
         "x_position": 490,
-        "y_position": 940
+        "y_position": 840
       },
       "shape": "circle",
       "dimension": {
