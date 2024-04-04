@@ -11,4 +11,4 @@ import java.util.Map;
  */
 public record CollisionRule(@JsonProperty("first_id") int firstId,
                      @JsonProperty("second_id") int secondId,
-                     List<Map<String, List<Integer>>> command) {}
+                     List<Map<String, List<Double>>> command) {}

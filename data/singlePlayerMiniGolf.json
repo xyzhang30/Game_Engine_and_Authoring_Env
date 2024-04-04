@@ -139,7 +139,7 @@
         "second_id": 3,
         "command": [
           {
-            "AdjustPointsCommand": [1,1]
+            "AdjustPointsCommand": [1.0,1.0]
           },
           {
             "AdvanceTurnCommand": []
@@ -149,14 +149,14 @@
     ],
     "turn_policy": "StandardTurnPolicy",
     "win_condition": {
-      "NRoundsCompletedCommand": [2]
+      "NRoundsCompletedCommand": [2.0]
     },
     "advance": [
       {
         "AdvanceTurnCommand": []
       },
       {
-        "AdjustPointsCommand": [1,1]
+        "AdjustPointsCommand": [1.0,1.0]
       }
     ]
   }
