@@ -1,6 +1,7 @@
 package oogasalad.view.Screen;
 
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
@@ -14,9 +15,10 @@ public abstract class UIScreen {
   private final Screen screen = Screen.getPrimary();
   final double sceneWidth = getScreenWidth() - 100;
   final double sceneHeight = getScreenHeight() - 100;
-  Group root;
   Controller controller;
   Scene scene;
+
+  public abstract Parent getRoot();
 
   /**
    * Getter method for scene

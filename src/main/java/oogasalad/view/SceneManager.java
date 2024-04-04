@@ -1,15 +1,17 @@
 package oogasalad.view;
 
 import java.util.List;
-import javafx.application.Platform;
 import javafx.scene.Scene;
-import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.CollidableRecord;
-import oogasalad.view.Screen.*;
+import oogasalad.model.api.GameRecord;
+import oogasalad.view.Screen.GameScreen;
+import oogasalad.view.Screen.MenuScreen;
+import oogasalad.view.Screen.TitleScreen;
 import oogasalad.view.VisualElements.CompositeElement;
 
 public class SceneManager {
   private CompositeElement compositeElement;
+  private GameScreen gameScreen;
 
 
   public SceneManager() {
@@ -17,9 +19,7 @@ public class SceneManager {
   }
 
   public void update(GameRecord gameRecord) {
-    for (CollidableRecord collidable : gameRecord.collidables()) {
-      compositeElement.updateShape(collidable.id(), collidable.x(), collidable.y(), collidable.visible());
-    }
+    compositeElement.update(gameRecord.collidables());
   }
 
   public boolean notMoving(GameRecord gameRecord){
@@ -34,10 +34,15 @@ public class SceneManager {
     MenuScreen menuScreen = new MenuScreen(titles, controller);
     return menuScreen.getScene();
   }
-  public Scene makeGameScreen(){
-      GameScreen gameScreen = new GameScreen(compositeElement);
+  public Scene makeGameScreen(Controller controller, CompositeElement compositeElement){
+      gameScreen = new GameScreen(controller, compositeElement);
       return gameScreen.getScene();
   }
+
+  public void enableHitting(){
+    gameScreen.enableHitting();
+  }
+
 
   public void makeTransitionScreen(){
 //    TransitionScreen transitionScreen = new TransitionScreen();

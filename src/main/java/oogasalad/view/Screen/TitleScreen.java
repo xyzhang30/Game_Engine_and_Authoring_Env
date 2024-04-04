@@ -1,6 +1,7 @@
 package oogasalad.view.Screen;
 
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -13,7 +14,7 @@ import oogasalad.view.SceneManager;
  * @author Jordan Haytaian
  */
 public class TitleScreen extends UIScreen {
-
+  private final Group root;
   public TitleScreen(Controller controller){
     this.controller = controller;
     root = new Group();
@@ -27,7 +28,10 @@ public class TitleScreen extends UIScreen {
   public Scene getScene(){
     return scene;
   }
-
+  @Override
+  public Parent getRoot() {
+    return root;
+  }
   private void createScene(){
     createTitle();
     createButtons();

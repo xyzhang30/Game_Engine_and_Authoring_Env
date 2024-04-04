@@ -2,6 +2,8 @@ package oogasalad.model.gameengine.collidable;
 
 import java.util.List;
 import java.util.Stack;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 import oogasalad.model.api.CollidableRecord;
 
 public abstract class Collidable {
@@ -39,6 +41,12 @@ public abstract class Collidable {
   public void updatePostCollisionVelocity() {
     myVelocityY = myNextVelocityY;
     myVelocityX = myNextVelocityX;
+    if(Math.abs(myVelocityX) < .00001) {
+      myVelocityX = 0;
+    }
+    if(Math.abs(myVelocityY) < .00001) {
+      myVelocityY = 0;
+    }
   }
 
   public abstract double[] calculateNewSpeed(Collidable other, double dt);
@@ -100,4 +108,15 @@ public abstract class Collidable {
     return myY;
   }
 
+  protected void setFromRecord(CollidableRecord record) {
+    myX = record.x();
+    myY = record.y();
+    myVelocityY = record.velocityY();
+    myVelocityX = record.velocityX();
+    myNextVelocityX = myVelocityX;
+    myNextVelocityY = myVelocityY;
+    myNextX = myX;
+    myNextY = myY;
+    myVisible = record.visible();
+  }
 }

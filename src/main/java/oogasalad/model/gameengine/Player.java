@@ -1,28 +1,29 @@
 package oogasalad.model.gameengine;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Stack;
+import javafx.collections.ObservableMap;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
+import javafx.collections.FXCollections;
+
 
 public class Player {
 
   private final int playerId;
   private final Collidable myCollidable;
-  private final Map<String, Double> variables;
-  private int turns;
-  private boolean active;
+  private Map<String, Double> variables;
+
+  private Stack<ObservableMap<String,Double>> variableStack;
 
   public Player(int id, Collidable collidable) {
     playerId = id;
     myCollidable = collidable;
     variables = new HashMap<>();
     variables.put("score", 0.0);
-    turns = 1;
-  }
-
-  public Collidable getPrimary() {
-    return myCollidable;
   }
 
   public double getVariable(String variable) {
@@ -33,15 +34,30 @@ public class Player {
     variables.put(key, value);
   }
 
-  protected void setActive(boolean state) {
-    active = state;
-  }
+  protected PlayerRecord getPlayerRecord(boolean active) {
 
-  protected PlayerRecord getPlayerRecord() {
-    return new PlayerRecord(playerId, variables.get("score"), myCollidable.getId(), active);
+    try {
+      return new PlayerRecord(playerId, variables.get("score"), myCollidable.getId(), active);
+    }
+    catch (NullPointerException e){
+      return null;
+    }
   }
 
   public int getId() {
     return playerId;
   }
+
+  public Map<String, Double> getObservableVariables() {
+    return Collections.unmodifiableMap(variables);
+  }
+
+  public void setObservableVariables(Map<String, Double> variablesOld) {
+    variables.clear();
+    for(String key : variablesOld.keySet()) {
+      variables.put(key, variablesOld.get(key));
+    }
+
+  }
+
 }

@@ -2,6 +2,7 @@ package oogasalad.model.api;
 
 import java.util.List;
 import oogasalad.Pair;
+import oogasalad.model.gameparser.GameLoaderModel;
 
 /**
  * @author Noah Loewy
@@ -11,7 +12,7 @@ public interface ExternalGameEngine {
   /**
    * Initiates the game with the given ID.
    */
-  void start();
+  void start(GameLoaderModel loader);
 
   /**
    * Pauses the current game.
@@ -22,6 +23,8 @@ public interface ExternalGameEngine {
    * Resumes the paused game.
    */
   void resume();
+
+  GameRecord update(double dt);
 
   /**
    * Provides view with updated GameState as immutable record after each frame

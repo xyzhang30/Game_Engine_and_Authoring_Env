@@ -12,7 +12,6 @@ public class Surface extends Collidable {
   public double[] calculateNewSpeed(Collidable other, double dt) {
     double oldVelocityX = other.getVelocityX();
     double oldVelocityY = other.getVelocityY();
-    System.out.println(getCollidableRecord());
     if(other.getVelocityX()==0 && other.getVelocityY()==0 && getVelocityX()==0 && getVelocityY()==0) {
       return new double [] {0,0};
     }

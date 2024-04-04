@@ -3,7 +3,7 @@ package oogasalad;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import oogasalad.view.Controller;
+import oogasalad.view.Window;
 
 /**
  * Feel free to completely change this code or delete it entirely.
@@ -12,7 +12,7 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-    Controller controller = new Controller(primaryStage, 0);
+    Window mainWindow = new Window(primaryStage, 0);
   }
 //
 //  /**
