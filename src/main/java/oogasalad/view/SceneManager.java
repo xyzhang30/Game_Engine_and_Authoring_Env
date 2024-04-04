@@ -69,6 +69,6 @@ public class SceneManager {
   }
 
   public void updateScoreBoard(double score) {
-    gameScreen.updateScoreBoard(score);
+   //gameScreen.updateScoreBoard(score);
   }
 }

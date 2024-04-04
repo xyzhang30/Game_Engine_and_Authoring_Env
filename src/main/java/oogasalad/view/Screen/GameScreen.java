@@ -79,7 +79,7 @@ public class GameScreen extends UIScreen {
   private void setupScoreBoard(int score){
     Rectangle rectangle = new Rectangle(10,50,100,50);
     rectangle.setFill(Color.LIMEGREEN);
-    scoreboardTxt = new Text("Score: "+score);
+    scoreboardTxt = new Text("Score: Coming Soon");
     scoreboardTxt.setX(50);
     scoreboardTxt.setY(100);
     scoreboardTxt.setFill(Color.BLACK);
