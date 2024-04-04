@@ -1,166 +1,205 @@
 {
   "gameName": "sampleMiniGolf",
   "collidable_objects": [
+
     {
-      "collidable_id": "01",
-      "properties": ["visible"],
-      "mass": 0,
+      "collidable_id": 1,
+      "name": "GREEN_1",
+      "properties": ["visible, surface"],
+      "mass": 1e1000000,
       "position": {
         "x_position": 0,
         "y_position": 0
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 500,
-        "y_dimension": 500
+        "x_dimension": 1000,
+        "y_dimension": 300
       },
-      "color": [100,200,100]
+      "friction": 0.04,
+      "color": [124,252,0]
     },
+
+
     {
-      "collidable_id": "02",
-      "properties": ["visible","tangible","movable","primary"],
+      "collidable_id": 2,
+      "name": "GREEN_2",
+      "properties": ["visible, surface"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 0,
+        "y_position": 300
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 333,
+        "y_dimension": 700
+      },
+      "friction": 0.04,
+      "color": [124,252,0]
+    },
+
+    {
+      "collidable_id": 3,
+      "name": "GREEN_3",
+      "properties": ["visible, surface"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 333,
+        "y_position": 700
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 333,
+        "y_dimension": 700
+      },
+      "friction": 0.04,
+      "color": [124,252,0]
+    },
+
+    {
+      "collidable_id": 4,
+      "name": "COLLIDABLE",
+      "properties": ["visible, moveable"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 333,
+        "y_position": 400
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 334,
+        "y_dimension": 300
+      },
+      "color": [230,159,0]
+    },
+
+    {
+      "collidable_id": 5,
+      "name": "ROUGH",
+      "properties": ["visible, surface"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 333,
+        "y_position": 300
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 334,
+        "y_dimension": 100
+      },
+      "friction": 0.2,
+      "color": [0,100,0]
+    },
+
+    {
+      "collidable_id": 6,
+      "name": "WATER",
+      "properties": ["visible","surface"],
       "mass": 1,
       "position": {
-        "x_position": 250,
-        "y_position": 450
+        "x_position": 667,
+        "y_position": 400
       },
       "shape": "circle",
       "dimension": {
-        "x_dimension": 2,
-        "y_dimension": 2
+        "x_dimension": 333,
+        "y_dimension": 300
       },
-      "color": [255,255,255]
+      "color": [0,0,255]
     },
+
     {
-      "collidable_id": "03",
-      "properties": ["visible","tangible","movable","primary"],
-      "mass": 1,
+      "collidable_id": 7,
+      "name": "GREEN_4",
+      "properties": ["visible, surface"],
+      "mass": 1e1000000,
       "position": {
-        "x_position": 250,
-        "y_position": 450
-      },
-      "shape": "circle",
-      "dimension": {
-        "x_dimension": 2,
-        "y_dimension": 2
-      },
-      "color": [255,255,255]
-    },
-    {
-      "collidable_id": "04",
-      "properties": ["visible"],
-      "mass": 0,
-      "position": {
-        "x_position": 250,
-        "y_position": 50
-      },
-      "shape": "circle",
-      "dimension": {
-        "x_dimension": 5,
-        "y_dimension": 5
-      },
-      "color": [0,0,0]
-    },
-    {
-      "collidable_id": "05",
-      "properties": ["visible","tangible"],
-      "mass": 200,
-      "position": {
-        "x_position": 0,
-        "y_position": 0
+        "x_position": 667,
+        "y_position": 300
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 500,
-        "y_dimension": 10
+        "x_dimension": 333,
+        "y_dimension": 100
       },
-      "color": [0,0,0]
+      "friction": 0.04,
+      "color": [124,252,0]
     },
+
     {
-      "collidable_id": "06",
-      "properties": ["visible","tangible"],
-      "mass": 200,
-      "position": {
-        "x_position": 0,
-        "y_position": 0
-      },
-      "shape": "rectangle",
-      "dimension": {
-        "x_dimension": 10,
-        "y_dimension": 500
-      },
-      "color": [0,0,0]
-    },
-    {
-      "collidable_id": "07",
-      "properties": ["visible","tangible"],
-      "mass": 200,
+      "collidable_id": 8,
+      "name": "BALL",
+      "properties": ["visible", "movable"],
+      "mass": 100,
       "position": {
         "x_position": 490,
-        "y_position": 0
+        "y_position": 940
       },
-      "shape": "rectangle",
+      "shape": "circle",
       "dimension": {
         "x_dimension": 10,
-        "y_dimension": 500
-      },
-      "color": [0,0,0]
-    },
-    {
-      "collidable_id": "08",
-      "properties": ["visible","tangible"],
-      "mass": 200,
-      "position": {
-        "x_position": 0,
-        "y_position": 490
-      },
-      "shape": "rectangle",
-      "dimension": {
-        "x_dimension": 500,
         "y_dimension": 10
       },
-      "color": [0,0,0]
-    }
-  ],
-  "variables": [
+      "color": [255,255,255]
+    },
+
+
     {
-      "global": {
-        "turn": 1
+      "collidable_id": 9,
+      "name": "HOLE",
+      "properties": ["visible", "movable"],
+      "mass": 100,
+      "position": {
+        "x_position": 480,
+        "y_position": 80
       },
-      "player": {
-        "strokes": 0,
-        "finished": 0
-      }
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 20,
+        "y_dimension": 20
+      },
+      "color": [0,0,0]
     }
   ],
   "rules": {
     "collisions": [
       {
-        "first_id": "02",
-        "second_id": "04",
-        "rule": [
+        "first_id": 8,
+        "second_id": 9,
+        "command": [
+          {
+            "AdjustPointsCommand": [1,1]
+          },
+          {
+            "AdvanceRoundCommand": []
+          }
         ]
       },
       {
-        "first_id": "3",
-        "second_id": "04",
+        "first_id": 8,
+        "second_id": 6,
         "command": [
           {
-            "XCommand": [4,5]
+            "UndoTurnCommand": []
+          },
+          {
+            "AdjustPointsCommand": [1,1]
           }
         ]
-        }
+      }
+    ],
+    "turn_policy": "StandardTurnPolicy",
+    "win_condition": {
+      "NRoundsCompletedCommand": [1]
+    },
+    "advance": [
+      {
+        "AdvanceTurnCommand": []
       },
-    "static_checks": [
-      [["=","finished",0],[
-        ["add","strokes",1]
-      ]],
-      [["=","turn","3"],[
-        ["set","turn",1]
-      ]],
-      [["=","finished",1],[
-        ["end_game"]
-      ]]
+      {
+        "AdjustPointsCommand": [1,1]
+      }
     ]
   }
 }

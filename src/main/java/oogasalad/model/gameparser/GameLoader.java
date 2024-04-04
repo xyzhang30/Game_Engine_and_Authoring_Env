@@ -22,7 +22,6 @@ public abstract class GameLoader {
   private static final String RESOURCE_FOLDER_PATH = "model.";
   private static final String ERROR_RESOURCE_FOLDER = "error.";
   private static final String ERROR_FILE_PREFIX = "Error";
-  private static final String PROPERTIES_FILE_EXTENSION = ".properties";
   private String language = "English";
   private ResourceBundle resourceBundle;
 
@@ -54,7 +53,7 @@ public abstract class GameLoader {
       File f = new File(filePath);
       this.gameData = objectMapper.readValue(f, GameData.class);
     } catch (IOException e) {
-      throw new InvalidFileException(String.format(resourceBundle.getString("JSONParsingError"), e.getMessage()), e);
+      throw new InvalidFileException(String.format("Error parsing JSON game configuration file: " + e.getMessage()), e);
     }
 
   }
