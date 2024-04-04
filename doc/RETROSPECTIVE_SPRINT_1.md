@@ -41,6 +41,7 @@
   * First, creating the authoring environment which will be extensive, 
   * but other than that I want to implement the TransitionScreens between rounds based on the type of game
   * Refactoring existing code
+  * Implement testing more
 
 * Blockers/Issues in your way
   * Authoring Environment, ensuring clear communication and collaboration for this component.g
@@ -71,16 +72,6 @@
 * Plan for next Sprint?
 
 * Blockers/Issues in your way
-
-
-### Konur
-
-* Work done this Sprint - None, had a terribly busy academic week
-
-* Plan for next Sprint? - Create a robust physics engine
-
-* Blockers/Issues in your way - Physics logic implemented in Moveable subclass, will have to refactor
-and abstract to physics engine. 
 
 
 
