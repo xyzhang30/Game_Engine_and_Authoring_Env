@@ -1,4 +1,4 @@
-package oogasalad.view;
+package oogasalad.view.AuthoringParsing;
 
 import java.io.PrintWriter;
 import java.io.FileWriter;
