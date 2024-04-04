@@ -124,7 +124,7 @@
       "properties": ["visible", "movable"],
       "mass": 100,
       "position": {
-        "x_position": 800,
+        "x_position": 480,
         "y_position": 140
       },
       "shape": "circle",
