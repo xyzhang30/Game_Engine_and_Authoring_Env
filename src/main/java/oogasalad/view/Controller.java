@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 import oogasalad.Pair;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameparser.GameLoaderView;
+
 
 /**
  * Controller class handles communications between model and view.  This class holds manager class
@@ -40,6 +42,7 @@ public class Controller {
     stage.setScene(menu);
   }
 
+
   /**
    * Starts the selected game by loading necessary back end components, creating the scene, and
    * starting the animation
@@ -54,6 +57,7 @@ public class Controller {
     //pass compositeElement to collision manager
     stage.setScene(gameScene);
     animationManager.runAnimation(this);
+
   }
 
   /**

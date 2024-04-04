@@ -73,6 +73,35 @@ public class GameLoaderView extends GameLoader {
 //      System.out.println("Error generating CSS file: " + e.getMessage());
 //    }
 //  }
+//
+//  //alisha
+//  private int validateColorComponent(int value) {
+//    if (value < 0) {
+//      return 0; // Set to 0 if value is negative
+//    } else if (value > 255) {
+//      return 255; // Set to 255 if value is greater than 255
+//    } else {
+//      return value; // Return original value if within valid range
+//    }
+//  }
+//
+////  private void writeColor() {
+////
+////  }
+////
+////  private void writeDimension() {
+////
+////  }
+//
+//  //alisha
+//  private void generateCollidableShapeConfig() {
+//
+//  }
+//}
+//
+//
+//
+
 
   //alisha
   private int validateColorComponent(int value) {
