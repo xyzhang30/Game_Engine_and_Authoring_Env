@@ -20,7 +20,7 @@ public class GameLoaderViewTest {
   }
 
   @Test
-  public void createCollidableConfigTest(){
+  public void createCollidableRecordTest(){
     GameLoaderView loaderView = new GameLoaderView("singlePlayerMiniGolf");
     List<ViewCollidableRecord> collidableRecords = loaderView.getViewCollidableInfo();
     for (ViewCollidableRecord record : collidableRecords){
