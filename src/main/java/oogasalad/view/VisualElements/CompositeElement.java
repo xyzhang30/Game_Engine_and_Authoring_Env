@@ -2,7 +2,6 @@ package oogasalad.view.VisualElements;
 
 import java.util.List;
 import javafx.scene.Node;
-import javafx.scene.shape.Shape;
 import java.util.HashMap;
 import java.util.Map;
 import oogasalad.model.api.CollidableRecord;
@@ -11,11 +10,11 @@ import oogasalad.model.api.ViewCollidableRecord;
 public class CompositeElement {
 
   private final Map<Integer, VisualElement> elementMap;
-  private Map<Integer, Shape> shapes = new HashMap<>();
-
   public CompositeElement(List<ViewCollidableRecord> recordList) {
     elementMap = new HashMap<>();
-    createElements(recordList);
+    for (ViewCollidableRecord viewRecord : recordList){
+      elementMap.putIfAbsent(viewRecord.collidableId(), new GameElement(viewRecord));
+    }
   }
 
   /**
@@ -25,7 +24,6 @@ public class CompositeElement {
    */
   public void update(List<CollidableRecord> models) {
     for (CollidableRecord model : models) {
-      elementMap.putIfAbsent(model.id(), new GameElement(model.id()));
       elementMap.get(model.id()).update(model);
     }
   }
@@ -42,30 +40,5 @@ public class CompositeElement {
 
   public List<Integer> idList() {
     return elementMap.keySet().stream().toList();
-  }
-
-  private void createElements(List<ViewCollidableRecord> recordList) {
-    for (ViewCollidableRecord record : recordList) {
-      GameElement element = new GameElement(record.collidableId());
-      element.createElement(record);
-      elementMap.put(record.collidableId(), element);
-    }
-  }
-
-
-  // THE BELOW ARE TO BE EXCISED UPON ACKNOWLEDGEMENT OF SECOND PARTY
-  @Deprecated
-  public Shape getShape(int id) {
-    return shapes.get(id);
-  }
-
-  @Deprecated
-  public void updateShape(int id, double x, double y, boolean visible) {
-    Shape shape = shapes.get(id);
-    if (shape != null) {
-      shape.setLayoutX(x);
-      shape.setLayoutY(y);
-      shape.setVisible(visible);
-    }
   }
 }
