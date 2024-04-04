@@ -73,6 +73,16 @@
 * Blockers/Issues in your way
 
 
+### Konur
+
+* Work done this Sprint - None, had a terribly busy academic week
+
+* Plan for next Sprint? - Create a robust physics engine
+
+* Blockers/Issues in your way - Physics logic implemented in Moveable subclass, will have to refactor
+and abstract to physics engine. 
+
+
 
 
 
