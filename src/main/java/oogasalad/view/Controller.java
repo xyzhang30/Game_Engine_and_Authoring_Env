@@ -6,7 +6,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import oogasalad.Pair;
 import oogasalad.model.api.GameRecord;
+import oogasalad.model.api.ViewCollidableRecord;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameparser.GameLoaderView;
+import oogasalad.view.VisualElements.CompositeElement;
+
 
 /**
  * Controller class handles communications between model and view.  This class holds manager class
@@ -17,6 +21,7 @@ import oogasalad.model.gameengine.GameEngine;
 public class Controller {
 
   private GameEngine gameEngine;
+  private GameLoaderView gameLoaderView;
   private final CollisionManager collisionManager;
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
@@ -47,13 +52,15 @@ public class Controller {
    * @param selectedGame the game selected to play
    */
   public void startGamePlay(String selectedGame) {
-    //new FrontendParser(selectedGame);
-    //gameEngine = new GameEngine(selectedGame);
-    //create compositeElement from css files and pass to sceneManager
-    Scene gameScene = sceneManager.makeGameScreen(this);
-    //pass compositeElement to collision manager
+    gameLoaderView = new GameLoaderView(selectedGame);
+    gameEngine = new GameEngine(selectedGame);
+    CompositeElement compositeElement = createCompositeElementFromGameLoader();
+    Scene gameScene = sceneManager.makeGameScreen(this, compositeElement);
+    collisionManager.setNewCompositeElement(compositeElement);
     stage.setScene(gameScene);
-    animationManager.runAnimation(this);
+
+    //animationManager.runAnimation(this);
+
   }
 
   /**
@@ -62,16 +69,16 @@ public class Controller {
    * @return boolean indicating if round is over
    */
   public boolean runGame(double timeStep) {
-//    GameRecord gameRecord = gameEngine.update(timeStep);
-//    sceneManager.update(gameRecord);
-//    List<Pair> collisionList = collisionManager.getIntersections();
-//    gameEngine.handleCollisions(collisionList, timeStep);
-//    gameEngine.update(timeStep);
-//
-//    if (sceneManager.notMoving(gameRecord)) {
-//      sceneManger.enableHitting();
-//    }
-//    //return if game is over
+    GameRecord gameRecord = gameEngine.update(timeStep);
+    sceneManager.update(gameRecord);
+    List<Pair> collisionList = collisionManager.getIntersections();
+    gameEngine.handleCollisions(collisionList, timeStep);
+    gameEngine.update(timeStep);
+
+    if (sceneManager.notMoving(gameRecord)) {
+      sceneManager.enableHitting();
+    }
+    //return if game is over
     return true;
   }
 
@@ -92,8 +99,13 @@ public class Controller {
   public List<String> getGameTitles() {
     //TODO: Add parsing functionality
     List<String> gameTitles = new ArrayList<>();
-    gameTitles.add("sampleMiniGolf");
+    gameTitles.add("singlePlayerMiniGolf");
     return gameTitles;
+  }
+
+  private CompositeElement createCompositeElementFromGameLoader(){
+    List<ViewCollidableRecord> recordList = gameLoaderView.getViewCollidableInfo();
+    return new CompositeElement(recordList);
   }
 
 }
