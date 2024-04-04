@@ -57,7 +57,7 @@ public class GameLoaderModel extends GameLoader {
       int id = gameData.players().get(0).playerId();
       int myCollidableId = gameData.players().get(0).myCollidable();
       Player player = new Player(id, getCollidableContainer().getCollidable(myCollidableId));
-      playerMap.put(0, player);
+      playerMap.put(id, player);
     }
     this.playerContainer = new PlayerContainer(playerMap);
   }
