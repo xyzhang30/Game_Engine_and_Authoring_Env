@@ -39,7 +39,8 @@ public class GameScreen extends UIScreen {
 
   private void setupAngleIndicator() {
     // Assume arrow starts at the middle bottom of the scene and points upwards initially
-    angleArrow = new Arrow(sceneWidth / 2, sceneHeight, sceneWidth / 2, sceneHeight - 100);
+    angleArrow = new Arrow(sceneWidth- sceneWidth/5-20, 800, sceneWidth-sceneWidth/5-20, 700);
+
     root.getChildren().add(angleArrow.getLine()); // Add the arrow line to the root pane
   }
 

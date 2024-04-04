@@ -1,5 +1,6 @@
 package oogasalad.model.gameengine.collidable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 import javafx.collections.FXCollections;
@@ -34,6 +35,7 @@ public abstract class Collidable {
   }
   public void onCollision(Collidable other, double dt) {
     double[] result = other.calculateNewSpeed(this, dt);
+
     myNextVelocityX = result[0];
     myNextVelocityY = result[1];
   }

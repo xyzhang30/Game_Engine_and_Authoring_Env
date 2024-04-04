@@ -9,10 +9,10 @@ public class Moveable extends Collidable {
 
   @Override
   public double[] calculateNewSpeed(Collidable other, double dt) { //gets speed of thing its
-    if(getMass() == Double.MAX_VALUE) {
+    if(getMass() == Double.POSITIVE_INFINITY) {
       return new double [] {-other.getVelocityX(), -other.getVelocityY()};
     }
-    if(other.getMass() == Double.MAX_VALUE) {
+    if(other.getMass() == Double.POSITIVE_INFINITY) {
       return new double [] {0,0};
     }
     double massSum = other.getMass() + getMass();
