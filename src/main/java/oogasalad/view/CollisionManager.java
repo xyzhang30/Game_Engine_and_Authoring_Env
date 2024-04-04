@@ -1,12 +1,14 @@
 package oogasalad.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.Node;
 import javafx.scene.shape.Shape;
 import oogasalad.Pair;
 import oogasalad.view.VisualElements.CompositeElement;
+import oogasalad.view.VisualElements.GameElement;
 
 /**
  * Class to maintain intersections and detect which collisions are active
@@ -39,6 +41,15 @@ public class CollisionManager {
     }
     return intersectionList;
   }
+
+//  public Map<Pair, String> getIntersectionsMap(){
+//    List<Pair> intersectionList = getIntersections();
+//    Map<Pair, String> collisionType = new HashMap<>();
+//    for (Pair pair : intersectionList){
+//      collisionType.put(pair, getCollisionType(pair));
+//    }
+//    return collisionType;
+//  }
 
   /**
    * Assigns the composite element to the given composite element

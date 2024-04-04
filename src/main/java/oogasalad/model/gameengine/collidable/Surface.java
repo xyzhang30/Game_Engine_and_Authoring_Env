@@ -3,8 +3,8 @@ package oogasalad.model.gameengine.collidable;
 public class Surface extends Collidable {
   private final double mu;
   private static final double g = 10;
-  public Surface(int id, double mass, double x, double y, boolean visible, double mu) {
-    super(id, mass, x, y, visible);
+  public Surface(int id, double mass, double x, double y, boolean visible, double mu, double width, double height) {
+    super(id, mass, x, y, visible, width, height);
     this.mu = mu;
   }
 

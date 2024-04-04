@@ -1,7 +1,9 @@
 package oogasalad.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javafx.stage.Stage;
 import oogasalad.Pair;
 import oogasalad.model.api.GameRecord;
@@ -76,6 +78,8 @@ public class Controller {
     sceneManager.updateScoreBoard(gameRecord.players().get(0).score());
 
     List<Pair> collisionList = collisionManager.getIntersections();
+//    Map<Pair, String> collisionType = collisionManager.getIntersectionsMap();
+
     GameRecord gameRecord2 = gameEngine.handleCollisions(collisionList, timeStep);
     sceneManager.update(gameRecord2);
     if (sceneManager.notMoving(gameRecord2)) {

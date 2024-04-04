@@ -56,14 +56,14 @@ public class GameEngineTest {
 
     protected void createCollidableContainer() {
       Map<Integer, Collidable> mockCollidables = new HashMap<>();
-      mockCollidables.put(1, new Moveable(1, 50, 0, 0, true));
-      mockCollidables.put(2, new Surface(2, Double.MAX_VALUE, 0, 0, true, .2));
-      mockCollidables.put(3, new Moveable(3, Double.MAX_VALUE, 100, 100, true));
-      mockCollidables.put(4, new Moveable(4, Double.MAX_VALUE, 70, 0, true));
-      mockCollidables.put(5, new Moveable(5, 50, 40, 40, true));
-      mockCollidables.put(6, new Moveable(6, 50, 60, 40, true));
-      mockCollidables.put(7, new Surface(7, Double.MAX_VALUE, 50, 50, true, 1));
-      mockCollidables.put(8, new Moveable(8, 10, 48, 48, true));
+      mockCollidables.put(1, new Moveable(1, 50, 0, 0, true, 0, 0));
+      mockCollidables.put(2, new Surface(2, Double.MAX_VALUE, 0, 0, true, .2, 0,0));
+      mockCollidables.put(3, new Moveable(3, Double.MAX_VALUE, 100, 100, true, 0, 0));
+      mockCollidables.put(4, new Moveable(4, Double.MAX_VALUE, 70, 0, true, 0, 0));
+      mockCollidables.put(5, new Moveable(5, 50, 40, 40, true, 0, 0));
+      mockCollidables.put(6, new Moveable(6, 50, 60, 40, true, 0, 0));
+      mockCollidables.put(7, new Surface(7, Double.MAX_VALUE, 50, 50, true, 1, 0, 0));
+      mockCollidables.put(8, new Moveable(8, 10, 48, 48, true, 0, 0));
 
       this.collidableContainer = new CollidableContainer(mockCollidables);
     }

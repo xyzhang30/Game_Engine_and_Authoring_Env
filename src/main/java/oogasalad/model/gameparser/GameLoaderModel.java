@@ -94,7 +94,9 @@ public class GameLoaderModel extends GameLoader {
         co.mass(),
         co.position().xPosition(),
         co.position().yPosition(),
-        co.properties().contains("visible")
+        co.properties().contains("visible"),
+        co.dimension().xDimension(),
+        co.dimension().yDimension()
     );
   }
 
@@ -105,7 +107,9 @@ public class GameLoaderModel extends GameLoader {
         co.position().xPosition(),
         co.position().yPosition(),
         co.properties().contains("visible"),
-        co.friction()
+        co.friction(),
+        co.dimension().xDimension(),
+        co.dimension().yDimension()
     );
   }
 
