@@ -50,11 +50,7 @@ public class GameScreen extends UIScreen {
   }
 
   private void setupControlPane() {
-    ControlPane controlPane = new ControlPane();
-    controlPane.setLayoutX(10); // top of screen?
-    controlPane.setLayoutY(10); // top of screen?
-
-    root.setTop(controlPane);
+    root.setTop(new ControlPane());
   }
 
   @Deprecated
