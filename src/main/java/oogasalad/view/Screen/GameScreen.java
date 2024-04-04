@@ -25,7 +25,7 @@ public class GameScreen extends UIScreen {
 
   private final BorderPane root;
 
-  public GameScreen(Controller controller) {
+  public GameScreen(Controller controller, CompositeElement compositeElement) {
     root = new BorderPane();
     this.controller = controller;
     ableToHit = true;

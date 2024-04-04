@@ -6,7 +6,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import oogasalad.Pair;
 import oogasalad.model.api.GameRecord;
+import oogasalad.model.api.ViewCollidableRecord;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameparser.GameLoaderView;
+import oogasalad.view.VisualElements.CompositeElement;
 
 /**
  * Controller class handles communications between model and view.  This class holds manager class
@@ -17,6 +20,7 @@ import oogasalad.model.gameengine.GameEngine;
 public class Controller {
 
   private GameEngine gameEngine;
+  private GameLoaderView gameLoaderView;
   private final CollisionManager collisionManager;
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
@@ -47,11 +51,11 @@ public class Controller {
    * @param selectedGame the game selected to play
    */
   public void startGamePlay(String selectedGame) {
-    //new FrontendParser(selectedGame);
-    //gameEngine = new GameEngine(selectedGame);
-    //create compositeElement from css files and pass to sceneManager
-    Scene gameScene = sceneManager.makeGameScreen(this);
-    //pass compositeElement to collision manager
+    gameLoaderView = new GameLoaderView(selectedGame);
+    gameEngine = new GameEngine(selectedGame);
+    CompositeElement compositeElement = createCompositeElementFromGameLoader();
+    Scene gameScene = sceneManager.makeGameScreen(this, compositeElement);
+    collisionManager.setNewCompositeElement(compositeElement);
     stage.setScene(gameScene);
     animationManager.runAnimation(this);
   }
@@ -94,6 +98,11 @@ public class Controller {
     List<String> gameTitles = new ArrayList<>();
     gameTitles.add("sampleMiniGolf");
     return gameTitles;
+  }
+
+  private CompositeElement createCompositeElementFromGameLoader(){
+    List<ViewCollidableRecord> recordList = gameLoaderView.getViewCollidableInfo();
+    return new CompositeElement(recordList);
   }
 
 }
