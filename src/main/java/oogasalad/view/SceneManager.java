@@ -53,7 +53,6 @@ public class SceneManager {
 
 
   public void checkEndRound(GameRecord gameRecord) {
-    System.out.println(gameRecord);
     if (gameRecord.round() != currentRound) {
       currentRound=gameRecord.round();
 

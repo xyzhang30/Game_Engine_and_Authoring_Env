@@ -2,7 +2,6 @@ package oogasalad.view;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import oogasalad.Pair;
 import oogasalad.model.api.GameRecord;
@@ -28,13 +27,12 @@ public class Controller {
   private final Stage stage;
 
   public Controller(Stage stage) {
-    sceneManager = new SceneManager();
-    animationManager = new AnimationManager();
     this.stage = stage;
+    sceneManager = new SceneManager();
     sceneManager.makeTitleScreen(this);
     stage.setScene(sceneManager.getScene());
+    animationManager = new AnimationManager();
     collisionManager = new CollisionManager();
-
   }
 
   /**
