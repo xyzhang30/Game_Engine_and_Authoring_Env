@@ -84,11 +84,6 @@
 
 * Just making sure we are all on the same page for authoring
 
-
-<<<<<<< HEAD
-
-
-=======
 ### Konur
 
 * Work done this Sprint - None, had a terribly busy academic week
@@ -97,7 +92,6 @@
 
 * Blockers/Issues in your way - Physics logic implemented in Moveable subclass, will have to refactor
 and abstract to physics engine.
->>>>>>> bd0035dd5f8e38b780b478656df960bdc89b6f56
 
 ## Project's current progress
 
