@@ -1,7 +1,8 @@
 # OOGASalad Stand Up and Retrospective Discussion
-### TEAM
-### NAMES
 
+### TEAM
+
+### NAMES
 
 ## Stand Up Meeting
 
@@ -13,7 +14,6 @@
 
 * Blockers/Issues in your way
 
-
 ### Kevin
 
 * Work done this Sprint
@@ -21,7 +21,6 @@
 * Plan for next Sprint?
 
 * Blockers/Issues in your way
-
 
 ### Konur
 
@@ -31,7 +30,6 @@
 
 * Blockers/Issues in your way
 
-
 ### Doga
 
 * Work done this Sprint
@@ -39,7 +37,6 @@
 * Plan for next Sprint?
 
 * Blockers/Issues in your way
-
 
 ### Judy
 
@@ -49,7 +46,6 @@
 
 * Blockers/Issues in your way
 
-
 ### Alisha
 
 * Work done this Sprint
@@ -58,27 +54,21 @@
 
 * Blockers/Issues in your way
 
-
 ### Jordan
 
-* Work done this Sprint
+* Controller, TitleScreen, MenuScreen, GameScreen, CollisionManager, SceneManager, AnimationManager,
+  Visual Element classes; pair programming, front-end planing meetings
 
-* Plan for next Sprint?
+* Refactoring existing code (fixing dependencies, reflection, hard coded values), meeting with
+  Luke?, start on authoring environment
 
-* Blockers/Issues in your way
-
-
-
-
+* Just making sure we are all on the same page for authoring
 
 ## Project's current progress
 
-
 ## Current level of communication
 
-
 ## Satisfaction with team roles
-
 
 ## Teamwork that worked well
 
@@ -86,12 +76,10 @@
 
 * Thing #2
 
-
 ## Teamwork that could be improved
 
 * Thing #1
 
 * Thing #2
-
 
 ## Teamwork to improve next Sprint
