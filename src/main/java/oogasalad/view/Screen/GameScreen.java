@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import oogasalad.model.api.CollidableRecord;
 import oogasalad.view.Controller;
 import oogasalad.view.VisualElements.CompositeElement;
@@ -63,6 +64,7 @@ public class GameScreen extends UIScreen {
   private void createScene() {
     setupControlPane(); //This messes up the power bar key listening
     Rectangle powerIndicator = setupPowerBar();
+    setupScoreBoard(0);
     scene = new Scene(root, sceneWidth, sceneHeight);
     initiateListening(scene, powerIndicator);
 
@@ -71,6 +73,16 @@ public class GameScreen extends UIScreen {
 
   private void setupControlPane() {
     root.setTop(new ControlPane());
+  }
+
+  private void setupScoreBoard(int score){
+    Rectangle rectangle = new Rectangle(10,50,100,50);
+    rectangle.setFill(Color.LIMEGREEN);
+    Text txt = new Text("Score: "+score);
+    txt.setX(50);
+    txt.setY(100);
+    txt.setFill(Color.BLACK);
+    root.getChildren().addAll(rectangle,txt);
   }
 
   private void setupFieldComponents(CompositeElement cm) {
