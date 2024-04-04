@@ -27,11 +27,13 @@ public class CollisionManager {
    */
   public List<Pair> getIntersections() {
     List<Pair> intersectionList = new ArrayList<>();
-    for (int i=0;i<compositeElement.idList().size()-1;i++){
-      for (int j=i+1;j<compositeElement.idList().size();j++){
-        if (compositeElement.getNode(compositeElement.idList().get(i)).intersects(
-            compositeElement.getNode(compositeElement.idList().get(j)).getBoundsInLocal())){
-          intersectionList.add(new Pair(compositeElement.idList().get(i),compositeElement.idList().get(j)));
+    for (Integer i : compositeElement.idList()){
+      for (Integer j : compositeElement.idList()){
+        if (i<j) {
+          if (compositeElement.getNode(i).getBoundsInParent().intersects(
+              compositeElement.getNode(j).getBoundsInParent())) {
+            intersectionList.add(new Pair(i,j));
+          }
         }
       }
     }
