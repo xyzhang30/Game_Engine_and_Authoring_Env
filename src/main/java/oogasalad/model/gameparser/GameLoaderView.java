@@ -1,16 +1,9 @@
 package oogasalad.model.gameparser;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import oogasalad.model.api.ViewCollidableRecord;
 import oogasalad.model.gameparser.data.CollidableObject;
-import org.json.simple.JSONArray;
-import java.util.Properties;
 
 /**
  * Concrete implementation of GameLoader for passing game data necessary for the View.

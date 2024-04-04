@@ -1,5 +1,9 @@
 package oogasalad.model.api.exception;
-
+/**
+ * The InvalidFileException extends RuntimeException to handle any errors related parsing JSON files for game configuration
+ *
+ * @author Judy He
+ */
 public class InvalidFileException extends RuntimeException {
 
   /**
