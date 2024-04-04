@@ -25,6 +25,11 @@ public class GameElement implements VisualElement {
   private Node makeShape(ViewCollidableRecord data){
     List<Integer> rgb = data.color();
     Color color = Color.rgb(rgb.get(0),rgb.get(1),rgb.get(2));
+//    return switch (data.shape().toLowerCase()) { // Convert to reflection at later date
+//      case "circle" -> new Circle(data.width(), color);
+//      case "rectangle" -> new Rectangle(data.width(), data.height(), color);
+//      default -> null; // Throw type not found exception
+//    };
     switch (data.shape().toLowerCase()) { // Convert to reflection at later date
       case "circle":
         return new Circle(data.startXpos(), data.startYpos(), data.width(), color);
