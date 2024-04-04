@@ -6,17 +6,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Screen;
 import oogasalad.view.Controller;
+import oogasalad.view.Window;
 
 public abstract class UIScreen {
-
-  private final Screen screen = Screen.getPrimary();
-  final double SCREEN_WIDTH = screen.getBounds().getWidth() - 100;
-  final double SCREEN_HEIGHT = screen.getBounds().getHeight() - 100;
+  double SCREEN_WIDTH = Window.SCREEN_WIDTH;
+  double SCREEN_HEIGHT = Window.SCREEN_HEIGHT;
   Controller controller;
 
   public abstract Parent getRoot();
+  public void setScreen(double width, double height){
+    SCREEN_WIDTH = width;
+    SCREEN_HEIGHT = height;
+  }
 
   /**
    * Styles text to match theme font

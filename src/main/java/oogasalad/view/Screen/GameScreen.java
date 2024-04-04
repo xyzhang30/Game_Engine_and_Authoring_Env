@@ -20,7 +20,7 @@ import oogasalad.view.VisualElements.CompositeElement;
 
 public class GameScreen extends UIScreen {
 
-  private final int maxPower = 650;
+  private final double maxPower = SCREEN_HEIGHT*0.8;
   private final BorderPane root;
   private boolean ableToHit;
   private Arrow angleArrow;
@@ -42,8 +42,8 @@ public class GameScreen extends UIScreen {
   private void setupAngleIndicator() {
     // Assume arrow starts at the middle bottom of the scene and points upwards initially
     angleArrow = new Arrow(
-        SCREEN_WIDTH - SCREEN_WIDTH / 5 - 20, 800, SCREEN_WIDTH - SCREEN_WIDTH / 5 - 20,
-        700);
+        SCREEN_WIDTH*0.85, SCREEN_HEIGHT*0.8, SCREEN_WIDTH*0.85,
+        SCREEN_HEIGHT*0.7);
 
     root.getChildren().add(angleArrow.getLine()); // Add the arrow line to the root pane
   }
@@ -93,11 +93,13 @@ public class GameScreen extends UIScreen {
   }
 
   private Rectangle setupPowerBar() {
-    Rectangle outline = new Rectangle(SCREEN_WIDTH - 200, 100, 100, 700);
+    Rectangle outline = new Rectangle(SCREEN_WIDTH*0.9, SCREEN_HEIGHT*0.1,
+        SCREEN_WIDTH*0.07, SCREEN_HEIGHT*0.8);
     outline.setFill(Color.DARKGRAY);
     outline.setEffect(createDropShadow());
 
-    Rectangle powerIndicator = new Rectangle(SCREEN_WIDTH - 190, 780, 80, 10);
+    Rectangle powerIndicator = new Rectangle(SCREEN_WIDTH*0.91, SCREEN_HEIGHT*0.89,
+        SCREEN_WIDTH*0.05, 10);
     powerIndicator.setFill(Color.DARKRED);
     powerIndicator.toFront();
 

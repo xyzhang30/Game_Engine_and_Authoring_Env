@@ -39,7 +39,7 @@ public class TitleScreen extends UIScreen {
     title.setEffect(createDropShadow());
 
     title.setX(SCREEN_WIDTH/2 - title.getLayoutBounds().getWidth()/2);
-    title.setY(SCREEN_HEIGHT/3 - title.getLayoutBounds().getHeight()/2);
+    title.setY(SCREEN_HEIGHT*0.3 - title.getLayoutBounds().getHeight()/2);
 
     root.getChildren().add(title);
   }

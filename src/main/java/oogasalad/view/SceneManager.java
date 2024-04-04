@@ -12,7 +12,7 @@ import oogasalad.view.VisualElements.CompositeElement;
 
 public class SceneManager {
 
-  private Scene scene;
+  private final Scene scene;
   private CompositeElement compositeElement;
   private GameScreen gameScreen;
   private int currentRound = 1;
