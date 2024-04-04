@@ -30,9 +30,9 @@ public class Controller {
   public Controller(Stage stage) {
     sceneManager = new SceneManager();
     animationManager = new AnimationManager();
-    Scene title = sceneManager.makeTitleScreen(this);
     this.stage = stage;
-    stage.setScene(title);
+    sceneManager.makeTitleScreen(this);
+    stage.setScene(sceneManager.getScene());
     collisionManager = new CollisionManager();
 
   }
@@ -41,8 +41,11 @@ public class Controller {
    * Creates and displays menu screen
    */
   public void openMenuScreen() {
-    Scene menu = sceneManager.makeMenuScreen(getGameTitles(), this);
-    stage.setScene(menu);
+    sceneManager.makeMenuScreen(getGameTitles(), this);
+  }
+
+  public void openTransitionScreen(){
+    sceneManager.makeTransitionScreen();
   }
 
   /**
@@ -55,9 +58,9 @@ public class Controller {
     gameLoaderView = new GameLoaderView(selectedGame);
     gameEngine = new GameEngine(selectedGame);
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
-    Scene gameScene = sceneManager.makeGameScreen(this, compositeElement);
+    sceneManager.makeGameScreen(this, compositeElement);
+    stage.setScene(sceneManager.getScene());
     collisionManager.setNewCompositeElement(compositeElement);
-    stage.setScene(gameScene);
 
     //animationManager.runAnimation(this);
 
@@ -86,8 +89,8 @@ public class Controller {
    * Sends velocity and angle to back end to simulate hitting point scoring object
    * @param fractionalVelocity velocity as fraction of maxVelocity
    */
-  public void hitPointScoringObject(double fractionalVelocity){
-    //gameEngine.applyInitialVelocity();
+  public void hitPointScoringObject(double fractionalVelocity, double angle){
+    //gameEngine.applyInitialVelocity(fractionalVelocity, angle, );
   }
 
 

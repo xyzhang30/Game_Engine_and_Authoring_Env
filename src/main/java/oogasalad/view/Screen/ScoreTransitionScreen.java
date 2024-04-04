@@ -4,7 +4,7 @@ public class ScoreTransitionScreen extends TransitionScreen {
   private int score;
 
   public ScoreTransitionScreen(int par, int score) {
-    super("Mini Golf Game Stats:"); //get from parser
+    super(); //get from parser
     this.score = score;
     setupTransitionDetails();
   }

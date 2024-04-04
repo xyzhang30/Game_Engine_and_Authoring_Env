@@ -34,6 +34,7 @@ public class GameEngine implements ExternalGameEngine {
 
   public GameEngine(String gameTitle) {
     loader = new GameLoaderModel(gameTitle);
+    start(loader);
   }
 
   /**

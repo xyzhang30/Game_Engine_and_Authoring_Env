@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -22,16 +23,24 @@ import oogasalad.view.VisualElements.CompositeElement;
 public class GameScreen extends UIScreen {
   private final int maxPower = 650;
   private boolean ableToHit;
-
+  private Scene scene;
   private final BorderPane root;
+  private Arrow angleArrow;
 
   public GameScreen(Controller controller, CompositeElement compositeElement) {
     root = new BorderPane();
     this.controller = controller;
     ableToHit = true;
     setupFieldComponents(compositeElement); // BIG improvised here. There's a lot of refactoring to do first...
+    setupAngleIndicator();
 
     createScene();
+  }
+
+  private void setupAngleIndicator() {
+    // Assume arrow starts at the middle bottom of the scene and points upwards initially
+    angleArrow = new Arrow(sceneWidth / 2, sceneHeight, sceneWidth / 2, sceneHeight - 100);
+    root.getChildren().add(angleArrow.getLine()); // Add the arrow line to the root pane
   }
 
   /**
@@ -46,6 +55,10 @@ public class GameScreen extends UIScreen {
     return root;
   }
 
+  @Deprecated
+  public Scene getScene(){
+    return scene;
+  }
   private void createScene() {
     setupControlPane(); //This messes up the power bar key listening
     Rectangle powerIndicator = setupPowerBar();
@@ -61,11 +74,9 @@ public class GameScreen extends UIScreen {
 
   @Deprecated
   private void setupFieldComponents(CompositeElement cm) {
-    StackPane sp = new StackPane();
     for (int i : cm.idList()) {
-      sp.getChildren().add(cm.getNode(i));
+      root.getChildren().add(cm.getNode(i));
     }
-    root.getChildren().add(sp);
   }
 
   private Rectangle setupPowerBar() {
@@ -105,15 +116,33 @@ public class GameScreen extends UIScreen {
         }
         break;
       }
-      case LEFT:{} //modify angle
-      case RIGHT: {} //modify angle
+      case LEFT:{
+        if (angleArrow.getAngle() > -180){
+          angleArrow.decreaseAngle();
+        }
+        break;
+      }
+      case RIGHT: {
+        if (angleArrow.getAngle() < 180){
+          angleArrow.increaseAngle();
+        }
+        break;
+      }
       case ENTER: {
         ableToHit = false;
+        double angle = angleArrow.getAngle();
         double fractionalVelocity = powerIndicator.getHeight() / maxPower;
-        controller.hitPointScoringObject(fractionalVelocity);
+        controller.hitPointScoringObject(fractionalVelocity, angle);
         break;
       }
     }
+  }
+
+  public void endRound(Boolean round){
+    if (round){
+      controller.openTransitionScreen();
+    }
+
   }
 
   //this would need to be a for loop and loop through all the ids of elements
