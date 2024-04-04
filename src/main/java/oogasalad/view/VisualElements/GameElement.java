@@ -16,7 +16,7 @@ public class GameElement implements VisualElement{
   public GameElement(int id){
     // Specify type of node (shape/imageview/etc.), dimensions, color, etc. from data.
     GameLoaderView loader = new GameLoaderView("singlePlayerMiniGolf");
-    Color color = loader.getViewCollidableInfo().get(id).color();
+    //Color color = loader.getViewCollidableInfo().get(id).color();
     myNode = new Circle( 10,Color.RED); // TO BE IMPLEMENTED! TALK TO ALISHA/JUDY
   }
 
