@@ -1,78 +1,108 @@
-# INTRO (JUDY)
+# Fysics Fun Demo 1
 
-## Genre and Commonalities/Differences (NOAH)
-### Genre: Physics Games
-- Games: Mini Golf, Air Hockey, Arena (Head) Soccer, Pinball, Shuffle Boarding
-- Differences:
-    - Turn-based and live games
-    - Single player vs multiplayer
-    - Win conditions (rounds completed vs threshold)
-- Similarities:
-    - All 2 Dimensional Games
-    - Concept of active and static states
-    - Involves collisions between game objects and friction caused by moving objects colliding with the surface
+## Noah, Alisha, Kevin, Judy, Doga, Konur, Jordan
 
-## Planned Features (JUDY)
-- Game Authoring No Code Environment
-- Abstracted Away Physics Engine
-- Optional Features:
-    - Online Gaming
-    - Friend circles and leaderboards / social center
+---
 
-## Prioritized Accomplishments for Sprint (ALISHA)
-- Balancing 2 Different and Competing Things:
-    1. Working single hole mini golf game with different obstacles, adhering to basic laws of physics
-    2. Abstractions to make it extendable for future sprints
-- Focus on game engine, assuming files were already created by the authoring environment
-- Implementing Design Patterns for easier project extension
+## Genre Exploration
 
-## Gitlab Sprint 1 Milestone Overview (JUDY)
-- Most of the mini golf features completed
-- Basic parts of the leaderboard not completed
-- Struggled with fleshing out APIs and integration at the end impeded progress
+### Genre Overview:
+- **Physics Games**: Mini Golf, Air Hockey, Arena Soccer, Pinball, Shuffle Boarding.
+- **Differences**:
+  - Turn-based vs. live action.
+  - Single-player vs. multiplayer.
+  - Win conditions variation.
+- **Commonalities**:
+  - 2-dimensional space.
+  - Active and static states.
+  - Collisions and friction mechanics.
 
-## Program Demonstration (NOAH)
-- Highlight mini golf gameplay:
-    1. Ball bouncing off
-    2. Ball hitting water
-    3. Differences between surfaces (e.g., green vs rough)
-    4. Ball hitting the hole
+---
 
-## Data Files and Usage (ALISHA)
-- SinglePlayerMiniGolf file:
-    - Highlight collidables and their properties
-    - Show rules (win conditions, collisions) mapped to Command classes and TurnPolicy
+## Planned Features
 
-## Testing (Noah)
-- Unfortunately, no time for javafx test during this sprint, but had working model tests. 
-  The way we did collision detection made it difficult, so we will need to change this in the 
-  future.
+- Game Authoring No-Code Environment
+- Abstracted Physics Engine
+- Optional Online Gaming Features:
+  - Friend Circles
+  - Leaderboards
 
-## Lessons Learned and Next Sprint Plan
-### Positive Event (JUDY)
-- **Positive:** Last night, high morale and teamwork prevailed, despite longer integration time. Effective collaboration and support among team members.
-- **Learned:** Importance of collective effort and support, fostering team spirit.
+---
 
-### Issue Event (JUDY)
-- **Issue:** Miscommunication of Parser Responsibilities led to redundant efforts and confusion.
-- **Learned:** Importance of clear communication, delegation, and regular stand-up meetings.
+## Sprint 1 Accomplishments
 
-### Teamwork and Communication Reflection (ALISHA)
-#### What Worked:
-- Effective use of group and individual chats.
-- Whiteboarding APIs proved helpful at the start.
+1. Single-hole mini golf game with obstacles.
+2. Abstractions for future expansion.
+3. Focus on game engine and design patterns.
 
-#### What Didn't Work:
-- Changes to APIs without communication caused merge conflicts.
-- Backlog utilization could have been better.
+---
 
-#### Improvement Plan:
-- Be diligent in using and updating the backlog.
-- Implement smaller scoped issues and feature branches.
-- Regularly sync up with the main branch.
+## Gitlab Sprint 1 Milestone Overview
 
-## Next Sprint Plan (NOAH)
+- Mini golf features mostly completed.
+- Leaderboard integration pending.
+- API and integration challenges faced.
+
+---
+
+## Program Demonstration
+
+- Mini golf gameplay showcase:
+  - Realistic ball physics.
+  - Interactions with water hazards.
+  - Surface variations.
+  - Successful hole-in-one!
+
+---
+
+## Data Files
+
+- SinglePlayerMiniGolf file overview:
+  - Collidables and properties.
+  - Mapped rules to Command classes.
+
+---
+
+## Testing Insights
+
+- Model tests conducted, but JavaFX tests deferred.
+- Challenges with collision detection identified for future improvements.
+
+---
+
+## Lessons Learned 
+
+### Positive Event Highlight by Judy
+
+- Team morale and collaboration during integration.
+- Importance of teamwork and support.
+
+### Issue Event Reflection by Judy
+
+- Miscommunication led to redundancy.
+- Importance of clear communication.
+
+---
+
+### Teamwork and Communication
+
+- Effective use of chats and whiteboarding.
+- Issues with API changes and backlog.
+
+---
+
+### Improvement Plan
+
+- Better backlog utilization.
+- Implement smaller scoped issues.
+- Regular sync-up meetings and communication.
+
+---
+
+### Next Sprint Goals
+
 - Focus on authoring environment.
 - Refactoring on the model side, adding a new physics engine for collision detection.
 - Potentially adding another game, introducing multiplayer concepts.
 - Enhance view side with more animations for pre-turn, as seen in mini golf.
+
