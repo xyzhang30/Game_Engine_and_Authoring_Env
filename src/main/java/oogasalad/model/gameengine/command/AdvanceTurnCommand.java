@@ -5,11 +5,12 @@ import oogasalad.model.gameengine.GameEngine;
 
 public class AdvanceTurnCommand implements Command {
 
-  private List<Double> arguments;
+  private final List<Double> arguments;
 
   public AdvanceTurnCommand(List<Double> arguments) {
     this.arguments = arguments;
   }
+
   @Override
   public double execute(GameEngine engine) {
     engine.advanceTurn();

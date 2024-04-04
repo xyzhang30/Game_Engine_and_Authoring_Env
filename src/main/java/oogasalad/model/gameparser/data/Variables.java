@@ -5,4 +5,6 @@ package oogasalad.model.gameparser.data;
  *
  * @author Judy He
  */
-public record Variables(GlobalVariables global, PlayerVariables player) {}
+public record Variables(GlobalVariables global, PlayerVariables player) {
+
+}

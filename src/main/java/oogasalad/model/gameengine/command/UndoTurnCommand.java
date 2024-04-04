@@ -5,11 +5,12 @@ import oogasalad.model.gameengine.GameEngine;
 
 public class UndoTurnCommand implements Command {
 
-  private List<Double> arguments;
+  private final List<Double> arguments;
 
   public UndoTurnCommand(List<Double> arguments) {
     this.arguments = arguments;
   }
+
   @Override
   public double execute(GameEngine engine) {
     System.out.println(103333);

@@ -1,8 +1,6 @@
 package oogasalad.view.Screen;
 
-import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -12,6 +10,7 @@ import javafx.stage.Screen;
 import oogasalad.view.Controller;
 
 public abstract class UIScreen {
+
   private final Screen screen = Screen.getPrimary();
   final double sceneWidth = getScreenWidth() - 100;
   final double sceneHeight = getScreenHeight() - 100;
@@ -21,19 +20,21 @@ public abstract class UIScreen {
 
   /**
    * Styles text to match theme font
+   *
    * @param text text to style
    * @param size font size of text
    */
-  void setToThemeFont(Text text, int size){
+  void setToThemeFont(Text text, int size) {
     text.setFont(Font.font("Arial", FontWeight.BOLD, size));
     text.setFill(Color.BLACK);
   }
 
   /**
    * Creates dropshadow that can be added to visual elements
+   *
    * @return dropshadow to be added to visual elements
    */
-  DropShadow createDropShadow(){
+  DropShadow createDropShadow() {
     DropShadow dropShadow = new DropShadow();
     dropShadow.setColor(Color.DARKGRAY);
     dropShadow.setRadius(5);
@@ -42,11 +43,11 @@ public abstract class UIScreen {
     return dropShadow;
   }
 
-  private double getScreenWidth(){
+  private double getScreenWidth() {
     return screen.getBounds().getWidth();
   }
 
-  private double getScreenHeight(){
+  private double getScreenHeight() {
     return screen.getBounds().getHeight();
   }
 

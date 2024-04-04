@@ -1,13 +1,11 @@
 package oogasalad.view.AuthoringParsing;
 
-import java.io.PrintWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import oogasalad.model.gameparser.GameLoader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /**
  * Enhanced GameLoader for generating CSS for game view components.
@@ -28,8 +26,7 @@ public class FrontendParser extends GameLoader {
     try (PrintWriter writer = new PrintWriter(new FileWriter(gameName + ".css"))) {
       JSONArray collidables = loadCollidables(); // Assuming this method retrieves your JSONArray of collidables
       for (Object o : collidables) {
-        if (o instanceof JSONObject) {
-          JSONObject collidable = (JSONObject) o;
+        if (o instanceof JSONObject collidable) {
           writeCollidableStyle(writer, collidable);
         }
       }
@@ -39,8 +36,8 @@ public class FrontendParser extends GameLoader {
   }
 
   /**
-   * Loads and returns the JSONArray of collidable objects.
-   * This method assumes you have a way to load or access your collidables JSONArray.
+   * Loads and returns the JSONArray of collidable objects. This method assumes you have a way to
+   * load or access your collidables JSONArray.
    */
   private JSONArray loadCollidables() {
     // Placeholder method body - you should implement this based on how your game data is loaded
