@@ -21,8 +21,9 @@ public class Window {
   public Window(Stage stage, int id) {
     Controller controller = new Controller(stage); // Dirty fix. Change once scene swapped by root.
     stage.setTitle(TITLE); // Port this hard coding into data.
-    stage.setWidth(SCREEN_WIDTH * 0.8);
-    stage.setHeight(SCREEN_HEIGHT * 0.8);
+//    stage.setWidth(SCREEN_WIDTH * 0.8);
+//    stage.setHeight(SCREEN_HEIGHT * 0.8);
+    stage.setFullScreen(true);
     stage.show();
   }
 }
