@@ -1,9 +1,13 @@
 package oogasalad.model;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 import java.util.Map;
 import oogasalad.Pair;
+import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.gameengine.Player;
 import oogasalad.model.gameengine.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
@@ -17,6 +21,7 @@ import oogasalad.model.gameengine.command.AdjustPointsCommand;
 import oogasalad.model.gameengine.command.AdvanceTurnCommand;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.command.NRoundsCompletedCommand;
+import oogasalad.model.gameparser.GameLoader;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,10 +55,20 @@ public class GameLoaderModelTest {
     this.mockPlayerContainer = new PlayerContainer(players);
   }
 
-//  @Test(expected = IndexOutOfBoundsException.class)
-//  public void testInvalidJSONFile() {
-//
-//  }
+  @Test
+  public void testInvalidJSONFile() {
+
+    InvalidFileException exception = assertThrows(InvalidFileException.class, () -> {
+      String invalidFileName = "invalidConfigurationFormat";
+      testGameLoaderModel = new GameLoaderModel(invalidFileName);
+    });
+
+    String expectedMessage = "Error parsing JSON game configuration file:";
+    String actualMessage = exception.getMessage();
+
+    assertTrue(actualMessage.contains(expectedMessage));
+
+  }
 
   @Test
   public void testParseCollidables() {
