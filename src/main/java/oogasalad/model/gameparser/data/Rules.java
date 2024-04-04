@@ -9,5 +9,5 @@ import java.util.Map;
  *
  * @author Judy He, Alisha Zhang
  */
-public record Rules(List<CollisionRule> collisions, @JsonProperty("static_checks") List<StaticCheckRule> staticChecks, @JsonProperty("turn_policy") String turnPolicy, @JsonProperty("win_condition") Map<String, List<Integer>> winCondition) {}
+public record Rules(List<CollisionRule> collisions, @JsonProperty("static_checks") List<StaticCheckRule> staticChecks, @JsonProperty("turn_policy") String turnPolicy, @JsonProperty("win_condition") Map<String, List<Integer>> winCondition, List<Map<String, List<Integer>>> advance) {}
 
