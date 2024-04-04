@@ -1,9 +1,11 @@
 package oogasalad.model.gameparser;
+import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 
 import java.io.IOException;
 
+import java.util.ResourceBundle;
 import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.gameparser.data.GameData;
 
@@ -17,6 +19,12 @@ public abstract class GameLoader {
 
   private static final String DATA_FOLDER_PATH = "data/";
   private static final String JSON_EXTENSION = ".json";
+  private static final String RESOURCE_FOLDER_PATH = "model.";
+  private static final String ERROR_RESOURCE_FOLDER = "error.";
+  private static final String ERROR_FILE_PREFIX = "Error";
+  private static final String PROPERTIES_FILE_EXTENSION = ".properties";
+  private String language = "English";
+  private ResourceBundle resourceBundle;
 
   public GameData gameData;
 
@@ -26,7 +34,8 @@ public abstract class GameLoader {
    *
    * @param id The ID of the game data to load.
    */
-  public GameLoader(int id){
+  public GameLoader(int id) throws InvalidFileException {
+    this.resourceBundle = ResourceBundle.getBundle(RESOURCE_FOLDER_PATH + ERROR_RESOURCE_FOLDER + ERROR_FILE_PREFIX + language + PROPERTIES_FILE_EXTENSION);
     parseJSON("/data/singlePlayerMiniGolf.json");
   }
 
@@ -34,30 +43,20 @@ public abstract class GameLoader {
    * Constructs a GameLoader object with the specified file path.
    * @param gameName The name of the game file to parse.
    */
-  public GameLoader(String gameName){
+  public GameLoader(String gameName) throws InvalidFileException {
+    this.resourceBundle = ResourceBundle.getBundle(RESOURCE_FOLDER_PATH + ERROR_RESOURCE_FOLDER + ERROR_FILE_PREFIX + language + PROPERTIES_FILE_EXTENSION);
     parseJSON(DATA_FOLDER_PATH + gameName + JSON_EXTENSION);
   }
 
   private void parseJSON(String filePath) throws InvalidFileException {
-    //find the file according to id (for database)
     try {
       ObjectMapper objectMapper = new ObjectMapper();
       File f = new File(filePath);
       this.gameData = objectMapper.readValue(f, GameData.class);
     } catch (IOException e) {
-      throw new InvalidFileException("Error: Invalid File", e);
+      throw new InvalidFileException(String.format(resourceBundle.getString("JSONParsingError"), e.getMessage()), e);
     }
-  }
 
-  // testing
-//  public static void main(String[] args) {
-//    GameLoader gameLoader = new GameLoaderModel(0);
-//    System.out.println("Game Name: " + gameLoader.gameData.gameName());
-//    System.out.println("Number of Collidable Objects: " + gameLoader.gameData.collidableObjects().size());
-//    for (Player p: gameLoader.gameData.players()) {
-//      System.out.println(p.playerId());
-//      System.out.println(p.myCollidable());
-//    }
-//  }
+  }
 
 }

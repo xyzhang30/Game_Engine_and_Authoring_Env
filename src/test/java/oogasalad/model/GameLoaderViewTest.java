@@ -21,7 +21,7 @@ public class GameLoaderViewTest {
     GameLoaderView loaderView = new GameLoaderView("singlePlayerMiniGolf");
     List<ViewCollidableRecord> collidableRecords = loaderView.getViewCollidableInfo();
     for (ViewCollidableRecord record : collidableRecords){
-      if (record.collidableId() == 2 || record.collidableId() == 3){
+      if (record.id() == 2 || record.id() == 3){
         assertEquals("circle", record.shape());
       } else {
         assertEquals("rectangle", record.shape());
