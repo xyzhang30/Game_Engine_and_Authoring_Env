@@ -22,7 +22,7 @@ import oogasalad.view.VisualElements.CompositeElement;
 public class GameScreen extends UIScreen {
   private final int maxPower = 650;
   private boolean ableToHit;
-
+  private Scene scene;
   private final BorderPane root;
 
   public GameScreen(Controller controller, CompositeElement compositeElement) {
@@ -46,6 +46,10 @@ public class GameScreen extends UIScreen {
     return root;
   }
 
+  @Deprecated
+  public Scene getScene(){
+    return scene;
+  }
   private void createScene() {
     setupControlPane(); //This messes up the power bar key listening
     Rectangle powerIndicator = setupPowerBar();

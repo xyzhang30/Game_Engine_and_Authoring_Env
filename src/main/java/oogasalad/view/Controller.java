@@ -42,12 +42,10 @@ public class Controller {
    */
   public void openMenuScreen() {
     sceneManager.makeMenuScreen(getGameTitles(), this);
-    stage.setScene(sceneManager.getScene());
   }
 
   public void openTransitionScreen(){
     sceneManager.makeTransitionScreen();
-    stage.setScene(sceneManager.getScene());
   }
 
   /**
@@ -61,8 +59,8 @@ public class Controller {
     gameEngine = new GameEngine(selectedGame);
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScreen(this, compositeElement);
-    collisionManager.setNewCompositeElement(compositeElement);
     stage.setScene(sceneManager.getScene());
+    collisionManager.setNewCompositeElement(compositeElement);
 
     //animationManager.runAnimation(this);
 

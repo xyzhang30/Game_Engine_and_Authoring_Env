@@ -21,13 +21,6 @@ public class TitleScreen extends UIScreen {
     createScene();
   }
 
-  /**
-   * Getter for root, used to change scenes
-   * @return root node of scene
-   */
-  public Scene getScene(){
-    return scene;
-  }
   @Override
   public Parent getRoot() {
     return root;
@@ -35,7 +28,6 @@ public class TitleScreen extends UIScreen {
   private void createScene(){
     createTitle();
     createButtons();
-    scene = new Scene(root, sceneWidth, sceneHeight);
   }
 
   private void createTitle(){
