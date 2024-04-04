@@ -116,6 +116,13 @@ public class GameScreen extends UIScreen {
     }
   }
 
+  public void endRound(Boolean round){
+    if (round){
+      controller.openTransitionScreen();
+    }
+
+  }
+
   //this would need to be a for loop and loop through all the ids of elements
 //  public void addCompElement(CompositeElement compositeElement){
 //    root.getChildren().add(compositeElement.getNode());

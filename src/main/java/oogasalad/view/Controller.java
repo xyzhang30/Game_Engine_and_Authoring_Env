@@ -45,6 +45,11 @@ public class Controller {
     stage.setScene(menu);
   }
 
+  public void openTransitionScreen(){
+    Scene transition = sceneManager.makeTransitionScreen();
+    stage.setScene(transition);
+  }
+
   /**
    * Starts the selected game by loading necessary back end components, creating the scene, and
    * starting the animation
