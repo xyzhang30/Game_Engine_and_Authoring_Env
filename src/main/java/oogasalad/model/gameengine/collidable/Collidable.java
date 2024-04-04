@@ -66,18 +66,6 @@ public abstract class Collidable {
     myNextY = myY + dt * myVelocityY;
   }
 
-  /**
-  public void addToLocationHistory(List<Integer> newLocation) {
-    locationHistory.push(newLocation);
-  }
-
-  public void moveToOldLocation(List<Integer> newLocation) {
-    locationHistory.pop();
-    myX = locationHistory.peek().get(0);
-    myY = locationHistory.peek().get(1);
-  }
-  */
-
   public void update() {
     myX = myNextX;
     myY = myNextY;
@@ -131,4 +119,26 @@ public abstract class Collidable {
     myNextY = myY;
     myVisible = record.visible();
   }
-}
+
+  //for debugging
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("{\n");
+    sb.append("  \"myMass\": ").append(myMass).append(",\n");
+    sb.append("  \"myX\": ").append(myX).append(",\n");
+    sb.append("  \"myY\": ").append(myY).append(",\n");
+    sb.append("  \"myVelocityX\": ").append(myVelocityX).append(",\n");
+    sb.append("  \"myVelocityY\": ").append(myVelocityY).append(",\n");
+    sb.append("  \"myId\": ").append(myId).append(",\n");
+    sb.append("  \"myNextX\": ").append(myNextX).append(",\n");
+    sb.append("  \"myNextY\": ").append(myNextY).append(",\n");
+    sb.append("  \"myNextVelocityX\": ").append(myNextVelocityX).append(",\n");
+    sb.append("  \"myNextVelocityY\": ").append(myNextVelocityY).append(",\n");
+    sb.append("  \"myVisible\": ").append(myVisible).append(",\n");
+    sb.append("  \"myWidth\": ").append(myWidth).append(",\n");
+    sb.append("  \"myHeight\": ").append(myHeight).append(",\n");
+    sb.append("}\n");
+    return sb.toString();
+  }
+  }
