@@ -17,11 +17,11 @@ public class GameLoaderViewTest {
   }
 
   @Test
-  public void createCollidableConfigTest(){
+  public void createCollidableRecordTest(){
     GameLoaderView loaderView = new GameLoaderView("singlePlayerMiniGolf");
     List<ViewCollidableRecord> collidableRecords = loaderView.getViewCollidableInfo();
     for (ViewCollidableRecord record : collidableRecords){
-      if (record.id() == 2 || record.id() == 3){
+      if (record.collidableId() == 2 || record.collidableId() == 3){
         assertEquals("circle", record.shape());
       } else {
         assertEquals("rectangle", record.shape());
