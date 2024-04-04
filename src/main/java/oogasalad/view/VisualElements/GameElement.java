@@ -58,23 +58,22 @@ public class GameElement implements VisualElement {
     id = record.collidableId();
     //ask about color
     Color color = getColorFromRecord(record);
-    myNode = getShapeFromRecord(record, color);
-    myNode.setTranslateX(record.xdimension());
-    myNode.setTranslateY(record.ydimention());
+    myNode = getShapeFromRecord(record, color, record.xdimension(), record.ydimention());
   }
 
-  private Shape getShapeFromRecord(ViewCollidableRecord record, Color color) {
+  //use reflection in the future
+  private Shape getShapeFromRecord(ViewCollidableRecord record, Color color, double width, double height) {
     String shape = record.shape();
     switch (shape.toLowerCase()) {
       case "rectangle" -> {
-        Rectangle rectangle = new Rectangle();
+        Rectangle rectangle = new Rectangle(width, height);
         rectangle.setFill(color);
-        break;
+        return rectangle;
       }
       case "circle" -> {
-        Circle circle = new Circle();
+        Circle circle = new Circle(width);
         circle.setFill(color);
-        break;
+        return circle;
       }
     }
     return null;

@@ -45,7 +45,6 @@ public class Controller {
     stage.setScene(menu);
   }
 
-
   /**
    * Starts the selected game by loading necessary back end components, creating the scene, and
    * starting the animation
@@ -59,7 +58,8 @@ public class Controller {
     Scene gameScene = sceneManager.makeGameScreen(this, compositeElement);
     collisionManager.setNewCompositeElement(compositeElement);
     stage.setScene(gameScene);
-    animationManager.runAnimation(this);
+
+    //animationManager.runAnimation(this);
 
   }
 
@@ -69,16 +69,16 @@ public class Controller {
    * @return boolean indicating if round is over
    */
   public boolean runGame(double timeStep) {
-//    GameRecord gameRecord = gameEngine.update(timeStep);
-//    sceneManager.update(gameRecord);
-//    List<Pair> collisionList = collisionManager.getIntersections();
-//    gameEngine.handleCollisions(collisionList, timeStep);
-//    gameEngine.update(timeStep);
-//
-//    if (sceneManager.notMoving(gameRecord)) {
-//      sceneManger.enableHitting();
-//    }
-//    //return if game is over
+    GameRecord gameRecord = gameEngine.update(timeStep);
+    sceneManager.update(gameRecord);
+    List<Pair> collisionList = collisionManager.getIntersections();
+    gameEngine.handleCollisions(collisionList, timeStep);
+    gameEngine.update(timeStep);
+
+    if (sceneManager.notMoving(gameRecord)) {
+      sceneManager.enableHitting();
+    }
+    //return if game is over
     return true;
   }
 
@@ -99,7 +99,7 @@ public class Controller {
   public List<String> getGameTitles() {
     //TODO: Add parsing functionality
     List<String> gameTitles = new ArrayList<>();
-    gameTitles.add("sampleMiniGolf");
+    gameTitles.add("singlePlayerMiniGolf");
     return gameTitles;
   }
 

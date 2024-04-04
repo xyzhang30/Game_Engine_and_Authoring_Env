@@ -34,7 +34,7 @@ public class ControlPane extends HBox {
   private void layoutButtons() {
     this.setPadding(new Insets(5));
     this.setSpacing(10); // Horizontal layout with spacing of 10
-    this.setStyle("-fx-background-color: #660099"); // Pull format from data
+    this.setStyle("-fx-background-color: #999999"); // Pull format from data
     this.getChildren().addAll(pauseButton, saveButton);
   }
 
