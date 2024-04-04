@@ -54,7 +54,9 @@ public class GameScreen extends UIScreen {
     Rectangle powerIndicator = setupPowerBar();
     scene = new Scene(root, sceneWidth, sceneHeight);
     initiateListening(scene, powerIndicator);
+
   }
+
 
   private void setupControlPane() {
     root.setTop(new ControlPane());
@@ -77,7 +79,6 @@ public class GameScreen extends UIScreen {
     Rectangle powerIndicator = new Rectangle(sceneWidth - 190, 780, 80, 10);
     powerIndicator.setFill(Color.DARKRED);
     powerIndicator.toFront();
-    powerIndicator.requestFocus();
 
     root.getChildren().addAll(outline, powerIndicator);
     return powerIndicator;

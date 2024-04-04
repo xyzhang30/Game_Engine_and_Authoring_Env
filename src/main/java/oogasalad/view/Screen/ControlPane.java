@@ -21,10 +21,13 @@ public class ControlPane extends HBox {
   private void initializeButtons() {
     // Initialize pause button
     pauseButton = new Button("Pause");
+    pauseButton.setFocusTraversable(false);
     pauseButton.setOnAction(e -> handlePause());
+
 
     // Initialize save button
     saveButton = new Button("Save");
+    saveButton.setFocusTraversable(false);
     saveButton.setOnAction(e -> handleSave());
   }
 
