@@ -19,15 +19,15 @@ public class GameElement implements VisualElement {
   private final int id;
 
   public GameElement(ViewCollidableRecord viewData) {
-    id = viewData.collidableId();
+    id = viewData.id();
     myNode = makeShape(viewData);
   }
   private Node makeShape(ViewCollidableRecord data){
     List<Integer> rgb = data.color();
     Color color = Color.rgb(rgb.get(0),rgb.get(1),rgb.get(2));
     return switch (data.shape().toLowerCase()) { // Convert to reflection at later date
-      case "circle" -> new Circle(data.xdimension(), color);
-      case "rectangle" -> new Rectangle(data.xdimension(), data.ydimention(), color);
+      case "circle" -> new Circle(data.width(), color);
+      case "rectangle" -> new Rectangle(data.width(), data.height(), color);
       default -> null; // Throw type not found exception
     };
   }

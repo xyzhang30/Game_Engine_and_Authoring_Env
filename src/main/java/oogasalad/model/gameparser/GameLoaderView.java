@@ -118,7 +118,7 @@ public class GameLoaderView extends GameLoader {
 //  private void generateCollidableShapeConfig(String gameName) {
 //    Properties properties = new Properties();
 //    for (CollidableObject o : gameData.collidableObjects()){
-//      int id = o.collidableId();
+//      int id = o.id();
 //      String shape = o.shape();
 //      properties.setProperty(String.valueOf(id), shape);
 //    }

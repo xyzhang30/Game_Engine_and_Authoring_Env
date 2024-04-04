@@ -13,7 +13,7 @@ public class CompositeElement {
   public CompositeElement(List<ViewCollidableRecord> recordList) {
     elementMap = new HashMap<>();
     for (ViewCollidableRecord viewRecord : recordList){
-      elementMap.putIfAbsent(viewRecord.collidableId(), new GameElement(viewRecord));
+      elementMap.putIfAbsent(viewRecord.id(), new GameElement(viewRecord));
     }
   }
 
