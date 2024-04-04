@@ -12,20 +12,24 @@ import oogasalad.model.api.CollidableRecord;
 import oogasalad.view.Controller;
 import oogasalad.view.VisualElements.CompositeElement;
 
+/**
+ * Manages the game's graphical interface, including user inputs for controlling hit strength and game actions.
+ * Interacts with the game controller to reflect changes in game state and player actions.
+ * 
+ * @ author Jordan Haytaian, Doga Ozmen
+ */
+
 public class GameScreen extends UIScreen {
   private final int maxPower = 650;
   private boolean ableToHit;
 
   private final BorderPane root;
 
-  public GameScreen(Controller controller) {
+  public GameScreen(Controller controller, CompositeElement compositeElement) {
     root = new BorderPane();
     this.controller = controller;
     ableToHit = true;
-    // Hard coded case
-    CompositeElement cm = new CompositeElement();
-    cm.update(List.of(new CollidableRecord(1, 10, 100, 100, 0, 0, true)));
-    setupFieldComponents(cm); // BIG improvised here. There's a lot of refactoring to do first...
+    setupFieldComponents(compositeElement); // BIG improvised here. There's a lot of refactoring to do first...
 
     createScene();
   }
@@ -43,11 +47,13 @@ public class GameScreen extends UIScreen {
   }
 
   private void createScene() {
-    //setupControlPane(); This messes up the power bar key listening
+    setupControlPane(); //This messes up the power bar key listening
     Rectangle powerIndicator = setupPowerBar();
     scene = new Scene(root, sceneWidth, sceneHeight);
     initiateListening(scene, powerIndicator);
+
   }
+
 
   private void setupControlPane() {
     root.setTop(new ControlPane());

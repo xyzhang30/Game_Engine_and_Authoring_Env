@@ -15,7 +15,6 @@ public class SceneManager {
 
 
   public SceneManager() {
-    this.compositeElement = new CompositeElement();
   }
 
   public void update(GameRecord gameRecord) {
@@ -34,8 +33,8 @@ public class SceneManager {
     MenuScreen menuScreen = new MenuScreen(titles, controller);
     return menuScreen.getScene();
   }
-  public Scene makeGameScreen(Controller controller){
-      gameScreen = new GameScreen(controller);
+  public Scene makeGameScreen(Controller controller, CompositeElement compositeElement){
+      gameScreen = new GameScreen(controller, compositeElement);
       return gameScreen.getScene();
   }
 

@@ -57,20 +57,4 @@ public class GameLoaderView extends GameLoader {
     }
   }
 
-  //alisha
-//  private void generateCollidableShapeConfig(String gameName) {
-//    Properties properties = new Properties();
-//    for (CollidableObject o : gameData.collidableObjects()){
-//      int id = o.collidableId();
-//      String shape = o.shape();
-//      properties.setProperty(String.valueOf(id), shape);
-//    }
-//    String filePath = RESOURCE_FOLDER_PATH + gameName + PROPERTIES_FILE_EXTENSION;
-//
-//    try (OutputStream output = new FileOutputStream(filePath)) {
-//      properties.store(output, COLLIDABLE_PROPERTIES_COMMENT);
-//    } catch (IOException e) {
-//      throw new RuntimeException(e);
-//    }
-//  }
 }
