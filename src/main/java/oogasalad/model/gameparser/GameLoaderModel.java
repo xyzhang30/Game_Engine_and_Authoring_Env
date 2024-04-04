@@ -144,8 +144,18 @@ public class GameLoaderModel extends GameLoader {
         params = gameData.rules().winCondition().get(condition);
       }
 
+      List<Command> advancecmds = new ArrayList<>();
+
+      for (Map<String, List<Integer>> condition : gameData.rules().advance()){
+        for (String s : condition.keySet()){
+          cc = Class.forName(COMMAND_PATH + s);
+          advancecmds.add((Command) cc.getDeclaredConstructor(List.class).newInstance(condition.get(s)));
+        }
+
+      }
+
       assert cc != null;
-      rulesRecord = new RulesRecord(maxRounds,maxTurns,commandMap, (Command) cc.getDeclaredConstructor(List.class).newInstance(params));
+      rulesRecord = new RulesRecord(maxRounds,maxTurns,commandMap, (Command) cc.getDeclaredConstructor(List.class).newInstance(params), advancecmds);
 
     } catch (AssertionError | NoSuchMethodException | IllegalAccessException | InstantiationException |
              ClassNotFoundException | InvocationTargetException e) {
