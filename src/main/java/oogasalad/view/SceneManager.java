@@ -10,12 +10,16 @@ import oogasalad.view.Screen.TransitionScreen;
 import oogasalad.view.VisualElements.CompositeElement;
 
 public class SceneManager {
+  private Scene scene;
   private CompositeElement compositeElement;
   private GameScreen gameScreen;
   private int currentRound = 0;
 
 
   public SceneManager() {
+  }
+  public Scene getScene(){
+    return scene;
   }
 
   public void update(GameRecord gameRecord) {
@@ -27,17 +31,17 @@ public class SceneManager {
     return gameRecord.staticState(); //will be added to record eventually
   }
 
-  public Scene makeTitleScreen(Controller controller){
-      TitleScreen titleScreen = new TitleScreen(controller);
-      return titleScreen.getScene();
+  public void makeTitleScreen(Controller controller){
+    TitleScreen titleScreen = new TitleScreen(controller);
+    scene = titleScreen.getScene();
   }
-  public Scene makeMenuScreen(List<String> titles, Controller controller){
+  public void makeMenuScreen(List<String> titles, Controller controller){
     MenuScreen menuScreen = new MenuScreen(titles, controller);
-    return menuScreen.getScene();
+    scene = menuScreen.getScene();
   }
-  public Scene makeGameScreen(Controller controller, CompositeElement compositeElement){
-      gameScreen = new GameScreen(controller, compositeElement);
-      return gameScreen.getScene();
+  public void makeGameScreen(Controller controller, CompositeElement compositeElement){
+    gameScreen = new GameScreen(controller, compositeElement);
+    scene = gameScreen.getScene();
   }
 
   public void enableHitting(){
