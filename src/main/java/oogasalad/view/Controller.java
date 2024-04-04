@@ -1,9 +1,7 @@
 package oogasalad.view;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javafx.stage.Stage;
 import oogasalad.Pair;
 import oogasalad.model.api.GameRecord;
@@ -21,12 +19,12 @@ import oogasalad.view.VisualElements.CompositeElement;
  */
 public class Controller {
 
-  private GameEngine gameEngine;
-  private GameLoaderView gameLoaderView;
   private final CollisionManager collisionManager;
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
   private final Stage stage;
+  private GameEngine gameEngine;
+  private GameLoaderView gameLoaderView;
 
   public Controller(Stage stage) {
     this.stage = stage;
@@ -44,7 +42,7 @@ public class Controller {
     sceneManager.makeMenuScreen(getGameTitles(), this);
   }
 
-  public void openTransitionScreen(){
+  public void openTransitionScreen() {
     sceneManager.makeTransitionScreen();
   }
 
@@ -66,12 +64,13 @@ public class Controller {
 
   /**
    * Method to update visual game elements
+   *
    * @param timeStep timestep for animation
    * @return boolean indicating if round is over
    */
   public boolean runGame(double timeStep) {
     GameRecord gameRecord = gameEngine.update(timeStep);
-    if(gameRecord.staticState()) {
+    if (gameRecord.staticState()) {
       animationManager.pauseAnimation();
     }
     sceneManager.update(gameRecord);
@@ -86,17 +85,17 @@ public class Controller {
       sceneManager.enableHitting();
     }
 
-
     //return if game is over
     return true;
   }
 
   /**
    * Sends velocity and angle to back end to simulate hitting point scoring object
+   *
    * @param fractionalVelocity velocity as fraction of maxVelocity
    */
-  public void hitPointScoringObject(double fractionalVelocity, double angle){
-    gameEngine.applyInitialVelocity(1000*fractionalVelocity, angle, 8); // The 8 has been hard
+  public void hitPointScoringObject(double fractionalVelocity, double angle) {
+    gameEngine.applyInitialVelocity(1000 * fractionalVelocity, angle, 8); // The 8 has been hard
     // coded!
     animationManager.runAnimation(this);
   }
@@ -114,7 +113,7 @@ public class Controller {
     return gameTitles;
   }
 
-  private CompositeElement createCompositeElementFromGameLoader(){
+  private CompositeElement createCompositeElementFromGameLoader() {
     List<ViewCollidableRecord> recordList = gameLoaderView.getViewCollidableInfo();
     return new CompositeElement(recordList);
   }

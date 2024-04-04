@@ -1,39 +1,39 @@
 package oogasalad.view.Screen;
 
-import java.util.List;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import oogasalad.model.api.CollidableRecord;
 import oogasalad.view.Controller;
 import oogasalad.view.VisualElements.CompositeElement;
 
 /**
- * Manages the game's graphical interface, including user inputs for controlling hit strength and game actions.
- * Interacts with the game controller to reflect changes in game state and player actions.
- * 
+ * Manages the game's graphical interface, including user inputs for controlling hit strength and
+ * game actions. Interacts with the game controller to reflect changes in game state and player
+ * actions.
+ *
  * @ author Jordan Haytaian, Doga Ozmen
  */
 
 public class GameScreen extends UIScreen {
+
   private final int maxPower = 650;
+  private final BorderPane root;
   private boolean ableToHit;
   private Scene scene;
-  private final BorderPane root;
   private Arrow angleArrow;
 
   private Text scoreboardTxt;
+
   public GameScreen(Controller controller, CompositeElement compositeElement) {
     root = new BorderPane();
     this.controller = controller;
     ableToHit = true;
-    setupFieldComponents(compositeElement); // BIG improvised here. There's a lot of refactoring to do first...
+    setupFieldComponents(
+        compositeElement); // BIG improvised here. There's a lot of refactoring to do first...
     setupAngleIndicator();
 
     createScene();
@@ -41,7 +41,8 @@ public class GameScreen extends UIScreen {
 
   private void setupAngleIndicator() {
     // Assume arrow starts at the middle bottom of the scene and points upwards initially
-    angleArrow = new Arrow(sceneWidth- sceneWidth/5-20, 800, sceneWidth-sceneWidth/5-20, 700);
+    angleArrow = new Arrow(sceneWidth - sceneWidth / 5 - 20, 800, sceneWidth - sceneWidth / 5 - 20,
+        700);
 
     root.getChildren().add(angleArrow.getLine()); // Add the arrow line to the root pane
   }
@@ -49,7 +50,7 @@ public class GameScreen extends UIScreen {
   /**
    * Enable the ability to hit after objects have stopped moving from previous hit
    */
-  public void enableHitting(){
+  public void enableHitting() {
     ableToHit = true;
   }
 
@@ -59,9 +60,10 @@ public class GameScreen extends UIScreen {
   }
 
   @Deprecated
-  public Scene getScene(){
+  public Scene getScene() {
     return scene;
   }
+
   private void createScene() {
     setupControlPane(); //This messes up the power bar key listening
     Rectangle powerIndicator = setupPowerBar();
@@ -76,17 +78,17 @@ public class GameScreen extends UIScreen {
     root.setTop(new ControlPane());
   }
 
-  private void setupScoreBoard(int score){
-    Rectangle rectangle = new Rectangle(10,50,100,50);
+  private void setupScoreBoard(int score) {
+    Rectangle rectangle = new Rectangle(10, 50, 100, 50);
     rectangle.setFill(Color.LIMEGREEN);
     scoreboardTxt = new Text("Score: Coming Soon");
     scoreboardTxt.setX(50);
     scoreboardTxt.setY(100);
     scoreboardTxt.setFill(Color.BLACK);
-    root.getChildren().addAll(rectangle,scoreboardTxt);
+    root.getChildren().addAll(rectangle, scoreboardTxt);
   }
 
-  public void updateScoreBoard(double score){
+  public void updateScoreBoard(double score) {
     scoreboardTxt.setText("Score: " + score);
   }
 
@@ -112,7 +114,7 @@ public class GameScreen extends UIScreen {
 
   private void initiateListening(Scene scene, Rectangle powerIndicator) {
     scene.setOnKeyPressed(event -> {
-      if(ableToHit){
+      if (ableToHit) {
         handleKeyInput(event.getCode(), powerIndicator);
       }
     });
@@ -134,21 +136,21 @@ public class GameScreen extends UIScreen {
         }
         break;
       }
-      case LEFT:{
-        if (angleArrow.getAngle() > -180){
+      case LEFT: {
+        if (angleArrow.getAngle() > -180) {
           angleArrow.decreaseAngle();
         }
         break;
       }
       case RIGHT: {
-        if (angleArrow.getAngle() < 180){
+        if (angleArrow.getAngle() < 180) {
           angleArrow.increaseAngle();
         }
         break;
       }
       case ENTER: {
         ableToHit = false;
-        double angle = Math.toRadians(angleArrow.getAngle()-90);
+        double angle = Math.toRadians(angleArrow.getAngle() - 90);
         double fractionalVelocity = powerIndicator.getHeight() / maxPower;
         controller.hitPointScoringObject(fractionalVelocity, angle);
         break;
@@ -156,8 +158,8 @@ public class GameScreen extends UIScreen {
     }
   }
 
-  public void endRound(Boolean round){
-    if (round){
+  public void endRound(Boolean round) {
+    if (round) {
       controller.openTransitionScreen();
     }
 

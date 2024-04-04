@@ -5,14 +5,15 @@ import oogasalad.model.gameengine.GameEngine;
 
 public abstract class CheckEndConditionCommand implements Command {
 
-  private List<Double> arguments;
+  private final List<Double> arguments;
 
   public CheckEndConditionCommand(List<Double> arguments) {
     this.arguments = arguments;
   }
+
   @Override
   public double execute(GameEngine engine) {
-    if(evaluateCondition(engine, arguments)) {
+    if (evaluateCondition(engine, arguments)) {
       engine.endGame();
       return 1.0;
     }

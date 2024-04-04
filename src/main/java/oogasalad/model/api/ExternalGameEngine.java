@@ -33,7 +33,6 @@ public interface ExternalGameEngine {
    */
 
 
-
   GameRecord handleCollisions(List<Pair> collisions, double dt);
 
   /**

@@ -7,5 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author Judy He
  */
-public record Dimension(@JsonProperty("x_dimension") int xDimension, @JsonProperty("y_dimension") int yDimension) {}
+public record Dimension(@JsonProperty("x_dimension") int xDimension,
+                        @JsonProperty("y_dimension") int yDimension) {
+
+}
 

@@ -7,4 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author Judy He
  */
-public record GlobalVariables(@JsonProperty("max_turns") int maxTurns, @JsonProperty("max_rounds")int maxRounds) {}
+public record GlobalVariables(@JsonProperty("max_turns") int maxTurns,
+                              @JsonProperty("max_rounds") int maxRounds) {
+
+}

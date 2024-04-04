@@ -6,9 +6,10 @@ import javafx.scene.text.Text;
 
 
 public class TransitionScreen extends UIScreen {
+
+  private final Group root;
   protected Text title;
   protected Text additionalInfo;
-  private final Group root;
 
   public TransitionScreen() {
     String titleText = "Mini Golf Completed";

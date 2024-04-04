@@ -2,20 +2,21 @@ package oogasalad.view.Screen;
 
 import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.Controller;
-import oogasalad.view.SceneManager;
 
 /**
  * Introductory screen when player first starts game, offers option to play or author
+ *
  * @author Jordan Haytaian
  */
 public class TitleScreen extends UIScreen {
+
   private final Group root;
-  public TitleScreen(Controller controller){
+
+  public TitleScreen(Controller controller) {
     this.controller = controller;
     root = new Group();
     createScene();
@@ -25,12 +26,13 @@ public class TitleScreen extends UIScreen {
   public Parent getRoot() {
     return root;
   }
-  private void createScene(){
+
+  private void createScene() {
     createTitle();
     createButtons();
   }
 
-  private void createTitle(){
+  private void createTitle() {
     double titleX = sceneWidth / 2 - 300;
     double titleY = sceneHeight / 5;
     Text title = new Text(titleX, titleY, "Fysics Fun");
@@ -70,7 +72,7 @@ public class TitleScreen extends UIScreen {
     root.getChildren().addAll(playButton, authorButton, play, author);
   }
 
-  private void addPlayButtonEventHandling(Rectangle playButton){
+  private void addPlayButtonEventHandling(Rectangle playButton) {
     playButton.setOnMouseClicked(e -> controller.openMenuScreen());
   }
 

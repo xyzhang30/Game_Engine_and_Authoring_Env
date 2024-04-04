@@ -7,4 +7,6 @@ import java.util.List;
  *
  * @author Judy He
  */
-public record StaticCheckRule(List<List<Object>> condition, List<List<Object>> action) {}
+public record StaticCheckRule(List<List<Object>> condition, List<List<Object>> action) {
+
+}

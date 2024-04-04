@@ -4,7 +4,8 @@ import javafx.scene.shape.Line;
 import javafx.scene.transform.Rotate;
 
 public class Arrow {
-  private Line line;
+
+  private final Line line;
   private double angle = 0; // Angle in degrees
 
   public Arrow(double startX, double startY, double endX, double endY) {
@@ -18,15 +19,15 @@ public class Arrow {
     return line;
   }
 
+  public double getAngle() {
+    return angle;
+  }
+
   public void setAngle(double angle) {
     this.angle = angle;
     // Reset transforms to apply new angle
     line.getTransforms().clear();
     line.getTransforms().add(new Rotate(angle, line.getStartX(), line.getStartY()));
-  }
-
-  public double getAngle() {
-    return angle;
   }
 
   public void increaseAngle() {

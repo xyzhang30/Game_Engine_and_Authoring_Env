@@ -28,7 +28,7 @@ public class GameEngine implements ExternalGameEngine {
   private boolean gameOver;
   private boolean staticState;
 
-  private GameLoaderModel loader;
+  private final GameLoaderModel loader;
   private Stack<GameRecord> staticStateStack;
 
 
@@ -52,8 +52,9 @@ public class GameEngine implements ExternalGameEngine {
     collisionHandlers = rules.collisionHandlers();
     turnPolicy = loader.getTurnPolicy();
     staticStateStack = new Stack<>();
-    staticStateStack.push(new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
-        round, turn, gameOver, staticState));
+    staticStateStack.push(
+        new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
+            round, turn, gameOver, staticState));
   }
 
   /**
@@ -81,22 +82,21 @@ public class GameEngine implements ExternalGameEngine {
    */
   @Override
   public GameRecord update(double dt) {
-    if(collidables.checkStatic()) {
+    if (collidables.checkStatic()) {
       staticState = true;
       playerContainer.addStaticStateVariables();
       collidables.addStaticStateCollidables();
-      staticStateStack.push(new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
-          round, turn, gameOver, staticState));
-      if(rules.winCondition().execute(this) == 1.0) {
+      staticStateStack.push(
+          new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
+              round, turn, gameOver, staticState));
+      if (rules.winCondition().execute(this) == 1.0) {
         endGame();
-      }
-      else {
-        for(Command cmd : rules.advance()) {
+      } else {
+        for (Command cmd : rules.advance()) {
           cmd.execute(this);
         }
       }
-    }
-    else {
+    } else {
       staticState = false;
       collidables.update(dt);
     }
@@ -106,19 +106,19 @@ public class GameEngine implements ExternalGameEngine {
 
   @Override
   public GameRecord handleCollisions(List<Pair> collisions, double dt) {
-    for(Pair collision : collisions) {
-        Collidable collidable1 = collidables.getCollidable(collision.getFirst());
-        Collidable collidable2 = collidables.getCollidable(collision.getSecond());
-        collidable1.onCollision(collidable2, dt);
-        collidable2.onCollision(collidable1, dt);
-        collidable1.updatePostCollisionVelocity();
-        collidable2.updatePostCollisionVelocity();
-        if (collisionHandlers.containsKey(collision)) {
-          for (Command cmd : collisionHandlers.get(collision)) {
-            cmd.execute(this);
-          }
+    for (Pair collision : collisions) {
+      Collidable collidable1 = collidables.getCollidable(collision.getFirst());
+      Collidable collidable2 = collidables.getCollidable(collision.getSecond());
+      collidable1.onCollision(collidable2, dt);
+      collidable2.onCollision(collidable1, dt);
+      collidable1.updatePostCollisionVelocity();
+      collidable2.updatePostCollisionVelocity();
+      if (collisionHandlers.containsKey(collision)) {
+        for (Command cmd : collisionHandlers.get(collision)) {
+          cmd.execute(this);
         }
       }
+    }
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
         round, turn, rules.winCondition().execute(this) == 1.0, staticState);
   }

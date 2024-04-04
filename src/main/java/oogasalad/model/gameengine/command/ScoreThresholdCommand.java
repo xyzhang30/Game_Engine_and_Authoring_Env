@@ -14,8 +14,8 @@ public class ScoreThresholdCommand extends CheckEndConditionCommand {
   protected boolean evaluateCondition(GameEngine engine, List<Double> arguments) {
     double scoreThresh = arguments.get(0);
     List<PlayerRecord> lst = engine.getImmutablePlayers();
-    for(PlayerRecord player : lst) {
-      if(player.score() > scoreThresh) {
+    for (PlayerRecord player : lst) {
+      if (player.score() > scoreThresh) {
         return true;
       }
     }
