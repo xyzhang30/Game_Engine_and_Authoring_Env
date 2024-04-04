@@ -83,6 +83,7 @@ public class GameLoaderModel extends GameLoader {
       }
       collidables.put(co.collidableId(), collidable);
     }
+    System.out.println(collidables);
     this.collidableContainer = new CollidableContainer(collidables);
 
   }
