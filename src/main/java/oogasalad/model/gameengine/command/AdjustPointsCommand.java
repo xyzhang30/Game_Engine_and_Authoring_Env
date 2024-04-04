@@ -21,7 +21,6 @@ public class AdjustPointsCommand implements Command {
         engine.getPlayerContainer().getPlayer((int) Math.round(arguments.get(PLAYER_ID)));
     double currentScore = currentPlayer.getVariable(SCORE_VARIABLE);
     currentPlayer.setVariable(SCORE_VARIABLE, currentScore + arguments.get(SCORE_INCREASE));
-
     return currentPlayer.getVariable(SCORE_VARIABLE);
   }
 }

@@ -101,13 +101,12 @@ public class GameEngine implements ExternalGameEngine {
       collidables.update(dt);
     }
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
-        round, turn, gameOver, staticState);
+        round, turn, rules.winCondition().execute(this) == 1.0, staticState);
   }
 
   @Override
   public GameRecord handleCollisions(List<Pair> collisions, double dt) {
     for(Pair collision : collisions) {
-
         Collidable collidable1 = collidables.getCollidable(collision.getFirst());
         Collidable collidable2 = collidables.getCollidable(collision.getSecond());
         collidable1.onCollision(collidable2, dt);
@@ -120,9 +119,8 @@ public class GameEngine implements ExternalGameEngine {
           }
         }
       }
-
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
-        round, turn, gameOver, staticState);
+        round, turn, rules.winCondition().execute(this) == 1.0, staticState);
   }
 
   /**
@@ -148,8 +146,6 @@ public class GameEngine implements ExternalGameEngine {
 
   public void advanceRound() {
     round++;
-    collidables = loader.getCollidableContainer();
-    collisionHandlers = rules.collisionHandlers();
   }
 
   public void advanceTurn() {
@@ -186,6 +182,7 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   public void toLastStaticState() {
+    staticState = true;
     GameRecord newCurrentState = staticStateStack.pop();
     turn = newCurrentState.turn();
     round = newCurrentState.round();

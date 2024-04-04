@@ -69,14 +69,20 @@ public class Controller {
    */
   public boolean runGame(double timeStep) {
     GameRecord gameRecord = gameEngine.update(timeStep);
+    if(gameRecord.staticState()) {
+      animationManager.pauseAnimation();
+    }
     sceneManager.update(gameRecord);
+    sceneManager.updateScoreBoard(gameRecord.players().get(0).score());
+
     List<Pair> collisionList = collisionManager.getIntersections();
     GameRecord gameRecord2 = gameEngine.handleCollisions(collisionList, timeStep);
     sceneManager.update(gameRecord2);
-
     if (sceneManager.notMoving(gameRecord2)) {
       sceneManager.enableHitting();
     }
+
+
     //return if game is over
     return true;
   }

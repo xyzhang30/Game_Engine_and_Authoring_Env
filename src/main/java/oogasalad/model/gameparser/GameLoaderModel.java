@@ -84,7 +84,6 @@ public class GameLoaderModel extends GameLoader {
       }
       collidables.put(co.collidableId(), collidable);
     }
-    System.out.println(collidables);
     this.collidableContainer = new CollidableContainer(collidables);
 
   }
@@ -139,13 +138,6 @@ public class GameLoaderModel extends GameLoader {
       }
 
       Class<?> cc = null;
-      List<Double> params = new ArrayList<>();
-
-      for (String condition : gameData.rules().winCondition().keySet()){
-        cc = Class.forName(COMMAND_PATH + condition);
-        params = gameData.rules().winCondition().get(condition);
-      }
-
       List<Command> advancecmds = new ArrayList<>();
 
       for (Map<String, List<Double>> condition : gameData.rules().advance()){
@@ -155,6 +147,15 @@ public class GameLoaderModel extends GameLoader {
         }
 
       }
+
+
+      List<Double> params = new ArrayList<>();
+
+      for (String condition : gameData.rules().winCondition().keySet()){
+        cc = Class.forName(COMMAND_PATH + condition);
+        params = gameData.rules().winCondition().get(condition);
+      }
+
 
       assert cc != null;
       rulesRecord = new RulesRecord(maxRounds,maxTurns,commandMap, (Command) cc.getDeclaredConstructor(List.class).newInstance(params), advancecmds);

@@ -82,14 +82,14 @@
         "x_dimension": 334,
         "y_dimension": 100
       },
-      "friction": 0.2,
+      "friction": 0.99,
       "color": [0,100,0]
     },
 
     {
       "collidable_id": 6,
       "properties": ["visible","surface"],
-      "mass": 1,
+      "mass": 1E1000000,
       "position": {
         "x_position": 667,
         "y_position": 400
@@ -124,8 +124,8 @@
       "properties": ["visible", "movable"],
       "mass": 100,
       "position": {
-        "x_position": 490,
-        "y_position": 840
+        "x_position": 800,
+        "y_position": 140
       },
       "shape": "circle",
       "dimension": {
@@ -139,7 +139,7 @@
     {
       "collidable_id": 9,
       "properties": ["visible", "movable"],
-      "mass": 100,
+      "mass": 1E10000000,
       "position": {
         "x_position": 480,
         "y_position": 80
@@ -250,14 +250,11 @@
         ]
       },
       {
-        "first_id": 8,
-        "second_id": 6,
+        "first_id": 6,
+        "second_id": 8,
         "command": [
           {
             "UndoTurnCommand": []
-          },
-          {
-            "AdjustPointsCommand": [1,1]
           }
         ]
       }

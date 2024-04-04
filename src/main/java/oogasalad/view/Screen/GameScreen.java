@@ -28,6 +28,7 @@ public class GameScreen extends UIScreen {
   private final BorderPane root;
   private Arrow angleArrow;
 
+  private Text scoreboardTxt;
   public GameScreen(Controller controller, CompositeElement compositeElement) {
     root = new BorderPane();
     this.controller = controller;
@@ -78,12 +79,17 @@ public class GameScreen extends UIScreen {
   private void setupScoreBoard(int score){
     Rectangle rectangle = new Rectangle(10,50,100,50);
     rectangle.setFill(Color.LIMEGREEN);
-    Text txt = new Text("Score: "+score);
-    txt.setX(50);
-    txt.setY(100);
-    txt.setFill(Color.BLACK);
-    root.getChildren().addAll(rectangle,txt);
+    scoreboardTxt = new Text("Score: "+score);
+    scoreboardTxt.setX(50);
+    scoreboardTxt.setY(100);
+    scoreboardTxt.setFill(Color.BLACK);
+    root.getChildren().addAll(rectangle,scoreboardTxt);
   }
+
+  public void updateScoreBoard(double score){
+    scoreboardTxt.setText("Score: " + score);
+  }
+
 
   private void setupFieldComponents(CompositeElement cm) {
     for (int i : cm.idList()) {
