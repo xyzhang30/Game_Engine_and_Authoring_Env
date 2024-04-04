@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.List;
 import oogasalad.model.api.ViewCollidableRecord;
 import oogasalad.model.gameparser.data.CollidableObject;
@@ -31,6 +32,7 @@ public class GameLoaderView extends GameLoader {
   }
 
   private void createViewRecord() {
+    viewCollidableRecords = new ArrayList<>();
     for (CollidableObject o : gameData.collidableObjects()) {
       int id = o.collidableId();
       String shape = o.shape();

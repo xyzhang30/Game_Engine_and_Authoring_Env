@@ -75,6 +75,7 @@ public class MenuScreen extends UIScreen {
 
   private void addListViewEventHandling(ListView<String> listView){
     listView.setOnMouseClicked(e -> {
+      System.out.println("Clicked");
       String item = listView.getSelectionModel().getSelectedItem();
       if(item != null){
         controller.startGamePlay(listView.getSelectionModel().getSelectedItem());

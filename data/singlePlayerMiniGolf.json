@@ -150,6 +150,14 @@
     "turn_policy": "StandardTurnPolicy",
     "win_condition": {
       "NRoundsCompletedCommand": [2]
-    }
+    },
+    "advance": [
+      {
+        "AdvanceTurnCommand": []
+      },
+      {
+        "AdjustPointsCommand": [1,1]
+      }
+    ]
   }
 }
