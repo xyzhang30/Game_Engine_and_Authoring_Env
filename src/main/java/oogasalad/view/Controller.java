@@ -89,8 +89,8 @@ public class Controller {
    * Sends velocity and angle to back end to simulate hitting point scoring object
    * @param fractionalVelocity velocity as fraction of maxVelocity
    */
-  public void hitPointScoringObject(double fractionalVelocity){
-    //gameEngine.applyInitialVelocity();
+  public void hitPointScoringObject(double fractionalVelocity, double angle){
+    //gameEngine.applyInitialVelocity(fractionalVelocity, angle, );
   }
 
 
