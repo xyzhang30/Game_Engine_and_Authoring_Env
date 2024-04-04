@@ -83,6 +83,7 @@ public class GameLoaderModel extends GameLoader {
       }
       collidables.put(co.collidableId(), collidable);
     }
+    System.out.println(collidables);
     this.collidableContainer = new CollidableContainer(collidables);
 
   }
@@ -127,7 +128,7 @@ public class GameLoaderModel extends GameLoader {
         Pair pair = new Pair(rule.firstId(), rule.secondId()); //collision rule is the one with ids and command map
         List<Command> commands = new ArrayList<>();
 
-        for (Map<String, List<Integer>> command : rule.command()){ //looping through the list of command maps
+        for (Map<String, List<Double>> command : rule.command()){ //looping through the list of command maps
           for(String s : command.keySet()){ //this is a for loop but there's always only going to be 1 command in the map (probably should change the structure of the json afterward)
             Class<?> cc = Class.forName(COMMAND_PATH + s);
             commands.add((Command) cc.getDeclaredConstructor(List.class).newInstance(command.get(s)));
@@ -137,7 +138,7 @@ public class GameLoaderModel extends GameLoader {
       }
 
       Class<?> cc = null;
-      List<Integer> params = new ArrayList<>();
+      List<Double> params = new ArrayList<>();
 
       for (String condition : gameData.rules().winCondition().keySet()){
         cc = Class.forName(COMMAND_PATH + condition);
@@ -146,7 +147,7 @@ public class GameLoaderModel extends GameLoader {
 
       List<Command> advancecmds = new ArrayList<>();
 
-      for (Map<String, List<Integer>> condition : gameData.rules().advance()){
+      for (Map<String, List<Double>> condition : gameData.rules().advance()){
         for (String s : condition.keySet()){
           cc = Class.forName(COMMAND_PATH + s);
           advancecmds.add((Command) cc.getDeclaredConstructor(List.class).newInstance(condition.get(s)));

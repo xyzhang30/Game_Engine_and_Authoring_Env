@@ -1,13 +1,9 @@
 package oogasalad.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import java.util.List;
 import java.util.Map;
 import oogasalad.Pair;
-import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.gameengine.Player;
 import oogasalad.model.gameengine.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
@@ -21,26 +17,9 @@ import oogasalad.model.gameengine.command.AdjustPointsCommand;
 import oogasalad.model.gameengine.command.AdvanceTurnCommand;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.command.NRoundsCompletedCommand;
-import oogasalad.model.gameparser.GameLoader;
 import oogasalad.model.gameparser.GameLoaderModel;
-import oogasalad.model.gameparser.data.CollidableObject;
-import oogasalad.model.gameparser.data.CollisionRule;
-import oogasalad.model.gameparser.data.Dimension;
-import oogasalad.model.gameparser.data.GameData;
-import oogasalad.model.gameparser.data.GlobalVariables;
-import oogasalad.model.gameparser.data.ParserPlayer;
-import oogasalad.model.gameparser.data.PlayerVariables;
-import oogasalad.model.gameparser.data.Position;
-import oogasalad.model.gameparser.data.Rules;
-import oogasalad.model.gameparser.data.Variables;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 
 public class GameLoaderModelTest {
   GameLoaderModel testGameLoaderModel;
@@ -52,9 +31,9 @@ public class GameLoaderModelTest {
     String gameTitle = "singlePlayerMiniGolf";
     this.testGameLoaderModel = new GameLoaderModel(gameTitle);
 
-    Collidable c1 = new Surface(1, 1000000, 0,0, true, 0.5);
+    Collidable c1 = new Surface(1, Double.POSITIVE_INFINITY, 0,0, true, 0.5);
     Collidable c2 = new Moveable(2, 1, 250, 450, true);
-    Collidable c3 = new Surface(3, 0, 0,0, true, 0);
+    Collidable c3 = new Surface(3, 0, 250,50, true, 0);
     Collidable c4 = new Moveable(4, 200, 0, 0, true);
     Collidable c5 = new Moveable(5, 200, 0, 0, true);
     Collidable c6 = new Moveable(6, 200, 490, 0, true);
@@ -64,9 +43,9 @@ public class GameLoaderModelTest {
 
     this.mockCollidableContainer = new CollidableContainer(collidables);
 
-    Player p1 = new Player(1, mockCollidableContainer.getCollidable(2));
+    Player p1 = new Player(1, c2);
 
-    Map<Integer, Player> players = Map.of(1, p1);
+    Map<Integer, Player> players = Map.of(0, p1);
 
     this.mockPlayerContainer = new PlayerContainer(players);
   }
@@ -75,20 +54,22 @@ public class GameLoaderModelTest {
 //  public void testInvalidJSONFile() {
 //
 //  }
+
   @Test
   public void testParseCollidables() {
-    assertEquals(this.testGameLoaderModel.getCollidableContainer(), mockCollidableContainer);
+    assertThat(testGameLoaderModel.getCollidableContainer()).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mockCollidableContainer);
   }
 
   @Test
   public void testParsePlayers() {
-    assertEquals(this.testGameLoaderModel.getPlayerContainer(), mockPlayerContainer);
+    assertThat(testGameLoaderModel.getPlayerContainer()).usingRecursiveComparison().isEqualTo(mockPlayerContainer);
   }
 
   @Test
   public void testParseTurnPolicy() {
     TurnPolicy mockTurnPolicy = new StandardTurnPolicy(mockPlayerContainer);
-    assertEquals(this.testGameLoaderModel.getTurnPolicy(), mockTurnPolicy);
+    assertThat(testGameLoaderModel.getTurnPolicy()).usingRecursiveComparison().isEqualTo(mockTurnPolicy);
+
   }
 
   @Test
@@ -104,7 +85,7 @@ public class GameLoaderModelTest {
 
     RulesRecord mockRulesRecord = new RulesRecord(1, 1, collisionHandlers, winCondition, advanceCs);
 
-    assertEquals(this.testGameLoaderModel.getRulesRecord(), mockRulesRecord);
+    assertThat(testGameLoaderModel.getRulesRecord()).usingRecursiveComparison().isEqualTo(mockRulesRecord);
   }
 
 
