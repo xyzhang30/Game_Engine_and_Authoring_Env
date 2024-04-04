@@ -1,9 +1,13 @@
 package oogasalad.model;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 import java.util.Map;
 import oogasalad.Pair;
+import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.gameengine.Player;
 import oogasalad.model.gameengine.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
@@ -17,6 +21,7 @@ import oogasalad.model.gameengine.command.AdjustPointsCommand;
 import oogasalad.model.gameengine.command.AdvanceTurnCommand;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.command.NRoundsCompletedCommand;
+import oogasalad.model.gameparser.GameLoader;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,13 +36,13 @@ public class GameLoaderModelTest {
     String gameTitle = "singlePlayerMiniGolf";
     this.testGameLoaderModel = new GameLoaderModel(gameTitle);
 
-    Collidable c1 = new Surface(1, Double.POSITIVE_INFINITY, 0,0, true, 0.5);
-    Collidable c2 = new Moveable(2, 1, 250, 450, true);
-    Collidable c3 = new Surface(3, 0, 250,50, true, 0);
-    Collidable c4 = new Moveable(4, 200, 0, 0, true);
-    Collidable c5 = new Moveable(5, 200, 0, 0, true);
-    Collidable c6 = new Moveable(6, 200, 490, 0, true);
-    Collidable c7 = new Moveable(7, 200, 0, 490, true);
+    Collidable c1 = new Surface(1, Double.POSITIVE_INFINITY, 0,0, true, 0.5, 0, 0);
+    Collidable c2 = new Moveable(2, 1, 250, 450, true, 0, 0);
+    Collidable c3 = new Surface(3, 0, 250,50, true, 0, 0, 0);
+    Collidable c4 = new Moveable(4, 200, 0, 0, true, 0, 0);
+    Collidable c5 = new Moveable(5, 200, 0, 0, true, 0, 0);
+    Collidable c6 = new Moveable(6, 200, 490, 0, true, 0, 0);
+    Collidable c7 = new Moveable(7, 200, 0, 490, true, 0, 0);
 
     Map<Integer, Collidable> collidables = Map.of(1, c1, 2, c2, 3, c3, 4, c4, 5, c5, 6, c6, 7, c7);
 
@@ -50,10 +55,20 @@ public class GameLoaderModelTest {
     this.mockPlayerContainer = new PlayerContainer(players);
   }
 
-//  @Test(expected = IndexOutOfBoundsException.class)
-//  public void testInvalidJSONFile() {
-//
-//  }
+  @Test
+  public void testInvalidJSONFile() {
+
+    InvalidFileException exception = assertThrows(InvalidFileException.class, () -> {
+      String invalidFileName = "invalidConfigurationFormat";
+      testGameLoaderModel = new GameLoaderModel(invalidFileName);
+    });
+
+    String expectedMessage = "Error parsing JSON game configuration file:";
+    String actualMessage = exception.getMessage();
+
+    assertTrue(actualMessage.contains(expectedMessage));
+
+  }
 
   @Test
   public void testParseCollidables() {

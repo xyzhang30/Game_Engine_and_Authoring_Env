@@ -1,9 +1,11 @@
 {
   "gameName": "sampleMiniGolf",
-  "collidable_objects": [
+  "collidables": [
+
     {
       "collidable_id": 1,
-      "properties": ["visible", "surface"],
+      "name": "GREEN_1",
+      "properties": ["visible, surface"],
       "mass": 1e1000000,
       "position": {
         "x_position": 0,
@@ -21,7 +23,8 @@
 
     {
       "collidable_id": 2,
-      "properties": ["visible", "surface"],
+      "name": "GREEN_2",
+      "properties": ["visible, surface"],
       "mass": 1e1000000,
       "position": {
         "x_position": 0,
@@ -38,7 +41,8 @@
 
     {
       "collidable_id": 3,
-      "properties": ["visible", "surface"],
+      "name": "GREEN_3",
+      "properties": ["visible, surface"],
       "mass": 1e1000000,
       "position": {
         "x_position": 333,
@@ -46,16 +50,17 @@
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 667,
-        "y_dimension": 300
+        "x_dimension": 333,
+        "y_dimension": 700
       },
-      "friction": 0.9,
+      "friction": 0.04,
       "color": [124,252,0]
     },
 
     {
       "collidable_id": 4,
-      "properties": ["visible", "movable"],
+      "name": "COLLIDABLE",
+      "properties": ["visible, moveable"],
       "mass": 1e1000000,
       "position": {
         "x_position": 333,
@@ -71,7 +76,8 @@
 
     {
       "collidable_id": 5,
-      "properties": ["visible", "surface"],
+      "name": "ROUGH",
+      "properties": ["visible, surface"],
       "mass": 1e1000000,
       "position": {
         "x_position": 333,
@@ -82,19 +88,20 @@
         "x_dimension": 334,
         "y_dimension": 100
       },
-      "friction": 0.99,
+      "friction": 0.2,
       "color": [0,100,0]
     },
 
     {
       "collidable_id": 6,
+      "name": "WATER",
       "properties": ["visible","surface"],
-      "mass": 1E1000000,
+      "mass": 1,
       "position": {
         "x_position": 667,
         "y_position": 400
       },
-      "shape": "rectangle",
+      "shape": "circle",
       "dimension": {
         "x_dimension": 333,
         "y_dimension": 300
@@ -104,7 +111,8 @@
 
     {
       "collidable_id": 7,
-      "properties": ["visible", "surface"],
+      "name": "GREEN_4",
+      "properties": ["visible, surface"],
       "mass": 1e1000000,
       "position": {
         "x_position": 667,
@@ -121,11 +129,12 @@
 
     {
       "collidable_id": 8,
+      "name": "BALL",
       "properties": ["visible", "movable"],
       "mass": 100,
       "position": {
-        "x_position": 480,
-        "y_position": 840
+        "x_position": 490,
+        "y_position": 940
       },
       "shape": "circle",
       "dimension": {
@@ -138,8 +147,9 @@
 
     {
       "collidable_id": 9,
+      "name": "HOLE",
       "properties": ["visible", "movable"],
-      "mass": 1E10000000,
+      "mass": 100,
       "position": {
         "x_position": 480,
         "y_position": 80
@@ -150,89 +160,6 @@
         "y_dimension": 20
       },
       "color": [0,0,0]
-    },
-
-    {
-      "collidable_id": 10,
-      "properties": ["visible", "movable"],
-      "mass": 1e1000000,
-      "position": {
-        "x_position": 0,
-        "y_position": 0
-      },
-      "shape": "rectangle",
-      "dimension": {
-        "x_dimension": 20,
-        "y_dimension": 1000
-      },
-      "color": [0,0,0]
-    },
-
-    {
-      "collidable_id": 11,
-      "properties": ["visible", "movable"],
-      "mass": 1e1000000,
-      "position": {
-        "x_position": 0,
-        "y_position": 0
-      },
-      "shape": "rectangle",
-      "dimension": {
-        "x_dimension": 1000,
-        "y_dimension": 20
-      },
-      "color": [0,0,0]
-    },
-
-    {
-      "collidable_id": 12,
-      "properties": ["visible", "movable"],
-      "mass": 1e1000000,
-      "position": {
-        "x_position": 0,
-        "y_position": 980
-      },
-      "shape": "rectangle",
-      "dimension": {
-        "x_dimension": 1000,
-        "y_dimension": 20
-      },
-      "color": [0,0,0]
-    },
-
-    {
-      "collidable_id": 13,
-      "properties": ["visible", "movable"],
-      "mass": 1e1000000,
-      "position": {
-        "x_position": 980,
-        "y_position": 0
-      },
-      "shape": "rectangle",
-      "dimension": {
-        "x_dimension": 20,
-        "y_dimension": 1000
-      },
-      "color": [0,0,0]
-    }
-
-  ],
-  "players": [
-    {
-      "player_id": 1,
-      "my_collidable": 8
-    }
-  ],
-  "variables": [
-    {
-      "global": {
-        "max_turns": 1,
-        "max_rounds": 1
-      },
-      "player": {
-        "strokes": 0,
-        "finished": 0
-      }
     }
   ],
   "rules": {
@@ -250,11 +177,14 @@
         ]
       },
       {
-        "first_id": 6,
-        "second_id": 8,
+        "first_id": 8,
+        "second_id": 6,
         "command": [
           {
             "UndoTurnCommand": []
+          },
+          {
+            "AdjustPointsCommand": [1,1]
           }
         ]
       }

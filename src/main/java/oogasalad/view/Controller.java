@@ -1,8 +1,9 @@
 package oogasalad.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import javafx.scene.Scene;
+import java.util.Map;
 import javafx.stage.Stage;
 import oogasalad.Pair;
 import oogasalad.model.api.GameRecord;
@@ -28,13 +29,12 @@ public class Controller {
   private final Stage stage;
 
   public Controller(Stage stage) {
-    sceneManager = new SceneManager();
-    animationManager = new AnimationManager();
     this.stage = stage;
+    sceneManager = new SceneManager();
     sceneManager.makeTitleScreen(this);
     stage.setScene(sceneManager.getScene());
+    animationManager = new AnimationManager();
     collisionManager = new CollisionManager();
-
   }
 
   /**
@@ -61,9 +61,6 @@ public class Controller {
     sceneManager.makeGameScreen(this, compositeElement);
     stage.setScene(sceneManager.getScene());
     collisionManager.setNewCompositeElement(compositeElement);
-
-    animationManager.runAnimation(this);
-
   }
 
   /**
@@ -73,14 +70,22 @@ public class Controller {
    */
   public boolean runGame(double timeStep) {
     GameRecord gameRecord = gameEngine.update(timeStep);
+    if(gameRecord.staticState()) {
+      animationManager.pauseAnimation();
+    }
     sceneManager.update(gameRecord);
-    List<Pair> collisionList = collisionManager.getIntersections();
-    gameEngine.handleCollisions(collisionList, timeStep);
-    gameEngine.update(timeStep);
+    sceneManager.updateScoreBoard(gameRecord.players().get(0).score());
 
-    if (sceneManager.notMoving(gameRecord)) {
+    List<Pair> collisionList = collisionManager.getIntersections();
+//    Map<Pair, String> collisionType = collisionManager.getIntersectionsMap();
+
+    GameRecord gameRecord2 = gameEngine.handleCollisions(collisionList, timeStep);
+    sceneManager.update(gameRecord2);
+    if (sceneManager.notMoving(gameRecord2)) {
       sceneManager.enableHitting();
     }
+
+
     //return if game is over
     return true;
   }
@@ -90,7 +95,9 @@ public class Controller {
    * @param fractionalVelocity velocity as fraction of maxVelocity
    */
   public void hitPointScoringObject(double fractionalVelocity, double angle){
-    //gameEngine.applyInitialVelocity(fractionalVelocity, angle, );
+    gameEngine.applyInitialVelocity(1000*fractionalVelocity, angle, 8); // The 8 has been hard
+    // coded!
+    animationManager.runAnimation(this);
   }
 
 

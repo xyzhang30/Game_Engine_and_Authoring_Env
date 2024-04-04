@@ -3,8 +3,9 @@ package oogasalad.model.gameengine.collidable;
 public class Surface extends Collidable {
   private final double mu;
   private static final double g = 10;
-  public Surface(int id, double mass, double x, double y, boolean visible, double mu) {
-    super(id, mass, x, y, visible);
+  private static final double C = 40;
+  public Surface(int id, double mass, double x, double y, boolean visible, double mu, double width, double height) {
+    super(id, mass, x, y, visible, width, height);
     this.mu = mu;
   }
 
@@ -15,10 +16,10 @@ public class Surface extends Collidable {
     if(other.getVelocityX()==0 && other.getVelocityY()==0 && getVelocityX()==0 && getVelocityY()==0) {
       return new double [] {0,0};
     }
-    double xv = oldVelocityX - mu * g * dt * (oldVelocityX / Math.hypot(oldVelocityX,
+    double xv = oldVelocityX - C * mu * g * dt * (oldVelocityX / Math.hypot(oldVelocityX,
         oldVelocityY));
 
-    double yv = oldVelocityY - mu * g * dt * (oldVelocityY / Math.hypot(oldVelocityX,
+    double yv = oldVelocityY - C * mu * g * dt * (oldVelocityY / Math.hypot(oldVelocityX,
         oldVelocityY));
     if(oldVelocityY*yv < 0)  yv = 0;
     if(oldVelocityX*xv < 0)  xv = 0;

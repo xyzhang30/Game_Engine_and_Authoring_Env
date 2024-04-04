@@ -14,7 +14,7 @@ public class SceneManager {
   private Scene scene;
   private CompositeElement compositeElement;
   private GameScreen gameScreen;
-  private int currentRound = 0;
+  private int currentRound = 1;
 
 
   public SceneManager() {
@@ -43,6 +43,7 @@ public class SceneManager {
   }
   public void makeGameScreen(Controller controller, CompositeElement compositeElement){
     gameScreen = new GameScreen(controller, compositeElement);
+    this.compositeElement = compositeElement;
     scene = gameScreen.getScene();
   }
 
@@ -53,7 +54,10 @@ public class SceneManager {
 
   public void checkEndRound(GameRecord gameRecord) {
     if (gameRecord.round() != currentRound) {
-      currentRound = gameRecord.round();
+      currentRound=gameRecord.round();
+
+    }
+    if(gameRecord.gameOver()) {
       gameScreen.endRound(true);
     }
   }
@@ -62,5 +66,9 @@ public class SceneManager {
   public void makeTransitionScreen(){
     TransitionScreen transitionScreen = new TransitionScreen();
     scene.setRoot(transitionScreen.getRoot());
+  }
+
+  public void updateScoreBoard(double score) {
+   //gameScreen.updateScoreBoard(score);
   }
 }

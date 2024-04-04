@@ -1,12 +1,14 @@
 package oogasalad.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.Node;
 import javafx.scene.shape.Shape;
 import oogasalad.Pair;
 import oogasalad.view.VisualElements.CompositeElement;
+import oogasalad.view.VisualElements.GameElement;
 
 /**
  * Class to maintain intersections and detect which collisions are active
@@ -27,17 +29,27 @@ public class CollisionManager {
    */
   public List<Pair> getIntersections() {
     List<Pair> intersectionList = new ArrayList<>();
-    for (int currRow = 0; currRow < intersections.length; currRow++) {
-      for (int currCol = currRow + 1; currCol < intersections[0].length; currCol++) {
-        double intersectionWidth = intersections[currRow][currCol].getBoundsInLocal().getWidth();
-        if (intersectionWidth != -1) {
-          Pair pair = new Pair(currRow, currCol);
-          intersectionList.add(pair);
+    for (Integer i : compositeElement.idList()){
+      for (Integer j : compositeElement.idList()){
+        if (i<j) {
+          if (compositeElement.getNode(i).getBoundsInParent().intersects(
+              compositeElement.getNode(j).getBoundsInParent())) {
+            intersectionList.add(new Pair(i,j));
+          }
         }
       }
     }
     return intersectionList;
   }
+
+//  public Map<Pair, String> getIntersectionsMap(){
+//    List<Pair> intersectionList = getIntersections();
+//    Map<Pair, String> collisionType = new HashMap<>();
+//    for (Pair pair : intersectionList){
+//      collisionType.put(pair, getCollisionType(pair));
+//    }
+//    return collisionType;
+//  }
 
   /**
    * Assigns the composite element to the given composite element

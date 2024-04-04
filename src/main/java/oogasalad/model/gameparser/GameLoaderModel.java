@@ -1,4 +1,5 @@
 package oogasalad.model.gameparser;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +57,7 @@ public class GameLoaderModel extends GameLoader {
       int id = gameData.players().get(0).playerId();
       int myCollidableId = gameData.players().get(0).myCollidable();
       Player player = new Player(id, getCollidableContainer().getCollidable(myCollidableId));
-      playerMap.put(0, player);
+      playerMap.put(id, player);
     }
     this.playerContainer = new PlayerContainer(playerMap);
   }
@@ -83,7 +84,6 @@ public class GameLoaderModel extends GameLoader {
       }
       collidables.put(co.collidableId(), collidable);
     }
-    System.out.println(collidables);
     this.collidableContainer = new CollidableContainer(collidables);
 
   }
@@ -94,7 +94,9 @@ public class GameLoaderModel extends GameLoader {
         co.mass(),
         co.position().xPosition(),
         co.position().yPosition(),
-        co.properties().contains("visible")
+        co.properties().contains("visible"),
+        co.dimension().xDimension(),
+        co.dimension().yDimension()
     );
   }
 
@@ -105,7 +107,9 @@ public class GameLoaderModel extends GameLoader {
         co.position().xPosition(),
         co.position().yPosition(),
         co.properties().contains("visible"),
-        co.friction()
+        co.friction(),
+        co.dimension().xDimension(),
+        co.dimension().yDimension()
     );
   }
 
@@ -138,13 +142,6 @@ public class GameLoaderModel extends GameLoader {
       }
 
       Class<?> cc = null;
-      List<Double> params = new ArrayList<>();
-
-      for (String condition : gameData.rules().winCondition().keySet()){
-        cc = Class.forName(COMMAND_PATH + condition);
-        params = gameData.rules().winCondition().get(condition);
-      }
-
       List<Command> advancecmds = new ArrayList<>();
 
       for (Map<String, List<Double>> condition : gameData.rules().advance()){
@@ -154,6 +151,15 @@ public class GameLoaderModel extends GameLoader {
         }
 
       }
+
+
+      List<Double> params = new ArrayList<>();
+
+      for (String condition : gameData.rules().winCondition().keySet()){
+        cc = Class.forName(COMMAND_PATH + condition);
+        params = gameData.rules().winCondition().get(condition);
+      }
+
 
       assert cc != null;
       rulesRecord = new RulesRecord(maxRounds,maxTurns,commandMap, (Command) cc.getDeclaredConstructor(List.class).newInstance(params), advancecmds);

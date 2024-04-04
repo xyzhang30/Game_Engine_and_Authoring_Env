@@ -60,6 +60,5 @@ public class PlayerContainer {
     for(Integer id : staticStateVariables.peek().keySet()) {
       getPlayer(id).setObservableVariables(staticStateVariables.peek().get(id));
     }
-    staticStateVariables.pop();
   }
 }
