@@ -62,8 +62,6 @@ public class Controller {
     stage.setScene(sceneManager.getScene());
     collisionManager.setNewCompositeElement(compositeElement);
 
-    animationManager.runAnimation(this);
-
   }
 
   /**
@@ -90,7 +88,8 @@ public class Controller {
    * @param fractionalVelocity velocity as fraction of maxVelocity
    */
   public void hitPointScoringObject(double fractionalVelocity, double angle){
-    gameEngine.applyInitialVelocity(fractionalVelocity, angle, 8); // The 8 has been hard coded!
+    gameEngine.applyInitialVelocity(100*fractionalVelocity, angle, 8); // The 8 has been hard coded!
+    animationManager.runAnimation(this);
   }
 
 
