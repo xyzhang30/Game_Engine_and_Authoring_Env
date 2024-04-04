@@ -118,7 +118,6 @@ public class GameEngine implements ExternalGameEngine {
             cmd.execute(this);
         }
       }
-
     }
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
         round, turn, gameOver, staticState);
