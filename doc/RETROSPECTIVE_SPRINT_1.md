@@ -35,10 +35,15 @@
 ### Doga
 
 * Work done this Sprint
+  * GameScreen, ScreenManager, ControlPane, Arrow, TransitionScreen, ScoreTransitionScreen, UIScreen, FrontEndParser
 
 * Plan for next Sprint?
+  * First, creating the authoring environment which will be extensive, 
+  * but other than that I want to implement the TransitionScreens between rounds based on the type of game
+  * Refactoring existing code
 
 * Blockers/Issues in your way
+  * Authoring Environment, ensuring clear communication and collaboration for this component.g
 
 
 ### Judy
