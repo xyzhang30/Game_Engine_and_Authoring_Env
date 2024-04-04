@@ -58,11 +58,21 @@
 
 * Controller, TitleScreen, MenuScreen, GameScreen, CollisionManager, SceneManager, AnimationManager,
   Visual Element classes; pair programming, front-end planing meetings
-
+* 
 * Refactoring existing code (fixing dependencies, reflection, hard coded values), meeting with
   Luke?, start on authoring environment
 
 * Just making sure we are all on the same page for authoring
+
+
+### Konur
+
+* Work done this Sprint - None, had a terribly busy academic week
+
+* Plan for next Sprint? - Create a robust physics engine
+
+* Blockers/Issues in your way - Physics logic implemented in Moveable subclass, will have to refactor
+and abstract to physics engine.
 
 ## Project's current progress
 
