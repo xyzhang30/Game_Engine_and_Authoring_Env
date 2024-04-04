@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -24,14 +25,22 @@ public class GameScreen extends UIScreen {
   private boolean ableToHit;
 
   private final BorderPane root;
+  private Arrow angleArrow;
 
   public GameScreen(Controller controller, CompositeElement compositeElement) {
     root = new BorderPane();
     this.controller = controller;
     ableToHit = true;
     setupFieldComponents(compositeElement); // BIG improvised here. There's a lot of refactoring to do first...
+    setupAngleIndicator();
 
     createScene();
+  }
+
+  private void setupAngleIndicator() {
+    // Assume arrow starts at the middle bottom of the scene and points upwards initially
+    angleArrow = new Arrow(sceneWidth / 2, sceneHeight, sceneWidth / 2, sceneHeight - 100);
+    root.getChildren().add(angleArrow.getLine()); // Add the arrow line to the root pane
   }
 
   /**
@@ -103,12 +112,23 @@ public class GameScreen extends UIScreen {
         }
         break;
       }
-      case LEFT:{} //modify angle
-      case RIGHT: {} //modify angle
+      case LEFT:{
+        if (angleArrow.getAngle() > -180){
+          angleArrow.decreaseAngle();
+        }
+        break;
+      }
+      case RIGHT: {
+        if (angleArrow.getAngle() < 180){
+          angleArrow.increaseAngle();
+        }
+        break;
+      }
       case ENTER: {
         ableToHit = false;
+        double angle = angleArrow.getAngle();
         double fractionalVelocity = powerIndicator.getHeight() / maxPower;
-        controller.hitPointScoringObject(fractionalVelocity);
+        controller.hitPointScoringObject(fractionalVelocity, angle);
         break;
       }
     }
