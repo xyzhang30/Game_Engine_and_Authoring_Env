@@ -20,11 +20,11 @@ import oogasalad.view.VisualElements.CompositeElement;
 
 public class GameScreen extends UIScreen {
 
-  private final int maxPower = 650;
+  private final double maxPower = SCREEN_HEIGHT*0.8;
   private final BorderPane root;
   private boolean ableToHit;
-  private Scene scene;
   private Arrow angleArrow;
+  private Rectangle powerIndicator;
 
   private Text scoreboardTxt;
 
@@ -41,8 +41,9 @@ public class GameScreen extends UIScreen {
 
   private void setupAngleIndicator() {
     // Assume arrow starts at the middle bottom of the scene and points upwards initially
-    angleArrow = new Arrow(sceneWidth - sceneWidth / 5 - 20, 800, sceneWidth - sceneWidth / 5 - 20,
-        700);
+    angleArrow = new Arrow(
+        SCREEN_WIDTH*0.85, SCREEN_HEIGHT*0.8, SCREEN_WIDTH*0.85,
+        SCREEN_HEIGHT*0.7);
 
     root.getChildren().add(angleArrow.getLine()); // Add the arrow line to the root pane
   }
@@ -59,18 +60,10 @@ public class GameScreen extends UIScreen {
     return root;
   }
 
-  @Deprecated
-  public Scene getScene() {
-    return scene;
-  }
-
   private void createScene() {
     setupControlPane(); //This messes up the power bar key listening
-    Rectangle powerIndicator = setupPowerBar();
+    powerIndicator = setupPowerBar();
     setupScoreBoard(0);
-    scene = new Scene(root, sceneWidth, sceneHeight);
-    initiateListening(scene, powerIndicator);
-
   }
 
 
@@ -100,11 +93,13 @@ public class GameScreen extends UIScreen {
   }
 
   private Rectangle setupPowerBar() {
-    Rectangle outline = new Rectangle(sceneWidth - 200, 100, 100, 700);
+    Rectangle outline = new Rectangle(SCREEN_WIDTH*0.9, SCREEN_HEIGHT*0.1,
+        SCREEN_WIDTH*0.07, SCREEN_HEIGHT*0.8);
     outline.setFill(Color.DARKGRAY);
     outline.setEffect(createDropShadow());
 
-    Rectangle powerIndicator = new Rectangle(sceneWidth - 190, 780, 80, 10);
+    Rectangle powerIndicator = new Rectangle(SCREEN_WIDTH*0.91, SCREEN_HEIGHT*0.89,
+        SCREEN_WIDTH*0.05, 10);
     powerIndicator.setFill(Color.DARKRED);
     powerIndicator.toFront();
 
@@ -112,15 +107,15 @@ public class GameScreen extends UIScreen {
     return powerIndicator;
   }
 
-  private void initiateListening(Scene scene, Rectangle powerIndicator) {
+  public void initiateListening(Scene scene) {
     scene.setOnKeyPressed(event -> {
       if (ableToHit) {
-        handleKeyInput(event.getCode(), powerIndicator);
+        handleKeyInput(event.getCode());
       }
     });
   }
 
-  private void handleKeyInput(KeyCode code, Rectangle powerIndicator) {
+  private void handleKeyInput(KeyCode code) {
     switch (code) {
       case UP: {
         if (powerIndicator.getHeight() < maxPower) {
