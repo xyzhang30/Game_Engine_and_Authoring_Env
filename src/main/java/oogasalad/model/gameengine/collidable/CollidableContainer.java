@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import java.util.HashSet;
+import java.util.Set;
+import oogasalad.Pair;
 import oogasalad.model.api.CollidableRecord;
 
 public class CollidableContainer {
@@ -57,5 +60,31 @@ public class CollidableContainer {
     for (CollidableRecord record : collidableHistory.peek()) {
       getCollidable(record.id()).setFromRecord(record);
     }
+
   }
+
+  public Set<Pair> getCollisionPairs() {
+    Set<Pair> collisionPairs = new HashSet<>();
+    List<CollidableRecord> records = getCollidableRecords();
+
+    for (int i = 0; i < records.size(); i++) {
+      CollidableRecord record1 = records.get(i);
+      Collidable collidable1 = myCollidables.get(record1.id());
+
+      for (int j = i + 1; j < records.size(); j++) {
+        CollidableRecord record2 = records.get(j);
+        Collidable collidable2 = myCollidables.get(record2.id());
+
+        if (new PhysicsEngine().isColliding(collidable1, collidable2)) {
+          collisionPairs.add(new Pair(record1.id(), record2.id()));
+        }
+      }
+    }
+    return collisionPairs;
+  }
+
+
+
+
+
 }

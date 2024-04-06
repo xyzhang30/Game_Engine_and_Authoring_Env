@@ -3,8 +3,8 @@ package oogasalad.model.gameengine.collidable;
 public class Moveable extends Collidable {
 
   public Moveable(int id, double mass, double x, double y,
-      boolean visible, double width, double height) {
-    super(id, mass, x, y, visible, width, height);
+      boolean visible, double width, double height, String shape) {
+    super(id, mass, x, y, visible, width, height, shape);
   }
 
   @Override

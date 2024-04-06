@@ -19,10 +19,11 @@ public abstract class Collidable {
   private boolean myVisible;
   private final double myWidth;
   private final double myHeight;
+  private final String myShape;
   private Stack<List<Integer>> locationHistory;
 
   public Collidable(int id, double mass, double x, double y,
-      boolean visible, double width, double height) {
+      boolean visible, double width, double height, String shape) {
     myId = id;
     myMass = mass;
     myX = x;
@@ -34,11 +35,12 @@ public abstract class Collidable {
     myVisible = visible;
     myWidth = width;
     myHeight = height;
+    myShape = shape;
+
   }
 
   public void onCollision(Collidable other, double dt) {
     double[] result = other.calculateNewSpeed(this, dt);
-
     myNextVelocityX = result[0];
     myNextVelocityY = result[1];
   }
@@ -112,6 +114,10 @@ public abstract class Collidable {
 
   protected double getHeight() {
     return myHeight;
+  }
+
+  protected String getShape() {
+    return myShape;
   }
 
   protected void setFromRecord(CollidableRecord record) {
