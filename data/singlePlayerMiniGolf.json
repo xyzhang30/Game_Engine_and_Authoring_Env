@@ -163,7 +163,7 @@
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 20,
+        "x_dimension": 50,
         "y_dimension": 1000
       },
       "color": [0,0,0]
@@ -180,7 +180,7 @@
       "shape": "rectangle",
       "dimension": {
         "x_dimension": 1000,
-        "y_dimension": 20
+        "y_dimension": 50
       },
       "color": [0,0,0]
     },
@@ -196,7 +196,7 @@
       "shape": "rectangle",
       "dimension": {
         "x_dimension": 1000,
-        "y_dimension": 20
+        "y_dimension": 50
       },
       "color": [0,0,0]
     },
@@ -211,7 +211,7 @@
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 20,
+        "x_dimension": 50,
         "y_dimension": 1000
       },
       "color": [0,0,0]

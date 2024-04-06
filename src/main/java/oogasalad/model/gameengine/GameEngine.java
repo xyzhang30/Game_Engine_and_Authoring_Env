@@ -106,8 +106,6 @@ public class GameEngine implements ExternalGameEngine {
       collidable2.onCollision(collidable1, dt);
       collidable1.updatePostCollisionVelocity();
       collidable2.updatePostCollisionVelocity();
-
-
       if(collisionHandlers.containsKey(collision)) {
       for (Command cmd : collisionHandlers.get(collision)) {
         cmd.execute(this);
@@ -141,22 +139,8 @@ public class GameEngine implements ExternalGameEngine {
 
   @Override
   public GameRecord handleCollisions(List<Pair> collisions, double dt) {
-    for (Pair collision : collisions) {
-      Collidable collidable1 = collidables.getCollidable(collision.getFirst());
-      Collidable collidable2 = collidables.getCollidable(collision.getSecond());
-      collidable1.onCollision(collidable2, dt);
-      collidable2.onCollision(collidable1, dt);
-      collidable1.updatePostCollisionVelocity();
-      collidable2.updatePostCollisionVelocity();
-      if (collisionHandlers.containsKey(collision)) {
-        for (Command cmd : collisionHandlers.get(collision)) {
-          cmd.execute(this);
-        }
-      }
+    return null;
     }
-    return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
-        round, turn, rules.winCondition().execute(this) == 1.0, staticState);
-  }
 
   /**
    * Applies a velocity to the entity with the provided ID.

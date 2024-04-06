@@ -94,7 +94,7 @@ public class Controller {
    * @param fractionalVelocity velocity as fraction of maxVelocity
    */
   public void hitPointScoringObject(double fractionalVelocity, double angle) {
-    gameEngine.applyInitialVelocity(1000 * fractionalVelocity, angle, 8); // The 8 has been hard
+    gameEngine.applyInitialVelocity(700 * fractionalVelocity, angle, 8); // The 8 has been hard
     // coded!
     animationManager.runAnimation(this);
   }

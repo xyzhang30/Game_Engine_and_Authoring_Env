@@ -76,12 +76,10 @@ public class CollidableContainer {
         Collidable collidable2 = myCollidables.get(record2.id());
 
         if (new PhysicsEngine().isColliding(collidable1, collidable2)) {
-          System.out.println(record1.id() + " " + record2.id());
           collisionPairs.add(new Pair(record1.id(), record2.id()));
         }
       }
     }
-
     return collisionPairs;
   }
 
