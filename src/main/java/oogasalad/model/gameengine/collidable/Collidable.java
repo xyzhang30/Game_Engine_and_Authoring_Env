@@ -98,11 +98,11 @@ public abstract class Collidable {
     return myVisible;
   }
 
-  protected double getX() {
+  public double getX() {
     return myX;
   }
 
-  protected double getY() {
+  public double getY() {
     return myY;
   }
 

@@ -9,6 +9,14 @@ public class Vector2D {
     this.y = y;
   }
 
+  public double getX() {
+    return x;
+  }
+
+  public double getY() {
+    return y;
+  }
+
   // Adds the given vector to this vector and returns the result as a new Vector2D
   public Vector2D add(Vector2D other) {
     return new Vector2D(this.x + other.x, this.y + other.y);
@@ -55,6 +63,7 @@ public class Vector2D {
     double magB = b.magnitude();
     return Math.acos(dotProd / (magA * magB));
   }
+
 
   @Override
   public String toString() {
