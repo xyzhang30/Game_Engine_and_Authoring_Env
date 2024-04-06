@@ -2,6 +2,7 @@ package oogasalad.model.gameengine;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 import oogasalad.Pair;
 import oogasalad.model.api.CollidableRecord;
@@ -97,7 +98,7 @@ public class GameEngine implements ExternalGameEngine {
     }
 
   private void handleCollisions() {
-    List<Pair> collisionPairs = collidables.getCollisionPairs(); //to implement
+    Set<Pair> collisionPairs = collidables.getCollisionPairs(); //to implement
     for(Pair collision : collisionPairs) {
       for (Command cmd : collisionHandlers.get(collision)) {
         cmd.execute(this);
