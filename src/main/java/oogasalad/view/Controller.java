@@ -1,7 +1,9 @@
 package oogasalad.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javafx.stage.Stage;
 import oogasalad.Pair;
 import oogasalad.model.api.GameRecord;
@@ -69,14 +71,22 @@ public class Controller {
    */
   public boolean runGame(double timeStep) {
     GameRecord gameRecord = gameEngine.update(timeStep);
+    if(gameRecord.staticState()) {
+      animationManager.pauseAnimation();
+    }
     sceneManager.update(gameRecord);
+    sceneManager.updateScoreBoard(gameRecord.players().get(0).score());
+
     List<Pair> collisionList = collisionManager.getIntersections();
+//    Map<Pair, String> collisionType = collisionManager.getIntersectionsMap();
+
     GameRecord gameRecord2 = gameEngine.handleCollisions(collisionList, timeStep);
     sceneManager.update(gameRecord2);
-
     if (sceneManager.notMoving(gameRecord2)) {
       sceneManager.enableHitting();
     }
+
+
     //return if game is over
     return true;
   }
@@ -86,7 +96,8 @@ public class Controller {
    * @param fractionalVelocity velocity as fraction of maxVelocity
    */
   public void hitPointScoringObject(double fractionalVelocity, double angle){
-    gameEngine.applyInitialVelocity(100*fractionalVelocity, angle, 8); // The 8 has been hard coded!
+    gameEngine.applyInitialVelocity(1000*fractionalVelocity, angle, 8); // The 8 has been hard
+    // coded!
     animationManager.runAnimation(this);
   }
 

@@ -67,4 +67,8 @@ public class SceneManager {
     TransitionScreen transitionScreen = new TransitionScreen();
     scene.setRoot(transitionScreen.getRoot());
   }
+
+  public void updateScoreBoard(double score) {
+   //gameScreen.updateScoreBoard(score);
+  }
 }

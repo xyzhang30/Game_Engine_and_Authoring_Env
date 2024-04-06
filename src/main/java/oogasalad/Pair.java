@@ -27,4 +27,8 @@ public class Pair {
   public int hashCode() {
     return hash(first, second);
   }
+
+  public String toString() {
+    return "("+first+","+second+")";
+  }
 }

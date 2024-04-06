@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import oogasalad.model.api.CollidableRecord;
 import oogasalad.view.Controller;
 import oogasalad.view.VisualElements.CompositeElement;
@@ -27,6 +28,7 @@ public class GameScreen extends UIScreen {
   private final BorderPane root;
   private Arrow angleArrow;
 
+  private Text scoreboardTxt;
   public GameScreen(Controller controller, CompositeElement compositeElement) {
     root = new BorderPane();
     this.controller = controller;
@@ -39,7 +41,8 @@ public class GameScreen extends UIScreen {
 
   private void setupAngleIndicator() {
     // Assume arrow starts at the middle bottom of the scene and points upwards initially
-    angleArrow = new Arrow(sceneWidth / 2, sceneHeight, sceneWidth / 2, sceneHeight - 100);
+    angleArrow = new Arrow(sceneWidth- sceneWidth/5-20, 800, sceneWidth-sceneWidth/5-20, 700);
+
     root.getChildren().add(angleArrow.getLine()); // Add the arrow line to the root pane
   }
 
@@ -62,6 +65,7 @@ public class GameScreen extends UIScreen {
   private void createScene() {
     setupControlPane(); //This messes up the power bar key listening
     Rectangle powerIndicator = setupPowerBar();
+    setupScoreBoard(0);
     scene = new Scene(root, sceneWidth, sceneHeight);
     initiateListening(scene, powerIndicator);
 
@@ -72,7 +76,21 @@ public class GameScreen extends UIScreen {
     root.setTop(new ControlPane());
   }
 
-  @Deprecated
+  private void setupScoreBoard(int score){
+    Rectangle rectangle = new Rectangle(10,50,100,50);
+    rectangle.setFill(Color.LIMEGREEN);
+    scoreboardTxt = new Text("Score: Coming Soon");
+    scoreboardTxt.setX(50);
+    scoreboardTxt.setY(100);
+    scoreboardTxt.setFill(Color.BLACK);
+    root.getChildren().addAll(rectangle,scoreboardTxt);
+  }
+
+  public void updateScoreBoard(double score){
+    scoreboardTxt.setText("Score: " + score);
+  }
+
+
   private void setupFieldComponents(CompositeElement cm) {
     for (int i : cm.idList()) {
       root.getChildren().add(cm.getNode(i));

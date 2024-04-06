@@ -54,7 +54,6 @@ public class CollidableContainer {
   }
 
   public void toLastStaticStateCollidables() {
-    collidableHistory.pop();
     for(CollidableRecord record : collidableHistory.peek()) {
       getCollidable(record.id()).setFromRecord(record);
     }

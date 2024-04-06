@@ -18,7 +18,7 @@ public class GameLoaderViewTest {
 
   @Test
   public void createCollidableRecordTest(){
-    GameLoaderView loaderView = new GameLoaderView("singlePlayerMiniGolf");
+    GameLoaderView loaderView = new GameLoaderView("testSinglePlayerMiniGolf");
     List<ViewCollidableRecord> collidableRecords = loaderView.getViewCollidableInfo();
     for (ViewCollidableRecord record : collidableRecords){
       if (record.id() == 2 || record.id() == 3){
