@@ -85,7 +85,7 @@ public class GameEngine implements ExternalGameEngine {
   @Override
   public GameRecord update(double dt) {
     collidables.update(dt);
-    handleCollisions(); //private
+    handleCollisions(dt); //private
     if (collidables.checkStatic()) {
       updateHistory(); //private
       switchToCorrectStaticState(); //private
@@ -97,11 +97,21 @@ public class GameEngine implements ExternalGameEngine {
         round, turn, gameOver, staticState);
     }
 
-  private void handleCollisions() {
+  private void handleCollisions(double dt) {
     Set<Pair> collisionPairs = collidables.getCollisionPairs(); //to implement
     for(Pair collision : collisionPairs) {
+      Collidable collidable1 = collidables.getCollidable(collision.getFirst());
+      Collidable collidable2 = collidables.getCollidable(collision.getSecond());
+      collidable1.onCollision(collidable2, dt);
+      collidable2.onCollision(collidable1, dt);
+      collidable1.updatePostCollisionVelocity();
+      collidable2.updatePostCollisionVelocity();
+
+
+      if(collisionHandlers.containsKey(collision)) {
       for (Command cmd : collisionHandlers.get(collision)) {
         cmd.execute(this);
+      }
       }
     }
   }
@@ -109,9 +119,10 @@ public class GameEngine implements ExternalGameEngine {
   private void switchToCorrectStaticState() {
     if (rules.winCondition().execute(this) == 1.0) {
       endGame();
-    } else if (rules.roundCondition().execute(this) == 1.0) {
-      advanceRound();
-    } else {
+    }// else if (rules.roundCondition().execute(this) == 1.0) {
+   //   advanceRound();
+    //}
+      else {
       for (Command cmd : rules.advance()) {
         cmd.execute(this);
       }

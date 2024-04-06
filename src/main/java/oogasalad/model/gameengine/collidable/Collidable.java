@@ -41,7 +41,6 @@ public abstract class Collidable {
 
   public void onCollision(Collidable other, double dt) {
     double[] result = other.calculateNewSpeed(this, dt);
-
     myNextVelocityX = result[0];
     myNextVelocityY = result[1];
   }
