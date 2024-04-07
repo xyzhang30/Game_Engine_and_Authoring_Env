@@ -2,20 +2,22 @@ package oogasalad.view.Screen;
 
 import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oogasalad.view.Controller;
-import oogasalad.view.SceneManager;
 
 /**
  * Introductory screen when player first starts game, offers option to play or author
+ *
  * @author Jordan Haytaian
  */
 public class TitleScreen extends UIScreen {
+
   private final Group root;
-  public TitleScreen(Controller controller){
+
+  public TitleScreen(Controller controller) {
     this.controller = controller;
     root = new Group();
     createScene();
@@ -25,53 +27,41 @@ public class TitleScreen extends UIScreen {
   public Parent getRoot() {
     return root;
   }
-  private void createScene(){
+
+  private void createScene() {
     createTitle();
     createButtons();
   }
 
-  private void createTitle(){
-    double titleX = sceneWidth / 2 - 300;
-    double titleY = sceneHeight / 5;
-    Text title = new Text(titleX, titleY, "Fysics Fun");
-
+  private void createTitle() {
+    Text title = new Text("Fysics Fun");
     setToThemeFont(title, 100);
     title.setEffect(createDropShadow());
+
+    title.setX(SCREEN_WIDTH/2 - title.getLayoutBounds().getWidth()/2);
+    title.setY(SCREEN_HEIGHT*0.3 - title.getLayoutBounds().getHeight()/2);
 
     root.getChildren().add(title);
   }
 
   private void createButtons() {
-    double buttonX = sceneWidth / 2 - 300;
-    double playTextX = sceneWidth / 2 - 125;
-    double authorTextX = sceneWidth / 2 - 160;
-    double playButtonY = sceneHeight / 3;
-    double authorButtonY = sceneHeight * 2 / 3;
-    double playTextY = sceneHeight / 2 - 50;
-    double authorTextY = sceneHeight * 3 / 4 + 25;
-    double buttonWidth = 500;
-    double buttonHeight = 150;
 
-    Rectangle playButton = new Rectangle(buttonX, playButtonY, buttonWidth, buttonHeight);
-    playButton.setFill(Color.LIGHTGRAY);
+    Button playButton = new Button("Play");
+    playButton.setPrefSize(SCREEN_WIDTH*0.3,SCREEN_HEIGHT*0.1);
+    playButton.setLayoutX(SCREEN_WIDTH/2 - playButton.getPrefWidth()/2);
+    playButton.setLayoutY(SCREEN_HEIGHT*0.4 - playButton.getPrefHeight()/2);
+    playButton.setFont(Font.font("Arial",65));
     playButton.setEffect(createDropShadow());
-    addPlayButtonEventHandling(playButton);
 
-    Rectangle authorButton = new Rectangle(buttonX, authorButtonY, buttonWidth, buttonHeight);
-    authorButton.setFill(Color.LIGHTGRAY);
+    playButton.setOnAction(e->controller.openMenuScreen());
+
+    Button authorButton = new Button("Author");
+    authorButton.setPrefSize(SCREEN_WIDTH*0.3,SCREEN_HEIGHT*0.1);
+    authorButton.setLayoutX(SCREEN_WIDTH/2 - authorButton.getPrefWidth()/2);
+    authorButton.setLayoutY(SCREEN_HEIGHT*0.6 - authorButton.getPrefHeight()/2);
+    authorButton.setFont(Font.font("Arial",65));
     authorButton.setEffect(createDropShadow());
 
-    Text play = new Text(playTextX, playTextY, "Play");
-    setToThemeFont(play, 65);
-
-    Text author = new Text(authorTextX, authorTextY, "Author");
-    setToThemeFont(author, 65);
-
-    root.getChildren().addAll(playButton, authorButton, play, author);
+    root.getChildren().addAll(playButton, authorButton);
   }
-
-  private void addPlayButtonEventHandling(Rectangle playButton){
-    playButton.setOnMouseClicked(e -> controller.openMenuScreen());
-  }
-
 }

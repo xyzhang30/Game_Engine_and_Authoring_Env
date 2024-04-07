@@ -2,22 +2,22 @@ package oogasalad.model.gameengine;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import javafx.collections.ObservableMap;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
-import javafx.collections.FXCollections;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Player {
 
   private final int playerId;
   private final Collidable myCollidable;
-  private Map<String, Double> variables;
+  private final Map<String, Double> variables;
+  private static final Logger LOGGER = LogManager.getLogger(Player.class);
 
-  private Stack<ObservableMap<String,Double>> variableStack;
+  private Stack<ObservableMap<String, Double>> variableStack;
 
   public Player(int id, Collidable collidable) {
     playerId = id;
@@ -27,7 +27,7 @@ public class Player {
   }
 
   public double getVariable(String variable) {
-    return variables.getOrDefault(variable,0.0);
+    return variables.getOrDefault(variable, 0.0);
   }
 
   public void setVariable(String key, double value) {
@@ -38,8 +38,8 @@ public class Player {
 
     try {
       return new PlayerRecord(playerId, variables.get("score"), myCollidable.getId(), active);
-    }
-    catch (NullPointerException e){
+    } catch (NullPointerException e) {
+      LOGGER.warn("Invalid player");
       return null;
     }
   }
@@ -54,7 +54,7 @@ public class Player {
 
   public void setObservableVariables(Map<String, Double> variablesOld) {
     variables.clear();
-    for(String key : variablesOld.keySet()) {
+    for (String key : variablesOld.keySet()) {
       variables.put(key, variablesOld.get(key));
     }
 

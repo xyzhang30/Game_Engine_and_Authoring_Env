@@ -1,30 +1,29 @@
 package oogasalad.model.gameengine.collidable;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableMap;
 import oogasalad.model.api.CollidableRecord;
 
 public abstract class Collidable {
+
   private final double myMass;
   private double myX;
   private double myY;
   private double myVelocityX;
   private double myVelocityY;
-  private int myId;
+  private final int myId;
   private double myNextX;
   private double myNextY;
   private double myNextVelocityX;
   private double myNextVelocityY;
   private boolean myVisible;
-  private double myWidth;
-  private double myHeight;
+  private final double myWidth;
+  private final double myHeight;
+  private final String myShape;
   private Stack<List<Integer>> locationHistory;
 
   public Collidable(int id, double mass, double x, double y,
-      boolean visible, double width, double height) {
+      boolean visible, double width, double height, String shape) {
     myId = id;
     myMass = mass;
     myX = x;
@@ -36,10 +35,12 @@ public abstract class Collidable {
     myVisible = visible;
     myWidth = width;
     myHeight = height;
+    myShape = shape;
+
   }
+
   public void onCollision(Collidable other, double dt) {
     double[] result = other.calculateNewSpeed(this, dt);
-
     myNextVelocityX = result[0];
     myNextVelocityY = result[1];
   }
@@ -47,10 +48,10 @@ public abstract class Collidable {
   public void updatePostCollisionVelocity() {
     myVelocityY = myNextVelocityY;
     myVelocityX = myNextVelocityX;
-    if(Math.abs(myVelocityX) < .00001) {
+    if (Math.abs(myVelocityX) < .00001) {
       myVelocityX = 0;
     }
-    if(Math.abs(myVelocityY) < .00001) {
+    if (Math.abs(myVelocityY) < .00001) {
       myVelocityY = 0;
     }
   }
@@ -66,22 +67,10 @@ public abstract class Collidable {
     myNextY = myY + dt * myVelocityY;
   }
 
-  /**
-  public void addToLocationHistory(List<Integer> newLocation) {
-    locationHistory.push(newLocation);
-  }
-
-  public void moveToOldLocation(List<Integer> newLocation) {
-    locationHistory.pop();
-    myX = locationHistory.peek().get(0);
-    myY = locationHistory.peek().get(1);
-  }
-  */
-
   public void update() {
     myX = myNextX;
     myY = myNextY;
-   }
+  }
 
   public void applyInitialVelocity(double magnitude, double direction) {
     myVelocityX = magnitude * Math.cos(direction);
@@ -94,12 +83,15 @@ public abstract class Collidable {
   protected double getVelocityX() {
     return myVelocityX;
   }
+
   protected double getVelocityY() {
     return myVelocityY;
   }
+
   protected double getMass() {
     return myMass;
   }
+
   public int getId() {
     return myId;
   }
@@ -107,17 +99,25 @@ public abstract class Collidable {
   protected boolean getVisible() {
     return myVisible;
   }
+
   protected double getX() {
     return myX;
   }
+
   protected double getY() {
     return myY;
   }
-  protected double getWidth(){
+
+  protected double getWidth() {
     return myWidth;
   }
-  protected double getHeight(){
+
+  protected double getHeight() {
     return myHeight;
+  }
+
+  protected String getShape() {
+    return myShape;
   }
 
   protected void setFromRecord(CollidableRecord record) {
@@ -130,5 +130,26 @@ public abstract class Collidable {
     myNextX = myX;
     myNextY = myY;
     myVisible = record.visible();
+  }
+
+  //for debugging
+  @Override
+  public String toString() {
+    String sb = "{\n"
+        + "  \"myMass\": " + myMass + ",\n"
+        + "  \"myX\": " + myX + ",\n"
+        + "  \"myY\": " + myY + ",\n"
+        + "  \"myVelocityX\": " + myVelocityX + ",\n"
+        + "  \"myVelocityY\": " + myVelocityY + ",\n"
+        + "  \"myId\": " + myId + ",\n"
+        + "  \"myNextX\": " + myNextX + ",\n"
+        + "  \"myNextY\": " + myNextY + ",\n"
+        + "  \"myNextVelocityX\": " + myNextVelocityX + ",\n"
+        + "  \"myNextVelocityY\": " + myNextVelocityY + ",\n"
+        + "  \"myVisible\": " + myVisible + ",\n"
+        + "  \"myWidth\": " + myWidth + ",\n"
+        + "  \"myHeight\": " + myHeight + ",\n"
+        + "}\n";
+    return sb;
   }
 }

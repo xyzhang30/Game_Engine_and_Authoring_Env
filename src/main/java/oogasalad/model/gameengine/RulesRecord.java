@@ -5,4 +5,7 @@ import java.util.Map;
 import oogasalad.Pair;
 import oogasalad.model.gameengine.command.Command;
 
-public record RulesRecord(int maxRounds, int maxTurns, Map<Pair, List<Command>> collisionHandlers, Command winCondition, List<Command> advance) {}
+public record RulesRecord(int maxRounds, int maxTurns, Map<Pair, List<Command>> collisionHandlers,
+                          Command winCondition, List<Command> advance) {
+
+}

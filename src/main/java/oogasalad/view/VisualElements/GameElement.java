@@ -2,13 +2,11 @@ package oogasalad.view.VisualElements;
 
 import java.util.List;
 import javafx.scene.Node;
-import oogasalad.model.api.CollidableRecord;
-import oogasalad.model.api.ViewCollidableRecord;
-
-// Temporary imports to be expunged after data dependency established *see Constructor*
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.ViewCollidableRecord;
 
 /**
  * Class for a single View Element for the Game engine.
@@ -24,9 +22,10 @@ public class GameElement implements VisualElement {
     myNode.setTranslateX(viewData.startXpos());
     myNode.setTranslateY(viewData.startYpos());
   }
-  private Node makeShape(ViewCollidableRecord data){
+
+  private Node makeShape(ViewCollidableRecord data) {
     List<Integer> rgb = data.color();
-    Color color = Color.rgb(rgb.get(0),rgb.get(1),rgb.get(2));
+    Color color = Color.rgb(rgb.get(0), rgb.get(1), rgb.get(2));
     return switch (data.shape().toLowerCase()) { // Convert to reflection at later date
       case "circle" -> new Circle(data.width(), color);
       case "rectangle" -> new Rectangle(data.width(), data.height(), color);

@@ -6,16 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
-import javafx.collections.ObservableMap;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.Player;
 
 public class PlayerContainer {
 
   private final Map<Integer, Player> myPlayers;
   private int active;
 
-  private Stack<Map<Integer,Map<String,Double>>> staticStateVariables;
+  private final Stack<Map<Integer, Map<String, Double>>> staticStateVariables;
+
   public PlayerContainer(Map<Integer, Player> players) {
     myPlayers = players;
     active = 1;
@@ -23,11 +22,12 @@ public class PlayerContainer {
     addStaticStateVariables();
 
   }
+
   public int getNumPlayers() {
     return myPlayers.size();
   }
 
-  public Player getPlayer (int playerId) {
+  public Player getPlayer(int playerId) {
     return myPlayers.get(playerId);
   }
 
@@ -42,22 +42,22 @@ public class PlayerContainer {
 
   public List<PlayerRecord> getPlayerRecords() {
     List<PlayerRecord> ret = new ArrayList<>();
-    for(Player p : myPlayers.values()) {
-      ret.add(p.getPlayerRecord(active==p.getId()));
+    for (Player p : myPlayers.values()) {
+      ret.add(p.getPlayerRecord(active == p.getId()));
     }
     return ret;
   }
 
   public void addStaticStateVariables() {
     staticStateVariables.push(new HashMap<>());
-    for(Player p : myPlayers.values()) {
+    for (Player p : myPlayers.values()) {
       staticStateVariables.peek().put(p.getId(), p.getObservableVariables());
     }
     staticStateVariables.push(Collections.unmodifiableMap(staticStateVariables.pop()));
   }
 
   public void toLastStaticStateVariables() {
-    for(Integer id : staticStateVariables.peek().keySet()) {
+    for (Integer id : staticStateVariables.peek().keySet()) {
       getPlayer(id).setObservableVariables(staticStateVariables.peek().get(id));
     }
   }

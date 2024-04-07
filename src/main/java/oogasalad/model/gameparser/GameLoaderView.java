@@ -3,7 +3,7 @@ package oogasalad.model.gameparser;
 import java.util.ArrayList;
 import java.util.List;
 import oogasalad.model.api.ViewCollidableRecord;
-import oogasalad.model.gameparser.data.CollidableObject;
+import oogasalad.model.api.data.CollidableObject;
 
 /**
  * Concrete implementation of GameLoader for passing game data necessary for the View.
@@ -30,25 +30,26 @@ public class GameLoaderView extends GameLoader {
       int id = o.collidableId();
       String shape = o.shape();
       List<Integer> colorRgb = new ArrayList<>();
-      for (int i : o.color()){
+      for (int i : o.color()) {
         colorRgb.add(validateRgbValue(i));
       }
       double xdimension = o.dimension().xDimension();
       double ydimension = o.dimension().yDimension();
       double startXpos = o.position().xPosition();
       double startYpos = o.position().yPosition();
-      ViewCollidableRecord viewCollidable = new ViewCollidableRecord(id, colorRgb, shape, xdimension,
+      ViewCollidableRecord viewCollidable = new ViewCollidableRecord(id, colorRgb, shape,
+          xdimension,
           ydimension, startXpos, startYpos);
       viewCollidableRecords.add(viewCollidable);
     }
   }
 
-  public List<ViewCollidableRecord> getViewCollidableInfo(){
+  public List<ViewCollidableRecord> getViewCollidableInfo() {
     return viewCollidableRecords;
   }
 
-  private int validateRgbValue(int colorValue){
-    if (colorValue < 0){
+  private int validateRgbValue(int colorValue) {
+    if (colorValue < 0) {
       return 0;
     } else if (colorValue > 255) {
       return 255;

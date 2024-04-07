@@ -6,9 +6,10 @@ import javafx.scene.text.Text;
 
 
 public class TransitionScreen extends UIScreen {
+
+  private final Group root;
   protected Text title;
   protected Text additionalInfo;
-  private final Group root;
 
   public TransitionScreen() {
     String titleText = "Mini Golf Completed";
@@ -26,8 +27,8 @@ public class TransitionScreen extends UIScreen {
   private void setup() {
     setToThemeFont(title, 36);
     title.setEffect(createDropShadow());
-    title.setLayoutX(sceneWidth / 2 - title.getBoundsInLocal().getWidth() / 2);
-    title.setLayoutY(sceneHeight / 4);
+    title.setLayoutX(SCREEN_WIDTH / 2 - title.getBoundsInLocal().getWidth() / 2);
+    title.setLayoutY(SCREEN_HEIGHT / 4);
     root.getChildren().add(title);
   }
 
@@ -35,8 +36,8 @@ public class TransitionScreen extends UIScreen {
     additionalInfo.setText(info);
     setToThemeFont(additionalInfo, 24);
     additionalInfo.setEffect(createDropShadow());
-    additionalInfo.setLayoutX(sceneWidth / 2 - additionalInfo.getBoundsInLocal().getWidth() / 2);
-    additionalInfo.setLayoutY(sceneHeight / 3);
+    additionalInfo.setLayoutX(SCREEN_WIDTH / 2 - additionalInfo.getBoundsInLocal().getWidth() / 2);
+    additionalInfo.setLayoutY(SCREEN_HEIGHT / 3);
     if (!root.getChildren().contains(additionalInfo)) {
       root.getChildren().add(additionalInfo);
     }

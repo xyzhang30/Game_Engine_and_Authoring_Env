@@ -99,7 +99,6 @@
         "x_dimension": 333,
         "y_dimension": 300
       },
-      "friction": 0.9,
       "color": [0,0,255]
     },
 
@@ -163,7 +162,7 @@
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 50,
+        "x_dimension": 20,
         "y_dimension": 1000
       },
       "color": [0,0,0]
@@ -180,7 +179,7 @@
       "shape": "rectangle",
       "dimension": {
         "x_dimension": 1000,
-        "y_dimension": 50
+        "y_dimension": 20
       },
       "color": [0,0,0]
     },
@@ -196,7 +195,7 @@
       "shape": "rectangle",
       "dimension": {
         "x_dimension": 1000,
-        "y_dimension": 50
+        "y_dimension": 20
       },
       "color": [0,0,0]
     },
@@ -211,7 +210,7 @@
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 50,
+        "x_dimension": 20,
         "y_dimension": 1000
       },
       "color": [0,0,0]

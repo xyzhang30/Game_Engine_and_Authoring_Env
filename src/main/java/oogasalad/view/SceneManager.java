@@ -11,7 +11,8 @@ import oogasalad.view.Screen.TransitionScreen;
 import oogasalad.view.VisualElements.CompositeElement;
 
 public class SceneManager {
-  private Scene scene;
+
+  private final Scene scene;
   private CompositeElement compositeElement;
   private GameScreen gameScreen;
   private int currentRound = 1;
@@ -20,7 +21,8 @@ public class SceneManager {
   public SceneManager() {
     scene = new Scene(new Group());
   }
-  public Scene getScene(){
+
+  public Scene getScene() {
     return scene;
   }
 
@@ -29,46 +31,49 @@ public class SceneManager {
     checkEndRound(gameRecord);
   }
 
-  public boolean notMoving(GameRecord gameRecord){
+  public boolean notMoving(GameRecord gameRecord) {
     return gameRecord.staticState(); //will be added to record eventually
   }
 
-  public void makeTitleScreen(Controller controller){
+  public void makeTitleScreen(Controller controller) {
     TitleScreen titleScreen = new TitleScreen(controller);
     scene.setRoot(titleScreen.getRoot());
   }
-  public void makeMenuScreen(List<String> titles, Controller controller){
+
+  public void makeMenuScreen(List<String> titles, Controller controller) {
     MenuScreen menuScreen = new MenuScreen(titles, controller);
     scene.setRoot(menuScreen.getRoot());
   }
-  public void makeGameScreen(Controller controller, CompositeElement compositeElement){
-    gameScreen = new GameScreen(controller, compositeElement);
+
+  public void makeGameScreen(Controller controller, CompositeElement compositeElement) {
     this.compositeElement = compositeElement;
-    scene = gameScreen.getScene();
+    gameScreen = new GameScreen(controller, compositeElement);
+    scene.setRoot(gameScreen.getRoot());
+    gameScreen.initiateListening(scene);
   }
 
-  public void enableHitting(){
+  public void enableHitting() {
     gameScreen.enableHitting();
   }
 
 
   public void checkEndRound(GameRecord gameRecord) {
     if (gameRecord.round() != currentRound) {
-      currentRound=gameRecord.round();
+      currentRound = gameRecord.round();
 
     }
-    if(gameRecord.gameOver()) {
+    if (gameRecord.gameOver()) {
       gameScreen.endRound(true);
     }
   }
 
 
-  public void makeTransitionScreen(){
+  public void makeTransitionScreen() {
     TransitionScreen transitionScreen = new TransitionScreen();
     scene.setRoot(transitionScreen.getRoot());
   }
 
   public void updateScoreBoard(double score) {
-   //gameScreen.updateScoreBoard(score);
+    //gameScreen.updateScoreBoard(score);
   }
 }

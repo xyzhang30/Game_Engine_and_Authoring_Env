@@ -10,11 +10,12 @@ public class AdjustPointsCommand implements Command {
   private static final int SCORE_INCREASE = 1;
   private static final String SCORE_VARIABLE = "score";
 
-  private List<Double> arguments;
+  private final List<Double> arguments;
 
   public AdjustPointsCommand(List<Double> arguments) {
     this.arguments = arguments;
   }
+
   @Override
   public double execute(GameEngine engine) {
     Player currentPlayer =
@@ -30,5 +31,4 @@ public class AdjustPointsCommand implements Command {
 //Runtime is ideal
 /**
  * (FIX): Directional Collisions ==> But what if other things
- *
  */
