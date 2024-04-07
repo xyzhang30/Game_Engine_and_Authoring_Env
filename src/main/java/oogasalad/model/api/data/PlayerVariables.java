@@ -1,4 +1,4 @@
-package oogasalad.model.gameparser.data;
+package oogasalad.model.api.data;
 
 /**
  * Represents the JSON data for player game variables.
