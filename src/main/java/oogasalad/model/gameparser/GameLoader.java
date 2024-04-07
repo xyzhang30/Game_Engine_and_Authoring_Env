@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import oogasalad.model.api.exception.InvalidFileException;
-import oogasalad.model.gameparser.data.GameData;
+import oogasalad.model.api.data.GameData;
 
 
 /**
