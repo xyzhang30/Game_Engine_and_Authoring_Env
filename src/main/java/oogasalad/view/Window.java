@@ -2,6 +2,7 @@ package oogasalad.view;
 
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import oogasalad.view.Controlling.GameController;
 
 /**
  * Class to represent the stage and scene being shown to the user
@@ -19,7 +20,7 @@ public class Window {
   }
 
   public Window(Stage stage, int id) {
-    Controller controller = new Controller(stage); // Dirty fix. Change once scene swapped by root.
+    GameController controller = new GameController(stage); // Dirty fix. Change once scene swapped by root.
     stage.setTitle(TITLE); // Port this hard coding into data.
 //    stage.setWidth(SCREEN_WIDTH * 0.8);
 //    stage.setHeight(SCREEN_HEIGHT * 0.8);

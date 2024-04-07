@@ -1,12 +1,11 @@
-package oogasalad.view.Screen;
+package oogasalad.view.GameScreens;
 
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import oogasalad.view.Controller;
+import oogasalad.view.Controlling.GameController;
 
 /**
  * Introductory screen when player first starts game, offers option to play or author
@@ -17,7 +16,7 @@ public class TitleScreen extends UIScreen {
 
   private final Group root;
 
-  public TitleScreen(Controller controller) {
+  public TitleScreen(GameController controller) {
     this.controller = controller;
     root = new Group();
     createScene();

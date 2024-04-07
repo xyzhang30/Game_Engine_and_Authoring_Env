@@ -1,4 +1,4 @@
-package oogasalad.view;
+package oogasalad.view.Controlling;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,16 +8,19 @@ import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewCollidableRecord;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
+import oogasalad.view.AnimationManager;
+import oogasalad.view.CollisionManager;
+import oogasalad.view.SceneManager;
 import oogasalad.view.VisualElements.CompositeElement;
 
 
 /**
- * Controller class handles communications between model and view.  This class holds manager class
+ * GameController class handles communications between model and view.  This class holds manager class
  * instances to delegate handling the information received from the model.
  *
  * @author Jordan Haytaian
  */
-public class Controller {
+public class GameController {
 
   private final CollisionManager collisionManager;
   private final SceneManager sceneManager;
@@ -26,7 +29,7 @@ public class Controller {
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
 
-  public Controller(Stage stage) {
+  public GameController(Stage stage) {
     this.stage = stage;
     sceneManager = new SceneManager();
     sceneManager.makeTitleScreen(this);

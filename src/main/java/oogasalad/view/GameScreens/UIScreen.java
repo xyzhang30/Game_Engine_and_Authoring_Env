@@ -1,4 +1,4 @@
-package oogasalad.view.Screen;
+package oogasalad.view.GameScreens;
 
 import javafx.scene.Parent;
 import javafx.scene.effect.DropShadow;
@@ -6,13 +6,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import oogasalad.view.Controller;
+import oogasalad.view.Controlling.GameController;
 import oogasalad.view.Window;
 
 public abstract class UIScreen {
   double SCREEN_WIDTH = Window.SCREEN_WIDTH;
   double SCREEN_HEIGHT = Window.SCREEN_HEIGHT;
-  Controller controller;
+  GameController controller;
 
   public abstract Parent getRoot();
   public void setScreen(double width, double height){

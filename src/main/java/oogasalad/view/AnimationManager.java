@@ -3,6 +3,7 @@ package oogasalad.view;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import oogasalad.view.Controlling.GameController;
 
 /**
  * Class to manage animations
@@ -31,7 +32,7 @@ public class AnimationManager {
   /**
    * Starts the animation, runs until runGame returns false indicating that round is over
    */
-  public void runAnimation(Controller controller) {
+  public void runAnimation(GameController controller) {
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
       if (controller.runGame(SECOND_DELAY)) {
