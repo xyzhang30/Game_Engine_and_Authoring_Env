@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.gameparser.data.GameData;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -14,6 +16,8 @@ import oogasalad.model.gameparser.data.GameData;
  * @author Judy He, Alisha Zhang
  */
 public abstract class GameLoader {
+
+  private static final Logger LOGGER = LogManager.getLogger(GameLoader.class);
 
   private static final String DATA_FOLDER_PATH = "data/";
   private static final String JSON_EXTENSION = ".json";
@@ -34,7 +38,8 @@ public abstract class GameLoader {
         RESOURCE_FOLDER_PATH + ERROR_RESOURCE_FOLDER + ERROR_FILE_PREFIX + language);
     try {
       parseJSON("/data/singlePlayerMiniGolf.json");
-    } catch (IOException e) {
+    } catch (IOException | InvalidFileException e) {
+      LOGGER.error(resourceBundle.getString(e.getMessage()));
       throw new InvalidFileException(String.format(
           String.format(resourceBundle.getString("JSONParsingError"), e.getMessage())), e);
     }
@@ -51,8 +56,9 @@ public abstract class GameLoader {
     try {
       parseJSON(DATA_FOLDER_PATH + gameName + JSON_EXTENSION);
     } catch (IOException e) {
-      throw new InvalidFileException(String.format(
-          String.format(resourceBundle.getString("JSONParsingError"), e.getMessage())), e);
+//      throw new InvalidFileException(String.format(
+//          String.format(resourceBundle.getString("JSONParsingError"), e.getMessage())), e);
+      LOGGER.error(resourceBundle.getString("JSONParsingError"), e.getMessage());
     }
   }
 
