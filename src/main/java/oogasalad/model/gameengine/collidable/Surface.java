@@ -7,8 +7,8 @@ public class Surface extends Collidable {
   private final double mu;
 
   public Surface(int id, double mass, double x, double y, boolean visible, double mu, double width,
-      double height) {
-    super(id, mass, x, y, visible, width, height);
+      double height, String shape) {
+    super(id, mass, x, y, visible, width, height, shape);
     this.mu = mu;
   }
 

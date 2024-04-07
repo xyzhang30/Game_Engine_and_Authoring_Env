@@ -9,8 +9,8 @@ public class Moveable extends Collidable {
   private static final Logger LOGGER = LogManager.getLogger(Moveable.class);
 
   public Moveable(int id, double mass, double x, double y,
-      boolean visible, double width, double height) {
-    super(id, mass, x, y, visible, width, height);
+      boolean visible, double width, double height, String shape) {
+    super(id, mass, x, y, visible, width, height, shape);
   }
 
   @Override
