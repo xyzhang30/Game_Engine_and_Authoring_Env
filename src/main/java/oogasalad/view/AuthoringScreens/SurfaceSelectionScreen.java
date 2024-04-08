@@ -1,7 +1,7 @@
 package oogasalad.view.AuthoringScreens;
 
-import java.io.File;
-import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.image.Image;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,6 +11,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.shape.Shape;
+import oogasalad.view.Controlling.AuthoringController;
 
 public class SurfaceSelectionScreen extends AuthoringScreen {
 
@@ -18,7 +20,8 @@ public class SurfaceSelectionScreen extends AuthoringScreen {
   private final int backgroundHeight = 980;
   private Rectangle backgroundBox;
 
-  public SurfaceSelectionScreen() {
+  public SurfaceSelectionScreen(AuthoringController controller) {
+    this.controller = controller;
     createScene();
   }
 
@@ -26,12 +29,8 @@ public class SurfaceSelectionScreen extends AuthoringScreen {
     root = new StackPane();
     createBackgroundBox();
     createOptionBox();
+    createNextButton();
     scene = new Scene(root, screenWidth, screenHeight);
-    scene.setFill(Color.PURPLE);
-  }
-
-  public Scene getScene() {
-    return scene;
   }
 
   private void createBackgroundBox() {
@@ -56,6 +55,10 @@ public class SurfaceSelectionScreen extends AuthoringScreen {
         backgroundBox.setFill(new ImagePattern(image)); // Use the Image object as before
       }
     });
+  }
+
+  void endSelection(){
+    controller.startNextSelection(ImageType.BACKGROUND, backgroundBox);
   }
 
   private void changeBackgroundColor(Color color) {

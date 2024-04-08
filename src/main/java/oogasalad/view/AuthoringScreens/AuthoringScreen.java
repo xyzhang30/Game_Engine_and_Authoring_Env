@@ -13,6 +13,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import oogasalad.view.Controlling.AuthoringController;
 import oogasalad.view.Window;
 
 public abstract class AuthoringScreen {
@@ -23,6 +24,11 @@ public abstract class AuthoringScreen {
   Scene scene;
   ColorPicker colorPicker;
   Button imageButton;
+  AuthoringController controller;
+
+  public Scene getScene() {
+    return scene;
+  }
 
   Image chooseImage(ImageType imageType) {
     FileChooser fileChooser = new FileChooser();
@@ -77,6 +83,17 @@ public abstract class AuthoringScreen {
     changeImage();
     root.getChildren().add(imageButton);
   }
+
+  void createNextButton(){
+    Button nextButton = new Button("Next");
+    nextButton.setPrefSize(100, 50);
+    nextButton.setOnMouseClicked(event -> endSelection());
+    StackPane.setAlignment(nextButton, Pos.BOTTOM_RIGHT);
+    StackPane.setMargin(nextButton, new Insets(0, 50, 50, 0));
+    root.getChildren().add(nextButton);
+  }
+
+  abstract void endSelection();
 
   abstract void changeColor();
 

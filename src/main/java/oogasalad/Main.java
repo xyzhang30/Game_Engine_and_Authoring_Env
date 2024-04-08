@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import oogasalad.view.AuthoringScreens.AuthoringScreen;
 import oogasalad.view.AuthoringScreens.SurfaceSelectionScreen;
+import oogasalad.view.Controlling.AuthoringController;
 import oogasalad.view.Window;
 
 /**
@@ -14,7 +15,7 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-    SurfaceSelectionScreen scene = new SurfaceSelectionScreen();
+    SurfaceSelectionScreen scene = new SurfaceSelectionScreen(new AuthoringController(primaryStage));
     primaryStage.setScene(scene.getScene());
     primaryStage.show();
     //Window mainWindow = new Window(primaryStage, 0);
