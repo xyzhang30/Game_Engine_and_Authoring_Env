@@ -49,6 +49,7 @@ public class SurfaceSelectionScreen extends AuthoringScreen {
 
   void changeImage() {
     imageButton.setOnAction(event -> {String imagePath = chooseImage(ImageType.BACKGROUND);
+      System.out.println(imagePath);
       backgroundBox.setFill(new ImagePattern(new Image(imagePath)));
     });
   }
