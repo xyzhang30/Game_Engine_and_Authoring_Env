@@ -86,9 +86,6 @@ public class CollisionDetector {
     // Check for overlap on the Y axis
     boolean overlapY = (y1 + height1 > y2) && (y2 + height2 > y1);
 
-    // If there's overlap on both axes, then the rectangles are colliding
-    System.out.println(rect1.getId());
-    System.out.println(rect2.getId());
     return overlapX && overlapY;
   }
 

@@ -46,9 +46,7 @@ public class CollidableContainer {
   public List<CollidableRecord> getCollidableRecords() {
     List<CollidableRecord> ret = new ArrayList<>();
     for (Collidable collidable : myCollidables.values()) {
-      ret.add(new CollidableRecord(collidable.getId(), collidable.getMass(), collidable.getX(),
-          collidable.getY(), collidable.getVelocityX(), collidable.getVelocityY(),
-          collidable.getVisible(), collidable.getMu()));
+      ret.add(collidable.getCollidableRecord());
     }
     return ret;
   }
@@ -58,11 +56,9 @@ public class CollidableContainer {
     for (CollidableRecord record : ret) {
       if (record.id() == id) {
         return record;
-      } else {
-        //TODO THROW EXCEPTION
-        return null;
       }
     }
+    return null;
   }
 
 

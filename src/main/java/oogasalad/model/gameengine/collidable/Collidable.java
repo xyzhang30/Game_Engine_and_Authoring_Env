@@ -61,7 +61,8 @@ public abstract class Collidable {
   public abstract double[] calculateNewSpeed(Collidable other, double dt);
 
   public CollidableRecord getCollidableRecord() {
-    return new CollidableRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible);
+    return new CollidableRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible, myMu
+        , myWidth, myHeight);
   }
 
   public void move(double dt) {
@@ -79,7 +80,6 @@ public abstract class Collidable {
     myNextVelocityX = myVelocityX;
     myVelocityY = magnitude * Math.sin(direction);
     myNextVelocityY = myVelocityY;
-
   }
 
   protected double getMu() { return myMu; }

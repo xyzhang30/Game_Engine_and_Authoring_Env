@@ -80,6 +80,7 @@ public class GameLoaderModel extends GameLoader {
         collidable = createMovableCollidable(co);
       } else if (co.properties().contains("surface")) {
         collidable = createSurfaceCollidable(co);
+        System.out.println(3);
       }
       collidables.put(co.collidableId(), collidable);
     }
