@@ -11,7 +11,6 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -62,6 +61,9 @@ public abstract class AuthoringScreen {
     switch (imageType) {
       case BACKGROUND -> {
         return path + "/data/background_images";
+      }
+      case GOAL -> {
+        return path + "/data/goal_images";
       }
       default -> {
         return path + "/data";

@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Shape;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -30,6 +33,7 @@ public class GoalSelectionScreen extends AuthoringScreen{
   private void createScene(Rectangle backgroundBox){
     root = new StackPane();
     root.getChildren().add(backgroundBox);
+    //TODO: only enable buttons once a goal is placed
     createOptionBox();
     createDraggableShapes();
     scene = new Scene(root, screenWidth, screenHeight);
@@ -70,8 +74,21 @@ public class GoalSelectionScreen extends AuthoringScreen{
   }
   void endSelection(){}
 
-  void changeColor(){}
+  void changeColor() {
+    colorPicker.setOnAction(
+        event -> changeGoalColor(((ColorPicker) event.getSource()).getValue()));
+  }
+  void changeImage(){
+    imageButton.setOnAction(event -> {
+      Image image = chooseImage(ImageType.GOAL);
+      if (image != null) {
+        selectedShape.setFill(new ImagePattern(image));
+      }
+    });
+  }
 
-  void changeImage(){}
+  private void changeGoalColor(Color color){
+    selectedShape.setFill(color);
+  }
 
 }

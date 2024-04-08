@@ -52,7 +52,7 @@ public class SurfaceSelectionScreen extends AuthoringScreen {
     imageButton.setOnAction(event -> {
       Image image = chooseImage(ImageType.BACKGROUND);
       if (image != null) {
-        backgroundBox.setFill(new ImagePattern(image)); // Use the Image object as before
+        backgroundBox.setFill(new ImagePattern(image));
       }
     });
   }
