@@ -1,12 +1,12 @@
 package oogasalad.view.AuthoringScreens;
 
-import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.control.ColorPicker;
 
@@ -47,7 +47,13 @@ public class SurfaceSelectionScreen extends AuthoringScreen {
         event -> changeBackgroundColor(((ColorPicker) event.getSource()).getValue()));
   }
 
-  private void changeBackgroundColor(Color color){
+  void changeImage() {
+    imageButton.setOnAction(event -> {String imagePath = chooseImage(ImageType.BACKGROUND);
+      backgroundBox.setFill(new ImagePattern(new Image(imagePath)));
+    });
+  }
+
+  private void changeBackgroundColor(Color color) {
     backgroundBox.setFill(color);
   }
 }
