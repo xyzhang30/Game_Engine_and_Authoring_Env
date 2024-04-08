@@ -1,4 +1,7 @@
-package oogasalad.model.gameengine;
+package oogasalad.model.gameengine.turn;
+
+import oogasalad.model.gameengine.PlayerContainer;
+import oogasalad.model.gameengine.turn.TurnPolicy;
 
 public class SnakeTurnPolicy implements TurnPolicy {
 

@@ -42,7 +42,7 @@ public class Collidable {
 
   }
 
-  public void updatePostCollisionVelocity() {
+  protected void updatePostCollisionVelocity() {
     myVelocityY = myNextVelocityY;
     myVelocityX = myNextVelocityX;
   }
@@ -53,12 +53,12 @@ public class Collidable {
         , myWidth, myHeight);
   }
 
-  public void move(double dt) {
+  protected void move(double dt) {
     myNextX = myX + dt * myVelocityX;
     myNextY = myY + dt * myVelocityY;
   }
 
-  public void update() {
+  protected void update() {
     myX = myNextX;
     myY = myNextY;
   }
@@ -70,8 +70,6 @@ public class Collidable {
     myNextVelocityY = myVelocityY;
   }
 
-  protected double getMu() { return myMu; }
-
   protected double getVelocityX() {
     return myVelocityX;
   }
@@ -80,16 +78,9 @@ public class Collidable {
     return myVelocityY;
   }
 
-  protected double getMass() {
-    return myMass;
-  }
 
   public int getId() {
     return myId;
-  }
-
-  protected boolean getVisible() {
-    return myVisible;
   }
 
   protected double getX() {

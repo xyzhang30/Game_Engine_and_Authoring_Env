@@ -8,15 +8,14 @@ import java.util.Map;
 import oogasalad.Pair;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidFileException;
-import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.Player;
 import oogasalad.model.gameengine.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
-import oogasalad.model.gameengine.TurnPolicy;
+import oogasalad.model.gameengine.turn.TurnPolicy;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
-import oogasalad.model.gameengine.collidable.FrictionHandler;
-import oogasalad.model.gameengine.collidable.MomentumHandler;
+import oogasalad.model.gameengine.collidable.collision.FrictionHandler;
+import oogasalad.model.gameengine.collidable.collision.MomentumHandler;
 import oogasalad.model.gameengine.collidable.PhysicsHandler;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.api.data.CollidableObject;
@@ -35,7 +34,7 @@ public class GameLoaderModel extends GameLoader {
   private static final Logger LOGGER = LogManager.getLogger(GameLoaderModel.class);
 
   private static final String COMMAND_PATH = "oogasalad.model.gameengine.command.";
-  private static final String TURN_POLICY_PATH = "oogasalad.model.gameengine.";
+  private static final String TURN_POLICY_PATH = "oogasalad.model.gameengine.turn.";
   private PlayerContainer playerContainer;
   private CollidableContainer collidableContainer;
   private RulesRecord rulesRecord;
