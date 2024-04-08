@@ -184,7 +184,7 @@ public abstract class AuthoringScreen {
 
     Slider slider = new Slider();
     slider.setPrefWidth(200);
-    slider.setMin(0);
+    slider.setMin(0.2);
     slider.setMax(2);
     slider.setValue(1);
     slider.setShowTickLabels(true);
@@ -206,7 +206,8 @@ public abstract class AuthoringScreen {
   }
 
   private void changeSize(double fractionalValue) {
-    //changeSize of selected shape
+    selectedShape.setScaleX(fractionalValue);
+    selectedShape.setScaleY(fractionalValue);
   }
 
   private void makeDraggable(Shape shape) {
