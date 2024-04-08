@@ -14,10 +14,10 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-    SurfaceSelectionScreen scene = new SurfaceSelectionScreen();
-    primaryStage.setScene(scene.getScene());
-    primaryStage.show();
-    //Window mainWindow = new Window(primaryStage, 0);
+//    SurfaceSelectionScreen scene = new SurfaceSelectionScreen();
+//    primaryStage.setScene(scene.getScene());
+//    primaryStage.show();
+    Window mainWindow = new Window(primaryStage, 0);
   }
 //
 //  /**
