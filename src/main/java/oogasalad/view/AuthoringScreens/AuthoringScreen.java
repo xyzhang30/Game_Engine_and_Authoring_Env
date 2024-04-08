@@ -10,6 +10,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
@@ -205,6 +206,24 @@ public abstract class AuthoringScreen {
     root.getChildren().add(sliderContainerBox);
   }
 
+  /**
+   * Updates authoring box by adding selected game objects to the stackpane
+   */
+  void addNewSelectionsToAuthoringBox(){
+    Group selections = new Group();
+    for (Shape shape : selectableShapes){
+      Bounds shapeBounds = shape.getBoundsInParent();
+      Bounds authoringBoxBounds = authoringBox.getBoundsInParent();
+
+      if (authoringBoxBounds.contains(shapeBounds)) {
+        selections.getChildren().add(shape);
+      }
+    }
+
+
+    authoringBox.getChildren().add(selections);
+  }
+
   private Slider createAngleSlider(VBox sliderContainerBox) {
     Slider slider = new Slider();
     slider.setPrefWidth(200);
@@ -345,6 +364,9 @@ public abstract class AuthoringScreen {
       }
       case GOAL -> {
         return path + "/data/goal_images";
+      }
+      case OBSTACLE -> {
+        return path + "/data/obstacle_images";
       }
       default -> {
         return path + "/data";

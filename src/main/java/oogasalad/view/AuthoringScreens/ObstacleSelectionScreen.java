@@ -5,14 +5,14 @@ import javafx.scene.layout.StackPane;
 import oogasalad.view.Controlling.AuthoringController;
 
 /**
- * Class to represent the screen in which user places and customizes goal objects in their unique
- * game
+ * Class to represent the screen in which user places and customizes obstacle objects in their
+ * unique game
  *
  * @author Jordan Haytaian, Doga Ozmen
  */
-public class GoalSelectionScreen extends AuthoringScreen {
+public class ObstacleSelectionScreen extends AuthoringScreen{
 
-  public GoalSelectionScreen(AuthoringController controller, StackPane authoringBox) {
+  public ObstacleSelectionScreen(AuthoringController controller, StackPane authoringBox) {
     super(controller, authoringBox);
   }
 
@@ -38,12 +38,13 @@ public class GoalSelectionScreen extends AuthoringScreen {
   }
 
   /**
-   * Returns goal image type indicating that user is placing goal objects
+   * Returns obstacle image type indicating that user is placing obstacle objects
    *
    * @return enum to represent goal image type
    */
   ImageType getImageType() {
-    return ImageType.GOAL;
+    return ImageType.OBSTACLE;
   }
+
 
 }

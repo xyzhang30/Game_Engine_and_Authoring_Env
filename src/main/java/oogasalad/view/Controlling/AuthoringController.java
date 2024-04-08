@@ -4,6 +4,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import oogasalad.view.AuthoringScreens.GoalSelectionScreen;
 import oogasalad.view.AuthoringScreens.ImageType;
+import oogasalad.view.AuthoringScreens.ObstacleSelectionScreen;
 
 /**
  * Class to handle transitions between authoring environment scenes and communications with backend
@@ -27,6 +28,10 @@ public class AuthoringController {
       case BACKGROUND -> {
         GoalSelectionScreen goalSelectionScreen = new GoalSelectionScreen(this, authoringBox);
           stage.setScene(goalSelectionScreen.getScene());
+      }
+      case GOAL -> {
+        ObstacleSelectionScreen obstacleSelectionScreen = new ObstacleSelectionScreen(this, authoringBox);
+        stage.setScene(obstacleSelectionScreen.getScene());
       }
     }
   }
