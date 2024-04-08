@@ -24,7 +24,7 @@ public class SurfaceSelectionScreen extends AuthoringScreen{
   public void createScene(){
     root = new StackPane();
     createBackgroundBox();
-    createBackgroundOptionBox();
+    createOptionBox();
     scene = new Scene(root, screenWidth, screenHeight);
     scene.setFill(Color.PURPLE);
   }
@@ -42,19 +42,5 @@ public class SurfaceSelectionScreen extends AuthoringScreen{
     root.getChildren().add(backgroundBox);
   }
 
-  private void createBackgroundOptionBox(){
-    ColorPicker colorPicker = new ColorPicker();
-    colorPicker.setPrefSize(200, 100);
-    StackPane.setAlignment(colorPicker, Pos.TOP_RIGHT);
-    StackPane.setMargin(colorPicker, new Insets(50, 50, 0, 0));
-    root.getChildren().addAll(colorPicker);
-
-
-    Button imageButton = new Button("Image");
-    imageButton.setPrefSize(200, 100);
-    StackPane.setAlignment(imageButton, Pos.TOP_RIGHT);
-    StackPane.setMargin(imageButton, new Insets(160, 50, 0, 0));
-    root.getChildren().add(imageButton);
-  }
 
 }

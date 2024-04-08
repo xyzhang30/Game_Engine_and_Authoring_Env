@@ -2,7 +2,11 @@ package oogasalad.view.AuthoringScreens;
 
 import java.awt.Image;
 import java.io.File;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -39,6 +43,21 @@ public abstract class AuthoringScreen {
       }
     }
 
+  }
+
+  void createOptionBox(){
+    ColorPicker colorPicker = new ColorPicker();
+    colorPicker.setPrefSize(200, 100);
+    StackPane.setAlignment(colorPicker, Pos.TOP_RIGHT);
+    StackPane.setMargin(colorPicker, new Insets(50, 50, 0, 0));
+    root.getChildren().addAll(colorPicker);
+
+
+    Button imageButton = new Button("Image");
+    imageButton.setPrefSize(200, 100);
+    StackPane.setAlignment(imageButton, Pos.TOP_RIGHT);
+    StackPane.setMargin(imageButton, new Insets(160, 50, 0, 0));
+    root.getChildren().add(imageButton);
   }
 
 
