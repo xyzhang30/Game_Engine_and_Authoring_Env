@@ -181,7 +181,7 @@ public abstract class AuthoringScreen {
    * Creates slider for user to change shape size
    */
   void createSizeSlider() {
-
+    //TODO: Change slider to reflect current value of selected shape
     Slider slider = new Slider();
     slider.setPrefWidth(200);
     slider.setMin(0.2);
