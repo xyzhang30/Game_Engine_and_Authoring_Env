@@ -1,8 +1,8 @@
 package oogasalad.view.AuthoringScreens;
 
-import java.awt.Color;
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,7 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import oogasalad.view.Controlling.AuthoringController;
@@ -25,6 +27,7 @@ public abstract class AuthoringScreen {
   ColorPicker colorPicker;
   Button imageButton;
   AuthoringController controller;
+  Shape selectedShape;
 
   public Scene getScene() {
     return scene;
@@ -91,6 +94,19 @@ public abstract class AuthoringScreen {
     StackPane.setAlignment(nextButton, Pos.BOTTOM_RIGHT);
     StackPane.setMargin(nextButton, new Insets(0, 50, 50, 0));
     root.getChildren().add(nextButton);
+  }
+
+  void makeSelectable(Shape shape, List<Shape> gameElements) {
+    shape.setOnMouseClicked(event -> {
+      selectedShape = shape;
+      shape.setStroke(Color.YELLOW);
+      shape.setStrokeWidth(3);
+      for(Shape element : gameElements){
+        if(element != selectedShape){
+          element.setStrokeWidth(0);
+        }
+      }
+    });
   }
 
   abstract void endSelection();

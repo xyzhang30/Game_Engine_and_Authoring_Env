@@ -57,7 +57,7 @@ public class SurfaceSelectionScreen extends AuthoringScreen {
     });
   }
 
-  void endSelection(){
+  void endSelection() {
     controller.startNextSelection(ImageType.BACKGROUND, backgroundBox);
   }
 
