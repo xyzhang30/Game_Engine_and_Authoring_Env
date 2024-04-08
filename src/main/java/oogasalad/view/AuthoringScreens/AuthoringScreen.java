@@ -198,8 +198,12 @@ public abstract class AuthoringScreen {
     });
 
     shape.setOnMouseReleased((MouseEvent event) -> {
-      //TODO: if rectangle is not inside of game board, delete it
+      checkForGameBoardIntersection(shape);
     });
+  }
+
+  private void checkForGameBoardIntersection(Shape shape){
+    //TODO: delete goal if it is not placed on gameboard
   }
 
   private void makeSelectable(Shape shape) {

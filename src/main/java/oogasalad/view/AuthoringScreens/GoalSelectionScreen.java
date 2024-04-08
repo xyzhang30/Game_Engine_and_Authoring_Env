@@ -31,6 +31,7 @@ public class GoalSelectionScreen extends AuthoringScreen {
    * When the next button is clicked, controller is prompted to start the next selection process
    */
   void endSelection() {
+    //TODO: add goal elements to authoringbox stackpane
     controller.startNextSelection(ImageType.GOAL, authoringBox);
   }
 
