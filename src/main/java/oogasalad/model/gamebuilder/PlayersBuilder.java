@@ -3,7 +3,7 @@ package oogasalad.model.gamebuilder;
 import java.util.List;
 import oogasalad.model.api.data.GameData;
 
-public class CollidablesBuilder implements GameBuilder {
+public class PlayersBuilder implements GameBuilder{
 
   @Override
   public void buildGameField(GameData gameData, List<Record> gameField) {

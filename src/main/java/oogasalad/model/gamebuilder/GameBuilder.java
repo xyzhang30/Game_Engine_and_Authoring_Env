@@ -12,12 +12,6 @@ import oogasalad.model.api.data.GameData;
 
 public interface GameBuilder {
 
-//  public GameBuilder(String gameName, Record gameField) throws IOException {
-//    buildGameData(gameDataRecords);
-//    writeGame(gameName);
-//  }
-
-
-  void buildGameField(String gameName, Record gameField);
+  void buildGameField(GameData gameData, List<Record> gameField);
 
 }
