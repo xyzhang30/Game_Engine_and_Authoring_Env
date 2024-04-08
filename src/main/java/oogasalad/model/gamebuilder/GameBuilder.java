@@ -10,21 +10,14 @@ import oogasalad.model.api.data.GameData;
  * @author Alisha Zhang
  */
 
-public class GameBuilder {
+public interface GameBuilder {
 
-  private GameData gameData;
+//  public GameBuilder(String gameName, Record gameField) throws IOException {
+//    buildGameData(gameDataRecords);
+//    writeGame(gameName);
+//  }
 
-  public GameBuilder(String gameName, List<Record> gameDataRecords) throws IOException {
-    buildGameData(gameDataRecords);
-    writeGame(gameName);
-  }
 
-  private void buildGameData(List<Record> gameDataRecords) {
-    //make the gameData
-  }
+  void buildGameField(String gameName, Record gameField);
 
-  private void writeGame(String gameName) throws IOException {
-    ObjectMapper objectMapper = new ObjectMapper();
-    objectMapper.writeValue(new File("game_data.json"), gameData);
-  }
 }
