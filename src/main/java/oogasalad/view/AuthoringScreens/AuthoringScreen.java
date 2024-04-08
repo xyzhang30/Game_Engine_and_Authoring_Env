@@ -215,11 +215,14 @@ public abstract class AuthoringScreen {
       Bounds shapeBounds = shape.getBoundsInParent();
       Bounds authoringBoxBounds = authoringBox.getBoundsInParent();
 
+      if(selectedShape == shape){
+        shape.setStrokeWidth(0);
+      }
+
       if (authoringBoxBounds.contains(shapeBounds)) {
         selections.getChildren().add(shape);
       }
     }
-
 
     authoringBox.getChildren().add(selections);
   }
