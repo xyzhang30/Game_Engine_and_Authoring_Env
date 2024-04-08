@@ -1,5 +1,6 @@
 package oogasalad.view.AuthoringScreens;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
 import javafx.geometry.Insets;
@@ -18,6 +19,7 @@ public abstract class AuthoringScreen {
   double screenHeight = Window.SCREEN_HEIGHT;
   StackPane root;
   Scene scene;
+  ColorPicker colorPicker;
 
   String chooseImage(ImageType imageType) {
     FileChooser fileChooser = new FileChooser();
@@ -46,10 +48,11 @@ public abstract class AuthoringScreen {
   }
 
   void createOptionBox(){
-    ColorPicker colorPicker = new ColorPicker();
+    colorPicker = new ColorPicker();
     colorPicker.setPrefSize(200, 100);
     StackPane.setAlignment(colorPicker, Pos.TOP_RIGHT);
     StackPane.setMargin(colorPicker, new Insets(50, 50, 0, 0));
+    changeColor();
     root.getChildren().addAll(colorPicker);
 
 
@@ -59,6 +62,8 @@ public abstract class AuthoringScreen {
     StackPane.setMargin(imageButton, new Insets(160, 50, 0, 0));
     root.getChildren().add(imageButton);
   }
+
+  abstract void changeColor();
 
 
 }

@@ -10,16 +10,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.control.ColorPicker;
 
-public class SurfaceSelectionScreen extends AuthoringScreen{
+public class SurfaceSelectionScreen extends AuthoringScreen {
+
   private final int backgroundWidth = 980;
   private final int backgroundHeight = 980;
   private Rectangle backgroundBox;
 
-  public SurfaceSelectionScreen(){
+  public SurfaceSelectionScreen() {
     createScene();
   }
 
-  public void createScene(){
+  public void createScene() {
     root = new StackPane();
     createBackgroundBox();
     createOptionBox();
@@ -27,11 +28,11 @@ public class SurfaceSelectionScreen extends AuthoringScreen{
     scene.setFill(Color.PURPLE);
   }
 
-  public Scene getScene(){
+  public Scene getScene() {
     return scene;
   }
 
-  private void createBackgroundBox(){
+  private void createBackgroundBox() {
     backgroundBox = new Rectangle(backgroundWidth, backgroundHeight);
     backgroundBox.setStroke(Color.BLACK);
     backgroundBox.setStrokeWidth(10);
@@ -40,5 +41,12 @@ public class SurfaceSelectionScreen extends AuthoringScreen{
     root.getChildren().add(backgroundBox);
   }
 
+  void changeColor() {
+    colorPicker.setOnAction(
+        event -> changeBackgroundColor(((ColorPicker) event.getSource()).getValue()));
+  }
 
+  private void changeBackgroundColor(Color color){
+    backgroundBox.setFill(color);
+  }
 }
