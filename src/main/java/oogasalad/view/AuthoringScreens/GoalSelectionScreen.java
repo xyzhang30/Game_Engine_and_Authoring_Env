@@ -23,6 +23,7 @@ public class GoalSelectionScreen extends AuthoringScreen {
     root = new StackPane();
     root.getChildren().add(authoringBox);
     createShapeDisplayOptionBox();
+    createSizeSlider();
     createDraggableShapeTemplates();
     scene = new Scene(root, screenWidth, screenHeight);
   }

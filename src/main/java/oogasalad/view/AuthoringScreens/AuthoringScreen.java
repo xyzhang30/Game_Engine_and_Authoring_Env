@@ -6,13 +6,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -171,6 +175,38 @@ public abstract class AuthoringScreen {
     root.getChildren().addAll(rectangle, circle);
   }
 
+  /**
+   * Creates slider for user to change shape size
+   */
+  void createSizeSlider(){
+
+    Slider slider = new Slider();
+    slider.setPrefWidth(200);
+    slider.setMin(0);
+    slider.setMax(2);
+    slider.setValue(1);
+    slider.setShowTickLabels(true);
+    slider.setShowTickMarks(true);
+    slider.setMajorTickUnit(0.1);
+    slider.setOrientation(Orientation.HORIZONTAL);
+
+    HBox sliderContainer = new HBox(slider);
+    sliderContainer.setPrefSize(200, 10);
+
+    sliderContainer.setAlignment(Pos.CENTER_RIGHT);
+    sliderContainer.setPadding(new Insets(-100, 50, 0, 0));
+
+    slider.valueProperty().addListener((observable, oldValue, newValue) ->
+        changeSize(newValue.doubleValue()));
+
+    root.getChildren().add(sliderContainer);
+
+  }
+
+  private void changeSize(double fractionalValue){
+    //changeSize of selected shape
+  }
+
   private void makeDraggable(Shape shape) {
     double[] startPos = new double[2];
     double[] translatePos = new double[2];
@@ -198,11 +234,11 @@ public abstract class AuthoringScreen {
     });
 
     shape.setOnMouseReleased((MouseEvent event) -> {
-      checkForGameBoardIntersection(shape);
+      checkForAuthoringBoxIntersection(shape);
     });
   }
 
-  private void checkForGameBoardIntersection(Shape shape){
+  private void checkForAuthoringBoxIntersection(Shape shape){
     //TODO: delete goal if it is not placed on gameboard
   }
 
