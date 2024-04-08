@@ -18,9 +18,9 @@ import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.collidable.Moveable;
 import oogasalad.model.gameengine.collidable.Surface;
 import oogasalad.model.gameengine.command.Command;
-import oogasalad.model.gameparser.data.CollidableObject;
-import oogasalad.model.gameparser.data.CollisionRule;
-import oogasalad.model.gameparser.data.ParserPlayer;
+import oogasalad.model.api.data.CollidableObject;
+import oogasalad.model.api.data.CollisionRule;
+import oogasalad.model.api.data.ParserPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
