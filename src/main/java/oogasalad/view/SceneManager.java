@@ -11,6 +11,12 @@ import oogasalad.view.GameScreens.TitleScreen;
 import oogasalad.view.GameScreens.TransitionScreen;
 import oogasalad.view.VisualElements.CompositeElement;
 
+/**
+ * Manages different screens (scenes) within the game, such as the title screen, menu screen, game screen, and transition screen.
+ * It updates and transitions between screens based on game state and player interactions.
+ *
+ * @author Doga Ozmen
+ */
 public class SceneManager {
 
   private final Scene scene;
