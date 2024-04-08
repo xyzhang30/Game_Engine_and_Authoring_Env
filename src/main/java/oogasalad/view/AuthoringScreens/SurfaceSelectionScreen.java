@@ -35,6 +35,7 @@ public class SurfaceSelectionScreen extends AuthoringScreen {
   private void createBackgroundBox() {
     backgroundBox = new Rectangle(backgroundWidth, backgroundHeight);
     backgroundBox.setStroke(Color.BLACK);
+    backgroundBox.setFill(Color.WHITE);
     backgroundBox.setStrokeWidth(10);
     StackPane.setAlignment(backgroundBox, Pos.TOP_LEFT);
     StackPane.setMargin(backgroundBox, new Insets(50, 0, 0, 50));
