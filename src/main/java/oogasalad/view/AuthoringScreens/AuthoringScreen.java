@@ -20,6 +20,7 @@ public abstract class AuthoringScreen {
   StackPane root;
   Scene scene;
   ColorPicker colorPicker;
+  Button imageButton;
 
   String chooseImage(ImageType imageType) {
     FileChooser fileChooser = new FileChooser();
@@ -36,12 +37,13 @@ public abstract class AuthoringScreen {
   }
 
   private String getImageFolder(ImageType imageType) {
+    String path = System.getProperty(("user.dir"));
     switch (imageType) {
       case BACKGROUND -> {
-        return "C:\\Users\\jhayt\\CS308\\oogasalad_team01\\data\\background_images";
+        return path + "/data/background_images";
       }
       default -> {
-        return "C:\\Users\\jhayt\\CS308\\oogasalad_team01\\data";
+        return path + "/data";
       }
     }
 
@@ -56,14 +58,17 @@ public abstract class AuthoringScreen {
     root.getChildren().addAll(colorPicker);
 
 
-    Button imageButton = new Button("Image");
+    imageButton = new Button("Image");
     imageButton.setPrefSize(200, 100);
     StackPane.setAlignment(imageButton, Pos.TOP_RIGHT);
     StackPane.setMargin(imageButton, new Insets(160, 50, 0, 0));
+    changeImage();
     root.getChildren().add(imageButton);
   }
 
   abstract void changeColor();
+
+  abstract void changeImage();
 
 
 }
