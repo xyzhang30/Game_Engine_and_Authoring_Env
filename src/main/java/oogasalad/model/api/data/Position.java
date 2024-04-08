@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author Judy He
  */
-public record Position(@JsonProperty("x_position") int xPosition,
-                       @JsonProperty("y_position") int yPosition) {
+public record Position(@JsonProperty("x_position") double xPosition,
+                       @JsonProperty("y_position") double yPosition) {
 
 }
 

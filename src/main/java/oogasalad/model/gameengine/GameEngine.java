@@ -5,13 +5,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 import oogasalad.Pair;
-import oogasalad.model.api.CollidableRecord;
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.Command;
+import oogasalad.model.gameengine.turn.TurnPolicy;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 public class GameEngine implements ExternalGameEngine {
 
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
+  private final GameLoaderModel loader;
   private PlayerContainer playerContainer;
   private RulesRecord rules;
   private CollidableContainer collidables;
@@ -32,8 +33,6 @@ public class GameEngine implements ExternalGameEngine {
   private int turn;
   private boolean gameOver;
   private boolean staticState;
-
-  private final GameLoaderModel loader;
   private Stack<GameRecord> staticStateStack;
 
 
@@ -92,28 +91,30 @@ public class GameEngine implements ExternalGameEngine {
     if (collidables.checkStatic()) {
       updateHistory(); //private
       switchToCorrectStaticState(); //private
-    }
-    else {
+    } else {
       staticState = false;
     }
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
         round, turn, gameOver, staticState);
-    }
+  }
 
   private void handleCollisions(double dt) {
-    Set<Pair> collisionPairs = collidables.getCollisionPairs(); //to implement
-    for(Pair collision : collisionPairs) {
-      Collidable collidable1 = collidables.getCollidable(collision.getFirst());
-      Collidable collidable2 = collidables.getCollidable(collision.getSecond());
-      collidable1.onCollision(collidable2, dt);
-      collidable2.onCollision(collidable1, dt);
-      collidable1.updatePostCollisionVelocity();
-      collidable2.updatePostCollisionVelocity();
-      if(collisionHandlers.containsKey(collision)) {
-      for (Command cmd : collisionHandlers.get(collision)) {
-        cmd.execute(this);
+    Set<Pair> collisionPairs = collidables.getCollisionPairs();
+    for (Pair collision : collisionPairs) {
+      if (rules.physicsMap().containsKey(collision)) {
+        System.out.println(collidables.getCollidableRecord(collision.getSecond()));
+        rules.physicsMap().get(collision).handleCollision(collidables, dt);
+        System.out.println(collidables.getCollidableRecord(collision.getSecond()));
+        System.out.println("_______");
       }
+      if (collisionHandlers.containsKey(collision)) {
+        for (Command cmd : collisionHandlers.get(collision)) {
+          cmd.execute(this);
+        }
       }
+    }
+    if (rules.winCondition().execute(this) == 1.0) {
+      endGame();
     }
   }
 
@@ -121,9 +122,9 @@ public class GameEngine implements ExternalGameEngine {
     if (rules.winCondition().execute(this) == 1.0) {
       endGame();
     }// else if (rules.roundCondition().execute(this) == 1.0) {
-   //   advanceRound();
+    //   advanceRound();
     //}
-      else {
+    else {
       for (Command cmd : rules.advance()) {
         cmd.execute(this);
       }
@@ -143,7 +144,7 @@ public class GameEngine implements ExternalGameEngine {
   @Override
   public GameRecord handleCollisions(List<Pair> collisions, double dt) {
     return null;
-    }
+  }
 
   /**
    * Applies a velocity to the entity with the provided ID.
