@@ -62,6 +62,6 @@ public class SurfaceSelectionScreen extends AuthoringScreen {
     selectedShape = background;
 
     authoringBox.getChildren().add(background);
-    root.getChildren().add(background);
+    root.getChildren().add(authoringBox);
   }
 }
