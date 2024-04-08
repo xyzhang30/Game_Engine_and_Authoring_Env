@@ -25,6 +25,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.transform.Rotate;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import oogasalad.view.Controlling.AuthoringController;
@@ -49,6 +50,7 @@ public abstract class AuthoringScreen {
   AuthoringController controller;
   Slider xSlider;
   Slider ySlider;
+  Slider angleSlider;
   Shape selectedShape;
   final int authoringBoxWidth = 980;
   final int authoringBoxHeight = 980;
@@ -185,24 +187,48 @@ public abstract class AuthoringScreen {
   /**
    * Creates slider for user to change shape size
    */
-  void createSizeSliders() {
+  void createSizeAndAngleSliders() {
     VBox sliderContainerBox = new VBox();
     sliderContainerBox.setPrefSize(200, 10);
     sliderContainerBox.setAlignment(Pos.CENTER_RIGHT);
     sliderContainerBox.setPadding(new Insets(-100, 50, 0, 0));
 
-    xSlider = createSingleSlider("X Scale", sliderContainerBox);
-    ySlider = createSingleSlider( "Y Scale ", sliderContainerBox);
+    xSlider = createSizeSlider("X Scale", sliderContainerBox);
+    ySlider = createSizeSlider("Y Scale", sliderContainerBox);
+    angleSlider = createAngleSlider(sliderContainerBox);
 
     xSlider.valueProperty().addListener((observable, oldValue, newValue) ->
         changeXSize(newValue.doubleValue()));
     ySlider.valueProperty().addListener((observable, oldValue, newValue) ->
         changeYSize(newValue.doubleValue()));
+    angleSlider.valueProperty().addListener((observable, oldValue, newValue) ->
+        changeAngle(newValue.doubleValue()));
 
     root.getChildren().add(sliderContainerBox);
   }
 
-  private Slider createSingleSlider(String labelText, VBox sliderContainerBox){
+  private Slider createAngleSlider(VBox sliderContainerBox) {
+    Slider slider = new Slider();
+    slider.setPrefWidth(200);
+    slider.setMin(0);
+    slider.setMax(360);
+    slider.setValue(0);
+    slider.setShowTickLabels(true);
+    slider.setShowTickMarks(true);
+    slider.setMajorTickUnit(20);
+    slider.setOrientation(Orientation.HORIZONTAL);
+
+    Label label = new Label("Angle");
+
+    HBox sliderContainer = new HBox(label, slider);
+    sliderContainer.setAlignment(Pos.CENTER_RIGHT);
+    sliderContainer.setSpacing(10);
+
+    sliderContainerBox.getChildren().add(sliderContainer);
+    return slider;
+  }
+
+  private Slider createSizeSlider(String labelText, VBox sliderContainerBox) {
     Slider slider = new Slider();
     slider.setPrefWidth(200);
     slider.setMin(0.2);
@@ -221,6 +247,11 @@ public abstract class AuthoringScreen {
 
     sliderContainerBox.getChildren().add(sliderContainer);
     return slider;
+  }
+
+  private void changeAngle(double angle){
+    Rotate rotate = new Rotate(angle);
+    selectedShape.getTransforms().add(rotate);
   }
 
   private void changeXSize(double xScale) {
@@ -288,7 +319,7 @@ public abstract class AuthoringScreen {
     });
   }
 
-  private void updateSlider(double xScale, double yScale){
+  private void updateSlider(double xScale, double yScale) {
     xSlider.setValue(xScale);
     ySlider.setValue(yScale);
   }
