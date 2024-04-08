@@ -11,11 +11,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.control.ColorPicker;
 
 public class SurfaceSelectionScreen extends AuthoringScreen{
-
-
   private final int backgroundWidth = 980;
   private final int backgroundHeight = 980;
-
+  private Rectangle backgroundBox;
 
   public SurfaceSelectionScreen(){
     createScene();
@@ -34,7 +32,7 @@ public class SurfaceSelectionScreen extends AuthoringScreen{
   }
 
   private void createBackgroundBox(){
-    Rectangle backgroundBox = new Rectangle(backgroundWidth, backgroundHeight);
+    backgroundBox = new Rectangle(backgroundWidth, backgroundHeight);
     backgroundBox.setStroke(Color.BLACK);
     backgroundBox.setStrokeWidth(10);
     StackPane.setAlignment(backgroundBox, Pos.TOP_LEFT);
