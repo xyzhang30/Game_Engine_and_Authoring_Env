@@ -13,12 +13,13 @@ public class CollidableContainer {
 
   private final Map<Integer, Collidable> myCollidables;
   private final Stack<List<CollidableRecord>> collidableHistory;
+  private final CollisionDetector collisionDetector;
 
   public CollidableContainer(Map<Integer, Collidable> collidables) {
     myCollidables = collidables;
     collidableHistory = new Stack<>();
     collidableHistory.add(getCollidableRecords());
-
+    collisionDetector = new CollisionDetector();
   }
 
   public Collidable getCollidable(int objectId) {
@@ -75,7 +76,7 @@ public class CollidableContainer {
         CollidableRecord record2 = records.get(j);
         Collidable collidable2 = myCollidables.get(record2.id());
 
-        if (new PhysicsEngine().isColliding(collidable1, collidable2)) {
+        if (collisionDetector.isColliding(collidable1, collidable2)) {
           collisionPairs.add(new Pair(record1.id(), record2.id()));
         }
       }

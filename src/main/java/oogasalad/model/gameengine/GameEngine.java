@@ -100,12 +100,15 @@ public class GameEngine implements ExternalGameEngine {
   private void handleCollisions(double dt) {
     Set<Pair> collisionPairs = collidables.getCollisionPairs(); //to implement
     for(Pair collision : collisionPairs) {
+
       Collidable collidable1 = collidables.getCollidable(collision.getFirst());
       Collidable collidable2 = collidables.getCollidable(collision.getSecond());
       collidable1.onCollision(collidable2, dt);
       collidable2.onCollision(collidable1, dt);
       collidable1.updatePostCollisionVelocity();
       collidable2.updatePostCollisionVelocity();
+
+
       if(collisionHandlers.containsKey(collision)) {
       for (Command cmd : collisionHandlers.get(collision)) {
         cmd.execute(this);

@@ -2,9 +2,12 @@ package oogasalad.model.gameengine.collidable;
 
 public class Moveable extends Collidable {
 
+  private double mu;
+
   public Moveable(int id, double mass, double x, double y,
-      boolean visible, double width, double height, String shape) {
+      boolean visible, double width, double friction, double height, String shape) {
     super(id, mass, x, y, visible, width, height, shape);
+    mu = friction;
   }
 
   @Override

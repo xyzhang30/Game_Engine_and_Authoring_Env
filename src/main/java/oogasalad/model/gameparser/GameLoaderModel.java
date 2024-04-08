@@ -94,6 +94,7 @@ public class GameLoaderModel extends GameLoader {
         co.position().xPosition(),
         co.position().yPosition(),
         co.properties().contains("visible"),
+        0,
         co.dimension().xDimension(),
         co.dimension().yDimension(),
         co.shape()
