@@ -241,13 +241,11 @@ public abstract class AuthoringScreen {
   }
 
   private void checkForAuthoringBoxIntersection(Shape shape) {
-    //TODO: delete goal if it is on border of authoring box, also consider if changing visibility is sufficient
+    //TODO: consider if changing visibility is sufficient
     Bounds shapeBounds = shape.getBoundsInParent();
     Bounds authoringBoxBounds = authoringBox.getBoundsInParent();
-    System.out.println("box x" + authoringBoxBounds.getMinX() + " " + authoringBoxBounds.getMaxX());
-    System.out.println("box y" + authoringBoxBounds.getMinY() + " " + authoringBoxBounds.getMaxY());
 
-    if (!authoringBoxBounds.intersects(shapeBounds)) {
+    if (!authoringBoxBounds.contains(shapeBounds)) {
       shape.setVisible(false);
     }
   }
