@@ -45,6 +45,7 @@ public abstract class AuthoringScreen {
   ColorPicker colorPicker;
   Button imageButton;
   AuthoringController controller;
+  Slider slider;
   Shape selectedShape;
   final int authoringBoxWidth = 980;
   final int authoringBoxHeight = 980;
@@ -181,8 +182,7 @@ public abstract class AuthoringScreen {
    * Creates slider for user to change shape size
    */
   void createSizeSlider() {
-    //TODO: Change slider to reflect current value of selected shape
-    Slider slider = new Slider();
+    slider = new Slider();
     slider.setPrefWidth(200);
     slider.setMin(0.2);
     slider.setMax(2);
@@ -257,6 +257,7 @@ public abstract class AuthoringScreen {
     shape.setOnMouseClicked(event -> {
       selectedShape = shape;
       shape.setStroke(Color.YELLOW);
+      updateSlider(shape.getScaleX());
       shape.setStrokeWidth(3);
       for (Shape currShape : selectableShapes) {
         if (currShape != selectedShape) {
@@ -264,6 +265,10 @@ public abstract class AuthoringScreen {
         }
       }
     });
+  }
+
+  private void updateSlider(double scale){
+    slider.setValue(scale);
   }
 
   private void createColorPickerHandler() {
