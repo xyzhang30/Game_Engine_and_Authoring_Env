@@ -1,14 +1,16 @@
 package oogasalad.view.AuthoringScreens;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.io.File;
+import java.net.MalformedURLException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import oogasalad.view.Window;
@@ -22,7 +24,7 @@ public abstract class AuthoringScreen {
   ColorPicker colorPicker;
   Button imageButton;
 
-  String chooseImage(ImageType imageType) {
+  Image chooseImage(ImageType imageType) {
     FileChooser fileChooser = new FileChooser();
 
     File initialDirectory = new File(getImageFolder(imageType));
@@ -32,8 +34,18 @@ public abstract class AuthoringScreen {
         new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
     );
     File selectedFile = fileChooser.showOpenDialog(new Stage());
-    return selectedFile.getAbsolutePath();
-    //TODO: this may be null, handle this case
+    String imagePath = selectedFile.getAbsolutePath();
+
+    try {
+      File file = new File(imagePath);
+      String imageUrl = file.toURI().toURL().toString(); // Convert the file path to a URL
+      javafx.scene.image.Image image = new Image(imageUrl);
+      return image;
+    } catch (MalformedURLException e) {
+      e.printStackTrace();
+      //TODO: this may be null, handle this case
+    }
+    return null;
   }
 
   private String getImageFolder(ImageType imageType) {
