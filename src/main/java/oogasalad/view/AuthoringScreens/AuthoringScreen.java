@@ -25,7 +25,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import javafx.scene.transform.Rotate;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import oogasalad.view.Controlling.AuthoringController;
@@ -96,7 +95,7 @@ public abstract class AuthoringScreen {
   void createImageHandler() {
     imageButton.setOnAction(event -> {
       Image image = chooseImage(getImageType());
-      if (image != null) {
+      if (image != null && selectedShape != null) {
         selectedShape.setFill(new ImagePattern(image));
       }
     });
@@ -172,7 +171,6 @@ public abstract class AuthoringScreen {
     StackPane.setMargin(rectangle, new Insets(300, 150, 0, 0));
     makeSelectable(rectangle);
     makeDraggable(rectangle);
-    selectedShape = rectangle;
 
     Ellipse ellipse = new Ellipse(30, 30);
     ellipse.setFill(Color.BLACK);
@@ -249,17 +247,22 @@ public abstract class AuthoringScreen {
     return slider;
   }
 
-  private void changeAngle(double angle){
-    Rotate rotate = new Rotate(angle);
-    selectedShape.getTransforms().add(rotate);
+  private void changeAngle(double angle) {
+    if (selectedShape != null) {
+      selectedShape.setRotate(angle);
+    }
   }
 
   private void changeXSize(double xScale) {
-    selectedShape.setScaleX(xScale);
+    if (selectedShape != null) {
+      selectedShape.setScaleX(xScale);
+    }
   }
 
   private void changeYSize(double yScale) {
-    selectedShape.setScaleY(yScale);
+    if (selectedShape != null) {
+      selectedShape.setScaleY(yScale);
+    }
   }
 
   private void makeDraggable(Shape shape) {
@@ -309,7 +312,7 @@ public abstract class AuthoringScreen {
     shape.setOnMouseClicked(event -> {
       selectedShape = shape;
       shape.setStroke(Color.YELLOW);
-      updateSlider(shape.getScaleX(), shape.getScaleY());
+      updateSlider(shape.getScaleX(), shape.getScaleY(), shape.getRotate());
       shape.setStrokeWidth(3);
       for (Shape currShape : selectableShapes) {
         if (currShape != selectedShape) {
@@ -319,14 +322,19 @@ public abstract class AuthoringScreen {
     });
   }
 
-  private void updateSlider(double xScale, double yScale) {
+  private void updateSlider(double xScale, double yScale, double angle) {
     xSlider.setValue(xScale);
     ySlider.setValue(yScale);
+    angleSlider.setValue(angle);
   }
 
   private void createColorPickerHandler() {
     colorPicker.setOnAction(
-        event -> selectedShape.setFill(((ColorPicker) event.getSource()).getValue()));
+        event -> {
+          if (selectedShape != null) {
+            selectedShape.setFill(((ColorPicker) event.getSource()).getValue());
+          }
+        });
   }
 
   private String getImageFolder(ImageType imageType) {
