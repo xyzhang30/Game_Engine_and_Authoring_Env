@@ -15,8 +15,6 @@ import oogasalad.view.Controlling.AuthoringController;
  */
 public class SurfaceSelectionScreen extends AuthoringScreen {
 
-  private final int backgroundWidth = 980;
-  private final int backgroundHeight = 980;
   private Rectangle background;
 
   public SurfaceSelectionScreen(AuthoringController controller, StackPane authoringBox) {
@@ -51,10 +49,11 @@ public class SurfaceSelectionScreen extends AuthoringScreen {
   }
 
   private void createAuthoringBox() {
+    authoringBox.setMaxSize(authoringBoxWidth, authoringBoxHeight);
     StackPane.setAlignment(authoringBox, Pos.TOP_LEFT);
     StackPane.setMargin(authoringBox, new Insets(50, 0, 0, 50));
 
-    background = new Rectangle(backgroundWidth, backgroundHeight);
+    background = new Rectangle(authoringBoxWidth, authoringBoxHeight);
     background.setStroke(Color.BLACK);
     background.setFill(Color.WHITE);
     background.setStrokeWidth(10);

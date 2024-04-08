@@ -46,6 +46,8 @@ public abstract class AuthoringScreen {
   Button imageButton;
   AuthoringController controller;
   Shape selectedShape;
+  final int authoringBoxWidth = 980;
+  final int authoringBoxHeight = 980;
 
   public AuthoringScreen(AuthoringController controller, StackPane authoringBox) {
     this.controller = controller;
@@ -178,7 +180,7 @@ public abstract class AuthoringScreen {
   /**
    * Creates slider for user to change shape size
    */
-  void createSizeSlider(){
+  void createSizeSlider() {
 
     Slider slider = new Slider();
     slider.setPrefWidth(200);
@@ -203,7 +205,7 @@ public abstract class AuthoringScreen {
 
   }
 
-  private void changeSize(double fractionalValue){
+  private void changeSize(double fractionalValue) {
     //changeSize of selected shape
   }
 
@@ -238,8 +240,16 @@ public abstract class AuthoringScreen {
     });
   }
 
-  private void checkForAuthoringBoxIntersection(Shape shape){
-    //TODO: delete goal if it is not placed on gameboard
+  private void checkForAuthoringBoxIntersection(Shape shape) {
+    //TODO: delete goal if it is on border of authoring box, also consider if changing visibility is sufficient
+    Bounds shapeBounds = shape.getBoundsInParent();
+    Bounds authoringBoxBounds = authoringBox.getBoundsInParent();
+    System.out.println("box x" + authoringBoxBounds.getMinX() + " " + authoringBoxBounds.getMaxX());
+    System.out.println("box y" + authoringBoxBounds.getMinY() + " " + authoringBoxBounds.getMaxY());
+
+    if (!authoringBoxBounds.intersects(shapeBounds)) {
+      shape.setVisible(false);
+    }
   }
 
   private void makeSelectable(Shape shape) {
