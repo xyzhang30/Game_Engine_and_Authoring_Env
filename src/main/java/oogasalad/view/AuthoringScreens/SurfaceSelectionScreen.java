@@ -12,8 +12,10 @@ import javafx.scene.control.ColorPicker;
 
 public class SurfaceSelectionScreen extends AuthoringScreen{
 
-  private final int backgroundWidth = 1000;
-  private final int backgroundHeight = 1000;
+
+  private final int backgroundWidth = 980;
+  private final int backgroundHeight = 980;
+
 
   public SurfaceSelectionScreen(){
     createScene();
@@ -54,6 +56,5 @@ public class SurfaceSelectionScreen extends AuthoringScreen{
     StackPane.setMargin(imageButton, new Insets(160, 50, 0, 0));
     root.getChildren().add(imageButton);
   }
-
 
 }
