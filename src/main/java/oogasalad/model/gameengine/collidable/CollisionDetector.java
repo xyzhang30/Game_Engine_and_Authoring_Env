@@ -1,8 +1,6 @@
 package oogasalad.model.gameengine.collidable;
 
-import oogasalad.Pair;
-
-public class PhysicsEngine {
+public class CollisionDetector {
 
   public boolean isColliding(Collidable collidable1, Collidable collidable2) {
     String shape1 = collidable1.getShape();
@@ -88,9 +86,6 @@ public class PhysicsEngine {
     // Check for overlap on the Y axis
     boolean overlapY = (y1 + height1 > y2) && (y2 + height2 > y1);
 
-    // If there's overlap on both axes, then the rectangles are colliding
-    System.out.println(rect1.getId());
-    System.out.println(rect2.getId());
     return overlapX && overlapY;
   }
 

@@ -66,6 +66,7 @@
         "x_dimension": 334,
         "y_dimension": 300
       },
+      "friction": 0,
       "color": [230,159,0]
     },
 
@@ -133,6 +134,7 @@
         "x_dimension": 10,
         "y_dimension": 10
       },
+      "friction": 0,
       "color": [255,255,255]
     },
 
@@ -150,6 +152,7 @@
         "x_dimension": 20,
         "y_dimension": 20
       },
+      "friction": 0,
       "color": [0,0,0]
     },
 
@@ -166,6 +169,7 @@
         "x_dimension": 50,
         "y_dimension": 1000
       },
+      "friction": 0,
       "color": [0,0,0]
     },
 
@@ -182,6 +186,7 @@
         "x_dimension": 1000,
         "y_dimension": 50
       },
+      "friction": 0,
       "color": [0,0,0]
     },
 
@@ -198,6 +203,7 @@
         "x_dimension": 1000,
         "y_dimension": 50
       },
+      "friction": 0,
       "color": [0,0,0]
     },
 
@@ -214,6 +220,7 @@
         "x_dimension": 50,
         "y_dimension": 1000
       },
+      "friction": 0,
       "color": [0,0,0]
     }
 

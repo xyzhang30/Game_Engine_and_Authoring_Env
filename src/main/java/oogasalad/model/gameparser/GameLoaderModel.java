@@ -15,8 +15,9 @@ import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.TurnPolicy;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
-import oogasalad.model.gameengine.collidable.Moveable;
-import oogasalad.model.gameengine.collidable.Surface;
+import oogasalad.model.gameengine.collidable.FrictionHandler;
+import oogasalad.model.gameengine.collidable.MomentumHandler;
+import oogasalad.model.gameengine.collidable.PhysicsHandler;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.api.data.CollidableObject;
 import oogasalad.model.api.data.CollisionRule;
@@ -38,6 +39,7 @@ public class GameLoaderModel extends GameLoader {
   private PlayerContainer playerContainer;
   private CollidableContainer collidableContainer;
   private RulesRecord rulesRecord;
+  private Map<Pair, PhysicsHandler> physicsMap;
   private TurnPolicy turnPolicy;
 
 
@@ -52,6 +54,7 @@ public class GameLoaderModel extends GameLoader {
     this.createPlayerContainer();
     this.createTurnPolicy();
     this.createRulesRecord();
+
   }
 
   // alisha
@@ -77,36 +80,25 @@ public class GameLoaderModel extends GameLoader {
 
   protected void createCollidableContainer() {
     List<CollidableObject> collidableObjects = gameData.collidableObjects();
+    List<Integer> moveables = new ArrayList<>();
     Map<Integer, Collidable> collidables = new HashMap<>();
-
+    physicsMap = new HashMap<>();
     for (CollidableObject co : collidableObjects) {
-      Collidable collidable = null;
       if (co.properties().contains("movable")) {
-        collidable = createMovableCollidable(co);
-      } else if (co.properties().contains("surface")) {
-        collidable = createSurfaceCollidable(co);
+        moveables.add(co.collidableId());
+        for (Integer key : collidables.keySet()) {
+          physicsMap.put(new Pair(key, co.collidableId()), moveables.contains(key) ?
+              new MomentumHandler(key, co.collidableId()) :
+              new FrictionHandler(key, co.collidableId()));
+        }
       }
-      collidables.put(co.collidableId(), collidable);
+      collidables.put(co.collidableId(), createCollidable(co));
     }
     this.collidableContainer = new CollidableContainer(collidables);
-
   }
 
-  protected Collidable createMovableCollidable(CollidableObject co) {
-    return new Moveable(
-        co.collidableId(),
-        co.mass(),
-        co.position().xPosition(),
-        co.position().yPosition(),
-        co.properties().contains("visible"),
-        co.dimension().xDimension(),
-        co.dimension().yDimension(),
-        co.shape()
-    );
-  }
-
-  protected Collidable createSurfaceCollidable(CollidableObject co) {
-    return new Surface(
+  protected Collidable createCollidable(CollidableObject co) {
+    return new Collidable(
         co.collidableId(),
         co.mass(),
         co.position().xPosition(),
@@ -115,9 +107,10 @@ public class GameLoaderModel extends GameLoader {
         co.friction(),
         co.dimension().xDimension(),
         co.dimension().yDimension(),
-        co.shape()
-    );
+        co.shape());
   }
+
+
 
   /**
    * Retrieves the collidable container.
@@ -136,10 +129,10 @@ public class GameLoaderModel extends GameLoader {
       int maxTurns = gameData.variables().get(0).global().maxTurns();
 
       for (CollisionRule rule : gameData.rules().collisions()) {
+
         Pair pair = new Pair(rule.firstId(),
             rule.secondId()); //collision rule is the one with ids and command map
         List<Command> commands = new ArrayList<>();
-
         for (Map<String, List<Double>> command : rule.command()) { //looping through the list of command maps
           for (String s : command.keySet()) { //this is a for loop but there's always only going to be 1 command in the map (probably should change the structure of the json afterward)
             Class<?> cc = Class.forName(COMMAND_PATH + s);
@@ -171,7 +164,7 @@ public class GameLoaderModel extends GameLoader {
 
       assert cc != null;
       rulesRecord = new RulesRecord(maxRounds, maxTurns, commandMap,
-          (Command) cc.getDeclaredConstructor(List.class).newInstance(params), advancecmds);
+          (Command) cc.getDeclaredConstructor(List.class).newInstance(params), advancecmds, physicsMap);
 
     } catch (AssertionError | NoSuchMethodException | IllegalAccessException |
              InstantiationException |
@@ -209,3 +202,4 @@ public class GameLoaderModel extends GameLoader {
 
 
 }
+

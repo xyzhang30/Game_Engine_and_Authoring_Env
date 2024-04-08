@@ -11,6 +11,8 @@ import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
+import oogasalad.model.gameengine.collidable.FrictionHandler;
+import oogasalad.model.gameengine.collidable.MomentumHandler;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.apache.logging.log4j.LogManager;
@@ -101,19 +103,22 @@ public class GameEngine implements ExternalGameEngine {
     }
 
   private void handleCollisions(double dt) {
-    Set<Pair> collisionPairs = collidables.getCollisionPairs(); //to implement
+    Set<Pair> collisionPairs = collidables.getCollisionPairs();
     for(Pair collision : collisionPairs) {
-      Collidable collidable1 = collidables.getCollidable(collision.getFirst());
-      Collidable collidable2 = collidables.getCollidable(collision.getSecond());
-      collidable1.onCollision(collidable2, dt);
-      collidable2.onCollision(collidable1, dt);
-      collidable1.updatePostCollisionVelocity();
-      collidable2.updatePostCollisionVelocity();
+      if(rules.physicsMap().containsKey(collision)) {
+        System.out.println(collidables.getCollidableRecord(collision.getSecond()));
+        rules.physicsMap().get(collision).handleCollision(collidables, dt);
+        System.out.println(collidables.getCollidableRecord(collision.getSecond()));
+        System.out.println("_______");
+      }
       if(collisionHandlers.containsKey(collision)) {
-      for (Command cmd : collisionHandlers.get(collision)) {
-        cmd.execute(this);
+         for (Command cmd : collisionHandlers.get(collision)) {
+           cmd.execute(this);
+         }
       }
-      }
+    }
+    if (rules.winCondition().execute(this) == 1.0) {
+      endGame();
     }
   }
 

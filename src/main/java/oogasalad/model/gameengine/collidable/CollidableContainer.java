@@ -13,12 +13,13 @@ public class CollidableContainer {
 
   private final Map<Integer, Collidable> myCollidables;
   private final Stack<List<CollidableRecord>> collidableHistory;
+  private final CollisionDetector collisionDetector;
 
   public CollidableContainer(Map<Integer, Collidable> collidables) {
     myCollidables = collidables;
     collidableHistory = new Stack<>();
     collidableHistory.add(getCollidableRecords());
-
+    collisionDetector = new CollisionDetector();
   }
 
   public Collidable getCollidable(int objectId) {
@@ -45,12 +46,21 @@ public class CollidableContainer {
   public List<CollidableRecord> getCollidableRecords() {
     List<CollidableRecord> ret = new ArrayList<>();
     for (Collidable collidable : myCollidables.values()) {
-      ret.add(new CollidableRecord(collidable.getId(), collidable.getMass(), collidable.getX(),
-          collidable.getY(), collidable.getVelocityX(), collidable.getVelocityY(),
-          collidable.getVisible()));
+      ret.add(collidable.getCollidableRecord());
     }
     return ret;
   }
+
+  public CollidableRecord getCollidableRecord(int id) {
+    List<CollidableRecord> ret = getCollidableRecords();
+    for (CollidableRecord record : ret) {
+      if (record.id() == id) {
+        return record;
+      }
+    }
+    return null;
+  }
+
 
   public void addStaticStateCollidables() {
     collidableHistory.push(getCollidableRecords());
@@ -75,16 +85,13 @@ public class CollidableContainer {
         CollidableRecord record2 = records.get(j);
         Collidable collidable2 = myCollidables.get(record2.id());
 
-        if (new PhysicsEngine().isColliding(collidable1, collidable2)) {
+        if (collisionDetector.isColliding(collidable1, collidable2)) {
           collisionPairs.add(new Pair(record1.id(), record2.id()));
         }
       }
     }
     return collisionPairs;
   }
-
-
-
 
 
 }

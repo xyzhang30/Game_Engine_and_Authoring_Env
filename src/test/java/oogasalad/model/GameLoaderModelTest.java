@@ -97,7 +97,8 @@ public class GameLoaderModelTest {
     Command advanceC2 = new AdjustPointsCommand(List.of(1.0, 1.0));
     List<Command> advanceCs = List.of(advanceC1, advanceC2);
 
-    RulesRecord mockRulesRecord = new RulesRecord(1, 1, collisionHandlers, winCondition, advanceCs);
+    RulesRecord mockRulesRecord = new RulesRecord(1, 1, collisionHandlers, winCondition, advanceCs,
+        physicsMap);
 
     assertThat(testGameLoaderModel.getRulesRecord()).usingRecursiveComparison().isEqualTo(mockRulesRecord);
   }
