@@ -1,5 +1,7 @@
 package oogasalad.view.AuthoringScreens;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import javafx.scene.image.Image;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -48,9 +50,11 @@ public class SurfaceSelectionScreen extends AuthoringScreen {
   }
 
   void changeImage() {
-    imageButton.setOnAction(event -> {String imagePath = chooseImage(ImageType.BACKGROUND);
-      System.out.println(imagePath);
-      backgroundBox.setFill(new ImagePattern(new Image(imagePath)));
+    imageButton.setOnAction(event -> {
+      Image image = chooseImage(ImageType.BACKGROUND);
+      if (image != null) {
+        backgroundBox.setFill(new ImagePattern(image)); // Use the Image object as before
+      }
     });
   }
 
