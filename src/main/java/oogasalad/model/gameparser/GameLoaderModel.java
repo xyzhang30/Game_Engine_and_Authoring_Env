@@ -16,9 +16,7 @@ import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.collidable.FrictionHandler;
 import oogasalad.model.gameengine.collidable.MomentumHandler;
-import oogasalad.model.gameengine.collidable.Moveable;
 import oogasalad.model.gameengine.collidable.PhysicsHandler;
-import oogasalad.model.gameengine.collidable.Surface;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameparser.data.CollidableObject;
 import oogasalad.model.gameparser.data.CollisionRule;
@@ -79,54 +77,23 @@ public class GameLoaderModel extends GameLoader {
     List<CollidableObject> collidableObjects = gameData.collidableObjects();
     List<Integer> moveables = new ArrayList<>();
     Map<Integer, Collidable> collidables = new HashMap<>();
-
-    for (CollidableObject co : collidableObjects) {
-      Collidable collidable = null;
-      if (co.properties().contains("movable")) {
-        collidable = createMovableCollidable(co);
-        moveables.add(co.collidableId());
-      } else if (co.properties().contains("surface")) {
-        collidable = createSurfaceCollidable(co);
-      }
-      collidables.put(co.collidableId(), collidable);
-    }
-    this.collidableContainer = new CollidableContainer(collidables);
     physicsMap = new HashMap<>();
-
-    for(Integer id : collidables.keySet()) {
-      for(Integer id2 : collidables.keySet()) {
-        if (!id.equals(id2)) {
-          if(moveables.contains(id) && moveables.contains(id2)) {
-            physicsMap.put(new Pair(id,id2), new MomentumHandler(id, id2));
-          }
-          else {
-            physicsMap.put(new Pair(id,id2), new FrictionHandler(id, id2));
-          }
+    for (CollidableObject co : collidableObjects) {
+      if (co.properties().contains("movable")) {
+        moveables.add(co.collidableId());
+        for (Integer key : collidables.keySet()) {
+          physicsMap.put(new Pair(key, co.collidableId()), moveables.contains(key) ?
+              new MomentumHandler(key, co.collidableId()) :
+              new FrictionHandler(key, co.collidableId()));
         }
       }
+      collidables.put(co.collidableId(), createCollidable(co));
     }
-
+    this.collidableContainer = new CollidableContainer(collidables);
   }
 
-  protected Collidable createMovableCollidable(CollidableObject co) {
-    Collidable m = new Moveable(
-        co.collidableId(),
-        co.mass(),
-        co.position().xPosition(),
-        co.position().yPosition(),
-        co.properties().contains("visible"),
-        0,
-        co.dimension().xDimension(),
-        co.dimension().yDimension(),
-        co.shape()
-    ) ;
-    return m;
-
-    }
-
-
-  protected Collidable createSurfaceCollidable(CollidableObject co) {
-    return new Surface(
+  protected Collidable createCollidable(CollidableObject co) {
+    return new Collidable(
         co.collidableId(),
         co.mass(),
         co.position().xPosition(),
@@ -135,10 +102,10 @@ public class GameLoaderModel extends GameLoader {
         co.friction(),
         co.dimension().xDimension(),
         co.dimension().yDimension(),
-        co.shape()
-    );
-
+        co.shape());
   }
+
+
 
   /**
    * Retrieves the collidable container.
@@ -228,3 +195,4 @@ public class GameLoaderModel extends GameLoader {
 
 
 }
+

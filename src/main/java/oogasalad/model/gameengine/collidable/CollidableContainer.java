@@ -94,13 +94,4 @@ public class CollidableContainer {
   }
 
 
-
-
-  protected void updateSpeeds(int id1, int id2, double[] speeds) {
-    getCollidable(id1).setSpeed(speeds[0], speeds[1]);
-    getCollidable(id1).updatePostCollisionVelocity();
-    getCollidable(id2).setSpeed(speeds[2], speeds[3]);
-    getCollidable(id2).updatePostCollisionVelocity();
-  }
-
 }

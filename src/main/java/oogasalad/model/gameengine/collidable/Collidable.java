@@ -2,6 +2,7 @@ package oogasalad.model.gameengine.collidable;
 
 import java.util.List;
 import java.util.Stack;
+import java.util.function.Supplier;
 import oogasalad.model.api.CollidableRecord;
 
 public class Collidable {
@@ -44,12 +45,6 @@ public class Collidable {
   public void updatePostCollisionVelocity() {
     myVelocityY = myNextVelocityY;
     myVelocityX = myNextVelocityX;
-    if (Math.abs(myVelocityX) < .00001) {
-      myVelocityX = 0;
-    }
-    if (Math.abs(myVelocityY) < .00001) {
-      myVelocityY = 0;
-    }
   }
 
 
@@ -150,8 +145,13 @@ public class Collidable {
     return sb;
   }
 
-  protected void setSpeed(double speedX, double speedY) {
+  private void setSpeed(double speedX, double speedY) {
     myNextVelocityX = speedX;
     myNextVelocityY = speedY;
+  }
+
+  protected void calculateNewSpeeds(Supplier<List<Double>> firstInfo) {
+    List<Double> newSpeeds = firstInfo.get();
+    setSpeed(newSpeeds.get(0), newSpeeds.get(1));
   }
 }
