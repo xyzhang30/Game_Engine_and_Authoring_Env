@@ -24,7 +24,6 @@ public class CollisionDetector {
       // other shapes, or default
     }
 
-
     return false;
   }
 
@@ -52,12 +51,12 @@ public class CollisionDetector {
   }
 
   private boolean checkCircleCircleCollision(Collidable circle1, Collidable circle2) {
-    double x1 = circle1.getX() ; // circle 1 x
-    double y1 = circle1.getY() ; // circle 2 x
+    double x1 = circle1.getX(); // circle 1 x
+    double y1 = circle1.getY(); // circle 2 x
     double radius1 = circle1.getWidth(); // circle 1 radius
 
-    double x2 = circle2.getX() ; // circle 2 x
-    double y2 = circle2.getY() ; // circle 2 y
+    double x2 = circle2.getX(); // circle 2 x
+    double y2 = circle2.getY(); // circle 2 y
     double radius2 = circle2.getWidth(); // circle2 radius
 
     // distance between the centers of the two circles
@@ -91,12 +90,14 @@ public class CollisionDetector {
 
   // Helper method to clamp a value between a min and max
   private double clamp(double value, double min, double max) {
-    if(value < min) return min;
-    if(value > max) return max;
+    if (value < min) {
+      return min;
+    }
+    if (value > max) {
+      return max;
+    }
     return value;
   }
-
-
 
 
 }

@@ -23,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 public class GameEngine implements ExternalGameEngine {
 
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
+  private final GameLoaderModel loader;
   private PlayerContainer playerContainer;
   private RulesRecord rules;
   private CollidableContainer collidables;
@@ -32,8 +33,6 @@ public class GameEngine implements ExternalGameEngine {
   private int turn;
   private boolean gameOver;
   private boolean staticState;
-
-  private final GameLoaderModel loader;
   private Stack<GameRecord> staticStateStack;
 
 
@@ -92,27 +91,26 @@ public class GameEngine implements ExternalGameEngine {
     if (collidables.checkStatic()) {
       updateHistory(); //private
       switchToCorrectStaticState(); //private
-    }
-    else {
+    } else {
       staticState = false;
     }
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
         round, turn, gameOver, staticState);
-    }
+  }
 
   private void handleCollisions(double dt) {
     Set<Pair> collisionPairs = collidables.getCollisionPairs();
-    for(Pair collision : collisionPairs) {
-      if(rules.physicsMap().containsKey(collision)) {
+    for (Pair collision : collisionPairs) {
+      if (rules.physicsMap().containsKey(collision)) {
         System.out.println(collidables.getCollidableRecord(collision.getSecond()));
         rules.physicsMap().get(collision).handleCollision(collidables, dt);
         System.out.println(collidables.getCollidableRecord(collision.getSecond()));
         System.out.println("_______");
       }
-      if(collisionHandlers.containsKey(collision)) {
-         for (Command cmd : collisionHandlers.get(collision)) {
-           cmd.execute(this);
-         }
+      if (collisionHandlers.containsKey(collision)) {
+        for (Command cmd : collisionHandlers.get(collision)) {
+          cmd.execute(this);
+        }
       }
     }
     if (rules.winCondition().execute(this) == 1.0) {
@@ -124,9 +122,9 @@ public class GameEngine implements ExternalGameEngine {
     if (rules.winCondition().execute(this) == 1.0) {
       endGame();
     }// else if (rules.roundCondition().execute(this) == 1.0) {
-   //   advanceRound();
+    //   advanceRound();
     //}
-      else {
+    else {
       for (Command cmd : rules.advance()) {
         cmd.execute(this);
       }
@@ -146,7 +144,7 @@ public class GameEngine implements ExternalGameEngine {
   @Override
   public GameRecord handleCollisions(List<Pair> collisions, double dt) {
     return null;
-    }
+  }
 
   /**
    * Applies a velocity to the entity with the provided ID.

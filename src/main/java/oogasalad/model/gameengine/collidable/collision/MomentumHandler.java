@@ -1,6 +1,5 @@
 package oogasalad.model.gameengine.collidable.collision;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 import oogasalad.model.api.CollidableRecord;

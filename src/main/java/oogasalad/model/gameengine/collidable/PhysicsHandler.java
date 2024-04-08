@@ -5,8 +5,10 @@ import java.util.function.Supplier;
 import oogasalad.model.api.CollidableRecord;
 
 public abstract class PhysicsHandler {
+
   private final int id1;
   private final int id2;
+
   public PhysicsHandler(int id1, int id2) {
     this.id1 = id1;
     this.id2 = id2;

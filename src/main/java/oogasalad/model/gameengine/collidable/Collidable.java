@@ -8,20 +8,20 @@ import oogasalad.model.api.CollidableRecord;
 public class Collidable {
 
   private final double myMass;
+  private final int myId;
+  private final double myWidth;
+  private final double myHeight;
+  private final String myShape;
   private double myX;
   private double myY;
   private double myVelocityX;
   private double myVelocityY;
-  private final int myId;
   private double myNextX;
   private double myNextY;
   private double myNextVelocityX;
   private double myNextVelocityY;
   private boolean myVisible;
-  private final double myWidth;
-  private final double myHeight;
-  private final String myShape;
-  private double myMu;
+  private final double myMu;
   private Stack<List<Integer>> locationHistory;
 
   public Collidable(int id, double mass, double x, double y,

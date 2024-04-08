@@ -17,28 +17,27 @@ public class FrictionHandler extends PhysicsHandler {
   @Override
   protected Supplier<List<Double>> makeVelocityFunction(CollidableRecord c1, CollidableRecord c2,
       double dt) {
-      return () -> {
-        if (c1.velocityX() == 0 && c1.velocityY() == 0) {
-          return List.of(0.0, 0.0);
-        }
-        double firstNewVelocityX =
-            c1.velocityX() - C * g * c2.mu() * dt * (c1.velocityX() / Math.hypot(c1.velocityX(),
-                c1.velocityY()));
-        double firstNewVelocityY =
-            c1.velocityY() - C * g * c2.mu() * dt * (c1.velocityY() / Math.hypot(c1.velocityX(),
-                c1.velocityY()));
+    return () -> {
+      if (c1.velocityX() == 0 && c1.velocityY() == 0) {
+        return List.of(0.0, 0.0);
+      }
+      double firstNewVelocityX =
+          c1.velocityX() - C * g * c2.mu() * dt * (c1.velocityX() / Math.hypot(c1.velocityX(),
+              c1.velocityY()));
+      double firstNewVelocityY =
+          c1.velocityY() - C * g * c2.mu() * dt * (c1.velocityY() / Math.hypot(c1.velocityX(),
+              c1.velocityY()));
 
-        if (Math.abs(firstNewVelocityX) < 10) {
-          firstNewVelocityX = 0;
-        }
+      if (Math.abs(firstNewVelocityX) < 10) {
+        firstNewVelocityX = 0;
+      }
 
-        if (Math.abs(firstNewVelocityY) < 10) {
-          firstNewVelocityY = 0;
-        }
+      if (Math.abs(firstNewVelocityY) < 10) {
+        firstNewVelocityY = 0;
+      }
 
-
-        return List.of(firstNewVelocityX, firstNewVelocityY);
-      };
-    }
+      return List.of(firstNewVelocityX, firstNewVelocityY);
+    };
   }
+}
 

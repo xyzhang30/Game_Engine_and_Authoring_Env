@@ -12,11 +12,10 @@ import org.apache.logging.log4j.Logger;
 
 public class Player {
 
+  private static final Logger LOGGER = LogManager.getLogger(Player.class);
   private final int playerId;
   private final Collidable myCollidable;
   private final Map<String, Double> variables;
-  private static final Logger LOGGER = LogManager.getLogger(Player.class);
-
   private Stack<ObservableMap<String, Double>> variableStack;
 
   public Player(int id, Collidable collidable) {
