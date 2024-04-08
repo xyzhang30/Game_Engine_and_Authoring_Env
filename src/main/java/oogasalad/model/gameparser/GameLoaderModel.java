@@ -8,6 +8,7 @@ import java.util.Map;
 import oogasalad.Pair;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidFileException;
+import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.Player;
 import oogasalad.model.gameengine.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
@@ -18,9 +19,11 @@ import oogasalad.model.gameengine.collidable.FrictionHandler;
 import oogasalad.model.gameengine.collidable.MomentumHandler;
 import oogasalad.model.gameengine.collidable.PhysicsHandler;
 import oogasalad.model.gameengine.command.Command;
-import oogasalad.model.gameparser.data.CollidableObject;
-import oogasalad.model.gameparser.data.CollisionRule;
-import oogasalad.model.gameparser.data.ParserPlayer;
+import oogasalad.model.api.data.CollidableObject;
+import oogasalad.model.api.data.CollisionRule;
+import oogasalad.model.api.data.ParserPlayer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Concrete implementation of GameLoader for passing game data necessary for the Model.
@@ -28,6 +31,8 @@ import oogasalad.model.gameparser.data.ParserPlayer;
  * @author Judy He, Alisha Zhang
  */
 public class GameLoaderModel extends GameLoader {
+
+  private static final Logger LOGGER = LogManager.getLogger(GameLoaderModel.class);
 
   private static final String COMMAND_PATH = "oogasalad.model.gameengine.command.";
   private static final String TURN_POLICY_PATH = "oogasalad.model.gameengine.";
@@ -164,6 +169,7 @@ public class GameLoaderModel extends GameLoader {
     } catch (AssertionError | NoSuchMethodException | IllegalAccessException |
              InstantiationException |
              ClassNotFoundException | InvocationTargetException e) {
+      LOGGER.error("invalid command, "+e.getMessage());
       throw new InvalidCommandException(e.getMessage());
     }
   }
@@ -179,6 +185,7 @@ public class GameLoaderModel extends GameLoader {
           .newInstance(this.playerContainer);
     } catch (NoSuchMethodException | IllegalAccessException | InstantiationException |
              ClassNotFoundException | InvocationTargetException e) {
+      LOGGER.error("invalid command, " + e.getMessage());
       throw new InvalidCommandException(e.getMessage());
     }
   }

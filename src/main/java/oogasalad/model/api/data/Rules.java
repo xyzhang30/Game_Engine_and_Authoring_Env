@@ -1,4 +1,4 @@
-package oogasalad.model.gameparser.data;
+package oogasalad.model.api.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
