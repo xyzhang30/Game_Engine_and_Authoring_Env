@@ -13,11 +13,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Ellipse;
@@ -184,23 +186,23 @@ public abstract class AuthoringScreen {
    * Creates slider for user to change shape size
    */
   void createSizeSliders() {
-    //TODO: add labels to sliders
-    xSlider = createSingleSlider();
-    ySlider = createSingleSlider();
+    VBox sliderContainerBox = new VBox();
+    sliderContainerBox.setPrefSize(200, 10);
+    sliderContainerBox.setAlignment(Pos.CENTER_RIGHT);
+    sliderContainerBox.setPadding(new Insets(-100, 50, 0, 0));
+
+    xSlider = createSingleSlider("X Scale", sliderContainerBox);
+    ySlider = createSingleSlider( "Y Scale ", sliderContainerBox);
 
     xSlider.valueProperty().addListener((observable, oldValue, newValue) ->
         changeXSize(newValue.doubleValue()));
     ySlider.valueProperty().addListener((observable, oldValue, newValue) ->
         changeYSize(newValue.doubleValue()));
 
-    HBox sliderContainer = new HBox(xSlider, ySlider);
-    sliderContainer.setPrefSize(200, 100);
-    sliderContainer.setAlignment(Pos.CENTER_RIGHT);
-    sliderContainer.setPadding(new Insets(-100, 50, 0, 0));
-    root.getChildren().add(sliderContainer);
+    root.getChildren().add(sliderContainerBox);
   }
 
-  private Slider createSingleSlider(){
+  private Slider createSingleSlider(String labelText, VBox sliderContainerBox){
     Slider slider = new Slider();
     slider.setPrefWidth(200);
     slider.setMin(0.2);
@@ -211,6 +213,13 @@ public abstract class AuthoringScreen {
     slider.setMajorTickUnit(0.1);
     slider.setOrientation(Orientation.HORIZONTAL);
 
+    Label label = new Label(labelText);
+
+    HBox sliderContainer = new HBox(label, slider);
+    sliderContainer.setAlignment(Pos.CENTER_RIGHT);
+    sliderContainer.setSpacing(10);
+
+    sliderContainerBox.getChildren().add(sliderContainer);
     return slider;
   }
 
