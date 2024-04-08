@@ -20,7 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
@@ -45,7 +45,8 @@ public abstract class AuthoringScreen {
   ColorPicker colorPicker;
   Button imageButton;
   AuthoringController controller;
-  Slider slider;
+  Slider xSlider;
+  Slider ySlider;
   Shape selectedShape;
   final int authoringBoxWidth = 980;
   final int authoringBoxHeight = 980;
@@ -169,20 +170,37 @@ public abstract class AuthoringScreen {
     makeDraggable(rectangle);
     selectedShape = rectangle;
 
-    Circle circle = new Circle(30, Color.BLACK);
-    StackPane.setAlignment(circle, Pos.TOP_RIGHT);
-    StackPane.setMargin(circle, new Insets(300, 50, 0, 0));
-    makeSelectable(circle);
-    makeDraggable(circle);
+    Ellipse ellipse = new Ellipse(30, 30);
+    ellipse.setFill(Color.BLACK);
+    StackPane.setAlignment(ellipse, Pos.TOP_RIGHT);
+    StackPane.setMargin(ellipse, new Insets(300, 50, 0, 0));
+    makeSelectable(ellipse);
+    makeDraggable(ellipse);
 
-    root.getChildren().addAll(rectangle, circle);
+    root.getChildren().addAll(rectangle, ellipse);
   }
 
   /**
    * Creates slider for user to change shape size
    */
-  void createSizeSlider() {
-    slider = new Slider();
+  void createSizeSliders() {
+    xSlider = createSingleSlider();
+    ySlider = createSingleSlider();
+
+    xSlider.valueProperty().addListener((observable, oldValue, newValue) ->
+        changeXSize(newValue.doubleValue()));
+    ySlider.valueProperty().addListener((observable, oldValue, newValue) ->
+        changeYSize(newValue.doubleValue()));
+
+    HBox sliderContainer = new HBox(xSlider, ySlider);
+    sliderContainer.setPrefSize(200, 100);
+    sliderContainer.setAlignment(Pos.CENTER_RIGHT);
+    sliderContainer.setPadding(new Insets(-100, 50, 0, 0));
+    root.getChildren().add(sliderContainer);
+  }
+
+  private Slider createSingleSlider(){
+    Slider slider = new Slider();
     slider.setPrefWidth(200);
     slider.setMin(0.2);
     slider.setMax(2);
@@ -192,22 +210,15 @@ public abstract class AuthoringScreen {
     slider.setMajorTickUnit(0.1);
     slider.setOrientation(Orientation.HORIZONTAL);
 
-    HBox sliderContainer = new HBox(slider);
-    sliderContainer.setPrefSize(200, 10);
-
-    sliderContainer.setAlignment(Pos.CENTER_RIGHT);
-    sliderContainer.setPadding(new Insets(-100, 50, 0, 0));
-
-    slider.valueProperty().addListener((observable, oldValue, newValue) ->
-        changeSize(newValue.doubleValue()));
-
-    root.getChildren().add(sliderContainer);
-
+    return slider;
   }
 
-  private void changeSize(double fractionalValue) {
-    selectedShape.setScaleX(fractionalValue);
-    selectedShape.setScaleY(fractionalValue);
+  private void changeXSize(double xScale) {
+    selectedShape.setScaleX(xScale);
+  }
+
+  private void changeYSize(double yScale) {
+    selectedShape.setScaleY(yScale);
   }
 
   private void makeDraggable(Shape shape) {
@@ -257,7 +268,7 @@ public abstract class AuthoringScreen {
     shape.setOnMouseClicked(event -> {
       selectedShape = shape;
       shape.setStroke(Color.YELLOW);
-      updateSlider(shape.getScaleX());
+      updateSlider(shape.getScaleX(), shape.getScaleY());
       shape.setStrokeWidth(3);
       for (Shape currShape : selectableShapes) {
         if (currShape != selectedShape) {
@@ -267,8 +278,9 @@ public abstract class AuthoringScreen {
     });
   }
 
-  private void updateSlider(double scale){
-    slider.setValue(scale);
+  private void updateSlider(double xScale, double yScale){
+    xSlider.setValue(xScale);
+    ySlider.setValue(yScale);
   }
 
   private void createColorPickerHandler() {
