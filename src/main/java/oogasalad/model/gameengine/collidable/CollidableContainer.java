@@ -48,10 +48,23 @@ public class CollidableContainer {
     for (Collidable collidable : myCollidables.values()) {
       ret.add(new CollidableRecord(collidable.getId(), collidable.getMass(), collidable.getX(),
           collidable.getY(), collidable.getVelocityX(), collidable.getVelocityY(),
-          collidable.getVisible()));
+          collidable.getVisible(), collidable.getMu()));
     }
     return ret;
   }
+
+  public CollidableRecord getCollidableRecord(int id) {
+    List<CollidableRecord> ret = getCollidableRecords();
+    for (CollidableRecord record : ret) {
+      if (record.id() == id) {
+        return record;
+      } else {
+        //TODO THROW EXCEPTION
+        return null;
+      }
+    }
+  }
+
 
   public void addStaticStateCollidables() {
     collidableHistory.push(getCollidableRecords());
@@ -87,5 +100,11 @@ public class CollidableContainer {
 
 
 
+  protected void updateSpeeds(int id1, int id2, double[] speeds) {
+    getCollidable(id1).setSpeed(speeds[0], speeds[1]);
+    getCollidable(id1).updatePostCollisionVelocity();
+    getCollidable(id2).setSpeed(speeds[2], speeds[3]);
+    getCollidable(id2).updatePostCollisionVelocity();
+  }
 
 }

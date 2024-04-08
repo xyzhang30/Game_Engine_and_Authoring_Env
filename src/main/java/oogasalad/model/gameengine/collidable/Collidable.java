@@ -20,10 +20,11 @@ public abstract class Collidable {
   private final double myWidth;
   private final double myHeight;
   private final String myShape;
+  private double myMu;
   private Stack<List<Integer>> locationHistory;
 
   public Collidable(int id, double mass, double x, double y,
-      boolean visible, double width, double height, String shape) {
+      boolean visible, double mu, double width, double height, String shape) {
     myId = id;
     myMass = mass;
     myX = x;
@@ -36,6 +37,7 @@ public abstract class Collidable {
     myWidth = width;
     myHeight = height;
     myShape = shape;
+    myMu = mu;
 
   }
 
@@ -79,6 +81,8 @@ public abstract class Collidable {
     myNextVelocityY = myVelocityY;
 
   }
+
+  protected double getMu() { return myMu; }
 
   protected double getVelocityX() {
     return myVelocityX;
@@ -151,5 +155,10 @@ public abstract class Collidable {
         + "  \"myHeight\": " + myHeight + ",\n"
         + "}\n";
     return sb;
+  }
+
+  protected void setSpeed(double speedX, double speedY) {
+    myNextVelocityX = speedX;
+    myNextVelocityY = speedY;
   }
 }
