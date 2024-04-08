@@ -1,67 +1,67 @@
 package oogasalad.view.AuthoringScreens;
 
-import java.util.ArrayList;
-import java.util.List;
-import javafx.scene.image.Image;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.shape.Shape;
 import oogasalad.view.Controlling.AuthoringController;
 
+/**
+ * Class to represent the screen in which the user customizes the background of their unique game
+ *
+ * @author Jordan Haytaian, Doga Ozmen
+ */
 public class SurfaceSelectionScreen extends AuthoringScreen {
 
   private final int backgroundWidth = 980;
   private final int backgroundHeight = 980;
-  private Rectangle backgroundBox;
+  private Rectangle background;
 
-  public SurfaceSelectionScreen(AuthoringController controller) {
-    this.controller = controller;
-    createScene();
+  public SurfaceSelectionScreen(AuthoringController controller, StackPane authoringBox) {
+    super(controller, authoringBox);
   }
 
-  public void createScene() {
+  /**
+   * Creates the scene for configuring the background
+   */
+  void createScene() {
     root = new StackPane();
-    createBackgroundBox();
-    createOptionBox();
+    createAuthoringBox();
+    createShapeDisplayOptionBox();
     createNextButton();
     scene = new Scene(root, screenWidth, screenHeight);
   }
 
-  private void createBackgroundBox() {
-    backgroundBox = new Rectangle(backgroundWidth, backgroundHeight);
-    backgroundBox.setStroke(Color.BLACK);
-    backgroundBox.setFill(Color.WHITE);
-    backgroundBox.setStrokeWidth(10);
-    StackPane.setAlignment(backgroundBox, Pos.TOP_LEFT);
-    StackPane.setMargin(backgroundBox, new Insets(50, 0, 0, 50));
-    root.getChildren().add(backgroundBox);
-  }
-
-  void changeColor() {
-    colorPicker.setOnAction(
-        event -> changeBackgroundColor(((ColorPicker) event.getSource()).getValue()));
-  }
-
-  void changeImage() {
-    imageButton.setOnAction(event -> {
-      Image image = chooseImage(ImageType.BACKGROUND);
-      if (image != null) {
-        backgroundBox.setFill(new ImagePattern(image));
-      }
-    });
-  }
-
+  /**
+   * When next button is clicked, controller is prompted to start the next selection process
+   */
   void endSelection() {
-    controller.startNextSelection(ImageType.BACKGROUND, backgroundBox);
+    controller.startNextSelection(ImageType.BACKGROUND, authoringBox);
   }
 
-  private void changeBackgroundColor(Color color) {
-    backgroundBox.setFill(color);
+  /**
+   * Returns background image type indicating that user is configuring the background
+   *
+   * @return enum to represent background image type
+   */
+  ImageType getImageType() {
+    return ImageType.BACKGROUND;
+  }
+
+  private void createAuthoringBox() {
+    StackPane.setAlignment(authoringBox, Pos.TOP_LEFT);
+    StackPane.setMargin(authoringBox, new Insets(50, 0, 0, 50));
+
+    background = new Rectangle(backgroundWidth, backgroundHeight);
+    background.setStroke(Color.BLACK);
+    background.setFill(Color.WHITE);
+    background.setStrokeWidth(10);
+    StackPane.setAlignment(background, Pos.TOP_LEFT);
+    selectedShape = background;
+
+    authoringBox.getChildren().add(background);
+    root.getChildren().add(background);
   }
 }

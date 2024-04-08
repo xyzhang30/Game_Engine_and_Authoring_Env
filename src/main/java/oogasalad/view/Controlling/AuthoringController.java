@@ -1,11 +1,15 @@
 package oogasalad.view.Controlling;
 
-import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import oogasalad.view.AuthoringScreens.AuthoringScreen;
 import oogasalad.view.AuthoringScreens.GoalSelectionScreen;
 import oogasalad.view.AuthoringScreens.ImageType;
 
+/**
+ * Class to handle transitions between authoring environment scenes and communications with backend
+ *
+ * @author Jordan Haytaian, Doga Ozmen
+ */
 public class AuthoringController {
   private Stage stage;
 
@@ -13,11 +17,15 @@ public class AuthoringController {
     this.stage = stage;
   }
 
-  public void startNextSelection(ImageType imageType, Rectangle backgroundBox){
-    //TODO: does it make sense to make backgroundbox a stackpane to hold all current selections?
+  /**
+   * Starts the next selection process by creating the applicable scene and showing it on the stage
+   * @param imageType the selection process that has just finished
+   * @param authoringBox holds the user's current game configurations
+   */
+  public void startNextSelection(ImageType imageType, StackPane authoringBox){
     switch(imageType){
       case BACKGROUND -> {
-        GoalSelectionScreen goalSelectionScreen = new GoalSelectionScreen(this, backgroundBox);
+        GoalSelectionScreen goalSelectionScreen = new GoalSelectionScreen(this, authoringBox);
           stage.setScene(goalSelectionScreen.getScene());
       }
     }

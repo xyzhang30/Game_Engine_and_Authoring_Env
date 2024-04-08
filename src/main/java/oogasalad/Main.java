@@ -2,6 +2,7 @@ package oogasalad;
 
 
 import javafx.application.Application;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import oogasalad.view.AuthoringScreens.AuthoringScreen;
 import oogasalad.view.AuthoringScreens.SurfaceSelectionScreen;
@@ -15,7 +16,8 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-    SurfaceSelectionScreen scene = new SurfaceSelectionScreen(new AuthoringController(primaryStage));
+    SurfaceSelectionScreen scene = new SurfaceSelectionScreen(new AuthoringController(primaryStage),
+        new StackPane());
     primaryStage.setScene(scene.getScene());
     primaryStage.show();
     //Window mainWindow = new Window(primaryStage, 0);
