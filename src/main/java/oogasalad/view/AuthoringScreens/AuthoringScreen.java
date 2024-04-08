@@ -184,6 +184,7 @@ public abstract class AuthoringScreen {
    * Creates slider for user to change shape size
    */
   void createSizeSliders() {
+    //TODO: add labels to sliders
     xSlider = createSingleSlider();
     ySlider = createSingleSlider();
 
