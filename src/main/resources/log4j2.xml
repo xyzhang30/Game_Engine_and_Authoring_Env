@@ -48,8 +48,8 @@
   <Loggers>
     <Root level="all">
       <AppenderRef ref="console" level="debug" />
-      <AppenderRef re3f="file" level="all" />
-<!--      <AppenderRef ref="rollingFile" level="all"/>-->
+      <AppenderRef ref="file" level="all" />
+      <AppenderRef ref="rollingFile" level="all"/>
     </Root>
   </Loggers>
 </Configuration>
