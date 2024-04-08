@@ -1,7 +1,5 @@
 package oogasalad.model.gameengine.collidable;
 
-public interface CollisionHandler {
+public interface PhysicsHandler {
   void handleCollision(CollidableContainer container, double dt);
-
-
 }

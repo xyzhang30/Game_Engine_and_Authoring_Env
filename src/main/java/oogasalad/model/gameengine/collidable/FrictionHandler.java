@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import oogasalad.model.api.CollidableRecord;
 
-public class FrictionHandler implements CollisionHandler {
+public class FrictionHandler implements PhysicsHandler {
 
   private static final double g = 10;
   private static final double C = 40;

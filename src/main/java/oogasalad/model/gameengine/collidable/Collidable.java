@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Stack;
 import oogasalad.model.api.CollidableRecord;
 
-public abstract class Collidable {
+public class Collidable {
 
   private final double myMass;
   private double myX;
@@ -41,12 +41,6 @@ public abstract class Collidable {
 
   }
 
-  public void onCollision(Collidable other, double dt) {
-    double[] result = other.calculateNewSpeed(this, dt);
-    myNextVelocityX = result[0];
-    myNextVelocityY = result[1];
-  }
-
   public void updatePostCollisionVelocity() {
     myVelocityY = myNextVelocityY;
     myVelocityX = myNextVelocityX;
@@ -58,7 +52,6 @@ public abstract class Collidable {
     }
   }
 
-  public abstract double[] calculateNewSpeed(Collidable other, double dt);
 
   public CollidableRecord getCollidableRecord() {
     return new CollidableRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible, myMu

@@ -14,7 +14,10 @@ import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.TurnPolicy;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
+import oogasalad.model.gameengine.collidable.FrictionHandler;
+import oogasalad.model.gameengine.collidable.MomentumHandler;
 import oogasalad.model.gameengine.collidable.Moveable;
+import oogasalad.model.gameengine.collidable.PhysicsHandler;
 import oogasalad.model.gameengine.collidable.Surface;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameparser.data.CollidableObject;
@@ -33,6 +36,7 @@ public class GameLoaderModel extends GameLoader {
   private PlayerContainer playerContainer;
   private CollidableContainer collidableContainer;
   private RulesRecord rulesRecord;
+  private Map<Pair, PhysicsHandler> physicsMap;
   private TurnPolicy turnPolicy;
 
 
@@ -47,6 +51,7 @@ public class GameLoaderModel extends GameLoader {
     this.createPlayerContainer();
     this.createTurnPolicy();
     this.createRulesRecord();
+
   }
 
   // alisha
@@ -72,24 +77,39 @@ public class GameLoaderModel extends GameLoader {
 
   protected void createCollidableContainer() {
     List<CollidableObject> collidableObjects = gameData.collidableObjects();
+    List<Integer> moveables = new ArrayList<>();
     Map<Integer, Collidable> collidables = new HashMap<>();
 
     for (CollidableObject co : collidableObjects) {
       Collidable collidable = null;
       if (co.properties().contains("movable")) {
         collidable = createMovableCollidable(co);
+        moveables.add(co.collidableId());
       } else if (co.properties().contains("surface")) {
         collidable = createSurfaceCollidable(co);
-        System.out.println(3);
       }
       collidables.put(co.collidableId(), collidable);
     }
     this.collidableContainer = new CollidableContainer(collidables);
+    physicsMap = new HashMap<>();
+
+    for(Integer id : collidables.keySet()) {
+      for(Integer id2 : collidables.keySet()) {
+        if (!id.equals(id2)) {
+          if(moveables.contains(id) && moveables.contains(id2)) {
+            physicsMap.put(new Pair(id,id2), new MomentumHandler(id, id2));
+          }
+          else {
+            physicsMap.put(new Pair(id,id2), new FrictionHandler(id, id2));
+          }
+        }
+      }
+    }
 
   }
 
   protected Collidable createMovableCollidable(CollidableObject co) {
-    return new Moveable(
+    Collidable m = new Moveable(
         co.collidableId(),
         co.mass(),
         co.position().xPosition(),
@@ -99,8 +119,11 @@ public class GameLoaderModel extends GameLoader {
         co.dimension().xDimension(),
         co.dimension().yDimension(),
         co.shape()
-    );
-  }
+    ) ;
+    return m;
+
+    }
+
 
   protected Collidable createSurfaceCollidable(CollidableObject co) {
     return new Surface(
@@ -114,6 +137,7 @@ public class GameLoaderModel extends GameLoader {
         co.dimension().yDimension(),
         co.shape()
     );
+
   }
 
   /**
@@ -133,10 +157,10 @@ public class GameLoaderModel extends GameLoader {
       int maxTurns = gameData.variables().get(0).global().maxTurns();
 
       for (CollisionRule rule : gameData.rules().collisions()) {
+
         Pair pair = new Pair(rule.firstId(),
             rule.secondId()); //collision rule is the one with ids and command map
         List<Command> commands = new ArrayList<>();
-
         for (Map<String, List<Double>> command : rule.command()) { //looping through the list of command maps
           for (String s : command.keySet()) { //this is a for loop but there's always only going to be 1 command in the map (probably should change the structure of the json afterward)
             Class<?> cc = Class.forName(COMMAND_PATH + s);
@@ -168,7 +192,7 @@ public class GameLoaderModel extends GameLoader {
 
       assert cc != null;
       rulesRecord = new RulesRecord(maxRounds, maxTurns, commandMap,
-          (Command) cc.getDeclaredConstructor(List.class).newInstance(params), advancecmds);
+          (Command) cc.getDeclaredConstructor(List.class).newInstance(params), advancecmds, physicsMap);
 
     } catch (AssertionError | NoSuchMethodException | IllegalAccessException |
              InstantiationException |

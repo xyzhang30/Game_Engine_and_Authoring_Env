@@ -103,22 +103,17 @@ public class GameEngine implements ExternalGameEngine {
   private void handleCollisions(double dt) {
     Set<Pair> collisionPairs = collidables.getCollisionPairs();
     for(Pair collision : collisionPairs) {
-        if (collidables.getCollidable(collision.getFirst()) instanceof Moveable
-            && collidables.getCollidable(collision.getSecond()) instanceof Moveable) {
-          new MomentumHandler(collision.getFirst(), collision.getSecond()).handleCollision(
-              collidables, dt);
-        } else if ((collidables.getCollidable(collision.getFirst()) instanceof Moveable)
-          != (collidables.getCollidable(collision.getSecond()) instanceof Moveable)) {
-          new FrictionHandler(collision.getFirst(), collision.getSecond()).handleCollision(
-              collidables, dt);
-        }
+      if(rules.physicsMap().containsKey(collision)) {
+        rules.physicsMap().get(collision).handleCollision(collidables, dt);
       }
-    for(Pair collision : collisionPairs) {
       if(collisionHandlers.containsKey(collision)) {
-      for (Command cmd : collisionHandlers.get(collision)) {
-        cmd.execute(this);
+         for (Command cmd : collisionHandlers.get(collision)) {
+           cmd.execute(this);
+         }
       }
-      }
+    }
+    if (rules.winCondition().execute(this) == 1.0) {
+      endGame();
     }
   }
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import oogasalad.model.api.CollidableRecord;
 
-public class MomentumHandler implements CollisionHandler {
+public class MomentumHandler implements PhysicsHandler {
 
   private final int id1;
   private final int id2;
