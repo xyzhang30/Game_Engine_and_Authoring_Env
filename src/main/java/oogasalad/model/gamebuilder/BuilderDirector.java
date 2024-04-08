@@ -14,6 +14,8 @@ import oogasalad.model.api.data.Variables;
 
 public class BuilderDirector implements DirectorInterface {
 
+  //change game data record into an actual class
+
   @JsonProperty("gameName") String gameName;
   @JsonProperty("collidable_objects") List<CollidableObject> collidableObjects;
   List<ParserPlayer> players;
@@ -32,8 +34,8 @@ public class BuilderDirector implements DirectorInterface {
 
   }
 
-  private void writeGame(GameData gameData) throws IOException {
-    // GameData gameData = new GameData();
+  private void writeGame() throws IOException {
+    GameData gameData = new GameData(gameName,collidableObjects, players, variables, rules);
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.writeValue(new File("game_data.json"), gameData);
   }
