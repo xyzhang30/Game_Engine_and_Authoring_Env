@@ -11,14 +11,12 @@ import oogasalad.model.api.data.GameData;
 import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
+import oogasalad.model.gameengine.Player;
 
 public class BuilderDirector implements DirectorInterface {
 
   private GameData gameData;
 
-  public BuilderDirector(){
-
-  }
   //change game data record into an actual class
 //
 //  @JsonProperty("gameName") String gameName;
@@ -30,13 +28,15 @@ public class BuilderDirector implements DirectorInterface {
 //  JSONObject jsonData = new JSONObject();
 
   @Override
-  public void constructCollidableObjects(GameData gameData) {
-    //call buildGameField in collidablesbuilder ??
+  public void constructCollidableObjects(GameData gameData, List<Record> gameField) {
+    CollidablesBuilder collidablesBuilder = new CollidablesBuilder();
+    collidablesBuilder.buildGameField(gameData, gameField);
   }
 
   @Override
-  public void constructPlayers(GameData gameData) {
-
+  public void constructPlayers(GameData gameData, List<Record> gameField) {
+    PlayersBuilder playersBuilder = new PlayersBuilder();
+    playersBuilder.buildGameField(gameData, gameField);
   }
 
   private void writeGame() throws IOException {
