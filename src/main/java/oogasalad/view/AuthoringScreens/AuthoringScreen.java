@@ -165,8 +165,8 @@ public abstract class AuthoringScreen {
     Circle circle = new Circle(30, Color.BLACK);
     StackPane.setAlignment(circle, Pos.TOP_RIGHT);
     StackPane.setMargin(circle, new Insets(300, 50, 0, 0));
-    makeDraggable(circle);
     makeSelectable(circle);
+    makeDraggable(circle);
 
     root.getChildren().addAll(rectangle, circle);
   }
