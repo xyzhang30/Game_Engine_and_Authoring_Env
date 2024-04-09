@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
 
-public class GameEngineTest {
+public class PhysicsTest {
 
 
   private GameEngine gameEngine;
