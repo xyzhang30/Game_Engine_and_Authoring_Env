@@ -148,6 +148,7 @@
       }
     ],
     "turn_policy": "StandardTurnPolicy",
+    "round_policy": "AdvanceRoundCheck",
     "win_condition": {
       "NRoundsCompletedCommand": [2.0]
     },
@@ -157,6 +158,11 @@
       },
       {
         "AdjustPointsCommand": [1.0,1.0]
+      }
+    ],
+    "advance_round": [
+      {
+        "AdvanceRoundCommand": []
       }
     ]
   }
