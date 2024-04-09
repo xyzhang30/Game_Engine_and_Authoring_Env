@@ -284,12 +284,17 @@
     "win_condition": {
       "NRoundsCompletedCommand": [1]
     },
-    "advance": [
+    "advance_turn": [
       {
         "AdvanceTurnCommand": []
       },
       {
         "AdjustPointsCommand": [1,1]
+      }
+    ],
+    "advance_round": [
+      {
+        "AdvanceRoundCommand": []
       }
     ]
   }
