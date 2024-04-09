@@ -142,6 +142,7 @@ public class Collidable {
 
   protected void calculateNewSpeeds(Supplier<List<Double>> firstInfo) {
     List<Double> newSpeeds = firstInfo.get();
+    System.out.println(newSpeeds);
     setSpeed(newSpeeds.get(0), newSpeeds.get(1));
   }
 }

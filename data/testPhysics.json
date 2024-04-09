@@ -22,8 +22,8 @@
       "properties": ["visible", "movable"],
       "mass": 100,
       "position": {
-        "x_position": 100,
-        "y_position": 100
+        "x_position": 50,
+        "y_position": -50
       },
       "shape": "circle",
       "dimension": {
@@ -38,8 +38,8 @@
       "properties": ["visible", "movable"],
       "mass": 100,
       "position": {
-        "x_position": -100,
-        "y_position": -100
+        "x_position": -50,
+        "y_position": -50
       },
       "shape": "circle",
       "dimension": {
@@ -52,15 +52,15 @@
     {
       "collidable_id": 4,
       "properties": ["visible","movable"],
-      "mass": 1,
+      "mass": 1e1000000,
       "position": {
-        "x_position": -510,
-        "y_position": -500
+        "x_position": -110,
+        "y_position": -100
       },
       "shape": "rectangle",
       "dimension": {
         "x_dimension": 10,
-        "y_dimension": 1000
+        "y_dimension": 200
       },
       "color": [255,255,255],
       "friction": 0
@@ -68,15 +68,15 @@
     {
       "collidable_id": 5,
       "properties": ["visible","movable"],
-      "mass": 1,
+      "mass": 1e1000000,
       "position": {
-        "x_position": 500,
-        "y_position": -500
+        "x_position": 100,
+        "y_position": -100
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 10,
-        "y_dimension": 1000
+        "x_dimension": 200,
+        "y_dimension": 10
       },
       "color": [255,255,255],
       "friction": 0
@@ -84,14 +84,14 @@
     {
       "collidable_id": 6,
       "properties": ["visible","movable"],
-      "mass": 1,
+      "mass": 1e1000000,
       "position": {
-        "x_position": -500,
-        "y_position": -510
+        "x_position": -100,
+        "y_position": -110
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 1000,
+        "x_dimension": 200,
         "y_dimension": 10
       },
       "color": [255,255,255],
@@ -100,14 +100,14 @@
     {
       "collidable_id": 7,
       "properties": ["visible","movable"],
-      "mass": 1,
+      "mass": 1e1000000,
       "position": {
-        "x_position": -500,
-        "y_position": 500
+        "x_position": -100,
+        "y_position": 100
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 1000,
+        "x_dimension": 200,
         "y_dimension": 10
       },
       "color": [255,255,255],
@@ -118,13 +118,13 @@
       "properties": ["visible", "surface"],
       "mass": 0,
       "position": {
-        "x_position": -100,
-        "y_position": 100
+        "x_position": -50,
+        "y_position": 50
       },
       "shape": "circle",
       "dimension": {
-        "x_dimension": 40,
-        "y_dimension": 40
+        "x_dimension": 20,
+        "y_dimension": 20
       },
       "color": [0,0,0],
       "friction": 0
@@ -134,16 +134,16 @@
       "properties": ["visible", "surface"],
       "mass": 0,
       "position": {
-        "x_position": -500,
-        "y_position": -500
+        "x_position": -50,
+        "y_position": -50
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 1000,
-        "y_dimension": 1000
+        "x_dimension": 200,
+        "y_dimension": 200
       },
       "color": [0,0,0],
-      "friction": 0.5
+      "friction": 0.05
     }
   ],
   "players": [
