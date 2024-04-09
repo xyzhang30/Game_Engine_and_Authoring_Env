@@ -39,11 +39,11 @@ public class GameData {
     return rules;
   }
 
-  public String getGameName() {
+  public @JsonProperty("gameName") String getGameName() {
     return gameName;
   }
 
-  public List<CollidableObject> getCollidableObjects() {
+  public @JsonProperty("collidable_objects") List<CollidableObject> getCollidableObjects() {
     return collidableObjects;
   }
 
