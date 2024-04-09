@@ -7,7 +7,8 @@ import oogasalad.model.api.data.Rules;
 public class RulesBuilder implements GameBuilder{
 
   @Override
-  public void buildGameField(GameData gameData, List<Record> gameField) {
-    gameData.setRules((Rules)gameField.get(0));
+  public <T> void buildGameField(GameData gameData, List<T> gameField) {
+    Rules rules = (Rules) gameField.get(0);
+    gameData.setRules(rules);
   }
 }

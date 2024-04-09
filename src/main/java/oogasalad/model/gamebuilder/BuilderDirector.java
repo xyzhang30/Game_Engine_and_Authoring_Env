@@ -15,8 +15,6 @@ import oogasalad.model.gameengine.Player;
 
 public class BuilderDirector implements DirectorInterface {
 
-  private GameData gameData;
-
   //change game data record into an actual class
 //
 //  @JsonProperty("gameName") String gameName;
@@ -28,20 +26,34 @@ public class BuilderDirector implements DirectorInterface {
 //  JSONObject jsonData = new JSONObject();
 
   @Override
-  public void constructCollidableObjects(GameData gameData, List<Record> gameField) {
+  public void constructCollidableObjects(GameData gameData, List<Record> fieldData) {
     CollidablesBuilder collidablesBuilder = new CollidablesBuilder();
-    collidablesBuilder.buildGameField(gameData, gameField);
+    collidablesBuilder.buildGameField(gameData, fieldData);
   }
 
   @Override
-  public void constructPlayers(GameData gameData, List<Record> gameField) {
+  public void constructPlayers(GameData gameData, List<Record> fieldData) {
     PlayersBuilder playersBuilder = new PlayersBuilder();
-    playersBuilder.buildGameField(gameData, gameField);
+    playersBuilder.buildGameField(gameData, fieldData);
   }
 
-  private void writeGame() throws IOException {
-    ObjectMapper objectMapper = new ObjectMapper();
-    objectMapper.writeValue(new File("game_data.json"), gameData);
+  @Override
+  public void constructVaraibles(GameData gameData, List<Record> fieldData) {
+    VariablesBuilder variablesBuilder = new VariablesBuilder();
+    variablesBuilder.buildGameField(gameData, fieldData);
+  }
+
+  @Override
+  public void constructRules(GameData gameData, List<Record> fieldData) {
+    RulesBuilder rulesBuilder = new RulesBuilder();
+    rulesBuilder.buildGameField(gameData, fieldData);
+  }
+
+
+  public void writeGame(GameData gameData, String filePath, String fileName) throws IOException {
+    gameData.setGameName("test_authoring_mini_golf");
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath+fileName), gameData);
   }
 
 }
