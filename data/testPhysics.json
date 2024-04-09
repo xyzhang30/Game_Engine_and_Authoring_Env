@@ -144,6 +144,22 @@
       },
       "color": [0,0,0],
       "friction": 0.05
+    },
+    {
+      "collidable_id": 10,
+      "properties": ["visible", "movable"],
+      "mass": 50,
+      "position": {
+        "x_position": -40,
+        "y_position": -0
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "color": [0,0,0],
+      "friction": 0
     }
   ],
   "players": [

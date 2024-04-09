@@ -2,14 +2,9 @@ package oogasalad.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import oogasalad.Pair;
 import oogasalad.model.api.CollidableRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.gameengine.GameEngine;
-import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -119,6 +114,23 @@ public class GameEngineTest {
     assertEquals(10/Math.sqrt(2), container.getCollidableRecord(1).y(), DELTA);
     assertEquals(10/Math.sqrt(2), container.getCollidableRecord(1).velocityX(), DELTA);
     assertEquals(10/Math.sqrt(2), container.getCollidableRecord(1).velocityX(), DELTA);
+  }
+
+  @Test
+  public void testTwoMovingObjectsCollide() {
+    gameEngine.applyInitialVelocity(15, -Math.PI, 1);
+    gameEngine.applyInitialVelocity(15, 0, 10);
+    gameEngine.update(.25);
+    assertEquals(-10, container.getCollidableRecord(1).velocityX(), DELTA);
+    assertEquals(10, container.getCollidableRecord(10).velocityX(), DELTA);
+    gameEngine.update(.25);
+
+    System.out.println(container.getCollidableRecord(1));
+
+    System.out.println(container.getCollidableRecord(10));
+//https://www.sciencecalculators.org/mechanics/collisions/
+    assertEquals(1.666666666666, container.getCollidableRecord(1).velocityX(), DELTA);
+    assertEquals(-8.3333333, container.getCollidableRecord(10).velocityX(), DELTA);
   }
 
 
