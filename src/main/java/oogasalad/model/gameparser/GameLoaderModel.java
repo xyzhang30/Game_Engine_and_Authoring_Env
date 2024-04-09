@@ -60,10 +60,8 @@ public class GameLoaderModel extends GameLoader {
   protected void createPlayerContainer() {
     Map<Integer, Player> playerMap = new HashMap<>();
     for (ParserPlayer p : gameData.getPlayers()) {
-      int id = gameData.getPlayers().get(0).playerId();
-      int myCollidableId = gameData.getPlayers().get(0).myCollidable();
-      Player player = new Player(id, getCollidableContainer().getCollidable(myCollidableId));
-      playerMap.put(id, player);
+      Player player = new Player(p.playerId(), getCollidableContainer().getCollidable(p.myCollidable()));
+      playerMap.put(p.playerId(), player);
     }
     this.playerContainer = new PlayerContainer(playerMap);
   }
@@ -85,12 +83,18 @@ public class GameLoaderModel extends GameLoader {
     for (CollidableObject co : collidableObjects) {
       if (co.properties().contains("movable")) {
         moveables.add(co.collidableId());
-        for (Integer key : collidables.keySet()) {
-          physicsMap.put(new Pair(key, co.collidableId()), moveables.contains(key) ?
-              new MomentumHandler(key, co.collidableId()) :
-              new FrictionHandler(key, co.collidableId()));
-        }
       }
+        for (Integer key : collidables.keySet()) {
+          if(moveables.contains(key) && co.properties().contains("movable")) {
+            physicsMap.put(new Pair(key, co.collidableId()), new MomentumHandler(key,
+                co.collidableId()));
+          }
+          else if (moveables.contains(key) || co.properties().contains("movable")){
+            physicsMap.put(new Pair(key, co.collidableId()), new FrictionHandler(key,
+                co.collidableId()));
+          }
+        }
+
       collidables.put(co.collidableId(), createCollidable(co));
     }
     this.collidableContainer = new CollidableContainer(collidables);

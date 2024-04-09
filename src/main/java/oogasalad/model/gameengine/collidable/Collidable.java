@@ -78,7 +78,6 @@ public class Collidable {
     return myVelocityY;
   }
 
-
   public int getId() {
     return myId;
   }

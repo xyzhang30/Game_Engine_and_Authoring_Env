@@ -13,7 +13,7 @@ public class StandardTurnPolicy implements TurnPolicy {
   @Override
   public int getTurn() {
     int numPlayers = playerContainer.getNumPlayers();
-    int turn = (playerContainer.getActive() + 1) % numPlayers + numPlayers;
+    int turn = ((playerContainer.getActive()) % numPlayers) + 1;
     playerContainer.setActive(turn);
     return turn;
   }
