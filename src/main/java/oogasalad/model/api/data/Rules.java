@@ -15,7 +15,9 @@ public record Rules(List<CollisionRule> collisions,
                     @JsonProperty("static_checks") List<StaticCheckRule> staticChecks,
                     @JsonProperty("turn_policy") String turnPolicy,
                     @JsonProperty("win_condition") Map<String, List<Double>> winCondition,
-                    List<Map<String, List<Double>>> advance) {
+                    @JsonProperty("advance_turn") List<Map<String, List<Double>>> advanceTurn,
+                    @JsonProperty("advance_round") List<Map<String, List<Double>>> advanceRound
+                    ) {
 
 }
 

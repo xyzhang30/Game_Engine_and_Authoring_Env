@@ -28,11 +28,11 @@ public class FrictionHandler extends PhysicsHandler {
           c1.velocityY() - C * g * c2.mu() * dt * (c1.velocityY() / Math.hypot(c1.velocityX(),
               c1.velocityY()));
 
-      if (Math.abs(firstNewVelocityX) < 10) {
+      if (c1.velocityX()*firstNewVelocityX < 0) {
         firstNewVelocityX = 0;
       }
 
-      if (Math.abs(firstNewVelocityY) < 10) {
+      if (c1.velocityY() * firstNewVelocityY < 0) {
         firstNewVelocityY = 0;
       }
 

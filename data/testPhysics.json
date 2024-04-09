@@ -1,0 +1,229 @@
+{
+  "gameName": "testPhysics",
+  "collidable_objects": [
+    {
+      "collidable_id": 1,
+      "properties": ["visible", "movable"],
+      "mass": 100,
+      "position": {
+        "x_position": 0,
+        "y_position": 0
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 20,
+        "y_dimension": 20
+      },
+      "color": [100,200,100],
+      "friction": 0
+    },
+    {
+      "collidable_id": 2,
+      "properties": ["visible", "movable"],
+      "mass": 100,
+      "position": {
+        "x_position": 50,
+        "y_position": -50
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 20,
+        "y_dimension": 20
+      },
+      "color": [100,200,100],
+      "friction": 0
+    },
+    {
+      "collidable_id": 3,
+      "properties": ["visible", "movable"],
+      "mass": 100,
+      "position": {
+        "x_position": -50,
+        "y_position": -50
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 20,
+        "y_dimension": 20
+      },
+      "color": [100,200,100],
+      "friction": 0
+    },
+    {
+      "collidable_id": 4,
+      "properties": ["visible","movable"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": -110,
+        "y_position": -100
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 200
+      },
+      "color": [255,255,255],
+      "friction": 0
+    },
+    {
+      "collidable_id": 5,
+      "properties": ["visible","movable"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 100,
+        "y_position": -100
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 200
+      },
+      "color": [255,255,255],
+      "friction": 0
+    },
+    {
+      "collidable_id": 6,
+      "properties": ["visible","movable"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": -100,
+        "y_position": -110
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 200,
+        "y_dimension": 10
+      },
+      "color": [255,255,255],
+      "friction": 0
+    },
+    {
+      "collidable_id": 7,
+      "properties": ["visible","movable"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": -100,
+        "y_position": 100
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 200,
+        "y_dimension": 10
+      },
+      "color": [255,255,255],
+      "friction": 0
+    },
+    {
+      "collidable_id": 8,
+      "properties": ["visible", "surface"],
+      "mass": 0,
+      "position": {
+        "x_position": -50,
+        "y_position": 50
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 20,
+        "y_dimension": 20
+      },
+      "color": [0,0,0],
+      "friction": 0
+    },
+    {
+      "collidable_id": 9,
+      "properties": ["visible", "surface"],
+      "mass": 0,
+      "position": {
+        "x_position": -50,
+        "y_position": -50
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 200,
+        "y_dimension": 200
+      },
+      "color": [0,0,0],
+      "friction": 0.05
+    },
+    {
+      "collidable_id": 10,
+      "properties": ["visible", "movable"],
+      "mass": 50,
+      "position": {
+        "x_position": -40,
+        "y_position": -0
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "color": [0,0,0],
+      "friction": 0
+    }
+  ],
+  "players": [
+    {
+      "player_id": 1,
+      "my_collidable": 1
+    },
+    {
+      "player_id": 2,
+      "my_collidable": 6
+    }
+  ],
+  "variables": [
+    {
+      "global": {
+        "max_turns": 1,
+        "max_rounds": 2
+      },
+      "player": {
+        "strokes": 0,
+        "finished": 0
+      }
+    }
+  ],
+  "rules": {
+    "collisions": [
+      {
+        "first_id": 1,
+        "second_id": 10,
+        "command": [
+          {
+            "AdjustPointsCommand": [1.0,1.0]
+          },
+          {
+            "AdjustPointsCommand": [1.0,1.0]
+          }
+        ]
+      },
+      {
+      "first_id": 1,
+      "second_id": 5,
+      "command": [
+        {
+          "UndoTurnCommand": []
+        }
+      ]
+      }
+    ],
+    "turn_policy": "StandardTurnPolicy",
+    "win_condition": {
+      "NRoundsCompletedCommand": [2.0]
+    },
+    "advance_turn": [
+      {
+        "AdvanceTurnCommand": []
+      },
+      {
+        "AdjustPointsCommand": [1.0,1.0]
+      }
+    ],
+    "advance_round": [
+      {
+        "AdvanceRoundCommand": []
+      }
+    ]
+  }
+}
