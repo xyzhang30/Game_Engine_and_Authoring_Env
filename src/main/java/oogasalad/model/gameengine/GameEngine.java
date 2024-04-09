@@ -186,11 +186,12 @@ public class GameEngine implements ExternalGameEngine {
   private void switchToCorrectStaticState() {
     if (rules.winCondition().execute(this) == 1.0) {
       endGame();
-    }// else if (rules.roundCondition().execute(this) == 1.0) {
-    //   advanceRound();
-    //}
+    }
+     else if (rules.advanceRound().get(0).execute(this) == 1.0) {
+       advanceRound();
+    }
     else {
-      for (Command cmd : rules.advance()) {
+      for (Command cmd : rules.advanceTurn()) {
         cmd.execute(this);
       }
     }

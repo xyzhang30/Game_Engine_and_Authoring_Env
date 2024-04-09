@@ -147,12 +147,23 @@ public class GameLoaderModel extends GameLoader {
       }
 
       Class<?> cc = null;
-      List<Command> advancecmds = new ArrayList<>();
+      List<Command> advanceTurnCmds = new ArrayList<>();
 
-      for (Map<String, List<Double>> condition : gameData.getRules().advance()) {
+      for (Map<String, List<Double>> condition : gameData.getRules().advanceTurn()) {
         for (String s : condition.keySet()) {
           cc = Class.forName(COMMAND_PATH + s);
-          advancecmds.add(
+          advanceTurnCmds.add(
+              (Command) cc.getDeclaredConstructor(List.class).newInstance(condition.get(s)));
+        }
+
+      }
+
+      List<Command> advanceRoundCmds = new ArrayList<>();
+
+      for (Map<String, List<Double>> condition : gameData.getRules().advanceRound()) {
+        for (String s : condition.keySet()) {
+          cc = Class.forName(COMMAND_PATH + s);
+          advanceRoundCmds.add(
               (Command) cc.getDeclaredConstructor(List.class).newInstance(condition.get(s)));
         }
 
@@ -166,8 +177,10 @@ public class GameLoaderModel extends GameLoader {
       }
 
       assert cc != null;
+      Command winCondition = (Command) cc.getDeclaredConstructor(List.class).newInstance(params);
+
       rulesRecord = new RulesRecord(maxRounds, maxTurns, commandMap,
-          (Command) cc.getDeclaredConstructor(List.class).newInstance(params), advancecmds, physicsMap);
+          winCondition, advanceTurnCmds, advanceRoundCmds, physicsMap);
 
     } catch (AssertionError | NoSuchMethodException | IllegalAccessException |
              InstantiationException |

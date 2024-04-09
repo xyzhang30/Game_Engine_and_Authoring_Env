@@ -78,10 +78,15 @@
     "win_condition" : {
       "NRoundsCompletedCommand" : [ 2.0 ]
     },
-    "advance" : [ {
+    "advance_turn" : [ {
       "AdvanceTurnCommand" : [ ]
     }, {
       "AdjustPointsCommand" : [ 1.0, 1.0 ]
-    } ]
+    } ],
+    "advance_round": [
+      {
+        "AdvanceRoundCommand": []
+      }
+    ]
   }
 }
