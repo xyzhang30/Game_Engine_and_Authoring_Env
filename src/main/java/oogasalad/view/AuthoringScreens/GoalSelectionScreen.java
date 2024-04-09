@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Shape;
@@ -25,6 +26,9 @@ public class GoalSelectionScreen extends AuthoringScreen {
 
   private Map<Shape, Boolean> advanceTurnMap = new HashMap<>();
   private Map<Shape, Integer> pointsScoredMap = new HashMap<>();
+  private TextField pointPrompt;
+  private ToggleButton falseButton;
+  private ToggleButton trueButton;
 
   public GoalSelectionScreen(AuthoringController controller, StackPane authoringBox) {
     super(controller, authoringBox);
@@ -64,23 +68,32 @@ public class GoalSelectionScreen extends AuthoringScreen {
     return ImageType.GOAL;
   }
 
+  /**
+   * Updates point prompt and advance round buttons when new goal is selected
+   */
+  void updateOptionSelections() {
+    updatePointPrompt();
+    updateAdvanceRoundButtons();
+  }
+
   private void createGoalOptions() {
     createAdvanceTurnOptions();
     createPointOptions();
   }
 
   private void createAdvanceTurnOptions() {
-    Button trueButton = new Button("True");
+    trueButton = new ToggleButton("True");
+    falseButton = new ToggleButton("False");
+
     trueButton.setPrefSize(75, 75);
     StackPane.setAlignment(trueButton, Pos.BOTTOM_RIGHT);
     StackPane.setMargin(trueButton, new Insets(0, 150, 300, 0));
-    createTrueAdvanceTurnHandler(trueButton);
+    createTrueAdvanceTurnHandler();
 
-    Button falseButton = new Button("False");
     falseButton.setPrefSize(75, 75);
     StackPane.setAlignment(falseButton, Pos.BOTTOM_RIGHT);
     StackPane.setMargin(falseButton, new Insets(0, 50, 300, 0));
-    createFalseAdvanceTurnHandler(falseButton);
+    createFalseAdvanceTurnHandler();
 
     Label label = new Label("Advance Turn on Goal");
     StackPane.setAlignment(label, Pos.BOTTOM_RIGHT);
@@ -90,9 +103,9 @@ public class GoalSelectionScreen extends AuthoringScreen {
   }
 
   private void createPointOptions() {
-    TextField pointPrompt = new TextField();
+    pointPrompt = new TextField();
     pointPrompt.setPrefSize(75, 75);
-    createPointsScoredHandler(pointPrompt);
+    createPointsScoredHandler();
 
     Label label = new Label("Points Scored on Goal");
     StackPane.setAlignment(label, Pos.BOTTOM_RIGHT);
@@ -106,23 +119,25 @@ public class GoalSelectionScreen extends AuthoringScreen {
     root.getChildren().addAll(label, pointPromptContainer);
   }
 
-  private void createTrueAdvanceTurnHandler(Button button) {
-    button.setOnMouseClicked(event -> {
+  private void createTrueAdvanceTurnHandler() {
+    trueButton.setOnMouseClicked(event -> {
       if (selectedShape != null) {
         advanceTurnMap.put(selectedShape, true);
+        falseButton.setSelected(false);
       }
     });
   }
 
-  private void createFalseAdvanceTurnHandler(Button button) {
-    button.setOnMouseClicked(event -> {
+  private void createFalseAdvanceTurnHandler() {
+    falseButton.setOnMouseClicked(event -> {
       if (selectedShape != null) {
         advanceTurnMap.put(selectedShape, false);
+        trueButton.setSelected(false);
       }
     });
   }
 
-  private void createPointsScoredHandler(TextField pointPrompt) {
+  private void createPointsScoredHandler() {
     pointPrompt.setOnKeyPressed(event -> {
       if (event.getCode() == KeyCode.ENTER && selectedShape != null) {
         //TODO: Exception handling if a non integer is entered
@@ -144,5 +159,30 @@ public class GoalSelectionScreen extends AuthoringScreen {
       }
     }
     return true;
+  }
+
+  private void updatePointPrompt() {
+    Integer points = pointsScoredMap.get(selectedShape);
+    if (points != null) {
+      pointPrompt.setText(points.toString());
+    } else {
+      pointPrompt.setText("");
+    }
+  }
+
+  private void updateAdvanceRoundButtons() {
+    Boolean advanceRound = advanceTurnMap.get(selectedShape);
+    if(advanceRound != null){
+      if(advanceRound) {
+        trueButton.setSelected(true);
+        falseButton.setSelected(false);
+      } else {
+        trueButton.setSelected(false);
+        falseButton.setSelected(true);
+      }
+    } else {
+      trueButton.setSelected(false);
+      falseButton.setSelected(false);
+    }
   }
 }

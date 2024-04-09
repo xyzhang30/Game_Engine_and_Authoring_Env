@@ -46,5 +46,10 @@ public class ObstacleSelectionScreen extends AuthoringScreen{
     return ImageType.OBSTACLE;
   }
 
+  /**
+   * Updates object type to reflect type of currently selected object
+   */
+  void updateOptionSelections() {
 
+  }
 }

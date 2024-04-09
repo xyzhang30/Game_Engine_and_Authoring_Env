@@ -90,6 +90,12 @@ public abstract class AuthoringScreen {
   abstract ImageType getImageType();
 
   /**
+   * Updates buttons, dropdowns, textfields, etc. to correctly display user selected options when a
+   * new shape is selected
+   */
+  abstract void updateOptionSelections();
+
+  /**
    * Opens a file dialogue box for user to choose image and displays image in currently selected
    * shape
    */
@@ -209,13 +215,13 @@ public abstract class AuthoringScreen {
   /**
    * Updates authoring box by adding selected game objects to the stackpane
    */
-  void addNewSelectionsToAuthoringBox(){
+  void addNewSelectionsToAuthoringBox() {
     Group selections = new Group();
-    for (Shape shape : selectableShapes){
+    for (Shape shape : selectableShapes) {
       Bounds shapeBounds = shape.getBoundsInParent();
       Bounds authoringBoxBounds = authoringBox.getBoundsInParent();
 
-      if(selectedShape == shape){
+      if (selectedShape == shape) {
         shape.setStrokeWidth(0);
       }
 
@@ -335,6 +341,7 @@ public abstract class AuthoringScreen {
       selectedShape = shape;
       shape.setStroke(Color.YELLOW);
       updateSlider(shape.getScaleX(), shape.getScaleY(), shape.getRotate());
+      updateOptionSelections();
       shape.setStrokeWidth(3);
       for (Shape currShape : selectableShapes) {
         if (currShape != selectedShape) {
