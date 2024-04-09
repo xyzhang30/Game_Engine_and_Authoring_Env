@@ -134,63 +134,29 @@ public class GameEngineTest {
   }
 
 
-  /**
-   *
   @Test
-  public void testAdvanceTurnAndAdjustPoints() {
+  public void testAdjustPointsCommand() {
     // Ensure the game starts without errors
-    gameEngine.handleCollisions(List.of(new Pair(1, 4)), 1.0/40);
-    assertEquals(2, gameEngine.getTurn());
-    assertEquals(10, gameEngine.getPlayerContainer().getPlayer(1).getVariable("score"));
+    gameEngine.applyInitialVelocity(15, -Math.PI, 1);
+    gameEngine.applyInitialVelocity(15, 0, 10);
+    GameRecord r = gameEngine.update(.5);
+    assertEquals(2.0, r.players().get(0).score(), DELTA);
   }
-
-  @Test
-  public void testMoveWithoutCollision() {
-    // Ensure the game starts without errors
-    gameEngine.applyInitialVelocity(10.0,0,1);
-    gameEngine.update(1);
-    gameEngine.handleCollisions(List.of(), 1);
-    assertEquals(10,
-        gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().velocityX());
-    assertEquals(10,
-        gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().x());
-  }
-
 
   @Test
   public void testUndoCommand() {
     // Ensure the game starts without errors
-    gameEngine.applyInitialVelocity(2,0,8);
-    gameEngine.update(1.0/40);
-    gameEngine.handleCollisions(List.of(new Pair(8,2)), 1.0/40); //move
-    gameEngine.update(1.0/40);
-    gameEngine.applyInitialVelocity(2,Math.PI/2,8);
-    gameEngine.update(1.0/40);
-    gameEngine.handleCollisions(List.of(new Pair(8,2)), 1.0/40); //move
-    gameEngine.update(1.0/40);
-    gameEngine.handleCollisions(List.of(new Pair(7,8),new Pair(8,2)), 1.0/40);
-    assertEquals(0,
-        gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().velocityX());
-
-    assertEquals(0,
-        gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().velocityY());
-    assertEquals(48.0,
-        gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().y());
-    assertEquals(50,
-        gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().x());
-
-    gameEngine.handleCollisions(List.of(new Pair(7,8),new Pair(8,2)), 1.0/40);
-
-    assertEquals(0,
-        gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().velocityX());
-
-    assertEquals(0,
-        gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().velocityY());
-    assertEquals(48.0,
-        gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().y());
-    assertEquals(48.0,
-        gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().x());
-
+    gameEngine.applyInitialVelocity(100, 0, 1);
+    gameEngine.update(1);
+    assertEquals(0.0,container.getCollidableRecord(1).velocityX(), DELTA);
+    assertEquals(0.0,container.getCollidableRecord(1).velocityY(), DELTA);
+    assertEquals(0.0,container.getCollidableRecord(1).x(), DELTA);
+    assertEquals(0.0,container.getCollidableRecord(1).y(), DELTA);
   }
-*/
+
+  @Test
+  public void testAdvanceTurnAndAdjustPoints() {
+  }
+
+
 }

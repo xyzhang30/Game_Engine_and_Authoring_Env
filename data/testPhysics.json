@@ -75,8 +75,8 @@
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 200,
-        "y_dimension": 10
+        "x_dimension": 10,
+        "y_dimension": 200
       },
       "color": [255,255,255],
       "friction": 0
@@ -188,7 +188,7 @@
     "collisions": [
       {
         "first_id": 1,
-        "second_id": 4,
+        "second_id": 10,
         "command": [
           {
             "AdjustPointsCommand": [1.0,1.0]
