@@ -15,11 +15,11 @@ public class GameData {
   private List<Variables> variables;
   private Rules rules;
 
-  public void setGameName(String gameName){
+  public void setGameName(@JsonProperty("gameName") String gameName){
     this.gameName = gameName;
   }
 
-  public void setCollidableObjects(List<CollidableObject> collidables){
+  public void setCollidableObjects( @JsonProperty("collidable_objects") List<CollidableObject> collidables){
     this.collidableObjects = collidables;
   }
 

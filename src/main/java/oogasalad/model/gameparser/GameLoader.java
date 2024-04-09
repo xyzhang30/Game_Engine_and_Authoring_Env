@@ -63,10 +63,13 @@ public abstract class GameLoader {
   }
 
   private void parseJSON(String filePath) throws IOException {
+    System.out.println("PARSE JSON BEING CALLED: " + filePath);
     ObjectMapper objectMapper = new ObjectMapper();
     File f = new File(filePath);
+    System.out.println("AFTER READ FILE");
+//    this.gameData = new GameData();
     this.gameData = objectMapper.readValue(f, GameData.class);
-
+    System.out.println("GAME NAME IN LOADER: "+gameData.getGameName());
   }
 
 }
