@@ -1,8 +1,6 @@
 package oogasalad.model.gameengine.collidable;
 
-import oogasalad.Pair;
-
-public class PhysicsEngine {
+public class CollisionDetector {
 
   public boolean isColliding(Collidable collidable1, Collidable collidable2) {
     String shape1 = collidable1.getShape();
@@ -25,7 +23,6 @@ public class PhysicsEngine {
     else {
       // other shapes, or default
     }
-
 
     return false;
   }
@@ -54,12 +51,12 @@ public class PhysicsEngine {
   }
 
   private boolean checkCircleCircleCollision(Collidable circle1, Collidable circle2) {
-    double x1 = circle1.getX() ; // circle 1 x
-    double y1 = circle1.getY() ; // circle 2 x
+    double x1 = circle1.getX(); // circle 1 x
+    double y1 = circle1.getY(); // circle 2 x
     double radius1 = circle1.getWidth(); // circle 1 radius
 
-    double x2 = circle2.getX() ; // circle 2 x
-    double y2 = circle2.getY() ; // circle 2 y
+    double x2 = circle2.getX(); // circle 2 x
+    double y2 = circle2.getY(); // circle 2 y
     double radius2 = circle2.getWidth(); // circle2 radius
 
     // distance between the centers of the two circles
@@ -88,20 +85,19 @@ public class PhysicsEngine {
     // Check for overlap on the Y axis
     boolean overlapY = (y1 + height1 > y2) && (y2 + height2 > y1);
 
-    // If there's overlap on both axes, then the rectangles are colliding
-    System.out.println(rect1.getId());
-    System.out.println(rect2.getId());
     return overlapX && overlapY;
   }
 
   // Helper method to clamp a value between a min and max
   private double clamp(double value, double min, double max) {
-    if(value < min) return min;
-    if(value > max) return max;
+    if (value < min) {
+      return min;
+    }
+    if (value > max) {
+      return max;
+    }
     return value;
   }
-
-
 
 
 }

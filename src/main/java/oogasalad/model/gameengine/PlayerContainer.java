@@ -11,9 +11,8 @@ import oogasalad.model.api.PlayerRecord;
 public class PlayerContainer {
 
   private final Map<Integer, Player> myPlayers;
-  private int active;
-
   private final Stack<Map<Integer, Map<String, Double>>> staticStateVariables;
+  private int active;
 
   public PlayerContainer(Map<Integer, Player> players) {
     myPlayers = players;

@@ -10,8 +10,8 @@ import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.Player;
 import oogasalad.model.gameengine.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
-import oogasalad.model.gameengine.StandardTurnPolicy;
-import oogasalad.model.gameengine.TurnPolicy;
+import oogasalad.model.gameengine.turn.StandardTurnPolicy;
+import oogasalad.model.gameengine.turn.TurnPolicy;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.collidable.Moveable;
@@ -84,7 +84,7 @@ public class GameEngineTest {
           List.of(new UndoTurnCommand(List.of()), new AdvanceTurnCommand(List.of()),
               new AdjustPointsCommand(List.of(1.0,1.0))));
       this.rules = new oogasalad.model.gameengine.RulesRecord(1, Integer.MAX_VALUE, myMap,
-          new NRoundsCompletedCommand(List.of(3.0)), List.of());
+          new NRoundsCompletedCommand(List.of(3.0)), List.of(), physicsMap);
     }
 
     @Override
