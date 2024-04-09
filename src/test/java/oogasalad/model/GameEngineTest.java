@@ -24,7 +24,7 @@ public class GameEngineTest {
 
   @BeforeEach
   public void setUp() {
-    gameEngine = new GameEngine("testPhysics");
+    gameEngine = new GameEngine("testMiniGolfPhysics");
     container = gameEngine.getCollidableContainer();
   }
 
