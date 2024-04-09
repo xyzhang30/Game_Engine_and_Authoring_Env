@@ -1,0 +1,103 @@
+{
+  "gameName": "test_authoring_mini_golf",
+  "collidable_objects": [
+    {
+      "collidable_id": 1,
+      "properties": ["visible", "surface"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 0.0,
+        "y_position": 0.0
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 500.0,
+        "y_dimension": 500.0
+      },
+      "color": [100,200,100],
+      "friction": 0.5,
+      "image": "sample.img"
+    },
+    {
+      "collidable_id": 2,
+      "properties": ["visible","movable"],
+      "mass": 1.0,
+      "position": {
+        "x_position": 250.0,
+        "y_position": 450.0
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 2.0,
+        "y_dimension": 2.0
+      },
+      "color": [255,255,255],
+      "friction": 0.0,
+      "image": "sample.img"
+    },
+    {
+      "collidable_id": 3,
+      "properties": ["visible", "surface"],
+      "mass": 0.0,
+      "position": {
+        "x_position": 250.0,
+        "y_position": 50.0
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 5.0,
+        "y_dimension": 5.0
+      },
+      "color": [0,0,0],
+      "friction": 0.0,
+      "image": "sample.img"
+    }
+  ],
+  "players": [
+    {
+      "player_id": 1,
+      "my_collidable": 2
+    }
+  ],
+  "variables": [
+    {
+      "global": {
+        "max_turns": 1,
+        "max_rounds": 1
+      },
+      "player": {
+        "strokes": 0,
+        "finished": 0
+      }
+    }
+  ],
+  "rules": {
+    "collisions": [
+      {
+        "first_id": 2,
+        "second_id": 3,
+        "command": [
+          {
+            "AdjustPointsCommand": [1.0,1.0]
+          },
+          {
+            "AdvanceTurnCommand": []
+          }
+        ]
+      }
+    ],
+    "static_checks" : null,
+    "turn_policy": "StandardTurnPolicy",
+    "win_condition": {
+      "NRoundsCompletedCommand": [2.0]
+    },
+    "advance": [
+      {
+        "AdvanceTurnCommand": []
+      },
+      {
+        "AdjustPointsCommand": [1.0,1.0]
+      }
+    ]
+  }
+}

@@ -40,10 +40,9 @@ public abstract class GameLoader {
       parseJSON(DATA_FOLDER_PATH + gameName + JSON_EXTENSION);
 
     } catch (IOException e) {
-//      throw new InvalidFileException(String.format(
-//          String.format(resourceBundle.getString("JSONParsingError"), e.getMessage())), e);
-      e.printStackTrace();
       LOGGER.error(resourceBundle.getString("JSONParsingError"), e.getMessage());
+      throw new InvalidFileException(String.format(
+          String.format(resourceBundle.getString("JSONParsingError"), e.getMessage())), e);
     }
   }
 
