@@ -7,116 +7,21 @@ import java.util.List;
 import java.util.Map;
 import oogasalad.Pair;
 import oogasalad.model.gameengine.GameEngine;
-import oogasalad.model.gameengine.Player;
-import oogasalad.model.gameengine.PlayerContainer;
-import oogasalad.model.gameengine.RulesRecord;
-import oogasalad.model.gameengine.turn.StandardTurnPolicy;
-import oogasalad.model.gameengine.turn.TurnPolicy;
-import oogasalad.model.gameengine.collidable.Collidable;
-import oogasalad.model.gameengine.collidable.CollidableContainer;
-import oogasalad.model.gameengine.collidable.Moveable;
-import oogasalad.model.gameengine.collidable.Surface;
-import oogasalad.model.gameengine.command.AdjustPointsCommand;
-import oogasalad.model.gameengine.command.AdvanceTurnCommand;
-import oogasalad.model.gameengine.command.Command;
-import oogasalad.model.gameengine.command.NRoundsCompletedCommand;
-import oogasalad.model.gameengine.command.UndoTurnCommand;
-import oogasalad.model.gameparser.GameLoaderModel;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
 
 public class GameEngineTest {
 
-  public static class GameLoaderMock extends GameLoaderModel {
-
-    private PlayerContainer playerContainer;
-    private CollidableContainer collidableContainer;
-    private oogasalad.model.gameengine.RulesRecord rules;
-    private GameEngine engine;
-    private TurnPolicy turnPolicy;
-
-    public GameLoaderMock(String id) {
-      super(id);
-      createCollidableContainer();
-      createPlayerContainer();
-      createRulesRecord();
-      createTurnPolicy();
-    }
-
-    @Override
-    public void createPlayerContainer() {
-      Map<Integer, Player> mockPlayers = new HashMap<>();
-      mockPlayers.put(1, new Player(1, collidableContainer.getCollidable(1)));
-      mockPlayers.put(2, new Player(2, collidableContainer.getCollidable(4)));
-
-      this.playerContainer = new PlayerContainer(mockPlayers);
-    }
-
-
-    @Override
-    protected void createCollidableContainer() {
-      Map<Integer, Collidable> mockCollidables = new HashMap<>();
-      mockCollidables.put(1, new Moveable(1, 50, 0, 0, true, 0, 0));
-      mockCollidables.put(2, new Surface(2, Double.MAX_VALUE, 0, 0, true, .2, 0,0));
-      mockCollidables.put(3, new Moveable(3, Double.MAX_VALUE, 100, 100, true, 0, 0));
-      mockCollidables.put(4, new Moveable(4, Double.MAX_VALUE, 70, 0, true, 0, 0));
-      mockCollidables.put(5, new Moveable(5, 50, 40, 40, true, 0, 0));
-      mockCollidables.put(6, new Moveable(6, 50, 60, 40, true, 0, 0));
-      mockCollidables.put(7, new Surface(7, Double.MAX_VALUE, 50, 50, true, 1, 0, 0));
-      mockCollidables.put(8, new Moveable(8, 10, 48, 48, true, 0, 0));
-
-      this.collidableContainer = new CollidableContainer(mockCollidables);
-    }
-
-
-    @Override
-    protected void createTurnPolicy() {
-      turnPolicy = new StandardTurnPolicy(playerContainer);
-    }
-
-    @Override
-    protected void createRulesRecord() {
-      Map<Pair, List<Command>> myMap = new HashMap<>();
-      myMap.put(new Pair(1, 4), List.of(new AdjustPointsCommand(List.of(1.0, 10.0)),
-          new AdvanceTurnCommand(List.of())));
-      myMap.put(new Pair(7,8),
-          List.of(new UndoTurnCommand(List.of()), new AdvanceTurnCommand(List.of()),
-              new AdjustPointsCommand(List.of(1.0,1.0))));
-      this.rules = new oogasalad.model.gameengine.RulesRecord(1, Integer.MAX_VALUE, myMap,
-          new NRoundsCompletedCommand(List.of(3.0)), List.of(), physicsMap);
-    }
-
-    @Override
-    public PlayerContainer getPlayerContainer() {
-      return playerContainer;
-    }
-
-    @Override
-    public CollidableContainer getCollidableContainer() {
-      return collidableContainer;
-    }
-
-    @Override
-    public RulesRecord getRulesRecord() {
-      return rules;
-    }
-
-    @Override
-    public TurnPolicy getTurnPolicy() {
-      return turnPolicy;
-    }
-  }
 
   private GameEngine gameEngine;
-  private GameLoaderModel loaderMock;
+
 
   @BeforeEach
   public void setUp() {
-    gameEngine = new GameEngine("singlePlayerMiniGolf");
-    gameEngine.start(new GameLoaderMock("singlePlayerMiniGolf"));
-  }
+    gameEngine = new GameEngine("testPhysics");
 
+  }
 
   @Test
   public void testStartAndResetGame() {
@@ -277,12 +182,6 @@ public class GameEngineTest {
         gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().y());
     assertEquals(48.0,
         gameEngine.getCollidableContainer().getCollidable(8).getCollidableRecord().x());
-
-
-
-
-
-
 
   }
 

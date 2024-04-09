@@ -15,8 +15,6 @@ import oogasalad.model.gameengine.turn.StandardTurnPolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
-import oogasalad.model.gameengine.collidable.Moveable;
-import oogasalad.model.gameengine.collidable.Surface;
 import oogasalad.model.gameengine.command.AdjustPointsCommand;
 import oogasalad.model.gameengine.command.AdvanceTurnCommand;
 import oogasalad.model.gameengine.command.Command;
