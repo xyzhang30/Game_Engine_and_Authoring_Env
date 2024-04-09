@@ -5,5 +5,7 @@ package oogasalad.model.gameparser.data;
  *
  * @author Judy He
  */
-public record PlayerVariables(int strokes, int finished) {}
+public record PlayerVariables(int strokes, int finished) {
+
+}
 

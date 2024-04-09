@@ -1,4 +1,4 @@
-package oogasalad.view.Screen;
+package oogasalad.view.GameScreens;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
  * @author Doga Ozmen
  */
 public class ControlPane extends HBox {
+
   private Button pauseButton;
   private Button saveButton;
 
@@ -23,7 +24,6 @@ public class ControlPane extends HBox {
     pauseButton = new Button("Pause");
     pauseButton.setFocusTraversable(false);
     pauseButton.setOnAction(e -> handlePause());
-
 
     // Initialize save button
     saveButton = new Button("Save");

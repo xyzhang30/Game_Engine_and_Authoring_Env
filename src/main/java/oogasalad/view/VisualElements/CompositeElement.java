@@ -1,18 +1,19 @@
 package oogasalad.view.VisualElements;
 
-import java.util.List;
-import javafx.scene.Node;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import javafx.scene.Node;
 import oogasalad.model.api.CollidableRecord;
 import oogasalad.model.api.ViewCollidableRecord;
 
 public class CompositeElement {
 
   private final Map<Integer, VisualElement> elementMap;
+
   public CompositeElement(List<ViewCollidableRecord> recordList) {
     elementMap = new HashMap<>();
-    for (ViewCollidableRecord viewRecord : recordList){
+    for (ViewCollidableRecord viewRecord : recordList) {
       elementMap.putIfAbsent(viewRecord.id(), new GameElement(viewRecord));
     }
   }

@@ -1,7 +1,8 @@
-package oogasalad.view.Screen;
+package oogasalad.view.GameScreens;
 
 public class ScoreTransitionScreen extends TransitionScreen {
-  private int score;
+
+  private final int score;
 
   public ScoreTransitionScreen(int par, int score) {
     super(); //get from parser

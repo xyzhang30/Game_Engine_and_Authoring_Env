@@ -1,8 +1,9 @@
-package oogasalad.view.Screen;
+package oogasalad.view.GameScreens;
 
 import javafx.scene.Parent;
 
-public class PauseScreen extends UIScreen{
+public class PauseScreen extends UIScreen {
+
   @Override
   public Parent getRoot() {
     return null;
