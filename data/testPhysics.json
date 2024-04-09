@@ -222,7 +222,7 @@
     ],
     "advance_round": [
       {
-        "AdvanceRoundCommand": []
+        "AdvanceRoundCheck": []
       }
     ]
   }
