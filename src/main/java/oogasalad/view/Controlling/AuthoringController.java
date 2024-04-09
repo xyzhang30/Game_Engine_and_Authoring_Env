@@ -2,6 +2,7 @@ package oogasalad.view.Controlling;
 
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import oogasalad.view.AuthoringScreens.BallSelectionScreen;
 import oogasalad.view.AuthoringScreens.GoalSelectionScreen;
 import oogasalad.view.AuthoringScreens.ImageType;
 import oogasalad.view.AuthoringScreens.ObstacleSelectionScreen;
@@ -32,6 +33,10 @@ public class AuthoringController {
       case GOAL -> {
         ObstacleSelectionScreen obstacleSelectionScreen = new ObstacleSelectionScreen(this, authoringBox);
         stage.setScene(obstacleSelectionScreen.getScene());
+      }
+      case OBSTACLE -> {
+        BallSelectionScreen ballSelectionScreen = new BallSelectionScreen(this, authoringBox);
+        stage.setScene(ballSelectionScreen.getScene());
       }
     }
   }
