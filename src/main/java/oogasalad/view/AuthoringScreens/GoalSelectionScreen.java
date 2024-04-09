@@ -5,7 +5,6 @@ import java.util.Map;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
@@ -39,6 +38,7 @@ public class GoalSelectionScreen extends AuthoringScreen {
    */
   void createScene() {
     root = new StackPane();
+    createTitle("Goal Selection");
     root.getChildren().add(authoringBox);
     createSizeAndAngleSliders();
     createShapeDisplayOptionBox();
@@ -172,8 +172,8 @@ public class GoalSelectionScreen extends AuthoringScreen {
 
   private void updateAdvanceRoundButtons() {
     Boolean advanceRound = advanceTurnMap.get(selectedShape);
-    if(advanceRound != null){
-      if(advanceRound) {
+    if (advanceRound != null) {
+      if (advanceRound) {
         trueButton.setSelected(true);
         falseButton.setSelected(false);
       } else {

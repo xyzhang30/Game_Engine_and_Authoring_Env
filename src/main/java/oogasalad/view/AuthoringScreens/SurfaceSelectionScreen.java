@@ -26,6 +26,7 @@ public class SurfaceSelectionScreen extends AuthoringScreen {
    */
   void createScene() {
     root = new StackPane();
+    createTitle("Background Selection");
     createAuthoringBox();
     createShapeDisplayOptionBox();
     createNextButton();
@@ -52,7 +53,8 @@ public class SurfaceSelectionScreen extends AuthoringScreen {
    * No objects on this screen are selectable, so update never occurs
    */
   //TODO: Is it ok to have empty method here
-  void updateOptionSelections() {}
+  void updateOptionSelections() {
+  }
 
   private void createAuthoringBox() {
     authoringBox.setMaxSize(authoringBoxWidth, authoringBoxHeight);

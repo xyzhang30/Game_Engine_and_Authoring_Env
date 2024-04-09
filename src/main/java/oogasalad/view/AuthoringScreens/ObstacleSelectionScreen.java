@@ -34,6 +34,7 @@ public class ObstacleSelectionScreen extends AuthoringScreen {
    */
   void createScene() {
     root = new StackPane();
+    createTitle("Obstacle Selection");
     root.getChildren().add(authoringBox);
     createSizeAndAngleSliders();
     createShapeDisplayOptionBox();

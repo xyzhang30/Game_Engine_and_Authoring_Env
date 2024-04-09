@@ -26,6 +26,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import oogasalad.view.Controlling.AuthoringController;
@@ -106,6 +108,19 @@ public abstract class AuthoringScreen {
         selectedShape.setFill(new ImagePattern(image));
       }
     });
+  }
+
+  /**
+   * Creates, positions, and styles title
+   *
+   * @param title the title text to display
+   */
+  void createTitle(String title) {
+    Text titleText = new Text(title);
+    titleText.setFont(Font.font("Arial", 30));
+    StackPane.setAlignment(titleText, Pos.TOP_LEFT);
+    StackPane.setMargin(titleText, new Insets(5, 0, 0, 50));
+    root.getChildren().add(titleText);
   }
 
   /**

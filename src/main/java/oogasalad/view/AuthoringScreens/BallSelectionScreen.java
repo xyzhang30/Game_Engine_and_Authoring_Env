@@ -10,7 +10,7 @@ import oogasalad.view.Controlling.AuthoringController;
  *
  * @author Jordan Haytaian, Doga Ozmen
  */
-public class BallSelectionScreen extends AuthoringScreen{
+public class BallSelectionScreen extends AuthoringScreen {
 
   public BallSelectionScreen(AuthoringController controller, StackPane authoringBox) {
     super(controller, authoringBox);
@@ -21,6 +21,7 @@ public class BallSelectionScreen extends AuthoringScreen{
    */
   void createScene() {
     root = new StackPane();
+    createTitle("Ball Selection");
     root.getChildren().add(authoringBox);
     createSizeAndAngleSliders();
     createShapeDisplayOptionBox();
@@ -31,7 +32,7 @@ public class BallSelectionScreen extends AuthoringScreen{
   /**
    * Called when user presses submit, triggers passing of info to back end
    */
-  void endSelection(){
+  void endSelection() {
     //TODO: implement
   }
 
@@ -45,7 +46,7 @@ public class BallSelectionScreen extends AuthoringScreen{
   }
 
   /**
-   * Updates ball options for currentlys selected ball
+   * Updates ball options for currently selected ball
    */
   void updateOptionSelections() {
 
