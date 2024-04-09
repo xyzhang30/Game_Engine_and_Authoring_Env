@@ -1,18 +1,11 @@
 package oogasalad.model;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import oogasalad.Pair;
 import oogasalad.model.api.data.CollidableObject;
 import oogasalad.model.api.data.CollisionRule;
 import oogasalad.model.api.data.Dimension;
@@ -36,12 +29,12 @@ public class GameBuilderTest {
   public void setup() {
     this.testBuilderDirector = new BuilderDirector();
 
-    CollidableObject co1 = new CollidableObject(1, List.of("visible, movable"),
+    CollidableObject co1 = new CollidableObject(1, List.of("visible", "surface"),
         Double.POSITIVE_INFINITY, new Position(0, 0), "rectangle", new Dimension(500, 500),
         List.of(100, 200, 100), 0.5, "sample.img");
-    CollidableObject co2 = new CollidableObject(2, List.of("visible", "movable"), 1,
+    CollidableObject co2 = new CollidableObject(2, List.of("visible", "movable"), 1.0,
         new Position(250, 450), "circle", new Dimension(2, 2), List.of(255, 255, 255), 0, "sample.img");
-    CollidableObject co3 = new CollidableObject(3, List.of("visible, surface"), 0,
+    CollidableObject co3 = new CollidableObject(3, List.of("visible", "surface"), 0.0,
         new Position(250, 50), "circle", new Dimension(5, 5), List.of(0, 0, 0), 0,
         "sample.img");
 
@@ -64,13 +57,16 @@ public class GameBuilderTest {
   }
 
   private static Rules getRules() {
-    Map<String, List<Double>> commands = Map.of("AdjustPointsCommand", List.of(1.0, 1.0), "AdvanceTurnCommand", List.of());
-    CollisionRule collisionRule = new CollisionRule(2, 3, List.of(commands));
+    Map<String, List<Double>> commands1 = Map.of("AdjustPointsCommand", List.of(1.0, 1.0));
+    Map<String, List<Double>> commands2 = Map.of("AdvanceTurnCommand", List.of());
+
+    CollisionRule collisionRule = new CollisionRule(2, 3, List.of(commands1, commands2));
     String turnPolicy = "StandardTurnPolicy";
     Map<String, List<Double>> winConditions = Map.of("NRoundsCompletedCommand", List.of(2.0));
-    Map<String, List<Double>> advance = Map.of("AdvanceTurnCommand", List.of(), "AdjustPointsCommand", List.of(1.0, 1.0));
+    Map<String, List<Double>> advance1 = Map.of("AdvanceTurnCommand", List.of());
+    Map<String, List<Double>> advance2 = Map.of("AdjustPointsCommand", List.of(1.0, 1.0));
 
-    Rules rules = new Rules(List.of(collisionRule), null, turnPolicy, winConditions, List.of(advance));
+    Rules rules = new Rules(List.of(collisionRule), null, turnPolicy, winConditions, List.of(advance1, advance2));
     return rules;
   }
 

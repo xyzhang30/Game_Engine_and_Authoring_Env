@@ -1,12 +1,14 @@
 package oogasalad.model.api.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.List;
 
 /**
  * Represents all JSON data configuring the game that gets serialized/deserialized into/from JSON
  */
 
+@JsonPropertyOrder({ "gameName", "collidable_objects", "players", "variables", "rules" })
 public class GameData {
 
   private @JsonProperty("gameName") String gameName;

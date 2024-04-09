@@ -31,9 +31,6 @@ public class GameLoaderModelTest {
   GameLoaderModel testGameLoaderModel;
   CollidableContainer mockCollidableContainer;
   PlayerContainer mockPlayerContainer;
-
-  Map<Integer, Collidable> collidables;
-
   @BeforeEach
   public void setup() {
     String gameTitle = "testSinglePlayerMiniGolf";
@@ -47,7 +44,7 @@ public class GameLoaderModelTest {
     Collidable c6 = new Collidable(6, 200, 490, 0, true, 0, 10, 500, "rectangle");
     Collidable c7 = new Collidable(7, 200, 0, 490, true, 0, 500, 10, "rectangle");
 
-    this.collidables = Map.of(1, c1, 2, c2, 3, c3, 4, c4, 5, c5, 6, c6, 7, c7);
+    Map<Integer, Collidable> collidables = Map.of(1, c1, 2, c2, 3, c3, 4, c4, 5, c5, 6, c6, 7, c7);
 
     this.mockCollidableContainer = new CollidableContainer(collidables);
 
