@@ -88,10 +88,9 @@
     ],
     "static_checks" : null,
     "turn_policy": "StandardTurnPolicy",
-<<<<<<< HEAD
-    "round_policy": "AdvanceRoundCheck",
-=======
->>>>>>> 2910cd2bad10c6cb287e0c79b455b15461bc4abc
+    "round_policy": {
+      "AdvanceRoundCheck": []
+    },
     "win_condition": {
       "NRoundsCompletedCommand": [2.0]
     },

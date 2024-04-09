@@ -114,7 +114,6 @@ public class GameLoaderModel extends GameLoader {
   }
 
 
-
   /**
    * Retrieves the collidable container.
    *
@@ -131,8 +130,8 @@ public class GameLoaderModel extends GameLoader {
       int maxRounds = gameData.getVariables().get(0).global().maxRounds();
       int maxTurns = gameData.getVariables().get(0).global().maxTurns();
 
+      //on collision rules
       for (CollisionRule rule : gameData.getRules().collisions()) {
-
         Pair pair = new Pair(rule.firstId(),
             rule.secondId()); //collision rule is the one with ids and command map
         List<Command> commands = new ArrayList<>();
@@ -147,8 +146,9 @@ public class GameLoaderModel extends GameLoader {
       }
 
       Class<?> cc = null;
-      List<Command> advanceTurnCmds = new ArrayList<>();
 
+      //advance turn commands
+      List<Command> advanceTurnCmds = new ArrayList<>();
       for (Map<String, List<Double>> condition : gameData.getRules().advanceTurn()) {
         for (String s : condition.keySet()) {
           cc = Class.forName(COMMAND_PATH + s);
@@ -158,8 +158,8 @@ public class GameLoaderModel extends GameLoader {
 
       }
 
+      //advance round commands
       List<Command> advanceRoundCmds = new ArrayList<>();
-
       for (Map<String, List<Double>> condition : gameData.getRules().advanceRound()) {
         for (String s : condition.keySet()) {
           cc = Class.forName(COMMAND_PATH + s);
@@ -169,18 +169,26 @@ public class GameLoaderModel extends GameLoader {
 
       }
 
+      //win condition command
       List<Double> params = new ArrayList<>();
-
       for (String condition : gameData.getRules().winCondition().keySet()) {
         cc = Class.forName(COMMAND_PATH + condition);
         params = gameData.getRules().winCondition().get(condition);
       }
-
       assert cc != null;
       Command winCondition = (Command) cc.getDeclaredConstructor(List.class).newInstance(params);
 
+      //round condition command
+      List<Command> roundPolicy = new ArrayList<>();
+      for (String condition : gameData.getRules().roundPolicy().keySet()) {
+        cc = Class.forName(COMMAND_PATH + condition);
+        params = gameData.getRules().winCondition().get(condition);
+        roundPolicy.add((Command) cc.getDeclaredConstructor(List.class).newInstance(gameData.getRules().roundPolicy().get(condition)));
+      }
+      Command roundPolicyCommand = roundPolicy.get(0);
+
       rulesRecord = new RulesRecord(maxRounds, maxTurns, commandMap,
-          winCondition, advanceTurnCmds, advanceRoundCmds, physicsMap);
+          winCondition, roundPolicyCommand, advanceRoundCmds, advanceTurnCmds, physicsMap);
 
     } catch (AssertionError | NoSuchMethodException | IllegalAccessException |
              InstantiationException |

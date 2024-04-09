@@ -209,7 +209,9 @@
       }
     ],
     "turn_policy": "StandardTurnPolicy",
-    "round_policy": "AdvanceRoundCheck",
+    "round_policy": {
+      "AdvanceRoundCheck": []
+    },
     "win_condition": {
       "NRoundsCompletedCommand": [2.0]
     },
