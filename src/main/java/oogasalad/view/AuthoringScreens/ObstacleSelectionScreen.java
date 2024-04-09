@@ -2,6 +2,7 @@ package oogasalad.view.AuthoringScreens;
 
 import java.util.HashMap;
 import java.util.Map;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -63,22 +64,42 @@ public class ObstacleSelectionScreen extends AuthoringScreen{
     shape.setOnMouseClicked(event -> {
       selectedShape = shape;
       ObstacleType type = obstacleTypeMap.getOrDefault(shape, null);
-      obstacleTypeComboBox.setValue(type); // sets the ComboBox to the shape's type or null if not present
+      obstacleTypeComboBox.setValue(type);
     });
   }
 
+
+  private boolean allSelectionsMade() {
+    for (Shape shape : selectableShapes) {
+      Bounds shapeBounds = shape.getBoundsInParent();
+      Bounds authoringBoxBounds = authoringBox.getBoundsInParent();
+
+      if (authoringBoxBounds.contains(shapeBounds)) {
+        if (!obstacleTypeMap.containsKey(shape)) {
+          return false; // Found an obstacle without an assigned type
+        }
+      }
+    }
+    return true; // All obstacles have an assigned type
+  }
   /**
    * When the next button is clicked, controller is prompted to start the next selection process
    */
+  @Override
   void endSelection() {
     printShapesAndTheirTypes();
-    addNewSelectionsToAuthoringBox();
-    controller.startNextSelection(ImageType.GOAL, authoringBox);
+    if (allSelectionsMade()) {
+      addNewSelectionsToAuthoringBox();
+      controller.startNextSelection(ImageType.BALL, authoringBox); // Adjust NEXT_TYPE to whatever comes next
+    } else {
+      // TODO: Show a message to the user explaining that not all obstacles have types assigned
+      System.out.println("Please assign types to all obstacles.");
+    }
   }
 
   private void printShapesAndTheirTypes() {
     obstacleTypeMap.forEach((shape, type) -> {
-      // Assuming shapes don't have a custom ID, we'll use the class name and hash code for identification
+      //implement custom ID, currently using class name and hash code for id
       String identifier = shape.getClass().getSimpleName() + "@" + Integer.toHexString(shape.hashCode());
       System.out.println("Shape: " + identifier + ", Type: " + type);
     });
