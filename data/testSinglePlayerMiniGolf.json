@@ -15,7 +15,8 @@
         "y_dimension": 500
       },
       "color": [100,200,100],
-      "friction": 0.5
+      "friction": 0.5,
+      "image": "sample.img"
     },
     {
       "collidable_id": 2,
@@ -31,7 +32,8 @@
         "y_dimension": 2
       },
       "color": [255,255,255],
-      "friction": 0
+      "friction": 0,
+      "image": "sample.img"
     },
     {
       "collidable_id": 3,
@@ -47,7 +49,8 @@
         "y_dimension": 5
       },
       "color": [0,0,0],
-      "friction": 0
+      "friction": 0,
+      "image": "sample.img"
     },
     {
       "collidable_id": 4,
@@ -63,7 +66,8 @@
         "y_dimension": 10
       },
       "color": [0,0,0],
-      "friction": 0
+      "friction": 0,
+      "image": "sample.img"
     },
     {
       "collidable_id": 5,
@@ -79,7 +83,8 @@
         "y_dimension": 500
       },
       "color": [0,0,0],
-      "friction": 0
+      "friction": 0,
+      "image": "sample.img"
     },
     {
       "collidable_id": 6,
@@ -95,7 +100,8 @@
         "y_dimension": 500
       },
       "color": [0,0,0],
-      "friction": 0
+      "friction": 0,
+      "image": "sample.img"
     },
     {
       "collidable_id": 7,
@@ -111,7 +117,8 @@
         "y_dimension": 10
       },
       "color": [0,0,0],
-      "friction": 0
+      "friction": 0,
+      "image": "sample.img"
     }
   ],
   "players": [
@@ -152,7 +159,7 @@
     "win_condition": {
       "NRoundsCompletedCommand": [2.0]
     },
-    "advance": [
+    "advance_turn": [
       {
         "AdvanceTurnCommand": []
       },

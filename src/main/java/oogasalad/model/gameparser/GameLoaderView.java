@@ -26,7 +26,7 @@ public class GameLoaderView extends GameLoader {
 
   private void createViewRecord() {
     viewCollidableRecords = new ArrayList<>();
-    for (CollidableObject o : gameData.collidableObjects()) {
+    for (CollidableObject o : gameData.getCollidableObjects()) {
       int id = o.collidableId();
       String shape = o.shape();
       List<Integer> colorRgb = new ArrayList<>();

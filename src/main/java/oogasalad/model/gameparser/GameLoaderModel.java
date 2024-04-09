@@ -59,11 +59,9 @@ public class GameLoaderModel extends GameLoader {
   // alisha
   protected void createPlayerContainer() {
     Map<Integer, Player> playerMap = new HashMap<>();
-    for (ParserPlayer p : gameData.players()) {
-      int id = gameData.players().get(0).playerId();
-      int myCollidableId = gameData.players().get(0).myCollidable();
-      Player player = new Player(id, getCollidableContainer().getCollidable(myCollidableId));
-      playerMap.put(id, player);
+    for (ParserPlayer p : gameData.getPlayers()) {
+      Player player = new Player(p.playerId(), getCollidableContainer().getCollidable(p.myCollidable()));
+      playerMap.put(p.playerId(), player);
     }
     this.playerContainer = new PlayerContainer(playerMap);
   }
@@ -78,19 +76,25 @@ public class GameLoaderModel extends GameLoader {
   }
 
   protected void createCollidableContainer() {
-    List<CollidableObject> collidableObjects = gameData.collidableObjects();
+    List<CollidableObject> collidableObjects = gameData.getCollidableObjects();
     List<Integer> moveables = new ArrayList<>();
     Map<Integer, Collidable> collidables = new HashMap<>();
     physicsMap = new HashMap<>();
     for (CollidableObject co : collidableObjects) {
       if (co.properties().contains("movable")) {
         moveables.add(co.collidableId());
-        for (Integer key : collidables.keySet()) {
-          physicsMap.put(new Pair(key, co.collidableId()), moveables.contains(key) ?
-              new MomentumHandler(key, co.collidableId()) :
-              new FrictionHandler(key, co.collidableId()));
-        }
       }
+        for (Integer key : collidables.keySet()) {
+          if(moveables.contains(key) && co.properties().contains("movable")) {
+            physicsMap.put(new Pair(key, co.collidableId()), new MomentumHandler(key,
+                co.collidableId()));
+          }
+          else if (moveables.contains(key) || co.properties().contains("movable")){
+            physicsMap.put(new Pair(key, co.collidableId()), new FrictionHandler(key,
+                co.collidableId()));
+          }
+        }
+
       collidables.put(co.collidableId(), createCollidable(co));
     }
     this.collidableContainer = new CollidableContainer(collidables);
@@ -124,10 +128,10 @@ public class GameLoaderModel extends GameLoader {
   protected void createRulesRecord() {
     try {
       Map<Pair, List<Command>> commandMap = new HashMap<>();
-      int maxRounds = gameData.variables().get(0).global().maxRounds();
-      int maxTurns = gameData.variables().get(0).global().maxTurns();
+      int maxRounds = gameData.getVariables().get(0).global().maxRounds();
+      int maxTurns = gameData.getVariables().get(0).global().maxTurns();
 
-      for (CollisionRule rule : gameData.rules().collisions()) {
+      for (CollisionRule rule : gameData.getRules().collisions()) {
 
         Pair pair = new Pair(rule.firstId(),
             rule.secondId()); //collision rule is the one with ids and command map
@@ -143,12 +147,23 @@ public class GameLoaderModel extends GameLoader {
       }
 
       Class<?> cc = null;
-      List<Command> advancecmds = new ArrayList<>();
+      List<Command> advanceTurnCmds = new ArrayList<>();
 
-      for (Map<String, List<Double>> condition : gameData.rules().advance()) {
+      for (Map<String, List<Double>> condition : gameData.getRules().advanceTurn()) {
         for (String s : condition.keySet()) {
           cc = Class.forName(COMMAND_PATH + s);
-          advancecmds.add(
+          advanceTurnCmds.add(
+              (Command) cc.getDeclaredConstructor(List.class).newInstance(condition.get(s)));
+        }
+
+      }
+
+      List<Command> advanceRoundCmds = new ArrayList<>();
+
+      for (Map<String, List<Double>> condition : gameData.getRules().advanceRound()) {
+        for (String s : condition.keySet()) {
+          cc = Class.forName(COMMAND_PATH + s);
+          advanceRoundCmds.add(
               (Command) cc.getDeclaredConstructor(List.class).newInstance(condition.get(s)));
         }
 
@@ -156,14 +171,16 @@ public class GameLoaderModel extends GameLoader {
 
       List<Double> params = new ArrayList<>();
 
-      for (String condition : gameData.rules().winCondition().keySet()) {
+      for (String condition : gameData.getRules().winCondition().keySet()) {
         cc = Class.forName(COMMAND_PATH + condition);
-        params = gameData.rules().winCondition().get(condition);
+        params = gameData.getRules().winCondition().get(condition);
       }
 
       assert cc != null;
+      Command winCondition = (Command) cc.getDeclaredConstructor(List.class).newInstance(params);
+
       rulesRecord = new RulesRecord(maxRounds, maxTurns, commandMap,
-          (Command) cc.getDeclaredConstructor(List.class).newInstance(params), advancecmds, physicsMap);
+          winCondition, advanceTurnCmds, advanceRoundCmds, physicsMap);
 
     } catch (AssertionError | NoSuchMethodException | IllegalAccessException |
              InstantiationException |
@@ -179,7 +196,7 @@ public class GameLoaderModel extends GameLoader {
 
   protected void createTurnPolicy() {
     try {
-      Class<?> cc = Class.forName(TURN_POLICY_PATH + gameData.rules().turnPolicy());
+      Class<?> cc = Class.forName(TURN_POLICY_PATH + gameData.getRules().turnPolicy());
       turnPolicy = (TurnPolicy) cc.getDeclaredConstructor(PlayerContainer.class)
           .newInstance(this.playerContainer);
     } catch (NoSuchMethodException | IllegalAccessException | InstantiationException |
