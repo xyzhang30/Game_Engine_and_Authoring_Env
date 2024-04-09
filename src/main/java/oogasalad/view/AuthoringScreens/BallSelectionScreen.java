@@ -44,4 +44,10 @@ public class BallSelectionScreen extends AuthoringScreen{
     return ImageType.BALL;
   }
 
+  /**
+   * Updates ball options for currentlys selected ball
+   */
+  void updateOptionSelections() {
+
+  }
 }

@@ -17,7 +17,8 @@ import oogasalad.view.Controlling.AuthoringController;
  *
  * @author Jordan Haytaian, Doga Ozmen
  */
-public class ObstacleSelectionScreen extends AuthoringScreen{
+public class ObstacleSelectionScreen extends AuthoringScreen {
+
   private ComboBox<ObstacleType> obstacleTypeComboBox;
 
   private Map<Shape, ObstacleType> obstacleTypeMap;
@@ -42,9 +43,18 @@ public class ObstacleSelectionScreen extends AuthoringScreen{
     scene = new Scene(root, screenWidth, screenHeight);
   }
 
+  /**
+   * Updates object type to reflect type of currently selected object
+   */
+  void updateOptionSelections() {
+    ObstacleType type = obstacleTypeMap.getOrDefault(selectedShape, null);
+    obstacleTypeComboBox.setValue(type);
+  }
+
   void createObstacleTypeDropdown() {
     obstacleTypeComboBox = new ComboBox<>();
-    obstacleTypeComboBox.getItems().addAll(ObstacleType.BOUNCE, ObstacleType.RESET, ObstacleType.SLOW);
+    obstacleTypeComboBox.getItems()
+        .addAll(ObstacleType.BOUNCE, ObstacleType.RESET, ObstacleType.SLOW);
     obstacleTypeComboBox.setPromptText("Select Obstacle Type");
     StackPane.setAlignment(obstacleTypeComboBox, Pos.BOTTOM_RIGHT);
     StackPane.setMargin(obstacleTypeComboBox, new Insets(0, 50, 350, 0));
@@ -59,16 +69,6 @@ public class ObstacleSelectionScreen extends AuthoringScreen{
     });
   }
 
-
-  private void makeSelectable(Shape shape) {
-    shape.setOnMouseClicked(event -> {
-      selectedShape = shape;
-      ObstacleType type = obstacleTypeMap.getOrDefault(shape, null);
-      obstacleTypeComboBox.setValue(type);
-    });
-  }
-
-
   private boolean allSelectionsMade() {
     for (Shape shape : selectableShapes) {
       Bounds shapeBounds = shape.getBoundsInParent();
@@ -82,15 +82,16 @@ public class ObstacleSelectionScreen extends AuthoringScreen{
     }
     return true; // All obstacles have an assigned type
   }
+
   /**
    * When the next button is clicked, controller is prompted to start the next selection process
    */
   @Override
   void endSelection() {
-    printShapesAndTheirTypes();
     if (allSelectionsMade()) {
       addNewSelectionsToAuthoringBox();
-      controller.startNextSelection(ImageType.OBSTACLE, authoringBox); // Adjust NEXT_TYPE to whatever comes next
+      controller.startNextSelection(ImageType.OBSTACLE,
+          authoringBox); // Adjust NEXT_TYPE to whatever comes next
     } else {
       // TODO: Show a message to the user explaining that not all obstacles have types assigned
       System.out.println("Please assign types to all obstacles.");
@@ -100,15 +101,10 @@ public class ObstacleSelectionScreen extends AuthoringScreen{
   private void printShapesAndTheirTypes() {
     obstacleTypeMap.forEach((shape, type) -> {
       //implement custom ID, currently using class name and hash code for id
-      String identifier = shape.getClass().getSimpleName() + "@" + Integer.toHexString(shape.hashCode());
+      String identifier =
+          shape.getClass().getSimpleName() + "@" + Integer.toHexString(shape.hashCode());
       System.out.println("Shape: " + identifier + ", Type: " + type);
     });
-  }
-
-  @Override
-  void createDraggableShapeTemplates() {
-    super.createDraggableShapeTemplates();
-    selectableShapes.forEach(this::makeSelectable);
   }
 
 
@@ -119,12 +115,5 @@ public class ObstacleSelectionScreen extends AuthoringScreen{
    */
   ImageType getImageType() {
     return ImageType.OBSTACLE;
-  }
-
-  /**
-   * Updates object type to reflect type of currently selected object
-   */
-  void updateOptionSelections() {
-
   }
 }
