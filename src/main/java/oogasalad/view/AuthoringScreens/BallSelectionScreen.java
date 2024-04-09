@@ -52,6 +52,6 @@ public class BallSelectionScreen extends AuthoringScreen {
   /**
    * Updates ball options for currently selected ball
    */
-  void updateOptionSelections() {//TODO: Can this be empty
+  void updateOptionSelections() {//TODO: Can this be empty/ are there ball options?
   }
 }
