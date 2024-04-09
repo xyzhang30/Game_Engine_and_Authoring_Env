@@ -12,6 +12,6 @@ public class AdvanceRoundCheck implements Command{
   @Override
   public double execute(GameEngine engine) {
     //checks
-    return 0;
+    return 0.0;
   }
 }

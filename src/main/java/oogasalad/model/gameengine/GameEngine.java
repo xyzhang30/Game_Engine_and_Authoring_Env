@@ -91,6 +91,7 @@ public class GameEngine implements ExternalGameEngine {
     if (collidables.checkStatic()) {
       updateHistory(); //private
       switchToCorrectStaticState(); //private
+
     } else {
       staticState = false;
     }
@@ -125,7 +126,6 @@ public class GameEngine implements ExternalGameEngine {
 
   public void advanceTurn() {
     turn = turnPolicy.getTurn();
-
   }
 
   public int getRound() {
@@ -179,6 +179,7 @@ public class GameEngine implements ExternalGameEngine {
       }
     }
     if (rules.winCondition().execute(this) == 1.0) {
+
       endGame();
     }
   }
@@ -187,8 +188,8 @@ public class GameEngine implements ExternalGameEngine {
     if (rules.winCondition().execute(this) == 1.0) {
       endGame();
     }
-     else if (rules.advanceRound().get(0).execute(this) == 1.0) {
-       advanceRound();
+     else if (rules.roundPolicy().execute(this) == 1.0) {
+      advanceRound();
     }
     else {
       for (Command cmd : rules.advanceTurn()) {
