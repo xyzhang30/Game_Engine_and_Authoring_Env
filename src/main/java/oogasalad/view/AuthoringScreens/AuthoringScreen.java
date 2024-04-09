@@ -175,8 +175,8 @@ public abstract class AuthoringScreen {
   /**
    * Creates next button for user to progress to next selection screen
    */
-  void createNextButton() {
-    Button nextButton = new Button("Next");
+  void createTransitionButton(String transitionText) {
+    Button nextButton = new Button(transitionText);
     nextButton.setPrefSize(100, 50);
     nextButton.setOnMouseClicked(event -> endSelection());
     StackPane.setAlignment(nextButton, Pos.BOTTOM_RIGHT);

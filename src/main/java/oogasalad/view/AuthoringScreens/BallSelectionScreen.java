@@ -1,6 +1,9 @@
 package oogasalad.view.AuthoringScreens;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import oogasalad.view.Controlling.AuthoringController;
 
@@ -26,6 +29,7 @@ public class BallSelectionScreen extends AuthoringScreen {
     createSizeAndAngleSliders();
     createShapeDisplayOptionBox();
     createDraggableShapeTemplates();
+    createTransitionButton("Submit");
     scene = new Scene(root, screenWidth, screenHeight);
   }
 
@@ -48,7 +52,6 @@ public class BallSelectionScreen extends AuthoringScreen {
   /**
    * Updates ball options for currently selected ball
    */
-  void updateOptionSelections() {
-
+  void updateOptionSelections() {//TODO: Can this be empty
   }
 }

@@ -29,7 +29,7 @@ public class SurfaceSelectionScreen extends AuthoringScreen {
     createTitle("Background Selection");
     createAuthoringBox();
     createShapeDisplayOptionBox();
-    createNextButton();
+    createTransitionButton("Next");
     scene = new Scene(root, screenWidth, screenHeight);
   }
 

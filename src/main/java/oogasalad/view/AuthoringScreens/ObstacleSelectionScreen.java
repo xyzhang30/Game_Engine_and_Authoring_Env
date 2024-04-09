@@ -39,7 +39,7 @@ public class ObstacleSelectionScreen extends AuthoringScreen {
     createSizeAndAngleSliders();
     createShapeDisplayOptionBox();
     createDraggableShapeTemplates();
-    createNextButton();
+    createTransitionButton("Next");
     createObstacleTypeDropdown();
     scene = new Scene(root, screenWidth, screenHeight);
   }

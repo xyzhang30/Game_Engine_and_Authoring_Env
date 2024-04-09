@@ -43,7 +43,7 @@ public class GoalSelectionScreen extends AuthoringScreen {
     createSizeAndAngleSliders();
     createShapeDisplayOptionBox();
     createDraggableShapeTemplates();
-    createNextButton();
+    createTransitionButton("Next");
     createGoalOptions();
     scene = new Scene(root, screenWidth, screenHeight);
   }
