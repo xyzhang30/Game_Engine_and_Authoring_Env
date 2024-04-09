@@ -99,15 +99,6 @@ public class ObstacleSelectionScreen extends AuthoringScreen {
     }
   }
 
-  private void printShapesAndTheirTypes() {
-    obstacleTypeMap.forEach((shape, type) -> {
-      //implement custom ID, currently using class name and hash code for id
-      String identifier =
-          shape.getClass().getSimpleName() + "@" + Integer.toHexString(shape.hashCode());
-      System.out.println("Shape: " + identifier + ", Type: " + type);
-    });
-  }
-
 
   /**
    * Returns obstacle image type indicating that user is placing obstacle objects
