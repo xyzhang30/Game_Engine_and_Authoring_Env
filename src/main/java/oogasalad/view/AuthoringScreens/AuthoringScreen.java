@@ -378,6 +378,9 @@ public abstract class AuthoringScreen {
       case OBSTACLE -> {
         return path + "/data/obstacle_images";
       }
+      case BALL -> {
+        return path + "/data/ball_images";
+      }
       default -> {
         return path + "/data";
       }
