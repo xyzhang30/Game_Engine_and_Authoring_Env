@@ -90,7 +90,7 @@ public class ObstacleSelectionScreen extends AuthoringScreen{
     printShapesAndTheirTypes();
     if (allSelectionsMade()) {
       addNewSelectionsToAuthoringBox();
-      controller.startNextSelection(ImageType.BALL, authoringBox); // Adjust NEXT_TYPE to whatever comes next
+      controller.startNextSelection(ImageType.OBSTACLE, authoringBox); // Adjust NEXT_TYPE to whatever comes next
     } else {
       // TODO: Show a message to the user explaining that not all obstacles have types assigned
       System.out.println("Please assign types to all obstacles.");
@@ -110,7 +110,6 @@ public class ObstacleSelectionScreen extends AuthoringScreen{
     super.createDraggableShapeTemplates();
     selectableShapes.forEach(this::makeSelectable);
   }
-
 
 
   /**
