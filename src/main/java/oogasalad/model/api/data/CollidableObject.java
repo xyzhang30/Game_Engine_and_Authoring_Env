@@ -15,6 +15,8 @@ public record CollidableObject(@JsonProperty("collidable_id") int collidableId,
                                String shape,
                                Dimension dimension,
                                List<Integer> color,
-                               double friction) {
+                               double friction,
+                               String image
+                               ) {
 
 }
