@@ -1,0 +1,128 @@
+{
+  "gameName": "testPhysics",
+  "collidable_objects": [
+    {
+      "collidable_id": 1,
+      "properties": ["visible", "movable"],
+      "mass": 100,
+      "position": {
+        "x_position": -100,
+        "y_position": 0
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 5,
+        "y_dimension": 5
+      },
+      "color": [100,200,100],
+      "friction": 0
+    },
+    {
+      "collidable_id": 2,
+      "properties": ["visible", "movable"],
+      "mass": 100,
+      "position": {
+        "x_position": -100,
+        "y_position": 100
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 5,
+        "y_dimension": 5
+      },
+      "color": [100,200,100],
+      "friction": 0
+    },
+    {
+      "collidable_id": 3,
+      "properties": ["visible", "surface"],
+      "mass": 0,
+      "position": {
+        "x_position": 0,
+        "y_position": 0
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "color": [0,0,0],
+      "friction": 0
+    },
+    {
+      "collidable_id": 4,
+      "properties": ["visible", "surface"],
+      "mass": 0,
+      "position": {
+        "x_position": -200,
+        "y_position": -200
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 400,
+        "y_dimension": 400
+      },
+      "color": [0,0,0],
+      "friction": 0.05
+    }
+  ],
+  "players": [
+    {
+      "player_id": 1,
+      "my_collidable": 1
+    },
+    {
+      "player_id": 2,
+      "my_collidable": 2
+    }
+  ],
+  "variables": [
+    {
+      "global": {
+        "max_turns": 1,
+        "max_rounds": 2
+      },
+      "player": {
+        "strokes": 0,
+        "finished": 0
+      }
+    }
+  ],
+  "rules": {
+    "collisions": [
+      {
+        "first_id": 1,
+        "second_id": 10,
+        "command": [
+          {
+            "AdjustPointsCommand": [1.0,1.0]
+          },
+          {
+            "AdjustPointsCommand": [1.0,1.0]
+          }
+        ]
+      },
+      {
+        "first_id": 1,
+        "second_id": 5,
+        "command": [
+          {
+            "UndoTurnCommand": []
+          }
+        ]
+      }
+    ],
+    "turn_policy": "StandardTurnPolicy",
+    "win_condition": {
+      "NRoundsCompletedCommand": [2.0]
+    },
+    "advance": [
+      {
+        "AdvanceTurnCommand": []
+      },
+      {
+        "AdjustPointsCommand": [1.0,1.0]
+      }
+    ]
+  }
+}
