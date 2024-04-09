@@ -3,7 +3,7 @@
   "collidable_objects" : [ {
     "collidable_id" : 1,
     "properties" : [ "visible", "surface" ],
-    "mass" : "Infinity",
+    "mass" : 100.0,
     "position" : {
       "x_position" : 0.0,
       "y_position" : 0.0

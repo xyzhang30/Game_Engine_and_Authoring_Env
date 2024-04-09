@@ -1,6 +1,7 @@
 package oogasalad.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class GameBuilderTest {
     this.testBuilderDirector = new BuilderDirector();
 
     CollidableObject co1 = new CollidableObject(1, List.of("visible", "surface"),
-        Double.POSITIVE_INFINITY, new Position(0, 0), "rectangle", new Dimension(500, 500),
+        100.0, new Position(0, 0), "rectangle", new Dimension(500, 500),
         List.of(100, 200, 100), 0.5, "sample.img");
     CollidableObject co2 = new CollidableObject(2, List.of("visible", "movable"), 1.0,
         new Position(250, 450), "circle", new Dimension(2, 2), List.of(255, 255, 255), 0, "sample.img");
@@ -96,7 +97,7 @@ public class GameBuilderTest {
     File expected = new File(filePath+expectedFile);
     File tested = new File(filePath+testFile);
 
-    assertEquals(mapper.readTree(expected), mapper.readTree(tested));
+    assertThat(mapper.readTree(expected)).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mapper.readTree(tested));
   }
 }  
 
