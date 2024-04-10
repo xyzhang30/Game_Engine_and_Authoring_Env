@@ -7,14 +7,15 @@ import java.util.Stack;
 import javafx.collections.ObservableMap;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Player {
 
+  private static final Logger LOGGER = LogManager.getLogger(Player.class);
   private final int playerId;
   private final Collidable myCollidable;
   private final Map<String, Double> variables;
-
   private Stack<ObservableMap<String, Double>> variableStack;
 
   public Player(int id, Collidable collidable) {
@@ -37,6 +38,7 @@ public class Player {
     try {
       return new PlayerRecord(playerId, variables.get("score"), myCollidable.getId(), active);
     } catch (NullPointerException e) {
+      LOGGER.warn("Invalid player");
       return null;
     }
   }

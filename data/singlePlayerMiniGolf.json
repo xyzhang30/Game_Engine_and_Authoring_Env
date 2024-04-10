@@ -15,7 +15,8 @@
         "y_dimension": 300
       },
       "friction": 0.04,
-      "color": [124,252,0]
+      "color": [124,252,0],
+      "image": "sample.img"
     },
 
 
@@ -33,7 +34,8 @@
         "y_dimension": 700
       },
       "friction": 0.04,
-      "color": [124,252,0]
+      "color": [124,252,0],
+      "image": "sample.img"
     },
 
     {
@@ -50,7 +52,8 @@
         "y_dimension": 300
       },
       "friction": 0.9,
-      "color": [124,252,0]
+      "color": [124,252,0],
+      "image": "sample.img"
     },
 
     {
@@ -66,6 +69,8 @@
         "x_dimension": 334,
         "y_dimension": 300
       },
+      "image": "sample.img",
+      "friction": 0,
       "color": [230,159,0]
     },
 
@@ -83,7 +88,8 @@
         "y_dimension": 100
       },
       "friction": 0.99,
-      "color": [0,100,0]
+      "color": [0,100,0],
+      "image": "sample.img"
     },
 
     {
@@ -99,7 +105,9 @@
         "x_dimension": 333,
         "y_dimension": 300
       },
-      "color": [0,0,255]
+      "friction": 0.9,
+      "color": [0,0,255],
+      "image": "sample.img"
     },
 
     {
@@ -116,7 +124,8 @@
         "y_dimension": 100
       },
       "friction": 0.04,
-      "color": [124,252,0]
+      "color": [124,252,0],
+      "image": "sample.img"
     },
 
     {
@@ -132,7 +141,9 @@
         "x_dimension": 10,
         "y_dimension": 10
       },
-      "color": [255,255,255]
+      "friction": 0,
+      "color": [255,255,255],
+      "image": "sample.img"
     },
 
 
@@ -149,7 +160,9 @@
         "x_dimension": 20,
         "y_dimension": 20
       },
-      "color": [0,0,0]
+      "friction": 0,
+      "color": [0,0,0],
+      "image": "sample.img"
     },
 
     {
@@ -162,10 +175,12 @@
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 20,
+        "x_dimension": 50,
         "y_dimension": 1000
       },
-      "color": [0,0,0]
+      "friction": 0,
+      "color": [0,0,0],
+      "image": "sample.img"
     },
 
     {
@@ -179,9 +194,11 @@
       "shape": "rectangle",
       "dimension": {
         "x_dimension": 1000,
-        "y_dimension": 20
+        "y_dimension": 50
       },
-      "color": [0,0,0]
+      "friction": 0,
+      "color": [0,0,0],
+      "image": "sample.img"
     },
 
     {
@@ -195,9 +212,11 @@
       "shape": "rectangle",
       "dimension": {
         "x_dimension": 1000,
-        "y_dimension": 20
+        "y_dimension": 50
       },
-      "color": [0,0,0]
+      "friction": 0,
+      "color": [0,0,0],
+      "image": "sample.img"
     },
 
     {
@@ -210,10 +229,12 @@
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 20,
+        "x_dimension": 50,
         "y_dimension": 1000
       },
-      "color": [0,0,0]
+      "friction": 0,
+      "color": [0,0,0],
+      "image": "sample.img"
     }
 
   ],
@@ -260,15 +281,23 @@
       }
     ],
     "turn_policy": "StandardTurnPolicy",
+    "round_policy": {
+      "AdvanceRoundCheck": []
+    },
     "win_condition": {
       "NRoundsCompletedCommand": [1]
     },
-    "advance": [
+    "advance_turn": [
       {
         "AdvanceTurnCommand": []
       },
       {
         "AdjustPointsCommand": [1,1]
+      }
+    ],
+    "advance_round": [
+      {
+        "AdvanceRoundCommand": []
       }
     ]
   }

@@ -2,27 +2,30 @@ package oogasalad.model.gameengine.collidable;
 
 import java.util.List;
 import java.util.Stack;
+import java.util.function.Supplier;
 import oogasalad.model.api.CollidableRecord;
 
-public abstract class Collidable {
+public class Collidable {
 
   private final double myMass;
+  private final int myId;
+  private final double myWidth;
+  private final double myHeight;
+  private final String myShape;
   private double myX;
   private double myY;
   private double myVelocityX;
   private double myVelocityY;
-  private final int myId;
   private double myNextX;
   private double myNextY;
   private double myNextVelocityX;
   private double myNextVelocityY;
   private boolean myVisible;
-  private final double myWidth;
-  private final double myHeight;
+  private final double myMu;
   private Stack<List<Integer>> locationHistory;
 
   public Collidable(int id, double mass, double x, double y,
-      boolean visible, double width, double height) {
+      boolean visible, double mu, double width, double height, String shape) {
     myId = id;
     myMass = mass;
     myX = x;
@@ -34,38 +37,28 @@ public abstract class Collidable {
     myVisible = visible;
     myWidth = width;
     myHeight = height;
+    myShape = shape;
+    myMu = mu;
+
   }
 
-  public void onCollision(Collidable other, double dt) {
-    double[] result = other.calculateNewSpeed(this, dt);
-
-    myNextVelocityX = result[0];
-    myNextVelocityY = result[1];
-  }
-
-  public void updatePostCollisionVelocity() {
+  protected void updatePostCollisionVelocity() {
     myVelocityY = myNextVelocityY;
     myVelocityX = myNextVelocityX;
-    if (Math.abs(myVelocityX) < .00001) {
-      myVelocityX = 0;
-    }
-    if (Math.abs(myVelocityY) < .00001) {
-      myVelocityY = 0;
-    }
   }
 
-  public abstract double[] calculateNewSpeed(Collidable other, double dt);
 
   public CollidableRecord getCollidableRecord() {
-    return new CollidableRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible);
+    return new CollidableRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible, myMu
+        , myWidth, myHeight);
   }
 
-  public void move(double dt) {
+  protected void move(double dt) {
     myNextX = myX + dt * myVelocityX;
     myNextY = myY + dt * myVelocityY;
   }
 
-  public void update() {
+  protected void update() {
     myX = myNextX;
     myY = myNextY;
   }
@@ -75,7 +68,6 @@ public abstract class Collidable {
     myNextVelocityX = myVelocityX;
     myVelocityY = magnitude * Math.sin(direction);
     myNextVelocityY = myVelocityY;
-
   }
 
   protected double getVelocityX() {
@@ -86,16 +78,8 @@ public abstract class Collidable {
     return myVelocityY;
   }
 
-  protected double getMass() {
-    return myMass;
-  }
-
   public int getId() {
     return myId;
-  }
-
-  protected boolean getVisible() {
-    return myVisible;
   }
 
   protected double getX() {
@@ -112,6 +96,10 @@ public abstract class Collidable {
 
   protected double getHeight() {
     return myHeight;
+  }
+
+  protected String getShape() {
+    return myShape;
   }
 
   protected void setFromRecord(CollidableRecord record) {
@@ -145,5 +133,15 @@ public abstract class Collidable {
         + "  \"myHeight\": " + myHeight + ",\n"
         + "}\n";
     return sb;
+  }
+
+  private void setSpeed(double speedX, double speedY) {
+    myNextVelocityX = speedX;
+    myNextVelocityY = speedY;
+  }
+
+  protected void calculateNewSpeeds(Supplier<List<Double>> firstInfo) {
+    List<Double> newSpeeds = firstInfo.get();
+    setSpeed(newSpeeds.get(0), newSpeeds.get(1));
   }
 }
