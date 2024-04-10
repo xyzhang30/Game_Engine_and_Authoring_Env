@@ -92,10 +92,11 @@ public class GameScreen extends UIScreen {
     for (int i : cm.idList()) {
       globalView.getChildren().add(cm.getNode(i));
     }
-
-    AnchorPane localView = new AnchorPane();
-    localView.getChildren().add(globalView);
-    root.setCenter(localView);
+    root.setCenter(globalView);
+    globalView.setScaleX(0.5);
+    globalView.setScaleY(0.5);
+    globalView.setTranslateX(-globalView.getBoundsInParent().getWidth()/2);
+    globalView.setTranslateY(-globalView.getBoundsInParent().getHeight()/2);
   }
 
   private Rectangle setupPowerBar() {

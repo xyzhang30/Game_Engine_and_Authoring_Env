@@ -26,7 +26,7 @@ public class Main extends Application {
         new StackPane(), map, new ArrayList<>());
     primaryStage.setScene(scene.getScene());
     primaryStage.show();
-    //Window mainWindow = new Window(primaryStage, 0);
+//    Window mainWindow = new Window(primaryStage, 0);
   }
 //
 //  /**
