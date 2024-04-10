@@ -82,6 +82,15 @@ public class Collidable {
     return myId;
   }
 
+  public void setVisible(boolean state) {
+    myVisible = state;
+  }
+
+
+  public boolean getVisible() {
+    return myVisible;
+  }
+
   protected double getX() {
     return myX;
   }

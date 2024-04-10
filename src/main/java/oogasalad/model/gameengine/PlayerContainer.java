@@ -60,4 +60,14 @@ public class PlayerContainer {
       getPlayer(id).setObservableVariables(staticStateVariables.peek().get(id));
     }
   }
+
+  public boolean allPlayersCompletedRound() {
+    for(Player p : myPlayers.values()) {
+
+      if (!p.isRoundCompleted()) {
+        return false;
+      }
+    }
+    return true;
+  }
 }

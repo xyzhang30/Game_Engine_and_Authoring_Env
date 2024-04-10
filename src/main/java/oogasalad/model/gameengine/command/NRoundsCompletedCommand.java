@@ -2,6 +2,7 @@ package oogasalad.model.gameengine.command;
 
 import java.util.List;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.PlayerContainer;
 
 public class NRoundsCompletedCommand extends CheckEndConditionCommand {
 
@@ -11,7 +12,7 @@ public class NRoundsCompletedCommand extends CheckEndConditionCommand {
 
   @Override
   protected boolean evaluateCondition(GameEngine engine, List<Double> arguments) {
-    return engine.getRound() > engine.getRules().maxRounds();
+    return engine.getRound() > arguments.get(0);
   }
 
 }

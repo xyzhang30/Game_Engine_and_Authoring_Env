@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 public class Player {
 
   private static final Logger LOGGER = LogManager.getLogger(Player.class);
+  private boolean roundCompleted = false;
   private final int playerId;
   private final Collidable myCollidable;
   private final Map<String, Double> variables;
@@ -21,6 +22,7 @@ public class Player {
   public Player(int id, Collidable collidable) {
     playerId = id;
     myCollidable = collidable;
+    roundCompleted = false;
     variables = new HashMap<>();
     variables.put("score", 0.0);
   }
@@ -51,12 +53,18 @@ public class Player {
     return Collections.unmodifiableMap(variables);
   }
 
+  public void setRoundCompleted(boolean isCompleted) {
+    roundCompleted = isCompleted;
+  }
+
+  public boolean isRoundCompleted() {
+    return roundCompleted;
+  }
   public void setObservableVariables(Map<String, Double> variablesOld) {
     variables.clear();
     for (String key : variablesOld.keySet()) {
       variables.put(key, variablesOld.get(key));
     }
-
   }
 
 }

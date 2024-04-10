@@ -292,11 +292,12 @@
         "AdvanceTurnCommand": []
       },
       {
-        "AdjustPointsCommand": [1,1]
+        "AdjustActivePointsCommand": [1.0]
       }
     ],
     "advance_round": [
       {
+        "AdjustActivePointsCommand": [1.0],
         "AdvanceRoundCommand": []
       }
     ]

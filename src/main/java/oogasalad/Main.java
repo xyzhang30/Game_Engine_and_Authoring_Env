@@ -26,7 +26,7 @@ public class Main extends Application {
 //   */
 //  public static void main(String[] args) {
 //    Main m = new Main();
-//    System.out.println(m.getVersion());
+//    System.out.println(m.getVersion()
 //  }
 //
 //  /**
