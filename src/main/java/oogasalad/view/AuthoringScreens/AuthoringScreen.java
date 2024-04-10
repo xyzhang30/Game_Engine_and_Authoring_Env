@@ -12,6 +12,8 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -146,16 +148,21 @@ public abstract class AuthoringScreen {
         new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
     );
     File selectedFile = fileChooser.showOpenDialog(new Stage());
-    String imagePath = selectedFile.getAbsolutePath();
-
-    try {
-      File file = new File(imagePath);
-      String imageUrl = file.toURI().toURL().toString(); // Convert the file path to a URL
-      return new Image(imageUrl);
-    } catch (MalformedURLException e) {
-      return null;
-      //TODO: exception handling
+    if (selectedFile != null) {
+      String imagePath = selectedFile.getAbsolutePath();
+      try {
+        File file = new File(imagePath);
+        String imageUrl = file.toURI().toURL().toString(); // Convert the file path to a URL
+        return new Image(imageUrl);
+      } catch (MalformedURLException e) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("Invalid URL");
+        alert.showAndWait();
+      }
     }
+    return null;
   }
 
   /**
