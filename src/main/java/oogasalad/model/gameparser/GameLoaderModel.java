@@ -14,6 +14,8 @@ import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.condition.Condition;
+import oogasalad.model.gameengine.statichandlers.GenericStaticStateHandler;
+import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListBuilder;
 import oogasalad.model.gameengine.turn.TurnPolicy;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
@@ -32,8 +34,8 @@ import org.apache.logging.log4j.Logger;
  */
 public class GameLoaderModel extends GameLoader {
 
+  protected static final String BASE_PATH = "oogasalad.model.gameengine.";
   private static final Logger LOGGER = LogManager.getLogger(GameLoaderModel.class);
-  public static final String BASE_PATH = "oogasalad.model.gameengine.";
   private PlayerContainer playerContainer;
   private CollidableContainer collidableContainer;
   private RulesRecord rulesRecord;
@@ -41,6 +43,8 @@ public class GameLoaderModel extends GameLoader {
   private List<Integer> movables;
   private List<Entry<BiPredicate<Integer, CollidableObject>,
       BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList;
+
+  private GenericStaticStateHandler staticHandler;
 
 
   /**
@@ -52,10 +56,17 @@ public class GameLoaderModel extends GameLoader {
     super(gameTitle);
     movables = new ArrayList<>();
     physicsMap = new HashMap<>();
+    staticHandler = StaticStateHandlerLinkedListBuilder.buildLinkedList(List.of(
+        "GameOverStaticStateHandler",
+        "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
+
+
     createCollisionTypeMap();
     createCollidableContainer();
     createPlayerContainer();
     createRulesRecord();
+    StaticStateHandlerLinkedListBuilder builder = new StaticStateHandlerLinkedListBuilder();
+
 
   }
 
@@ -139,7 +150,7 @@ public class GameLoaderModel extends GameLoader {
     Condition roundPolicy = createCondition(gameData.getRules().roundPolicy());
     TurnPolicy turnPolicy = createTurnPolicy();
     rulesRecord = new RulesRecord(commandMap,
-          winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy);
+          winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy, staticHandler);
     }
 
   private TurnPolicy createTurnPolicy() {

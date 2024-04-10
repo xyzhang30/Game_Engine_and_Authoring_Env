@@ -19,6 +19,8 @@ import oogasalad.model.gameengine.command.AdvanceRoundCommand;
 import oogasalad.model.gameengine.condition.AllPlayersCompletedRoundCondition;
 import oogasalad.model.gameengine.condition.Condition;
 import oogasalad.model.gameengine.condition.NRoundsCompletedCondition;
+import oogasalad.model.gameengine.statichandlers.GenericStaticStateHandler;
+import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListBuilder;
 import oogasalad.model.gameengine.turn.StandardTurnPolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
 import oogasalad.model.gameengine.collidable.Collidable;
@@ -108,6 +110,10 @@ public class GameLoaderModelTest {
     Command advanceC3 = new AdvanceRoundCommand(List.of());
     List<Command> advanceRound = List.of(advanceC3);
 
+    GenericStaticStateHandler mockStaticStateHandler = StaticStateHandlerLinkedListBuilder.buildLinkedList(List.of(
+        "GameOverStaticStateHandler",
+        "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
+
 
     Map<Pair, PhysicsHandler> physicsMap = new HashMap<>();
     physicsMap.put(new Pair(1, 2), new FrictionHandler(1, 2));
@@ -132,7 +138,8 @@ public class GameLoaderModelTest {
     physicsMap.put(new Pair(1, 7), new FrictionHandler(1, 7));
 
     RulesRecord mockRulesRecord = new RulesRecord(collisionHandlers, winCondition, roundPolicy,
-        advanceTurn, advanceRound, physicsMap, mockTurnPolicy);
+        advanceTurn, advanceRound, physicsMap, mockTurnPolicy, mockStaticStateHandler);
+
 
     assertThat(testGameLoaderModel.getRulesRecord()).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mockRulesRecord);
   }

@@ -12,10 +12,10 @@ import org.apache.logging.log4j.Logger;
 public class Player {
 
   private static final Logger LOGGER = LogManager.getLogger(Player.class);
-  private boolean roundCompleted = false;
   private final int playerId;
   private final int myCollidable;
   private final Map<String, Double> variables;
+  private boolean roundCompleted = false;
   private Stack<ObservableMap<String, Double>> variableStack;
 
   public Player(int id, int collidable) {
@@ -52,18 +52,19 @@ public class Player {
     return Collections.unmodifiableMap(variables);
   }
 
-  public void setRoundCompleted(boolean isCompleted) {
-    roundCompleted = isCompleted;
-  }
-
-  public boolean isRoundCompleted() {
-    return roundCompleted;
-  }
   public void setObservableVariables(Map<String, Double> variablesOld) {
     variables.clear();
     for (String key : variablesOld.keySet()) {
       variables.put(key, variablesOld.get(key));
     }
+  }
+
+  public boolean isRoundCompleted() {
+    return roundCompleted;
+  }
+
+  public void setRoundCompleted(boolean isCompleted) {
+    roundCompleted = isCompleted;
   }
 
 }

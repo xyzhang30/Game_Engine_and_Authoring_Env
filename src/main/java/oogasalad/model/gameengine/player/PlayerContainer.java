@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.player.Player;
 
 public class PlayerContainer {
 
@@ -63,7 +62,7 @@ public class PlayerContainer {
   }
 
   public boolean allPlayersCompletedRound() {
-    for(Player p : myPlayers.values()) {
+    for (Player p : myPlayers.values()) {
 
       if (!p.isRoundCompleted()) {
         return false;
