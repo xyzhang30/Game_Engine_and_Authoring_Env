@@ -13,11 +13,11 @@ import oogasalad.view.Controlling.AuthoringController;
  *
  * @author Jordan Haytaian, Doga Ozmen
  */
-public class SurfaceSelectionScreen extends AuthoringScreen {
+public class BackgroundSelectionScreen extends AuthoringScreen {
 
   private Rectangle background;
 
-  public SurfaceSelectionScreen(AuthoringController controller, StackPane authoringBox) {
+  public BackgroundSelectionScreen(AuthoringController controller, StackPane authoringBox) {
     super(controller, authoringBox);
   }
 

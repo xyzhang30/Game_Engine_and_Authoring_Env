@@ -99,6 +99,7 @@
         "x_dimension": 333,
         "y_dimension": 300
       },
+      "friction": 0.9,
       "color": [0,0,255]
     },
 
