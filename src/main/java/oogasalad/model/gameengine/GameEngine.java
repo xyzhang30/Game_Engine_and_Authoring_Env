@@ -11,7 +11,7 @@ import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.Command;
-import oogasalad.model.gameengine.turn.TurnPolicy;
+import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,7 +28,6 @@ public class GameEngine implements ExternalGameEngine {
   private RulesRecord rules;
   private CollidableContainer collidables;
   private Map<Pair, List<Command>> collisionHandlers;
-  private TurnPolicy turnPolicy;
   private int round;
   private int turn;
   private boolean gameOver;
@@ -54,7 +53,6 @@ public class GameEngine implements ExternalGameEngine {
     rules = loader.getRulesRecord();
     collidables = loader.getCollidableContainer();
     collisionHandlers = rules.collisionHandlers();
-    turnPolicy = loader.getTurnPolicy();
     staticStateStack = new Stack<>();
     staticStateStack.push(
         new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
@@ -125,9 +123,9 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   public void advanceTurn() {
-    turn = turnPolicy.getTurn();
+    turn = rules.turnPolicy().getTurn();
     while(playerContainer.getPlayer(turn).isRoundCompleted()) {
-      turn = turnPolicy.getTurn();
+      turn = rules.turnPolicy().getTurn();
     }
   }
 
@@ -181,17 +179,17 @@ public class GameEngine implements ExternalGameEngine {
         }
       }
     }
-    if (rules.winCondition().execute(this) == 1.0) {
+    if (rules.winCondition().evaluate(this)) {
       endGame();
     }
   }
 
   private void switchToCorrectStaticState() {
-    if (rules.winCondition().execute(this) == 1.0) {
+    if (rules.winCondition().evaluate(this)) {
       endGame();
       return;
     }
-    if (rules.roundPolicy().execute(this) == 1.0) {
+    if (rules.roundPolicy().evaluate(this)) {
       advanceRound();
     }
     else {

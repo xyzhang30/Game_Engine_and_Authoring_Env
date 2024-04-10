@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine;
+package oogasalad.model.gameengine.player;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Stack;
 import javafx.collections.ObservableMap;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.collidable.Collidable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,11 +14,11 @@ public class Player {
   private static final Logger LOGGER = LogManager.getLogger(Player.class);
   private boolean roundCompleted = false;
   private final int playerId;
-  private final Collidable myCollidable;
+  private final int myCollidable;
   private final Map<String, Double> variables;
   private Stack<ObservableMap<String, Double>> variableStack;
 
-  public Player(int id, Collidable collidable) {
+  public Player(int id, int collidable) {
     playerId = id;
     myCollidable = collidable;
     roundCompleted = false;
@@ -38,7 +37,7 @@ public class Player {
   protected PlayerRecord getPlayerRecord(boolean active) {
 
     try {
-      return new PlayerRecord(playerId, variables.get("score"), myCollidable.getId(), active);
+      return new PlayerRecord(playerId, variables.get("score"), myCollidable, active);
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");
       return null;
