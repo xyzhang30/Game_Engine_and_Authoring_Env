@@ -42,13 +42,13 @@ public class GameLoaderModelTest {
     String gameTitle = "testSinglePlayerMiniGolf";
     this.testGameLoaderModel = new GameLoaderModel(gameTitle);
 
-    Collidable c1 = new Collidable(1, Double.POSITIVE_INFINITY, 0,0, true, 0.5, 500, 500, "rectangle");
-    Collidable c2 = new Collidable(2, 1, 250, 450, true, 0, 2, 2, "circle");
-    Collidable c3 = new Collidable(3, 0, 250,50, true, 0, 5, 5, "circle");
-    Collidable c4 = new Collidable(4, 200, 0, 0, true, 0, 500, 10, "rectangle");
-    Collidable c5 = new Collidable(5, 200, 0, 0, true, 0, 10, 500, "rectangle");
-    Collidable c6 = new Collidable(6, 200, 490, 0, true, 0, 10, 500, "rectangle");
-    Collidable c7 = new Collidable(7, 200, 0, 490, true, 0, 500, 10, "rectangle");
+    Collidable c1 = new Collidable(1, Double.POSITIVE_INFINITY, 0,0, true, 0.5, 0.5, 500, 500, "rectangle");
+    Collidable c2 = new Collidable(2, 1, 250, 450, true, 0, 0, 2, 2, "circle");
+    Collidable c3 = new Collidable(3, 0, 250,50, true, 0,0, 5, 5, "circle");
+    Collidable c4 = new Collidable(4, 200, 0, 0, true, 0,0, 500, 10, "rectangle");
+    Collidable c5 = new Collidable(5, 200, 0, 0, true, 0,0, 10, 500, "rectangle");
+    Collidable c6 = new Collidable(6, 200, 490, 0, true, 0,0, 10, 500, "rectangle");
+    Collidable c7 = new Collidable(7, 200, 0, 490, true, 0,0, 500, 10, "rectangle");
 
     Map<Integer, Collidable> collidables = Map.of(1, c1, 2, c2, 3, c3, 4, c4, 5, c5, 6, c6, 7, c7);
 

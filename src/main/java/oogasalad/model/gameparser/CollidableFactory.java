@@ -12,7 +12,8 @@ public class CollidableFactory {
         co.position().xPosition(),
         co.position().yPosition(),
         co.properties().contains("visible"),
-        co.friction(),
+        co.staticFriction(),
+        co.kineticFriction(),
         co.dimension().xDimension(),
         co.dimension().yDimension(),
         co.shape());

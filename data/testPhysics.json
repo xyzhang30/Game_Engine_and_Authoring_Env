@@ -4,7 +4,7 @@
     {
       "collidable_id": 1,
       "properties": ["visible", "movable"],
-      "mass": 100,
+      "mass": 0.04,
       "position": {
         "x_position": 0,
         "y_position": 0
@@ -15,7 +15,8 @@
         "y_dimension": 20
       },
       "color": [100,200,100],
-      "friction": 0
+      "staticFriction": 0,
+      "kineticFriction": 0
     },
     {
       "collidable_id": 2,
@@ -31,7 +32,8 @@
         "y_dimension": 20
       },
       "color": [100,200,100],
-      "friction": 0
+      "staticFriction": 0,
+      "kineticFriction": 0
     },
     {
       "collidable_id": 3,
@@ -47,7 +49,8 @@
         "y_dimension": 20
       },
       "color": [100,200,100],
-      "friction": 0
+      "staticFriction": 0,
+      "kineticFriction": 0
     },
     {
       "collidable_id": 4,
@@ -63,7 +66,8 @@
         "y_dimension": 200
       },
       "color": [255,255,255],
-      "friction": 0
+      "staticFriction": 0,
+      "kineticFriction": 0
     },
     {
       "collidable_id": 5,
@@ -79,7 +83,8 @@
         "y_dimension": 200
       },
       "color": [255,255,255],
-      "friction": 0
+      "staticFriction": 0,
+      "kineticFriction": 0
     },
     {
       "collidable_id": 6,
@@ -95,7 +100,8 @@
         "y_dimension": 10
       },
       "color": [255,255,255],
-      "friction": 0
+      "staticFriction": 0,
+      "kineticFriction": 0
     },
     {
       "collidable_id": 7,
@@ -111,7 +117,8 @@
         "y_dimension": 10
       },
       "color": [255,255,255],
-      "friction": 0
+      "staticFriction": 0,
+      "kineticFriction": 0
     },
     {
       "collidable_id": 8,
@@ -127,7 +134,8 @@
         "y_dimension": 20
       },
       "color": [0,0,0],
-      "friction": 0
+      "staticFriction": 0,
+      "kineticFriction": 0
     },
     {
       "collidable_id": 9,
@@ -143,12 +151,13 @@
         "y_dimension": 200
       },
       "color": [0,0,0],
-      "friction": 0.05
+      "staticFriction": 3.03873,
+      "kineticFriction": 2.03873
     },
     {
       "collidable_id": 10,
       "properties": ["visible", "movable"],
-      "mass": 50,
+      "mass": 0.02,
       "position": {
         "x_position": -40,
         "y_position": -0
@@ -159,7 +168,8 @@
         "y_dimension": 10
       },
       "color": [0,0,0],
-      "friction": 0
+      "staticFriction": 0,
+      "kineticFriction": 0
     }
   ],
   "players": [
