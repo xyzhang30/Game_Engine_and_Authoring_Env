@@ -28,7 +28,6 @@ public class GameEngine implements ExternalGameEngine {
   private RulesRecord rules;
   private CollidableContainer collidables;
   private Map<Pair, List<Command>> collisionHandlers;
-  private TurnPolicy turnPolicy;
   private int round;
   private int turn;
   private boolean gameOver;
@@ -54,7 +53,6 @@ public class GameEngine implements ExternalGameEngine {
     rules = loader.getRulesRecord();
     collidables = loader.getCollidableContainer();
     collisionHandlers = rules.collisionHandlers();
-    turnPolicy = loader.getTurnPolicy();
     staticStateStack = new Stack<>();
     staticStateStack.push(
         new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
@@ -125,9 +123,9 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   public void advanceTurn() {
-    turn = turnPolicy.getTurn();
+    turn = rules.turnPolicy().getTurn();
     while(playerContainer.getPlayer(turn).isRoundCompleted()) {
-      turn = turnPolicy.getTurn();
+      turn = rules.turnPolicy().getTurn();
     }
   }
 
