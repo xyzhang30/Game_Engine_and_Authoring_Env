@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import oogasalad.Pair;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidFileException;
@@ -19,8 +22,6 @@ import oogasalad.model.gameengine.collidable.collision.MomentumHandler;
 import oogasalad.model.gameengine.collidable.PhysicsHandler;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.api.data.CollidableObject;
-import oogasalad.model.api.data.CollisionRule;
-import oogasalad.model.api.data.ParserPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -37,7 +38,9 @@ public class GameLoaderModel extends GameLoader {
   private CollidableContainer collidableContainer;
   private RulesRecord rulesRecord;
   private Map<Pair, PhysicsHandler> physicsMap;
-
+  private List<Integer> movables;
+  private List<Entry<BiPredicate<Integer, CollidableObject>,
+      BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList;
 
 
   /**
@@ -47,20 +50,13 @@ public class GameLoaderModel extends GameLoader {
    */
   public GameLoaderModel(String gameTitle) throws InvalidFileException {
     super(gameTitle);
+    movables = new ArrayList<>();
+    physicsMap = new HashMap<>();
+    createCollisionTypeMap();
     createCollidableContainer();
     createPlayerContainer();
     createRulesRecord();
 
-  }
-
-  // alisha
-  private void createPlayerContainer() {
-    Map<Integer, Player> playerMap = new HashMap<>();
-    for (ParserPlayer p : gameData.getPlayers()) {
-      Player player = new Player(p.playerId(), getCollidableContainer().getCollidable(p.myCollidable()));
-      playerMap.put(p.playerId(), player);
-    }
-    this.playerContainer = new PlayerContainer(playerMap);
   }
 
   /**
@@ -72,29 +68,55 @@ public class GameLoaderModel extends GameLoader {
     return playerContainer;
   }
 
-  private void createCollidableContainer() {
-    List<CollidableObject> collidableObjects = gameData.getCollidableObjects();
-    List<Integer> moveables = new ArrayList<>();
-    Map<Integer, Collidable> collidables = new HashMap<>();
-    physicsMap = new HashMap<>();
-    for (CollidableObject co : collidableObjects) {
-      if (co.properties().contains("movable")) {
-        moveables.add(co.collidableId());
-      }
-      for (Integer key : collidables.keySet()) {
-        if(moveables.contains(key) && co.properties().contains("movable")) {
-          physicsMap.put(new Pair(key, co.collidableId()), new MomentumHandler(key,
-              co.collidableId()));
-        }
-        else if (moveables.contains(key) || co.properties().contains("movable")){
-          physicsMap.put(new Pair(key, co.collidableId()), new FrictionHandler(key,
-              co.collidableId()));
-        }
-      }
 
+  /**
+   * Retrieves the collidable container.
+   *
+   * @return The collidable container.
+   */
+  public CollidableContainer getCollidableContainer() {
+    return collidableContainer;
+  }
+
+  /**
+   * Retrieves the rules record.
+   *
+   * @return The rules record.
+   */
+  public RulesRecord getRulesRecord() {
+    return rulesRecord;
+  }
+
+  private void createCollidableContainer() {
+    Map<Integer, Collidable> collidables = new HashMap<>();
+    gameData.getCollidableObjects().forEach(co -> {
+      if (co.properties().contains("movable")) {
+        movables.add(co.collidableId());
+      }
       collidables.put(co.collidableId(), createCollidable(co));
-    }
+      collidables.keySet().forEach(id -> addPairToPhysicsMap(co, id, conditionsList));
+    });
+
     this.collidableContainer = new CollidableContainer(collidables);
+  }
+
+  private void addPairToPhysicsMap(CollidableObject co, Integer id,
+      List<Entry<BiPredicate<Integer, CollidableObject>, BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList) {
+    for (Entry<BiPredicate<Integer, CollidableObject>, BiFunction<Integer, Integer, PhysicsHandler>> entry : conditionsList) {
+      if (entry.getKey().test(id, co)) {
+        physicsMap.put(new Pair(id, co.collidableId()), entry.getValue().apply(id,
+            co.collidableId()));
+        break;
+      }
+    }
+  }
+
+  private void createCollisionTypeMap() {
+    conditionsList = new ArrayList<>();
+    conditionsList.add(Map.entry((key, co) -> movables.contains(key) && co.properties().contains("movable"),
+        MomentumHandler::new));
+    conditionsList.add(Map.entry((key, co) -> movables.contains(key) || co.properties().contains("movable"),
+        FrictionHandler::new));
   }
 
   private Collidable createCollidable(CollidableObject co) {
@@ -110,14 +132,12 @@ public class GameLoaderModel extends GameLoader {
         co.shape());
   }
 
-
-  /**
-   * Retrieves the collidable container.
-   *
-   * @return The collidable container.
-   */
-  public CollidableContainer getCollidableContainer() {
-    return collidableContainer;
+  private void createPlayerContainer() {
+    Map<Integer, Player> playerMap = new HashMap<>();
+    gameData.getPlayers().forEach(p -> {
+      playerMap.put(p.playerId(), new Player(p.playerId(), p.myCollidable()));
+    });
+    this.playerContainer = new PlayerContainer(playerMap);
   }
 
   private void createRulesRecord() {
@@ -129,7 +149,6 @@ public class GameLoaderModel extends GameLoader {
     TurnPolicy turnPolicy = createTurnPolicy();
     rulesRecord = new RulesRecord(commandMap,
           winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy);
-
     }
 
   private TurnPolicy createTurnPolicy() {
@@ -171,13 +190,4 @@ public class GameLoaderModel extends GameLoader {
     return commandMap;
   }
 
-
-  /**
-   * Retrieves the rules record.
-   *
-   * @return The rules record.
-   */
-  public RulesRecord getRulesRecord() {
-    return rulesRecord;
-  }
 }
