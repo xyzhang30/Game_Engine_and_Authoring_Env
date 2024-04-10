@@ -47,14 +47,14 @@ public class GameLoaderModel extends GameLoader {
    */
   public GameLoaderModel(String gameTitle) throws InvalidFileException {
     super(gameTitle);
-    this.createCollidableContainer();
-    this.createPlayerContainer();
-    this.createRulesRecord();
+    createCollidableContainer();
+    createPlayerContainer();
+    createRulesRecord();
 
   }
 
   // alisha
-  protected void createPlayerContainer() {
+  private void createPlayerContainer() {
     Map<Integer, Player> playerMap = new HashMap<>();
     for (ParserPlayer p : gameData.getPlayers()) {
       Player player = new Player(p.playerId(), getCollidableContainer().getCollidable(p.myCollidable()));
@@ -72,7 +72,7 @@ public class GameLoaderModel extends GameLoader {
     return playerContainer;
   }
 
-  protected void createCollidableContainer() {
+  private void createCollidableContainer() {
     List<CollidableObject> collidableObjects = gameData.getCollidableObjects();
     List<Integer> moveables = new ArrayList<>();
     Map<Integer, Collidable> collidables = new HashMap<>();
@@ -97,7 +97,7 @@ public class GameLoaderModel extends GameLoader {
     this.collidableContainer = new CollidableContainer(collidables);
   }
 
-  protected Collidable createCollidable(CollidableObject co) {
+  private Collidable createCollidable(CollidableObject co) {
     return new Collidable(
         co.collidableId(),
         co.mass(),
@@ -120,14 +120,13 @@ public class GameLoaderModel extends GameLoader {
     return collidableContainer;
   }
 
-  protected void createRulesRecord() {
+  private void createRulesRecord() {
     Map<Pair, List<Command>> commandMap = createCommandMap();
     List<Command> advanceTurnCmds = createAdvanceCommands(gameData.getRules().advanceTurn());
     List<Command> advanceRoundCmds = createAdvanceCommands(gameData.getRules().advanceRound());
     Condition winCondition = createCondition(gameData.getRules().winCondition());
     Condition roundPolicy = createCondition(gameData.getRules().roundPolicy());
     TurnPolicy turnPolicy = createTurnPolicy();
-
     rulesRecord = new RulesRecord(commandMap,
           winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy);
 
@@ -150,25 +149,25 @@ public class GameLoaderModel extends GameLoader {
 
   private List<Command> createAdvanceCommands(List<Map<String, List<Double>>> commands) {
     List<Command> ret = new ArrayList<>();
-    for (Map<String, List<Double>> commandsToParams : commands) {
-      for (String s : commandsToParams.keySet()) {
+    commands.forEach(commandsToParams -> {
+      commandsToParams.keySet().forEach(s -> {
         ret.add(CommandFactory.createCommand(s, commandsToParams.get(s)));
-      }
-    }
+      });
+    });
     return ret;
   }
 
   private Map<Pair, List<Command>> createCommandMap() {
     Map<Pair, List<Command>> commandMap = new HashMap<>();
-    for (CollisionRule rule : gameData.getRules().collisions()) {
+    gameData.getRules().collisions().forEach(rule -> {
       List<Command> commands = new ArrayList<>();
-      for (Map<String, List<Double>> commandsToParams : rule.command()) { //looping through the
-        for (String s : commandsToParams.keySet()) {
+      rule.command().forEach(commandsToParams -> {
+        commandsToParams.keySet().forEach(s -> {
           commands.add(CommandFactory.createCommand(s, commandsToParams.get(s)));
-        }
-      }
+        });
+      });
       commandMap.put(new Pair(rule.firstId(), rule.secondId()), commands);
-    }
+    });
     return commandMap;
   }
 
