@@ -1,6 +1,7 @@
 package oogasalad.view.AuthoringScreens;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
@@ -15,7 +16,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Shape;
 import oogasalad.view.Controlling.AuthoringController;
 
-public class InteractionSelectionScreen extends AuthoringScreen{
+public class InteractionSelectionScreen extends AuthoringScreen {
 
   private Map<Shape, Boolean> advanceTurnMap = new HashMap<>();
   private Map<Shape, Integer> pointsScoredMap = new HashMap<>();
@@ -23,8 +24,9 @@ public class InteractionSelectionScreen extends AuthoringScreen{
   private ToggleButton falseButton;
   private ToggleButton trueButton;
 
-  public InteractionSelectionScreen(AuthoringController controller, StackPane authoringBox) {
-    super(controller, authoringBox);
+  public InteractionSelectionScreen(AuthoringController controller, StackPane authoringBox,
+      Map<Shape, NonControllableType> nonControllableTypeMap, List<Shape> controllableList) {
+    super(controller, authoringBox, nonControllableTypeMap, controllableList);
   }
 
   /**
@@ -44,9 +46,12 @@ public class InteractionSelectionScreen extends AuthoringScreen{
     updateAdvanceRoundButtons();
   }
 
-  ImageType getImageType(){return null;}
+  ImageType getImageType() {
+    return null;
+  }
 
-  void endSelection(){}
+  void endSelection() {
+  }
 
   private void createInteractionOptions() {
     createAdvanceTurnOptions();

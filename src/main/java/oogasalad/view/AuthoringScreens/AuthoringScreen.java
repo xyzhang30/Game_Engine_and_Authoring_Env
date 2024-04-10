@@ -40,6 +40,8 @@ import oogasalad.view.Window;
  */
 public abstract class AuthoringScreen {
 
+  Map<Shape, NonControllableType> nonControllableMap;
+  List<Shape> controllableList;
   double screenWidth = Window.SCREEN_WIDTH;
   double screenHeight = Window.SCREEN_HEIGHT;
   StackPane authoringBox;
@@ -57,7 +59,10 @@ public abstract class AuthoringScreen {
   final int authoringBoxWidth = 980;
   final int authoringBoxHeight = 980;
 
-  public AuthoringScreen(AuthoringController controller, StackPane authoringBox) {
+  public AuthoringScreen(AuthoringController controller, StackPane authoringBox, Map<Shape,
+      NonControllableType> nonControllableMap, List<Shape> controllableList) {
+    this.nonControllableMap = nonControllableMap;
+    this.controllableList = controllableList;
     this.controller = controller;
     this.authoringBox = authoringBox;
     selectableShapes = new ArrayList<>();
