@@ -106,6 +106,7 @@ public class GameEngine implements ExternalGameEngine {
    */
   @Override
   public void applyInitialVelocity(double magnitude, double direction, int id) {
+    LOGGER.info(" apply initial velocity with magnitude " + magnitude +  " and direction " + direction*180/Math.PI);
     Collidable collidable = collidables.getCollidable(id);
     collidable.applyInitialVelocity(magnitude, direction);
   }
@@ -175,6 +176,10 @@ public class GameEngine implements ExternalGameEngine {
       }
       if (collisionHandlers.containsKey(collision)) {
         for (Command cmd : collisionHandlers.get(collision)) {
+          LOGGER.info(toLogForm(cmd) + " "
+              + "(collision "
+              + "info"
+              + " - ) " + collision.getFirst() + " " + collision.getSecond());
           cmd.execute(this);
         }
       }
@@ -185,15 +190,19 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   private void switchToCorrectStaticState() {
+
     if (rules.winCondition().evaluate(this)) {
+      LOGGER.info(toLogForm(rules.winCondition()) + " (win " + "condition) evaluated True");
       endGame();
       return;
     }
     if (rules.roundPolicy().evaluate(this)) {
+      LOGGER.info(toLogForm(rules.roundPolicy()) + " (round condition) evaluated True");
       advanceRound();
     }
     else {
       for (Command cmd : rules.advanceTurn()) {
+        LOGGER.info(toLogForm(cmd) + " " + "(advance) ");
         cmd.execute(this);
       }
     }
@@ -208,8 +217,12 @@ public class GameEngine implements ExternalGameEngine {
             round, turn, gameOver, staticState));
   }
 
-
   public boolean isOver() {
     return gameOver;
+  }
+
+  private String toLogForm(Object o) {
+    return o.toString().substring(o.toString().lastIndexOf(".")+1,
+        o.toString().lastIndexOf("@"));
   }
 }
