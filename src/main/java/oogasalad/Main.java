@@ -16,11 +16,11 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-    SurfaceSelectionScreen scene = new SurfaceSelectionScreen(new AuthoringController(primaryStage),
-        new StackPane());
-    primaryStage.setScene(scene.getScene());
-    primaryStage.show();
-    //Window mainWindow = new Window(primaryStage, 0);
+//    SurfaceSelectionScreen scene = new SurfaceSelectionScreen(new AuthoringController(primaryStage),
+//        new StackPane());
+//    primaryStage.setScene(scene.getScene());
+//    primaryStage.show();
+    Window mainWindow = new Window(primaryStage, 0);
   }
 //
 //  /**
