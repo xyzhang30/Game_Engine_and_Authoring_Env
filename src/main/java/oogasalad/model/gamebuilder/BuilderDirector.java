@@ -25,6 +25,8 @@ public class BuilderDirector implements DirectorInterface {
   private static final String ERROR_RESOURCE_FOLDER = "error.";
   private static final String ERROR_FILE_PREFIX = "Error";
   private final String language = "English";
+  private static final String DATA_FOLDER_PATH = "data/";
+  private static final String JSON_EXTENSION = ".json";
   private final ResourceBundle resourceBundle = ResourceBundle.getBundle(
   RESOURCE_FOLDER_PATH + ERROR_RESOURCE_FOLDER + ERROR_FILE_PREFIX + language);
 
@@ -52,8 +54,9 @@ public class BuilderDirector implements DirectorInterface {
     rulesBuilder.buildGameField(gameData, fieldData);
   }
 
-  public void writeGame(GameData gameData, String gameName, String filePath, String fileName) throws InvalidJSONDataException {
-    gameData.setGameName(gameName);
+  @Override
+  public void writeGame(GameData gameData, String fileName) throws InvalidJSONDataException {
+    gameData.setGameName(fileName);
     ObjectMapper mapper = new ObjectMapper();
     if (gameData.getCollidableObjects() == null || gameData.getPlayers() == null || gameData.getVariables() == null || gameData.getRules() == null) {
       LOGGER.error(resourceBundle.getString("NullJSONFieldError"));
@@ -61,7 +64,7 @@ public class BuilderDirector implements DirectorInterface {
           String.format(resourceBundle.getString("NullJSONFieldError"))));
     }
     try {
-      mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath+fileName), gameData);
+      mapper.writerWithDefaultPrettyPrinter().writeValue(new File(DATA_FOLDER_PATH+fileName+JSON_EXTENSION), gameData);
     } catch (IOException e) {
       LOGGER.error(resourceBundle.getString("JSONWritingError"), e.getMessage());
       throw new InvalidJSONDataException(String.format(

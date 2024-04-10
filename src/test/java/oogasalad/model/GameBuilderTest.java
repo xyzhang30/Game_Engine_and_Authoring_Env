@@ -28,9 +28,8 @@ public class GameBuilderTest {
 
   BuilderDirector testBuilderDirector;
   GameData testGameData = new GameData();
-  String expectedFile = "testAuthoringSinglePlayerMiniGolf.json";
-  String testFile = "test_authoring_mini_golf.json";
-  String filePath = "data/";
+  String expectedFilePath = "data/testAuthoringSinglePlayerMiniGolf.json";
+  String testFileName = "generatedTestAuthoringMiniGolf";
 
   @BeforeEach
   public void setup() {
@@ -83,7 +82,7 @@ public class GameBuilderTest {
 
     InvalidJSONDataException exception = assertThrows(InvalidJSONDataException.class, () -> {
       GameData invalidGameData = new GameData();
-      this.testBuilderDirector.writeGame(invalidGameData, "testAuthoringMiniGolf", filePath, testFile);
+      this.testBuilderDirector.writeGame(invalidGameData, "testAuthoringMiniGolf");
     });
 
     String expectedMessage = "Error writing JSON game configuration file:";
@@ -95,10 +94,10 @@ public class GameBuilderTest {
 
   @Test
   public void testWriteJSON() throws IOException {
-    this.testBuilderDirector.writeGame(testGameData, "testAuthoringMiniGolf", filePath, testFile);
+    this.testBuilderDirector.writeGame(testGameData, testFileName);
     ObjectMapper mapper = new ObjectMapper();
-    File expected = new File(filePath+expectedFile);
-    File tested = new File(filePath+testFile);
+    File expected = new File(expectedFilePath);
+    File tested = new File("data/"+testFileName+".json");
 
     assertThat(mapper.readTree(expected)).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mapper.readTree(tested));
   }
