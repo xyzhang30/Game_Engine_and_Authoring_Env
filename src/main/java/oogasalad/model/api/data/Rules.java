@@ -10,9 +10,8 @@ import java.util.Map;
  *
  * @author Judy He, Alisha Zhang
  */
-@JsonPropertyOrder({"collisions", "static_checks", "turn_policy", "round_policy", "win_condition", "advance_turn", "advance_round"})
+@JsonPropertyOrder({"collisions", "turn_policy", "round_policy", "win_condition", "advance_turn", "advance_round"})
 public record Rules(List<CollisionRule> collisions,
-                    @JsonProperty("static_checks") List<StaticCheckRule> staticChecks,
                     @JsonProperty("turn_policy") String turnPolicy,
                     @JsonProperty("round_policy") Map<String, List<Double>> roundPolicy,
                     @JsonProperty("win_condition") Map<String, List<Double>> winCondition,

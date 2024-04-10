@@ -14,9 +14,6 @@ public class PhysicsTest {
 
 
   private GameEngine gameEngine;
-  private CollidableRecord c1;
-  private CollidableRecord c2;
-  private CollidableRecord c3;
   private CollidableContainer container;
 
   private static final double DELTA = .0001;
@@ -66,9 +63,7 @@ public class PhysicsTest {
     gameEngine.applyInitialVelocity(10, 0, 1);
     // Assert that the initial round and turn are as expected
     assertEquals(10, container.getCollidableRecord(1).velocityX());
-    System.out.println(container.getCollidableRecord(1));
     gameEngine.update(1.0/4.0);
-    System.out.println(container.getCollidableRecord(1));
     assertEquals(2.5, container.getCollidableRecord(1).x());
     assertEquals(5, container.getCollidableRecord(1).velocityX());
   }

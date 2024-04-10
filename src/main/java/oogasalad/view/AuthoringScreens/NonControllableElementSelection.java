@@ -1,6 +1,7 @@
 package oogasalad.view.AuthoringScreens;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
@@ -24,8 +25,9 @@ public class NonControllableElementSelection extends AuthoringScreen {
   private Map<Shape, NonControllableType> obstacleTypeMap;
 
 
-  public NonControllableElementSelection(AuthoringController controller, StackPane authoringBox) {
-    super(controller, authoringBox);
+  public NonControllableElementSelection(AuthoringController controller, StackPane authoringBox,
+      Map<Shape, NonControllableType> nonControllableMap, List<Shape> controllableList) {
+    super(controller, authoringBox, nonControllableMap, controllableList);
     obstacleTypeMap = new HashMap<>();
   }
 
@@ -91,7 +93,20 @@ public class NonControllableElementSelection extends AuthoringScreen {
   void endSelection() {
     if (allSelectionsMade()) {
       addNewSelectionsToAuthoringBox();
-      controller.startNextSelection(ImageType.NONCONTROLLABLE_ELEMENT, authoringBox); // Adjust NEXT_TYPE to whatever comes next
+
+      for (Shape shape : selectableShapes) {
+        Bounds shapeBounds = shape.getBoundsInParent();
+        Bounds authoringBoxBounds = authoringBox.getBoundsInParent();
+
+        if (authoringBoxBounds.contains(shapeBounds)) {
+          NonControllableType type = obstacleTypeMap.get(shape);
+          nonControllableMap.put(shape, type);
+        }
+      }
+
+      controller.startNextSelection(ImageType.NONCONTROLLABLE_ELEMENT,
+          authoringBox, nonControllableMap,
+          controllableList); // Adjust NEXT_TYPE to whatever comes next
     } else {
       // TODO: Show a message to the user explaining that not all obstacles have types assigned
       System.out.println("Please assign types to all obstacles.");
