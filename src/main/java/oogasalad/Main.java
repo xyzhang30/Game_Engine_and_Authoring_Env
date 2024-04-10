@@ -6,6 +6,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import oogasalad.view.AuthoringScreens.BackgroundSelectionScreen;
 import oogasalad.view.Controlling.AuthoringController;
+import oogasalad.view.Window;
 
 /**
  * Feel free to completely change this code or delete it entirely.
