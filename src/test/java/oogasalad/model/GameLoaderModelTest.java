@@ -15,8 +15,10 @@ import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.collidable.PhysicsHandler;
 import oogasalad.model.gameengine.collidable.collision.FrictionHandler;
 import oogasalad.model.gameengine.collidable.collision.MomentumHandler;
-import oogasalad.model.gameengine.command.AdvanceRoundCheck;
 import oogasalad.model.gameengine.command.AdvanceRoundCommand;
+import oogasalad.model.gameengine.condition.AllPlayersCompletedRoundCondition;
+import oogasalad.model.gameengine.condition.Condition;
+import oogasalad.model.gameengine.condition.NRoundsCompletedCondition;
 import oogasalad.model.gameengine.turn.StandardTurnPolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
 import oogasalad.model.gameengine.collidable.Collidable;
@@ -24,7 +26,6 @@ import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.AdjustPointsCommand;
 import oogasalad.model.gameengine.command.AdvanceTurnCommand;
 import oogasalad.model.gameengine.command.Command;
-import oogasalad.model.gameengine.command.NRoundsCompletedCommand;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -94,9 +95,9 @@ public class GameLoaderModelTest {
     Command c1 = new AdjustPointsCommand(List.of(1.0,1.0));
     Command c2 = new AdvanceTurnCommand(List.of());
     Map<Pair, List<Command>> collisionHandlers = Map.of(new Pair(2, 3), List.of(c1, c2));
-    Command winCondition = new NRoundsCompletedCommand(List.of(2.0));
+    Condition winCondition = new NRoundsCompletedCondition(List.of(2.0));
 
-    Command roundPolicy = new AdvanceRoundCheck(List.of());
+    Condition roundPolicy = new AllPlayersCompletedRoundCondition(List.of());
 
     Command advanceC1 = new AdvanceTurnCommand(List.of());
     Command advanceC2 = new AdjustPointsCommand(List.of(1.0, 1.0));

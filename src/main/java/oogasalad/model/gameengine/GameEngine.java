@@ -181,17 +181,17 @@ public class GameEngine implements ExternalGameEngine {
         }
       }
     }
-    if (rules.winCondition().execute(this) == 1.0) {
+    if (rules.winCondition().evaluate(this)) {
       endGame();
     }
   }
 
   private void switchToCorrectStaticState() {
-    if (rules.winCondition().execute(this) == 1.0) {
+    if (rules.winCondition().evaluate(this)) {
       endGame();
       return;
     }
-    if (rules.roundPolicy().execute(this) == 1.0) {
+    if (rules.roundPolicy().evaluate(this)) {
       advanceRound();
     }
     else {

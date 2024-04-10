@@ -11,6 +11,7 @@ import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.gameengine.Player;
 import oogasalad.model.gameengine.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
+import oogasalad.model.gameengine.condition.Condition;
 import oogasalad.model.gameengine.turn.TurnPolicy;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
@@ -33,8 +34,10 @@ public class GameLoaderModel extends GameLoader {
 
   private static final Logger LOGGER = LogManager.getLogger(GameLoaderModel.class);
 
-  private static final String COMMAND_PATH = "oogasalad.model.gameengine.command.";
-  private static final String TURN_POLICY_PATH = "oogasalad.model.gameengine.turn.";
+  private static final String BASE_PATH = "oogasalad.model.gameengine.";
+  private static final String COMMAND_PATH = "command.";
+  private static final String CONDITION_PATH = "condition.";
+  private static final String TURN_POLICY_PATH = "turn.";
   private PlayerContainer playerContainer;
   private CollidableContainer collidableContainer;
   private RulesRecord rulesRecord;
@@ -137,7 +140,7 @@ public class GameLoaderModel extends GameLoader {
         List<Command> commands = new ArrayList<>();
         for (Map<String, List<Double>> command : rule.command()) { //looping through the list of command maps
           for (String s : command.keySet()) { //this is a for loop but there's always only going to be 1 command in the map (probably should change the structure of the json afterward)
-            Class<?> cc = Class.forName(COMMAND_PATH + s);
+            Class<?> cc = Class.forName(BASE_PATH + COMMAND_PATH + s);
             commands.add(
                 (Command) cc.getDeclaredConstructor(List.class).newInstance(command.get(s)));
             commandMap.put(pair, commands);
@@ -151,7 +154,7 @@ public class GameLoaderModel extends GameLoader {
       List<Command> advanceTurnCmds = new ArrayList<>();
       for (Map<String, List<Double>> condition : gameData.getRules().advanceTurn()) {
         for (String s : condition.keySet()) {
-          cc = Class.forName(COMMAND_PATH + s);
+          cc = Class.forName(BASE_PATH + COMMAND_PATH + s);
           advanceTurnCmds.add(
               (Command) cc.getDeclaredConstructor(List.class).newInstance(condition.get(s)));
         }
@@ -162,7 +165,7 @@ public class GameLoaderModel extends GameLoader {
       List<Command> advanceRoundCmds = new ArrayList<>();
       for (Map<String, List<Double>> condition : gameData.getRules().advanceRound()) {
         for (String s : condition.keySet()) {
-          cc = Class.forName(COMMAND_PATH + s);
+          cc = Class.forName(BASE_PATH + COMMAND_PATH + s);
           advanceRoundCmds.add(
               (Command) cc.getDeclaredConstructor(List.class).newInstance(condition.get(s)));
         }
@@ -172,20 +175,20 @@ public class GameLoaderModel extends GameLoader {
       //win condition command
       List<Double> params = new ArrayList<>();
       for (String condition : gameData.getRules().winCondition().keySet()) {
-        cc = Class.forName(COMMAND_PATH + condition);
+        cc = Class.forName(BASE_PATH + CONDITION_PATH + condition);
         params = gameData.getRules().winCondition().get(condition);
       }
       assert cc != null;
-      Command winCondition = (Command) cc.getDeclaredConstructor(List.class).newInstance(params);
+      Condition winCondition = (Condition) cc.getDeclaredConstructor(List.class).newInstance(params);
 
       //round condition command
-      List<Command> roundPolicy = new ArrayList<>();
+      List<Condition> roundPolicy = new ArrayList<>();
       for (String condition : gameData.getRules().roundPolicy().keySet()) {
-        cc = Class.forName(COMMAND_PATH + condition);
+        cc = Class.forName(BASE_PATH + CONDITION_PATH + condition);
         params = gameData.getRules().winCondition().get(condition);
-        roundPolicy.add((Command) cc.getDeclaredConstructor(List.class).newInstance(gameData.getRules().roundPolicy().get(condition)));
+        roundPolicy.add((Condition) cc.getDeclaredConstructor(List.class).newInstance(gameData.getRules().roundPolicy().get(condition)));
       }
-      Command roundPolicyCommand = roundPolicy.get(0);
+      Condition roundPolicyCommand = roundPolicy.get(0);
 
       rulesRecord = new RulesRecord(maxRounds, maxTurns, commandMap,
           winCondition, roundPolicyCommand, advanceTurnCmds, advanceRoundCmds, physicsMap);
@@ -204,7 +207,7 @@ public class GameLoaderModel extends GameLoader {
 
   protected void createTurnPolicy() {
     try {
-      Class<?> cc = Class.forName(TURN_POLICY_PATH + gameData.getRules().turnPolicy());
+      Class<?> cc = Class.forName(BASE_PATH + TURN_POLICY_PATH + gameData.getRules().turnPolicy());
       turnPolicy = (TurnPolicy) cc.getDeclaredConstructor(PlayerContainer.class)
           .newInstance(this.playerContainer);
     } catch (NoSuchMethodException | IllegalAccessException | InstantiationException |
