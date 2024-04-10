@@ -32,22 +32,22 @@ public class BuilderDirector {
     this.gameData = new GameData();
   }
 
-  public void constructCollidableObjects(List<Record> fieldData) {
+  public <T> void constructCollidableObjects(List<T> fieldData) {
     CollidablesBuilder collidablesBuilder = new CollidablesBuilder();
     collidablesBuilder.buildGameField(gameData, fieldData);
   }
 
-  public void constructPlayers(List<Record> fieldData) {
+  public <T> void constructPlayers(List<T> fieldData) {
     PlayersBuilder playersBuilder = new PlayersBuilder();
     playersBuilder.buildGameField(gameData, fieldData);
   }
 
-  public void constructVaraibles(List<Record> fieldData) {
+  public <T> void constructVaraibles(List<T> fieldData) {
     VariablesBuilder variablesBuilder = new VariablesBuilder();
     variablesBuilder.buildGameField(gameData, fieldData);
   }
 
-  public void constructRules(List<Record> fieldData) {
+  public <T> void constructRules(List<T> fieldData) {
     RulesBuilder rulesBuilder = new RulesBuilder();
     rulesBuilder.buildGameField(gameData, fieldData);
   }

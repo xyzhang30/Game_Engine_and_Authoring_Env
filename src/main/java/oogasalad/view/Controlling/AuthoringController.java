@@ -13,7 +13,10 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import oogasalad.model.api.data.CollidableObject;
 import oogasalad.model.api.data.Dimension;
+import oogasalad.model.api.data.GlobalVariables;
+import oogasalad.model.api.data.PlayerVariables;
 import oogasalad.model.api.data.Position;
+import oogasalad.model.api.data.Variables;
 import oogasalad.view.AuthoringScreens.BackgroundSelectionScreen;
 import oogasalad.view.AuthoringScreens.ControllableElementSelectionScreen;
 import oogasalad.view.AuthoringScreens.ImageType;
@@ -103,16 +106,34 @@ public class AuthoringController {
 
   private boolean submitGame() {
     try {
-      writeCollidablesRecord();
+      writeCollidables();
+      writeRules();
+      writePlayer();
+      writeVariables();
       return true;
     } catch (RuntimeException e) {
       return false;
     }
   }
 
-  private void writeCollidablesRecord() {
+  private void writeVariables() {
+    //HARD CODED FOR DEMO!
+    Variables variables = new Variables(new GlobalVariables(1,2), new PlayerVariables(0,0));
+  }
+
+  private void writePlayer() {
+    //HARD CODED FOR DEMO!
+
+  }
+
+  private void writeRules() {
+
+  }
+
+  private void writeCollidables() {
     int collidableId = 0;
     List<CollidableObject> collidableObjects = new ArrayList<>();
+
     //controllables
     for (Shape shape : controllables) {
       Color c = (Color) (shape.getFill());
@@ -122,11 +143,30 @@ public class AuthoringController {
           properties, 10,
           new Position(shape.getLayoutX(), shape.getLayoutY()), shapeName,
           new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
-          List.of((int) c.getRed() * 255, (int) c.getGreen() * 255, (int) c.getBlue() * 255), 0.5, "");
+          List.of((int) c.getRed() * 255, (int) c.getGreen() * 255, (int) c.getBlue() * 255), 0.0, "");
       collidableObjects.add(collidableObject);
+      collidableId ++;
     }
 
     //nonControllables
+    for (Shape shape : nonControllableTypeMap.keySet()) {
+      Color c = (Color) (shape.getFill());
+      List<String> properties = new ArrayList<>();
+      properties.add("collidable");
+      properties.add(nonControllableTypeMap.get(shape).toString());
+      double friction = (nonControllableTypeMap.get(shape).toString().equals("Surface")) ? 0.5 : 0.0;
+      String shapeName = (shape instanceof Circle) ? "Circle" : "Rectangle";
+      CollidableObject collidableObject = new CollidableObject(collidableId,
+          properties, 10,
+          new Position(shape.getLayoutX(), shape.getLayoutY()), shapeName,
+          new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
+          List.of((int) c.getRed() * 255, (int) c.getGreen() * 255, (int) c.getBlue() * 255), friction, "");
+      collidableObjects.add(collidableObject);
+      collidableId ++;
+    }
+
+    builderDirector.constructCollidableObjects(collidableObjects);
+
   }
 
 }
