@@ -1,7 +1,9 @@
 package oogasalad.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +19,7 @@ import oogasalad.model.api.data.PlayerVariables;
 import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
+import oogasalad.model.api.exception.InvalidJSONDataException;
 import oogasalad.model.gamebuilder.BuilderDirector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +28,9 @@ public class GameBuilderTest {
 
   BuilderDirector testBuilderDirector;
   GameData testGameData = new GameData();
+  String expectedFile = "testAuthoringSinglePlayerMiniGolf.json";
+  String testFile = "test_authoring_mini_golf.json";
+  String filePath = "data/";
 
   @BeforeEach
   public void setup() {
@@ -72,27 +78,24 @@ public class GameBuilderTest {
     return rules;
   }
 
-//  @Test
-//  public void testInvalidJSONFile() {
-//
-//    InvalidFileException exception = assertThrows(InvalidFileException.class, () -> {
-//      String invalidFileName = "invalidConfigurationFormat";
-//      testGameLoaderModel = new GameLoaderModel(invalidFileName);
-//    });
-//
-//    String expectedMessage = "Error parsing JSON game configuration file:";
-//    String actualMessage = exception.getMessage();
-//
-//    assertTrue(actualMessage.contains(expectedMessage));
-//
-//  }
+  @Test
+  public void testInvalidJSONData() {
+
+    InvalidJSONDataException exception = assertThrows(InvalidJSONDataException.class, () -> {
+      GameData invalidGameData = new GameData();
+      this.testBuilderDirector.writeGame(invalidGameData, "testAuthoringMiniGolf", filePath, testFile);
+    });
+
+    String expectedMessage = "Error writing JSON game configuration file:";
+    String actualMessage = exception.getMessage();
+
+    assertTrue(actualMessage.contains(expectedMessage));
+
+  }
 
   @Test
   public void testWriteJSON() throws IOException {
-    String expectedFile = "testAuthoringSinglePlayerMiniGolf.json";
-    String testFile = "test_authoring_mini_golf.json";
-    String filePath = "data/";
-    this.testBuilderDirector.writeGame(testGameData, "testAuthoringMiniGold", filePath, testFile);
+    this.testBuilderDirector.writeGame(testGameData, "testAuthoringMiniGolf", filePath, testFile);
     ObjectMapper mapper = new ObjectMapper();
     File expected = new File(filePath+expectedFile);
     File tested = new File(filePath+testFile);
