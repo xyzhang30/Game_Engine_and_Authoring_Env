@@ -188,7 +188,7 @@ public class GameLoaderModel extends GameLoader {
       Command roundPolicyCommand = roundPolicy.get(0);
 
       rulesRecord = new RulesRecord(maxRounds, maxTurns, commandMap,
-          winCondition, roundPolicyCommand, advanceRoundCmds, advanceTurnCmds, physicsMap);
+          winCondition, roundPolicyCommand, advanceTurnCmds, advanceRoundCmds, physicsMap);
 
     } catch (AssertionError | NoSuchMethodException | IllegalAccessException |
              InstantiationException |

@@ -1,10 +1,10 @@
 {
-  "gameName": "test_authoring_mini_golf",
+  "gameName": "testAuthoringMiniGold",
   "collidable_objects": [
     {
       "collidable_id": 1,
       "properties": ["visible", "surface"],
-      "mass": 1e1000000,
+      "mass": 100.0,
       "position": {
         "x_position": 0.0,
         "y_position": 0.0

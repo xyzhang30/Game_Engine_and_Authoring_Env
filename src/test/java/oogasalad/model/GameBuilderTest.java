@@ -1,6 +1,7 @@
 package oogasalad.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class GameBuilderTest {
     this.testBuilderDirector = new BuilderDirector();
 
     CollidableObject co1 = new CollidableObject(1, List.of("visible", "surface"),
-        Double.POSITIVE_INFINITY, new Position(0, 0), "rectangle", new Dimension(500, 500),
+        100.0, new Position(0, 0), "rectangle", new Dimension(500, 500),
         List.of(100, 200, 100), 0.5, "sample.img");
     CollidableObject co2 = new CollidableObject(2, List.of("visible", "movable"), 1.0,
         new Position(250, 450), "circle", new Dimension(2, 2), List.of(255, 255, 255), 0, "sample.img");
@@ -62,11 +63,12 @@ public class GameBuilderTest {
 
     CollisionRule collisionRule = new CollisionRule(2, 3, List.of(commands1, commands2));
     String turnPolicy = "StandardTurnPolicy";
+    Map<String, List<Double>> roundPolicy = Map.of("AdvanceRoundCheck", List.of());
     Map<String, List<Double>> winConditions = Map.of("NRoundsCompletedCommand", List.of(2.0));
     Map<String, List<Double>> advance1 = Map.of("AdvanceTurnCommand", List.of());
     Map<String, List<Double>> advance2 = Map.of("AdjustPointsCommand", List.of(1.0, 1.0));
-
-    Rules rules = new Rules(List.of(collisionRule), null, turnPolicy, winConditions, List.of(advance1, advance2));
+    Map<String, List<Double>> advance3 = Map.of("AdvanceRoundCommand", List.of());
+    Rules rules = new Rules(List.of(collisionRule), null, turnPolicy, roundPolicy, winConditions, List.of(advance1, advance2), List.of(advance3));
     return rules;
   }
 
@@ -89,14 +91,13 @@ public class GameBuilderTest {
   public void testWriteJSON() throws IOException {
     String expectedFile = "testAuthoringSinglePlayerMiniGolf.json";
     String testFile = "test_authoring_mini_golf.json";
-//    String fileType = ".json";
     String filePath = "data/";
-    this.testBuilderDirector.writeGame(testGameData, filePath, testFile);
+    this.testBuilderDirector.writeGame(testGameData, "testAuthoringMiniGold", filePath, testFile);
     ObjectMapper mapper = new ObjectMapper();
     File expected = new File(filePath+expectedFile);
     File tested = new File(filePath+testFile);
 
-    assertEquals(mapper.readTree(expected), mapper.readTree(tested));
+    assertThat(mapper.readTree(expected)).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mapper.readTree(tested));
   }
 }  
 
