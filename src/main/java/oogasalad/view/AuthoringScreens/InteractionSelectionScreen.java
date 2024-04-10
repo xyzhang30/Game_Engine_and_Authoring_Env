@@ -37,7 +37,7 @@ public class InteractionSelectionScreen extends AuthoringScreen {
     createTitle("Interaction Selection");
     root.getChildren().add(authoringBox);
     createInteractionOptions();
-    createTransitionButton("Next");
+    createTransitionButton("Submit");
     scene = new Scene(root, screenWidth, screenHeight);
   }
 
@@ -51,6 +51,7 @@ public class InteractionSelectionScreen extends AuthoringScreen {
   }
 
   void endSelection() {
+    controller.endAuthoring();
   }
 
   private void createInteractionOptions() {
