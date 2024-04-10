@@ -15,7 +15,7 @@ public class AdjustPointsCommand extends AdjustPointsGivenPlayerCommand {
 
   @Override
   public double execute(GameEngine engine) {
-    return adjust(engine, (int) Math.round(arguments.get(0)));
+    return adjust(engine, (int) Math.round(arguments.get(1)));
   }
 }
 

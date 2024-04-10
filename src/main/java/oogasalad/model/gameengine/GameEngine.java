@@ -126,6 +126,9 @@ public class GameEngine implements ExternalGameEngine {
 
   public void advanceTurn() {
     turn = turnPolicy.getTurn();
+    while(playerContainer.getPlayer(turn).isRoundCompleted()) {
+      turn = turnPolicy.getTurn();
+    }
   }
 
   public int getRound() {
@@ -179,7 +182,6 @@ public class GameEngine implements ExternalGameEngine {
       }
     }
     if (rules.winCondition().execute(this) == 1.0) {
-
       endGame();
     }
   }
@@ -187,8 +189,9 @@ public class GameEngine implements ExternalGameEngine {
   private void switchToCorrectStaticState() {
     if (rules.winCondition().execute(this) == 1.0) {
       endGame();
+      return;
     }
-     else if (rules.roundPolicy().execute(this) == 1.0) {
+    if (rules.roundPolicy().execute(this) == 1.0) {
       advanceRound();
     }
     else {
@@ -208,5 +211,7 @@ public class GameEngine implements ExternalGameEngine {
   }
 
 
-
+  public boolean isOver() {
+    return gameOver;
+  }
 }

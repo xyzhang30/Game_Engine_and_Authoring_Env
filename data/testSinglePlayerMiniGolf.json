@@ -131,7 +131,7 @@
     {
       "global": {
         "max_turns": 1,
-        "max_rounds": 1
+        "max_rounds": 2
       },
       "player": {
         "strokes": 0,

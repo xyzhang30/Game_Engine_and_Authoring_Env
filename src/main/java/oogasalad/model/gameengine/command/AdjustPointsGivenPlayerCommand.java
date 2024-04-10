@@ -6,8 +6,7 @@ import oogasalad.model.gameengine.Player;
 
 public abstract class AdjustPointsGivenPlayerCommand implements Command {
 
-  private static final int PLAYER_ID = 0;
-  private static final int SCORE_INCREASE = 1;
+  private static final int SCORE_INCREASE = 0;
   private static final String SCORE_VARIABLE = "score";
 
   private final List<Double> arguments;
