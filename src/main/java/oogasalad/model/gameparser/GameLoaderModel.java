@@ -38,7 +38,7 @@ public class GameLoaderModel extends GameLoader {
   private CollidableContainer collidableContainer;
   private RulesRecord rulesRecord;
   private Map<Pair, PhysicsHandler> physicsMap;
-  private TurnPolicy turnPolicy;
+
 
 
   /**
@@ -50,7 +50,6 @@ public class GameLoaderModel extends GameLoader {
     super(gameTitle);
     this.createCollidableContainer();
     this.createPlayerContainer();
-    this.createTurnPolicy();
     this.createRulesRecord();
 
   }
@@ -124,71 +123,82 @@ public class GameLoaderModel extends GameLoader {
 
   // alisha
   protected void createRulesRecord() {
-      Map<Pair, List<Command>> commandMap = new HashMap<>();
-      for (CollisionRule rule : gameData.getRules().collisions()) {
-        Pair pair = new Pair(rule.firstId(),
-            rule.secondId()); //collision rule is the one with ids and command map
-        List<Command> commands = new ArrayList<>();
-        for (Map<String, List<Double>> commandsToParams : rule.command()) { //looping through the
-          for (String s : commandsToParams.keySet()) {
-            commands.add(CommandFactory.createCommand(s, commandsToParams.get(s)));
-          }
-        }
-        commandMap.put(pair, commands);
-      }
+    Map<Pair, List<Command>> commandMap = createCommandMap();
+    List<Command> advanceTurnCmds = createAdvanceTurnCommands();
+    List<Command> advanceRoundCmds = createAdvanceRoundCommands();
+    Condition winCondition = createWinCondition();
+    Condition roundPolicy = createRoundPolicy();
+    TurnPolicy turnPolicy = createTurnPolicy();
 
-      Class<?> cc = null;
-
-      //advance turn commands
-      List<Command> advanceTurnCmds = new ArrayList<>();
-      for (Map<String, List<Double>> commandsToParams : gameData.getRules().advanceTurn()) {
-        for (String s : commandsToParams.keySet()) {
-          advanceTurnCmds.add(CommandFactory.createCommand(s, commandsToParams.get(s)));
-        }
-      }
-
-      //advance round commands
-      List<Command> advanceRoundCmds = new ArrayList<>();
-      for (Map<String, List<Double>> commandsToParams : gameData.getRules().advanceRound()) {
-        for (String s : commandsToParams.keySet()) {
-          advanceRoundCmds.add(CommandFactory.createCommand(s, commandsToParams.get(s)));
-        }
-      }
-
-      Condition winCondition = null;
-      if(gameData.getRules().winCondition().keySet().iterator().hasNext()) {
-        String condition = gameData.getRules().winCondition().keySet().iterator().next();
-        winCondition = ConditionFactory.createCondition(condition,
-            gameData.getRules().winCondition().get(condition));
-      }
-      else {
-        throw new InvalidCommandException("");
-      }
-
-      Condition roundPolicy = null;
-      if(gameData.getRules().roundPolicy().keySet().iterator().hasNext()) {
-        String condition = gameData.getRules().roundPolicy().keySet().iterator().next();
-        roundPolicy = ConditionFactory.createCondition(condition,
-            gameData.getRules().roundPolicy().get(condition));
-      }
-      else {
-        throw new InvalidCommandException("");
-      }
-      //round condition command
-
-      rulesRecord = new RulesRecord(commandMap,
-          winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap);
+    rulesRecord = new RulesRecord(commandMap,
+          winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy);
 
     }
 
-
-  public TurnPolicy getTurnPolicy() {
-    return turnPolicy;
+  private TurnPolicy createTurnPolicy() {
+    return TurnPolicyFactory.createTurnPolicy(gameData.getRules().turnPolicy(),
+        playerContainer);
   }
 
-  protected void createTurnPolicy() {
-    turnPolicy = TurnPolicyFactory.createTurnPolicy(gameData.getRules().turnPolicy(),
-        playerContainer);
+  private Condition createRoundPolicy() {
+    Condition roundPolicy = null;
+    if(gameData.getRules().roundPolicy().keySet().iterator().hasNext()) {
+      String condition = gameData.getRules().roundPolicy().keySet().iterator().next();
+      roundPolicy = ConditionFactory.createCondition(condition,
+          gameData.getRules().roundPolicy().get(condition));
+    }
+    else {
+      throw new InvalidCommandException("");
+    }
+    //round condition command
+    return roundPolicy;
+  }
+
+  private Condition createWinCondition() {
+    Condition winCondition = null;
+    if(gameData.getRules().winCondition().keySet().iterator().hasNext()) {
+      String condition = gameData.getRules().winCondition().keySet().iterator().next();
+      winCondition = ConditionFactory.createCondition(condition,
+          gameData.getRules().winCondition().get(condition));
+    }
+    else {
+      throw new InvalidCommandException("");
+    }
+    return winCondition;
+  }
+
+  private List<Command> createAdvanceRoundCommands() {
+    List<Command> advanceRoundCmds = new ArrayList<>();
+    for (Map<String, List<Double>> commandsToParams : gameData.getRules().advanceRound()) {
+      for (String s : commandsToParams.keySet()) {
+        advanceRoundCmds.add(CommandFactory.createCommand(s, commandsToParams.get(s)));
+      }
+    }
+    return advanceRoundCmds;
+  }
+
+  private List<Command> createAdvanceTurnCommands() {
+    List<Command> advanceTurnCmds = new ArrayList<>();
+    for (Map<String, List<Double>> commandsToParams : gameData.getRules().advanceTurn()) {
+      for (String s : commandsToParams.keySet()) {
+        advanceTurnCmds.add(CommandFactory.createCommand(s, commandsToParams.get(s)));
+      }
+    }
+    return advanceTurnCmds;
+  }
+
+  private Map<Pair, List<Command>> createCommandMap() {
+    Map<Pair, List<Command>> commandMap = new HashMap<>();
+    for (CollisionRule rule : gameData.getRules().collisions()) {
+      List<Command> commands = new ArrayList<>();
+      for (Map<String, List<Double>> commandsToParams : rule.command()) { //looping through the
+        for (String s : commandsToParams.keySet()) {
+          commands.add(CommandFactory.createCommand(s, commandsToParams.get(s)));
+        }
+      }
+      commandMap.put(new Pair(rule.firstId(), rule.secondId()), commands);
+    }
+    return commandMap;
   }
 
 
