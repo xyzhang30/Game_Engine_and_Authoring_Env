@@ -4,6 +4,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import oogasalad.view.AuthoringScreens.ControllableElementSelectionScreen;
 import oogasalad.view.AuthoringScreens.ImageType;
+import oogasalad.view.AuthoringScreens.InteractionSelectionScreen;
 import oogasalad.view.AuthoringScreens.NonControllableElementSelection;
 
 /**
@@ -38,7 +39,9 @@ public class AuthoringController {
         stage.setScene(nonControllableElementSelection.getScene());
       }
       case NONCONTROLLABLE_ELEMENT -> {
-        //interaction screen
+        InteractionSelectionScreen interactionSelectionScreen
+            = new InteractionSelectionScreen(this, authoringBox);
+        stage.setScene(interactionSelectionScreen.getScene());
       }
     }
   }
