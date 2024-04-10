@@ -190,41 +190,11 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   private void switchToCorrectStaticState() {
-    if (checkWinCondition()) {
-    } else if (checkRoundCondition()) {
-    } else {
-      checkTurnCondition();
-    }
 
   }
 
-  private boolean checkWinCondition() {
-    if (rules.winCondition().evaluate(this)) {
-      LOGGER.info(toLogForm(rules.winCondition()) + " (win " + "condition) evaluated True");
-      endGame();
-      return true;
-    }
-    return false;
-  }
 
-  private boolean
-  checkRoundCondition() {
-    if (rules.roundPolicy().evaluate(this)) {
-      LOGGER.info(toLogForm(rules.roundPolicy()) + " (round condition) evaluated True");
-      advanceRound();
-      checkWinCondition();
-      return true;
-    }
-    return false;
-  }
 
-  private void checkTurnCondition() {
-    for (Command cmd : rules.advanceTurn()) {
-      LOGGER.info(toLogForm(cmd) + " " + "(advance) ");
-      cmd.execute(this);
-    }
-    checkRoundCondition();
-  }
 
   private void updateHistory() {
     staticState = true;
@@ -239,6 +209,7 @@ public class GameEngine implements ExternalGameEngine {
   public boolean isOver() {
     return gameOver;
   }
+
 
   private String toLogForm(Object o) {
     return o.toString().substring(o.toString().lastIndexOf(".") + 1,
