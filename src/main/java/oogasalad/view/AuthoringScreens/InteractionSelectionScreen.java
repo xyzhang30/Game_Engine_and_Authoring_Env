@@ -11,6 +11,8 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -209,21 +211,29 @@ public class InteractionSelectionScreen extends AuthoringScreen {
   private void createPointsScoredHandler() {
     pointPrompt.setOnKeyPressed(event -> {
       if (event.getCode() == KeyCode.ENTER) {
-        //TODO: Exception handling if a non integer is entered
-        String points = pointPrompt.getText();
-
-        for (List<Shape> list : interactionMap.keySet()) {
-          if (list.containsAll(clickedShapes)) {
-            Map<InteractionType, Integer> currentInteractions = interactionMap.get(list);
-            currentInteractions.put(InteractionType.SCORE, Integer.parseInt(points));
-            return;
+        String pointsText = pointPrompt.getText();
+        try {
+          Integer points = Integer.parseInt(pointsText);
+          for (List<Shape> list : interactionMap.keySet()) {
+            if (list.containsAll(clickedShapes)) {
+              Map<InteractionType, Integer> currentInteractions = interactionMap.get(list);
+              currentInteractions.put(InteractionType.SCORE, points);
+              return;
+            }
           }
-        }
 
-        List<Shape> shapeList = new ArrayList<>(clickedShapes);
-        Map<InteractionType, Integer> currentInteractions = new HashMap<>();
-        currentInteractions.put(InteractionType.SCORE, Integer.parseInt(points));
-        interactionMap.put(shapeList, currentInteractions);
+          List<Shape> shapeList = new ArrayList<>(clickedShapes);
+          Map<InteractionType, Integer> currentInteractions = new HashMap<>();
+          currentInteractions.put(InteractionType.SCORE, points);
+          interactionMap.put(shapeList, currentInteractions);
+
+        } catch (NumberFormatException e) {
+          Alert alert = new Alert(AlertType.ERROR);
+          alert.setTitle("Error");
+          alert.setHeaderText(null);
+          alert.setContentText("Please Enter an Integer");
+          alert.showAndWait();
+        }
       }
     });
   }
