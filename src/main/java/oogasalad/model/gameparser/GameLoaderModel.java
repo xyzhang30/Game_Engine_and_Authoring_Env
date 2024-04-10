@@ -57,6 +57,7 @@ public class GameLoaderModel extends GameLoader {
     createPlayerContainer();
     createRulesRecord();
 
+
   }
 
   /**

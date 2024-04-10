@@ -22,6 +22,13 @@ public abstract class GenericStaticStateHandler implements StaticStateHandler{
    }
   }
 
+  protected void setNext(GenericStaticStateHandler h) {
+    next = h;
+  }
+  protected void setPrev(GenericStaticStateHandler h) {
+    prev = h;
+  }
+
   protected GenericStaticStateHandler getNext() {
     return next;
   }

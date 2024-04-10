@@ -12,6 +12,7 @@ import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.player.PlayerContainer;
+import oogasalad.model.gameengine.statichandlers.GenericStaticStateHandler;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +35,7 @@ public class GameEngine implements ExternalGameEngine {
   private boolean staticState;
   private Stack<GameRecord> staticStateStack;
 
+  private GenericStaticStateHandler staticStateHandler;
 
   public GameEngine(String gameTitle) {
     loader = new GameLoaderModel(gameTitle);
@@ -57,6 +59,7 @@ public class GameEngine implements ExternalGameEngine {
     staticStateStack.push(
         new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
             round, turn, gameOver, staticState));
+    static
   }
 
   /**
@@ -190,7 +193,7 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   private void switchToCorrectStaticState() {
-
+    StaticSt
   }
 
 
