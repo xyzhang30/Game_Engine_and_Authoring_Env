@@ -31,12 +31,12 @@ public class AuthoringController {
 
   private Stage stage;
   private BuilderDirector builderDirector = new BuilderDirector();
-  private List<Shape> controllableList;
+  private List<Shape> controllables;
   private Map<Shape, NonControllableType> nonControllableTypeMap;
 
   public AuthoringController() {
     stage = new Stage();
-    controllableList = new ArrayList<>();
+    controllables = new ArrayList<>();
     nonControllableTypeMap = new HashMap<>();
   }
 
