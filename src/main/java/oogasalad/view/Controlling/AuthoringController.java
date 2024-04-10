@@ -11,6 +11,7 @@ import oogasalad.view.AuthoringScreens.BackgroundSelectionScreen;
 import oogasalad.view.AuthoringScreens.ControllableElementSelectionScreen;
 import oogasalad.view.AuthoringScreens.ImageType;
 import oogasalad.view.AuthoringScreens.InteractionSelectionScreen;
+import oogasalad.view.AuthoringScreens.InteractionType;
 import oogasalad.view.AuthoringScreens.NonControllableElementSelection;
 import oogasalad.view.AuthoringScreens.NonControllableType;
 
@@ -65,7 +66,7 @@ public class AuthoringController {
     }
   }
 
-  public void endAuthoring(){
+  public void endAuthoring(Map<List<Shape>, Map<InteractionType, Integer>> interactionMap){
     stage.close();
   }
 
