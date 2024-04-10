@@ -129,7 +129,7 @@ public class GameLoaderModelTest {
     physicsMap.put(new Pair(2, 7), new MomentumHandler(2, 7));
     physicsMap.put(new Pair(1, 7), new FrictionHandler(1, 7));
 
-    RulesRecord mockRulesRecord = new RulesRecord(1, 1, collisionHandlers, winCondition, roundPolicy, advanceTurn, advanceRound, physicsMap);
+    RulesRecord mockRulesRecord = new RulesRecord(collisionHandlers, winCondition, roundPolicy, advanceTurn, advanceRound, physicsMap);
 
     assertThat(testGameLoaderModel.getRulesRecord()).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mockRulesRecord);
   }
