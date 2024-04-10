@@ -4,12 +4,19 @@ import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import oogasalad.model.api.GameRecord;
-import oogasalad.view.Screen.GameScreen;
-import oogasalad.view.Screen.MenuScreen;
-import oogasalad.view.Screen.TitleScreen;
-import oogasalad.view.Screen.TransitionScreen;
+import oogasalad.view.Controlling.GameController;
+import oogasalad.view.GameScreens.GameScreen;
+import oogasalad.view.GameScreens.MenuScreen;
+import oogasalad.view.GameScreens.TitleScreen;
+import oogasalad.view.GameScreens.TransitionScreen;
 import oogasalad.view.VisualElements.CompositeElement;
 
+/**
+ * Manages different screens (scenes) within the game, such as the title screen, menu screen, game screen, and transition screen.
+ * It updates and transitions between screens based on game state and player interactions.
+ *
+ * @author Doga Ozmen
+ */
 public class SceneManager {
 
   private final Scene scene;
@@ -35,17 +42,17 @@ public class SceneManager {
     return gameRecord.staticState(); //will be added to record eventually
   }
 
-  public void makeTitleScreen(Controller controller) {
+  public void makeTitleScreen(GameController controller) {
     TitleScreen titleScreen = new TitleScreen(controller);
     scene.setRoot(titleScreen.getRoot());
   }
 
-  public void makeMenuScreen(List<String> titles, Controller controller) {
+  public void makeMenuScreen(List<String> titles, GameController controller) {
     MenuScreen menuScreen = new MenuScreen(titles, controller);
     scene.setRoot(menuScreen.getRoot());
   }
 
-  public void makeGameScreen(Controller controller, CompositeElement compositeElement) {
+  public void makeGameScreen(GameController controller, CompositeElement compositeElement) {
     this.compositeElement = compositeElement;
     gameScreen = new GameScreen(controller, compositeElement);
     scene.setRoot(gameScreen.getRoot());

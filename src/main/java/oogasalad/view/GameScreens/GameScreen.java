@@ -1,4 +1,4 @@
-package oogasalad.view.Screen;
+package oogasalad.view.GameScreens;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -7,7 +7,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import oogasalad.view.Controller;
+import oogasalad.view.Controlling.GameController;
 import oogasalad.view.VisualElements.CompositeElement;
 
 /**
@@ -28,7 +28,7 @@ public class GameScreen extends UIScreen {
 
   private Text scoreboardTxt;
 
-  public GameScreen(Controller controller, CompositeElement compositeElement) {
+  public GameScreen(GameController controller, CompositeElement compositeElement) {
     root = new BorderPane();
     this.controller = controller;
     ableToHit = true;

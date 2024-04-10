@@ -1,4 +1,4 @@
-package oogasalad.view.Screen;
+package oogasalad.view.GameScreens;
 
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -10,7 +10,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import oogasalad.view.Controller;
+import oogasalad.view.Controlling.GameController;
 
 /**
  * Scene allows player to select from list of available games
@@ -21,7 +21,7 @@ public class MenuScreen extends UIScreen {
 
   private final Group root;
 
-  public MenuScreen(List<String> titles, Controller controller) {
+  public MenuScreen(List<String> titles, GameController controller) {
     root = new Group();
     createScene(titles);
     this.controller = controller;

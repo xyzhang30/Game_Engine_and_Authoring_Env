@@ -1,4 +1,4 @@
-package oogasalad.view.Screen;
+package oogasalad.view.GameScreens;
 
 import javafx.scene.Group;
 import javafx.scene.Parent;

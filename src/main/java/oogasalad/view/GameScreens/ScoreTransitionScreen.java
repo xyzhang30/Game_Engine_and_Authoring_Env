@@ -1,4 +1,4 @@
-package oogasalad.view.Screen;
+package oogasalad.view.GameScreens;
 
 public class ScoreTransitionScreen extends TransitionScreen {
 
