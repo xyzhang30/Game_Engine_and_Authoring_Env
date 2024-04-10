@@ -5,9 +5,11 @@ import java.util.Map;
 import oogasalad.Pair;
 import oogasalad.model.gameengine.collidable.PhysicsHandler;
 import oogasalad.model.gameengine.command.Command;
+import oogasalad.model.gameengine.condition.Condition;
 
 public record RulesRecord(int maxRounds, int maxTurns, Map<Pair, List<Command>> collisionHandlers,
-                          Command winCondition, Command roundPolicy, List<Command> advanceTurn, List<Command> advanceRound,
+                          Condition winCondition, Condition roundPolicy, List<Command> advanceTurn,
+                          List<Command> advanceRound,
                           Map<Pair, PhysicsHandler> physicsMap) {
 
 }
