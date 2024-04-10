@@ -1,7 +1,12 @@
 package oogasalad.view.AuthoringScreens;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Shape;
 import oogasalad.view.Controlling.AuthoringController;
 
 /**
@@ -12,9 +17,13 @@ import oogasalad.view.Controlling.AuthoringController;
  */
 public class ControllableElementSelectionScreen extends AuthoringScreen {
 
+  private List<Shape> controllableList;
+
   public ControllableElementSelectionScreen(AuthoringController controller,
-      StackPane authoringBox) {
-    super(controller, authoringBox);
+      StackPane authoringBox, Map<Shape, NonControllableType> nonControllableMap,
+      List<Shape> controllableList) {
+    super(controller, authoringBox, nonControllableMap, controllableList);
+    this.controllableList = controllableList;
   }
 
   /**
@@ -36,7 +45,16 @@ public class ControllableElementSelectionScreen extends AuthoringScreen {
    */
   void endSelection() {
     addNewSelectionsToAuthoringBox();
-    controller.startNextSelection(ImageType.CONTROLLABLE_ELEMENT, authoringBox);
+    for (Shape shape : selectableShapes) {
+      Bounds shapeBounds = shape.getBoundsInParent();
+      Bounds authoringBoxBounds = authoringBox.getBoundsInParent();
+
+      if (authoringBoxBounds.contains(shapeBounds)) {
+        controllableList.add(shape);
+      }
+    }
+    controller.startNextSelection(ImageType.CONTROLLABLE_ELEMENT, authoringBox, nonControllableMap,
+        controllableList);
   }
 
   /**
