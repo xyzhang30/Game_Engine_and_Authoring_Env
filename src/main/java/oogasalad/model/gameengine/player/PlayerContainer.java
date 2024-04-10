@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine;
+package oogasalad.model.gameengine.player;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import oogasalad.model.api.PlayerRecord;
+import oogasalad.model.gameengine.player.Player;
 
 public class PlayerContainer {
 

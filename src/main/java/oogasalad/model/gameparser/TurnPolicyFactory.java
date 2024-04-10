@@ -3,9 +3,8 @@ package oogasalad.model.gameparser;
 import static oogasalad.model.gameparser.GameLoaderModel.BASE_PATH;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import oogasalad.model.api.exception.InvalidCommandException;
-import oogasalad.model.gameengine.PlayerContainer;
+import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameengine.turn.TurnPolicy;
 
 public class TurnPolicyFactory {

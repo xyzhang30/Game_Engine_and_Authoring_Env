@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine;
+package oogasalad.model.gameengine.player;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Stack;
 import javafx.collections.ObservableMap;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.collidable.Collidable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
