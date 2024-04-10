@@ -5,7 +5,7 @@ import oogasalad.model.gameengine.GameEngine;
 
 public class AllPlayersCompletedRoundCondition implements Condition {
 
-  public AllPlayersCompletedRoundCondition(List<Double> arguments){
+  public AllPlayersCompletedRoundCondition(List<Double> arguments) {
 
   }
 

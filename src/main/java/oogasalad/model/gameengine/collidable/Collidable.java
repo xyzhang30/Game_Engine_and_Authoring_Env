@@ -12,6 +12,7 @@ public class Collidable {
   private final double myWidth;
   private final double myHeight;
   private final String myShape;
+  private final double myMu;
   private double myX;
   private double myY;
   private double myVelocityX;
@@ -21,7 +22,6 @@ public class Collidable {
   private double myNextVelocityX;
   private double myNextVelocityY;
   private boolean myVisible;
-  private final double myMu;
   private Stack<List<Integer>> locationHistory;
 
   public Collidable(int id, double mass, double x, double y,
@@ -82,13 +82,12 @@ public class Collidable {
     return myId;
   }
 
-  public void setVisible(boolean state) {
-    myVisible = state;
-  }
-
-
   public boolean getVisible() {
     return myVisible;
+  }
+
+  public void setVisible(boolean state) {
+    myVisible = state;
   }
 
   protected double getX() {

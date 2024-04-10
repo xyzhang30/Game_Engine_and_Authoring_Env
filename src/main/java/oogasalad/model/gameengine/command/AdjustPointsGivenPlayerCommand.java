@@ -2,7 +2,7 @@ package oogasalad.model.gameengine.command;
 
 import java.util.List;
 import oogasalad.model.gameengine.GameEngine;
-import oogasalad.model.gameengine.Player;
+import oogasalad.model.gameengine.player.Player;
 
 public abstract class AdjustPointsGivenPlayerCommand implements Command {
 
@@ -21,6 +21,7 @@ public abstract class AdjustPointsGivenPlayerCommand implements Command {
     currentPlayer.setVariable(SCORE_VARIABLE, currentScore + arguments.get(SCORE_INCREASE));
     return currentPlayer.getVariable(SCORE_VARIABLE);
   }
+
   public abstract double execute(GameEngine engine);
 }
 

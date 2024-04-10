@@ -11,7 +11,8 @@ import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.Command;
-import oogasalad.model.gameengine.turn.TurnPolicy;
+import oogasalad.model.gameengine.player.PlayerContainer;
+import oogasalad.model.gameengine.statichandlers.GenericStaticStateHandler;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,9 +35,11 @@ public class GameEngine implements ExternalGameEngine {
   private boolean staticState;
   private Stack<GameRecord> staticStateStack;
 
+  private GenericStaticStateHandler staticStateHandler;
 
   public GameEngine(String gameTitle) {
     loader = new GameLoaderModel(gameTitle);
+    round = 1;
     start(loader);
   }
 
@@ -46,7 +49,6 @@ public class GameEngine implements ExternalGameEngine {
   @Override
   public void start(GameLoaderModel loader) {
     gameOver = false;
-    round = 1;
     turn = 1; //first player ideally should have id 1
     staticState = true;
     playerContainer = loader.getPlayerContainer();
@@ -89,7 +91,6 @@ public class GameEngine implements ExternalGameEngine {
     if (collidables.checkStatic()) {
       updateHistory(); //private
       switchToCorrectStaticState(); //private
-
     } else {
       staticState = false;
     }
@@ -106,6 +107,8 @@ public class GameEngine implements ExternalGameEngine {
    */
   @Override
   public void applyInitialVelocity(double magnitude, double direction, int id) {
+    LOGGER.info(" apply initial velocity with magnitude " + magnitude + " and direction "
+        + direction * 180 / Math.PI);
     Collidable collidable = collidables.getCollidable(id);
     collidable.applyInitialVelocity(magnitude, direction);
   }
@@ -120,11 +123,12 @@ public class GameEngine implements ExternalGameEngine {
 
   public void advanceRound() {
     round++;
+    start(loader);
   }
 
   public void advanceTurn() {
     turn = rules.turnPolicy().getTurn();
-    while(playerContainer.getPlayer(turn).isRoundCompleted()) {
+    while (playerContainer.getPlayer(turn).isRoundCompleted()) {
       turn = rules.turnPolicy().getTurn();
     }
   }
@@ -175,6 +179,9 @@ public class GameEngine implements ExternalGameEngine {
       }
       if (collisionHandlers.containsKey(collision)) {
         for (Command cmd : collisionHandlers.get(collision)) {
+          LOGGER.info(
+              toLogForm(cmd) + " " + "(collision " + "info" + " - ) " + collision.getFirst() + " "
+                  + collision.getSecond());
           cmd.execute(this);
         }
       }
@@ -185,19 +192,11 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   private void switchToCorrectStaticState() {
-    if (rules.winCondition().evaluate(this)) {
-      endGame();
-      return;
-    }
-    if (rules.roundPolicy().evaluate(this)) {
-      advanceRound();
-    }
-    else {
-      for (Command cmd : rules.advanceTurn()) {
-        cmd.execute(this);
-      }
-    }
+    rules.staticStateHandler().handle(this, rules);
   }
+
+
+
 
   private void updateHistory() {
     staticState = true;
@@ -211,5 +210,11 @@ public class GameEngine implements ExternalGameEngine {
 
   public boolean isOver() {
     return gameOver;
+  }
+
+
+  private String toLogForm(Object o) {
+    return o.toString().substring(o.toString().lastIndexOf(".") + 1,
+        o.toString().lastIndexOf("@"));
   }
 }

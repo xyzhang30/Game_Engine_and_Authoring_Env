@@ -10,10 +10,12 @@ import java.util.function.BiPredicate;
 import oogasalad.Pair;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidFileException;
-import oogasalad.model.gameengine.Player;
-import oogasalad.model.gameengine.PlayerContainer;
+import oogasalad.model.gameengine.player.Player;
+import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.condition.Condition;
+import oogasalad.model.gameengine.statichandlers.GenericStaticStateHandler;
+import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListBuilder;
 import oogasalad.model.gameengine.turn.TurnPolicy;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
@@ -32,8 +34,8 @@ import org.apache.logging.log4j.Logger;
  */
 public class GameLoaderModel extends GameLoader {
 
+  protected static final String BASE_PATH = "oogasalad.model.gameengine.";
   private static final Logger LOGGER = LogManager.getLogger(GameLoaderModel.class);
-  public static final String BASE_PATH = "oogasalad.model.gameengine.";
   private PlayerContainer playerContainer;
   private CollidableContainer collidableContainer;
   private RulesRecord rulesRecord;
@@ -41,6 +43,8 @@ public class GameLoaderModel extends GameLoader {
   private List<Integer> movables;
   private List<Entry<BiPredicate<Integer, CollidableObject>,
       BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList;
+
+  private GenericStaticStateHandler staticHandler;
 
 
   /**
@@ -52,10 +56,17 @@ public class GameLoaderModel extends GameLoader {
     super(gameTitle);
     movables = new ArrayList<>();
     physicsMap = new HashMap<>();
+    staticHandler = StaticStateHandlerLinkedListBuilder.buildLinkedList(List.of(
+        "GameOverStaticStateHandler",
+        "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
+
+
     createCollisionTypeMap();
     createCollidableContainer();
     createPlayerContainer();
     createRulesRecord();
+    StaticStateHandlerLinkedListBuilder builder = new StaticStateHandlerLinkedListBuilder();
+
 
   }
 
@@ -103,7 +114,7 @@ public class GameLoaderModel extends GameLoader {
   private void addPairToPhysicsMap(CollidableObject co, Integer id,
       List<Entry<BiPredicate<Integer, CollidableObject>, BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList) {
     for (Entry<BiPredicate<Integer, CollidableObject>, BiFunction<Integer, Integer, PhysicsHandler>> entry : conditionsList) {
-      if (entry.getKey().test(id, co)) {
+      if (entry.getKey().test(id, co) && id!=co.collidableId()) {
         physicsMap.put(new Pair(id, co.collidableId()), entry.getValue().apply(id,
             co.collidableId()));
         break;
@@ -120,16 +131,7 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private Collidable createCollidable(CollidableObject co) {
-    return new Collidable(
-        co.collidableId(),
-        co.mass(),
-        co.position().xPosition(),
-        co.position().yPosition(),
-        co.properties().contains("visible"),
-        co.friction(),
-        co.dimension().xDimension(),
-        co.dimension().yDimension(),
-        co.shape());
+    return CollidableFactory.createCollidable(co);
   }
 
   private void createPlayerContainer() {
@@ -148,7 +150,7 @@ public class GameLoaderModel extends GameLoader {
     Condition roundPolicy = createCondition(gameData.getRules().roundPolicy());
     TurnPolicy turnPolicy = createTurnPolicy();
     rulesRecord = new RulesRecord(commandMap,
-          winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy);
+          winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy, staticHandler);
     }
 
   private TurnPolicy createTurnPolicy() {

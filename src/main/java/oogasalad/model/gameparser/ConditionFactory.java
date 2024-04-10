@@ -12,10 +12,12 @@ public class ConditionFactory {
   private static final String CONDITION_PATH = "condition.";
   public static Condition createCondition(String conditionName, List<Double> params) throws InvalidCommandException {
     try {
+
       Class<?> clazz = Class.forName(BASE_PATH + CONDITION_PATH + conditionName);
       return (Condition) clazz.getDeclaredConstructor(List.class).newInstance(params);
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              NoSuchMethodException | IllegalAccessException e) {
+      System.out.println(conditionName);
       throw new InvalidCommandException("");
     }
   }
