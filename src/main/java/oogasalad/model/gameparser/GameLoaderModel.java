@@ -127,7 +127,6 @@ public class GameLoaderModel extends GameLoader {
 
   // alisha
   protected void createRulesRecord() {
-    try {
       Map<Pair, List<Command>> commandMap = new HashMap<>();
       for (CollisionRule rule : gameData.getRules().collisions()) {
         Pair pair = new Pair(rule.firstId(),
@@ -159,33 +158,32 @@ public class GameLoaderModel extends GameLoader {
         }
       }
 
-      //win condition command
-      List<Double> params = new ArrayList<>();
-      for (String condition : gameData.getRules().winCondition().keySet()) {
-        cc = Class.forName(BASE_PATH + CONDITION_PATH + condition);
-        params = gameData.getRules().winCondition().get(condition);
+      Condition winCondition = null;
+      if(gameData.getRules().winCondition().keySet().iterator().hasNext()) {
+        String condition = gameData.getRules().winCondition().keySet().iterator().next();
+        winCondition = ConditionFactory.createCondition(condition,
+            gameData.getRules().winCondition().get(condition));
       }
-      assert cc != null;
-      Condition winCondition = (Condition) cc.getDeclaredConstructor(List.class).newInstance(params);
+      else {
+        throw new InvalidCommandException("");
+      }
 
-      //round condition command
-      List<Condition> roundPolicy = new ArrayList<>();
-      for (String condition : gameData.getRules().roundPolicy().keySet()) {
-        cc = Class.forName(BASE_PATH + CONDITION_PATH + condition);
-        roundPolicy.add((Condition) cc.getDeclaredConstructor(List.class).newInstance(gameData.getRules().roundPolicy().get(condition)));
+      Condition roundPolicy = null;
+      if(gameData.getRules().roundPolicy().keySet().iterator().hasNext()) {
+        String condition = gameData.getRules().roundPolicy().keySet().iterator().next();
+        roundPolicy = ConditionFactory.createCondition(condition,
+            gameData.getRules().roundPolicy().get(condition));
       }
-      Condition roundPolicyCommand = roundPolicy.get(0);
+      else {
+        throw new InvalidCommandException("");
+      }
+      //round condition command
 
       rulesRecord = new RulesRecord(commandMap,
-          winCondition, roundPolicyCommand, advanceTurnCmds, advanceRoundCmds, physicsMap);
+          winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap);
 
-    } catch (AssertionError | NoSuchMethodException | IllegalAccessException |
-             InstantiationException |
-             ClassNotFoundException | InvocationTargetException e) {
-      LOGGER.error("invalid command, "+e.getMessage());
-      throw new InvalidCommandException(e.getMessage());
     }
-  }
+
 
   public TurnPolicy getTurnPolicy() {
     return turnPolicy;
