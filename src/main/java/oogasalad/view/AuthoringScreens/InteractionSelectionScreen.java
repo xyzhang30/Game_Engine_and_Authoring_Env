@@ -91,7 +91,7 @@ public class InteractionSelectionScreen extends AuthoringScreen {
   private void createCheckBoxes() {
     advanceTurnCheckBox = new CheckBox("Advance");
     resetCheckBox = new CheckBox("Reset");
-    changeSpeedCheckBox = new CheckBox("ChangeSped");
+    changeSpeedCheckBox = new CheckBox("Change Speed");
 
     advanceTurnCheckBox.setDisable(true);
     resetCheckBox.setDisable(true);
