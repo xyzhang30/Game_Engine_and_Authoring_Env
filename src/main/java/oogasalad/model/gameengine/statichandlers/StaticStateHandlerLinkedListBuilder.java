@@ -4,12 +4,11 @@ import java.util.List;
 
 public class StaticStateHandlerLinkedListBuilder {
 
-  public GenericStaticStateHandler buildLinkedList(List<String> classNames) throws Exception {
-    StaticStateHandlerFactory factory = new StaticStateHandlerFactory();
+  public static GenericStaticStateHandler buildLinkedList(List<String> classNames) {
     GenericStaticStateHandler firstHandler = null;
     GenericStaticStateHandler prevHandler = null;
     for (String className : classNames) {
-      GenericStaticStateHandler handler = factory.createHandler(className);
+      GenericStaticStateHandler handler = StaticStateHandlerFactory.createHandler(className);
       handler.setPrev(prevHandler);
       if (prevHandler != null) {
         prevHandler.setNext(handler);

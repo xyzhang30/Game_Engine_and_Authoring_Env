@@ -7,7 +7,7 @@ public class GameOverStaticStateHandler extends GenericStaticStateHandler {
 
   @Override
   public boolean canHandle(GameEngine engine, RulesRecord rules) {
-    return rules.roundPolicy().evaluate(engine);
+    return rules.winCondition().evaluate(engine);
   }
 
   @Override

@@ -59,7 +59,6 @@ public class GameEngine implements ExternalGameEngine {
     staticStateStack.push(
         new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
             round, turn, gameOver, staticState));
-    static
   }
 
   /**
@@ -193,7 +192,7 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   private void switchToCorrectStaticState() {
-    StaticSt
+    rules.staticStateHandler().handle(this, rules);
   }
 
 
