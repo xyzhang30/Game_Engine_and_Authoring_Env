@@ -7,6 +7,7 @@ import java.util.Map;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
+import oogasalad.view.AuthoringScreens.BackgroundSelectionScreen;
 import oogasalad.view.AuthoringScreens.ControllableElementSelectionScreen;
 import oogasalad.view.AuthoringScreens.ImageType;
 import oogasalad.view.AuthoringScreens.InteractionSelectionScreen;
@@ -22,8 +23,16 @@ public class AuthoringController {
 
   private Stage stage;
 
-  public AuthoringController(Stage stage) {
-    this.stage = stage;
+  public AuthoringController() {
+    stage = new Stage();
+  }
+
+  public void startAuthoring(){
+    Map<Shape, NonControllableType> map = new HashMap<>();
+    BackgroundSelectionScreen scene = new BackgroundSelectionScreen(
+        this, new StackPane(), map, new ArrayList<>());
+    stage.setScene(scene.getScene());
+    stage.show();
   }
 
   /**
@@ -54,6 +63,10 @@ public class AuthoringController {
         stage.setScene(interactionSelectionScreen.getScene());
       }
     }
+  }
+
+  public void endAuthoring(){
+    stage.close();
   }
 
 }
