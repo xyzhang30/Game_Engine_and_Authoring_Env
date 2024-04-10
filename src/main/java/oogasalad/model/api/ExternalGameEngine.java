@@ -27,15 +27,6 @@ public interface ExternalGameEngine {
   GameRecord update(double dt);
 
   /**
-   * Provides view with updated GameState as immutable record after each frame
-   *
-   * @return GameRecord object representing the current Collidables, Scores, etc
-   */
-
-
-  GameRecord handleCollisions(List<Pair> collisions, double dt);
-
-  /**
    * Applies a velocity to the entity with the provided ID.
    *
    * @param magnitude The magnitude of the force to apply.
