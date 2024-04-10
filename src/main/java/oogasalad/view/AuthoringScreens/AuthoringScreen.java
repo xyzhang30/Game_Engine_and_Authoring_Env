@@ -30,7 +30,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import oogasalad.view.AuthoringScreens.EnvironmentPanes.AuthoringBoxPane;
 import oogasalad.view.Controlling.AuthoringController;
 import oogasalad.view.Window;
 
@@ -55,22 +54,15 @@ public abstract class AuthoringScreen {
   Slider ySlider;
   Slider angleSlider;
   Shape selectedShape;
-  AuthoringBoxPane authoringBoxPane;
   final int authoringBoxWidth = 980;
   final int authoringBoxHeight = 980;
 
   public AuthoringScreen(AuthoringController controller, StackPane authoringBox) {
     this.controller = controller;
-//    this.authoringBox = authoringBox;
-    this.authoringBoxPane = new AuthoringBoxPane();
+    this.authoringBox = authoringBox;
     selectableShapes = new ArrayList<>();
     newTemplateMap = new HashMap<>();
-    setUpRootPane();
     createScene();
-  }
-
-  private void setUpRootPane() {
-    this.root.getChildren().add(this.authoringBoxPane);
   }
 
   /**
@@ -129,16 +121,6 @@ public abstract class AuthoringScreen {
     StackPane.setAlignment(titleText, Pos.TOP_LEFT);
     StackPane.setMargin(titleText, new Insets(5, 0, 0, 50));
     root.getChildren().add(titleText);
-  }
-
-  void addShapesToAuthoringBox() {
-    Rectangle rectangle = new Rectangle(100, 50, Color.BLACK);
-    Ellipse ellipse = new Ellipse(50, 25);
-    ellipse.setFill(Color.BLACK);
-
-    // Add shapes to the authoring box pane, which will make them draggable and selectable
-    authoringBoxPane.addShape(rectangle);
-    authoringBoxPane.addShape(ellipse);
   }
 
   /**
@@ -405,15 +387,12 @@ public abstract class AuthoringScreen {
       case BACKGROUND -> {
         return path + "/data/background_images";
       }
-      case GOAL -> {
-        return path + "/data/goal_images";
-      }
-      case OBSTACLE -> {
-        return path + "/data/obstacle_images";
-      }
-      case BALL -> {
-        return path + "/data/ball_images";
-      }
+//      case NONCONTROLLABLE_ELEMENT -> {
+//        return path + "/data/noncontrollable_images";
+//      }
+//      case CONTROLLABLE_ELEMENT -> {
+//        return path + "/data/controllable_images";
+//      }
       default -> {
         return path + "/data";
       }
@@ -421,3 +400,4 @@ public abstract class AuthoringScreen {
 
   }
 }
+
