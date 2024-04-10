@@ -6,6 +6,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Shape;
+import oogasalad.view.AuthoringScreens.ImageType;
 
 public class ShapeOptionBox {
   private VBox container;
@@ -13,6 +14,7 @@ public class ShapeOptionBox {
   private ColorPicker colorPicker;
   private Button imageButton;
   private Slider opacitySlider;
+  private ImageType imageType;
 
   public ShapeOptionBox() {
     createComponents();
@@ -35,8 +37,7 @@ public class ShapeOptionBox {
 
     imageButton = new Button("Select Image");
     imageButton.setOnAction(event -> {
-      // Assume ImageHandler exists and is initialized somewhere
-      // ImageHandler.applyImageToShape(selectedShape);
+      ImageHandler.applyImageToShape(selectedShape, imageType);
     });
 
     opacitySlider = new Slider(0, 1, 1);
@@ -52,6 +53,9 @@ public class ShapeOptionBox {
 
   public void setSelectedShape(Shape shape) {
     this.selectedShape = shape;
-    // Update UI components based on the selected shape's properties if necessary
+  }
+
+  public void setImageType(ImageType imageType){
+    this.imageType = imageType;
   }
 }

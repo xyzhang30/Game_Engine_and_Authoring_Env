@@ -14,16 +14,15 @@ public class ImageHandler {
   private Stage stage;
 
   public ImageHandler(Stage stage) {
-    this.stage = stage;
   }
 
-  public void applyImageToShape(Shape shape, ImageType imageType) {
+  public static void applyImageToShape(Shape shape, ImageType imageType) {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setInitialDirectory(new File(getImageFolder(imageType)));
     fileChooser.getExtensionFilters().addAll(
         new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
     );
-    File file = fileChooser.showOpenDialog(stage);
+    File file = fileChooser.showOpenDialog(new Stage());
     if (file != null) {
       try {
         Image image = new Image(file.toURI().toURL().toString());
@@ -34,7 +33,7 @@ public class ImageHandler {
     }
   }
 
-  private String getImageFolder(ImageType imageType) {
+  private static String getImageFolder(ImageType imageType) {
     String path = System.getProperty("user.dir");
     switch (imageType) {
       case BACKGROUND:
