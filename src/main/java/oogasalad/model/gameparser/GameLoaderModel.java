@@ -33,10 +33,7 @@ import org.apache.logging.log4j.Logger;
 public class GameLoaderModel extends GameLoader {
 
   private static final Logger LOGGER = LogManager.getLogger(GameLoaderModel.class);
-
   public static final String BASE_PATH = "oogasalad.model.gameengine.";
-  private static final String CONDITION_PATH = "condition.";
-  private static final String TURN_POLICY_PATH = "turn.";
   private PlayerContainer playerContainer;
   private CollidableContainer collidableContainer;
   private RulesRecord rulesRecord;
@@ -190,15 +187,8 @@ public class GameLoaderModel extends GameLoader {
   }
 
   protected void createTurnPolicy() {
-    try {
-      Class<?> cc = Class.forName(BASE_PATH + TURN_POLICY_PATH + gameData.getRules().turnPolicy());
-      turnPolicy = (TurnPolicy) cc.getDeclaredConstructor(PlayerContainer.class)
-          .newInstance(this.playerContainer);
-    } catch (NoSuchMethodException | IllegalAccessException | InstantiationException |
-             ClassNotFoundException | InvocationTargetException e) {
-      LOGGER.error("invalid command, " + e.getMessage());
-      throw new InvalidCommandException(e.getMessage());
-    }
+    turnPolicy = TurnPolicyFactory.createTurnPolicy(gameData.getRules().turnPolicy(),
+        playerContainer);
   }
 
 

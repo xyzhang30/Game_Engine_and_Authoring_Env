@@ -4,7 +4,6 @@ import static oogasalad.model.gameparser.GameLoaderModel.BASE_PATH;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Map;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.gameengine.command.Command;
 
