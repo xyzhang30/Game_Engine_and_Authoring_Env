@@ -50,8 +50,8 @@ public class BuilderDirector implements DirectorInterface {
   }
 
 
-  public void writeGame(GameData gameData, String filePath, String fileName) throws IOException {
-    gameData.setGameName("test_authoring_mini_golf");
+  public void writeGame(GameData gameData, String gameName, String filePath, String fileName) throws IOException {
+    gameData.setGameName(gameName);
     ObjectMapper mapper = new ObjectMapper();
     mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath+fileName), gameData);
   }
