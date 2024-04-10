@@ -105,7 +105,8 @@ public class GameEngine implements ExternalGameEngine {
    */
   @Override
   public void applyInitialVelocity(double magnitude, double direction, int id) {
-    LOGGER.info(" apply initial velocity with magnitude " + magnitude +  " and direction " + direction*180/Math.PI);
+    LOGGER.info(" apply initial velocity with magnitude " + magnitude + " and direction "
+        + direction * 180 / Math.PI);
     Collidable collidable = collidables.getCollidable(id);
     collidable.applyInitialVelocity(magnitude, direction);
   }
@@ -125,7 +126,7 @@ public class GameEngine implements ExternalGameEngine {
 
   public void advanceTurn() {
     turn = rules.turnPolicy().getTurn();
-    while(playerContainer.getPlayer(turn).isRoundCompleted()) {
+    while (playerContainer.getPlayer(turn).isRoundCompleted()) {
       turn = rules.turnPolicy().getTurn();
     }
   }
@@ -176,7 +177,9 @@ public class GameEngine implements ExternalGameEngine {
       }
       if (collisionHandlers.containsKey(collision)) {
         for (Command cmd : collisionHandlers.get(collision)) {
-          LOGGER.info(toLogForm(cmd) + " " + "(collision " + "info" + " - ) " + collision.getFirst() + " " + collision.getSecond());
+          LOGGER.info(
+              toLogForm(cmd) + " " + "(collision " + "info" + " - ) " + collision.getFirst() + " "
+                  + collision.getSecond());
           cmd.execute(this);
         }
       }
@@ -204,7 +207,8 @@ public class GameEngine implements ExternalGameEngine {
     return false;
   }
 
-  private boolean checkRoundCondition() {
+  private boolean
+  checkRoundCondition() {
     if (rules.roundPolicy().evaluate(this)) {
       LOGGER.info(toLogForm(rules.roundPolicy()) + " (round condition) evaluated True");
       advanceRound();
@@ -221,6 +225,7 @@ public class GameEngine implements ExternalGameEngine {
     }
     checkRoundCondition();
   }
+
   private void updateHistory() {
     staticState = true;
     playerContainer.addStaticStateVariables();
@@ -236,7 +241,7 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   private String toLogForm(Object o) {
-    return o.toString().substring(o.toString().lastIndexOf(".")+1,
+    return o.toString().substring(o.toString().lastIndexOf(".") + 1,
         o.toString().lastIndexOf("@"));
   }
 }

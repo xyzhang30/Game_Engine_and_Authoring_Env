@@ -21,6 +21,7 @@ public abstract class AdjustPointsGivenPlayerCommand implements Command {
     currentPlayer.setVariable(SCORE_VARIABLE, currentScore + arguments.get(SCORE_INCREASE));
     return currentPlayer.getVariable(SCORE_VARIABLE);
   }
+
   public abstract double execute(GameEngine engine);
 }
 
