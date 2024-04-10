@@ -17,14 +17,14 @@ import oogasalad.view.Controlling.AuthoringController;
  *
  * @author Jordan Haytaian, Doga Ozmen
  */
-public class ObstacleSelectionScreen extends AuthoringScreen {
+public class NonControllableElementSelection extends AuthoringScreen {
 
-  private ComboBox<ObstacleType> obstacleTypeComboBox;
+  private ComboBox<NonControllableType> obstacleTypeComboBox;
 
-  private Map<Shape, ObstacleType> obstacleTypeMap;
+  private Map<Shape, NonControllableType> obstacleTypeMap;
 
 
-  public ObstacleSelectionScreen(AuthoringController controller, StackPane authoringBox) {
+  public NonControllableElementSelection(AuthoringController controller, StackPane authoringBox) {
     super(controller, authoringBox);
     obstacleTypeMap = new HashMap<>();
   }
@@ -34,13 +34,13 @@ public class ObstacleSelectionScreen extends AuthoringScreen {
    */
   void createScene() {
     root = new StackPane();
-    createTitle("Obstacle Selection");
+    createTitle("NonControllable Selection");
     root.getChildren().add(authoringBox);
     createSizeAndAngleSliders();
     createShapeDisplayOptionBox();
     createDraggableShapeTemplates();
+    createTypeDropDown();
     createTransitionButton("Next");
-    createObstacleTypeDropdown();
     scene = new Scene(root, screenWidth, screenHeight);
   }
 
@@ -48,14 +48,14 @@ public class ObstacleSelectionScreen extends AuthoringScreen {
    * Updates object type to reflect type of currently selected object
    */
   void updateOptionSelections() {
-    ObstacleType type = obstacleTypeMap.getOrDefault(selectedShape, null);
+    NonControllableType type = obstacleTypeMap.getOrDefault(selectedShape, null);
     obstacleTypeComboBox.setValue(type);
   }
 
-  void createObstacleTypeDropdown() {
+  void createTypeDropDown() {
     obstacleTypeComboBox = new ComboBox<>();
     obstacleTypeComboBox.getItems()
-        .addAll(ObstacleType.BOUNCE, ObstacleType.RESET, ObstacleType.SLOW);
+        .addAll(NonControllableType.SURFACE, NonControllableType.OBJECT);
     obstacleTypeComboBox.setPromptText("Select Obstacle Type");
     StackPane.setAlignment(obstacleTypeComboBox, Pos.BOTTOM_RIGHT);
     StackPane.setMargin(obstacleTypeComboBox, new Insets(0, 50, 350, 0));
@@ -91,8 +91,7 @@ public class ObstacleSelectionScreen extends AuthoringScreen {
   void endSelection() {
     if (allSelectionsMade()) {
       addNewSelectionsToAuthoringBox();
-      controller.startNextSelection(ImageType.OBSTACLE,
-          authoringBox); // Adjust NEXT_TYPE to whatever comes next
+      controller.startNextSelection(ImageType.NONCONTROLLABLE_ELEMENT, authoringBox); // Adjust NEXT_TYPE to whatever comes next
     } else {
       // TODO: Show a message to the user explaining that not all obstacles have types assigned
       System.out.println("Please assign types to all obstacles.");
@@ -106,6 +105,6 @@ public class ObstacleSelectionScreen extends AuthoringScreen {
    * @return enum to represent goal image type
    */
   ImageType getImageType() {
-    return ImageType.OBSTACLE;
+    return ImageType.NONCONTROLLABLE_ELEMENT;
   }
 }
