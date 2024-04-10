@@ -7,6 +7,8 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Shape;
@@ -108,8 +110,11 @@ public class NonControllableElementSelection extends AuthoringScreen {
           authoringBox, nonControllableMap,
           controllableList); // Adjust NEXT_TYPE to whatever comes next
     } else {
-      // TODO: Show a message to the user explaining that not all obstacles have types assigned
-      System.out.println("Please assign types to all obstacles.");
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setTitle("Error");
+      alert.setHeaderText(null);
+      alert.setContentText("Assign A Type To All Elements Before Continuing");
+      alert.showAndWait();
     }
   }
 
