@@ -52,7 +52,7 @@ public class TitleScreen extends UIScreen {
     playButton.setFont(Font.font("Arial",65));
     playButton.setEffect(createDropShadow());
 
-    playButton.setOnAction(e->controller.openMenuScreen());
+    playButton.setOnMouseClicked(e->controller.openMenuScreen());
 
     Button authorButton = new Button("Author");
     authorButton.setPrefSize(SCREEN_WIDTH*0.3,SCREEN_HEIGHT*0.1);
@@ -60,6 +60,8 @@ public class TitleScreen extends UIScreen {
     authorButton.setLayoutY(SCREEN_HEIGHT*0.6 - authorButton.getPrefHeight()/2);
     authorButton.setFont(Font.font("Arial",65));
     authorButton.setEffect(createDropShadow());
+
+    authorButton.setOnMouseClicked(e->controller.openAuthorEnvironment());
 
     root.getChildren().addAll(playButton, authorButton);
   }

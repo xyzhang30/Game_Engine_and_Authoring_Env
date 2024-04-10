@@ -3,6 +3,7 @@ package oogasalad.view.Controlling;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 import oogasalad.Pair;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewCollidableRecord;
@@ -48,6 +49,11 @@ public class GameController {
 
   public void openTransitionScreen() {
     sceneManager.makeTransitionScreen();
+  }
+
+  public void openAuthorEnvironment(){
+    AuthoringController authoringController = new AuthoringController();
+    authoringController.startAuthoring();
   }
 
   /**
