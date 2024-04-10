@@ -5,23 +5,17 @@ import java.util.Map;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
-import javafx.scene.shape.Shape;
-import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Shape;
 import oogasalad.view.Controlling.AuthoringController;
 
-/**
- * Class to represent the screen in which user places and customizes goal objects in their unique
- * game
- *
- * @author Jordan Haytaian, Doga Ozmen
- */
-public class GoalSelectionScreen extends AuthoringScreen {
+public class InteractionSelectionScreen extends AuthoringScreen{
 
   private Map<Shape, Boolean> advanceTurnMap = new HashMap<>();
   private Map<Shape, Integer> pointsScoredMap = new HashMap<>();
@@ -29,7 +23,7 @@ public class GoalSelectionScreen extends AuthoringScreen {
   private ToggleButton falseButton;
   private ToggleButton trueButton;
 
-  public GoalSelectionScreen(AuthoringController controller, StackPane authoringBox) {
+  public InteractionSelectionScreen(AuthoringController controller, StackPane authoringBox) {
     super(controller, authoringBox);
   }
 
@@ -38,45 +32,23 @@ public class GoalSelectionScreen extends AuthoringScreen {
    */
   void createScene() {
     root = new StackPane();
-    createTitle("Goal Selection");
+    createTitle("Interaction Selection");
     root.getChildren().add(authoringBox);
-    createSizeAndAngleSliders();
-    createShapeDisplayOptionBox();
-    createDraggableShapeTemplates();
+    createInteractionOptions();
     createTransitionButton("Next");
-    createGoalOptions();
     scene = new Scene(root, screenWidth, screenHeight);
   }
 
-  /**
-   * When the next button is clicked, controller is prompted to start the next selection process
-   */
-  void endSelection() {
-    if (allSelectionsMade()) {
-      addNewSelectionsToAuthoringBox();
-      controller.startNextSelection(ImageType.GOAL, authoringBox);
-    }
-    //TODO: Show message explaining that not all selections have been made
-  }
-
-  /**
-   * Returns goal image type indicating that user is placing goal objects
-   *
-   * @return enum to represent goal image type
-   */
-  ImageType getImageType() {
-    return ImageType.GOAL;
-  }
-
-  /**
-   * Updates point prompt and advance round buttons when new goal is selected
-   */
   void updateOptionSelections() {
     updatePointPrompt();
     updateAdvanceRoundButtons();
   }
 
-  private void createGoalOptions() {
+  ImageType getImageType(){return null;}
+
+  void endSelection(){}
+
+  private void createInteractionOptions() {
     createAdvanceTurnOptions();
     createPointOptions();
   }
@@ -95,7 +67,7 @@ public class GoalSelectionScreen extends AuthoringScreen {
     StackPane.setMargin(falseButton, new Insets(0, 50, 300, 0));
     createFalseAdvanceTurnHandler();
 
-    Label label = new Label("Advance Turn on Goal");
+    Label label = new Label("Advance Turn on Collision");
     StackPane.setAlignment(label, Pos.BOTTOM_RIGHT);
     StackPane.setMargin(label, new Insets(0, 75, 400, 0));
 
@@ -107,7 +79,7 @@ public class GoalSelectionScreen extends AuthoringScreen {
     pointPrompt.setPrefSize(75, 75);
     createPointsScoredHandler();
 
-    Label label = new Label("Points Scored on Goal");
+    Label label = new Label("Points Scored on Collision");
     StackPane.setAlignment(label, Pos.BOTTOM_RIGHT);
     StackPane.setMargin(label, new Insets(0, 75, 250, 0));
 
@@ -185,4 +157,6 @@ public class GoalSelectionScreen extends AuthoringScreen {
       falseButton.setSelected(false);
     }
   }
+
+
 }
