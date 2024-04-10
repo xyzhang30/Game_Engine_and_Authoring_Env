@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine;
+package oogasalad.model.gameengine.player;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,7 +62,7 @@ public class PlayerContainer {
   }
 
   public boolean allPlayersCompletedRound() {
-    for(Player p : myPlayers.values()) {
+    for (Player p : myPlayers.values()) {
 
       if (!p.isRoundCompleted()) {
         return false;

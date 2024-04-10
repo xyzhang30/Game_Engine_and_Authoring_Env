@@ -9,14 +9,18 @@ import java.util.List;
 import java.util.Map;
 import oogasalad.Pair;
 import oogasalad.model.api.exception.InvalidFileException;
-import oogasalad.model.gameengine.Player;
-import oogasalad.model.gameengine.PlayerContainer;
+import oogasalad.model.gameengine.player.Player;
+import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.collidable.PhysicsHandler;
 import oogasalad.model.gameengine.collidable.collision.FrictionHandler;
 import oogasalad.model.gameengine.collidable.collision.MomentumHandler;
-import oogasalad.model.gameengine.command.AdvanceRoundCheck;
 import oogasalad.model.gameengine.command.AdvanceRoundCommand;
+import oogasalad.model.gameengine.condition.AllPlayersCompletedRoundCondition;
+import oogasalad.model.gameengine.condition.Condition;
+import oogasalad.model.gameengine.condition.NRoundsCompletedCondition;
+import oogasalad.model.gameengine.statichandlers.GenericStaticStateHandler;
+import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListBuilder;
 import oogasalad.model.gameengine.turn.StandardTurnPolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
 import oogasalad.model.gameengine.collidable.Collidable;
@@ -24,7 +28,6 @@ import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.AdjustPointsCommand;
 import oogasalad.model.gameengine.command.AdvanceTurnCommand;
 import oogasalad.model.gameengine.command.Command;
-import oogasalad.model.gameengine.command.NRoundsCompletedCommand;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,6 +36,7 @@ public class GameLoaderModelTest {
   GameLoaderModel testGameLoaderModel;
   CollidableContainer mockCollidableContainer;
   PlayerContainer mockPlayerContainer;
+  TurnPolicy mockTurnPolicy;
   @BeforeEach
   public void setup() {
     String gameTitle = "testSinglePlayerMiniGolf";
@@ -50,11 +54,12 @@ public class GameLoaderModelTest {
 
     this.mockCollidableContainer = new CollidableContainer(collidables);
 
-    Player p1 = new Player(1, c2);
+    Player p1 = new Player(1, c2.getId());
 
     Map<Integer, Player> players = Map.of(1, p1);
 
     this.mockPlayerContainer = new PlayerContainer(players);
+    mockTurnPolicy = new StandardTurnPolicy(mockPlayerContainer);
   }
 
   @Test
@@ -85,7 +90,7 @@ public class GameLoaderModelTest {
   @Test
   public void testParseTurnPolicy() {
     TurnPolicy mockTurnPolicy = new StandardTurnPolicy(mockPlayerContainer);
-    assertThat(testGameLoaderModel.getTurnPolicy()).usingRecursiveComparison().isEqualTo(mockTurnPolicy);
+    assertThat(testGameLoaderModel.getRulesRecord().turnPolicy()).usingRecursiveComparison().isEqualTo(mockTurnPolicy);
 
   }
 
@@ -94,9 +99,9 @@ public class GameLoaderModelTest {
     Command c1 = new AdjustPointsCommand(List.of(1.0,1.0));
     Command c2 = new AdvanceTurnCommand(List.of());
     Map<Pair, List<Command>> collisionHandlers = Map.of(new Pair(2, 3), List.of(c1, c2));
-    Command winCondition = new NRoundsCompletedCommand(List.of(2.0));
+    Condition winCondition = new NRoundsCompletedCondition(List.of(2.0));
 
-    Command roundPolicy = new AdvanceRoundCheck(List.of());
+    Condition roundPolicy = new AllPlayersCompletedRoundCondition(List.of());
 
     Command advanceC1 = new AdvanceTurnCommand(List.of());
     Command advanceC2 = new AdjustPointsCommand(List.of(1.0, 1.0));
@@ -104,6 +109,10 @@ public class GameLoaderModelTest {
 
     Command advanceC3 = new AdvanceRoundCommand(List.of());
     List<Command> advanceRound = List.of(advanceC3);
+
+    GenericStaticStateHandler mockStaticStateHandler = StaticStateHandlerLinkedListBuilder.buildLinkedList(List.of(
+        "GameOverStaticStateHandler",
+        "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
 
 
     Map<Pair, PhysicsHandler> physicsMap = new HashMap<>();
@@ -128,7 +137,9 @@ public class GameLoaderModelTest {
     physicsMap.put(new Pair(2, 7), new MomentumHandler(2, 7));
     physicsMap.put(new Pair(1, 7), new FrictionHandler(1, 7));
 
-    RulesRecord mockRulesRecord = new RulesRecord(1, 1, collisionHandlers, winCondition, roundPolicy, advanceTurn, advanceRound, physicsMap);
+    RulesRecord mockRulesRecord = new RulesRecord(collisionHandlers, winCondition, roundPolicy,
+        advanceTurn, advanceRound, physicsMap, mockTurnPolicy, mockStaticStateHandler);
+
 
     assertThat(testGameLoaderModel.getRulesRecord()).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mockRulesRecord);
   }

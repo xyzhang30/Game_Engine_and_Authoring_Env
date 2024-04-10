@@ -87,7 +87,8 @@ public class CollidableContainer {
         CollidableRecord record2 = records.get(j);
         Collidable collidable2 = myCollidables.get(record2.id());
 
-        if (collidable2.getVisible() && collidable1.getVisible() && collisionDetector.isColliding(collidable1, collidable2)) {
+        if (collidable2.getVisible() && collidable1.getVisible() && collisionDetector.isColliding(
+            collidable1, collidable2)) {
           collisionPairs.add(new Pair(record1.id(), record2.id()));
         }
       }
