@@ -13,15 +13,20 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import oogasalad.view.Controlling.AuthoringController;
 
 public class InteractionSelectionScreen extends AuthoringScreen {
@@ -32,6 +37,10 @@ public class InteractionSelectionScreen extends AuthoringScreen {
   private CheckBox resetCheckBox;
   private CheckBox changeSpeedCheckBox;
   private Set<Shape> clickedShapes = new HashSet<>();
+  private TextField gameNameTextField;
+  private Stage gameNameStage;
+  private Button submitGameNameButton;
+
 
   public InteractionSelectionScreen(AuthoringController controller, StackPane authoringBox,
       Map<Shape, NonControllableType> nonControllableTypeMap, List<Shape> controllableList) {
@@ -80,7 +89,54 @@ public class InteractionSelectionScreen extends AuthoringScreen {
   }
 
   void endSelection() {
-    controller.endAuthoring(interactionMap);
+    showGameNamePopup();
+  }
+
+//  private void enterGameName() {
+//    if (gameNameTextField == null) {
+//      gameNameTextField = new TextField();
+//      gameNameTextField.setPromptText("Enter game name...");
+//      gameNameTextField.setMaxWidth(200);
+//      StackPane.setAlignment(gameNameTextField, Pos.TOP_CENTER);
+//      StackPane.setMargin(gameNameTextField, new Insets(10));
+//      root.getChildren().add(gameNameTextField);
+//    }
+//    gameNameTextField.setVisible(true);
+//  }
+
+private void showGameNamePopup() {
+  if (gameNameStage == null) {
+    gameNameStage = new Stage();
+    gameNameStage.initModality(Modality.APPLICATION_MODAL);
+    gameNameStage.setTitle("Enter Game Name");
+
+    VBox vbox = new VBox();
+    gameNameTextField = new TextField();
+    gameNameTextField.setPromptText("Enter game name...");
+    vbox.getChildren().addAll(gameNameTextField, submitGameNameButton());
+
+    Scene scene = new Scene(vbox, 300, 100);
+    gameNameStage.setScene(scene);
+  }
+  gameNameStage.showAndWait();
+
+  // Proceed only when the user has hit submit
+//  if (submitGameNameButton.isPressed()) {
+//    // Call the controller method to end authoring
+//    controller.endAuthoring(interactionMap);
+//  }
+}
+
+  private Button submitGameNameButton() {
+    if (submitGameNameButton == null) {
+      submitGameNameButton = new Button("Submit");
+      submitGameNameButton.setOnAction(e -> {
+        // Close the popup when the submit button is pressed
+        gameNameStage.close();
+        controller.endAuthoring(interactionMap);
+      });
+    }
+    return submitGameNameButton;
   }
 
   private void createInteractionOptions() {

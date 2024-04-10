@@ -11,11 +11,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
+import javafx.util.Builder;
 import oogasalad.model.api.data.CollidableObject;
+import oogasalad.model.api.data.CollisionRule;
 import oogasalad.model.api.data.Dimension;
 import oogasalad.model.api.data.GlobalVariables;
+import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.data.PlayerVariables;
 import oogasalad.model.api.data.Position;
+import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
 import oogasalad.view.AuthoringScreens.BackgroundSelectionScreen;
 import oogasalad.view.AuthoringScreens.ControllableElementSelectionScreen;
@@ -81,27 +85,25 @@ public class AuthoringController {
         System.out.println("finished noncontrollable, getting interaction");
         stage.setScene(interactionSelectionScreen.getScene());
       }
-      case INTERACTION -> {
-        System.out.println("writing to json!");
-        boolean saveGameSuccess = submitGame();
-        Alert alert = new Alert(AlertType.INFORMATION);
-        if (saveGameSuccess) {
-          alert.setTitle("Save Game Success");
-          alert.setHeaderText(null);
-          alert.setContentText("Game saved successfully!");
-          alert.showAndWait();
-        } else {
-          alert.setTitle("Save Game Error");
-          alert.setHeaderText(null);
-          alert.setContentText("Saving game failed :(");
-          alert.showAndWait();
-        }
-      }
     }
   }
 
   public void endAuthoring(Map<List<Shape>, Map<InteractionType, Integer>> interactionMap) {
-    stage.close();
+    System.out.println("writing to json!");
+    boolean saveGameSuccess = submitGame();
+    Alert alert = new Alert(AlertType.INFORMATION);
+    if (saveGameSuccess) {
+      alert.setTitle("Save Game Success");
+      alert.setHeaderText(null);
+      alert.setContentText("Game saved successfully!");
+      alert.showAndWait();
+    } else {
+      alert.setTitle("Save Game Error");
+      alert.setHeaderText(null);
+      alert.setContentText("Saving game failed :(");
+      alert.showAndWait();
+      stage.close();
+    }
   }
 
   private boolean submitGame() {
@@ -110,6 +112,7 @@ public class AuthoringController {
       writeRules();
       writePlayer();
       writeVariables();
+      builderDirector.writeGame("testFile");
       return true;
     } catch (RuntimeException e) {
       return false;
@@ -119,15 +122,20 @@ public class AuthoringController {
   private void writeVariables() {
     //HARD CODED FOR DEMO!
     Variables variables = new Variables(new GlobalVariables(1,2), new PlayerVariables(0,0));
+    builderDirector.constructVaraibles(List.of(variables));
   }
 
   private void writePlayer() {
     //HARD CODED FOR DEMO!
+    //QUESTION: WHICH COLLIDABLE WILL BE THE ONE PLAYER IS ASSIGNED TO IN THE DEMO WE DO??
+    ParserPlayer player = new ParserPlayer(1,1);
 
+    builderDirector.constructPlayers(List.of(player));
   }
 
   private void writeRules() {
 
+    builderDirector.constructRules(null);
   }
 
   private void writeCollidables() {
