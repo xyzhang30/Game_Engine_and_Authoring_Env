@@ -24,9 +24,13 @@ public class AuthoringController {
 
   private Stage stage;
   private BuilderDirector builderDirector = new BuilderDirector();
+  private List<Shape> controllableList;
+  private Map<Shape, NonControllableType> nonControllableTypeMap;
 
   public AuthoringController() {
     stage = new Stage();
+    controllableList = new ArrayList<>();
+    nonControllableTypeMap = new HashMap<>();
   }
 
   public void startAuthoring(){
