@@ -121,13 +121,12 @@ public class GameLoaderModel extends GameLoader {
     return collidableContainer;
   }
 
-  // alisha
   protected void createRulesRecord() {
     Map<Pair, List<Command>> commandMap = createCommandMap();
     List<Command> advanceTurnCmds = createAdvanceTurnCommands();
     List<Command> advanceRoundCmds = createAdvanceRoundCommands();
-    Condition winCondition = createWinCondition();
-    Condition roundPolicy = createRoundPolicy();
+    Condition winCondition = createCondition(gameData.getRules().winCondition());
+    Condition roundPolicy = createCondition(gameData.getRules().roundPolicy());
     TurnPolicy turnPolicy = createTurnPolicy();
 
     rulesRecord = new RulesRecord(commandMap,
@@ -140,31 +139,14 @@ public class GameLoaderModel extends GameLoader {
         playerContainer);
   }
 
-  private Condition createRoundPolicy() {
-    Condition roundPolicy = null;
-    if(gameData.getRules().roundPolicy().keySet().iterator().hasNext()) {
-      String condition = gameData.getRules().roundPolicy().keySet().iterator().next();
-      roundPolicy = ConditionFactory.createCondition(condition,
-          gameData.getRules().roundPolicy().get(condition));
+  private Condition createCondition(Map<String, List<Double>> conditionToParams) {
+    if(conditionToParams.keySet().iterator().hasNext()) {
+      String conditionName = conditionToParams.keySet().iterator().next();
+      return ConditionFactory.createCondition(conditionName, conditionToParams.get(conditionName));
     }
     else {
       throw new InvalidCommandException("");
     }
-    //round condition command
-    return roundPolicy;
-  }
-
-  private Condition createWinCondition() {
-    Condition winCondition = null;
-    if(gameData.getRules().winCondition().keySet().iterator().hasNext()) {
-      String condition = gameData.getRules().winCondition().keySet().iterator().next();
-      winCondition = ConditionFactory.createCondition(condition,
-          gameData.getRules().winCondition().get(condition));
-    }
-    else {
-      throw new InvalidCommandException("");
-    }
-    return winCondition;
   }
 
   private List<Command> createAdvanceRoundCommands() {
