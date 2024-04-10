@@ -15,11 +15,11 @@ public class Player {
   private static final Logger LOGGER = LogManager.getLogger(Player.class);
   private boolean roundCompleted = false;
   private final int playerId;
-  private final Collidable myCollidable;
+  private final int myCollidable;
   private final Map<String, Double> variables;
   private Stack<ObservableMap<String, Double>> variableStack;
 
-  public Player(int id, Collidable collidable) {
+  public Player(int id, int collidable) {
     playerId = id;
     myCollidable = collidable;
     roundCompleted = false;
@@ -38,7 +38,7 @@ public class Player {
   protected PlayerRecord getPlayerRecord(boolean active) {
 
     try {
-      return new PlayerRecord(playerId, variables.get("score"), myCollidable.getId(), active);
+      return new PlayerRecord(playerId, variables.get("score"), myCollidable, active);
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");
       return null;
