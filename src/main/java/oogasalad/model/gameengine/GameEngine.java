@@ -37,6 +37,7 @@ public class GameEngine implements ExternalGameEngine {
 
   public GameEngine(String gameTitle) {
     loader = new GameLoaderModel(gameTitle);
+    round = 1;
     start(loader);
   }
 
@@ -46,7 +47,6 @@ public class GameEngine implements ExternalGameEngine {
   @Override
   public void start(GameLoaderModel loader) {
     gameOver = false;
-    round = 1;
     turn = 1; //first player ideally should have id 1
     staticState = true;
     playerContainer = loader.getPlayerContainer();
@@ -89,7 +89,6 @@ public class GameEngine implements ExternalGameEngine {
     if (collidables.checkStatic()) {
       updateHistory(); //private
       switchToCorrectStaticState(); //private
-
     } else {
       staticState = false;
     }
@@ -121,6 +120,7 @@ public class GameEngine implements ExternalGameEngine {
 
   public void advanceRound() {
     round++;
+    start(loader);
   }
 
   public void advanceTurn() {
@@ -176,10 +176,7 @@ public class GameEngine implements ExternalGameEngine {
       }
       if (collisionHandlers.containsKey(collision)) {
         for (Command cmd : collisionHandlers.get(collision)) {
-          LOGGER.info(toLogForm(cmd) + " "
-              + "(collision "
-              + "info"
-              + " - ) " + collision.getFirst() + " " + collision.getSecond());
+          LOGGER.info(toLogForm(cmd) + " " + "(collision " + "info" + " - ) " + collision.getFirst() + " " + collision.getSecond());
           cmd.execute(this);
         }
       }
@@ -190,24 +187,40 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   private void switchToCorrectStaticState() {
+    if (checkWinCondition()) {
+    } else if (checkRoundCondition()) {
+    } else {
+      checkTurnCondition();
+    }
 
+  }
+
+  private boolean checkWinCondition() {
     if (rules.winCondition().evaluate(this)) {
       LOGGER.info(toLogForm(rules.winCondition()) + " (win " + "condition) evaluated True");
       endGame();
-      return;
+      return true;
     }
+    return false;
+  }
+
+  private boolean checkRoundCondition() {
     if (rules.roundPolicy().evaluate(this)) {
       LOGGER.info(toLogForm(rules.roundPolicy()) + " (round condition) evaluated True");
       advanceRound();
+      checkWinCondition();
+      return true;
     }
-    else {
-      for (Command cmd : rules.advanceTurn()) {
-        LOGGER.info(toLogForm(cmd) + " " + "(advance) ");
-        cmd.execute(this);
-      }
-    }
+    return false;
   }
 
+  private void checkTurnCondition() {
+    for (Command cmd : rules.advanceTurn()) {
+      LOGGER.info(toLogForm(cmd) + " " + "(advance) ");
+      cmd.execute(this);
+    }
+    checkRoundCondition();
+  }
   private void updateHistory() {
     staticState = true;
     playerContainer.addStaticStateVariables();
@@ -216,6 +229,7 @@ public class GameEngine implements ExternalGameEngine {
         new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
             round, turn, gameOver, staticState));
   }
+
 
   public boolean isOver() {
     return gameOver;
