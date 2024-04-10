@@ -74,7 +74,8 @@ public class MiniGolfGameRulesTest {
     gameEngine.update(1);
     gameEngine.applyInitialVelocity(25, Math.PI/4, 1);
     gameEngine.update(1);
-    gameEngine.update(1); //these need to be changed for ending the game
+    gameEngine.update(1); //these need to be changed for ending the game, shouldnt need more
+    // updates ideally
     gameEngine.update(1);
     assertEquals(3.0, gameEngine.getRound(), DELTA);
     assertTrue( gameEngine.isOver());
