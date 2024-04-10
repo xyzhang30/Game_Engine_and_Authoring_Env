@@ -3,6 +3,7 @@ package oogasalad.view.GameScreens;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -87,9 +88,14 @@ public class GameScreen extends UIScreen {
 
 
   private void setupFieldComponents(CompositeElement cm) {
+    AnchorPane globalView = new AnchorPane();
     for (int i : cm.idList()) {
-      root.getChildren().add(cm.getNode(i));
+      globalView.getChildren().add(cm.getNode(i));
     }
+
+    AnchorPane localView = new AnchorPane();
+    localView.getChildren().add(globalView);
+    root.setCenter(localView);
   }
 
   private Rectangle setupPowerBar() {
