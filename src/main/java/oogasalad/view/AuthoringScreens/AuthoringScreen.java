@@ -387,14 +387,11 @@ public abstract class AuthoringScreen {
       case BACKGROUND -> {
         return path + "/data/background_images";
       }
-      case GOAL -> {
-        return path + "/data/goal_images";
+      case NONCONTROLLABLE_ELEMENT -> {
+        return path + "/data/noncontrollable_images";
       }
-      case OBSTACLE -> {
-        return path + "/data/obstacle_images";
-      }
-      case BALL -> {
-        return path + "/data/ball_images";
+      case CONTROLLABLE_ELEMENT -> {
+        return path + "/data/controllable_images";
       }
       default -> {
         return path + "/data";
