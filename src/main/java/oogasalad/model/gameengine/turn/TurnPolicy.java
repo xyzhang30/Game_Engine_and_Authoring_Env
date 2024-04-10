@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine;
+package oogasalad.model.gameengine.turn;
 
 public interface TurnPolicy {
 
