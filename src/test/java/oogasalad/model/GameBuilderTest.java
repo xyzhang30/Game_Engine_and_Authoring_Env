@@ -20,7 +20,7 @@ import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
 import oogasalad.model.api.exception.InvalidJSONDataException;
-import oogasalad.model.gamebuilder.BuilderDirector;
+import oogasalad.view.Controlling.BuilderDirector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

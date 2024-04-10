@@ -1,4 +1,4 @@
-package oogasalad.model.gamebuilder;
+package oogasalad.model.api;
 
 import java.util.List;
 import oogasalad.model.api.data.GameData;

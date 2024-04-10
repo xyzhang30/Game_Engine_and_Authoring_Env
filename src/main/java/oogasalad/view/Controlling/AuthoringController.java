@@ -23,6 +23,7 @@ import oogasalad.view.AuthoringScreens.NonControllableType;
 public class AuthoringController {
 
   private Stage stage;
+  private BuilderDirector builderDirector = new BuilderDirector();
 
   public AuthoringController() {
     stage = new Stage();
