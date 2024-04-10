@@ -156,10 +156,10 @@
     ],
     "turn_policy": "StandardTurnPolicy",
     "round_policy": {
-      "AdvanceRoundCheck": []
+      "AllPlayersCompletedRoundCondition": []
     },
     "win_condition": {
-      "NRoundsCompletedCommand": [2.0]
+      "NRoundsCompletedCondition": [2.0]
     },
     "advance_turn": [
       {

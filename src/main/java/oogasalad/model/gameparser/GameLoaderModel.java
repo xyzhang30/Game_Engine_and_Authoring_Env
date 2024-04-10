@@ -103,7 +103,7 @@ public class GameLoaderModel extends GameLoader {
   private void addPairToPhysicsMap(CollidableObject co, Integer id,
       List<Entry<BiPredicate<Integer, CollidableObject>, BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList) {
     for (Entry<BiPredicate<Integer, CollidableObject>, BiFunction<Integer, Integer, PhysicsHandler>> entry : conditionsList) {
-      if (entry.getKey().test(id, co)) {
+      if (entry.getKey().test(id, co) && id!=co.collidableId()) {
         physicsMap.put(new Pair(id, co.collidableId()), entry.getValue().apply(id,
             co.collidableId()));
         break;
@@ -120,16 +120,7 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private Collidable createCollidable(CollidableObject co) {
-    return new Collidable(
-        co.collidableId(),
-        co.mass(),
-        co.position().xPosition(),
-        co.position().yPosition(),
-        co.properties().contains("visible"),
-        co.friction(),
-        co.dimension().xDimension(),
-        co.dimension().yDimension(),
-        co.shape());
+    return CollidableFactory.createCollidable(co);
   }
 
   private void createPlayerContainer() {

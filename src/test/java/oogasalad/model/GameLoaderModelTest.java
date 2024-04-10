@@ -34,6 +34,7 @@ public class GameLoaderModelTest {
   GameLoaderModel testGameLoaderModel;
   CollidableContainer mockCollidableContainer;
   PlayerContainer mockPlayerContainer;
+  TurnPolicy mockTurnPolicy;
   @BeforeEach
   public void setup() {
     String gameTitle = "testSinglePlayerMiniGolf";
@@ -51,11 +52,12 @@ public class GameLoaderModelTest {
 
     this.mockCollidableContainer = new CollidableContainer(collidables);
 
-    Player p1 = new Player(1, c2);
+    Player p1 = new Player(1, c2.getId());
 
     Map<Integer, Player> players = Map.of(1, p1);
 
     this.mockPlayerContainer = new PlayerContainer(players);
+    mockTurnPolicy = new StandardTurnPolicy(mockPlayerContainer);
   }
 
   @Test
@@ -86,7 +88,7 @@ public class GameLoaderModelTest {
   @Test
   public void testParseTurnPolicy() {
     TurnPolicy mockTurnPolicy = new StandardTurnPolicy(mockPlayerContainer);
-    assertThat(testGameLoaderModel.getTurnPolicy()).usingRecursiveComparison().isEqualTo(mockTurnPolicy);
+    assertThat(testGameLoaderModel.getRulesRecord().turnPolicy()).usingRecursiveComparison().isEqualTo(mockTurnPolicy);
 
   }
 
@@ -129,7 +131,8 @@ public class GameLoaderModelTest {
     physicsMap.put(new Pair(2, 7), new MomentumHandler(2, 7));
     physicsMap.put(new Pair(1, 7), new FrictionHandler(1, 7));
 
-    RulesRecord mockRulesRecord = new RulesRecord(collisionHandlers, winCondition, roundPolicy, advanceTurn, advanceRound, physicsMap);
+    RulesRecord mockRulesRecord = new RulesRecord(collisionHandlers, winCondition, roundPolicy,
+        advanceTurn, advanceRound, physicsMap, mockTurnPolicy);
 
     assertThat(testGameLoaderModel.getRulesRecord()).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mockRulesRecord);
   }
