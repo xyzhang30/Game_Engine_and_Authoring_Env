@@ -2,6 +2,7 @@ package oogasalad.view.Controlling;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import oogasalad.Pair;
 import oogasalad.model.api.GameRecord;
@@ -25,17 +26,18 @@ public class GameController {
   private final CollisionManager collisionManager;
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
-  private final Stage stage;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
 
-  public GameController(Stage stage) {
-    this.stage = stage;
+  public GameController() {
     sceneManager = new SceneManager();
     sceneManager.makeTitleScreen(this);
-    stage.setScene(sceneManager.getScene());
     animationManager = new AnimationManager();
     collisionManager = new CollisionManager();
+  }
+
+  public Scene getScene(){
+    return sceneManager.getScene();
   }
 
   /**
@@ -60,7 +62,6 @@ public class GameController {
     gameEngine = new GameEngine(selectedGame);
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScreen(this, compositeElement);
-    stage.setScene(sceneManager.getScene());
     collisionManager.setNewCompositeElement(compositeElement);
   }
 
