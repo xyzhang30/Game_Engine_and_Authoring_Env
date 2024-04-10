@@ -30,6 +30,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import oogasalad.view.AuthoringScreens.EnvironmentPanes.AuthoringBoxPane;
 import oogasalad.view.Controlling.AuthoringController;
 import oogasalad.view.Window;
 
@@ -54,15 +55,22 @@ public abstract class AuthoringScreen {
   Slider ySlider;
   Slider angleSlider;
   Shape selectedShape;
+  AuthoringBoxPane authoringBoxPane;
   final int authoringBoxWidth = 980;
   final int authoringBoxHeight = 980;
 
   public AuthoringScreen(AuthoringController controller, StackPane authoringBox) {
     this.controller = controller;
-    this.authoringBox = authoringBox;
+//    this.authoringBox = authoringBox;
+    this.authoringBoxPane = new AuthoringBoxPane();
     selectableShapes = new ArrayList<>();
     newTemplateMap = new HashMap<>();
+    setUpRootPane();
     createScene();
+  }
+
+  private void setUpRootPane() {
+    this.root.getChildren().add(this.authoringBoxPane);
   }
 
   /**
@@ -121,6 +129,16 @@ public abstract class AuthoringScreen {
     StackPane.setAlignment(titleText, Pos.TOP_LEFT);
     StackPane.setMargin(titleText, new Insets(5, 0, 0, 50));
     root.getChildren().add(titleText);
+  }
+
+  void addShapesToAuthoringBox() {
+    Rectangle rectangle = new Rectangle(100, 50, Color.BLACK);
+    Ellipse ellipse = new Ellipse(50, 25);
+    ellipse.setFill(Color.BLACK);
+
+    // Add shapes to the authoring box pane, which will make them draggable and selectable
+    authoringBoxPane.addShape(rectangle);
+    authoringBoxPane.addShape(ellipse);
   }
 
   /**
