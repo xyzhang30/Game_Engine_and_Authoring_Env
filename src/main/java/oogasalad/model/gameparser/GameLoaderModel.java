@@ -1,6 +1,5 @@
 package oogasalad.model.gameparser;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -123,8 +122,8 @@ public class GameLoaderModel extends GameLoader {
 
   protected void createRulesRecord() {
     Map<Pair, List<Command>> commandMap = createCommandMap();
-    List<Command> advanceTurnCmds = createAdvanceTurnCommands();
-    List<Command> advanceRoundCmds = createAdvanceRoundCommands();
+    List<Command> advanceTurnCmds = createAdvanceCommands(gameData.getRules().advanceTurn());
+    List<Command> advanceRoundCmds = createAdvanceCommands(gameData.getRules().advanceRound());
     Condition winCondition = createCondition(gameData.getRules().winCondition());
     Condition roundPolicy = createCondition(gameData.getRules().roundPolicy());
     TurnPolicy turnPolicy = createTurnPolicy();
@@ -149,24 +148,14 @@ public class GameLoaderModel extends GameLoader {
     }
   }
 
-  private List<Command> createAdvanceRoundCommands() {
-    List<Command> advanceRoundCmds = new ArrayList<>();
-    for (Map<String, List<Double>> commandsToParams : gameData.getRules().advanceRound()) {
+  private List<Command> createAdvanceCommands(List<Map<String, List<Double>>> commands) {
+    List<Command> ret = new ArrayList<>();
+    for (Map<String, List<Double>> commandsToParams : commands) {
       for (String s : commandsToParams.keySet()) {
-        advanceRoundCmds.add(CommandFactory.createCommand(s, commandsToParams.get(s)));
+        ret.add(CommandFactory.createCommand(s, commandsToParams.get(s)));
       }
     }
-    return advanceRoundCmds;
-  }
-
-  private List<Command> createAdvanceTurnCommands() {
-    List<Command> advanceTurnCmds = new ArrayList<>();
-    for (Map<String, List<Double>> commandsToParams : gameData.getRules().advanceTurn()) {
-      for (String s : commandsToParams.keySet()) {
-        advanceTurnCmds.add(CommandFactory.createCommand(s, commandsToParams.get(s)));
-      }
-    }
-    return advanceTurnCmds;
+    return ret;
   }
 
   private Map<Pair, List<Command>> createCommandMap() {
