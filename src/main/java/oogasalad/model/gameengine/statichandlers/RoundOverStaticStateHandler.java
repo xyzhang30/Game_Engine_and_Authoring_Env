@@ -14,7 +14,10 @@ public class RoundOverStaticStateHandler extends GenericStaticStateHandler {
   @Override
   public void handleIt(GameEngine engine, RulesRecord rules) {
     LOGGER.info(toLogForm(rules.roundPolicy()) + " (round condition) evaluated True");
-    engine.advanceRound();
+    for (Command cmd : rules.advanceRound()) {
+      LOGGER.info(toLogForm(cmd) + " " + "(advance) ");
+      cmd.execute(engine);
+    }
     if(getPrev().canHandle(engine,rules)) {
       getPrev().handleIt(engine, rules);
     }
