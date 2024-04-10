@@ -15,6 +15,8 @@ import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.collidable.PhysicsHandler;
 import oogasalad.model.gameengine.collidable.collision.FrictionHandler;
 import oogasalad.model.gameengine.collidable.collision.MomentumHandler;
+import oogasalad.model.gameengine.command.AdvanceRoundCheck;
+import oogasalad.model.gameengine.command.AdvanceRoundCommand;
 import oogasalad.model.gameengine.turn.StandardTurnPolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
 import oogasalad.model.gameengine.collidable.Collidable;
@@ -94,12 +96,19 @@ public class GameLoaderModelTest {
     Map<Pair, List<Command>> collisionHandlers = Map.of(new Pair(2, 3), List.of(c1, c2));
     Command winCondition = new NRoundsCompletedCommand(List.of(2.0));
 
+    Command roundPolicy = new AdvanceRoundCheck(List.of());
+
     Command advanceC1 = new AdvanceTurnCommand(List.of());
     Command advanceC2 = new AdjustPointsCommand(List.of(1.0, 1.0));
-    List<Command> advanceCs = List.of(advanceC1, advanceC2);
+    List<Command> advanceTurn = List.of(advanceC1, advanceC2);
+
+    Command advanceC3 = new AdvanceRoundCommand(List.of());
+    List<Command> advanceRound = List.of(advanceC3);
+
 
     Map<Pair, PhysicsHandler> physicsMap = new HashMap<>();
     physicsMap.put(new Pair(1, 2), new FrictionHandler(1, 2));
+    physicsMap.put(new Pair(2, 3), new FrictionHandler(2, 3));
     physicsMap.put(new Pair(3, 4), new FrictionHandler(3, 4));
     physicsMap.put(new Pair(4, 5), new MomentumHandler(4, 5));
     physicsMap.put(new Pair(5, 6), new MomentumHandler(5, 6));
@@ -119,9 +128,9 @@ public class GameLoaderModelTest {
     physicsMap.put(new Pair(2, 7), new MomentumHandler(2, 7));
     physicsMap.put(new Pair(1, 7), new FrictionHandler(1, 7));
 
-    RulesRecord mockRulesRecord = new RulesRecord(1, 1, collisionHandlers, winCondition, advanceCs, physicsMap);
+    RulesRecord mockRulesRecord = new RulesRecord(1, 1, collisionHandlers, winCondition, roundPolicy, advanceTurn, advanceRound, physicsMap);
 
-    assertThat(testGameLoaderModel.getRulesRecord()).usingRecursiveComparison().isEqualTo(mockRulesRecord);
+    assertThat(testGameLoaderModel.getRulesRecord()).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mockRulesRecord);
   }
 
 

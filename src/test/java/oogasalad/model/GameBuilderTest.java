@@ -63,11 +63,12 @@ public class GameBuilderTest {
 
     CollisionRule collisionRule = new CollisionRule(2, 3, List.of(commands1, commands2));
     String turnPolicy = "StandardTurnPolicy";
+    Map<String, List<Double>> roundPolicy = Map.of("AdvanceRoundCheck", List.of());
     Map<String, List<Double>> winConditions = Map.of("NRoundsCompletedCommand", List.of(2.0));
     Map<String, List<Double>> advance1 = Map.of("AdvanceTurnCommand", List.of());
     Map<String, List<Double>> advance2 = Map.of("AdjustPointsCommand", List.of(1.0, 1.0));
-
-    Rules rules = new Rules(List.of(collisionRule), null, turnPolicy, winConditions, List.of(advance1, advance2));
+    Map<String, List<Double>> advance3 = Map.of("AdvanceRoundCommand", List.of());
+    Rules rules = new Rules(List.of(collisionRule), null, turnPolicy, roundPolicy, winConditions, List.of(advance1, advance2), List.of(advance3));
     return rules;
   }
 
@@ -90,9 +91,8 @@ public class GameBuilderTest {
   public void testWriteJSON() throws IOException {
     String expectedFile = "testAuthoringSinglePlayerMiniGolf.json";
     String testFile = "test_authoring_mini_golf.json";
-//    String fileType = ".json";
     String filePath = "data/";
-    this.testBuilderDirector.writeGame(testGameData, filePath, testFile);
+    this.testBuilderDirector.writeGame(testGameData, "testAuthoringMiniGold", filePath, testFile);
     ObjectMapper mapper = new ObjectMapper();
     File expected = new File(filePath+expectedFile);
     File tested = new File(filePath+testFile);
