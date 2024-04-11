@@ -231,7 +231,7 @@ public class AuthoringController {
           properties, 10,
           new Position(shape.getLayoutX(), shape.getLayoutY()), shapeName,
           new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
-          colorRgb, 0.0, imgPath);
+          colorRgb, 0.0, 0.0, imgPath);
       collidableObjects.add(collidableObject);
       collidableIdMap.put(shape, collidableId);
       collidableId++;
@@ -251,14 +251,16 @@ public class AuthoringController {
       List<String> properties = new ArrayList<>();
       properties.add("collidable");
       properties.add(nonControllableTypeMap.get(shape).toString());
-      double friction =
-          (nonControllableTypeMap.get(shape).toString().equals("Surface")) ? 0.5 : 0.0;
+      double staticFriction =
+          (nonControllableTypeMap.get(shape).toString().equals("Surface")) ? 3.03873 : 0.0;
+      double kineticFriction =
+          (nonControllableTypeMap.get(shape).toString().equals("Surface")) ? 2.03873 : 0.0;
       String shapeName = (shape instanceof Circle) ? "Circle" : "Rectangle";
       CollidableObject collidableObject = new CollidableObject(collidableId,
           properties, 10,
           new Position(shape.getLayoutX(), shape.getLayoutY()), shapeName,
           new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
-          colorRgb, friction, imgPath);
+          colorRgb, staticFriction, kineticFriction, imgPath);
       collidableObjects.add(collidableObject);
       collidableIdMap.put(shape, collidableId);
       collidableId++;
