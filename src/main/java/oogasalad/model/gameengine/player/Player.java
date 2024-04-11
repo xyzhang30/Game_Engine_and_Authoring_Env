@@ -2,6 +2,7 @@ package oogasalad.model.gameengine.player;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import javafx.collections.ObservableMap;
@@ -13,14 +14,14 @@ public class Player {
 
   private static final Logger LOGGER = LogManager.getLogger(Player.class);
   private final int playerId;
-  private final int myCollidable;
+  private final List<Integer> myControllable;
   private final Map<String, Double> variables;
   private boolean roundCompleted = false;
   private Stack<ObservableMap<String, Double>> variableStack;
 
-  public Player(int id, int collidable) {
+  public Player(int id, List<Integer> controlable) {
     playerId = id;
-    myCollidable = collidable;
+    myControllable = controlable;
     roundCompleted = false;
     variables = new HashMap<>();
     variables.put("score", 0.0);
@@ -37,7 +38,7 @@ public class Player {
   protected PlayerRecord getPlayerRecord(boolean active) {
 
     try {
-      return new PlayerRecord(playerId, variables.get("score"), myCollidable, active);
+      return new PlayerRecord(playerId, variables.get("score"), myControllable, active);
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");
       return null;

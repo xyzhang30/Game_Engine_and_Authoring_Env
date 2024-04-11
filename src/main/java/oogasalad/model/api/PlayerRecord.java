@@ -1,6 +1,9 @@
 package oogasalad.model.api;
 
-public record PlayerRecord(int playerId, double score, int primaryId, boolean active) {
+import java.util.List;
+
+public record PlayerRecord(int playerId, double score, List<Integer> myControllable,
+                           boolean active) {
 
 }
 

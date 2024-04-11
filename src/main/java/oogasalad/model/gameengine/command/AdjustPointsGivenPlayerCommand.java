@@ -22,7 +22,7 @@ public abstract class AdjustPointsGivenPlayerCommand implements Command {
     return currentPlayer.getVariable(SCORE_VARIABLE);
   }
 
-  public abstract double execute(GameEngine engine);
+  public abstract void execute(GameEngine engine);
 }
 
 //Backlog
