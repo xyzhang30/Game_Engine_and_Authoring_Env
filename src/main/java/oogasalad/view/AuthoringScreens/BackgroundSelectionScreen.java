@@ -7,6 +7,7 @@ import java.util.Map;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -23,15 +24,16 @@ public class BackgroundSelectionScreen extends AuthoringScreen {
   private Rectangle background;
 
   public BackgroundSelectionScreen(AuthoringController controller, StackPane authoringBox,
+      Map<Shape, List<Double>> posMap,
       Map<Shape, NonControllableType> nonControllableMap, List<Shape> controllableList) {
-    super(controller, authoringBox, nonControllableMap, controllableList);
+    super(controller, authoringBox, posMap, nonControllableMap, controllableList);
   }
 
   /**
    * Creates the scene for configuring the background
    */
   void createScene() {
-    root = new StackPane();
+    root = new AnchorPane();
     createTitle("Background Selection");
     createAuthoringBox();
     createShapeDisplayOptionBox();
@@ -43,7 +45,7 @@ public class BackgroundSelectionScreen extends AuthoringScreen {
    * When next button is clicked, controller is prompted to start the next selection process
    */
   void endSelection() {
-    controller.startNextSelection(ImageType.BACKGROUND, authoringBox, nonControllableMap,
+    controller.startNextSelection(ImageType.BACKGROUND, authoringBox, posMap, nonControllableMap,
         new ArrayList<>());
   }
 
@@ -65,8 +67,8 @@ public class BackgroundSelectionScreen extends AuthoringScreen {
 
   private void createAuthoringBox() {
     authoringBox.setMaxSize(authoringBoxWidth, authoringBoxHeight);
-    StackPane.setAlignment(authoringBox, Pos.TOP_LEFT);
-    StackPane.setMargin(authoringBox, new Insets(50, 0, 0, 50));
+    AnchorPane.setTopAnchor(authoringBox, 50.0);
+    AnchorPane.setLeftAnchor(authoringBox, 50.0);
 
     background = new Rectangle(authoringBoxWidth, authoringBoxHeight);
     background.setStroke(Color.BLACK);

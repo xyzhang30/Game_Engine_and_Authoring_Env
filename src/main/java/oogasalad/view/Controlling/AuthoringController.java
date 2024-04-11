@@ -50,7 +50,7 @@ public class AuthoringController {
   public void startAuthoring() {
     Map<Shape, NonControllableType> map = new HashMap<>();
     BackgroundSelectionScreen scene = new BackgroundSelectionScreen(
-        this, new StackPane(), map, new ArrayList<>());
+        this, new StackPane(), new HashMap<>(), map, new ArrayList<>());
     stage.setScene(scene.getScene());
     stage.show();
   }
@@ -62,25 +62,26 @@ public class AuthoringController {
    * @param authoringBox holds the user's current game configurations
    */
   public void startNextSelection(ImageType imageType, StackPane authoringBox,
+      Map<Shape, List<Double>> posMap,
       Map<Shape, NonControllableType> nonControllableMap, List<Shape> controllableList) {
     switch (imageType) {
       case BACKGROUND -> {
         ControllableElementSelectionScreen controllableElementSelectionScreen =
-            new ControllableElementSelectionScreen(this, authoringBox, nonControllableMap,
+            new ControllableElementSelectionScreen(this, authoringBox, posMap, nonControllableMap,
                 controllableList);
         System.out.println("finished background, getting controllable");
         stage.setScene(controllableElementSelectionScreen.getScene());
       }
       case CONTROLLABLE_ELEMENT -> {
         NonControllableElementSelection nonControllableElementSelection =
-            new NonControllableElementSelection(this, authoringBox, nonControllableMap,
+            new NonControllableElementSelection(this, authoringBox, posMap, nonControllableMap,
                 controllableList);
         System.out.println("finished controllable, getting noncontrollable");
         stage.setScene(nonControllableElementSelection.getScene());
       }
       case NONCONTROLLABLE_ELEMENT -> {
         InteractionSelectionScreen interactionSelectionScreen
-            = new InteractionSelectionScreen(this, authoringBox, nonControllableMap,
+            = new InteractionSelectionScreen(this, authoringBox, posMap, nonControllableMap,
             controllableList);
         System.out.println("finished noncontrollable, getting interaction");
         stage.setScene(interactionSelectionScreen.getScene());
@@ -121,14 +122,14 @@ public class AuthoringController {
 
   private void writeVariables() {
     //HARD CODED FOR DEMO!
-    Variables variables = new Variables(new GlobalVariables(1,2), new PlayerVariables(0,0));
+    Variables variables = new Variables(new GlobalVariables(1, 2), new PlayerVariables(0, 0));
     builderDirector.constructVaraibles(List.of(variables));
   }
 
   private void writePlayer() {
     //HARD CODED FOR DEMO!
     //QUESTION: WHICH COLLIDABLE WILL BE THE ONE PLAYER IS ASSIGNED TO IN THE DEMO WE DO??
-    ParserPlayer player = new ParserPlayer(1,1);
+    ParserPlayer player = new ParserPlayer(1, 1);
 
     builderDirector.constructPlayers(List.of(player));
   }
@@ -151,9 +152,10 @@ public class AuthoringController {
           properties, 10,
           new Position(shape.getLayoutX(), shape.getLayoutY()), shapeName,
           new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
-          List.of((int) c.getRed() * 255, (int) c.getGreen() * 255, (int) c.getBlue() * 255), 0.0, "");
+          List.of((int) c.getRed() * 255, (int) c.getGreen() * 255, (int) c.getBlue() * 255), 0.0,
+          "");
       collidableObjects.add(collidableObject);
-      collidableId ++;
+      collidableId++;
     }
 
     //nonControllables
@@ -162,15 +164,17 @@ public class AuthoringController {
       List<String> properties = new ArrayList<>();
       properties.add("collidable");
       properties.add(nonControllableTypeMap.get(shape).toString());
-      double friction = (nonControllableTypeMap.get(shape).toString().equals("Surface")) ? 0.5 : 0.0;
+      double friction =
+          (nonControllableTypeMap.get(shape).toString().equals("Surface")) ? 0.5 : 0.0;
       String shapeName = (shape instanceof Circle) ? "Circle" : "Rectangle";
       CollidableObject collidableObject = new CollidableObject(collidableId,
           properties, 10,
           new Position(shape.getLayoutX(), shape.getLayoutY()), shapeName,
           new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
-          List.of((int) c.getRed() * 255, (int) c.getGreen() * 255, (int) c.getBlue() * 255), friction, "");
+          List.of((int) c.getRed() * 255, (int) c.getGreen() * 255, (int) c.getBlue() * 255),
+          friction, "");
       collidableObjects.add(collidableObject);
-      collidableId ++;
+      collidableId++;
     }
 
     builderDirector.constructCollidableObjects(collidableObjects);

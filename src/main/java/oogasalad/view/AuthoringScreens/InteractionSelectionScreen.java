@@ -20,6 +20,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -43,17 +44,19 @@ public class InteractionSelectionScreen extends AuthoringScreen {
 
 
   public InteractionSelectionScreen(AuthoringController controller, StackPane authoringBox,
+      Map<Shape, List<Double>> posMap,
       Map<Shape, NonControllableType> nonControllableTypeMap, List<Shape> controllableList) {
-    super(controller, authoringBox, nonControllableTypeMap, controllableList);
+    super(controller, authoringBox, posMap, nonControllableTypeMap, controllableList);
   }
 
   /**
    * Creates the scene including the previously selected background
    */
   void createScene() {
-    root = new StackPane();
+    root = new AnchorPane();
     createTitle("Interaction Selection");
     root.getChildren().add(authoringBox);
+    addElements();
     createInteractionOptions();
     setUpShapes();
     createTransitionButton("Submit");
@@ -104,28 +107,28 @@ public class InteractionSelectionScreen extends AuthoringScreen {
 //    gameNameTextField.setVisible(true);
 //  }
 
-private void showGameNamePopup() {
-  if (gameNameStage == null) {
-    gameNameStage = new Stage();
-    gameNameStage.initModality(Modality.APPLICATION_MODAL);
-    gameNameStage.setTitle("Enter Game Name");
+  private void showGameNamePopup() {
+    if (gameNameStage == null) {
+      gameNameStage = new Stage();
+      gameNameStage.initModality(Modality.APPLICATION_MODAL);
+      gameNameStage.setTitle("Enter Game Name");
 
-    VBox vbox = new VBox();
-    gameNameTextField = new TextField();
-    gameNameTextField.setPromptText("Enter game name...");
-    vbox.getChildren().addAll(gameNameTextField, submitGameNameButton());
+      VBox vbox = new VBox();
+      gameNameTextField = new TextField();
+      gameNameTextField.setPromptText("Enter game name...");
+      vbox.getChildren().addAll(gameNameTextField, submitGameNameButton());
 
-    Scene scene = new Scene(vbox, 300, 100);
-    gameNameStage.setScene(scene);
-  }
-  gameNameStage.showAndWait();
+      Scene scene = new Scene(vbox, 300, 100);
+      gameNameStage.setScene(scene);
+    }
+    gameNameStage.showAndWait();
 
-  // Proceed only when the user has hit submit
+    // Proceed only when the user has hit submit
 //  if (submitGameNameButton.isPressed()) {
 //    // Call the controller method to end authoring
 //    controller.endAuthoring(interactionMap);
 //  }
-}
+  }
 
   private Button submitGameNameButton() {
     if (submitGameNameButton == null) {
@@ -154,18 +157,18 @@ private void showGameNamePopup() {
     changeSpeedCheckBox.setDisable(true);
 
     advanceTurnCheckBox.setPrefSize(150, 150);
-    StackPane.setAlignment(advanceTurnCheckBox, Pos.BOTTOM_RIGHT);
-    StackPane.setMargin(advanceTurnCheckBox, new Insets(0, 75, 300, 0));
+    AnchorPane.setRightAnchor(advanceTurnCheckBox, 75.0);
+    AnchorPane.setBottomAnchor(advanceTurnCheckBox, 300.0);
     createAdvanceHandler();
 
     resetCheckBox.setPrefSize(150, 150);
-    StackPane.setAlignment(resetCheckBox, Pos.BOTTOM_RIGHT);
-    StackPane.setMargin(resetCheckBox, new Insets(0, 75, 400, 0));
+    AnchorPane.setRightAnchor(resetCheckBox, 75.0);
+    AnchorPane.setBottomAnchor(resetCheckBox, 400.0);
     createResetHandler();
 
     changeSpeedCheckBox.setPrefSize(150, 150);
-    StackPane.setAlignment(changeSpeedCheckBox, Pos.BOTTOM_RIGHT);
-    StackPane.setMargin(changeSpeedCheckBox, new Insets(0, 75, 500, 0));
+    AnchorPane.setRightAnchor(changeSpeedCheckBox, 75.0);
+    AnchorPane.setBottomAnchor(changeSpeedCheckBox, 500.0);
     createChangeHandler();
 
     root.getChildren().addAll(advanceTurnCheckBox, resetCheckBox, changeSpeedCheckBox);
@@ -253,13 +256,13 @@ private void showGameNamePopup() {
     createPointsScoredHandler();
 
     Label label = new Label("Points Scored on Collision");
-    StackPane.setAlignment(label, Pos.BOTTOM_RIGHT);
-    StackPane.setMargin(label, new Insets(0, 75, 250, 0));
+    AnchorPane.setRightAnchor(label, 75.0);
+    AnchorPane.setBottomAnchor(label, 250.0);
 
     HBox pointPromptContainer = new HBox(pointPrompt);
     pointPromptContainer.setMaxSize(75, 75);
-    StackPane.setAlignment(pointPromptContainer, Pos.BOTTOM_RIGHT);
-    StackPane.setMargin(pointPromptContainer, new Insets(0, 100, 150, 0));
+    AnchorPane.setRightAnchor(pointPromptContainer, 100.0);
+    AnchorPane.setBottomAnchor(pointPromptContainer, 150.0);
 
     root.getChildren().addAll(label, pointPromptContainer);
   }
