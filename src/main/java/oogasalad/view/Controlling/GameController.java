@@ -11,12 +11,16 @@ import javafx.stage.Stage;
 import oogasalad.Pair;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewCollidableRecord;
+import oogasalad.model.api.exception.InvalidImageException;
+import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.AnimationManager;
 import oogasalad.view.CollisionManager;
 import oogasalad.view.SceneManager;
 import oogasalad.view.VisualElements.CompositeElement;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -27,6 +31,7 @@ import oogasalad.view.VisualElements.CompositeElement;
  */
 public class GameController {
 
+  private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private final CollisionManager collisionManager;
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
@@ -138,8 +143,13 @@ public class GameController {
   }
 
   private CompositeElement createCompositeElementFromGameLoader() {
-    List<ViewCollidableRecord> recordList = gameLoaderView.getViewCollidableInfo();
-    return new CompositeElement(recordList);
+    try {
+      List<ViewCollidableRecord> recordList = gameLoaderView.getViewCollidableInfo();
+      return new CompositeElement(recordList);
+    } catch (InvalidShapeException | InvalidImageException e){
+      LOGGER.error(e.getMessage());
+      return null;
+    }
   }
 
 }
