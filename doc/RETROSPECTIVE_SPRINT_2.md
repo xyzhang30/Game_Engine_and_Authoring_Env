@@ -46,70 +46,34 @@ being applied correctly. However, it is passing my tests, so I should probably w
 ### Doga
 
 * Work done this Sprint
-    * GameScreen, ScreenManager, ControlPane, Arrow, TransitionScreen, ScoreTransitionScreen,
-      UIScreen, FrontEndParser
 
 * Plan for next Sprint?
-    * First, creating the authoring environment which will be extensive,
-    * but other than that I want to implement the TransitionScreens between rounds based on the type
-      of game
-    * Refactoring existing code
-    * Implement testing more
 
 * Blockers/Issues in your way
-    * Authoring Environment, ensuring clear communication and collaboration for this component.g
 
 ### Judy
 
 * Work done this Sprint
-    * data package
-        * Added all necessary classes for mapping to the format of the JSON configuration files (
-          supporting use of Jackson to parse JSON files)
-    * GameLoader
-        * Used Jackson to parse JSON
-    * GameLoaderModel
-        * Parsed collidables
-    * Testing
-        * Added JUnit tests for all methods in GameLoaderModel (100% coverage)
-        * Used AssertJ library for checking equal objects
-    * Error handling
-        * GameLoader: InvalidFileException (invalid JSON configuration)
 
 * Plan for next Sprint?
-    * GameBuilder: write JSON file given data from the View's game authoring environment
-    * Write JSON configuration files for new games
 
 * Blockers/Issues in your way
-    * Next sprint: finalizing how to apply to Builder design pattern to writing new JSON files (
-      GameBuilder)
 
 ### Alisha
 
 * Work done this Sprint
-    * Finished view and model parser
-    * Made JSON files for games
-    * Fixed physics for object collisions
-    * Made tests for view parser
 
 * Plan for next Sprint?
-    * Finish the game builder (the writing JSON part) for the game authoring environment
-    * Make more game files for different games
-    * Refactor the view parser
-    * Make more tests for view parser, make tests for the game builder
 
 * Blockers/Issues in your way
-    * (for next sprint) finalize how the authoring environment is passing information into the
-      builder.
 
 ### Jordan
 
-* Controller, TitleScreen, MenuScreen, GameScreen, CollisionManager, SceneManager, AnimationManager,
-  Visual Element classes; pair programming, front-end planing meetings
-*
-* Refactoring existing code (fixing dependencies, reflection, hard coded values), meeting with
-  Luke?, start on authoring environment
+* Work done this Sprint
 
-* Just making sure we are all on the same page for authoring
+* Plan for next Sprint?
+
+* Blockers/Issues in your way
 
 ### Konur
 
