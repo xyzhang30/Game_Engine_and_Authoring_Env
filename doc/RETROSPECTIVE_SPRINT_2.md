@@ -54,10 +54,17 @@ being applied correctly. However, it is passing my tests, so I should probably w
 ### Judy
 
 * Work done this Sprint
+  * Implemented Builder pattern to write new JSON files based on data received from the authoring environment
+  * Wrote JUnit tests for JSON file generation (GameBuilder) - 100% coverage
+  * Updated tests for GameLoaderModel and test JSON files given GameEngine changes
+  * Helped implement View authoring environment 
 
 * Plan for next Sprint?
+  * Implement multiplayer support for View 
+  * Refactor after implementing multiplayer
 
 * Blockers/Issues in your way
+  * Using more design patterns to improve design of frontend
 
 ### Alisha
 
