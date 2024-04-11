@@ -12,7 +12,6 @@ import java.util.Map;
 import oogasalad.model.api.data.CollidableObject;
 import oogasalad.model.api.data.CollisionRule;
 import oogasalad.model.api.data.Dimension;
-import oogasalad.model.api.data.GameData;
 import oogasalad.model.api.data.GlobalVariables;
 import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.data.PlayerVariables;
