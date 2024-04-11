@@ -48,32 +48,29 @@ public class ControllableElementSelectionTest extends ApplicationTest {
     WaitForAsyncUtils.waitForFxEvents();
 
     interact(() -> {
-      screen.createDraggableShapeTemplates(); // This method should add the rectangle
+      screen.createDraggableShapeTemplates();
     });
 
-    WaitForAsyncUtils.waitForFxEvents(); // Wait for UI updates
+    WaitForAsyncUtils.waitForFxEvents();
 
     draggableRectangle = lookup("#draggableRectangle").query();
     assertNotNull(draggableRectangle, "Draggable rectangle was not found.");
 
-    // Calculate the drag start point (anywhere on the rectangle)
     double dragStartX = draggableRectangle.localToScreen(draggableRectangle.getBoundsInLocal()).getMinX() + draggableRectangle.getWidth() / 2;
     double dragStartY = draggableRectangle.localToScreen(draggableRectangle.getBoundsInLocal()).getMinY() + draggableRectangle.getHeight() / 2;
 
-    // Calculate the drop point inside the authoringBox
     double dropX = authoringBox.localToScreen(authoringBox.getBoundsInLocal()).getMinX() + authoringBox.getWidth() / 2;
     double dropY = authoringBox.localToScreen(authoringBox.getBoundsInLocal()).getMinY() + authoringBox.getHeight() / 2;
 
     System.out.println("Drag start point: (" + dragStartX + ", " + dragStartY + ")");
     System.out.println("Drop point: (" + dropX + ", " + dropY + ")");
 
-    // Simulate dragging from the rectangle to the target drop point inside the authoringBox
     moveTo(dragStartX, dragStartY);
-    press(MouseButton.PRIMARY); // Simulate mouse press on the rectangle
+    press(MouseButton.PRIMARY);
     moveTo(dropX, dropY);
-    release(MouseButton.PRIMARY); // Release the mouse to drop the rectangle
+    release(MouseButton.PRIMARY);
 
-    WaitForAsyncUtils.waitForFxEvents(); // Ensure the drop action completes
+    WaitForAsyncUtils.waitForFxEvents();
 
     System.out.println("Rectangle dropped: " + authoringBox.getChildren().contains(draggableRectangle));
 

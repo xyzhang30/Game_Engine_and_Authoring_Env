@@ -10,6 +10,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
+import oogasalad.view.AuthoringScreens.ImageType;
 import oogasalad.view.AuthoringScreens.NonControllableType;
 import org.junit.jupiter.api.Test;
 import oogasalad.view.AuthoringScreens.BackgroundSelectionScreen;
@@ -47,6 +48,6 @@ public class BackgroundSelectionScreenTest extends DukeApplicationTest {
 
     clickOn("Next");
 
-    verify(mockController, times(1)).startNextSelection(any(), any(), any(), any(), any(), any());
+    verify(mockController, times(1)).startNextSelection(any(ImageType.class), any(StackPane.class), anyMap(), anyMap(), any(List.class), anyMap());
   }
 }
