@@ -79,7 +79,7 @@
     },
     "color" : [ 0, 0, 0 ],
     "friction" : 0.0,
-    "image" : "file:/C:/Users/alish/cs308/oogasalad_team01/data/background_images/grass.jpg"
+    "image" : "data/background_images/grass.jpg"
   } ],
   "players" : [ {
     "player_id" : 1,
