@@ -39,17 +39,33 @@ being applied correctly. However, it is passing my tests, so I should probably w
 
 * Work done this Sprint
 
+Work on the physics engine. Dealing with JSON files, parser, friction handling, momentum handling. 
+Worked on refactoring, cleaning, and enhancing the physics engine. Worked on PhysicsEnhancement branch. 
+
 * Plan for next Sprint?
 
+Continue to abstract physics engine. Ensure all physical interactions can be accounted for so
+we can implement the rest of the games Introduce gravity, etc. Also write tests to ensure all of 
+these enhanced physics are working. 
+
 * Blockers/Issues in your way
+
+JSONs not configured properly yet to handle angle, also realizing that I'm going to need an elasticity property
 
 ### Doga
 
-* Work done this Sprint
+* Work done this Sprint:
+  * Worked on the frontend side of the authoring environment. Helped with the individual authoring screens,
+  bugs, and the creation of the enums. I spent a long time with Jordan on debugging the authoring environment.
+  I also began with creating extensive tests on the authoring environment.
 
 * Plan for next Sprint?
+  * Creating more view tests
+  * Refactoring the authoring environment, specifically the AuthoringScreen
 
 * Blockers/Issues in your way
+  * Some bugs with the authoring environment, especially with the connection to the model size.
+  * The way the authoring environment is currently written makes it complicated to testg
 
 ### Judy
 
@@ -76,21 +92,14 @@ being applied correctly. However, it is passing my tests, so I should probably w
 
 ### Jordan
 
-* Work done this Sprint
+* Work done this Sprint: Created Authoring Environment, helped bridge authoring environment to JSON
+  file creation, debugging integration issues
 
-* Plan for next Sprint?
+* Plan for next Sprint: Refactoring front end code, enabling multiplayer
 
-* Blockers/Issues in your way
+* Blockers/Issues in your way: Planning design/refactoring to be compatible with anticipated future
+  features/games
 
-### Konur
-
-* Work done this Sprint - None, had a terribly busy academic week
-
-* Plan for next Sprint? - Create a robust physics engine
-
-* Blockers/Issues in your way - Physics logic implemented in Moveable subclass, will have to
-  refactor
-  and abstract to physics engine.
 
 ## Project's current progress
 
@@ -115,12 +124,12 @@ makes working more enjoyable.
 
 ## Teamwork that worked well
 
-* Thing #1:
+* Working to integrate front and back end earlier in the week
 * Thing #2:
 
 ## Teamwork that could be improved
 
-* Thing #1:
+* Planning earlier and more comprehensively
 
 * Thing #2:
 
