@@ -234,12 +234,13 @@ public class AuthoringController {
     }
     List<String> properties = new ArrayList<>();
     properties.add("collidable");
-    properties.add(nonControllableTypeMap.get(background).toString());
+    properties.add("visible");
+    properties.add(nonControllableTypeMap.get(background).toString().toLowerCase());
     double friction =
         (nonControllableTypeMap.get(background).toString().equals("Surface")) ? 0.5 : 0.0;
     String shapeName = "Rectangle";
     CollidableObject collidableObject = new CollidableObject(collidableId,
-        properties, 10,
+        properties, Double.MAX_VALUE,
         new Position(posMap.get(background).get(0), posMap.get(background).get(1)),
         shapeName, new Dimension(background.getLayoutBounds().getWidth(),
         background.getLayoutBounds().getHeight()), colorRgb, friction, imgPath);
@@ -265,7 +266,8 @@ public class AuthoringController {
       }
       properties = new ArrayList<>();
       properties.add("collidable");
-      properties.add(nonControllableTypeMap.get(shape).toString());
+      properties.add("visible");
+      properties.add(nonControllableTypeMap.get(shape).toString().toLowerCase());
       friction =
           (nonControllableTypeMap.get(shape).toString().equals("Surface")) ? 0.5 : 0.0;
       shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
@@ -302,7 +304,7 @@ public class AuthoringController {
         String escapedUserDir = "file:/" + userDir.replace("\\", "/");
         imgPath = originalImagePath.replaceAll(escapedUserDir, "");
       }
-      properties = List.of("movable", "collidable", "controllable");
+      properties = List.of("movable", "collidable", "controllable", "visible");
       shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
       if (shape instanceof Ellipse) {
         collidableObject = new CollidableObject(collidableId,
