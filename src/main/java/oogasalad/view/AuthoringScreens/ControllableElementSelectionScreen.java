@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import javafx.geometry.Bounds;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Shape;
 import oogasalad.view.Controlling.AuthoringController;
@@ -20,9 +21,10 @@ public class ControllableElementSelectionScreen extends AuthoringScreen {
   private List<Shape> controllableList;
 
   public ControllableElementSelectionScreen(AuthoringController controller,
-      StackPane authoringBox, Map<Shape, NonControllableType> nonControllableMap,
+      StackPane authoringBox, Map<Shape, List<Double>> posMap,
+      Map<Shape, NonControllableType> nonControllableMap,
       List<Shape> controllableList) {
-    super(controller, authoringBox, nonControllableMap, controllableList);
+    super(controller, authoringBox, posMap, nonControllableMap, controllableList);
     this.controllableList = controllableList;
   }
 
@@ -30,9 +32,10 @@ public class ControllableElementSelectionScreen extends AuthoringScreen {
    * Creates the scene including the previously selected background
    */
   void createScene() {
-    root = new StackPane();
+    root = new AnchorPane();
     createTitle("Controllable Selection");
     root.getChildren().add(authoringBox);
+    addElements();
     createSizeAndAngleSliders();
     createShapeDisplayOptionBox();
     createDraggableShapeTemplates();
@@ -53,7 +56,8 @@ public class ControllableElementSelectionScreen extends AuthoringScreen {
         controllableList.add(shape);
       }
     }
-    controller.startNextSelection(ImageType.CONTROLLABLE_ELEMENT, authoringBox, nonControllableMap,
+    controller.startNextSelection(ImageType.CONTROLLABLE_ELEMENT, authoringBox, posMap,
+        nonControllableMap,
         controllableList);
   }
 

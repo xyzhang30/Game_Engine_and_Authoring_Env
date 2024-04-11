@@ -86,7 +86,6 @@
         ]
       }
     ],
-    "static_checks" : null,
     "turn_policy": "StandardTurnPolicy",
     "round_policy": {
       "AdvanceRoundCheck": []

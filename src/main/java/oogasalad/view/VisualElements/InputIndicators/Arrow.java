@@ -1,4 +1,4 @@
-package oogasalad.view.GameScreens;
+package oogasalad.view.VisualElements.InputIndicators;
 
 import javafx.scene.shape.Line;
 import javafx.scene.transform.Rotate;

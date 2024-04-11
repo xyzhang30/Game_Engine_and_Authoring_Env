@@ -15,6 +15,10 @@ import oogasalad.model.gamebuilder.VariablesBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * @Author: Alisha Zhang, Judy He
+ */
+
 public class BuilderDirector {
 
   private GameData gameData;
@@ -23,7 +27,7 @@ public class BuilderDirector {
   private static final String ERROR_RESOURCE_FOLDER = "error.";
   private static final String ERROR_FILE_PREFIX = "Error";
   private final String language = "English";
-  private static final String DATA_FOLDER_PATH = "data/";
+  private static final String DATA_FOLDER_PATH = "data/playable_games/";
   private static final String JSON_EXTENSION = ".json";
   private final ResourceBundle resourceBundle = ResourceBundle.getBundle(
   RESOURCE_FOLDER_PATH + ERROR_RESOURCE_FOLDER + ERROR_FILE_PREFIX + language);
@@ -32,22 +36,22 @@ public class BuilderDirector {
     this.gameData = new GameData();
   }
 
-  public void constructCollidableObjects(List<Record> fieldData) {
+  public <T> void constructCollidableObjects(List<T> fieldData) {
     CollidablesBuilder collidablesBuilder = new CollidablesBuilder();
     collidablesBuilder.buildGameField(gameData, fieldData);
   }
 
-  public void constructPlayers(List<Record> fieldData) {
+  public <T> void constructPlayers(List<T> fieldData) {
     PlayersBuilder playersBuilder = new PlayersBuilder();
     playersBuilder.buildGameField(gameData, fieldData);
   }
 
-  public void constructVaraibles(List<Record> fieldData) {
+  public <T> void constructVaraibles(List<T> fieldData) {
     VariablesBuilder variablesBuilder = new VariablesBuilder();
     variablesBuilder.buildGameField(gameData, fieldData);
   }
 
-  public void constructRules(List<Record> fieldData) {
+  public <T> void constructRules(List<T> fieldData) {
     RulesBuilder rulesBuilder = new RulesBuilder();
     rulesBuilder.buildGameField(gameData, fieldData);
   }
