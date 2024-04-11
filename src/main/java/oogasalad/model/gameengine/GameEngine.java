@@ -196,8 +196,6 @@ public class GameEngine implements ExternalGameEngine {
   }
 
 
-
-
   private void updateHistory() {
     staticState = true;
     playerContainer.addStaticStateVariables();

@@ -115,7 +115,7 @@ public class GameController {
    */
   public void hitPointScoringObject(double fractionalVelocity, double angle) {
     gameEngine.applyInitialVelocity(700 * fractionalVelocity, angle,
-        controllableID); // The 8 has been hard
+        8); // The 8 has been hard
     // coded!
     animationManager.runAnimation(this);
   }
@@ -147,7 +147,7 @@ public class GameController {
   private CompositeElement createCompositeElementFromGameLoader() {
     try {
       List<ViewCollidableRecord> recordList = gameLoaderView.getViewCollidableInfo();
-      controllableID = gameLoaderView.getControllableIds().controllableIds().get(0);
+      //controllableID = gameLoaderView.getControllableIds().controllableIds().get(0);
       return new CompositeElement(recordList);
     } catch (InvalidShapeException | InvalidImageException e) {
       System.out.println(e.getMessage());
