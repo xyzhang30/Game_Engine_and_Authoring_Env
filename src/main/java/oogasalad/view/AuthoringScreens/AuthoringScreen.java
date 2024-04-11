@@ -181,6 +181,7 @@ public abstract class AuthoringScreen {
     root.getChildren().addAll(colorPicker);
 
     imageButton = new Button("Image");
+    imageButton.setId("imageButton");
     imageButton.setPrefSize(200, 100);
     AnchorPane.setTopAnchor(imageButton, 160.0);
     AnchorPane.setRightAnchor(imageButton, 50.0);
