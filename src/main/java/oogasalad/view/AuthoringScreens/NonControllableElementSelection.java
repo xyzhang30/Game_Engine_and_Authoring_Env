@@ -59,7 +59,7 @@ public class NonControllableElementSelection extends AuthoringScreen {
   void createTypeDropDown() {
     obstacleTypeComboBox = new ComboBox<>();
     obstacleTypeComboBox.getItems()
-        .addAll(NonControllableType.SURFACE, NonControllableType.OBJECT);
+        .addAll(NonControllableType.SURFACE, NonControllableType.MOVABLE);
     obstacleTypeComboBox.setPromptText("Select Obstacle Type");
     StackPane.setAlignment(obstacleTypeComboBox, Pos.BOTTOM_RIGHT);
     StackPane.setMargin(obstacleTypeComboBox, new Insets(0, 50, 350, 0));

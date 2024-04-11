@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -28,6 +29,7 @@ import oogasalad.view.AuthoringScreens.InteractionSelectionScreen;
 import oogasalad.view.AuthoringScreens.InteractionType;
 import oogasalad.view.AuthoringScreens.NonControllableElementSelection;
 import oogasalad.view.AuthoringScreens.NonControllableType;
+import org.apache.logging.log4j.core.net.ssl.SslConfiguration;
 
 /**
  * Class to handle transitions between authoring environment scenes and communications with backend
@@ -38,13 +40,13 @@ public class AuthoringController {
 
   private Stage stage;
   private BuilderDirector builderDirector = new BuilderDirector();
-  private List<Shape> controllables;
-  private Map<Shape, NonControllableType> nonControllableTypeMap;
+//  private List<Shape> controllables;
+//  private Map<Shape, NonControllableType> nonControllableTypeMap;
 
   public AuthoringController() {
     stage = new Stage();
-    controllables = new ArrayList<>();
-    nonControllableTypeMap = new HashMap<>();
+//    controllables = new ArrayList<>();
+//    nonControllableTypeMap = new HashMap<>();
   }
 
   public void startAuthoring() {
@@ -88,9 +90,9 @@ public class AuthoringController {
     }
   }
 
-  public void endAuthoring(Map<List<Shape>, Map<InteractionType, Integer>> interactionMap) {
+  public void endAuthoring(String gameName, Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap, List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap) {
     System.out.println("writing to json!");
-    boolean saveGameSuccess = submitGame();
+    boolean saveGameSuccess = submitGame(gameName, interactionMap, controllables, nonControllableTypeMap);
     Alert alert = new Alert(AlertType.INFORMATION);
     if (saveGameSuccess) {
       alert.setTitle("Save Game Success");
@@ -106,15 +108,17 @@ public class AuthoringController {
     }
   }
 
-  private boolean submitGame() {
+  private boolean submitGame(String gameName, Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap, List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap) {
     try {
-      writeCollidables();
-      writeRules();
+      Map<Shape, Integer> collidableIdMap = new HashMap<>();
+      writeCollidables(collidableIdMap, controllables, nonControllableTypeMap);
       writePlayer();
       writeVariables();
-      builderDirector.writeGame("testFile");
+      writeRules(interactionMap, collidableIdMap);
+      builderDirector.writeGame(gameName);
       return true;
     } catch (RuntimeException e) {
+      e.printStackTrace();
       return false;
     }
   }
@@ -133,32 +137,104 @@ public class AuthoringController {
     builderDirector.constructPlayers(List.of(player));
   }
 
-  private void writeRules() {
+  private void writeRules(Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap, Map<Shape, Integer> collidableIdMap) {
+    //COLLISION RULE
+    List<CollisionRule> collisionRules = new ArrayList<>();
+    for (List<Shape> pair : interactionMap.keySet()){
+      Map<String, List<Double>> collisionCommand = new HashMap<>();
+      for (InteractionType type : interactionMap.get(pair).keySet()){
+        if (type != InteractionType.CHANGE_SPEED){
+          collisionCommand.put(matchCommandName(type), interactionMap.get(pair).get(type));
+        }
+      }
+      for (Shape shape : collidableIdMap.keySet()){
+        System.out.println("ID: "+ collidableIdMap.get(shape));
+      }
+      System.out.println("FIRST ID: "+collidableIdMap.get(pair.get(0)));
+      CollisionRule collisionRule = new CollisionRule(collidableIdMap.get(pair.get(0)), collidableIdMap.get(pair.get(1)), List.of(collisionCommand));
 
-    builderDirector.constructRules(null);
+      collisionRules.add(collisionRule);
+    }
+
+    String turnPolicy = "StandardTurnPolicy";
+
+    Map<String, List<Double>> roundPolicy = new HashMap<>();
+    roundPolicy.put("AllPlayersCompletedRoundCondition", new ArrayList<>());
+
+    Map<String, List<Double>> winCondition = new HashMap<>();
+    winCondition.put("NRoundsCompletedCondition", List.of((double)1));
+
+    List<Map<String, List<Double>>> advanceTurn = new ArrayList<>();
+    Map<String, List<Double>> turnCommandOne = new HashMap<>();
+    turnCommandOne.put("AdvanceTurnCommand", new ArrayList<>());
+    advanceTurn.add(turnCommandOne);
+    Map<String, List<Double>> turnCommandTwo = new HashMap<>();
+    turnCommandTwo.put("AdjustActivePointsCommand", List.of(1.0));
+    advanceTurn.add(turnCommandTwo);
+
+    List<Map<String, List<Double>>> advanceRound = new ArrayList<>();
+    Map<String, List<Double>> roundCommandOne = new HashMap<>();
+    roundCommandOne.put("AdvanceRoundCommand", new ArrayList<>());
+    advanceRound.add(roundCommandOne);
+    Map<String, List<Double>> roundCommandTwo = new HashMap<>();
+    roundCommandTwo.put("AdjustActivePointsCommand", List.of(1.0));
+    advanceRound.add(roundCommandTwo);
+
+    Rules rules = new Rules(collisionRules, turnPolicy, roundPolicy, winCondition, advanceTurn, advanceRound);
+
+    builderDirector.constructRules(List.of(rules));
   }
 
-  private void writeCollidables() {
+  private String matchCommandName(InteractionType type) {
+    return switch (type){
+      case RESET -> "UndoTurnCommand";
+      case ADVANCE -> "AdvanceTurnCommand";
+      case SCORE -> "AdjustPointsCommand";
+      case CHANGE_SPEED -> null;
+    };
+  }
+
+  private void writeCollidables(Map<Shape, Integer> collidableIdMap, List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap) {
     int collidableId = 0;
     List<CollidableObject> collidableObjects = new ArrayList<>();
 
+    System.out.println("controllables size:"+controllables.size());
+
     //controllables
     for (Shape shape : controllables) {
-      Color c = (Color) (shape.getFill());
+      List<Integer> colorRgb = List.of(0,0,0);
+      String imgPath = "";
+      if (shape.getFill() instanceof Color){
+        Color c = (Color) (shape.getFill());
+        colorRgb = List.of((int) c.getRed() * 255, (int) c.getGreen() * 255, (int) c.getBlue() * 255);
+      }
+//      else {
+////        imgPath = shape.getFill();
+//      }
+
+
       List<String> properties = List.of("movable", "collidable", "controllable");
       String shapeName = (shape instanceof Circle) ? "Circle" : "Rectangle";
       CollidableObject collidableObject = new CollidableObject(collidableId,
           properties, 10,
           new Position(shape.getLayoutX(), shape.getLayoutY()), shapeName,
           new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
-          List.of((int) c.getRed() * 255, (int) c.getGreen() * 255, (int) c.getBlue() * 255), 0.0, "");
+          colorRgb, 0.0, imgPath);
       collidableObjects.add(collidableObject);
+      collidableIdMap.put(shape,collidableId);
       collidableId ++;
     }
 
+    System.out.println("noncontrollables size:"+nonControllableTypeMap.size());
+
     //nonControllables
     for (Shape shape : nonControllableTypeMap.keySet()) {
-      Color c = (Color) (shape.getFill());
+      List<Integer> colorRgb = List.of(0,0,0);
+      String imgPath = "";
+      if (shape.getFill() instanceof Color){
+        Color c = (Color) (shape.getFill());
+        colorRgb = List.of((int) c.getRed() * 255, (int) c.getGreen() * 255, (int) c.getBlue() * 255);
+      }
       List<String> properties = new ArrayList<>();
       properties.add("collidable");
       properties.add(nonControllableTypeMap.get(shape).toString());
@@ -168,9 +244,14 @@ public class AuthoringController {
           properties, 10,
           new Position(shape.getLayoutX(), shape.getLayoutY()), shapeName,
           new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
-          List.of((int) c.getRed() * 255, (int) c.getGreen() * 255, (int) c.getBlue() * 255), friction, "");
+          colorRgb, friction, imgPath);
       collidableObjects.add(collidableObject);
+      collidableIdMap.put(shape,collidableId);
       collidableId ++;
+    }
+
+    for (Shape shape : collidableIdMap.keySet()){
+      System.out.println("ID in collidablewrite: "+ collidableIdMap.get(shape));
     }
 
     builderDirector.constructCollidableObjects(collidableObjects);
