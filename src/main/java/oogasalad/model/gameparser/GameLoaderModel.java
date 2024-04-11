@@ -60,7 +60,6 @@ public class GameLoaderModel extends GameLoader {
         "GameOverStaticStateHandler",
         "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
 
-
     createCollisionTypeMap();
     createCollidableContainer();
     createPlayerContainer();
@@ -114,7 +113,7 @@ public class GameLoaderModel extends GameLoader {
   private void addPairToPhysicsMap(CollidableObject co, Integer id,
       List<Entry<BiPredicate<Integer, CollidableObject>, BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList) {
     for (Entry<BiPredicate<Integer, CollidableObject>, BiFunction<Integer, Integer, PhysicsHandler>> entry : conditionsList) {
-      if (entry.getKey().test(id, co) && id!=co.collidableId()) {
+      if (entry.getKey().test(id, co) && id != co.collidableId()) {
         physicsMap.put(new Pair(id, co.collidableId()), entry.getValue().apply(id,
             co.collidableId()));
         break;
@@ -124,10 +123,12 @@ public class GameLoaderModel extends GameLoader {
 
   private void createCollisionTypeMap() {
     conditionsList = new ArrayList<>();
-    conditionsList.add(Map.entry((key, co) -> movables.contains(key) && co.properties().contains("movable"),
-        MomentumHandler::new));
-    conditionsList.add(Map.entry((key, co) -> movables.contains(key) || co.properties().contains("movable"),
-        FrictionHandler::new));
+    conditionsList.add(
+        Map.entry((key, co) -> movables.contains(key) && co.properties().contains("movable"),
+            MomentumHandler::new));
+    conditionsList.add(
+        Map.entry((key, co) -> movables.contains(key) || co.properties().contains("movable"),
+            FrictionHandler::new));
   }
 
   private Collidable createCollidable(CollidableObject co) {
@@ -150,8 +151,9 @@ public class GameLoaderModel extends GameLoader {
     Condition roundPolicy = createCondition(gameData.getRules().roundPolicy());
     TurnPolicy turnPolicy = createTurnPolicy();
     rulesRecord = new RulesRecord(commandMap,
-          winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy, staticHandler);
-    }
+        winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy,
+        staticHandler);
+  }
 
   private TurnPolicy createTurnPolicy() {
     return TurnPolicyFactory.createTurnPolicy(gameData.getRules().turnPolicy(),
@@ -159,11 +161,10 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private Condition createCondition(Map<String, List<Double>> conditionToParams) {
-    if(conditionToParams.keySet().iterator().hasNext()) {
+    if (conditionToParams.keySet().iterator().hasNext()) {
       String conditionName = conditionToParams.keySet().iterator().next();
       return ConditionFactory.createCondition(conditionName, conditionToParams.get(conditionName));
-    }
-    else {
+    } else {
       throw new InvalidCommandException("");
     }
   }

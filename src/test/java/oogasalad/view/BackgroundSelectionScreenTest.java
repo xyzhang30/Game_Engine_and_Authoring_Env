@@ -10,6 +10,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
+import oogasalad.view.AuthoringScreens.ImageType;
 import oogasalad.view.AuthoringScreens.NonControllableType;
 import org.junit.jupiter.api.Test;
 import oogasalad.view.AuthoringScreens.BackgroundSelectionScreen;
@@ -18,7 +19,7 @@ import util.DukeApplicationTest;
 
 import static org.mockito.Mockito.*;
 
-public class BackgroundSelectionScreenTest extends DukeApplicationTest {
+public class  BackgroundSelectionScreenTest extends DukeApplicationTest {
 
   private AuthoringController mockController;
 
@@ -43,10 +44,25 @@ public class BackgroundSelectionScreenTest extends DukeApplicationTest {
 
   @Test
   public void testColorSelectionAndNextButtonPress() {
-    setValue(lookup(".color-picker").query(), Color.BLUE);
+    // color selection
+    //clickOn("#colorPicker").write("ff0000"); // Enters red color
 
-    clickOn("Next");
+    sleep(500);
+    // click on the "Image" button
+    clickOn("#imageButton"); // Click on the "Image" button to open the file chooser dialog
+    //doubleClickOn("Chapel"); // Double-click on the desired file to select it
+    System.out.println(lookup(".file-chooser-dialog .file-list-view").queryAll());
+    //clickOn("Open");
 
     verify(mockController, times(1)).startNextSelection(any(), any(), any(), any(), any(), any());
+    // click on the "Next" button
+    //clickOn("#Next");
+
+//    verify(mockController, times(1)).startNextSelection(
+//        any(ImageType.class), any(StackPane.class), anyMap(), anyMap(), any(List.class), anyMap());
   }
+
+
+
+
 }

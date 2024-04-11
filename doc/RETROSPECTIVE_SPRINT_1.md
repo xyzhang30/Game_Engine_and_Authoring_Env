@@ -9,14 +9,10 @@
 ### Noah
 
 * Work done this Sprint
-<<<<<<< Updated upstream
 In this sprint, I primarily worked on the Game Engine module. This involved writing all of the 
   Command classes, as well as designing and redesigning APIs for the backend. I worked on 9 
   different tests that focused on both the commands and the physics engine, and outlined a basic 
   physics engine. However, there is still work to be done.
-=======
-In this sprint, I primarily worked on the Game Engine module. This involved 
->>>>>>> Stashed changes
 * Plan for next Sprint?
 Next Sprint, I hope to refactor the Physics Engine and abstract it away, so that collisions are 
   detected in the backend instead of the front end. I would also like to spend time working on 
