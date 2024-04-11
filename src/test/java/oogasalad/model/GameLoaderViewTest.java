@@ -28,4 +28,15 @@ public class GameLoaderViewTest {
       }
     }
   }
+
+  @Test
+  public void wrongRgbValueTest(){
+    GameLoaderView loaderView = new GameLoaderView("testBadRgbValue");
+    List<ViewCollidableRecord> collidableRecords = loaderView.getViewCollidableInfo();
+    for (ViewCollidableRecord record : collidableRecords) {
+      if (record.id() == 5) {
+        assertEquals(0, record.color().get(0));
+      }
+    }
+  }
 }

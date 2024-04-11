@@ -33,7 +33,7 @@ public class GameElement implements VisualElement {
 
   private Node makeShape(ViewCollidableRecord data) throws InvalidShapeException {
     try {
-      if (data.image().isEmpty()) {
+      if (data.image().isEmpty() || !Files.exists(Path.of(data.image()))) {
         List<Integer> rgb = data.color();
         Color color = Color.rgb(rgb.get(0), rgb.get(1), rgb.get(2));
         switch (data.shape().toLowerCase()) { // Convert to reflection at later date
@@ -48,7 +48,7 @@ public class GameElement implements VisualElement {
           default -> throw new InvalidShapeException("Invalid shape");
         }
       } else {
-        Image image = new Image(data.image());
+        Image image = new Image(getClass().getResource(data.image()).toString());
         switch (data.shape().toLowerCase()) {
           case "circle" -> {
             Ellipse ellipse = new Ellipse(data.width(), data.height());
