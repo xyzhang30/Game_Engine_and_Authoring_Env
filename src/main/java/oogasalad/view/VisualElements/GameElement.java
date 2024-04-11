@@ -48,9 +48,8 @@ public class GameElement implements VisualElement {
           default -> throw new InvalidShapeException("Invalid shape");
         }
       } else {
-        System.out.println(data.image());
         Image image =
-            new Image("file:/" + System.getProperty("user.dir") + "/" + data.image());
+            new Image(data.image());
         switch (data.shape().toLowerCase()) {
           case "circle" -> {
             Ellipse ellipse = new Ellipse(data.width(), data.height());
