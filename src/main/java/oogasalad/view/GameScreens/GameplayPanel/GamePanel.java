@@ -1,8 +1,8 @@
 package oogasalad.view.GameScreens.GameplayPanel;
 
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import oogasalad.view.VisualElements.CompositeElement;
 
 public class GamePanel {
@@ -11,21 +11,20 @@ public class GamePanel {
   private double scaleY;
   private double offsetX;
   private double offsetY;
-  public GamePanel(CompositeElement compositeElement){
+  public GamePanel(){
     globalView = new AnchorPane();
-    addGameContentNodes(compositeElement);
     scaleX = 1;
     scaleY = 1;
     offsetX = 0;
     offsetY = 0;
   }
-  public Pane getGlobalView(){
-    return globalView;
-  }
-  public void addGameContentNodes(CompositeElement cm){
-    for (int i : cm.idList()) {
-      globalView.getChildren().add(cm.getNode(i));
+  public void addGameContentNodes(CompositeElement elements){
+    for (int i : elements.idList()) {
+      globalView.getChildren().add(elements.getNode(i));
     }
+    Sheen sheen = new Sheen();
+    sheen.setSize(globalView);
+    globalView.getChildren().add(sheen.getNode());
   }
   public void TransformLocal(){
     globalView.setScaleX(scaleX);

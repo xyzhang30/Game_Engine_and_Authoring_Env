@@ -36,7 +36,8 @@ public class GameScreen extends UIScreen {
     this.controller = controller;
     ableToHit = true;
 
-    gameContent = new GamePanel(compositeElement);
+    gameContent = new GamePanel();
+    gameContent.addGameContentNodes(compositeElement);
     root.setCenter(gameContent.getPane());
 
     setupAngleIndicator();
