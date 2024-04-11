@@ -19,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Shape;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -88,13 +89,14 @@ public class InteractionSelectionScreen extends AuthoringScreen {
   }
 
   void endSelection() {
+
     for (Shape shape : controllableList) {
       List<Double> posList = new ArrayList<>();
       posList.add(shape.localToScene(shape.getBoundsInLocal()).getMinX());
       posList.add(shape.localToScene(shape.getBoundsInLocal()).getMinY());
       posMap.put(shape, posList);
     }
-    for (Shape shape : nonControllableMap.keySet()){
+    for (Shape shape : nonControllableMap.keySet()) {
       List<Double> posList = new ArrayList<>();
       posList.add(shape.localToScene(shape.getBoundsInLocal()).getMinX());
       posList.add(shape.localToScene(shape.getBoundsInLocal()).getMinY());

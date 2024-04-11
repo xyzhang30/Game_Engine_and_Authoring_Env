@@ -36,11 +36,17 @@ public class GameElement implements VisualElement {
       if (data.image().isEmpty()) {
         List<Integer> rgb = data.color();
         Color color = Color.rgb(rgb.get(0), rgb.get(1), rgb.get(2));
-        return switch (data.shape().toLowerCase()) { // Convert to reflection at later date
-          case "circle" -> new Circle(data.width(), color);
-          case "rectangle" -> new Rectangle(data.width(), data.height(), color);
+        switch (data.shape().toLowerCase()) { // Convert to reflection at later date
+          case "circle" -> {
+            Ellipse ellipse = new Ellipse(data.width(), data.height());
+            ellipse.setFill(color);
+            return ellipse;
+          }
+          case "rectangle" -> {
+            return new Rectangle(data.width(), data.height(), color);
+          }
           default -> throw new InvalidShapeException("Invalid shape");
-        };
+        }
       } else {
         Image image = new Image(data.image());
         switch (data.shape().toLowerCase()) {

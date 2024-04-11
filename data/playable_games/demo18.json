@@ -1,5 +1,5 @@
 {
-  "gameName" : "demo11",
+  "gameName" : "demo18",
   "collidable_objects" : [ {
     "collidable_id" : 0,
     "properties" : [ "collidable", "SURFACE" ],
@@ -18,11 +18,27 @@
     "image" : "file:/C:/Users/jhayt/CS308/oogasalad_team01/data/background_images/grass.jpg"
   }, {
     "collidable_id" : 1,
+    "properties" : [ "collidable", "MOVABLE" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 284.3999938964844,
+      "y_position" : 242.0
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 30.0,
+      "y_dimension" : 30.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "friction" : 0.0,
+    "image" : ""
+  }, {
+    "collidable_id" : 2,
     "properties" : [ "collidable", "SURFACE" ],
     "mass" : 10.0,
     "position" : {
-      "x_position" : 584.7999877929688,
-      "y_position" : 448.3999938964844
+      "x_position" : 513.5999755859375,
+      "y_position" : 398.0211181640625
     },
     "shape" : "Rectangle",
     "dimension" : {
@@ -33,33 +49,17 @@
     "friction" : 0.0,
     "image" : "file:/C:/Users/jhayt/CS308/oogasalad_team01/data/noncontrollable_images/sand.jpg"
   }, {
-    "collidable_id" : 2,
-    "properties" : [ "collidable", "MOVABLE" ],
-    "mass" : 10.0,
-    "position" : {
-      "x_position" : 669.2000122070312,
-      "y_position" : 216.39999389648438
-    },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 60.0,
-      "y_dimension" : 60.0
-    },
-    "color" : [ 0, 0, 0 ],
-    "friction" : 0.0,
-    "image" : ""
-  }, {
     "collidable_id" : 3,
     "properties" : [ "movable", "collidable", "controllable" ],
     "mass" : 10.0,
     "position" : {
-      "x_position" : 521.4817504882812,
-      "y_position" : 841.77001953125
+      "x_position" : 520.7999877929688,
+      "y_position" : 748.4000244140625
     },
     "shape" : "Circle",
     "dimension" : {
-      "x_dimension" : 60.0,
-      "y_dimension" : 60.0
+      "x_dimension" : 30.0,
+      "y_dimension" : 30.0
     },
     "color" : [ 0, 0, 0 ],
     "friction" : 0.0,
