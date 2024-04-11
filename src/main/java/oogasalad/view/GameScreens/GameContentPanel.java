@@ -15,6 +15,7 @@ public class GameContentPanel {
   public GameContentPanel(CompositeElement compositeElement){
     globalView = new AnchorPane();
     addNodes(compositeElement);
+    globalView.getChildren().add(new Rectangle(globalView.getBoundsInLocal().getWidth(),globalView.getBoundsInLocal().getHeight(),Color.TRANSPARENT));
     scaleX = 1;
     scaleY = 1;
     offsetX = 0;
@@ -30,6 +31,11 @@ public class GameContentPanel {
     globalView.setScaleY(scaleY);
     globalView.setTranslateX(globalView.getBoundsInLocal().getCenterX()*(scaleX-1)-offsetX);
     globalView.setTranslateY(globalView.getBoundsInLocal().getCenterY()*(scaleY-1)-offsetY);
+  }
+  public void modifyScope(double del){
+    scaleX *= del;
+    scaleY *= del;
+    SyncLocalView();
   }
   public Pane getPane(){
     SyncLocalView();
