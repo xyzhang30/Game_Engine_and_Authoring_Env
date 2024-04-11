@@ -64,8 +64,8 @@ public class PhysicsTest {
     // Assert that the initial round and turn are as expected
     assertEquals(10, container.getCollidableRecord(1).velocityX());
     gameEngine.update(1.0/4.0);
-    assertEquals(2.5, container.getCollidableRecord(1).x());
-    assertEquals(5, container.getCollidableRecord(1).velocityX());
+    assertEquals(2.5, container.getCollidableRecord(1).x(), DELTA);
+    assertEquals(5, container.getCollidableRecord(1).velocityX(), DELTA);
   }
 
 
@@ -73,13 +73,13 @@ public class PhysicsTest {
   public void testMultipleUpdate() {
     // Ensure the game starts without errors
     gameEngine.applyInitialVelocity(15, 0, 1);
-    assertEquals(15, container.getCollidableRecord(1).velocityX());
+    assertEquals(15, container.getCollidableRecord(1).velocityX(), DELTA);
     gameEngine.update(1.0/4);
-    assertEquals(15/4.0, container.getCollidableRecord(1).x());
-    assertEquals(10, container.getCollidableRecord(1).velocityX());
+    assertEquals(15/4.0, container.getCollidableRecord(1).x(), DELTA);
+    assertEquals(10, container.getCollidableRecord(1).velocityX(), DELTA);
     gameEngine.update(1.0/4);
-    assertEquals(25/4.0, container.getCollidableRecord(1).x());
-    assertEquals(5, container.getCollidableRecord(1).velocityX());
+    assertEquals(25/4.0, container.getCollidableRecord(1).x(), DELTA);
+    assertEquals(5, container.getCollidableRecord(1).velocityX(), DELTA);
   }
 
 
@@ -95,8 +95,8 @@ public class PhysicsTest {
       System.out.println(r.collidables().get(0));
 
     }
-    assertEquals(7.5, container.getCollidableRecord(1).y());
-    assertEquals(0, container.getCollidableRecord(1).velocityY());
+    assertEquals(7.5, container.getCollidableRecord(1).y(), DELTA);
+    assertEquals(0, container.getCollidableRecord(1).velocityY(), DELTA);
   }
 
 
