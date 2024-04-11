@@ -40,7 +40,6 @@ import oogasalad.view.Window;
  * @author Jordan Haytaian, Doga Ozmen
  */
 public abstract class AuthoringScreen {
-
   Map<Shape, NonControllableType> nonControllableMap;
   List<Shape> controllableList;
   double screenWidth = Window.SCREEN_WIDTH;

@@ -266,7 +266,8 @@ public class AuthoringController {
         collidableObject = new CollidableObject(collidableId,
             properties, 10,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
-            new Dimension(((Ellipse) shape).getRadiusX(), ((Ellipse) shape).getRadiusY()),
+            new Dimension(((Ellipse) shape).getRadiusX() * shape.getScaleX(),
+                ((Ellipse) shape).getRadiusY() * shape.getScaleY()),
             colorRgb, 0.0, imgPath);
       } else {
         collidableObject = new CollidableObject(collidableId,
@@ -297,13 +298,15 @@ public class AuthoringController {
         collidableObject = new CollidableObject(collidableId,
             properties, 10,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
-            new Dimension(((Ellipse) shape).getRadiusX(), ((Ellipse) shape).getRadiusY()),
+            new Dimension(((Ellipse) shape).getRadiusX() * shape.getScaleX(),
+                ((Ellipse) shape).getRadiusY() * shape.getScaleY()),
             colorRgb, 0.0, imgPath);
       } else {
         collidableObject = new CollidableObject(collidableId,
             properties, 10,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
-            new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
+            new Dimension(shape.getLayoutBounds().getWidth() * shape.getScaleX(),
+                shape.getLayoutBounds().getHeight() * shape.getScaleY()),
             colorRgb, 0.0, imgPath);
       }
       collidableObjects.add(collidableObject);
