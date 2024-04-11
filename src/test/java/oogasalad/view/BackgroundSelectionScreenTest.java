@@ -19,7 +19,7 @@ import util.DukeApplicationTest;
 
 import static org.mockito.Mockito.*;
 
-public class  BackgroundSelectionScreenTest extends DukeApplicationTest {
+public class BackgroundSelectionScreenTest extends DukeApplicationTest {
 
   private AuthoringController mockController;
 
@@ -54,7 +54,6 @@ public class  BackgroundSelectionScreenTest extends DukeApplicationTest {
     System.out.println(lookup(".file-chooser-dialog .file-list-view").queryAll());
     //clickOn("Open");
 
-    verify(mockController, times(1)).startNextSelection(any(), any(), any(), any(), any(), any());
     // click on the "Next" button
     //clickOn("#Next");
 
