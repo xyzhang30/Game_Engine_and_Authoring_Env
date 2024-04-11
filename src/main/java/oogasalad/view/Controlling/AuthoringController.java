@@ -207,7 +207,7 @@ public class AuthoringController {
   private String matchCommandName(InteractionType type) {
     return switch (type) {
       case RESET -> "UndoTurnCommand";
-      case ADVANCE -> "AdvanceTurnCommand";
+      case ADVANCE -> "AdvanceRoundCommand";
       case SCORE -> "AdjustPointsCommand";
       case CHANGE_SPEED -> null;
     };
@@ -236,11 +236,10 @@ public class AuthoringController {
     properties.add("collidable");
     properties.add("visible");
     properties.add(nonControllableTypeMap.get(background).toString().toLowerCase());
-    double friction =
-        (nonControllableTypeMap.get(background).toString().equals("Surface")) ? 0.5 : 0.0;
+    double friction = 0.8;
     String shapeName = "Rectangle";
     CollidableObject collidableObject = new CollidableObject(collidableId,
-        properties, Double.MAX_VALUE,
+        properties, Float.POSITIVE_INFINITY,
         new Position(posMap.get(background).get(0), posMap.get(background).get(1)),
         shapeName, new Dimension(background.getLayoutBounds().getWidth(),
         background.getLayoutBounds().getHeight()), colorRgb, friction, imgPath);
@@ -260,7 +259,7 @@ public class AuthoringController {
     properties.add("movable");
     shapeName = "Rectangle";
     collidableObject = new CollidableObject(collidableId,
-        properties, Double.MAX_VALUE,
+        properties, Double.POSITIVE_INFINITY,
         new Position(50, 50),
         shapeName, new Dimension(20,
         990), colorRgb, friction, imgPath);
@@ -270,7 +269,7 @@ public class AuthoringController {
 
     Rectangle wall2 = new Rectangle(1020, 50, 20, 990);
     collidableObject = new CollidableObject(collidableId,
-        properties, Double.MAX_VALUE,
+        properties, Double.POSITIVE_INFINITY,
         new Position(1020, 50),
         shapeName, new Dimension(20,
         990), colorRgb, friction, imgPath);
@@ -280,7 +279,7 @@ public class AuthoringController {
 
     Rectangle wall3 = new Rectangle(50, 50, 990, 20);
     collidableObject = new CollidableObject(collidableId,
-        properties, Double.MAX_VALUE,
+        properties, Double.POSITIVE_INFINITY,
         new Position(50, 50),
         shapeName, new Dimension(985,
         20), colorRgb, friction, imgPath);
@@ -290,7 +289,7 @@ public class AuthoringController {
 
     Rectangle wall4 = new Rectangle(50, 1020, 990, 20);
     collidableObject = new CollidableObject(collidableId,
-        properties, Double.MAX_VALUE,
+        properties, Double.POSITIVE_INFINITY,
         new Position(50, 1015),
         shapeName, new Dimension(985,
         20), colorRgb, friction, imgPath);
@@ -317,18 +316,22 @@ public class AuthoringController {
       properties.add("visible");
       properties.add(nonControllableTypeMap.get(shape).toString().toLowerCase());
       friction =
-          (nonControllableTypeMap.get(shape).toString().equals("Surface")) ? 0.5 : 0.0;
+          (nonControllableTypeMap.get(shape).toString().equalsIgnoreCase("surface")) ? 0.5 : 0.0;
+      double mass =
+          (nonControllableTypeMap.get(shape).toString().equalsIgnoreCase("Surface"))
+              ? Double.POSITIVE_INFINITY
+              : 10.0;
       shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
       if (shape instanceof Ellipse) {
         collidableObject = new CollidableObject(collidableId,
-            properties, 10,
+            properties, mass,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(((Ellipse) shape).getRadiusX() * shape.getScaleX(),
                 ((Ellipse) shape).getRadiusY() * shape.getScaleY()),
             colorRgb, 0.0, imgPath);
       } else {
         collidableObject = new CollidableObject(collidableId,
-            properties, 10,
+            properties, mass,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(shape.getLayoutBounds().getWidth() * shape.getScaleX(),
                 shape.getLayoutBounds().getHeight() * shape.getScaleY()),
