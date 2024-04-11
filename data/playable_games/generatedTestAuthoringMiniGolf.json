@@ -51,7 +51,7 @@
   } ],
   "players" : [ {
     "player_id" : 1,
-    "my_collidable" : [2]
+    "my_collidable" : [ 2 ]
   } ],
   "variables" : [ {
     "global" : {
