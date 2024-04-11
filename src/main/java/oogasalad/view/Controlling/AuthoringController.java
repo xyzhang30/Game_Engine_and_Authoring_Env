@@ -95,9 +95,9 @@ public class AuthoringController {
   public void endAuthoring(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
       List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap,
-      Map<Shape, String> imageMap) {
+      Map<Shape, String> imageMap, Map<Shape, List<Double>> posMap) {
     boolean saveGameSuccess = submitGame(gameName, interactionMap, controllables,
-        nonControllableTypeMap, imageMap);
+        nonControllableTypeMap, imageMap, posMap);
     Alert alert = new Alert(AlertType.INFORMATION);
     if (saveGameSuccess) {
       alert.setTitle("Save Game Success");
@@ -117,10 +117,10 @@ public class AuthoringController {
   private boolean submitGame(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
       List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap,
-      Map<Shape, String> imageMap) {
+      Map<Shape, String> imageMap, Map<Shape, List<Double>> posMap) {
     try {
       Map<Shape, Integer> collidableIdMap = new HashMap<>();
-      writeCollidables(collidableIdMap, controllables, nonControllableTypeMap, imageMap);
+      writeCollidables(collidableIdMap, controllables, nonControllableTypeMap, imageMap, posMap);
       writePlayer();
       writeVariables();
       writeRules(interactionMap, collidableIdMap);
@@ -207,7 +207,8 @@ public class AuthoringController {
   }
 
   private void writeCollidables(Map<Shape, Integer> collidableIdMap, List<Shape> controllables,
-      Map<Shape, NonControllableType> nonControllableTypeMap, Map<Shape, String> imageMap) {
+      Map<Shape, NonControllableType> nonControllableTypeMap, Map<Shape, String> imageMap,
+      Map<Shape, List<Double>> posMap) {
     int collidableId = 0;
     List<CollidableObject> collidableObjects = new ArrayList<>();
 
@@ -229,7 +230,7 @@ public class AuthoringController {
       String shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
       CollidableObject collidableObject = new CollidableObject(collidableId,
           properties, 10,
-          new Position(shape.getLayoutX(), shape.getLayoutY()), shapeName,
+          new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
           new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
           colorRgb, 0.0, imgPath);
       collidableObjects.add(collidableObject);
@@ -258,8 +259,10 @@ public class AuthoringController {
       String shapeName = (shape instanceof Circle) ? "Circle" : "Rectangle";
       CollidableObject collidableObject = new CollidableObject(collidableId,
           properties, 10,
-          new Position(shape.getLayoutX(), shape.getLayoutY()), shapeName,
-          new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
+          new Position(shape.localToScene(shape.getBoundsInLocal()).getMinX(),
+              shape.localToScene(shape.getBoundsInLocal()).getMinY()), shapeName,
+          new Dimension(shape.getLayoutBounds().getWidth(),
+              shape.getLayoutBounds().getHeight()),
           colorRgb, friction, imgPath);
       collidableObjects.add(collidableObject);
       collidableIdMap.put(shape, collidableId);
