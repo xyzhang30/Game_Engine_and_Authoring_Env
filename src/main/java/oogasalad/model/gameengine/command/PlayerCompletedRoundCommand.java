@@ -12,9 +12,8 @@ public class PlayerCompletedRoundCommand implements Command {
   }
 
   @Override
-  public double execute(GameEngine engine) {
+  public void execute(GameEngine engine) {
     engine.getPlayerContainer().getPlayer((int) Math.round(arguments.get(0)))
         .setRoundCompleted(true);
-    return 0.0;
   }
 }
