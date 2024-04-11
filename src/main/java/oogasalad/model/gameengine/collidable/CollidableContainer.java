@@ -93,6 +93,7 @@ public class CollidableContainer {
         }
       }
     }
+    System.out.println(collisionPairs);
     return collisionPairs;
   }
 

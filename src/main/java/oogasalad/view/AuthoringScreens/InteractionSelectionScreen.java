@@ -19,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Shape;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -27,6 +28,7 @@ import oogasalad.view.Controlling.AuthoringController;
 public class InteractionSelectionScreen extends AuthoringScreen {
 
   private Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap = new HashMap<>();
+  private Map<Shape, List<Double>> posMap = new HashMap<>();
   private TextField pointPrompt;
   private CheckBox advanceTurnCheckBox;
   private CheckBox resetCheckBox;
@@ -87,6 +89,18 @@ public class InteractionSelectionScreen extends AuthoringScreen {
   }
 
   void endSelection() {
+    for (Shape shape : controllableList) {
+      List<Double> posList = new ArrayList<>();
+      posList.add(shape.localToScene(shape.getBoundsInLocal()).getMinX());
+      posList.add(shape.localToScene(shape.getBoundsInLocal()).getMinY());
+      posMap.put(shape, posList);
+    }
+    for (Shape shape : nonControllableMap.keySet()) {
+      List<Double> posList = new ArrayList<>();
+      posList.add(shape.localToScene(shape.getBoundsInLocal()).getMinX());
+      posList.add(shape.localToScene(shape.getBoundsInLocal()).getMinY());
+      posMap.put(shape, posList);
+    }
     showGameNamePopup();
   }
 
@@ -114,7 +128,7 @@ public class InteractionSelectionScreen extends AuthoringScreen {
         gameNameStage.close();
         String gameName = gameNameTextField.getText();
         controller.endAuthoring(gameName, interactionMap, controllableList, nonControllableMap,
-            imageMap);
+            imageMap, posMap);
       });
     }
     return submitGameNameButton;

@@ -6,17 +6,17 @@ public class CollisionDetector {
     String shape1 = collidable1.getShape();
     String shape2 = collidable2.getShape();
     // circle v. rectangle
-    if ("circle".equals(shape1) && "rectangle".equals(shape2)) {
+    if ("Circle".equals(shape1) && "Rectangle".equals(shape2)) {
       return checkCircleRectangleCollision(collidable1, collidable2);
-    } else if ("rectangle".equals(shape1) && "circle".equals(shape2)) {
+    } else if ("Rectangle".equals(shape1) && "Circle".equals(shape2)) {
       return checkCircleRectangleCollision(collidable2, collidable1);
     }
     // circle v. circle
-    else if ("circle".equals(shape1) && "circle".equals(shape2)) {
+    else if ("Circle".equals(shape1) && "Circle".equals(shape2)) {
       return checkCircleCircleCollision(collidable1, collidable2);
     }
     // rectangle v. rectangle
-    else if ("rectangle".equals(shape1) && "rectangle".equals(shape2)) {
+    else if ("Rectangle".equals(shape1) && "Rectangle".equals(shape2)) {
       return checkRectangleRectangleCollision(collidable1, collidable2);
     }
     //other shape combinations as we go on
