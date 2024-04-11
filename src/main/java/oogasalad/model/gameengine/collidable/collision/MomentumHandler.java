@@ -9,7 +9,6 @@ public class MomentumHandler extends PhysicsHandler {
 
   public MomentumHandler(int id1, int id2) {
     super(id1, id2);
-    System.out.println("momentum");
   }
 
   protected Supplier<List<Double>> makeVelocityFunction(CollidableRecord c1, CollidableRecord c2,
