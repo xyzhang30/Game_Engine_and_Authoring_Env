@@ -30,6 +30,7 @@ import oogasalad.view.AuthoringScreens.InteractionType;
 import oogasalad.view.AuthoringScreens.NonControllableElementSelection;
 import oogasalad.view.AuthoringScreens.NonControllableType;
 import org.apache.logging.log4j.core.net.ssl.SslConfiguration;
+import java.io.File;
 
 /**
  * Class to handle transitions between authoring environment scenes and communications with backend
@@ -226,7 +227,10 @@ public class AuthoringController {
       colorRgb = List.of((int) c.getRed() * 255, (int) c.getGreen() * 255,
           (int) c.getBlue() * 255);
     } else {
-      imgPath = imageMap.get(background);
+      String originalImagePath = imageMap.get(background);
+      String userDir = System.getProperty("user.dir");
+      String escapedUserDir = "file:/" + userDir.replace("\\", "/");
+      imgPath = originalImagePath.replaceAll(escapedUserDir, "");
     }
     List<String> properties = new ArrayList<>();
     properties.add("collidable");
@@ -254,7 +258,10 @@ public class AuthoringController {
         colorRgb = List.of((int) c.getRed() * 255, (int) c.getGreen() * 255,
             (int) c.getBlue() * 255);
       } else {
-        imgPath = imageMap.get(shape);
+        String originalImagePath = imageMap.get(shape);
+        String userDir = System.getProperty("user.dir");
+        String escapedUserDir = "file:/" + userDir.replace("\\", "/");
+        imgPath = originalImagePath.replaceAll(escapedUserDir, "");
       }
       properties = new ArrayList<>();
       properties.add("collidable");
@@ -290,7 +297,10 @@ public class AuthoringController {
         colorRgb = List.of((int) c.getRed() * 255, (int) c.getGreen() * 255,
             (int) c.getBlue() * 255);
       } else {
-        imgPath = imageMap.get(shape);
+        String originalImagePath = imageMap.get(shape);
+        String userDir = System.getProperty("user.dir");
+        String escapedUserDir = "file:/" + userDir.replace("\\", "/");
+        imgPath = originalImagePath.replaceAll(escapedUserDir, "");
       }
       properties = List.of("movable", "collidable", "controllable");
       shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
