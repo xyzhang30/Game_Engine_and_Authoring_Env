@@ -85,10 +85,18 @@ JSONs not configured properly yet to handle angle, also realizing that I'm going
 ### Alisha
 
 * Work done this Sprint
+  * Created builder for writing data from authoring environment into JSON
+  * Wrote authoring environment user input into data records for the builder
+  * Added some features in the authoring frontend (user game name input; save game status message)
+  * Updated game data records and parser according to change in game engine and view
 
 * Plan for next Sprint?
+  * Continue maintaining the parser and builder according to changes made in engine and view 
+  * Refactor game builder and record creation for builder -- split it out of the authoring controller so it supports saving mid-game.
+  * Add the remaining authoring screens and remove hard coded stuff in record creation
 
 * Blockers/Issues in your way
+  * Need to refactor stuff for better design (use more design patterns)
 
 ### Jordan
 
@@ -104,7 +112,7 @@ JSONs not configured properly yet to handle angle, also realizing that I'm going
 ## Project's current progress
 
 I am somewhat satisfied with our progress, but think there is ample room for improvement. We have
-the basics of both the engine and authoring enviornment/parser, but still need to develop more
+the basics of both the engine and authoring environment/parser, but still need to develop more
 features and remove some hard coding. We also have only worked on one game, so we are kind of
 hoping (with good reason) that our commands will be able to easily apply to other games.
 
