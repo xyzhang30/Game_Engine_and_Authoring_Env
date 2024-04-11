@@ -1,0 +1,92 @@
+{
+  "gameName" : "demo",
+  "collidable_objects" : [ {
+    "collidable_id" : 0,
+    "properties" : [ "collidable", "SURFACE" ],
+    "mass" : 1e1000000,
+    "position" : {
+      "x_position" : 50.0,
+      "y_position" : 50.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 990.0,
+      "y_dimension" : 990.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "friction" : 0.0,
+    "image" : "file:/C:/Users/jhayt/CS308/oogasalad_team01/data/background_images/grass.jpg"
+  }, {
+    "collidable_id" : 1,
+    "properties" : [ "collidable", "movable" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 190.0,
+      "y_position" : 169.60000610351562
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 30.0,
+      "y_dimension" : 30.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "friction" : 0.0,
+    "image" : ""
+  }, {
+    "collidable_id" : 2,
+    "properties" : [ "movable", "collidable", "controllable" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 536.4000244140625,
+      "y_position" : 729.5999755859375
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 30.0,
+      "y_dimension" : 30.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "friction" : 0.0,
+    "image" : "file:/C:/Users/jhayt/CS308/oogasalad_team01/data/controllable_images/golf%20ball.jpg"
+  } ],
+  "players" : [ {
+    "player_id" : 1,
+    "my_collidable" : [ 1 ]
+  } ],
+  "variables" : [ {
+    "global" : {
+      "max_turns" : 1,
+      "max_rounds" : 2
+    },
+    "player" : {
+      "strokes" : 0,
+      "finished" : 0
+    }
+  } ],
+  "rules" : {
+    "collisions" : [ {
+      "first_id" : 2,
+      "second_id" : 1,
+      "command" : [ {
+        "AdvanceTurnCommand" : [ -1.0 ]
+      } ]
+    } ],
+    "turn_policy" : "StandardTurnPolicy",
+    "round_policy" : {
+      "AllPlayersCompletedRoundCondition" : [ ]
+    },
+    "win_condition" : {
+      "NRoundsCompletedCondition" : [ 1.0 ]
+    },
+    "advance_turn" : [ {
+      "AdvanceTurnCommand" : [ ]
+    }, {
+      "AdjustActivePointsCommand" : [ 1.0 ]
+    } ],
+    "advance_round" : [ {
+      "AdvanceRoundCommand" : [ ]
+    }, {
+      "AdjustActivePointsCommand" : [ 1.0 ]
+    } ]
+  }
+}

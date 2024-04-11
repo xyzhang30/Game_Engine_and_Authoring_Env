@@ -12,6 +12,7 @@ public class FrictionHandler extends PhysicsHandler {
 
   public FrictionHandler(int id1, int id2) {
     super(id1, id2);
+    System.out.println("friction");
   }
 
   @Override
