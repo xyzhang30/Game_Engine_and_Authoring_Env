@@ -24,8 +24,8 @@ import org.apache.logging.log4j.Logger;
 
 
 /**
- * GameController class handles communications between model and view.  This class holds manager class
- * instances to delegate handling the information received from the model.
+ * GameController class handles communications between model and view.  This class holds manager
+ * class instances to delegate handling the information received from the model.
  *
  * @author Jordan Haytaian
  */
@@ -35,6 +35,7 @@ public class GameController {
   private final CollisionManager collisionManager;
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
+  private int controllableID;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
   private final String PLAYABLE_GAMES_DIRECTORY = "data/playable_games";
@@ -47,7 +48,7 @@ public class GameController {
     collisionManager = new CollisionManager();
   }
 
-  public Scene getScene(){
+  public Scene getScene() {
     return sceneManager.getScene();
   }
 
@@ -62,7 +63,7 @@ public class GameController {
     sceneManager.makeTransitionScreen();
   }
 
-  public void openAuthorEnvironment(){
+  public void openAuthorEnvironment() {
     AuthoringController authoringController = new AuthoringController();
     authoringController.startAuthoring();
   }
@@ -81,6 +82,7 @@ public class GameController {
     collisionManager.setNewCompositeElement(compositeElement);
   }
 
+
   /**
    * Method to update visual game elements
    *
@@ -88,18 +90,18 @@ public class GameController {
    * @return boolean indicating if round is over
    */
   public boolean runGame(double timeStep) {
+
     GameRecord gameRecord = gameEngine.update(timeStep);
     if (gameRecord.staticState()) {
       animationManager.pauseAnimation();
     }
     sceneManager.update(gameRecord);
-    sceneManager.updateScoreBoard(gameRecord.players().get(0).score());
 
     //List<Pair> collisionList = collisionManager.getIntersections();
 //    Map<Pair, String> collisionType = collisionManager.getIntersectionsMap();
 
-   // GameRecord gameRecord2 = gameEngine.handleCollisions(collisionList, timeStep);
-   // sceneManager.update(gameRecord2);
+    // GameRecord gameRecord2 = gameEngine.handleCollisions(collisionList, timeStep);
+    // sceneManager.update(gameRecord2);
     if (sceneManager.notMoving(gameRecord)) {
       sceneManager.enableHitting();
     }
@@ -113,7 +115,8 @@ public class GameController {
    * @param fractionalVelocity velocity as fraction of maxVelocity
    */
   public void hitPointScoringObject(double fractionalVelocity, double angle) {
-    gameEngine.applyInitialVelocity(700 * fractionalVelocity, angle, 8); // The 8 has been hard
+    gameEngine.applyInitialVelocity(700 * fractionalVelocity, angle,
+        controllableID); // The 8 has been hard
     // coded!
     animationManager.runAnimation(this);
   }
@@ -127,9 +130,9 @@ public class GameController {
   public List<String> getGameTitles() {
     Set<String> files = listFiles(PLAYABLE_GAMES_DIRECTORY);
     List<String> gameTitles = new ArrayList<>();
-    for (String file: files) {
+    for (String file : files) {
       if (!file.toLowerCase().contains(TEST_FILE_IDENTIFIER)) {
-        gameTitles.add(file.substring(0,file.indexOf(".")));
+        gameTitles.add(file.substring(0, file.indexOf(".")));
       }
     }
     return gameTitles;
@@ -145,8 +148,10 @@ public class GameController {
   private CompositeElement createCompositeElementFromGameLoader() {
     try {
       List<ViewCollidableRecord> recordList = gameLoaderView.getViewCollidableInfo();
+      controllableID = gameLoaderView.getControllableIds().controllableIds().get(0);
       return new CompositeElement(recordList);
-    } catch (InvalidShapeException | InvalidImageException e){
+    } catch (InvalidShapeException | InvalidImageException e) {
+      System.out.println(e.getMessage());
       LOGGER.error(e.getMessage());
       return null;
     }
