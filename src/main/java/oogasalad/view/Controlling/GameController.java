@@ -93,7 +93,7 @@ public class GameController {
       animationManager.pauseAnimation();
     }
     sceneManager.update(gameRecord);
-    sceneManager.updateScoreBoard(gameRecord.players().get(0).score());
+   // sceneManager.updateScoreBoard(gameRecord.players().get(0).score());
 
     //List<Pair> collisionList = collisionManager.getIntersections();
 //    Map<Pair, String> collisionType = collisionManager.getIntersectionsMap();
