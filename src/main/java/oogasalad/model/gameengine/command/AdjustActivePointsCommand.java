@@ -10,8 +10,8 @@ public class AdjustActivePointsCommand extends AdjustPointsGivenPlayerCommand {
   }
 
   @Override
-  public double execute(GameEngine engine) {
-    return adjust(engine, engine.getPlayerContainer().getActive());
+  public void execute(GameEngine engine) {
+    adjust(engine, engine.getPlayerContainer().getActive());
   }
 }
 

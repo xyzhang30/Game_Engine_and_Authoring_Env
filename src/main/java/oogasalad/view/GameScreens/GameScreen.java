@@ -67,7 +67,7 @@ public class GameScreen extends UIScreen {
   private void createScene() {
     setupControlPane(); //This messes up the power bar key listening
     powerIndicator = setupPowerBar();
-//    setupScoreBoard(0);
+   // setupScoreBoard(0);
   }
 
 
@@ -78,7 +78,7 @@ public class GameScreen extends UIScreen {
   private void setupScoreBoard(int score) {
     Rectangle rectangle = new Rectangle(10, 50, 100, 50);
     rectangle.setFill(Color.LIMEGREEN);
-    scoreboardTxt = new Text("Score: Coming Soon");
+    scoreboardTxt = new Text("Score: " + score);
     scoreboardTxt.setX(50);
     scoreboardTxt.setY(100);
     scoreboardTxt.setFill(Color.BLACK);
