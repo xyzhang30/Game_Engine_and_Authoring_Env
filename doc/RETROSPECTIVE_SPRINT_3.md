@@ -35,14 +35,6 @@ being applied correctly. However, it is passing my tests, so I should probably w
 
 * Blockers/Issues in your way
 
-### Konur
-
-* Work done this Sprint
-
-* Plan for next Sprint?
-
-* Blockers/Issues in your way
-
 ### Doga
 
 * Work done this Sprint
@@ -75,27 +67,19 @@ being applied correctly. However, it is passing my tests, so I should probably w
 
 * Blockers/Issues in your way
 
+### Konur
+
+* Work done this Sprint 
+
+* Plan for next Sprint?  
+
+* Blockers/Issues in your way 
 
 ## Project's current progress
 
-I am somewhat satisfied with our progress, but think there is ample room for improvement. We have
-the basics of both the engine and authoring enviornment/parser, but still need to develop more
-features and remove some hard coding. We also have only worked on one game, so we are kind of
-hoping (with good reason) that our commands will be able to easily apply to other games.
-
 ## Current level of communication
 
-I think the current level of communication can be improved. We are talking a decent amount in our
-chat, but not meeting nearly enough. We should be integrating our code more frequently and often, to
-avoid merge marathons at the end. We did a better job this week, but had some Mac versus windows
-issues at the end that made dealing with files a pain. I’m sure there is an API we can use.
-
 ## Satisfaction with team roles
-
-I think everyone is pretty satisfied with the team roles. We are all working hard and committing
-pretty frequently, and everyone is getting opportunities to work on multiple aspects of the project.
-Most importantly, I think we all seem to get along quite well, which is extremely helpful as it
-makes working more enjoyable.
 
 ## Teamwork that worked well
 
@@ -110,8 +94,3 @@ makes working more enjoyable.
 
 ## Teamwork to improve next Sprint
 
-Next sprint, I think we can improve by having everyone become more of a “jack of all trades” as
-opposed to an “expert”. This will allow for debugging to be much easier, so that we all don’t need
-to rely on the person that wrote a given part of the code base to help debug. I think everyone
-should be familiar with all of the packages and not just the ones they wrote, and that could make a
-big difference for the team.
