@@ -1,43 +1,27 @@
 {
-  "gameName" : "demohi",
+  "gameName" : "game",
   "collidable_objects" : [ {
     "collidable_id" : 0,
     "properties" : [ "movable", "collidable", "controllable" ],
     "mass" : 10.0,
     "position" : {
-      "x_position" : 1284.3,
-      "y_position" : 301.5
-    },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 103.0,
-      "y_dimension" : 53.0
-    },
-    "color" : [ 0, 0, 0 ],
-    "friction" : 0.0,
-    "image" : ""
-  }, {
-    "collidable_id" : 1,
-    "properties" : [ "movable", "collidable", "controllable" ],
-    "mass" : 10.0,
-    "position" : {
-      "x_position" : 1456.0,
-      "y_position" : 330.0
+      "x_position" : 1198.5,
+      "y_position" : 331.5
     },
     "shape" : "Circle",
     "dimension" : {
-      "x_dimension" : 60.0,
-      "y_dimension" : 60.0
+      "x_dimension" : 63.0,
+      "y_dimension" : 63.0
     },
     "color" : [ 0, 0, 0 ],
     "friction" : 0.0,
-    "image" : ""
+    "image" : "file:/C:/Users/dogao/Desktop/DukeYr3/CS308/projects/oogasalad_team01/data/controllable_images/golf%20ball.jpg"
   }, {
-    "collidable_id" : 2,
+    "collidable_id" : 1,
     "properties" : [ "collidable", "MOVABLE" ],
     "mass" : 10.0,
     "position" : {
-      "x_position" : 1454.3,
+      "x_position" : 1198.5,
       "y_position" : 331.5
     },
     "shape" : "Rectangle",
@@ -49,41 +33,25 @@
     "friction" : 0.0,
     "image" : ""
   }, {
-    "collidable_id" : 3,
+    "collidable_id" : 2,
     "properties" : [ "collidable", "SURFACE" ],
     "mass" : 10.0,
     "position" : {
-      "x_position" : 1286.0,
-      "y_position" : 300.0
+      "x_position" : 5.0,
+      "y_position" : 5.0
     },
     "shape" : "Rectangle",
     "dimension" : {
-      "x_dimension" : 100.0,
-      "y_dimension" : 50.0
+      "x_dimension" : 990.0,
+      "y_dimension" : 990.0
     },
     "color" : [ 0, 0, 0 ],
     "friction" : 0.0,
     "image" : ""
-  }, {
-    "collidable_id" : 4,
-    "properties" : [ "collidable", "SURFACE" ],
-    "mass" : 10.0,
-    "position" : {
-      "x_position" : 0.0,
-      "y_position" : 0.0
-    },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 980.0,
-      "y_dimension" : 980.0
-    },
-    "color" : [ 0, 0, 0 ],
-    "friction" : 0.0,
-    "image" : "data/background_images/grass.jpg"
   } ],
   "players" : [ {
     "player_id" : 1,
-    "my_collidable" : [ 1 ]
+    "my_collidable" : [1]
   } ],
   "variables" : [ {
     "global" : {
@@ -97,8 +65,8 @@
   } ],
   "rules" : {
     "collisions" : [ {
-      "first_id" : 2,
-      "second_id" : 0,
+      "first_id" : 0,
+      "second_id" : 1,
       "command" : [ {
         "AdvanceTurnCommand" : [ -1.0 ]
       } ]

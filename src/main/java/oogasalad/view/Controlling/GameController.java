@@ -82,6 +82,7 @@ public class GameController {
     collisionManager.setNewCompositeElement(compositeElement);
   }
 
+
   /**
    * Method to update visual game elements
    *
@@ -89,12 +90,12 @@ public class GameController {
    * @return boolean indicating if round is over
    */
   public boolean runGame(double timeStep) {
+
     GameRecord gameRecord = gameEngine.update(timeStep);
     if (gameRecord.staticState()) {
       animationManager.pauseAnimation();
     }
     sceneManager.update(gameRecord);
-   // sceneManager.updateScoreBoard(gameRecord.players().get(0).score());
 
     //List<Pair> collisionList = collisionManager.getIntersections();
 //    Map<Pair, String> collisionType = collisionManager.getIntersectionsMap();

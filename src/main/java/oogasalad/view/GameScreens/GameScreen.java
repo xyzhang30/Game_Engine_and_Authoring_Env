@@ -36,13 +36,14 @@ public class GameScreen extends UIScreen {
     this.controller = controller;
     ableToHit = true;
 
-    gameContent = new GamePanel();
-    gameContent.addGameContentNodes(compositeElement);
+    gameContent = new GamePanel(compositeElement);
     root.setCenter(gameContent.getPane());
 
     setupAngleIndicator();
 
     createScene();
+
+
   }
 
   private void setupAngleIndicator() {
@@ -69,7 +70,7 @@ public class GameScreen extends UIScreen {
   private void createScene() {
     setupControlPane(); //This messes up the power bar key listening
     powerIndicator = setupPowerBar();
-   // setupScoreBoard(0);
+    // setupScoreBoard(0);
   }
 
 
