@@ -266,6 +266,9 @@ public abstract class AuthoringScreen {
 
   void addElements() {
     for (Shape shape : posMap.keySet()) {
+      shape.setOnMousePressed(null);
+      shape.setOnMouseClicked(null);
+      shape.setOnMouseDragged(null);
       AnchorPane.setTopAnchor(shape, posMap.get(shape).get(0));
       AnchorPane.setLeftAnchor(shape, posMap.get(shape).get(1));
       root.getChildren().add(shape);
