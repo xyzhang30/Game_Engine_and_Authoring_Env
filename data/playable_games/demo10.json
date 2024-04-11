@@ -1,0 +1,102 @@
+{
+  "gameName" : "demo10",
+  "collidable_objects" : [ {
+    "collidable_id" : 0,
+    "properties" : [ "collidable", "SURFACE" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 450.0,
+      "y_position" : 344.79998779296875
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 100.0,
+      "y_dimension" : 50.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "friction" : 0.0,
+    "image" : ""
+  }, {
+    "collidable_id" : 1,
+    "properties" : [ "collidable", "SURFACE" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 817.2000122070312,
+      "y_position" : 360.79998779296875
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 100.0,
+      "y_dimension" : 50.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "friction" : 0.0,
+    "image" : ""
+  }, {
+    "collidable_id" : 2,
+    "properties" : [ "collidable", "SURFACE" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 50.0,
+      "y_position" : 50.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 990.0,
+      "y_dimension" : 990.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "friction" : 0.0,
+    "image" : "file:/C:/Users/jhayt/CS308/oogasalad_team01/data/background_images/grass.jpg"
+  }, {
+    "collidable_id" : 3,
+    "properties" : [ "movable", "collidable", "controllable" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 477.6000061035156,
+      "y_position" : 707.5999755859375
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 60.0,
+      "y_dimension" : 60.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "friction" : 0.0,
+    "image" : ""
+  } ],
+  "players" : [ {
+    "player_id" : 1,
+    "my_collidable" : [ 1 ]
+  } ],
+  "variables" : [ {
+    "global" : {
+      "max_turns" : 1,
+      "max_rounds" : 2
+    },
+    "player" : {
+      "strokes" : 0,
+      "finished" : 0
+    }
+  } ],
+  "rules" : {
+    "collisions" : [ ],
+    "turn_policy" : "StandardTurnPolicy",
+    "round_policy" : {
+      "AllPlayersCompletedRoundCondition" : [ ]
+    },
+    "win_condition" : {
+      "NRoundsCompletedCondition" : [ 1.0 ]
+    },
+    "advance_turn" : [ {
+      "AdvanceTurnCommand" : [ ]
+    }, {
+      "AdjustActivePointsCommand" : [ 1.0 ]
+    } ],
+    "advance_round" : [ {
+      "AdvanceRoundCommand" : [ ]
+    }, {
+      "AdjustActivePointsCommand" : [ 1.0 ]
+    } ]
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "gameName" : "demo11",
+  "collidable_objects" : [ {
+    "collidable_id" : 0,
+    "properties" : [ "collidable", "SURFACE" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 50.0,
+      "y_position" : 50.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 990.0,
+      "y_dimension" : 990.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "friction" : 0.0,
+    "image" : "file:/C:/Users/jhayt/CS308/oogasalad_team01/data/background_images/grass.jpg"
+  }, {
+    "collidable_id" : 1,
+    "properties" : [ "collidable", "SURFACE" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 584.7999877929688,
+      "y_position" : 448.3999938964844
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 100.0,
+      "y_dimension" : 50.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "friction" : 0.0,
+    "image" : "file:/C:/Users/jhayt/CS308/oogasalad_team01/data/noncontrollable_images/sand.jpg"
+  }, {
+    "collidable_id" : 2,
+    "properties" : [ "collidable", "MOVABLE" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 669.2000122070312,
+      "y_position" : 216.39999389648438
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 60.0,
+      "y_dimension" : 60.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "friction" : 0.0,
+    "image" : ""
+  }, {
+    "collidable_id" : 3,
+    "properties" : [ "movable", "collidable", "controllable" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 521.4817504882812,
+      "y_position" : 841.77001953125
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 60.0,
+      "y_dimension" : 60.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "friction" : 0.0,
+    "image" : "file:/C:/Users/jhayt/CS308/oogasalad_team01/data/controllable_images/golf%20ball.jpg"
+  } ],
+  "players" : [ {
+    "player_id" : 1,
+    "my_collidable" : [ 1 ]
+  } ],
+  "variables" : [ {
+    "global" : {
+      "max_turns" : 1,
+      "max_rounds" : 2
+    },
+    "player" : {
+      "strokes" : 0,
+      "finished" : 0
+    }
+  } ],
+  "rules" : {
+    "collisions" : [ ],
+    "turn_policy" : "StandardTurnPolicy",
+    "round_policy" : {
+      "AllPlayersCompletedRoundCondition" : [ ]
+    },
+    "win_condition" : {
+      "NRoundsCompletedCondition" : [ 1.0 ]
+    },
+    "advance_turn" : [ {
+      "AdvanceTurnCommand" : [ ]
+    }, {
+      "AdjustActivePointsCommand" : [ 1.0 ]
+    } ],
+    "advance_round" : [ {
+      "AdvanceRoundCommand" : [ ]
+    }, {
+      "AdjustActivePointsCommand" : [ 1.0 ]
+    } ]
+  }
+}
