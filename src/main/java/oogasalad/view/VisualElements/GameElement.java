@@ -51,8 +51,7 @@ public class GameElement implements VisualElement {
         default -> {
           return null;
         } // Throw type not found exception
-      }
-      ;
+      };
     }
     return null;
   }
