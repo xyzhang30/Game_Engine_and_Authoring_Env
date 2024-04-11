@@ -86,11 +86,14 @@ public class GameEngine implements ExternalGameEngine {
    */
   @Override
   public GameRecord update(double dt) {
+    LOGGER.info("Update in Progress");
     collidables.update(dt);
     handleCollisions(dt); //private
     if (collidables.checkStatic()) {
+      LOGGER.info("Static State Reached");
       updateHistory(); //private
       switchToCorrectStaticState(); //private
+      LOGGER.info("SCORE : " + playerContainer.getPlayer(1).getVariable("score"));
     } else {
       staticState = false;
     }
@@ -107,8 +110,9 @@ public class GameEngine implements ExternalGameEngine {
    */
   @Override
   public void applyInitialVelocity(double magnitude, double direction, int id) {
-    LOGGER.info(" apply initial velocity with magnitude " + magnitude + " and direction "
-        + direction * 180 / Math.PI);
+    //LOGGER.info(" apply initial velocity with magnitude " + magnitude + " and direction "
+     //   + direction * 180 / Math.PI);
+    LOGGER.info("Velocity Applied");
     Collidable collidable = collidables.getCollidable(id);
     collidable.applyInitialVelocity(magnitude, direction);
   }
