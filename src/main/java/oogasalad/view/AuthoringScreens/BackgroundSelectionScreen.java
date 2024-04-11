@@ -79,6 +79,7 @@ public class BackgroundSelectionScreen extends AuthoringScreen {
     selectedShape = background;
 
     nonControllableMap.put(background, NonControllableType.SURFACE);
+    controller.setBackground(background);
 
     authoringBox.getChildren().add(background);
     root.getChildren().add(authoringBox);

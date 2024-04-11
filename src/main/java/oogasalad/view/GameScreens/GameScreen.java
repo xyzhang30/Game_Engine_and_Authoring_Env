@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.Controlling.GameController;
+import oogasalad.view.GameScreens.GameplayPanel.GamePanel;
 import oogasalad.view.VisualElements.CompositeElement;
 import oogasalad.view.VisualElements.InputIndicators.Arrow;
 
@@ -23,7 +24,7 @@ public class GameScreen extends UIScreen {
 
   private final double maxPower = SCREEN_HEIGHT*0.8;
   private final BorderPane root;
-  private final GameContentPanel gameContent;
+  private final GamePanel gameContent;
   private boolean ableToHit;
   private Arrow angleArrow;
   private Rectangle powerIndicator;
@@ -35,12 +36,14 @@ public class GameScreen extends UIScreen {
     this.controller = controller;
     ableToHit = true;
 
-    gameContent = new GameContentPanel(compositeElement);
+    gameContent = new GamePanel(compositeElement);
     root.setCenter(gameContent.getPane());
 
     setupAngleIndicator();
 
     createScene();
+
+
   }
 
   private void setupAngleIndicator() {
@@ -67,7 +70,7 @@ public class GameScreen extends UIScreen {
   private void createScene() {
     setupControlPane(); //This messes up the power bar key listening
     powerIndicator = setupPowerBar();
-//    setupScoreBoard(0);
+   // setupScoreBoard(0);
   }
 
 
@@ -78,7 +81,7 @@ public class GameScreen extends UIScreen {
   private void setupScoreBoard(int score) {
     Rectangle rectangle = new Rectangle(10, 50, 100, 50);
     rectangle.setFill(Color.LIMEGREEN);
-    scoreboardTxt = new Text("Score: Coming Soon");
+    scoreboardTxt = new Text("Score: " + score);
     scoreboardTxt.setX(50);
     scoreboardTxt.setY(100);
     scoreboardTxt.setFill(Color.BLACK);

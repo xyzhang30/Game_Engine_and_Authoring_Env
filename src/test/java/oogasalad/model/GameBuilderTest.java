@@ -1,3 +1,4 @@
+
 package oogasalad.model;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -44,7 +45,7 @@ public class GameBuilderTest {
 
     this.testBuilderDirector.constructCollidableObjects(List.of(co1, co2, co3));
 
-    ParserPlayer p1 = new ParserPlayer(1, 2);
+    ParserPlayer p1 = new ParserPlayer(1, List.of(2));
 
     this.testBuilderDirector.constructPlayers(List.of(p1));
 
@@ -98,4 +99,7 @@ public class GameBuilderTest {
 
     assertThat(mapper.readTree(expected)).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mapper.readTree(tested));
   }
-}
+
+}  
+
+
