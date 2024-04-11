@@ -3,7 +3,6 @@ package oogasalad.view.GameScreens;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -24,6 +23,7 @@ public class GameScreen extends UIScreen {
 
   private final double maxPower = SCREEN_HEIGHT*0.8;
   private final BorderPane root;
+  private final GameContentPanel gameContent;
   private boolean ableToHit;
   private Arrow angleArrow;
   private Rectangle powerIndicator;
@@ -35,7 +35,7 @@ public class GameScreen extends UIScreen {
     this.controller = controller;
     ableToHit = true;
 
-    GameContentPanel gameContent = new GameContentPanel(compositeElement);
+    gameContent = new GameContentPanel(compositeElement);
     root.setCenter(gameContent.getPane());
 
     setupAngleIndicator();
@@ -67,7 +67,7 @@ public class GameScreen extends UIScreen {
   private void createScene() {
     setupControlPane(); //This messes up the power bar key listening
     powerIndicator = setupPowerBar();
-    setupScoreBoard(0);
+//    setupScoreBoard(0);
   }
 
 
@@ -146,6 +146,15 @@ public class GameScreen extends UIScreen {
         double angle = Math.toRadians(angleArrow.getAngle() - 90);
         double fractionalVelocity = powerIndicator.getHeight() / maxPower;
         controller.hitPointScoringObject(fractionalVelocity, angle);
+        break;
+      }
+      // Some silly scaling dev keys
+      case Q: {
+        gameContent.modifyScope(0.95);
+        break;
+      }
+      case E: {
+        gameContent.modifyScope(1/0.95);
         break;
       }
     }
