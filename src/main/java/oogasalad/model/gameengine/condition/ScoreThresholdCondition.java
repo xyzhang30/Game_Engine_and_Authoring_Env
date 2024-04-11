@@ -7,6 +7,7 @@ import oogasalad.model.gameengine.GameEngine;
 public class ScoreThresholdCondition implements Condition {
 
   private final List<Double> arguments;
+
   public ScoreThresholdCondition(List<Double> arguments) {
     this.arguments = arguments;
   }
