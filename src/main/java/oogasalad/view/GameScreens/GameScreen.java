@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.Controlling.GameController;
+import oogasalad.view.GameScreens.GameplayPanel.GamePanel;
 import oogasalad.view.VisualElements.CompositeElement;
 import oogasalad.view.VisualElements.InputIndicators.Arrow;
 
@@ -23,7 +24,7 @@ public class GameScreen extends UIScreen {
 
   private final double maxPower = SCREEN_HEIGHT*0.8;
   private final BorderPane root;
-  private final GameContentPanel gameContent;
+  private final GamePanel gameContent;
   private boolean ableToHit;
   private Arrow angleArrow;
   private Rectangle powerIndicator;
@@ -35,7 +36,7 @@ public class GameScreen extends UIScreen {
     this.controller = controller;
     ableToHit = true;
 
-    gameContent = new GameContentPanel(compositeElement);
+    gameContent = new GamePanel(compositeElement);
     root.setCenter(gameContent.getPane());
 
     setupAngleIndicator();
