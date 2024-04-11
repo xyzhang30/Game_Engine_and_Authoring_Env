@@ -29,11 +29,12 @@ public class BackgroundSelectionScreenTest extends DukeApplicationTest {
     Map<Shape, List<Double>> posMap = new HashMap<>();
     Map<Shape, NonControllableType> nonControllableMap = new HashMap<>();
     List<Shape> controllableList = new ArrayList<>();
+    Map<Shape, String> imageMap = new HashMap<>();
 
     mockController = mock(AuthoringController.class);
 
     BackgroundSelectionScreen screen = new BackgroundSelectionScreen(
-        mockController, authoringBox, posMap, nonControllableMap, controllableList);
+        mockController, authoringBox, posMap, nonControllableMap, controllableList, imageMap);
 
     Scene scene = screen.getScene();
     stage.setScene(scene);
@@ -46,6 +47,6 @@ public class BackgroundSelectionScreenTest extends DukeApplicationTest {
 
     clickOn("Next");
 
-    verify(mockController, times(1)).startNextSelection(any(), any(), any(), any(), any());
+    verify(mockController, times(1)).startNextSelection(any(), any(), any(), any(), any(), any());
   }
 }
