@@ -25,8 +25,9 @@ public class BackgroundSelectionScreen extends AuthoringScreen {
 
   public BackgroundSelectionScreen(AuthoringController controller, StackPane authoringBox,
       Map<Shape, List<Double>> posMap,
-      Map<Shape, NonControllableType> nonControllableMap, List<Shape> controllableList) {
-    super(controller, authoringBox, posMap, nonControllableMap, controllableList);
+      Map<Shape, NonControllableType> nonControllableMap, List<Shape> controllableList,
+      Map<Shape, String> imageMap) {
+    super(controller, authoringBox, posMap, nonControllableMap, controllableList, imageMap);
   }
 
   /**
@@ -46,7 +47,7 @@ public class BackgroundSelectionScreen extends AuthoringScreen {
    */
   void endSelection() {
     controller.startNextSelection(ImageType.BACKGROUND, authoringBox, posMap, nonControllableMap,
-        new ArrayList<>());
+        new ArrayList<>(), imageMap);
   }
 
   /**
