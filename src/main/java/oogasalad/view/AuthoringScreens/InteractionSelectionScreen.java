@@ -45,8 +45,9 @@ public class InteractionSelectionScreen extends AuthoringScreen {
 
   public InteractionSelectionScreen(AuthoringController controller, StackPane authoringBox,
       Map<Shape, List<Double>> posMap,
-      Map<Shape, NonControllableType> nonControllableTypeMap, List<Shape> controllableList) {
-    super(controller, authoringBox, posMap, nonControllableTypeMap, controllableList);
+      Map<Shape, NonControllableType> nonControllableTypeMap, List<Shape> controllableList,
+      Map<Shape, String> imageMap) {
+    super(controller, authoringBox, posMap, nonControllableTypeMap, controllableList, imageMap);
   }
 
   /**
@@ -118,7 +119,8 @@ public class InteractionSelectionScreen extends AuthoringScreen {
       submitGameNameButton.setOnAction(e -> {
         gameNameStage.close();
         String gameName = gameNameTextField.getText();
-        controller.endAuthoring(gameName, interactionMap, controllableList, nonControllableMap);
+        controller.endAuthoring(gameName, interactionMap, controllableList, nonControllableMap,
+            imageMap);
       });
     }
     return submitGameNameButton;
@@ -170,13 +172,13 @@ public class InteractionSelectionScreen extends AuthoringScreen {
           if (currentInteractions.containsKey(InteractionType.CHANGE_SPEED)) {
             currentInteractions.remove(InteractionType.CHANGE_SPEED);
           }
-          currentInteractions.put(InteractionType.ADVANCE, List.of((double)-1));
+          currentInteractions.put(InteractionType.ADVANCE, List.of((double) -1));
           return;
         }
       }
       List<Shape> shapeList = new ArrayList<>(clickedShapes);
       Map<InteractionType, List<Double>> currentInteractions = new HashMap<>();
-      currentInteractions.put(InteractionType.ADVANCE, List.of((double)-1));
+      currentInteractions.put(InteractionType.ADVANCE, List.of((double) -1));
       interactionMap.put(shapeList, currentInteractions);
     });
   }
@@ -195,13 +197,13 @@ public class InteractionSelectionScreen extends AuthoringScreen {
           if (currentInteractions.containsKey(InteractionType.CHANGE_SPEED)) {
             currentInteractions.remove(InteractionType.CHANGE_SPEED);
           }
-          currentInteractions.put(InteractionType.RESET, List.of((double)-1));
+          currentInteractions.put(InteractionType.RESET, List.of((double) -1));
           return;
         }
       }
       List<Shape> shapeList = new ArrayList<>(clickedShapes);
       Map<InteractionType, List<Double>> currentInteractions = new HashMap<>();
-      currentInteractions.put(InteractionType.RESET, List.of((double)-1));
+      currentInteractions.put(InteractionType.RESET, List.of((double) -1));
       interactionMap.put(shapeList, currentInteractions);
     });
   }
@@ -220,12 +222,12 @@ public class InteractionSelectionScreen extends AuthoringScreen {
           if (currentInteractions.containsKey(InteractionType.ADVANCE)) {
             currentInteractions.remove(InteractionType.ADVANCE);
           }
-          currentInteractions.put(InteractionType.CHANGE_SPEED, List.of((double)-1));
+          currentInteractions.put(InteractionType.CHANGE_SPEED, List.of((double) -1));
           return;
         }
         List<Shape> shapeList = new ArrayList<>(clickedShapes);
         Map<InteractionType, List<Double>> currentInteractions = new HashMap<>();
-        currentInteractions.put(InteractionType.CHANGE_SPEED, List.of((double)-1));
+        currentInteractions.put(InteractionType.CHANGE_SPEED, List.of((double) -1));
         interactionMap.put(shapeList, currentInteractions);
       }
     });
@@ -258,14 +260,14 @@ public class InteractionSelectionScreen extends AuthoringScreen {
           for (List<Shape> list : interactionMap.keySet()) {
             if (list.containsAll(clickedShapes)) {
               Map<InteractionType, List<Double>> currentInteractions = interactionMap.get(list);
-              currentInteractions.put(InteractionType.SCORE, List.of((double)1,(double)points));
+              currentInteractions.put(InteractionType.SCORE, List.of((double) 1, (double) points));
               return;
             }
           }
 
           List<Shape> shapeList = new ArrayList<>(clickedShapes);
           Map<InteractionType, List<Double>> currentInteractions = new HashMap<>();
-          currentInteractions.put(InteractionType.SCORE, List.of((double)1,(double)points));
+          currentInteractions.put(InteractionType.SCORE, List.of((double) 1, (double) points));
           interactionMap.put(shapeList, currentInteractions);
 
         } catch (NumberFormatException e) {

@@ -52,7 +52,7 @@ public class AuthoringController {
   public void startAuthoring() {
     Map<Shape, NonControllableType> map = new HashMap<>();
     BackgroundSelectionScreen scene = new BackgroundSelectionScreen(
-        this, new StackPane(), new HashMap<>(), map, new ArrayList<>());
+        this, new StackPane(), new HashMap<>(), map, new ArrayList<>(), new HashMap<Shape, String>());
     stage.setScene(scene.getScene());
     stage.show();
   }
@@ -65,26 +65,27 @@ public class AuthoringController {
    */
   public void startNextSelection(ImageType imageType, StackPane authoringBox,
       Map<Shape, List<Double>> posMap,
-      Map<Shape, NonControllableType> nonControllableMap, List<Shape> controllableList) {
+      Map<Shape, NonControllableType> nonControllableMap, List<Shape> controllableList,
+      Map<Shape, String> imageMap) {
     switch (imageType) {
       case BACKGROUND -> {
         ControllableElementSelectionScreen controllableElementSelectionScreen =
             new ControllableElementSelectionScreen(this, authoringBox, posMap, nonControllableMap,
-                controllableList);
+                controllableList, imageMap);
         System.out.println("finished background, getting controllable");
         stage.setScene(controllableElementSelectionScreen.getScene());
       }
       case CONTROLLABLE_ELEMENT -> {
         NonControllableElementSelection nonControllableElementSelection =
             new NonControllableElementSelection(this, authoringBox, posMap, nonControllableMap,
-                controllableList);
+                controllableList, imageMap);
         System.out.println("finished controllable, getting noncontrollable");
         stage.setScene(nonControllableElementSelection.getScene());
       }
       case NONCONTROLLABLE_ELEMENT -> {
         InteractionSelectionScreen interactionSelectionScreen
             = new InteractionSelectionScreen(this, authoringBox, posMap, nonControllableMap,
-            controllableList);
+            controllableList, imageMap);
         System.out.println("finished noncontrollable, getting interaction");
         stage.setScene(interactionSelectionScreen.getScene());
       }
@@ -93,10 +94,11 @@ public class AuthoringController {
 
   public void endAuthoring(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
-      List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap) {
+      List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap,
+      Map<Shape, String> imageMap) {
     System.out.println("writing to json!");
     boolean saveGameSuccess = submitGame(gameName, interactionMap, controllables,
-        nonControllableTypeMap);
+        nonControllableTypeMap, imageMap);
     Alert alert = new Alert(AlertType.INFORMATION);
     if (saveGameSuccess) {
       alert.setTitle("Save Game Success");
@@ -115,10 +117,11 @@ public class AuthoringController {
 
   private boolean submitGame(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
-      List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap) {
+      List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap,
+      Map<Shape, String> imageMap) {
     try {
       Map<Shape, Integer> collidableIdMap = new HashMap<>();
-      writeCollidables(collidableIdMap, controllables, nonControllableTypeMap);
+      writeCollidables(collidableIdMap, controllables, nonControllableTypeMap, imageMap);
       writePlayer();
       writeVariables();
       writeRules(interactionMap, collidableIdMap);
@@ -205,7 +208,7 @@ public class AuthoringController {
   }
 
   private void writeCollidables(Map<Shape, Integer> collidableIdMap, List<Shape> controllables,
-      Map<Shape, NonControllableType> nonControllableTypeMap) {
+      Map<Shape, NonControllableType> nonControllableTypeMap, Map<Shape, String> imageMap) {
     int collidableId = 0;
     List<CollidableObject> collidableObjects = new ArrayList<>();
 
@@ -219,10 +222,9 @@ public class AuthoringController {
         Color c = (Color) (shape.getFill());
         colorRgb = List.of((int) c.getRed() * 255, (int) c.getGreen() * 255,
             (int) c.getBlue() * 255);
+      } else {
+        imgPath = imageMap.get(shape);
       }
-//      else {
-////        imgPath = shape.getFill();
-//      }
 
       List<String> properties = List.of("movable", "collidable", "controllable");
       String shapeName = (shape instanceof Circle) ? "Circle" : "Rectangle";
