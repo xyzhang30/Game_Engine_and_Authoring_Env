@@ -14,7 +14,8 @@
       "y_dimension" : 980.0
     },
     "color" : [ 0, 0, 0 ],
-    "friction" : 0.8,
+    "staticFriction" : 5,
+    "kineticFriction" : 2,
     "image" : "/data/background_images/grass.jpg"
   }, {
     "collidable_id" : 1,
@@ -30,7 +31,8 @@
       "y_dimension" : 990.0
     },
     "color" : [ 0, 0, 0 ],
-    "friction" : 0.8,
+    "staticFriction" : 5,
+    "kineticFriction" : 2,
     "image" : ""
   }, {
     "collidable_id" : 2,
@@ -46,7 +48,8 @@
       "y_dimension" : 990.0
     },
     "color" : [ 0, 0, 0 ],
-    "friction" : 0.8,
+    "staticFriction" : 5,
+    "kineticFriction" : 2,
     "image" : ""
   }, {
     "collidable_id" : 3,
@@ -62,7 +65,8 @@
       "y_dimension" : 20.0
     },
     "color" : [ 0, 0, 0 ],
-    "friction" : 0.8,
+    "staticFriction" : 5,
+    "kineticFriction" : 2,
     "image" : ""
   }, {
     "collidable_id" : 4,
@@ -78,7 +82,8 @@
       "y_dimension" : 20.0
     },
     "color" : [ 0, 0, 0 ],
-    "friction" : 0.8,
+    "staticFriction" : 5,
+    "kineticFriction" : 2,
     "image" : ""
   }, {
     "collidable_id" : 5,
@@ -94,7 +99,8 @@
       "y_dimension" : 19.400491400491433
     },
     "color" : [ 0, 0, 0 ],
-    "friction" : 0.0,
+    "staticFriction" : 0,
+    "kineticFriction" : 0,
     "image" : ""
   }, {
     "collidable_id" : 6,
@@ -110,7 +116,8 @@
       "y_dimension" : 50.0
     },
     "color" : [ 0, 0, 0 ],
-    "friction" : 0.0,
+    "staticFriction" : 0,
+    "kineticFriction" : 0,
     "image" : "/data/noncontrollable_images/flag.jpg"
   }, {
     "collidable_id" : 7,
@@ -126,7 +133,8 @@
       "y_dimension" : 89.82653562653564
     },
     "color" : [ 0, 0, 0 ],
-    "friction" : 0.0,
+    "staticFriction" : 0,
+    "kineticFriction" : 0,
     "image" : "/data/noncontrollable_images/sand.jpg"
   }, {
     "collidable_id" : 8,
@@ -142,7 +150,8 @@
       "y_dimension" : 13.031941031941049
     },
     "color" : [ 0, 0, 0 ],
-    "friction" : 0.0,
+    "staticFriction" : 0,
+    "kineticFriction" : 0,
     "image" : "/data/controllable_images/golf%20ball.jpg"
   } ],
   "players" : [ {
