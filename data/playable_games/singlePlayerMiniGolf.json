@@ -173,7 +173,8 @@
       "collidable_id": 8,
       "properties": [
         "visible",
-        "movable"
+        "movable",
+        "controllable"
       ],
       "mass": 100,
       "position": {

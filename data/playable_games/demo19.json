@@ -15,7 +15,7 @@
     },
     "color" : [ 0, 0, 0 ],
     "friction" : 0.0,
-    "image" : "file:/C:/Users/jhayt/CS308/oogasalad_team01/data/background_images/grass.jpg"
+    "image" : "data/background_images/grass.jpg"
   }, {
     "collidable_id" : 1,
     "properties" : [ "collidable", "MOVABLE" ],
@@ -47,7 +47,7 @@
     },
     "color" : [ 0, 0, 0 ],
     "friction" : 0.0,
-    "image" : "file:/C:/Users/jhayt/CS308/oogasalad_team01/data/noncontrollable_images/sand.jpg"
+    "image" : "data/noncontrollable_images/sand.jpg"
   }, {
     "collidable_id" : 3,
     "properties" : [ "movable", "collidable", "controllable" ],
@@ -63,7 +63,7 @@
     },
     "color" : [ 0, 0, 0 ],
     "friction" : 0.0,
-    "image" : "file:/C:/Users/jhayt/CS308/oogasalad_team01/data/controllable_images/golf%20ball.jpg"
+    "image" : "data/controllable_images/golf%20ball.jpg"
   } ],
   "players" : [ {
     "player_id" : 1,
