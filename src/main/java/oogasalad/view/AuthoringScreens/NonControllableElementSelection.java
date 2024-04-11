@@ -28,8 +28,9 @@ public class NonControllableElementSelection extends AuthoringScreen {
 
   public NonControllableElementSelection(AuthoringController controller, StackPane authoringBox,
       Map<Shape, List<Double>> posMap,
-      Map<Shape, NonControllableType> nonControllableMap, List<Shape> controllableList) {
-    super(controller, authoringBox, posMap, nonControllableMap, controllableList);
+      Map<Shape, NonControllableType> nonControllableMap, List<Shape> controllableList,
+      Map<Shape, String> imageMap) {
+    super(controller, authoringBox, posMap, nonControllableMap, controllableList, imageMap);
     obstacleTypeMap = new HashMap<>();
   }
 
@@ -109,7 +110,7 @@ public class NonControllableElementSelection extends AuthoringScreen {
 
       controller.startNextSelection(ImageType.NONCONTROLLABLE_ELEMENT,
           authoringBox, posMap, nonControllableMap,
-          controllableList); // Adjust NEXT_TYPE to whatever comes next
+          controllableList, imageMap); // Adjust NEXT_TYPE to whatever comes next
     } else {
       Alert alert = new Alert(AlertType.ERROR);
       alert.setTitle("Error");
