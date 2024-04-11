@@ -94,6 +94,8 @@ JSONs not configured properly yet to handle angle, also realizing that I'm going
   * Continue maintaining the parser and builder according to changes made in engine and view 
   * Refactor game builder and record creation for builder -- split it out of the authoring controller so it supports saving mid-game.
   * Add the remaining authoring screens and remove hard coded stuff in record creation
+  * Improve logging and error handling
+  * Add frontend part of the database (?)
 
 * Blockers/Issues in your way
   * Need to refactor stuff for better design (use more design patterns)
