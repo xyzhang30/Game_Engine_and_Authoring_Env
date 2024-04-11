@@ -28,4 +28,17 @@ public class GameLoaderViewTest {
       }
     }
   }
+
+//  @Test
+//  public void wrongRgbValueTest(){
+//    GameLoaderView loaderView = new GameLoaderView("testingBadRgbValue");
+//    List<ViewCollidableRecord> collidableRecords = loaderView.getViewCollidableInfo();
+//    for (ViewCollidableRecord record : collidableRecords){
+//      if (record.id() == 2 || record.id() == 3){
+//        assertEquals("circle", record.shape());
+//      } else {
+//        assertEquals("rectangle", record.shape());
+//      }
+//    }
+//  }
 }
