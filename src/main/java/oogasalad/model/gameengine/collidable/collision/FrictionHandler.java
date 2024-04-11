@@ -8,7 +8,7 @@ import oogasalad.model.gameengine.collidable.PhysicsHandler;
 public class FrictionHandler extends PhysicsHandler {
 
   private static final double C = 40;
-  private static final double g = 10;
+  private static final double g = 9.81;
 
   public FrictionHandler(int id1, int id2) {
     super(id1, id2);
@@ -18,8 +18,6 @@ public class FrictionHandler extends PhysicsHandler {
   protected Supplier<List<Double>> makeVelocityFunction(CollidableRecord c1, CollidableRecord c2,
       double dt) {
     return () -> {
-      // Assuming g is 9.81 m/s^2
-      double g = 9.81;
       // Assuming normal force calculation remains the same; adjust if considering angles
       double normalForce = c1.mass() * g; // No angle considered here for simplicity
       // Choose between static and kinetic friction based on the object's motion

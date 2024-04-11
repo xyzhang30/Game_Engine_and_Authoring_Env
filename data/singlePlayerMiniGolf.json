@@ -14,8 +14,8 @@
         "x_dimension": 1000,
         "y_dimension": 300
       },
-      "staticFriction": 3,
-      "kineticFriction": 2,
+      "staticFriction": 3.03873,
+      "kineticFriction": 2.03873,
       "color": [124,252,0],
       "image": "sample.img"
     },
@@ -34,8 +34,8 @@
         "x_dimension": 333,
         "y_dimension": 700
       },
-      "staticFriction": 3,
-      "kineticFriction": 2,
+      "staticFriction": 3.03873,
+      "kineticFriction": 2.03873,
       "color": [124,252,0],
       "image": "sample.img"
     },
@@ -53,8 +53,8 @@
         "x_dimension": 667,
         "y_dimension": 300
       },
-      "staticFriction": 90,
-      "kineticFriction": 80,
+      "staticFriction": 3.03873,
+      "kineticFriction": 2.03873,
       "color": [124,252,0],
       "image": "sample.img"
     },
@@ -91,8 +91,8 @@
         "x_dimension": 334,
         "y_dimension": 100
       },
-      "staticFriction": 99,
-      "kineticFriction": 90,
+      "staticFriction": 34,
+      "kineticFriction": 24,
       "color": [0,100,0],
       "image": "sample.img"
     },
@@ -110,8 +110,8 @@
         "x_dimension": 333,
         "y_dimension": 300
       },
-      "staticFriction": 90,
-      "kineticFriction": 80,
+      "staticFriction": 19,
+      "kineticFriction": 9,
       "color": [0,0,255],
       "image": "sample.img"
     },
@@ -129,8 +129,8 @@
         "x_dimension": 333,
         "y_dimension": 100
       },
-      "staticFriction": 3,
-      "kineticFriction": 2,
+      "staticFriction": 3.03873,
+      "kineticFriction": 2.03873,
       "color": [124,252,0],
       "image": "sample.img"
     },
