@@ -69,11 +69,13 @@ being applied correctly. However, it is passing my tests, so I should probably w
 
 ### Jordan
 
-* Work done this Sprint
+* Work done this Sprint: Created Authoring Environment, helped bridge authoring environment to JSON
+  file creation, debugging integration issues
 
-* Plan for next Sprint?
+* Plan for next Sprint: Refactoring front end code, enabling multiplayer
 
-* Blockers/Issues in your way
+* Blockers/Issues in your way: Planning design/refactoring to be compatible with anticipated future
+  features/games
 
 ### Konur
 
@@ -108,12 +110,12 @@ makes working more enjoyable.
 
 ## Teamwork that worked well
 
-* Thing #1:
+* Working to integrate front and back end earlier in the week
 * Thing #2:
 
 ## Teamwork that could be improved
 
-* Thing #1:
+* Planning earlier and more comprehensively
 
 * Thing #2:
 
