@@ -262,13 +262,19 @@ public class AuthoringController {
       friction =
           (nonControllableTypeMap.get(shape).toString().equals("Surface")) ? 0.5 : 0.0;
       shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
-      collidableObject = new CollidableObject(collidableId,
-          properties, 10,
-          new Position(posMap.get(shape).get(0),
-              posMap.get(shape).get(1)), shapeName,
-          new Dimension(shape.getLayoutBounds().getWidth(),
-              shape.getLayoutBounds().getHeight()),
-          colorRgb, friction, imgPath);
+      if (shape instanceof Ellipse) {
+        collidableObject = new CollidableObject(collidableId,
+            properties, 10,
+            new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
+            new Dimension(((Ellipse) shape).getRadiusX(), ((Ellipse) shape).getRadiusY()),
+            colorRgb, 0.0, imgPath);
+      } else {
+        collidableObject = new CollidableObject(collidableId,
+            properties, 10,
+            new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
+            new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
+            colorRgb, 0.0, imgPath);
+      }
       collidableObjects.add(collidableObject);
       collidableIdMap.put(shape, collidableId);
       collidableId++;
@@ -285,14 +291,21 @@ public class AuthoringController {
       } else {
         imgPath = imageMap.get(shape);
       }
-
       properties = List.of("movable", "collidable", "controllable");
       shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
-      collidableObject = new CollidableObject(collidableId,
-          properties, 10,
-          new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
-          new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
-          colorRgb, 0.0, imgPath);
+      if (shape instanceof Ellipse) {
+        collidableObject = new CollidableObject(collidableId,
+            properties, 10,
+            new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
+            new Dimension(((Ellipse) shape).getRadiusX(), ((Ellipse) shape).getRadiusY()),
+            colorRgb, 0.0, imgPath);
+      } else {
+        collidableObject = new CollidableObject(collidableId,
+            properties, 10,
+            new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
+            new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
+            colorRgb, 0.0, imgPath);
+      }
       collidableObjects.add(collidableObject);
       collidableIdMap.put(shape, collidableId);
       collidableId++;

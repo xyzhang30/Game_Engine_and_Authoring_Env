@@ -3,7 +3,10 @@
   "collidable_objects": [
     {
       "collidable_id": 1,
-      "properties": ["visible", "surface"],
+      "properties": [
+        "visible",
+        "surface"
+      ],
       "mass": 1e1000000,
       "position": {
         "x_position": 0,
@@ -15,14 +18,19 @@
         "y_dimension": 300
       },
       "friction": 0.04,
-      "color": [124,252,0],
-      "image": "sample.img"
+      "color": [
+        124,
+        252,
+        0
+      ],
+      "image": ""
     },
-
-
     {
       "collidable_id": 2,
-      "properties": ["visible", "surface"],
+      "properties": [
+        "visible",
+        "surface"
+      ],
       "mass": 1e1000000,
       "position": {
         "x_position": 0,
@@ -34,13 +42,19 @@
         "y_dimension": 700
       },
       "friction": 0.04,
-      "color": [124,252,0],
-      "image": "sample.img"
+      "color": [
+        124,
+        252,
+        0
+      ],
+      "image": ""
     },
-
     {
       "collidable_id": 3,
-      "properties": ["visible", "surface"],
+      "properties": [
+        "visible",
+        "surface"
+      ],
       "mass": 1e1000000,
       "position": {
         "x_position": 333,
@@ -52,13 +66,19 @@
         "y_dimension": 300
       },
       "friction": 0.9,
-      "color": [124,252,0],
-      "image": "sample.img"
+      "color": [
+        124,
+        252,
+        0
+      ],
+      "image": ""
     },
-
     {
       "collidable_id": 4,
-      "properties": ["visible", "movable"],
+      "properties": [
+        "visible",
+        "movable"
+      ],
       "mass": 1e1000000,
       "position": {
         "x_position": 333,
@@ -69,14 +89,20 @@
         "x_dimension": 334,
         "y_dimension": 300
       },
-      "image": "sample.img",
+      "image": "",
       "friction": 0,
-      "color": [230,159,0]
+      "color": [
+        230,
+        159,
+        0
+      ]
     },
-
     {
       "collidable_id": 5,
-      "properties": ["visible", "surface"],
+      "properties": [
+        "visible",
+        "surface"
+      ],
       "mass": 1e1000000,
       "position": {
         "x_position": 333,
@@ -88,13 +114,19 @@
         "y_dimension": 100
       },
       "friction": 0.99,
-      "color": [0,100,0],
-      "image": "sample.img"
+      "color": [
+        0,
+        100,
+        0
+      ],
+      "image": ""
     },
-
     {
       "collidable_id": 6,
-      "properties": ["visible","surface"],
+      "properties": [
+        "visible",
+        "surface"
+      ],
       "mass": 1E1000000,
       "position": {
         "x_position": 667,
@@ -106,13 +138,19 @@
         "y_dimension": 300
       },
       "friction": 0.9,
-      "color": [0,0,255],
-      "image": "sample.img"
+      "color": [
+        0,
+        0,
+        255
+      ],
+      "image": ""
     },
-
     {
       "collidable_id": 7,
-      "properties": ["visible", "surface"],
+      "properties": [
+        "visible",
+        "surface"
+      ],
       "mass": 1e1000000,
       "position": {
         "x_position": 667,
@@ -124,13 +162,20 @@
         "y_dimension": 100
       },
       "friction": 0.04,
-      "color": [124,252,0],
-      "image": "sample.img"
+      "color": [
+        124,
+        252,
+        0
+      ],
+      "image": ""
     },
-
     {
       "collidable_id": 8,
-      "properties": ["visible", "movable"],
+      "properties": [
+        "visible",
+        "movable",
+        "controllable"
+      ],
       "mass": 100,
       "position": {
         "x_position": 480,
@@ -142,14 +187,19 @@
         "y_dimension": 10
       },
       "friction": 0,
-      "color": [255,255,255],
-      "image": "sample.img"
+      "color": [
+        255,
+        255,
+        255
+      ],
+      "image": ""
     },
-
-
     {
       "collidable_id": 9,
-      "properties": ["visible", "movable"],
+      "properties": [
+        "visible",
+        "movable"
+      ],
       "mass": 1E10000000,
       "position": {
         "x_position": 480,
@@ -161,13 +211,19 @@
         "y_dimension": 20
       },
       "friction": 0,
-      "color": [0,0,0],
-      "image": "sample.img"
+      "color": [
+        0,
+        0,
+        0
+      ],
+      "image": ""
     },
-
     {
       "collidable_id": 10,
-      "properties": ["visible", "movable"],
+      "properties": [
+        "visible",
+        "movable"
+      ],
       "mass": 1e1000000,
       "position": {
         "x_position": 0,
@@ -179,13 +235,19 @@
         "y_dimension": 1000
       },
       "friction": 0,
-      "color": [0,0,0],
-      "image": "sample.img"
+      "color": [
+        0,
+        0,
+        0
+      ],
+      "image": ""
     },
-
     {
       "collidable_id": 11,
-      "properties": ["visible", "movable"],
+      "properties": [
+        "visible",
+        "movable"
+      ],
       "mass": 1e1000000,
       "position": {
         "x_position": 0,
@@ -197,13 +259,19 @@
         "y_dimension": 50
       },
       "friction": 0,
-      "color": [0,0,0],
-      "image": "sample.img"
+      "color": [
+        0,
+        0,
+        0
+      ],
+      "image": ""
     },
-
     {
       "collidable_id": 12,
-      "properties": ["visible", "movable"],
+      "properties": [
+        "visible",
+        "movable"
+      ],
       "mass": 1e1000000,
       "position": {
         "x_position": 0,
@@ -215,13 +283,19 @@
         "y_dimension": 50
       },
       "friction": 0,
-      "color": [0,0,0],
-      "image": "sample.img"
+      "color": [
+        0,
+        0,
+        0
+      ],
+      "image": ""
     },
-
     {
       "collidable_id": 13,
-      "properties": ["visible", "movable"],
+      "properties": [
+        "visible",
+        "movable"
+      ],
       "mass": 1e1000000,
       "position": {
         "x_position": 980,
@@ -233,15 +307,20 @@
         "y_dimension": 1000
       },
       "friction": 0,
-      "color": [0,0,0],
-      "image": "sample.img"
+      "color": [
+        0,
+        0,
+        0
+      ],
+      "image": ""
     }
-
   ],
   "players": [
     {
       "player_id": 1,
-      "my_collidable": [8]
+      "my_collidable": [
+        8
+      ]
     }
   ],
   "variables": [
@@ -263,7 +342,10 @@
         "second_id": 9,
         "command": [
           {
-            "AdjustPointsCommand": [1,1]
+            "AdjustPointsCommand": [
+              1,
+              1
+            ]
           },
           {
             "AdvanceRoundCommand": []
@@ -285,19 +367,25 @@
       "AllPlayersCompletedRoundCondition": []
     },
     "win_condition": {
-      "NRoundsCompletedCondition": [1]
+      "NRoundsCompletedCondition": [
+        1
+      ]
     },
     "advance_turn": [
       {
         "AdvanceTurnCommand": []
       },
       {
-        "AdjustActivePointsCommand": [1.0]
+        "AdjustActivePointsCommand": [
+          1.0
+        ]
       }
     ],
     "advance_round": [
       {
-        "AdjustActivePointsCommand": [1.0],
+        "AdjustActivePointsCommand": [
+          1.0
+        ],
         "AdvanceRoundCommand": []
       }
     ]
