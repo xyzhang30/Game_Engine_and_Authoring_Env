@@ -15,7 +15,7 @@
     },
     "color" : [ 0, 0, 0 ],
     "friction" : 0.0,
-    "image" : "data/background_images/grass.jpg"
+    "image" : ""
   }, {
     "collidable_id" : 1,
     "properties" : [ "collidable", "movable" ],
@@ -45,9 +45,9 @@
       "x_dimension" : 30.0,
       "y_dimension" : 30.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : [ 200, 200, 200 ],
     "friction" : 0.0,
-    "image" : "data/controllable_images/golf%20ball.jpg"
+    "image" : ""
   } ],
   "players" : [ {
     "player_id" : 1,
