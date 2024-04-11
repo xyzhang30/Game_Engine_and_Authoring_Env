@@ -45,11 +45,18 @@ being applied correctly. However, it is passing my tests, so I should probably w
 
 ### Doga
 
-* Work done this Sprint
+* Work done this Sprint:
+  * Worked on the frontend side of the authoring environment. Helped with the individual authoring screens,
+  bugs, and the creation of the enums. I spent a long time with Jordan on debugging the authoring environment.
+  I also began with creating extensive tests on the authoring environment.
 
 * Plan for next Sprint?
+  * Creating more view tests
+  * Refactoring the authoring environment, specifically the AuthoringScreen
 
 * Blockers/Issues in your way
+  * Some bugs with the authoring environment, especially with the connection to the model size.
+  * The way the authoring environment is currently written makes it complicated to testg
 
 ### Judy
 
