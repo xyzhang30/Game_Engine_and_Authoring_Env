@@ -130,7 +130,7 @@
 
     {
       "collidable_id": 8,
-      "properties": ["visible", "movable"],
+      "properties": ["visible", "movable", "controllable"],
       "mass": 100,
       "position": {
         "x_position": 480,
