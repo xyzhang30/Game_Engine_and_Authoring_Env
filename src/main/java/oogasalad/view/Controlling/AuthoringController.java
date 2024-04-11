@@ -141,7 +141,7 @@ public class AuthoringController {
   private void writePlayer() {
     //HARD CODED FOR DEMO!
     //QUESTION: WHICH COLLIDABLE WILL BE THE ONE PLAYER IS ASSIGNED TO IN THE DEMO WE DO??
-    ParserPlayer player = new ParserPlayer(1, 1);
+    ParserPlayer player = new ParserPlayer(1, List.of(1));
 
     builderDirector.constructPlayers(List.of(player));
   }

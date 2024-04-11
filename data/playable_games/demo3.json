@@ -1,7 +1,7 @@
 {
   "gameName" : "demo3",
   "collidable_objects" : [ {
-    "collidable_id" : 0,
+    "collidable_id" : [0],
     "properties" : [ "movable", "collidable", "controllable" ],
     "mass" : 10.0,
     "position" : {

@@ -152,4 +152,11 @@ public class Collidable {
     List<Double> newSpeeds = firstInfo.get();
     setSpeed(newSpeeds.get(0), newSpeeds.get(1));
   }
+
+  public void multiplySpeed(double factor) {//dont love that this is public
+    myVelocityX *= factor;
+    myVelocityY *= factor;
+  }
+
+
 }
