@@ -254,7 +254,7 @@
   "players": [
     {
       "player_id": 1,
-      "my_collidable": 8
+      "my_collidable": [8]
     }
   ],
   "variables": [

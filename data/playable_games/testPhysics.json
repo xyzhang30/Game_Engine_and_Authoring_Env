@@ -175,11 +175,11 @@
   "players": [
     {
       "player_id": 1,
-      "my_collidable": 1
+      "my_collidable": [1]
     },
     {
       "player_id": 2,
-      "my_collidable": 6
+      "my_collidable": [6]
     }
   ],
   "variables": [
