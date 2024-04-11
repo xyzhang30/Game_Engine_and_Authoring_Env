@@ -23,8 +23,8 @@ public class ControllableElementSelectionScreen extends AuthoringScreen {
   public ControllableElementSelectionScreen(AuthoringController controller,
       StackPane authoringBox, Map<Shape, List<Double>> posMap,
       Map<Shape, NonControllableType> nonControllableMap,
-      List<Shape> controllableList) {
-    super(controller, authoringBox, posMap, nonControllableMap, controllableList);
+      List<Shape> controllableList, Map<Shape, String> imageMap) {
+    super(controller, authoringBox, posMap, nonControllableMap, controllableList, imageMap);
     this.controllableList = controllableList;
   }
 
@@ -58,7 +58,7 @@ public class ControllableElementSelectionScreen extends AuthoringScreen {
     }
     controller.startNextSelection(ImageType.CONTROLLABLE_ELEMENT, authoringBox, posMap,
         nonControllableMap,
-        controllableList);
+        controllableList, imageMap);
   }
 
   /**

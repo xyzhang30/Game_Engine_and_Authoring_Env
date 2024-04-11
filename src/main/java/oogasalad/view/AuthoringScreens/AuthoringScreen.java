@@ -60,13 +60,15 @@ public abstract class AuthoringScreen {
   final int authoringBoxWidth = 980;
   final int authoringBoxHeight = 980;
   Map<Shape, List<Double>> posMap;
+  Map<Shape, String> imageMap;
 
   public AuthoringScreen(AuthoringController controller, StackPane authoringBox,
-      Map<Shape, List<Double>> posMap, Map<Shape,
-      NonControllableType> nonControllableMap, List<Shape> controllableList) {
+      Map<Shape, List<Double>> posMap, Map<Shape, NonControllableType> nonControllableMap,
+      List<Shape> controllableList, Map<Shape, String> imageMap) {
     this.nonControllableMap = nonControllableMap;
     this.controllableList = controllableList;
     this.posMap = posMap;
+    this.imageMap = imageMap;
     this.controller = controller;
     this.authoringBox = authoringBox;
     selectableShapes = new ArrayList<>();
@@ -114,6 +116,7 @@ public abstract class AuthoringScreen {
     imageButton.setOnAction(event -> {
       Image image = chooseImage(getImageType());
       if (image != null && selectedShape != null) {
+        imageMap.put(selectedShape, image.getUrl());
         selectedShape.setFill(new ImagePattern(image));
       }
     });

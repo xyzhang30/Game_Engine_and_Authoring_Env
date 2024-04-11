@@ -33,6 +33,7 @@ public class GameController {
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
   private final String PLAYABLE_GAMES_DIRECTORY = "data/playable_games";
+  private final String TEST_FILE_IDENTIFIER = "test";
 
   public GameController() {
     sceneManager = new SceneManager();
@@ -120,7 +121,13 @@ public class GameController {
    */
   public List<String> getGameTitles() {
     Set<String> files = listFiles(PLAYABLE_GAMES_DIRECTORY);
-    return new ArrayList<>(files);
+    List<String> gameTitles = new ArrayList<>();
+    for (String file: files) {
+      if (!file.toLowerCase().contains(TEST_FILE_IDENTIFIER)) {
+        gameTitles.add(file.substring(0,file.indexOf(".")));
+      }
+    }
+    return gameTitles;
   }
 
   private Set<String> listFiles(String dir) {
