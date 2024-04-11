@@ -34,7 +34,6 @@ public class GameElement implements VisualElement {
   private Node makeShape(ViewCollidableRecord data) throws InvalidShapeException {
     try {
       if (data.image().isEmpty()) {
-        System.out.println("here");
         List<Integer> rgb = data.color();
         Color color = Color.rgb(rgb.get(0), rgb.get(1), rgb.get(2));
         switch (data.shape().toLowerCase()) { // Convert to reflection at later date
