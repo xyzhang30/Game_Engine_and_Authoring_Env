@@ -224,7 +224,7 @@ public abstract class AuthoringScreen {
   void createSizeAndAngleSliders() {
     VBox sliderContainerBox = new VBox();
     sliderContainerBox.setPrefSize(200, 10);
-    AnchorPane.setTopAnchor(sliderContainerBox, 500.0);
+    AnchorPane.setTopAnchor(sliderContainerBox, 400.0);
     AnchorPane.setRightAnchor(sliderContainerBox, 50.0);
     sliderContainerBox.setAlignment(Pos.CENTER_RIGHT);
 
@@ -286,7 +286,6 @@ public abstract class AuthoringScreen {
     Label label = new Label("Angle");
 
     HBox sliderContainer = new HBox(label, slider);
-    sliderContainer.setAlignment(Pos.CENTER_RIGHT);
     sliderContainer.setSpacing(10);
 
     sliderContainerBox.getChildren().add(sliderContainer);
@@ -305,9 +304,7 @@ public abstract class AuthoringScreen {
     slider.setOrientation(Orientation.HORIZONTAL);
 
     Label label = new Label(labelText);
-
     HBox sliderContainer = new HBox(label, slider);
-    sliderContainer.setAlignment(Pos.CENTER_RIGHT);
     sliderContainer.setSpacing(10);
 
     sliderContainerBox.getChildren().add(sliderContainer);

@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.geometry.Bounds;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -65,7 +63,7 @@ public class NonControllableElementSelection extends AuthoringScreen {
         .addAll(NonControllableType.SURFACE, NonControllableType.MOVABLE);
     obstacleTypeComboBox.setPromptText("Select Obstacle Type");
     AnchorPane.setRightAnchor(obstacleTypeComboBox, 50.0);
-    AnchorPane.setBottomAnchor(obstacleTypeComboBox, 350.0);
+    AnchorPane.setBottomAnchor(obstacleTypeComboBox, 300.0);
     obstacleTypeComboBox.setPrefSize(200, 100);
     root.getChildren().add(obstacleTypeComboBox);
 
