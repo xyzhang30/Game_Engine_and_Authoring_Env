@@ -7,17 +7,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.geometry.Bounds;
-import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -39,13 +40,14 @@ import oogasalad.view.Window;
  * @author Jordan Haytaian, Doga Ozmen
  */
 public abstract class AuthoringScreen {
-
+  Map<Shape, NonControllableType> nonControllableMap;
+  List<Shape> controllableList;
   double screenWidth = Window.SCREEN_WIDTH;
   double screenHeight = Window.SCREEN_HEIGHT;
-  StackPane authoringBox;
+  public StackPane authoringBox;
   List<Shape> selectableShapes;
   Map<Shape, Boolean> newTemplateMap;
-  StackPane root;
+  AnchorPane root;
   Scene scene;
   ColorPicker colorPicker;
   Button imageButton;
@@ -56,8 +58,16 @@ public abstract class AuthoringScreen {
   Shape selectedShape;
   final int authoringBoxWidth = 980;
   final int authoringBoxHeight = 980;
+  Map<Shape, List<Double>> posMap;
+  Map<Shape, String> imageMap;
 
-  public AuthoringScreen(AuthoringController controller, StackPane authoringBox) {
+  public AuthoringScreen(AuthoringController controller, StackPane authoringBox,
+      Map<Shape, List<Double>> posMap, Map<Shape, NonControllableType> nonControllableMap,
+      List<Shape> controllableList, Map<Shape, String> imageMap) {
+    this.nonControllableMap = nonControllableMap;
+    this.controllableList = controllableList;
+    this.posMap = posMap;
+    this.imageMap = imageMap;
     this.controller = controller;
     this.authoringBox = authoringBox;
     selectableShapes = new ArrayList<>();
@@ -105,6 +115,7 @@ public abstract class AuthoringScreen {
     imageButton.setOnAction(event -> {
       Image image = chooseImage(getImageType());
       if (image != null && selectedShape != null) {
+        imageMap.put(selectedShape, image.getUrl());
         selectedShape.setFill(new ImagePattern(image));
       }
     });
@@ -118,8 +129,8 @@ public abstract class AuthoringScreen {
   void createTitle(String title) {
     Text titleText = new Text(title);
     titleText.setFont(Font.font("Arial", 30));
-    StackPane.setAlignment(titleText, Pos.TOP_LEFT);
-    StackPane.setMargin(titleText, new Insets(5, 0, 0, 50));
+    AnchorPane.setTopAnchor(titleText, 5.0);
+    AnchorPane.setLeftAnchor(titleText, 50.0);
     root.getChildren().add(titleText);
   }
 
@@ -141,16 +152,21 @@ public abstract class AuthoringScreen {
         new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
     );
     File selectedFile = fileChooser.showOpenDialog(new Stage());
-    String imagePath = selectedFile.getAbsolutePath();
-
-    try {
-      File file = new File(imagePath);
-      String imageUrl = file.toURI().toURL().toString(); // Convert the file path to a URL
-      return new Image(imageUrl);
-    } catch (MalformedURLException e) {
-      return null;
-      //TODO: exception handling
+    if (selectedFile != null) {
+      String imagePath = selectedFile.getAbsolutePath();
+      try {
+        File file = new File(imagePath);
+        String imageUrl = file.toURI().toURL().toString(); // Convert the file path to a URL
+        return new Image(imageUrl);
+      } catch (MalformedURLException e) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("Invalid URL");
+        alert.showAndWait();
+      }
     }
+    return null;
   }
 
   /**
@@ -159,15 +175,16 @@ public abstract class AuthoringScreen {
   void createShapeDisplayOptionBox() {
     colorPicker = new ColorPicker();
     colorPicker.setPrefSize(200, 100);
-    StackPane.setAlignment(colorPicker, Pos.TOP_RIGHT);
-    StackPane.setMargin(colorPicker, new Insets(50, 50, 0, 0));
+    AnchorPane.setTopAnchor(colorPicker, 50.0);
+    AnchorPane.setRightAnchor(colorPicker, 50.0);
     createColorPickerHandler();
     root.getChildren().addAll(colorPicker);
 
     imageButton = new Button("Image");
+    imageButton.setId("imageButton");
     imageButton.setPrefSize(200, 100);
-    StackPane.setAlignment(imageButton, Pos.TOP_RIGHT);
-    StackPane.setMargin(imageButton, new Insets(160, 50, 0, 0));
+    AnchorPane.setTopAnchor(imageButton, 160.0);
+    AnchorPane.setRightAnchor(imageButton, 50.0);
     createImageHandler();
     root.getChildren().add(imageButton);
   }
@@ -179,25 +196,26 @@ public abstract class AuthoringScreen {
     Button nextButton = new Button(transitionText);
     nextButton.setPrefSize(100, 50);
     nextButton.setOnMouseClicked(event -> endSelection());
-    StackPane.setAlignment(nextButton, Pos.BOTTOM_RIGHT);
-    StackPane.setMargin(nextButton, new Insets(0, 50, 50, 0));
+    AnchorPane.setBottomAnchor(nextButton, 50.0);
+    AnchorPane.setRightAnchor(nextButton, 50.0);
     root.getChildren().add(nextButton);
   }
 
   /**
    * Creates a rectangle and circle template that users can drag onto gameboard
    */
-  void createDraggableShapeTemplates() {
+  public void createDraggableShapeTemplates() {
     Rectangle rectangle = new Rectangle(100, 50, Color.BLACK);
-    StackPane.setAlignment(rectangle, Pos.TOP_RIGHT);
-    StackPane.setMargin(rectangle, new Insets(300, 150, 0, 0));
+    AnchorPane.setRightAnchor(rectangle, 150.0);
+    AnchorPane.setTopAnchor(rectangle, 300.0);
     makeSelectable(rectangle);
+    rectangle.setId("draggableRectangle");
     makeDraggable(rectangle);
 
     Ellipse ellipse = new Ellipse(30, 30);
     ellipse.setFill(Color.BLACK);
-    StackPane.setAlignment(ellipse, Pos.TOP_RIGHT);
-    StackPane.setMargin(ellipse, new Insets(300, 50, 0, 0));
+    AnchorPane.setRightAnchor(ellipse, 50.0);
+    AnchorPane.setTopAnchor(ellipse, 300.0);
     makeSelectable(ellipse);
     makeDraggable(ellipse);
 
@@ -210,8 +228,9 @@ public abstract class AuthoringScreen {
   void createSizeAndAngleSliders() {
     VBox sliderContainerBox = new VBox();
     sliderContainerBox.setPrefSize(200, 10);
+    AnchorPane.setTopAnchor(sliderContainerBox, 400.0);
+    AnchorPane.setRightAnchor(sliderContainerBox, 50.0);
     sliderContainerBox.setAlignment(Pos.CENTER_RIGHT);
-    sliderContainerBox.setPadding(new Insets(-100, 50, 0, 0));
 
     xSlider = createSizeSlider("X Scale", sliderContainerBox);
     ySlider = createSizeSlider("Y Scale", sliderContainerBox);
@@ -231,7 +250,6 @@ public abstract class AuthoringScreen {
    * Updates authoring box by adding selected game objects to the stackpane
    */
   void addNewSelectionsToAuthoringBox() {
-    Group selections = new Group();
     for (Shape shape : selectableShapes) {
       Bounds shapeBounds = shape.getBoundsInParent();
       Bounds authoringBoxBounds = authoringBox.getBoundsInParent();
@@ -241,11 +259,24 @@ public abstract class AuthoringScreen {
       }
 
       if (authoringBoxBounds.contains(shapeBounds)) {
-        selections.getChildren().add(shape);
+        List<Double> posList = new ArrayList<>();
+        posList.add(AnchorPane.getTopAnchor(shape));
+        posList.add(AnchorPane.getLeftAnchor(shape));
+        posMap.put(shape, posList);
       }
     }
 
-    authoringBox.getChildren().add(selections);
+  }
+
+  void addElements() {
+    for (Shape shape : posMap.keySet()) {
+      shape.setOnMousePressed(null);
+      shape.setOnMouseClicked(null);
+      shape.setOnMouseDragged(null);
+      AnchorPane.setTopAnchor(shape, posMap.get(shape).get(0));
+      AnchorPane.setLeftAnchor(shape, posMap.get(shape).get(1));
+      root.getChildren().add(shape);
+    }
   }
 
   private Slider createAngleSlider(VBox sliderContainerBox) {
@@ -262,7 +293,6 @@ public abstract class AuthoringScreen {
     Label label = new Label("Angle");
 
     HBox sliderContainer = new HBox(label, slider);
-    sliderContainer.setAlignment(Pos.CENTER_RIGHT);
     sliderContainer.setSpacing(10);
 
     sliderContainerBox.getChildren().add(sliderContainer);
@@ -281,9 +311,7 @@ public abstract class AuthoringScreen {
     slider.setOrientation(Orientation.HORIZONTAL);
 
     Label label = new Label(labelText);
-
     HBox sliderContainer = new HBox(label, slider);
-    sliderContainer.setAlignment(Pos.CENTER_RIGHT);
     sliderContainer.setSpacing(10);
 
     sliderContainerBox.getChildren().add(sliderContainer);

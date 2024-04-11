@@ -12,8 +12,7 @@ public class AdvanceRoundCommand implements Command {
   }
 
   @Override
-  public double execute(GameEngine engine) {
+  public void execute(GameEngine engine) {
     engine.advanceRound();
-    return 0.0;
   }
 }

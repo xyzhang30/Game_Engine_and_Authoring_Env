@@ -1,7 +1,12 @@
 package oogasalad.view.AuthoringScreens;
 
+import java.util.List;
+import java.util.Map;
+import javafx.geometry.Bounds;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Shape;
 import oogasalad.view.Controlling.AuthoringController;
 
 /**
@@ -12,18 +17,24 @@ import oogasalad.view.Controlling.AuthoringController;
  */
 public class ControllableElementSelectionScreen extends AuthoringScreen {
 
+  private List<Shape> controllableList;
+
   public ControllableElementSelectionScreen(AuthoringController controller,
-      StackPane authoringBox) {
-    super(controller, authoringBox);
+      StackPane authoringBox, Map<Shape, List<Double>> posMap,
+      Map<Shape, NonControllableType> nonControllableMap,
+      List<Shape> controllableList, Map<Shape, String> imageMap) {
+    super(controller, authoringBox, posMap, nonControllableMap, controllableList, imageMap);
+    this.controllableList = controllableList;
   }
 
   /**
    * Creates the scene including the previously selected background
    */
   void createScene() {
-    root = new StackPane();
+    root = new AnchorPane();
     createTitle("Controllable Selection");
     root.getChildren().add(authoringBox);
+    addElements();
     createSizeAndAngleSliders();
     createShapeDisplayOptionBox();
     createDraggableShapeTemplates();
@@ -36,7 +47,17 @@ public class ControllableElementSelectionScreen extends AuthoringScreen {
    */
   void endSelection() {
     addNewSelectionsToAuthoringBox();
-    controller.startNextSelection(ImageType.CONTROLLABLE_ELEMENT, authoringBox);
+    for (Shape shape : selectableShapes) {
+      Bounds shapeBounds = shape.getBoundsInParent();
+      Bounds authoringBoxBounds = authoringBox.getBoundsInParent();
+
+      if (authoringBoxBounds.contains(shapeBounds)) {
+        controllableList.add(shape);
+      }
+    }
+    controller.startNextSelection(ImageType.CONTROLLABLE_ELEMENT, authoringBox, posMap,
+        nonControllableMap,
+        controllableList, imageMap);
   }
 
   /**

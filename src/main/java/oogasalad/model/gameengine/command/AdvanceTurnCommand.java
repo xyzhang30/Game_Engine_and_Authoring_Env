@@ -12,9 +12,8 @@ public class AdvanceTurnCommand implements Command {
   }
 
   @Override
-  public double execute(GameEngine engine) {
+  public void execute(GameEngine engine) {
     engine.advanceTurn();
-    return 0.0;
   }
 
 }

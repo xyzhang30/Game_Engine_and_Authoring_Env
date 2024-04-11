@@ -1,12 +1,14 @@
 package oogasalad.view.AuthoringScreens;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.geometry.Bounds;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Shape;
 import oogasalad.view.Controlling.AuthoringController;
@@ -24,8 +26,11 @@ public class NonControllableElementSelection extends AuthoringScreen {
   private Map<Shape, NonControllableType> obstacleTypeMap;
 
 
-  public NonControllableElementSelection(AuthoringController controller, StackPane authoringBox) {
-    super(controller, authoringBox);
+  public NonControllableElementSelection(AuthoringController controller, StackPane authoringBox,
+      Map<Shape, List<Double>> posMap,
+      Map<Shape, NonControllableType> nonControllableMap, List<Shape> controllableList,
+      Map<Shape, String> imageMap) {
+    super(controller, authoringBox, posMap, nonControllableMap, controllableList, imageMap);
     obstacleTypeMap = new HashMap<>();
   }
 
@@ -33,9 +38,10 @@ public class NonControllableElementSelection extends AuthoringScreen {
    * Creates the scene including the previously selected background
    */
   void createScene() {
-    root = new StackPane();
+    root = new AnchorPane();
     createTitle("NonControllable Selection");
     root.getChildren().add(authoringBox);
+    addElements();
     createSizeAndAngleSliders();
     createShapeDisplayOptionBox();
     createDraggableShapeTemplates();
@@ -55,10 +61,10 @@ public class NonControllableElementSelection extends AuthoringScreen {
   void createTypeDropDown() {
     obstacleTypeComboBox = new ComboBox<>();
     obstacleTypeComboBox.getItems()
-        .addAll(NonControllableType.SURFACE, NonControllableType.OBJECT);
+        .addAll(NonControllableType.SURFACE, NonControllableType.MOVABLE);
     obstacleTypeComboBox.setPromptText("Select Obstacle Type");
-    StackPane.setAlignment(obstacleTypeComboBox, Pos.BOTTOM_RIGHT);
-    StackPane.setMargin(obstacleTypeComboBox, new Insets(0, 50, 350, 0));
+    AnchorPane.setRightAnchor(obstacleTypeComboBox, 50.0);
+    AnchorPane.setBottomAnchor(obstacleTypeComboBox, 300.0);
     obstacleTypeComboBox.setPrefSize(200, 100);
     root.getChildren().add(obstacleTypeComboBox);
 
@@ -91,10 +97,26 @@ public class NonControllableElementSelection extends AuthoringScreen {
   void endSelection() {
     if (allSelectionsMade()) {
       addNewSelectionsToAuthoringBox();
-      controller.startNextSelection(ImageType.NONCONTROLLABLE_ELEMENT, authoringBox); // Adjust NEXT_TYPE to whatever comes next
+
+      for (Shape shape : selectableShapes) {
+        Bounds shapeBounds = shape.getBoundsInParent();
+        Bounds authoringBoxBounds = authoringBox.getBoundsInParent();
+
+        if (authoringBoxBounds.contains(shapeBounds)) {
+          NonControllableType type = obstacleTypeMap.get(shape);
+          nonControllableMap.put(shape, type);
+        }
+      }
+
+      controller.startNextSelection(ImageType.NONCONTROLLABLE_ELEMENT,
+          authoringBox, posMap, nonControllableMap,
+          controllableList, imageMap); // Adjust NEXT_TYPE to whatever comes next
     } else {
-      // TODO: Show a message to the user explaining that not all obstacles have types assigned
-      System.out.println("Please assign types to all obstacles.");
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setTitle("Error");
+      alert.setHeaderText(null);
+      alert.setContentText("Assign A Type To All Elements Before Continuing");
+      alert.showAndWait();
     }
   }
 

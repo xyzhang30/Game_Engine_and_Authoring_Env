@@ -12,11 +12,8 @@ public class UndoTurnCommand implements Command {
   }
 
   @Override
-  public double execute(GameEngine engine) {
-    System.out.println(103333);
+  public void execute(GameEngine engine) {
     engine.toLastStaticState();
-
-    return 1.0;
   }
 
 
