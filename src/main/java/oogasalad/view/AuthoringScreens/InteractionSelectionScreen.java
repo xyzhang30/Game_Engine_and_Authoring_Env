@@ -1,25 +1,20 @@
 package oogasalad.view.AuthoringScreens;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javafx.geometry.Bounds;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -31,7 +26,7 @@ import oogasalad.view.Controlling.AuthoringController;
 
 public class InteractionSelectionScreen extends AuthoringScreen {
 
-  private Map<List<Shape>, Map<InteractionType, Integer>> interactionMap = new HashMap<>();
+  private Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap = new HashMap<>();
   private TextField pointPrompt;
   private CheckBox advanceTurnCheckBox;
   private CheckBox resetCheckBox;
@@ -43,17 +38,19 @@ public class InteractionSelectionScreen extends AuthoringScreen {
 
 
   public InteractionSelectionScreen(AuthoringController controller, StackPane authoringBox,
+      Map<Shape, List<Double>> posMap,
       Map<Shape, NonControllableType> nonControllableTypeMap, List<Shape> controllableList) {
-    super(controller, authoringBox, nonControllableTypeMap, controllableList);
+    super(controller, authoringBox, posMap, nonControllableTypeMap, controllableList);
   }
 
   /**
    * Creates the scene including the previously selected background
    */
   void createScene() {
-    root = new StackPane();
+    root = new AnchorPane();
     createTitle("Interaction Selection");
     root.getChildren().add(authoringBox);
+    addElements();
     createInteractionOptions();
     setUpShapes();
     createTransitionButton("Submit");
@@ -92,48 +89,30 @@ public class InteractionSelectionScreen extends AuthoringScreen {
     showGameNamePopup();
   }
 
-//  private void enterGameName() {
-//    if (gameNameTextField == null) {
-//      gameNameTextField = new TextField();
-//      gameNameTextField.setPromptText("Enter game name...");
-//      gameNameTextField.setMaxWidth(200);
-//      StackPane.setAlignment(gameNameTextField, Pos.TOP_CENTER);
-//      StackPane.setMargin(gameNameTextField, new Insets(10));
-//      root.getChildren().add(gameNameTextField);
-//    }
-//    gameNameTextField.setVisible(true);
-//  }
+  private void showGameNamePopup() {
+    if (gameNameStage == null) {
+      gameNameStage = new Stage();
+      gameNameStage.initModality(Modality.APPLICATION_MODAL);
+      gameNameStage.setTitle("Enter Game Name");
 
-private void showGameNamePopup() {
-  if (gameNameStage == null) {
-    gameNameStage = new Stage();
-    gameNameStage.initModality(Modality.APPLICATION_MODAL);
-    gameNameStage.setTitle("Enter Game Name");
+      VBox vbox = new VBox();
+      gameNameTextField = new TextField();
+      gameNameTextField.setPromptText("Enter game name...");
+      vbox.getChildren().addAll(gameNameTextField, submitGameNameButton());
 
-    VBox vbox = new VBox();
-    gameNameTextField = new TextField();
-    gameNameTextField.setPromptText("Enter game name...");
-    vbox.getChildren().addAll(gameNameTextField, submitGameNameButton());
-
-    Scene scene = new Scene(vbox, 300, 100);
-    gameNameStage.setScene(scene);
+      Scene scene = new Scene(vbox, 300, 100);
+      gameNameStage.setScene(scene);
+    }
+    gameNameStage.showAndWait();
   }
-  gameNameStage.showAndWait();
-
-  // Proceed only when the user has hit submit
-//  if (submitGameNameButton.isPressed()) {
-//    // Call the controller method to end authoring
-//    controller.endAuthoring(interactionMap);
-//  }
-}
 
   private Button submitGameNameButton() {
     if (submitGameNameButton == null) {
       submitGameNameButton = new Button("Submit");
       submitGameNameButton.setOnAction(e -> {
-        // Close the popup when the submit button is pressed
         gameNameStage.close();
-        controller.endAuthoring(interactionMap);
+        String gameName = gameNameTextField.getText();
+        controller.endAuthoring(gameName, interactionMap, controllableList, nonControllableMap);
       });
     }
     return submitGameNameButton;
@@ -154,18 +133,18 @@ private void showGameNamePopup() {
     changeSpeedCheckBox.setDisable(true);
 
     advanceTurnCheckBox.setPrefSize(150, 150);
-    StackPane.setAlignment(advanceTurnCheckBox, Pos.BOTTOM_RIGHT);
-    StackPane.setMargin(advanceTurnCheckBox, new Insets(0, 75, 300, 0));
+    AnchorPane.setRightAnchor(advanceTurnCheckBox, 75.0);
+    AnchorPane.setBottomAnchor(advanceTurnCheckBox, 300.0);
     createAdvanceHandler();
 
     resetCheckBox.setPrefSize(150, 150);
-    StackPane.setAlignment(resetCheckBox, Pos.BOTTOM_RIGHT);
-    StackPane.setMargin(resetCheckBox, new Insets(0, 75, 400, 0));
+    AnchorPane.setRightAnchor(resetCheckBox, 75.0);
+    AnchorPane.setBottomAnchor(resetCheckBox, 400.0);
     createResetHandler();
 
     changeSpeedCheckBox.setPrefSize(150, 150);
-    StackPane.setAlignment(changeSpeedCheckBox, Pos.BOTTOM_RIGHT);
-    StackPane.setMargin(changeSpeedCheckBox, new Insets(0, 75, 500, 0));
+    AnchorPane.setRightAnchor(changeSpeedCheckBox, 75.0);
+    AnchorPane.setBottomAnchor(changeSpeedCheckBox, 500.0);
     createChangeHandler();
 
     root.getChildren().addAll(advanceTurnCheckBox, resetCheckBox, changeSpeedCheckBox);
@@ -178,20 +157,20 @@ private void showGameNamePopup() {
 
       for (List<Shape> list : interactionMap.keySet()) {
         if (list.containsAll(clickedShapes)) {
-          Map<InteractionType, Integer> currentInteractions = interactionMap.get(list);
+          Map<InteractionType, List<Double>> currentInteractions = interactionMap.get(list);
           if (currentInteractions.containsKey(InteractionType.RESET)) {
             currentInteractions.remove(InteractionType.RESET);
           }
           if (currentInteractions.containsKey(InteractionType.CHANGE_SPEED)) {
             currentInteractions.remove(InteractionType.CHANGE_SPEED);
           }
-          currentInteractions.put(InteractionType.ADVANCE, -1);
+          currentInteractions.put(InteractionType.ADVANCE, List.of((double)-1));
           return;
         }
       }
       List<Shape> shapeList = new ArrayList<>(clickedShapes);
-      Map<InteractionType, Integer> currentInteractions = new HashMap<>();
-      currentInteractions.put(InteractionType.ADVANCE, -1);
+      Map<InteractionType, List<Double>> currentInteractions = new HashMap<>();
+      currentInteractions.put(InteractionType.ADVANCE, List.of((double)-1));
       interactionMap.put(shapeList, currentInteractions);
     });
   }
@@ -203,20 +182,20 @@ private void showGameNamePopup() {
 
       for (List<Shape> list : interactionMap.keySet()) {
         if (list.containsAll(clickedShapes)) {
-          Map<InteractionType, Integer> currentInteractions = interactionMap.get(list);
+          Map<InteractionType, List<Double>> currentInteractions = interactionMap.get(list);
           if (currentInteractions.containsKey(InteractionType.ADVANCE)) {
             currentInteractions.remove(InteractionType.ADVANCE);
           }
           if (currentInteractions.containsKey(InteractionType.CHANGE_SPEED)) {
             currentInteractions.remove(InteractionType.CHANGE_SPEED);
           }
-          currentInteractions.put(InteractionType.RESET, -1);
+          currentInteractions.put(InteractionType.RESET, List.of((double)-1));
           return;
         }
       }
       List<Shape> shapeList = new ArrayList<>(clickedShapes);
-      Map<InteractionType, Integer> currentInteractions = new HashMap<>();
-      currentInteractions.put(InteractionType.RESET, -1);
+      Map<InteractionType, List<Double>> currentInteractions = new HashMap<>();
+      currentInteractions.put(InteractionType.RESET, List.of((double)-1));
       interactionMap.put(shapeList, currentInteractions);
     });
   }
@@ -228,19 +207,19 @@ private void showGameNamePopup() {
 
       for (List<Shape> list : interactionMap.keySet()) {
         if (list.containsAll(clickedShapes)) {
-          Map<InteractionType, Integer> currentInteractions = interactionMap.get(list);
+          Map<InteractionType, List<Double>> currentInteractions = interactionMap.get(list);
           if (currentInteractions.containsKey(InteractionType.RESET)) {
             currentInteractions.remove(InteractionType.RESET);
           }
           if (currentInteractions.containsKey(InteractionType.ADVANCE)) {
             currentInteractions.remove(InteractionType.ADVANCE);
           }
-          currentInteractions.put(InteractionType.CHANGE_SPEED, -1);
+          currentInteractions.put(InteractionType.CHANGE_SPEED, List.of((double)-1));
           return;
         }
         List<Shape> shapeList = new ArrayList<>(clickedShapes);
-        Map<InteractionType, Integer> currentInteractions = new HashMap<>();
-        currentInteractions.put(InteractionType.CHANGE_SPEED, -1);
+        Map<InteractionType, List<Double>> currentInteractions = new HashMap<>();
+        currentInteractions.put(InteractionType.CHANGE_SPEED, List.of((double)-1));
         interactionMap.put(shapeList, currentInteractions);
       }
     });
@@ -253,13 +232,13 @@ private void showGameNamePopup() {
     createPointsScoredHandler();
 
     Label label = new Label("Points Scored on Collision");
-    StackPane.setAlignment(label, Pos.BOTTOM_RIGHT);
-    StackPane.setMargin(label, new Insets(0, 75, 250, 0));
+    AnchorPane.setRightAnchor(label, 75.0);
+    AnchorPane.setBottomAnchor(label, 250.0);
 
     HBox pointPromptContainer = new HBox(pointPrompt);
     pointPromptContainer.setMaxSize(75, 75);
-    StackPane.setAlignment(pointPromptContainer, Pos.BOTTOM_RIGHT);
-    StackPane.setMargin(pointPromptContainer, new Insets(0, 100, 150, 0));
+    AnchorPane.setRightAnchor(pointPromptContainer, 100.0);
+    AnchorPane.setBottomAnchor(pointPromptContainer, 150.0);
 
     root.getChildren().addAll(label, pointPromptContainer);
   }
@@ -272,15 +251,15 @@ private void showGameNamePopup() {
           Integer points = Integer.parseInt(pointsText);
           for (List<Shape> list : interactionMap.keySet()) {
             if (list.containsAll(clickedShapes)) {
-              Map<InteractionType, Integer> currentInteractions = interactionMap.get(list);
-              currentInteractions.put(InteractionType.SCORE, points);
+              Map<InteractionType, List<Double>> currentInteractions = interactionMap.get(list);
+              currentInteractions.put(InteractionType.SCORE, List.of((double)1,(double)points));
               return;
             }
           }
 
           List<Shape> shapeList = new ArrayList<>(clickedShapes);
-          Map<InteractionType, Integer> currentInteractions = new HashMap<>();
-          currentInteractions.put(InteractionType.SCORE, points);
+          Map<InteractionType, List<Double>> currentInteractions = new HashMap<>();
+          currentInteractions.put(InteractionType.SCORE, List.of((double)1,(double)points));
           interactionMap.put(shapeList, currentInteractions);
 
         } catch (NumberFormatException e) {
@@ -298,9 +277,10 @@ private void showGameNamePopup() {
     pointPrompt.setText("");
     for (List<Shape> list : interactionMap.keySet()) {
       if (list.containsAll(clickedShapes)) {
-        Map<InteractionType, Integer> currentInteractions = interactionMap.get(list);
+        Map<InteractionType, List<Double>> currentInteractions = interactionMap.get(list);
         if (currentInteractions.containsKey(InteractionType.SCORE)) {
-          Integer points = currentInteractions.get(InteractionType.SCORE);
+//          Integer points = currentInteractions.get(InteractionType.SCORE).get(1);
+          Double points = currentInteractions.get(InteractionType.SCORE).get(1);
           pointPrompt.setText(points.toString());
         }
       }
@@ -310,7 +290,7 @@ private void showGameNamePopup() {
   private void updateCheckBoxes() {
     for (List<Shape> list : interactionMap.keySet()) {
       if (list.containsAll(clickedShapes)) {
-        Map<InteractionType, Integer> currentInteractions = interactionMap.get(list);
+        Map<InteractionType, List<Double>> currentInteractions = interactionMap.get(list);
         if (currentInteractions.containsKey(InteractionType.ADVANCE)) {
           advanceTurnCheckBox.setSelected(true);
         } else if (currentInteractions.containsKey(InteractionType.RESET)) {
@@ -384,7 +364,7 @@ private void showGameNamePopup() {
 
   private boolean slowIsOption() {
     for (Shape shape : clickedShapes) {
-      if (nonControllableMap.getOrDefault(shape, NonControllableType.OBJECT)
+      if (nonControllableMap.getOrDefault(shape, NonControllableType.MOVABLE)
           == NonControllableType.SURFACE) {
         return true;
       }
