@@ -250,6 +250,54 @@ public class AuthoringController {
 
     nonControllableTypeMap.remove(background);
 
+    //walls
+    Rectangle wall1 = new Rectangle(50, 50, 20, 990);
+    colorRgb = List.of(0, 0, 0);
+    imgPath = "";
+    properties = new ArrayList<>();
+    properties.add("collidable");
+    properties.add("visible");
+    properties.add("movable");
+    shapeName = "Rectangle";
+    collidableObject = new CollidableObject(collidableId,
+        properties, Double.MAX_VALUE,
+        new Position(50, 50),
+        shapeName, new Dimension(20,
+        990), colorRgb, friction, imgPath);
+    collidableObjects.add(collidableObject);
+    collidableIdMap.put(wall1, collidableId);
+    collidableId++;
+
+    Rectangle wall2 = new Rectangle(1020, 50, 20, 990);
+    collidableObject = new CollidableObject(collidableId,
+        properties, Double.MAX_VALUE,
+        new Position(1020, 50),
+        shapeName, new Dimension(20,
+        990), colorRgb, friction, imgPath);
+    collidableObjects.add(collidableObject);
+    collidableIdMap.put(wall2, collidableId);
+    collidableId++;
+
+    Rectangle wall3 = new Rectangle(50, 50, 990, 20);
+    collidableObject = new CollidableObject(collidableId,
+        properties, Double.MAX_VALUE,
+        new Position(50, 50),
+        shapeName, new Dimension(985,
+        20), colorRgb, friction, imgPath);
+    collidableObjects.add(collidableObject);
+    collidableIdMap.put(wall3, collidableId);
+    collidableId++;
+
+    Rectangle wall4 = new Rectangle(50, 1020, 990, 20);
+    collidableObject = new CollidableObject(collidableId,
+        properties, Double.MAX_VALUE,
+        new Position(50, 1015),
+        shapeName, new Dimension(985,
+        20), colorRgb, friction, imgPath);
+    collidableObjects.add(collidableObject);
+    collidableIdMap.put(wall4, collidableId);
+    collidableId++;
+
     //noncontrollables
     for (Shape shape : nonControllableTypeMap.keySet()) {
       colorRgb = List.of(0, 0, 0);
@@ -282,7 +330,8 @@ public class AuthoringController {
         collidableObject = new CollidableObject(collidableId,
             properties, 10,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
-            new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
+            new Dimension(shape.getLayoutBounds().getWidth() * shape.getScaleX(),
+                shape.getLayoutBounds().getHeight() * shape.getScaleY()),
             colorRgb, 0.0, imgPath);
       }
       collidableObjects.add(collidableObject);
