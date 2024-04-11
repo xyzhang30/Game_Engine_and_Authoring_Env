@@ -39,7 +39,7 @@ public class GameLoaderView extends GameLoader {
       double startYpos = o.position().yPosition();
       ViewCollidableRecord viewCollidable = new ViewCollidableRecord(id, colorRgb, shape,
           xdimension,
-          ydimension, startXpos, startYpos);
+          ydimension, startXpos, startYpos, o.image());
       viewCollidableRecords.add(viewCollidable);
     }
   }
