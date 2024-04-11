@@ -91,6 +91,7 @@ public class GameEngine implements ExternalGameEngine {
     if (collidables.checkStatic()) {
       updateHistory(); //private
       switchToCorrectStaticState(); //private
+      staticState = true;
     } else {
       staticState = false;
     }

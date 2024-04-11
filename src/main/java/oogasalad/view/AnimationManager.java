@@ -39,5 +39,6 @@ public class AnimationManager {
         animation.stop();
       }
     }));
+    animation.play();
   }
 }

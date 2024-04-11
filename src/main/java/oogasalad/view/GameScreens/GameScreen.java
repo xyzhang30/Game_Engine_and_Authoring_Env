@@ -70,7 +70,7 @@ public class GameScreen extends UIScreen {
   private void createScene() {
     setupControlPane(); //This messes up the power bar key listening
     powerIndicator = setupPowerBar();
-   // setupScoreBoard(0);
+    setupScoreBoard(0);
   }
 
 
