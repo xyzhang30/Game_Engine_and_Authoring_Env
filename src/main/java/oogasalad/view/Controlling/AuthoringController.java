@@ -51,7 +51,8 @@ public class AuthoringController {
   public void startAuthoring() {
     Map<Shape, NonControllableType> map = new HashMap<>();
     BackgroundSelectionScreen scene = new BackgroundSelectionScreen(
-        this, new StackPane(), new HashMap<>(), map, new ArrayList<>(), new HashMap<Shape, String>());
+        this, new StackPane(), new HashMap<>(), map, new ArrayList<>(),
+        new HashMap<Shape, String>());
     stage.setScene(scene.getScene());
     stage.show();
   }
@@ -71,7 +72,7 @@ public class AuthoringController {
         ControllableElementSelectionScreen controllableElementSelectionScreen =
             new ControllableElementSelectionScreen(this, authoringBox, posMap, nonControllableMap,
                 controllableList, imageMap);
-       // System.out.println("finished background, getting controllable");
+        // System.out.println("finished background, getting controllable");
         stage.setScene(controllableElementSelectionScreen.getScene());
       }
       case CONTROLLABLE_ELEMENT -> {
@@ -95,7 +96,6 @@ public class AuthoringController {
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
       List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap,
       Map<Shape, String> imageMap) {
-    System.out.println("writing to json!");
     boolean saveGameSuccess = submitGame(gameName, interactionMap, controllables,
         nonControllableTypeMap, imageMap);
     Alert alert = new Alert(AlertType.INFORMATION);
@@ -247,6 +247,8 @@ public class AuthoringController {
         Color c = (Color) (shape.getFill());
         colorRgb = List.of((int) c.getRed() * 255, (int) c.getGreen() * 255,
             (int) c.getBlue() * 255);
+      } else {
+        imgPath = imageMap.get(shape);
       }
       List<String> properties = new ArrayList<>();
       properties.add("collidable");

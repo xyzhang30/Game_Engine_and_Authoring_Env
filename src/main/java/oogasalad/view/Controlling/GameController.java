@@ -24,8 +24,8 @@ import org.apache.logging.log4j.Logger;
 
 
 /**
- * GameController class handles communications between model and view.  This class holds manager class
- * instances to delegate handling the information received from the model.
+ * GameController class handles communications between model and view.  This class holds manager
+ * class instances to delegate handling the information received from the model.
  *
  * @author Jordan Haytaian
  */
@@ -47,7 +47,7 @@ public class GameController {
     collisionManager = new CollisionManager();
   }
 
-  public Scene getScene(){
+  public Scene getScene() {
     return sceneManager.getScene();
   }
 
@@ -62,7 +62,7 @@ public class GameController {
     sceneManager.makeTransitionScreen();
   }
 
-  public void openAuthorEnvironment(){
+  public void openAuthorEnvironment() {
     AuthoringController authoringController = new AuthoringController();
     authoringController.startAuthoring();
   }
@@ -98,8 +98,8 @@ public class GameController {
     //List<Pair> collisionList = collisionManager.getIntersections();
 //    Map<Pair, String> collisionType = collisionManager.getIntersectionsMap();
 
-   // GameRecord gameRecord2 = gameEngine.handleCollisions(collisionList, timeStep);
-   // sceneManager.update(gameRecord2);
+    // GameRecord gameRecord2 = gameEngine.handleCollisions(collisionList, timeStep);
+    // sceneManager.update(gameRecord2);
     if (sceneManager.notMoving(gameRecord)) {
       sceneManager.enableHitting();
     }
@@ -127,9 +127,9 @@ public class GameController {
   public List<String> getGameTitles() {
     Set<String> files = listFiles(PLAYABLE_GAMES_DIRECTORY);
     List<String> gameTitles = new ArrayList<>();
-    for (String file: files) {
+    for (String file : files) {
       if (!file.toLowerCase().contains(TEST_FILE_IDENTIFIER)) {
-        gameTitles.add(file.substring(0,file.indexOf(".")));
+        gameTitles.add(file.substring(0, file.indexOf(".")));
       }
     }
     return gameTitles;
@@ -146,7 +146,8 @@ public class GameController {
     try {
       List<ViewCollidableRecord> recordList = gameLoaderView.getViewCollidableInfo();
       return new CompositeElement(recordList);
-    } catch (InvalidShapeException | InvalidImageException e){
+    } catch (InvalidShapeException | InvalidImageException e) {
+      System.out.println(e.getMessage());
       LOGGER.error(e.getMessage());
       return null;
     }
