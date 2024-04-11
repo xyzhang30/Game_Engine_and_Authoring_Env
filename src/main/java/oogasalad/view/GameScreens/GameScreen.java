@@ -34,8 +34,10 @@ public class GameScreen extends UIScreen {
     root = new BorderPane();
     this.controller = controller;
     ableToHit = true;
-    setupFieldComponents(
-        compositeElement); // BIG improvised here. There's a lot of refactoring to do first...
+
+    GameContentPanel gameContent = new GameContentPanel(compositeElement);
+    root.setCenter(gameContent.getPane());
+
     setupAngleIndicator();
 
     createScene();
@@ -87,18 +89,6 @@ public class GameScreen extends UIScreen {
     scoreboardTxt.setText("Score: " + score);
   }
 
-
-  private void setupFieldComponents(CompositeElement cm) {
-    AnchorPane globalView = new AnchorPane();
-    for (int i : cm.idList()) {
-      globalView.getChildren().add(cm.getNode(i));
-    }
-    root.setCenter(globalView);
-    globalView.setScaleX(0.5);
-    globalView.setScaleY(0.5);
-    globalView.setTranslateX(-globalView.getBoundsInParent().getWidth()/2);
-    globalView.setTranslateY(-globalView.getBoundsInParent().getHeight()/2);
-  }
 
   private Rectangle setupPowerBar() {
     Rectangle outline = new Rectangle(SCREEN_WIDTH*0.9, SCREEN_HEIGHT*0.1,

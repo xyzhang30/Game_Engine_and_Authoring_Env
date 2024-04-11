@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Builder;
@@ -34,7 +35,7 @@ import org.apache.logging.log4j.core.net.ssl.SslConfiguration;
 /**
  * Class to handle transitions between authoring environment scenes and communications with backend
  *
- * @author Jordan Haytaian, Doga Ozmen
+ * @author Jordan Haytaian, Doga Ozmen, Alisha Zhang
  */
 public class AuthoringController {
 
@@ -72,21 +73,21 @@ public class AuthoringController {
         ControllableElementSelectionScreen controllableElementSelectionScreen =
             new ControllableElementSelectionScreen(this, authoringBox, posMap, nonControllableMap,
                 controllableList, imageMap);
-        System.out.println("finished background, getting controllable");
+       // System.out.println("finished background, getting controllable");
         stage.setScene(controllableElementSelectionScreen.getScene());
       }
       case CONTROLLABLE_ELEMENT -> {
         NonControllableElementSelection nonControllableElementSelection =
             new NonControllableElementSelection(this, authoringBox, posMap, nonControllableMap,
                 controllableList, imageMap);
-        System.out.println("finished controllable, getting noncontrollable");
+        //System.out.println("finished controllable, getting noncontrollable");
         stage.setScene(nonControllableElementSelection.getScene());
       }
       case NONCONTROLLABLE_ELEMENT -> {
         InteractionSelectionScreen interactionSelectionScreen
             = new InteractionSelectionScreen(this, authoringBox, posMap, nonControllableMap,
             controllableList, imageMap);
-        System.out.println("finished noncontrollable, getting interaction");
+        //System.out.println("finished noncontrollable, getting interaction");
         stage.setScene(interactionSelectionScreen.getScene());
       }
     }
@@ -227,7 +228,7 @@ public class AuthoringController {
       }
 
       List<String> properties = List.of("movable", "collidable", "controllable");
-      String shapeName = (shape instanceof Circle) ? "Circle" : "Rectangle";
+      String shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
       CollidableObject collidableObject = new CollidableObject(collidableId,
           properties, 10,
           new Position(shape.getLayoutX(), shape.getLayoutY()), shapeName,
