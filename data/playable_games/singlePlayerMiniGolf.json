@@ -111,8 +111,8 @@
         "x_dimension": 333,
         "y_dimension": 300
       },
-      "staticFriction": 19,
-      "kineticFriction": 9,
+      "staticFriction": 9,
+      "kineticFriction": 7,
       "color": [0,0,255],
       "image": ""
     },
