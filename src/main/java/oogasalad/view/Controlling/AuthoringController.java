@@ -10,6 +10,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import oogasalad.model.api.data.CollidableObject;
@@ -29,6 +30,7 @@ import oogasalad.view.AuthoringScreens.InteractionType;
 import oogasalad.view.AuthoringScreens.NonControllableElementSelection;
 import oogasalad.view.AuthoringScreens.NonControllableType;
 import org.apache.logging.log4j.core.net.ssl.SslConfiguration;
+import java.io.File;
 
 /**
  * Class to handle transitions between authoring environment scenes and communications with backend
@@ -38,6 +40,7 @@ import org.apache.logging.log4j.core.net.ssl.SslConfiguration;
 public class AuthoringController {
 
   private Stage stage;
+  private Rectangle background;
   private BuilderDirector builderDirector = new BuilderDirector();
 //  private List<Shape> controllables;
 //  private Map<Shape, NonControllableType> nonControllableTypeMap;
@@ -51,7 +54,8 @@ public class AuthoringController {
   public void startAuthoring() {
     Map<Shape, NonControllableType> map = new HashMap<>();
     BackgroundSelectionScreen scene = new BackgroundSelectionScreen(
-        this, new StackPane(), new HashMap<>(), map, new ArrayList<>(), new HashMap<Shape, String>());
+        this, new StackPane(), new HashMap<>(), map, new ArrayList<>(),
+        new HashMap<>());
     stage.setScene(scene.getScene());
     stage.show();
   }
@@ -71,7 +75,7 @@ public class AuthoringController {
         ControllableElementSelectionScreen controllableElementSelectionScreen =
             new ControllableElementSelectionScreen(this, authoringBox, posMap, nonControllableMap,
                 controllableList, imageMap);
-       // System.out.println("finished background, getting controllable");
+        // System.out.println("finished background, getting controllable");
         stage.setScene(controllableElementSelectionScreen.getScene());
       }
       case CONTROLLABLE_ELEMENT -> {
@@ -91,13 +95,16 @@ public class AuthoringController {
     }
   }
 
+  public void setBackground(Rectangle background) {
+    this.background = background;
+  }
+
   public void endAuthoring(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
       List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap,
-      Map<Shape, String> imageMap) {
-    System.out.println("writing to json!");
+      Map<Shape, String> imageMap, Map<Shape, List<Double>> posMap) {
     boolean saveGameSuccess = submitGame(gameName, interactionMap, controllables,
-        nonControllableTypeMap, imageMap);
+        nonControllableTypeMap, imageMap, posMap);
     Alert alert = new Alert(AlertType.INFORMATION);
     if (saveGameSuccess) {
       alert.setTitle("Save Game Success");
@@ -117,10 +124,10 @@ public class AuthoringController {
   private boolean submitGame(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
       List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap,
-      Map<Shape, String> imageMap) {
+      Map<Shape, String> imageMap, Map<Shape, List<Double>> posMap) {
     try {
       Map<Shape, Integer> collidableIdMap = new HashMap<>();
-      writeCollidables(collidableIdMap, controllables, nonControllableTypeMap, imageMap);
+      writeCollidables(collidableIdMap, controllables, nonControllableTypeMap, imageMap, posMap);
       writePlayer();
       writeVariables();
       writeRules(interactionMap, collidableIdMap);
@@ -200,65 +207,172 @@ public class AuthoringController {
   private String matchCommandName(InteractionType type) {
     return switch (type) {
       case RESET -> "UndoTurnCommand";
-      case ADVANCE -> "AdvanceTurnCommand";
+      case ADVANCE -> "AdvanceRoundCommand";
       case SCORE -> "AdjustPointsCommand";
       case CHANGE_SPEED -> null;
     };
   }
 
   private void writeCollidables(Map<Shape, Integer> collidableIdMap, List<Shape> controllables,
-      Map<Shape, NonControllableType> nonControllableTypeMap, Map<Shape, String> imageMap) {
+      Map<Shape, NonControllableType> nonControllableTypeMap, Map<Shape, String> imageMap,
+      Map<Shape, List<Double>> posMap) {
     int collidableId = 0;
     List<CollidableObject> collidableObjects = new ArrayList<>();
 
-    System.out.println("controllables size:" + controllables.size());
+    //handling background first
+    List<Integer> colorRgb = List.of(0, 0, 0);
+    String imgPath = "";
+    if (background.getFill() instanceof Color) {
+      Color c = (Color) (background.getFill());
+      colorRgb = List.of((int) c.getRed() * 255, (int) c.getGreen() * 255,
+          (int) c.getBlue() * 255);
+    } else {
+      String originalImagePath = imageMap.get(background);
+      String userDir = System.getProperty("user.dir");
+      String escapedUserDir = "file:/" + userDir.replace("\\", "/");
+      imgPath = originalImagePath.replaceAll(escapedUserDir, "");
+    }
+    List<String> properties = new ArrayList<>();
+    properties.add("collidable");
+    properties.add("visible");
+    properties.add(nonControllableTypeMap.get(background).toString().toLowerCase());
+    double friction = 0.8;
+    String shapeName = "Rectangle";
+    CollidableObject collidableObject = new CollidableObject(collidableId,
+        properties, Float.POSITIVE_INFINITY,
+        new Position(posMap.get(background).get(0), posMap.get(background).get(1)),
+        shapeName, new Dimension(background.getLayoutBounds().getWidth(),
+        background.getLayoutBounds().getHeight()), colorRgb, friction, imgPath);
+    collidableObjects.add(collidableObject);
+    collidableIdMap.put(background, collidableId);
+    collidableId++;
 
-    //controllables
-    for (Shape shape : controllables) {
-      List<Integer> colorRgb = List.of(0, 0, 0);
-      String imgPath = "";
+    nonControllableTypeMap.remove(background);
+
+    //walls
+    Rectangle wall1 = new Rectangle(50, 50, 20, 990);
+    colorRgb = List.of(0, 0, 0);
+    imgPath = "";
+    properties = new ArrayList<>();
+    properties.add("collidable");
+    properties.add("visible");
+    properties.add("movable");
+    shapeName = "Rectangle";
+    collidableObject = new CollidableObject(collidableId,
+        properties, Double.POSITIVE_INFINITY,
+        new Position(50, 50),
+        shapeName, new Dimension(20,
+        990), colorRgb, friction, imgPath);
+    collidableObjects.add(collidableObject);
+    collidableIdMap.put(wall1, collidableId);
+    collidableId++;
+
+    Rectangle wall2 = new Rectangle(1020, 50, 20, 990);
+    collidableObject = new CollidableObject(collidableId,
+        properties, Double.POSITIVE_INFINITY,
+        new Position(1020, 50),
+        shapeName, new Dimension(20,
+        990), colorRgb, friction, imgPath);
+    collidableObjects.add(collidableObject);
+    collidableIdMap.put(wall2, collidableId);
+    collidableId++;
+
+    Rectangle wall3 = new Rectangle(50, 50, 990, 20);
+    collidableObject = new CollidableObject(collidableId,
+        properties, Double.POSITIVE_INFINITY,
+        new Position(50, 50),
+        shapeName, new Dimension(985,
+        20), colorRgb, friction, imgPath);
+    collidableObjects.add(collidableObject);
+    collidableIdMap.put(wall3, collidableId);
+    collidableId++;
+
+    Rectangle wall4 = new Rectangle(50, 1020, 990, 20);
+    collidableObject = new CollidableObject(collidableId,
+        properties, Double.POSITIVE_INFINITY,
+        new Position(50, 1015),
+        shapeName, new Dimension(985,
+        20), colorRgb, friction, imgPath);
+    collidableObjects.add(collidableObject);
+    collidableIdMap.put(wall4, collidableId);
+    collidableId++;
+
+    //noncontrollables
+    for (Shape shape : nonControllableTypeMap.keySet()) {
+      colorRgb = List.of(0, 0, 0);
+      imgPath = "";
       if (shape.getFill() instanceof Color) {
         Color c = (Color) (shape.getFill());
         colorRgb = List.of((int) c.getRed() * 255, (int) c.getGreen() * 255,
             (int) c.getBlue() * 255);
       } else {
-        imgPath = imageMap.get(shape);
+        String originalImagePath = imageMap.get(shape);
+        String userDir = System.getProperty("user.dir");
+        String escapedUserDir = "file:/" + userDir.replace("\\", "/");
+        imgPath = originalImagePath.replaceAll(escapedUserDir, "");
       }
-
-      List<String> properties = List.of("movable", "collidable", "controllable");
-      String shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
-      CollidableObject collidableObject = new CollidableObject(collidableId,
-          properties, 10,
-          new Position(shape.getLayoutX(), shape.getLayoutY()), shapeName,
-          new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
-          colorRgb, 0.0, imgPath);
+      properties = new ArrayList<>();
+      properties.add("collidable");
+      properties.add("visible");
+      properties.add(nonControllableTypeMap.get(shape).toString().toLowerCase());
+      friction =
+          (nonControllableTypeMap.get(shape).toString().equalsIgnoreCase("surface")) ? 0.5 : 0.0;
+      double mass =
+          (nonControllableTypeMap.get(shape).toString().equalsIgnoreCase("Surface"))
+              ? Double.POSITIVE_INFINITY
+              : 10.0;
+      shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
+      if (shape instanceof Ellipse) {
+        collidableObject = new CollidableObject(collidableId,
+            properties, mass,
+            new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
+            new Dimension(((Ellipse) shape).getRadiusX() * shape.getScaleX(),
+                ((Ellipse) shape).getRadiusY() * shape.getScaleY()),
+            colorRgb, 0.0, imgPath);
+      } else {
+        collidableObject = new CollidableObject(collidableId,
+            properties, mass,
+            new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
+            new Dimension(shape.getLayoutBounds().getWidth() * shape.getScaleX(),
+                shape.getLayoutBounds().getHeight() * shape.getScaleY()),
+            colorRgb, 0.0, imgPath);
+      }
       collidableObjects.add(collidableObject);
       collidableIdMap.put(shape, collidableId);
       collidableId++;
     }
 
-    System.out.println("noncontrollables size:" + nonControllableTypeMap.size());
-
-    //nonControllables
-    for (Shape shape : nonControllableTypeMap.keySet()) {
-      List<Integer> colorRgb = List.of(0, 0, 0);
-      String imgPath = "";
+    //controllables
+    for (Shape shape : controllables) {
+      colorRgb = List.of(0, 0, 0);
+      imgPath = "";
       if (shape.getFill() instanceof Color) {
         Color c = (Color) (shape.getFill());
         colorRgb = List.of((int) c.getRed() * 255, (int) c.getGreen() * 255,
             (int) c.getBlue() * 255);
+      } else {
+        String originalImagePath = imageMap.get(shape);
+        String userDir = System.getProperty("user.dir");
+        String escapedUserDir = "file:/" + userDir.replace("\\", "/");
+        imgPath = originalImagePath.replaceAll(escapedUserDir, "");
       }
-      List<String> properties = new ArrayList<>();
-      properties.add("collidable");
-      properties.add(nonControllableTypeMap.get(shape).toString());
-      double friction =
-          (nonControllableTypeMap.get(shape).toString().equals("Surface")) ? 0.5 : 0.0;
-      String shapeName = (shape instanceof Circle) ? "Circle" : "Rectangle";
-      CollidableObject collidableObject = new CollidableObject(collidableId,
-          properties, 10,
-          new Position(shape.getLayoutX(), shape.getLayoutY()), shapeName,
-          new Dimension(shape.getLayoutBounds().getWidth(), shape.getLayoutBounds().getHeight()),
-          colorRgb, friction, imgPath);
+      properties = List.of("movable", "collidable", "controllable", "visible");
+      shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
+      if (shape instanceof Ellipse) {
+        collidableObject = new CollidableObject(collidableId,
+            properties, 10,
+            new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
+            new Dimension(((Ellipse) shape).getRadiusX() * shape.getScaleX(),
+                ((Ellipse) shape).getRadiusY() * shape.getScaleY()),
+            colorRgb, 0.0, imgPath);
+      } else {
+        collidableObject = new CollidableObject(collidableId,
+            properties, 10,
+            new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
+            new Dimension(shape.getLayoutBounds().getWidth() * shape.getScaleX(),
+                shape.getLayoutBounds().getHeight() * shape.getScaleY()),
+            colorRgb, 0.0, imgPath);
+      }
       collidableObjects.add(collidableObject);
       collidableIdMap.put(shape, collidableId);
       collidableId++;
