@@ -39,9 +39,18 @@ being applied correctly. However, it is passing my tests, so I should probably w
 
 * Work done this Sprint
 
+Work on the physics engine. Dealing with JSON files, parser, friction handling, momentum handling. 
+Worked on refactoring, cleaning, and enhancing the physics engine. Worked on PhysicsEnhancement branch. 
+
 * Plan for next Sprint?
 
+Continue to abstract physics engine. Ensure all physical interactions can be accounted for so
+we can implement the rest of the games Introduce gravity, etc. Also write tests to ensure all of 
+these enhanced physics are working. 
+
 * Blockers/Issues in your way
+
+JSONs not configured properly yet to handle angle, also realizing that I'm going to need an elasticity property
 
 ### Doga
 
