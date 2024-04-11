@@ -44,7 +44,7 @@ public abstract class AuthoringScreen {
   List<Shape> controllableList;
   double screenWidth = Window.SCREEN_WIDTH;
   double screenHeight = Window.SCREEN_HEIGHT;
-  StackPane authoringBox;
+  public StackPane authoringBox;
   List<Shape> selectableShapes;
   Map<Shape, Boolean> newTemplateMap;
   AnchorPane root;
@@ -203,11 +203,12 @@ public abstract class AuthoringScreen {
   /**
    * Creates a rectangle and circle template that users can drag onto gameboard
    */
-  void createDraggableShapeTemplates() {
+  public void createDraggableShapeTemplates() {
     Rectangle rectangle = new Rectangle(100, 50, Color.BLACK);
     AnchorPane.setRightAnchor(rectangle, 150.0);
     AnchorPane.setTopAnchor(rectangle, 300.0);
     makeSelectable(rectangle);
+    rectangle.setId("draggableRectangle");
     makeDraggable(rectangle);
 
     Ellipse ellipse = new Ellipse(30, 30);
