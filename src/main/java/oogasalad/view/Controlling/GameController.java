@@ -89,24 +89,20 @@ public class GameController {
    * @param timeStep timestep for animation
    * @return boolean indicating if round is over
    */
-  public boolean runGame(double timeStep) {
-
+  public boolean runGameAndCheckStatic(double timeStep) {
     GameRecord gameRecord = gameEngine.update(timeStep);
-    if (gameRecord.staticState()) {
-      animationManager.pauseAnimation();
+    boolean staticState = gameRecord.staticState();
+    if (staticState) {
+      sceneManager.enableHitting();
     }
     sceneManager.update(gameRecord);
+    return staticState;
 
     //List<Pair> collisionList = collisionManager.getIntersections();
 //    Map<Pair, String> collisionType = collisionManager.getIntersectionsMap();
 
     // GameRecord gameRecord2 = gameEngine.handleCollisions(collisionList, timeStep);
     // sceneManager.update(gameRecord2);
-    if (sceneManager.notMoving(gameRecord)) {
-      sceneManager.enableHitting();
-    }
-
-    return true;
   }
 
   /**
