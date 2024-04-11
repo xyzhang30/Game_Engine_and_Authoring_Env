@@ -1,7 +1,11 @@
 package oogasalad.view.Controlling;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import oogasalad.Pair;
@@ -28,6 +32,7 @@ public class GameController {
   private final AnimationManager animationManager;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
+  private final String PLAYABLE_GAMES_DIRECTORY = "data/playable_games";
 
   public GameController() {
     sceneManager = new SceneManager();
@@ -114,10 +119,15 @@ public class GameController {
    * @return a list of the game titles
    */
   public List<String> getGameTitles() {
-    //TODO: Add parsing functionality
-    List<String> gameTitles = new ArrayList<>();
-    gameTitles.add("singlePlayerMiniGolf");
-    return gameTitles;
+    Set<String> files = listFiles(PLAYABLE_GAMES_DIRECTORY);
+    return new ArrayList<>(files);
+  }
+
+  private Set<String> listFiles(String dir) {
+    return Stream.of(new File(dir).listFiles())
+        .filter(file -> !file.isDirectory())
+        .map(File::getName)
+        .collect(Collectors.toSet());
   }
 
   private CompositeElement createCompositeElementFromGameLoader() {

@@ -27,8 +27,7 @@ import org.junit.jupiter.api.Test;
 public class GameBuilderTest {
 
   BuilderDirector testBuilderDirector;
-  GameData testGameData = new GameData();
-  String expectedFilePath = "data/testAuthoringSinglePlayerMiniGolf.json";
+  String expectedFilePath = "data/test_games/testAuthoringSinglePlayerMiniGolf.json";
   String testFileName = "generatedTestAuthoringMiniGolf";
 
   @BeforeEach
@@ -44,21 +43,21 @@ public class GameBuilderTest {
         new Position(250, 50), "circle", new Dimension(5, 5), List.of(0, 0, 0), 0,
         "sample.img");
 
-    this.testBuilderDirector.constructCollidableObjects(testGameData, List.of(co1, co2, co3));
+    this.testBuilderDirector.constructCollidableObjects(List.of(co1, co2, co3));
 
     ParserPlayer p1 = new ParserPlayer(1, 2);
 
-    this.testBuilderDirector.constructPlayers(testGameData, List.of(p1));
+    this.testBuilderDirector.constructPlayers(List.of(p1));
 
     PlayerVariables pvar = new PlayerVariables(0, 0);
     GlobalVariables gvar = new GlobalVariables(1, 1);
     Variables var1 = new Variables(gvar, pvar);
 
-    this.testBuilderDirector.constructVaraibles(testGameData, List.of(var1));
+    this.testBuilderDirector.constructVaraibles(List.of(var1));
 
     Rules rules = getRules();
 
-    this.testBuilderDirector.constructRules(testGameData, List.of(rules));
+    this.testBuilderDirector.constructRules(List.of(rules));
 
   }
 
@@ -73,16 +72,15 @@ public class GameBuilderTest {
     Map<String, List<Double>> advance1 = Map.of("AdvanceTurnCommand", List.of());
     Map<String, List<Double>> advance2 = Map.of("AdjustPointsCommand", List.of(1.0, 1.0));
     Map<String, List<Double>> advance3 = Map.of("AdvanceRoundCommand", List.of());
-    Rules rules = new Rules(List.of(collisionRule), null, turnPolicy, roundPolicy, winConditions, List.of(advance1, advance2), List.of(advance3));
-    return rules;
+    return new Rules(List.of(collisionRule), turnPolicy, roundPolicy, winConditions, List.of(advance1, advance2), List.of(advance3));
   }
 
   @Test
   public void testInvalidJSONData() {
 
     InvalidJSONDataException exception = assertThrows(InvalidJSONDataException.class, () -> {
-      GameData invalidGameData = new GameData();
-      this.testBuilderDirector.writeGame(invalidGameData, "testAuthoringMiniGolf");
+      BuilderDirector invalidGameBuilder = new BuilderDirector();
+      invalidGameBuilder.writeGame("testAuthoringMiniGolf");
     });
 
     String expectedMessage = "Error writing JSON game configuration file:";
@@ -94,10 +92,10 @@ public class GameBuilderTest {
 
   @Test
   public void testWriteJSON() throws IOException {
-    this.testBuilderDirector.writeGame(testGameData, testFileName);
+    this.testBuilderDirector.writeGame(testFileName);
     ObjectMapper mapper = new ObjectMapper();
     File expected = new File(expectedFilePath);
-    File tested = new File("data/"+testFileName+".json");
+    File tested = new File("data/playable_games/"+testFileName+".json");
 
     assertThat(mapper.readTree(expected)).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mapper.readTree(tested));
   }
