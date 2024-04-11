@@ -15,6 +15,10 @@ import oogasalad.model.gamebuilder.VariablesBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * @Author: Alisha Zhang, Judy He
+ */
+
 public class BuilderDirector {
 
   private GameData gameData;
