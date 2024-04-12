@@ -5,7 +5,6 @@ public class CollisionDetector {
   public boolean isColliding(Collidable collidable1, Collidable collidable2) {
     String shape1 = collidable1.getShape();
     String shape2 = collidable2.getShape();
-    System.out.println(shape1 + " " + shape2);
 
     // circle v. rectangle
     if ("Circle".equalsIgnoreCase(shape1) && "Rectangle".equalsIgnoreCase(shape2)) {

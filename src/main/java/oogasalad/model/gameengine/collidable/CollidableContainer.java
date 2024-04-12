@@ -70,9 +70,12 @@ public class CollidableContainer {
 
   public void toLastStaticStateCollidables() {
     for (CollidableRecord record : collidableHistory.peek()) {
-      getCollidable(record.id()).setFromRecord(record);
+      callSetFromRecord(record);
     }
+  }
 
+  private void callSetFromRecord(CollidableRecord record) {
+    getCollidable(record.id()).setFromRecord(record);
   }
 
   public Set<Pair> getCollisionPairs() {
@@ -93,7 +96,6 @@ public class CollidableContainer {
         }
       }
     }
-    System.out.println(collisionPairs);
     return collisionPairs;
   }
 

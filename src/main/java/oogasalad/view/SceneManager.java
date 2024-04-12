@@ -35,11 +35,8 @@ public class SceneManager {
 
   public void update(GameRecord gameRecord) {
     compositeElement.update(gameRecord.collidables());
+    updateScoreBoard(gameRecord.players().get(0).score());
     checkEndRound(gameRecord);
-  }
-
-  public boolean notMoving(GameRecord gameRecord) {
-    return gameRecord.staticState(); //will be added to record eventually
   }
 
   public void makeTitleScreen(GameController controller) {
@@ -81,6 +78,6 @@ public class SceneManager {
   }
 
   public void updateScoreBoard(double score) {
-    //gameScreen.updateScoreBoard(score);
+    gameScreen.updateScoreBoard(score);
   }
 }
