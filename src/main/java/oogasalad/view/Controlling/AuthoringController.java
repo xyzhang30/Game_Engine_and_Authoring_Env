@@ -227,10 +227,7 @@ public class AuthoringController {
       colorRgb = List.of((int) c.getRed() * 255, (int) c.getGreen() * 255,
           (int) c.getBlue() * 255);
     } else {
-      String originalImagePath = imageMap.get(background);
-      String userDir = System.getProperty("user.dir");
-      String escapedUserDir = "file:/" + userDir.replace("\\", "/");
-      imgPath = originalImagePath.replaceAll(escapedUserDir, "");
+      imgPath = imageMap.get(background);
     }
     List<String> properties = new ArrayList<>();
     properties.add("collidable");
@@ -244,7 +241,8 @@ public class AuthoringController {
         properties, Float.POSITIVE_INFINITY,
         new Position(posMap.get(background).get(0), posMap.get(background).get(1)),
         shapeName, new Dimension(background.getLayoutBounds().getWidth(),
-        background.getLayoutBounds().getHeight()), colorRgb, staticFriction, kineticFriction, imgPath);
+        background.getLayoutBounds().getHeight()), colorRgb, staticFriction, kineticFriction,
+        imgPath);
     collidableObjects.add(collidableObject);
     collidableIdMap.put(background, collidableId);
     collidableId++;
@@ -308,19 +306,18 @@ public class AuthoringController {
         colorRgb = List.of((int) c.getRed() * 255, (int) c.getGreen() * 255,
             (int) c.getBlue() * 255);
       } else {
-        String originalImagePath = imageMap.get(shape);
-        String userDir = System.getProperty("user.dir");
-        String escapedUserDir = "file:/" + userDir.replace("\\", "/");
-        imgPath = originalImagePath.replaceAll(escapedUserDir, "");
+        imgPath = imageMap.get(shape);
       }
       properties = new ArrayList<>();
       properties.add("collidable");
       properties.add("visible");
       properties.add(nonControllableTypeMap.get(shape).toString().toLowerCase());
       staticFriction =
-          (nonControllableTypeMap.get(shape).toString().equalsIgnoreCase("surface")) ? 3.03873 : 0.0;
+          (nonControllableTypeMap.get(shape).toString().equalsIgnoreCase("surface")) ? 3.03873
+              : 0.0;
       kineticFriction =
-          (nonControllableTypeMap.get(shape).toString().equalsIgnoreCase("surface")) ? 2.03873 : 0.0;
+          (nonControllableTypeMap.get(shape).toString().equalsIgnoreCase("surface")) ? 2.03873
+              : 0.0;
       double mass =
           (nonControllableTypeMap.get(shape).toString().equalsIgnoreCase("Surface"))
               ? Double.POSITIVE_INFINITY
@@ -356,10 +353,7 @@ public class AuthoringController {
         colorRgb = List.of((int) c.getRed() * 255, (int) c.getGreen() * 255,
             (int) c.getBlue() * 255);
       } else {
-        String originalImagePath = imageMap.get(shape);
-        String userDir = System.getProperty("user.dir");
-        String escapedUserDir = "file:/" + userDir.replace("\\", "/");
-        imgPath = originalImagePath.replaceAll(escapedUserDir, "");
+        imgPath = imageMap.get(shape);
       }
       properties = List.of("movable", "collidable", "controllable", "visible");
       shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
