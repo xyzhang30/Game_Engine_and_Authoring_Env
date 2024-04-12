@@ -2,6 +2,7 @@ package oogasalad.view.VisualElements;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -48,8 +49,8 @@ public class GameElement implements VisualElement {
           default -> throw new InvalidShapeException("Invalid shape");
         }
       } else {
-        Image image =
-            new Image(data.image());
+        Path imgPath = Paths.get(data.image());
+        Image image = new Image(imgPath.toUri().toString());
         switch (data.shape().toLowerCase()) {
           case "circle" -> {
             Ellipse ellipse = new Ellipse(data.width(), data.height());
