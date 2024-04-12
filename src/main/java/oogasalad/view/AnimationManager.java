@@ -35,16 +35,10 @@ public class AnimationManager {
   public void runAnimation(GameController controller) {
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
-      if (controller.runGame(SECOND_DELAY)) {
-        animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY)));
-      } else {
+      if (controller.runGameAndCheckStatic(SECOND_DELAY)) {
         animation.stop();
       }
     }));
     animation.play();
-  }
-
-  public void pauseAnimation() {
-    animation.pause();
   }
 }

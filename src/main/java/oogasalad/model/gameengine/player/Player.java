@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import java.util.stream.Collectors;
 import javafx.collections.ObservableMap;
 import oogasalad.model.api.PlayerRecord;
 import org.apache.logging.log4j.LogManager;
@@ -49,16 +50,6 @@ public class Player {
     return playerId;
   }
 
-  public Map<String, Double> getObservableVariables() {
-    return Collections.unmodifiableMap(variables);
-  }
-
-  public void setObservableVariables(Map<String, Double> variablesOld) {
-    variables.clear();
-    for (String key : variablesOld.keySet()) {
-      variables.put(key, variablesOld.get(key));
-    }
-  }
 
   public boolean isRoundCompleted() {
     return roundCompleted;
@@ -68,4 +59,7 @@ public class Player {
     roundCompleted = isCompleted;
   }
 
+  protected void setFromRecord(PlayerRecord record) {
+    variables.put("score", record.score());
+  }
 }
