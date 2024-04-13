@@ -54,6 +54,7 @@ public class GameLoaderModel extends GameLoader {
    */
   public GameLoaderModel(String gameTitle) throws InvalidFileException {
     super(gameTitle);
+    createPlayerContainer();
     movables = new ArrayList<>();
     physicsMap = new HashMap<>();
 
@@ -63,24 +64,29 @@ public class GameLoaderModel extends GameLoader {
     createCollisionTypeMap();
   }
 
+  public void createLevel() {
+
+  }
   /**
    * Retrieves the player container.
    *
    * @return The player container.
    */
   public PlayerContainer getPlayerContainer() {
-    createPlayerContainer();
     return playerContainer;
   }
 
 
+  public void makeLevel(int id) {
+    createCollidableContainer();
+    createRulesRecord();
+  }
   /**
    * Retrieves the collidable container.
    *
    * @return The collidable container.
    */
   public CollidableContainer getCollidableContainer() {
-    createCollidableContainer();
     return collidableContainer;
   }
 
@@ -90,7 +96,7 @@ public class GameLoaderModel extends GameLoader {
    * @return The rules record.
    */
   public RulesRecord getRulesRecord() {
-    createRulesRecord();
+
     return rulesRecord;
   }
 

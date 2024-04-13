@@ -11,9 +11,7 @@ import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.command.Command;
-import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
-import oogasalad.model.gameengine.statichandlers.GenericStaticStateHandler;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,22 +37,23 @@ public class GameEngine implements ExternalGameEngine {
   public GameEngine(String gameTitle) {
     loader = new GameLoaderModel(gameTitle);
     playerContainer = loader.getPlayerContainer();
-    rules = loader.getRulesRecord();
     round = 1;
-    start(loader);
+    startRound(loader);
   }
 
   /**
    * Starts the current game
    */
   @Override
-  public void start(GameLoaderModel loader) {
+  public void startRound(GameLoaderModel loader) {
     gameOver = false;
     turn = 1; //first player ideally should have id 1
     staticState = true;
     playerContainer.startRound();
     playerContainer.setActive(turn);
+    loader.makeLevel(round);
     collidables = loader.getCollidableContainer();
+    rules = loader.getRulesRecord();
     collisionHandlers = rules.collisionHandlers();
     collidables.addStaticStateCollidables();
     playerContainer.addPlayerHistory();
@@ -62,8 +61,6 @@ public class GameEngine implements ExternalGameEngine {
     staticStateStack.push(
         new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
             round, turn, gameOver, staticState));
-    System.out.println(staticStateStack.peek());
-
   }
 
   /**
@@ -130,7 +127,7 @@ public class GameEngine implements ExternalGameEngine {
 
   public void advanceRound() {
     round++;
-    start(loader);
+    startRound(loader);
   }
 
   public void advanceTurn() {

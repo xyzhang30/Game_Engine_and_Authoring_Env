@@ -41,7 +41,7 @@ public class GameLoaderModelTest {
   public void setup() {
     String gameTitle = "testSinglePlayerMiniGolf";
     this.testGameLoaderModel = new GameLoaderModel(gameTitle);
-
+    testGameLoaderModel.makeLevel(1);
     Collidable c1 = new Collidable(1, Double.POSITIVE_INFINITY, 0,0, true, 3.03873, 2.03873, 500, 500, "rectangle");
     Collidable c2 = new Collidable(2, 1, 250, 450, true, 0, 0, 2, 2, "circle");
     Collidable c3 = new Collidable(3, 0, 250,50, true, 0,0, 5, 5, "circle");
@@ -140,7 +140,6 @@ public class GameLoaderModelTest {
     RulesRecord mockRulesRecord = new RulesRecord(collisionHandlers, winCondition, roundPolicy,
         advanceTurn, advanceRound, physicsMap, mockTurnPolicy, mockStaticStateHandler);
 
-    testGameLoaderModel.getPlayerContainer();
     testGameLoaderModel.getCollidableContainer();
     assertThat(testGameLoaderModel.getRulesRecord()).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mockRulesRecord);
   }
