@@ -2,6 +2,9 @@ package oogasalad.view.AuthoringScreens;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,12 +43,11 @@ import oogasalad.view.Window;
  * @author Jordan Haytaian, Doga Ozmen
  */
 public abstract class AuthoringScreen {
-
   Map<Shape, NonControllableType> nonControllableMap;
   List<Shape> controllableList;
   double screenWidth = Window.SCREEN_WIDTH;
   double screenHeight = Window.SCREEN_HEIGHT;
-  StackPane authoringBox;
+  public StackPane authoringBox;
   List<Shape> selectableShapes;
   Map<Shape, Boolean> newTemplateMap;
   AnchorPane root;
@@ -114,10 +116,13 @@ public abstract class AuthoringScreen {
    */
   void createImageHandler() {
     imageButton.setOnAction(event -> {
-      Image image = chooseImage(getImageType());
-      if (image != null && selectedShape != null) {
-        imageMap.put(selectedShape, image.getUrl());
-        selectedShape.setFill(new ImagePattern(image));
+      String relativePath = chooseImage(getImageType());
+      if (relativePath != null && selectedShape != null) {
+        imageMap.put(selectedShape, relativePath);
+        System.out.println(relativePath);
+        System.out.println(relativePath);
+        String imgPath = Paths.get(relativePath).toUri().toString();
+        selectedShape.setFill(new ImagePattern(new Image(imgPath)));
       }
     });
   }
@@ -143,7 +148,7 @@ public abstract class AuthoringScreen {
    *                  ball)
    * @return the selected image
    */
-  Image chooseImage(ImageType imageType) {
+  String chooseImage(ImageType imageType) {
     FileChooser fileChooser = new FileChooser();
 
     File initialDirectory = new File(getImageFolder(imageType));
@@ -152,23 +157,11 @@ public abstract class AuthoringScreen {
     fileChooser.getExtensionFilters().addAll(
         new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
     );
-    File selectedFile = fileChooser.showOpenDialog(new Stage());
-    if (selectedFile != null) {
-      String imagePath = selectedFile.getAbsolutePath();
-      try {
-        File file = new File(imagePath);
-        String imageUrl = file.toURI().toURL().toString(); // Convert the file path to a URL
-        return new Image(imageUrl);
-      } catch (MalformedURLException e) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText("Invalid URL");
-        alert.showAndWait();
-      }
-    }
-    return null;
+    File file =  fileChooser.showOpenDialog(new Stage());
+    return initialDirectory + FileSystems.getDefault().getSeparator() + file.getName();
   }
+
+
 
   /**
    * Creates buttons for color and image selection and their respective event handlers
@@ -182,6 +175,7 @@ public abstract class AuthoringScreen {
     root.getChildren().addAll(colorPicker);
 
     imageButton = new Button("Image");
+    imageButton.setId("imageButton");
     imageButton.setPrefSize(200, 100);
     AnchorPane.setTopAnchor(imageButton, 160.0);
     AnchorPane.setRightAnchor(imageButton, 50.0);
@@ -204,11 +198,12 @@ public abstract class AuthoringScreen {
   /**
    * Creates a rectangle and circle template that users can drag onto gameboard
    */
-  void createDraggableShapeTemplates() {
+  public void createDraggableShapeTemplates() {
     Rectangle rectangle = new Rectangle(100, 50, Color.BLACK);
     AnchorPane.setRightAnchor(rectangle, 150.0);
     AnchorPane.setTopAnchor(rectangle, 300.0);
     makeSelectable(rectangle);
+    rectangle.setId("draggableRectangle");
     makeDraggable(rectangle);
 
     Ellipse ellipse = new Ellipse(30, 30);
@@ -409,19 +404,18 @@ public abstract class AuthoringScreen {
   }
 
   private String getImageFolder(ImageType imageType) {
-    String path = System.getProperty(("user.dir"));
     switch (imageType) {
       case BACKGROUND -> {
-        return path + "/data/background_images";
+        return  "data/background_images";
       }
       case NONCONTROLLABLE_ELEMENT -> {
-        return path + "/data/noncontrollable_images";
+        return  "data/noncontrollable_images";
       }
       case CONTROLLABLE_ELEMENT -> {
-        return path + "/data/controllable_images";
+        return  "data/controllable_images";
       }
       default -> {
-        return path + "/data";
+        return  "data/";
       }
     }
 

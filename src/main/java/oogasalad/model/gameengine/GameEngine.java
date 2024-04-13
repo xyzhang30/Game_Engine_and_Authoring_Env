@@ -55,6 +55,8 @@ public class GameEngine implements ExternalGameEngine {
     rules = loader.getRulesRecord();
     collidables = loader.getCollidableContainer();
     collisionHandlers = rules.collisionHandlers();
+    collidables.addStaticStateCollidables();
+    playerContainer.addPlayerHistory();
     staticStateStack = new Stack<>();
     staticStateStack.push(
         new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
@@ -89,8 +91,9 @@ public class GameEngine implements ExternalGameEngine {
     collidables.update(dt);
     handleCollisions(dt); //private
     if (collidables.checkStatic()) {
-      updateHistory(); //private
       switchToCorrectStaticState(); //private
+      updateHistory(); //private
+      staticState = true;
     } else {
       staticState = false;
     }
@@ -164,6 +167,7 @@ public class GameEngine implements ExternalGameEngine {
   public void toLastStaticState() {
     staticState = true;
     GameRecord newCurrentState = staticStateStack.pop();
+    System.out.println(newCurrentState);
     turn = newCurrentState.turn();
     round = newCurrentState.round();
     gameOver = newCurrentState.gameOver();
@@ -196,15 +200,20 @@ public class GameEngine implements ExternalGameEngine {
   }
 
 
-
-
   private void updateHistory() {
     staticState = true;
-    playerContainer.addStaticStateVariables();
+    playerContainer.addPlayerHistory();
     collidables.addStaticStateCollidables();
     staticStateStack.push(
         new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
             round, turn, gameOver, staticState));
+    printStaticStateStack();
+  }
+
+  private void printStaticStateStack() {
+    for(GameRecord r: staticStateStack) {
+      System.out.print(r.players().get(0).score() + " ");
+    }
   }
 
 

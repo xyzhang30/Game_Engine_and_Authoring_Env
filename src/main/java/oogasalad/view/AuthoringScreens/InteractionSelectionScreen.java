@@ -89,7 +89,6 @@ public class InteractionSelectionScreen extends AuthoringScreen {
   }
 
   void endSelection() {
-
     for (Shape shape : controllableList) {
       List<Double> posList = new ArrayList<>();
       posList.add(shape.localToScene(shape.getBoundsInLocal()).getMinX());

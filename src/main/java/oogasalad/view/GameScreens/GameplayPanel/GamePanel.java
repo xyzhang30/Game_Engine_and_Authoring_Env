@@ -12,12 +12,12 @@ public class GamePanel {
   public Pane getPane(){
     return globalView;
   }
-  public void addGameContentNodes(CompositeElement elements){
-    for (int i : elements.idList()) {
-      globalView.getChildren().add(elements.getNode(i));
+  public Pane getGlobalView(){
+    return globalView;
+  }
+  public void addGameContentNodes(CompositeElement cm){
+    for (int i : cm.idList()) {
+      globalView.getChildren().add(cm.getNode(i));
     }
-    Sheen sheen = new Sheen();
-    sheen.setSize(globalView);
-    globalView.getChildren().add(sheen.getNode());
   }
 }
