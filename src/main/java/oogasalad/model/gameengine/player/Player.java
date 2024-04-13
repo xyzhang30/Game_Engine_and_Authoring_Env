@@ -32,7 +32,8 @@ public class Player {
   //TODO
   //later make this an abstraction
   public void updateActiveControllableId() {
-    activeControllable = (myControllables.indexOf(activeControllable) % myControllables.size()) + 1;
+    activeControllable =
+        myControllables.get((myControllables.indexOf(activeControllable) + 1) % myControllables.size()) ;
   }
 
   public void setVariable(String key, double value) {
@@ -41,6 +42,8 @@ public class Player {
 
   protected PlayerRecord getPlayerRecord(boolean active) {
     try {
+      System.out.println(new PlayerRecord(playerId, variables.get("score"), activeControllable,
+          active));
       return new PlayerRecord(playerId, variables.get("score"), activeControllable, active);
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");

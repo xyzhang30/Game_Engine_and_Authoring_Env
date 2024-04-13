@@ -1,0 +1,341 @@
+{
+  "gameName": "sampleMiniGolf",
+  "collidable_objects": [
+    {
+      "collidable_id": 1,
+      "properties": ["visible", "surface"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 0,
+        "y_position": 0
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 1000,
+        "y_dimension": 300
+      },
+      "staticFriction": 3.03873,
+      "kineticFriction": 2.03873,
+      "color": [124,252,0],
+      "image": ""
+    },
+
+
+    {
+      "collidable_id": 2,
+      "properties": ["visible", "surface"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 0,
+        "y_position": 300
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 333,
+        "y_dimension": 700
+      },
+      "staticFriction": 3.03873,
+      "kineticFriction": 2.03873,
+      "color": [124,252,0],
+      "image": ""
+    },
+
+    {
+      "collidable_id": 3,
+      "properties": ["visible", "surface"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 333,
+        "y_position": 700
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 667,
+        "y_dimension": 300
+      },
+      "staticFriction": 3.03873,
+      "kineticFriction": 2.03873,
+      "color": [124,252,0],
+      "image": ""
+    },
+
+    {
+      "collidable_id": 4,
+      "properties": ["visible", "movable"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 333,
+        "y_position": 400
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 334,
+        "y_dimension": 300
+      },
+
+      "image": "",
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [230,159,0]
+    },
+
+    {
+      "collidable_id": 5,
+      "properties": ["visible", "surface"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 333,
+        "y_position": 300
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 334,
+        "y_dimension": 100
+      },
+      "staticFriction": 34,
+      "kineticFriction": 24,
+      "color": [0,100,0],
+      "image": ""
+    },
+
+    {
+      "collidable_id": 6,
+      "properties": ["visible","surface"],
+      "mass": 1E1000000,
+      "position": {
+        "x_position": 667,
+        "y_position": 400
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 333,
+        "y_dimension": 300
+      },
+      "staticFriction": 9,
+      "kineticFriction": 7,
+      "color": [0,0,255],
+      "image": ""
+    },
+
+    {
+      "collidable_id": 7,
+      "properties": ["visible", "surface"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 667,
+        "y_position": 300
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 333,
+        "y_dimension": 100
+      },
+      "staticFriction": 3.03873,
+      "kineticFriction": 2.03873,
+      "color": [124,252,0],
+      "image": ""
+    },
+
+    {
+      "collidable_id": 8,
+      "properties": ["visible", "movable", "controllable"],
+      "mass": 0.04,
+      "position": {
+        "x_position": 480,
+        "y_position": 840
+      },
+      "shape": "Circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [255,255,255],
+      "image": ""
+    },
+
+
+    {
+      "collidable_id": 9,
+      "properties": ["visible", "movable"],
+      "mass": 1E10000000,
+      "position": {
+        "x_position": 480,
+        "y_position": 80
+      },
+      "shape": "Circle",
+      "dimension": {
+        "x_dimension": 20,
+        "y_dimension": 20
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [0,0,0],
+      "image": ""
+    },
+
+    {
+      "collidable_id": 10,
+      "properties": ["visible", "movable"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 0,
+        "y_position": 0
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 50,
+        "y_dimension": 1000
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [0,0,0],
+      "image": ""
+    },
+
+    {
+      "collidable_id": 11,
+      "properties": ["visible", "movable"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 0,
+        "y_position": 0
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 1000,
+        "y_dimension": 50
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [0,0,0],
+      "image": ""
+    },
+
+    {
+      "collidable_id": 12,
+      "properties": ["visible", "movable"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 0,
+        "y_position": 980
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 1000,
+        "y_dimension": 50
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [0,0,0],
+      "image": ""
+    },
+
+    {
+      "collidable_id": 13,
+      "properties": ["visible", "movable"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 980,
+        "y_position": 0
+      },
+      "shape": "Rectangle",
+
+      "dimension": {
+        "x_dimension": 50,
+        "y_dimension": 1000
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [0,0,0],
+      "image": ""
+    },
+    {
+      "collidable_id": 14,
+      "properties": ["visible", "movable", "controllable"],
+      "mass": 0.04,
+      "position": {
+        "x_position": 380,
+        "y_position": 840
+      },
+      "shape": "Circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [255,255,255],
+      "image": ""
+    }
+  ],
+  "players": [
+    {
+      "player_id": 1,
+      "my_collidable": [8]
+    },
+    {
+      "player_id": 2,
+      "my_collidable": [14]
+    }
+  ],
+  "variables": [
+    {
+      "global": {
+        "max_turns": 1,
+        "max_rounds": 1
+      },
+      "player": {
+        "strokes": 0,
+        "finished": 0
+      }
+    }
+  ],
+  "rules": {
+    "collisions": [
+      {
+        "first_id": 8,
+        "second_id": 9,
+        "command": [
+          {
+            "AdjustPointsCommand": [1,1]
+          },
+          {
+            "AdvanceRoundCommand": []
+          }
+        ]
+      },
+      {
+        "first_id": 6,
+        "second_id": 8,
+        "command": [
+          {
+            "UndoTurnCommand": []
+          }
+        ]
+      }
+    ],
+    "turn_policy": "StandardTurnPolicy",
+    "round_policy": {
+      "AllPlayersCompletedRoundCondition": []
+    },
+    "win_condition": {
+      "NRoundsCompletedCondition": [1]
+    },
+    "advance_turn": [
+      {
+        "AdvanceTurnCommand": []
+      },
+      {
+        "AdjustActivePointsCommand": [1.0]
+      }
+    ],
+    "advance_round": [
+      {
+        "AdjustActivePointsCommand": [1.0],
+        "AdvanceRoundCommand": []
+      }
+    ]
+  }
+}

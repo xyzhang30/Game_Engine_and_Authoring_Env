@@ -109,6 +109,10 @@ public class GameController {
       sceneManager.enableHitting();
     }
     getCurrentControllable(gameRecord);
+   // System.out.println("______");
+    //System.out.println(activePlayer);
+    //System.out.println(controllableID);
+    //System.out.println("______");
     sceneManager.update(gameRecord);
 
 

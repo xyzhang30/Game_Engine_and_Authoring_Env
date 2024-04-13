@@ -165,7 +165,7 @@ public class GameEngine implements ExternalGameEngine {
   public void toLastStaticState() {
     staticState = true;
     GameRecord newCurrentState = staticStateStack.pop();
-    System.out.println(newCurrentState);
+    //System.out.println(newCurrentState);
     turn = newCurrentState.turn();
     round = newCurrentState.round();
     gameOver = newCurrentState.gameOver();
@@ -205,7 +205,7 @@ public class GameEngine implements ExternalGameEngine {
     staticStateStack.push(
         new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
             round, turn, gameOver, staticState));
-    printStaticStateStack();
+   // printStaticStateStack();
   }
 
   private void printStaticStateStack() {
