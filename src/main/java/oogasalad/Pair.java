@@ -29,6 +29,7 @@ public class Pair {
       return false;
     }
     Pair pair = (Pair) o;
+
     return (first == pair.first && second == pair.second) || (first == pair.second
         && second == pair.first);
   }

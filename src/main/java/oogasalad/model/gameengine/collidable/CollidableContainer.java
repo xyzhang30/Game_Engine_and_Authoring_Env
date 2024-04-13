@@ -100,4 +100,9 @@ public class CollidableContainer {
   }
 
 
+  public void makeStatic() {
+    for(Collidable c : myCollidables.values()) {
+      c.stop();
+    }
+  }
 }
