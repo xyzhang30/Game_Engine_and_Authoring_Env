@@ -64,4 +64,5 @@ public class Player {
   protected void setFromRecord(PlayerRecord record) {
     variables.put("score", record.score());
   }
+
 }

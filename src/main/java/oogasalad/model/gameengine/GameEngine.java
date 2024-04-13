@@ -35,8 +35,6 @@ public class GameEngine implements ExternalGameEngine {
   private boolean staticState;
   private Stack<GameRecord> staticStateStack;
 
-  private GenericStaticStateHandler staticStateHandler;
-
   public GameEngine(String gameTitle) {
     loader = new GameLoaderModel(gameTitle);
     round = 1;
@@ -225,5 +223,9 @@ public class GameEngine implements ExternalGameEngine {
   private String toLogForm(Object o) {
     return o.toString().substring(o.toString().lastIndexOf(".") + 1,
         o.toString().lastIndexOf("@"));
+  }
+
+  public GameRecord getGameRecord() {
+    return staticStateStack.peek();
   }
 }

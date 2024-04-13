@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import oogasalad.Pair;
 import oogasalad.model.api.GameRecord;
+import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.api.ViewCollidableRecord;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
@@ -36,6 +37,7 @@ public class GameController {
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
   private int controllableID;
+  private int activePlayer;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
   private final String PLAYABLE_GAMES_DIRECTORY = "data/playable_games";
@@ -77,9 +79,20 @@ public class GameController {
   public void startGamePlay(String selectedGame) {
     gameLoaderView = new GameLoaderView(selectedGame);
     gameEngine = new GameEngine(selectedGame);
+    getCurrentControllable(gameEngine.getGameRecord());
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScreen(this, compositeElement);
     collisionManager.setNewCompositeElement(compositeElement);
+  }
+
+  private void getCurrentControllable(GameRecord gameRecord) {
+    activePlayer = gameRecord.turn();
+    for(PlayerRecord p : gameRecord.players()) {
+      if(p.playerId()==activePlayer) {
+        controllableID = p.myControllable();
+        break;
+      }
+    }
   }
 
 
@@ -95,7 +108,10 @@ public class GameController {
     if (staticState) {
       sceneManager.enableHitting();
     }
+    getCurrentControllable(gameRecord);
     sceneManager.update(gameRecord);
+
+
     return staticState;
   }
 
@@ -111,6 +127,7 @@ public class GameController {
     gameEngine.applyInitialVelocity(700 * fractionalVelocity, angle,
         controllableID); // The 8 has been hard
     // coded!
+
     animationManager.runAnimation(this);
   }
 
@@ -141,7 +158,6 @@ public class GameController {
   private CompositeElement createCompositeElementFromGameLoader() {
     try {
       List<ViewCollidableRecord> recordList = gameLoaderView.getViewCollidableInfo();
-      controllableID = gameLoaderView.getControllableIds().controllableIds().get(0);
       return new CompositeElement(recordList);
     } catch (InvalidShapeException | InvalidImageException e) {
       System.out.println(e.getMessage());
