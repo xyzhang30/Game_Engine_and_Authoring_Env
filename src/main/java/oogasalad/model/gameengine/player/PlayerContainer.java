@@ -70,4 +70,18 @@ public class PlayerContainer {
     }
     return true;
   }
+
+  public String toString() {
+    StringBuilder s= new StringBuilder();
+    for(Player p : myPlayers.values()) {
+      s.append("\n" + p.toString());
+    }
+    return s.toString();
+  }
+
+  public void startRound() {
+    for(Player p : myPlayers.values()) {
+      p.setRoundCompleted(false);
+    }
+  }
 }

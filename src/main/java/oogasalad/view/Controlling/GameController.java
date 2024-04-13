@@ -80,7 +80,6 @@ public class GameController {
     gameLoaderView = new GameLoaderView(selectedGame);
     gameEngine = new GameEngine(selectedGame);
     getCurrentControllable(gameEngine.getGameRecord());
-    System.out.println(controllableID);
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScreen(this, compositeElement);
     collisionManager.setNewCompositeElement(compositeElement);

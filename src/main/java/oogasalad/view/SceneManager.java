@@ -71,7 +71,6 @@ public class SceneManager {
   public void checkEndRound(GameRecord gameRecord) {
     if (gameRecord.round() != currentRound) {
       currentRound = gameRecord.round();
-
     }
     if (gameRecord.gameOver()) {
       gameScreen.endRound(true);

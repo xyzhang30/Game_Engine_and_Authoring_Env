@@ -59,14 +59,7 @@ public class GameLoaderModel extends GameLoader {
     staticHandler = StaticStateHandlerLinkedListBuilder.buildLinkedList(List.of(
         "GameOverStaticStateHandler",
         "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
-
     createCollisionTypeMap();
-    createCollidableContainer();
-    createPlayerContainer();
-    createRulesRecord();
-    StaticStateHandlerLinkedListBuilder builder = new StaticStateHandlerLinkedListBuilder();
-
-
   }
 
   /**
@@ -75,6 +68,7 @@ public class GameLoaderModel extends GameLoader {
    * @return The player container.
    */
   public PlayerContainer getPlayerContainer() {
+    createPlayerContainer();
     return playerContainer;
   }
 
@@ -85,6 +79,7 @@ public class GameLoaderModel extends GameLoader {
    * @return The collidable container.
    */
   public CollidableContainer getCollidableContainer() {
+    createCollidableContainer();
     return collidableContainer;
   }
 
@@ -94,6 +89,7 @@ public class GameLoaderModel extends GameLoader {
    * @return The rules record.
    */
   public RulesRecord getRulesRecord() {
+    createRulesRecord();
     return rulesRecord;
   }
 

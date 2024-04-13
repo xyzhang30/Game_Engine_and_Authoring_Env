@@ -142,7 +142,7 @@
       "mass": 0.04,
       "position": {
         "x_position": 480,
-        "y_position": 840
+        "y_position": 200
       },
       "shape": "Circle",
       "dimension": {
@@ -257,7 +257,7 @@
       "mass": 0.04,
       "position": {
         "x_position": 380,
-        "y_position": 840
+        "y_position": 200
       },
       "shape": "Circle",
       "dimension": {
@@ -299,16 +299,37 @@
         "second_id": 9,
         "command": [
           {
-            "AdjustPointsCommand": [1,1]
+            "AdjustActivePointsCommand": [1]
           },
           {
-            "AdvanceRoundCommand": []
+            "PlayerCompletedRoundCommand": []
+          }
+        ]
+      },
+      {
+        "first_id": 9,
+        "second_id": 14,
+        "command": [
+          {
+            "AdjustActivePointsCommand": [1]
+          },
+          {
+            "PlayerCompletedRoundCommand": []
           }
         ]
       },
       {
         "first_id": 6,
         "second_id": 8,
+        "command": [
+          {
+            "UndoTurnCommand": []
+          }
+        ]
+      },
+      {
+        "first_id": 6,
+        "second_id": 14,
         "command": [
           {
             "UndoTurnCommand": []
@@ -321,7 +342,7 @@
       "AllPlayersCompletedRoundCondition": []
     },
     "win_condition": {
-      "NRoundsCompletedCondition": [1]
+      "NRoundsCompletedCondition": [2]
     },
     "advance_turn": [
       {

@@ -42,8 +42,6 @@ public class Player {
 
   protected PlayerRecord getPlayerRecord(boolean active) {
     try {
-      System.out.println(new PlayerRecord(playerId, variables.get("score"), activeControllable,
-          active));
       return new PlayerRecord(playerId, variables.get("score"), activeControllable, active);
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");
@@ -56,6 +54,9 @@ public class Player {
   }
 
 
+  public String toString() {
+    return "ID " + playerId + "\n\tRoundCompleted " + roundCompleted + "\n\t" + "Score " + variables.get("score")+"\n\t";
+  }
   public boolean isRoundCompleted() {
     return roundCompleted;
   }
