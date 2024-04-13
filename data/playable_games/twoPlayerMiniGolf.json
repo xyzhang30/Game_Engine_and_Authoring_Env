@@ -325,10 +325,8 @@
     },
     "advance_turn": [
       {
+        "AdjustActivePointsCommand": [1.0],
         "AdvanceTurnCommand": []
-      },
-      {
-        "AdjustActivePointsCommand": [1.0]
       }
     ],
     "advance_round": [

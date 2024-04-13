@@ -80,6 +80,7 @@ public class GameController {
     gameLoaderView = new GameLoaderView(selectedGame);
     gameEngine = new GameEngine(selectedGame);
     getCurrentControllable(gameEngine.getGameRecord());
+    System.out.println(controllableID);
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScreen(this, compositeElement);
     collisionManager.setNewCompositeElement(compositeElement);
@@ -109,13 +110,7 @@ public class GameController {
       sceneManager.enableHitting();
     }
     getCurrentControllable(gameRecord);
-   // System.out.println("______");
-    //System.out.println(activePlayer);
-    //System.out.println(controllableID);
-    //System.out.println("______");
     sceneManager.update(gameRecord);
-
-
     return staticState;
   }
 
