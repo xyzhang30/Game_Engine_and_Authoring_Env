@@ -1,7 +1,5 @@
 package oogasalad.model.api;
 
-import java.util.List;
-import oogasalad.Pair;
 import oogasalad.model.gameparser.GameLoaderModel;
 
 /**
@@ -12,7 +10,7 @@ public interface ExternalGameEngine {
   /**
    * Initiates the game with the given ID.
    */
-  void start(GameLoaderModel loader);
+  void startRound(GameLoaderModel loader);
 
   /**
    * Pauses the current game.

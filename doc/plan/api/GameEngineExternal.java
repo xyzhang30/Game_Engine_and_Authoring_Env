@@ -6,7 +6,7 @@ interface GameEngineExternal {
   /**
    * Initiates the game.
    */
-  void start();
+  void start(int round);
 
   /**
    * Pauses the current game.

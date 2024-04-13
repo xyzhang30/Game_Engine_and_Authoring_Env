@@ -142,7 +142,7 @@
       "mass": 0.04,
       "position": {
         "x_position": 480,
-        "y_position": 840
+        "y_position": 200
       },
       "shape": "Circle",
       "dimension": {
@@ -250,13 +250,70 @@
       "kineticFriction": 0,
       "color": [0,0,0],
       "image": ""
+    },
+    {
+      "collidable_id": 14,
+      "properties": ["visible", "movable", "controllable"],
+      "mass": 0.04,
+      "position": {
+        "x_position": 380,
+        "y_position": 200
+      },
+      "shape": "Circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [255,255,255],
+      "image": ""
+    },
+    {
+      "collidable_id": 15,
+      "properties": ["visible", "movable", "controllable"],
+      "mass": 0.04,
+      "position": {
+        "x_position": 380,
+        "y_position": 300
+      },
+      "shape": "Circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [255,255,255],
+      "image": ""
+    },
+    {
+      "collidable_id": 16,
+      "properties": ["visible", "movable", "controllable"],
+      "mass": 0.04,
+      "position": {
+        "x_position": 480,
+        "y_position": 300
+      },
+      "shape": "Circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [255,255,255],
+      "image": ""
     }
-
   ],
   "players": [
     {
       "player_id": 1,
-      "my_collidable": [8]
+      "my_collidable": [8,15]
+    },
+    {
+      "player_id": 2,
+      "my_collidable": [14,16]
     }
   ],
   "variables": [
@@ -278,16 +335,31 @@
         "second_id": 9,
         "command": [
           {
-            "AdjustPointsCommand": [1,1]
-          },
+            "PlayerCompletedRoundCommand": []
+          }
+        ]
+      },
+      {
+        "first_id": 9,
+        "second_id": 14,
+        "command": [
           {
-            "AdvanceRoundCommand": []
+            "PlayerCompletedRoundCommand": []
           }
         ]
       },
       {
         "first_id": 6,
         "second_id": 8,
+        "command": [
+          {
+            "UndoTurnCommand": []
+          }
+        ]
+      },
+      {
+        "first_id": 6,
+        "second_id": 14,
         "command": [
           {
             "UndoTurnCommand": []
@@ -300,14 +372,12 @@
       "AllPlayersCompletedRoundCondition": []
     },
     "win_condition": {
-      "NRoundsCompletedCondition": [1]
+      "NRoundsCompletedCondition": [2]
     },
     "advance_turn": [
       {
+        "AdjustActivePointsCommand": [1.0],
         "AdvanceTurnCommand": []
-      },
-      {
-        "AdjustActivePointsCommand": [1.0]
       }
     ],
     "advance_round": [

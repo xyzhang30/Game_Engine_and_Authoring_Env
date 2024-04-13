@@ -8,22 +8,22 @@ import java.util.Map.Entry;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import oogasalad.Pair;
+import oogasalad.model.api.data.CollidableObject;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidFileException;
+import oogasalad.model.gameengine.RulesRecord;
+import oogasalad.model.gameengine.collidable.Collidable;
+import oogasalad.model.gameengine.collidable.CollidableContainer;
+import oogasalad.model.gameengine.collidable.PhysicsHandler;
+import oogasalad.model.gameengine.collidable.collision.FrictionHandler;
+import oogasalad.model.gameengine.collidable.collision.MomentumHandler;
+import oogasalad.model.gameengine.command.Command;
+import oogasalad.model.gameengine.condition.Condition;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
-import oogasalad.model.gameengine.RulesRecord;
-import oogasalad.model.gameengine.condition.Condition;
 import oogasalad.model.gameengine.statichandlers.GenericStaticStateHandler;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListBuilder;
 import oogasalad.model.gameengine.turn.TurnPolicy;
-import oogasalad.model.gameengine.collidable.Collidable;
-import oogasalad.model.gameengine.collidable.CollidableContainer;
-import oogasalad.model.gameengine.collidable.collision.FrictionHandler;
-import oogasalad.model.gameengine.collidable.collision.MomentumHandler;
-import oogasalad.model.gameengine.collidable.PhysicsHandler;
-import oogasalad.model.gameengine.command.Command;
-import oogasalad.model.api.data.CollidableObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,12 +39,12 @@ public class GameLoaderModel extends GameLoader {
   private PlayerContainer playerContainer;
   private CollidableContainer collidableContainer;
   private RulesRecord rulesRecord;
-  private Map<Pair, PhysicsHandler> physicsMap;
-  private List<Integer> movables;
+  private final Map<Pair, PhysicsHandler> physicsMap;
+  private final List<Integer> movables;
   private List<Entry<BiPredicate<Integer, CollidableObject>,
       BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList;
 
-  private GenericStaticStateHandler staticHandler;
+  private final GenericStaticStateHandler staticHandler;
 
 
   /**
@@ -54,18 +54,17 @@ public class GameLoaderModel extends GameLoader {
    */
   public GameLoaderModel(String gameTitle) throws InvalidFileException {
     super(gameTitle);
+    createPlayerContainer();
     movables = new ArrayList<>();
     physicsMap = new HashMap<>();
+
     staticHandler = StaticStateHandlerLinkedListBuilder.buildLinkedList(List.of(
         "GameOverStaticStateHandler",
         "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
-
     createCollisionTypeMap();
-    createCollidableContainer();
-    createPlayerContainer();
-    createRulesRecord();
-    StaticStateHandlerLinkedListBuilder builder = new StaticStateHandlerLinkedListBuilder();
+  }
 
+  public void createLevel() {
 
   }
 
@@ -78,6 +77,11 @@ public class GameLoaderModel extends GameLoader {
     return playerContainer;
   }
 
+
+  public void makeLevel(int id) {
+    createCollidableContainer();
+    createRulesRecord();
+  }
 
   /**
    * Retrieves the collidable container.
@@ -94,6 +98,7 @@ public class GameLoaderModel extends GameLoader {
    * @return The rules record.
    */
   public RulesRecord getRulesRecord() {
+
     return rulesRecord;
   }
 

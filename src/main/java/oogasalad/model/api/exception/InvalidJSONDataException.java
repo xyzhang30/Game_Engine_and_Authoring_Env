@@ -1,7 +1,8 @@
 package oogasalad.model.api.exception;
+
 /**
- * The InvalidJSONDataException extends RuntimeException to handle any errors related writing JSON files
- * for game configuration
+ * The InvalidJSONDataException extends RuntimeException to handle any errors related writing JSON
+ * files for game configuration
  *
  * @author Judy He
  */

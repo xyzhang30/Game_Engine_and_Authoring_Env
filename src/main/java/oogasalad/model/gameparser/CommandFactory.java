@@ -10,7 +10,9 @@ import oogasalad.model.gameengine.command.Command;
 public class CommandFactory {
 
   private static final String COMMAND_PATH = "command.";
-  public static Command createCommand(String cmdName, List<Double> params) throws InvalidCommandException {
+
+  public static Command createCommand(String cmdName, List<Double> params)
+      throws InvalidCommandException {
     try {
       Class<?> clazz = Class.forName(BASE_PATH + COMMAND_PATH + cmdName);
       return (Command) clazz.getDeclaredConstructor(List.class).newInstance(params);

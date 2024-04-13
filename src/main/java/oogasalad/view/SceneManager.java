@@ -1,9 +1,12 @@
 package oogasalad.view;
 
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import oogasalad.model.api.GameRecord;
+import oogasalad.model.api.PlayerRecord;
 import oogasalad.view.Controlling.GameController;
 import oogasalad.view.GameScreens.GameScreen;
 import oogasalad.view.GameScreens.MenuScreen;
@@ -35,11 +38,12 @@ public class SceneManager {
 
   public void update(GameRecord gameRecord) {
     compositeElement.update(gameRecord.collidables());
+    Map<Integer, Double> scoreMap = new TreeMap<>();
+    for(PlayerRecord p : gameRecord.players()) {
+      scoreMap.put(p.playerId(), p.score());
+    }
+    updateScoreTurnBoard(scoreMap, gameRecord.turn(), gameRecord.round());
     checkEndRound(gameRecord);
-  }
-
-  public boolean notMoving(GameRecord gameRecord) {
-    return gameRecord.staticState(); //will be added to record eventually
   }
 
   public void makeTitleScreen(GameController controller) {
@@ -67,7 +71,6 @@ public class SceneManager {
   public void checkEndRound(GameRecord gameRecord) {
     if (gameRecord.round() != currentRound) {
       currentRound = gameRecord.round();
-
     }
     if (gameRecord.gameOver()) {
       gameScreen.endRound(true);
@@ -80,7 +83,8 @@ public class SceneManager {
     scene.setRoot(transitionScreen.getRoot());
   }
 
-  public void updateScoreBoard(double score) {
-    //gameScreen.updateScoreBoard(score);
+  public void updateScoreTurnBoard(Map<Integer, Double> scoreMap, int turn, int round) {
+    gameScreen.updateScoreBoard(scoreMap);
+    gameScreen.updateTurnBoard(turn, round);
   }
 }

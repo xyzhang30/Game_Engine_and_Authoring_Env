@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
-import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.api.data.GameData;
+import oogasalad.model.api.exception.InvalidFileException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,9 +24,9 @@ public abstract class GameLoader {
   private static final String RESOURCE_FOLDER_PATH = "model.";
   private static final String ERROR_RESOURCE_FOLDER = "error.";
   private static final String ERROR_FILE_PREFIX = "Error";
-  public GameData gameData;
   private final String language = "English";
   private final ResourceBundle resourceBundle;
+  public GameData gameData;
 
   /**
    * Constructs a GameLoader object with the specified file path.

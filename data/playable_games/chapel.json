@@ -1,5 +1,5 @@
 {
-  "gameName" : "AuthoringGolfExample",
+  "gameName" : "chapel",
   "collidable_objects" : [ {
     "collidable_id" : 0,
     "properties" : [ "collidable", "visible", "surface" ],
@@ -10,13 +10,13 @@
     },
     "shape" : "Rectangle",
     "dimension" : {
-      "x_dimension" : 980.0,
-      "y_dimension" : 980.0
+      "x_dimension" : 990.0,
+      "y_dimension" : 990.0
     },
     "color" : [ 0, 0, 0 ],
-    "staticFriction" : 5,
-    "kineticFriction" : 2,
-    "image" : "/data/background_images/grass.jpg"
+    "staticFriction" : 7.0,
+    "kineticFriction" : 5.0,
+    "image" : "data/background_images/Chapel.jpg"
   }, {
     "collidable_id" : 1,
     "properties" : [ "collidable", "visible", "movable" ],
@@ -31,8 +31,8 @@
       "y_dimension" : 990.0
     },
     "color" : [ 0, 0, 0 ],
-    "staticFriction" : 5,
-    "kineticFriction" : 2,
+    "staticFriction" : 7.0,
+    "kineticFriction" : 5.0,
     "image" : ""
   }, {
     "collidable_id" : 2,
@@ -48,8 +48,8 @@
       "y_dimension" : 990.0
     },
     "color" : [ 0, 0, 0 ],
-    "staticFriction" : 5,
-    "kineticFriction" : 2,
+    "staticFriction" : 7.0,
+    "kineticFriction" : 5.0,
     "image" : ""
   }, {
     "collidable_id" : 3,
@@ -65,8 +65,8 @@
       "y_dimension" : 20.0
     },
     "color" : [ 0, 0, 0 ],
-    "staticFriction" : 5,
-    "kineticFriction" : 2,
+    "staticFriction" : 7.0,
+    "kineticFriction" : 5.0,
     "image" : ""
   }, {
     "collidable_id" : 4,
@@ -82,33 +82,16 @@
       "y_dimension" : 20.0
     },
     "color" : [ 0, 0, 0 ],
-    "staticFriction" : 5,
-    "kineticFriction" : 2,
+    "staticFriction" : 7.0,
+    "kineticFriction" : 5.0,
     "image" : ""
   }, {
     "collidable_id" : 5,
-    "properties" : [ "collidable", "visible", "movable" ],
-    "mass" : 10.0,
+    "properties" : [ "collidable", "visible", "surface" ],
+    "mass" : "Infinity",
     "position" : {
-      "x_position" : 510.79998779296875,
-      "y_position" : 390.5995178222656
-    },
-    "shape" : "Circle",
-    "dimension" : {
-      "x_dimension" : 30.0,
-      "y_dimension" : 19.400491400491433
-    },
-    "color" : [ 0, 0, 0 ],
-    "staticFriction" : 0,
-    "kineticFriction" : 0,
-    "image" : ""
-  }, {
-    "collidable_id" : 6,
-    "properties" : [ "collidable", "visible", "movable" ],
-    "mass" : 10.0,
-    "position" : {
-      "x_position" : 717.2000122070312,
-      "y_position" : 196.0
+      "x_position" : 707.0,
+      "y_position" : 668.0
     },
     "shape" : "Rectangle",
     "dimension" : {
@@ -116,43 +99,26 @@
       "y_dimension" : 50.0
     },
     "color" : [ 0, 0, 0 ],
-    "staticFriction" : 0,
-    "kineticFriction" : 0,
-    "image" : "/data/noncontrollable_images/flag.jpg"
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "image" : ""
   }, {
-    "collidable_id" : 7,
-    "properties" : [ "collidable", "visible", "surface" ],
-    "mass" : "Infinity",
-    "position" : {
-      "x_position" : 643.22265625,
-      "y_position" : 568.7867431640625
-    },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 168.55467980295555,
-      "y_dimension" : 89.82653562653564
-    },
-    "color" : [ 0, 0, 0 ],
-    "staticFriction" : 0,
-    "kineticFriction" : 0,
-    "image" : "/data/noncontrollable_images/sand.jpg"
-  }, {
-    "collidable_id" : 8,
+    "collidable_id" : 6,
     "properties" : [ "movable", "collidable", "controllable", "visible" ],
     "mass" : 10.0,
     "position" : {
-      "x_position" : 517.9000244140625,
-      "y_position" : 751.0164794921875
+      "x_position" : 769.0,
+      "y_position" : 352.0
     },
-    "shape" : "Circle",
+    "shape" : "Rectangle",
     "dimension" : {
-      "x_dimension" : 13.71428571428573,
-      "y_dimension" : 13.031941031941049
+      "x_dimension" : 100.0,
+      "y_dimension" : 50.0
     },
     "color" : [ 0, 0, 0 ],
-    "staticFriction" : 0,
-    "kineticFriction" : 0,
-    "image" : "/data/controllable_images/golf%20ball.jpg"
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "image" : ""
   } ],
   "players" : [ {
     "player_id" : 1,
@@ -169,25 +135,7 @@
     }
   } ],
   "rules" : {
-    "collisions" : [ {
-      "first_id" : 7,
-      "second_id" : 8,
-      "command" : [ { } ]
-    }, {
-      "first_id" : 5,
-      "second_id" : 8,
-      "command" : [ {
-        "AdvanceRoundCommand" : [ -1.0 ],
-        "AdjustPointsCommand" : [ 1.0, 1.0 ]
-      } ]
-    }, {
-      "first_id" : 6,
-      "second_id" : 8,
-      "command" : [ {
-        "AdvanceRoundCommand" : [ -1.0 ],
-        "AdjustPointsCommand" : [ 1.0, 2.0 ]
-      } ]
-    } ],
+    "collisions" : [ ],
     "turn_policy" : "StandardTurnPolicy",
     "round_policy" : {
       "AllPlayersCompletedRoundCondition" : [ ]

@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import oogasalad.Pair;
 import oogasalad.model.api.GameRecord;
+import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.api.ViewCollidableRecord;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
@@ -32,10 +33,10 @@ import org.apache.logging.log4j.Logger;
 public class GameController {
 
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
-  private final CollisionManager collisionManager;
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
   private int controllableID;
+  private int activePlayer;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
   private final String PLAYABLE_GAMES_DIRECTORY = "data/playable_games";
@@ -45,7 +46,6 @@ public class GameController {
     sceneManager = new SceneManager();
     sceneManager.makeTitleScreen(this);
     animationManager = new AnimationManager();
-    collisionManager = new CollisionManager();
   }
 
   public Scene getScene() {
@@ -77,9 +77,19 @@ public class GameController {
   public void startGamePlay(String selectedGame) {
     gameLoaderView = new GameLoaderView(selectedGame);
     gameEngine = new GameEngine(selectedGame);
+    getCurrentControllable(gameEngine.getGameRecord());
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScreen(this, compositeElement);
-    collisionManager.setNewCompositeElement(compositeElement);
+  }
+
+  private void getCurrentControllable(GameRecord gameRecord) {
+    activePlayer = gameRecord.turn();
+    for(PlayerRecord p : gameRecord.players()) {
+      if(p.playerId()==activePlayer) {
+        controllableID = p.myControllable();
+        break;
+      }
+    }
   }
 
 
@@ -89,27 +99,21 @@ public class GameController {
    * @param timeStep timestep for animation
    * @return boolean indicating if round is over
    */
-  public boolean runGame(double timeStep) {
-
+  public boolean runGameAndCheckStatic(double timeStep) {
     GameRecord gameRecord = gameEngine.update(timeStep);
-    if (gameRecord.staticState()) {
-      animationManager.pauseAnimation();
-    }
-    sceneManager.update(gameRecord);
-
-    //List<Pair> collisionList = collisionManager.getIntersections();
-//    Map<Pair, String> collisionType = collisionManager.getIntersectionsMap();
-
-    // GameRecord gameRecord2 = gameEngine.handleCollisions(collisionList, timeStep);
-    // sceneManager.update(gameRecord2);
-    if (sceneManager.notMoving(gameRecord)) {
+    boolean staticState = gameRecord.staticState();
+    if (staticState) {
       sceneManager.enableHitting();
     }
-
-    return true;
+    getCurrentControllable(gameRecord);
+    sceneManager.update(gameRecord);
+    return staticState;
   }
 
   /**
+
+
+   /**
    * Sends velocity and angle to back end to simulate hitting point scoring object
    *
    * @param fractionalVelocity velocity as fraction of maxVelocity
@@ -118,6 +122,7 @@ public class GameController {
     gameEngine.applyInitialVelocity(700 * fractionalVelocity, angle,
         controllableID); // The 8 has been hard
     // coded!
+
     animationManager.runAnimation(this);
   }
 
@@ -148,7 +153,6 @@ public class GameController {
   private CompositeElement createCompositeElementFromGameLoader() {
     try {
       List<ViewCollidableRecord> recordList = gameLoaderView.getViewCollidableInfo();
-      controllableID = gameLoaderView.getControllableIds().controllableIds().get(0);
       return new CompositeElement(recordList);
     } catch (InvalidShapeException | InvalidImageException e) {
       System.out.println(e.getMessage());

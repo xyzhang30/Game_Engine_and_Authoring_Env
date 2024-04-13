@@ -18,7 +18,7 @@ public class RoundOverStaticStateHandler extends GenericStaticStateHandler {
       LOGGER.info(toLogForm(cmd) + " " + "(advance) ");
       cmd.execute(engine);
     }
-    if(getPrev().canHandle(engine,rules)) {
+    if (getPrev().canHandle(engine, rules)) {
       getPrev().handleIt(engine, rules);
     }
   }

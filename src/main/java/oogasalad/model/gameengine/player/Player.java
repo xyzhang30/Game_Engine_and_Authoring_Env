@@ -1,11 +1,8 @@
 package oogasalad.model.gameengine.player;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
-import javafx.collections.ObservableMap;
 import oogasalad.model.api.PlayerRecord;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,15 +11,16 @@ public class Player {
 
   private static final Logger LOGGER = LogManager.getLogger(Player.class);
   private final int playerId;
-  private final List<Integer> myControllable;
+  private final List<Integer> myControllables;
   private final Map<String, Double> variables;
+  private int activeControllable;
   private boolean roundCompleted = false;
-  private Stack<ObservableMap<String, Double>> variableStack;
 
   public Player(int id, List<Integer> controlable) {
     playerId = id;
-    myControllable = controlable;
+    myControllables = controlable;
     roundCompleted = false;
+    activeControllable = myControllables.get(0);
     variables = new HashMap<>();
     variables.put("score", 0.0);
   }
@@ -31,14 +29,21 @@ public class Player {
     return variables.getOrDefault(variable, 0.0);
   }
 
+  //TODO
+  //later make this an abstraction
+  public void updateActiveControllableId() {
+    activeControllable =
+        myControllables.get(
+            (myControllables.indexOf(activeControllable) + 1) % myControllables.size());
+  }
+
   public void setVariable(String key, double value) {
     variables.put(key, value);
   }
 
   protected PlayerRecord getPlayerRecord(boolean active) {
-
     try {
-      return new PlayerRecord(playerId, variables.get("score"), myControllable, active);
+      return new PlayerRecord(playerId, variables.get("score"), activeControllable, active);
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");
       return null;
@@ -49,23 +54,25 @@ public class Player {
     return playerId;
   }
 
-  public Map<String, Double> getObservableVariables() {
-    return Collections.unmodifiableMap(variables);
-  }
 
-  public void setObservableVariables(Map<String, Double> variablesOld) {
-    variables.clear();
-    for (String key : variablesOld.keySet()) {
-      variables.put(key, variablesOld.get(key));
-    }
-  }
-
+  //public String toString() {
+  //   return "ID " + playerId + "\n\tRoundCompleted " + roundCompleted + "\n\t" + "Score "
+  //    + variables.get("score")+"\n\t";
+  //}
   public boolean isRoundCompleted() {
     return roundCompleted;
   }
 
   public void setRoundCompleted(boolean isCompleted) {
     roundCompleted = isCompleted;
+  }
+
+  public int getControllableId() {
+    return myControllables.get(myControllables.indexOf(activeControllable));
+  }
+
+  protected void setFromRecord(PlayerRecord record) {
+    variables.put("score", record.score());
   }
 
 }

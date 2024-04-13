@@ -14,7 +14,8 @@
       "y_dimension" : 500.0
     },
     "color" : [ 100, 200, 100 ],
-    "friction" : 0.5,
+    "staticFriction" : 3.03873,
+    "kineticFriction" : 2.03873,
     "image" : "sample.img"
   }, {
     "collidable_id" : 2,
@@ -30,7 +31,8 @@
       "y_dimension" : 2.0
     },
     "color" : [ 255, 255, 255 ],
-    "friction" : 0.0,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
     "image" : "sample.img"
   }, {
     "collidable_id" : 3,
@@ -46,7 +48,8 @@
       "y_dimension" : 5.0
     },
     "color" : [ 0, 0, 0 ],
-    "friction" : 0.0,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
     "image" : "sample.img"
   } ],
   "players" : [ {
