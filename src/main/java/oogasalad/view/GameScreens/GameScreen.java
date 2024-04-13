@@ -9,6 +9,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.Controlling.GameController;
 import oogasalad.view.GameScreens.GameplayPanel.GamePanel;
+import oogasalad.view.GameScreens.GameplayPanel.GamePanelLocalView;
 import oogasalad.view.VisualElements.CompositeElement;
 import oogasalad.view.VisualElements.InputIndicators.Arrow;
 
@@ -24,7 +25,7 @@ public class GameScreen extends UIScreen {
 
   private final double maxPower = SCREEN_HEIGHT*0.8;
   private final BorderPane root;
-  private final GamePanel gameContent;
+  private final GamePanelLocalView gplv;
   private boolean ableToHit;
   private Arrow angleArrow;
   private Rectangle powerIndicator;
@@ -36,9 +37,11 @@ public class GameScreen extends UIScreen {
     this.controller = controller;
     ableToHit = true;
 
-    gameContent = new GamePanel();
-    gameContent.addGameContentNodes(compositeElement);
-    root.setCenter(gameContent.getPane());
+    GamePanel gamePanel = new GamePanel();
+    gamePanel.addGameContentNodes(compositeElement);
+//    root.setCenter(gamePanel.getPane());
+    gplv = new GamePanelLocalView(gamePanel.getPane());
+    root.setCenter(gplv.getPane());
 
     setupAngleIndicator();
 
@@ -152,11 +155,11 @@ public class GameScreen extends UIScreen {
       }
       // Some silly scaling dev keys
       case Q: {
-        gameContent.modifyScope(0.95);
+        gplv.setCamera(0,0,800,800);
         break;
       }
       case E: {
-        gameContent.modifyScope(1/0.95);
+        gplv.setCamera(0,0,1000,1000);
         break;
       }
     }

@@ -1,5 +1,5 @@
 package oogasalad.view.GameScreens.GameplayPanel;
 
-public class GamePanelScaleDecoration {
+public class GamePanelMaker {
 
 }

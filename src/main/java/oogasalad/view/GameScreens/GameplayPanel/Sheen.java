@@ -3,6 +3,10 @@ package oogasalad.view.GameScreens.GameplayPanel;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * A Sheen to cover the game content.
+ * Serves as a universal color filter and bounds limiter.
+ */
 public class Sheen {
   private final Rectangle sheen;
   public Sheen() {
