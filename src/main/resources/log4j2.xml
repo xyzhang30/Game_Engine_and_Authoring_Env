@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+
+  <Properties>
+    <Property name="LOG_DIR">logs</Property>
+  </Properties>
+
+  <Appenders>
+    <Console name="console" target="SYSTEM_OUT">
+      <!-- for details about these options: https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout -->
+      <PatternLayout>
+        <Pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</Pattern>
+      </PatternLayout>
+    </Console>
+      <RollingFile
+        name="rollingFile"
+        fileName="${LOG_DIR}/app.log"
+        filePattern="${LOG_DIR}/app.%i.log.gz"
+        ignoreExceptions="false"
+        append="True">
+<!--    <RollingFile name="RollingFile" fileName="logs/appRolling.log" immediateFlush="true" append="true" filePattern="logs/app-%d{MM-dd-yyyy}.log.gz"-->
+<!--      ignoreExceptions="false">-->
+<!--      <RollingFile name="Rolling-${mdc:UserId}" fileName="log/${mdc:UserId}.log" filePattern="log/${mdc:UserId}.%i.log.gz">-->
+<!--    <RollingFile name="file" fileName="logs/appRolling.log" append="true">-->
+      <PatternLayout>
+<!--        <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>-->
+        <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n</Pattern>
+      </PatternLayout>
+      <Policies>
+<!--        <TimeBasedTriggeringPolicy interval="1 hour" modulate="true"/>-->
+        <SizeBasedTriggeringPolicy size="250 MB"/>
+      </Policies>
+        <DefaultRolloverStrategy max="5">
+          <Delete basePath="${LOG_DIR}" maxDepth="2">
+            <IfFileName glob="*/app-*.log.gz" />
+            <IfLastModified age="P30D" />
+          </Delete>
+        </DefaultRolloverStrategy>
+    </RollingFile>
+    <File name="file" fileName="log/app.log" immediateFlush="true" append="true">
+      <!-- consider using a rolling file instead to avoid super long log files -->
+      <!-- https://logging.apache.org/log4j/2.x/manual/appenders.html#RollingFileAppender -->
+      <PatternLayout>
+        <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+      </PatternLayout>
+    </File>
+  </Appenders>
+  <Loggers>
+    <Root level="all">
+      <AppenderRef ref="console" level="debug" />
+      <AppenderRef ref="file" level="all" />
+      <AppenderRef ref="rollingFile" level="all"/>
+    </Root>
+  </Loggers>
+</Configuration>

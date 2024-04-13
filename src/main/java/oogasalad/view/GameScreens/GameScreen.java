@@ -1,5 +1,6 @@
 package oogasalad.view.GameScreens;
 
+import java.util.Map;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -8,7 +9,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.Controlling.GameController;
+import oogasalad.view.GameScreens.GameplayPanel.GamePanel;
 import oogasalad.view.VisualElements.CompositeElement;
+import oogasalad.view.VisualElements.InputIndicators.Arrow;
 
 /**
  * Manages the game's graphical interface, including user inputs for controlling hit strength and
@@ -22,21 +25,27 @@ public class GameScreen extends UIScreen {
 
   private final double maxPower = SCREEN_HEIGHT*0.8;
   private final BorderPane root;
+  private final GamePanel gameContent;
   private boolean ableToHit;
   private Arrow angleArrow;
   private Rectangle powerIndicator;
 
   private Text scoreboardTxt;
+  private Text turnBoardTxt;
 
   public GameScreen(GameController controller, CompositeElement compositeElement) {
     root = new BorderPane();
     this.controller = controller;
     ableToHit = true;
-    setupFieldComponents(
-        compositeElement); // BIG improvised here. There's a lot of refactoring to do first...
+
+    gameContent = new GamePanel(compositeElement);
+    root.setCenter(gameContent.getPane());
+
     setupAngleIndicator();
 
     createScene();
+
+
   }
 
   private void setupAngleIndicator() {
@@ -63,7 +72,8 @@ public class GameScreen extends UIScreen {
   private void createScene() {
     setupControlPane(); //This messes up the power bar key listening
     powerIndicator = setupPowerBar();
-    setupScoreBoard(0);
+    setupScoreBoard();
+    setupTurnBoard();
   }
 
 
@@ -71,26 +81,43 @@ public class GameScreen extends UIScreen {
     root.setTop(new ControlPane());
   }
 
-  private void setupScoreBoard(int score) {
+  private void setupScoreBoard() {
     Rectangle rectangle = new Rectangle(10, 50, 100, 50);
     rectangle.setFill(Color.LIMEGREEN);
-    scoreboardTxt = new Text("Score: Coming Soon");
-    scoreboardTxt.setX(50);
-    scoreboardTxt.setY(100);
+    scoreboardTxt = new Text("SCOREBOARD");
+    scoreboardTxt.setX(25);
+    scoreboardTxt.setY(65);
     scoreboardTxt.setFill(Color.BLACK);
     root.getChildren().addAll(rectangle, scoreboardTxt);
   }
-
-  public void updateScoreBoard(double score) {
-    scoreboardTxt.setText("Score: " + score);
+  private void setupTurnBoard() {
+    Rectangle rectangle = new Rectangle(110, 50, 100, 50);
+    rectangle.setFill(Color.LIMEGREEN);
+    turnBoardTxt = new Text("");
+    turnBoardTxt.setX(125);
+    turnBoardTxt.setY(65);
+    turnBoardTxt.setFill(Color.BLACK);
+    root.getChildren().addAll(rectangle, turnBoardTxt);
+  }
+  public void updateTurnBoard(int turn, int round) {
+    Rectangle rectangle = new Rectangle(110, 50, 100, 50);
+    rectangle.setFill(Color.LIMEGREEN);
+    turnBoardTxt = new Text("Round: " + round + "\n" + "Turn : " + turn);
+    turnBoardTxt.setX(125);
+    turnBoardTxt.setY(65);
+    turnBoardTxt.setFill(Color.BLACK);
+    root.getChildren().addAll(rectangle, turnBoardTxt);
   }
 
-
-  private void setupFieldComponents(CompositeElement cm) {
-    for (int i : cm.idList()) {
-      root.getChildren().add(cm.getNode(i));
+  public void updateScoreBoard(Map<Integer, Double> score) {
+    StringBuilder scoreboardText = new StringBuilder("Score:\n");
+    for (Map.Entry<Integer, Double> entry : score.entrySet()) {
+      scoreboardText.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
     }
+    scoreboardTxt.setText(scoreboardText.toString());
   }
+
+
 
   private Rectangle setupPowerBar() {
     Rectangle outline = new Rectangle(SCREEN_WIDTH*0.9, SCREEN_HEIGHT*0.1,
@@ -148,6 +175,15 @@ public class GameScreen extends UIScreen {
         double angle = Math.toRadians(angleArrow.getAngle() - 90);
         double fractionalVelocity = powerIndicator.getHeight() / maxPower;
         controller.hitPointScoringObject(fractionalVelocity, angle);
+        break;
+      }
+      // Some silly scaling dev keys
+      case Q: {
+        gameContent.modifyScope(0.95);
+        break;
+      }
+      case E: {
+        gameContent.modifyScope(1/0.95);
         break;
       }
     }

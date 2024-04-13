@@ -1,0 +1,138 @@
+{
+  "gameName": "testPhysics",
+  "collidable_objects": [
+    {
+      "collidable_id": 1,
+      "properties": ["visible", "movable"],
+      "mass": 100,
+      "position": {
+        "x_position": 0,
+        "y_position": 0
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "color": [100,200,100],
+      "staticFriction": 0,
+      "kineticFriction": 0
+    },
+    {
+      "collidable_id": 2,
+      "properties": ["visible", "movable"],
+      "mass": 100,
+      "position": {
+        "x_position": 50,
+        "y_position": 50
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "color": [100,200,100],
+      "staticFriction": 0,
+      "kineticFriction": 0
+    },
+    {
+      "collidable_id": 3,
+      "properties": ["visible", "movable"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": 25,
+        "y_position": 25
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 5,
+        "y_dimension": 5
+      },
+      "color": [100,200,100],
+      "staticFriction": 0,
+      "kineticFriction": 0
+    },
+    {
+      "collidable_id": 4,
+      "properties": ["visible","surface"],
+      "mass": 1e1000000,
+      "position": {
+        "x_position": -100,
+        "y_position": -100
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 200,
+        "y_dimension": 200
+      },
+      "color": [255,255,255],
+      "staticFriction": 3.03873,
+      "kineticFriction": 2.03873
+    }
+  ],
+  "players": [
+    {
+      "player_id": 1,
+      "my_collidable": [1]
+    },
+    {
+      "player_id": 2,
+      "my_collidable": [2]
+    }
+  ],
+  "variables": [
+    {
+      "global": {
+        "max_turns": 1,
+        "max_rounds": 2
+      },
+      "player": {
+        "strokes": 0,
+        "finished": 0
+      }
+    }
+  ],
+  "rules": {
+    "collisions": [
+      {
+        "first_id": 1,
+        "second_id": 3,
+        "command": [
+          {
+            "AdjustActivePointsCommand": [1.0],
+            "SetVisibleCommand": [1.0, 0.0],
+            "PlayerCompletedRoundCommand": [1.0]
+          }
+        ]
+      },
+      {
+        "first_id": 2,
+        "second_id": 3,
+        "command": [
+          {
+            "AdjustActivePointsCommand": [1.0],
+            "SetVisibleCommand": [2.0, 0.0],
+            "PlayerCompletedRoundCommand": [2.0]
+          }
+        ]
+      }
+    ],
+    "turn_policy": "StandardTurnPolicy",
+    "round_policy": {
+      "AllPlayersCompletedRoundCondition": []
+    },
+    "win_condition": {
+      "NRoundsCompletedCondition": [2.0]
+    },
+    "advance_turn": [
+      {
+        "AdvanceTurnCommand": []
+      }
+    ],
+    "advance_round": [
+      {
+        "AdvanceRoundCommand": []
+      }
+    ]
+  }
+}

@@ -1,7 +1,5 @@
 package oogasalad.model.api;
 
-import java.util.List;
-import oogasalad.Pair;
 import oogasalad.model.gameparser.GameLoaderModel;
 
 /**
@@ -12,7 +10,7 @@ public interface ExternalGameEngine {
   /**
    * Initiates the game with the given ID.
    */
-  void start(GameLoaderModel loader);
+  void startRound(GameLoaderModel loader);
 
   /**
    * Pauses the current game.
@@ -25,15 +23,6 @@ public interface ExternalGameEngine {
   void resume();
 
   GameRecord update(double dt);
-
-  /**
-   * Provides view with updated GameState as immutable record after each frame
-   *
-   * @return GameRecord object representing the current Collidables, Scores, etc
-   */
-
-
-  GameRecord handleCollisions(List<Pair> collisions, double dt);
 
   /**
    * Applies a velocity to the entity with the provided ID.

@@ -4,6 +4,6 @@ import oogasalad.model.gameengine.GameEngine;
 
 public interface Command {
 
-  double execute(GameEngine engine);
+  void execute(GameEngine engine);
 
 }
