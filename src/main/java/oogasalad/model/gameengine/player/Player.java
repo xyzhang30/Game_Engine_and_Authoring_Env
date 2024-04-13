@@ -54,9 +54,10 @@ public class Player {
   }
 
 
-  public String toString() {
-    return "ID " + playerId + "\n\tRoundCompleted " + roundCompleted + "\n\t" + "Score " + variables.get("score")+"\n\t";
-  }
+  //public String toString() {
+ //   return "ID " + playerId + "\n\tRoundCompleted " + roundCompleted + "\n\t" + "Score "
+  //    + variables.get("score")+"\n\t";
+  //}
   public boolean isRoundCompleted() {
     return roundCompleted;
   }

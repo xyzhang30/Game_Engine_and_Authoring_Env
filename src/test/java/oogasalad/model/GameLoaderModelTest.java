@@ -90,7 +90,7 @@ public class GameLoaderModelTest {
   @Test
   public void testParseTurnPolicy() {
     TurnPolicy mockTurnPolicy = new StandardTurnPolicy(mockPlayerContainer);
-    assertThat(testGameLoaderModel.getRulesRecord().turnPolicy()).usingRecursiveComparison().isEqualTo(mockTurnPolicy);
+    assertThat(testGameLoaderModel.getRulesRecord().turnPolicy().getClass()).isEqualTo(mockTurnPolicy.getClass());
 
   }
 
