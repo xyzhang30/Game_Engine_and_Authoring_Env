@@ -24,7 +24,7 @@ public class GameEngine implements ExternalGameEngine {
 
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private final GameLoaderModel loader;
-  private PlayerContainer playerContainer;
+  private final PlayerContainer playerContainer;
   private RulesRecord rules;
   private CollidableContainer collidables;
   private Map<Pair, List<Command>> collisionHandlers;
@@ -208,11 +208,11 @@ public class GameEngine implements ExternalGameEngine {
     staticStateStack.push(
         new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
             round, turn, gameOver, staticState));
-   // printStaticStateStack();
+    // printStaticStateStack();
   }
 
   private void printStaticStateStack() {
-    for(GameRecord r: staticStateStack) {
+    for (GameRecord r : staticStateStack) {
       System.out.print(r.players().get(0).score() + " ");
     }
   }

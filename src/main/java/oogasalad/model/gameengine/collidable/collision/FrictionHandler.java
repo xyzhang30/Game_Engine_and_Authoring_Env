@@ -30,7 +30,8 @@ public class FrictionHandler extends PhysicsHandler {
       double frictionAcceleration = frictionForce / c1.mass();
 
       // The velocity's magnitude for calculating unit direction vector
-      double velocityMagnitude = Math.sqrt(Math.pow(c1.velocityX(), 2) + Math.pow(c1.velocityY(), 2));
+      double velocityMagnitude = Math.sqrt(
+          Math.pow(c1.velocityX(), 2) + Math.pow(c1.velocityY(), 2));
 
       // Prevent division by zero when velocity is zero
       if (velocityMagnitude == 0) {
@@ -50,8 +51,12 @@ public class FrictionHandler extends PhysicsHandler {
       double newVelocityY = c1.velocityY() - frictionDecelerationY * dt;
 
       // Ensure velocity components do not switch signs due to over-application of friction
-      if (Math.signum(newVelocityX) != Math.signum(c1.velocityX())) newVelocityX = 0;
-      if (Math.signum(newVelocityY) != Math.signum(c1.velocityY())) newVelocityY = 0;
+      if (Math.signum(newVelocityX) != Math.signum(c1.velocityX())) {
+        newVelocityX = 0;
+      }
+      if (Math.signum(newVelocityY) != Math.signum(c1.velocityY())) {
+        newVelocityY = 0;
+      }
 
       return List.of(newVelocityX, newVelocityY);
     };

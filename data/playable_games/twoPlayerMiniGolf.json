@@ -268,16 +268,52 @@
       "kineticFriction": 0,
       "color": [255,255,255],
       "image": ""
+    },
+    {
+      "collidable_id": 15,
+      "properties": ["visible", "movable", "controllable"],
+      "mass": 0.04,
+      "position": {
+        "x_position": 380,
+        "y_position": 300
+      },
+      "shape": "Circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [255,255,255],
+      "image": ""
+    },
+    {
+      "collidable_id": 16,
+      "properties": ["visible", "movable", "controllable"],
+      "mass": 0.04,
+      "position": {
+        "x_position": 480,
+        "y_position": 300
+      },
+      "shape": "Circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [255,255,255],
+      "image": ""
     }
   ],
   "players": [
     {
       "player_id": 1,
-      "my_collidable": [8]
+      "my_collidable": [8,15]
     },
     {
       "player_id": 2,
-      "my_collidable": [14]
+      "my_collidable": [14,16]
     }
   ],
   "variables": [

@@ -26,7 +26,8 @@ public class Collidable {
   private Stack<List<Integer>> locationHistory;
 
   public Collidable(int id, double mass, double x, double y,
-      boolean visible, double staticMu, double kineticMu, double width, double height, String shape) {
+      boolean visible, double staticMu, double kineticMu, double width, double height,
+      String shape) {
     myId = id;
     myMass = mass;
     myX = x;
@@ -51,7 +52,8 @@ public class Collidable {
 
 
   public CollidableRecord getCollidableRecord() {
-    return new CollidableRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible, myStaticMu, myKineticMu
+    return new CollidableRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible,
+        myStaticMu, myKineticMu
         , myWidth, myHeight);
   }
 

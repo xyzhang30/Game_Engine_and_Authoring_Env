@@ -2,7 +2,6 @@ package oogasalad.model.gameparser;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.naming.ldap.Control;
 import oogasalad.model.api.ControllablesView;
 import oogasalad.model.api.ViewCollidableRecord;
 import oogasalad.model.api.data.CollidableObject;
@@ -31,7 +30,7 @@ public class GameLoaderView extends GameLoader {
     List<Integer> controllableIds = new ArrayList<>();
     viewCollidableRecords = new ArrayList<>();
     for (CollidableObject o : gameData.getCollidableObjects()) {
-      if (o.properties().contains("controllable")){
+      if (o.properties().contains("controllable")) {
         controllableIds.add(o.collidableId());
       }
       int id = o.collidableId();
@@ -56,7 +55,7 @@ public class GameLoaderView extends GameLoader {
     return viewCollidableRecords;
   }
 
-  public ControllablesView getControllableIds(){
+  public ControllablesView getControllableIds() {
     return controllablesView;
   }
 

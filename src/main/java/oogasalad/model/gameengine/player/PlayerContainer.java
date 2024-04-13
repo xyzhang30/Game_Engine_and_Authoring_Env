@@ -49,7 +49,6 @@ public class PlayerContainer {
   }
 
 
-
   private void callSetFromRecord(PlayerRecord record) {
     getPlayer(record.playerId()).setFromRecord(record);
   }
@@ -71,15 +70,15 @@ public class PlayerContainer {
   }
 
   public String toString() {
-    StringBuilder s= new StringBuilder();
-    for(Player p : myPlayers.values()) {
+    StringBuilder s = new StringBuilder();
+    for (Player p : myPlayers.values()) {
       s.append("\n" + p.toString());
     }
     return s.toString();
   }
 
   public void startRound() {
-    for(Player p : myPlayers.values()) {
+    for (Player p : myPlayers.values()) {
       p.setRoundCompleted(false);
     }
   }

@@ -33,7 +33,8 @@ public class Player {
   //later make this an abstraction
   public void updateActiveControllableId() {
     activeControllable =
-        myControllables.get((myControllables.indexOf(activeControllable) + 1) % myControllables.size()) ;
+        myControllables.get(
+            (myControllables.indexOf(activeControllable) + 1) % myControllables.size());
   }
 
   public void setVariable(String key, double value) {
@@ -55,7 +56,7 @@ public class Player {
 
 
   //public String toString() {
- //   return "ID " + playerId + "\n\tRoundCompleted " + roundCompleted + "\n\t" + "Score "
+  //   return "ID " + playerId + "\n\tRoundCompleted " + roundCompleted + "\n\t" + "Score "
   //    + variables.get("score")+"\n\t";
   //}
   public boolean isRoundCompleted() {
@@ -69,6 +70,7 @@ public class Player {
   public int getControllableId() {
     return myControllables.get(myControllables.indexOf(activeControllable));
   }
+
   protected void setFromRecord(PlayerRecord record) {
     variables.put("score", record.score());
   }
