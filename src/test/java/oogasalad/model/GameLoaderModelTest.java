@@ -140,7 +140,8 @@ public class GameLoaderModelTest {
     RulesRecord mockRulesRecord = new RulesRecord(collisionHandlers, winCondition, roundPolicy,
         advanceTurn, advanceRound, physicsMap, mockTurnPolicy, mockStaticStateHandler);
 
-
+    testGameLoaderModel.getPlayerContainer();
+    testGameLoaderModel.getCollidableContainer();
     assertThat(testGameLoaderModel.getRulesRecord()).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mockRulesRecord);
   }
 

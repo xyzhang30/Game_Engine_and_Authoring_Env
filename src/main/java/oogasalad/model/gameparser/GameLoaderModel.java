@@ -56,6 +56,7 @@ public class GameLoaderModel extends GameLoader {
     super(gameTitle);
     movables = new ArrayList<>();
     physicsMap = new HashMap<>();
+
     staticHandler = StaticStateHandlerLinkedListBuilder.buildLinkedList(List.of(
         "GameOverStaticStateHandler",
         "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
