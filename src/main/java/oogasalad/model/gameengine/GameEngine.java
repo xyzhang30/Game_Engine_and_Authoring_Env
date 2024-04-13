@@ -53,6 +53,7 @@ public class GameEngine implements ExternalGameEngine {
     turn = 1; //first player ideally should have id 1
     staticState = true;
     playerContainer.startRound();
+    playerContainer.setActive(turn);
     collidables = loader.getCollidableContainer();
     collisionHandlers = rules.collisionHandlers();
     collidables.addStaticStateCollidables();
@@ -61,6 +62,8 @@ public class GameEngine implements ExternalGameEngine {
     staticStateStack.push(
         new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
             round, turn, gameOver, staticState));
+    System.out.println(staticStateStack.peek());
+
   }
 
   /**
@@ -128,7 +131,6 @@ public class GameEngine implements ExternalGameEngine {
   public void advanceRound() {
     round++;
     start(loader);
-    System.out.println(getGameRecord());
   }
 
   public void advanceTurn() {
@@ -179,7 +181,6 @@ public class GameEngine implements ExternalGameEngine {
 
   private void handleCollisions(double dt) {
     Set<Pair> collisionPairs = collidables.getCollisionPairs();
-    System.out.println(collisionPairs);
     for (Pair collision : collisionPairs) {
       if (rules.physicsMap().containsKey(collision)) {
         rules.physicsMap().get(collision).handleCollision(collidables, dt);
@@ -234,4 +235,8 @@ public class GameEngine implements ExternalGameEngine {
     return staticStateStack.peek();
   }
 
+  public void setActivesControllablesInvisible() {
+    int id = playerContainer.getPlayer(playerContainer.getActive()).getControllableId();
+    collidables.getCollidable(id).setVisible(false);
+  }
 }

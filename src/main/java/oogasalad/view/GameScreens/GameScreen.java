@@ -31,6 +31,7 @@ public class GameScreen extends UIScreen {
   private Rectangle powerIndicator;
 
   private Text scoreboardTxt;
+  private Text turnBoardTxt;
 
   public GameScreen(GameController controller, CompositeElement compositeElement) {
     root = new BorderPane();
@@ -72,6 +73,7 @@ public class GameScreen extends UIScreen {
     setupControlPane(); //This messes up the power bar key listening
     powerIndicator = setupPowerBar();
     setupScoreBoard();
+    setupTurnBoard();
   }
 
 
@@ -87,6 +89,24 @@ public class GameScreen extends UIScreen {
     scoreboardTxt.setY(65);
     scoreboardTxt.setFill(Color.BLACK);
     root.getChildren().addAll(rectangle, scoreboardTxt);
+  }
+  private void setupTurnBoard() {
+    Rectangle rectangle = new Rectangle(110, 50, 100, 50);
+    rectangle.setFill(Color.LIMEGREEN);
+    turnBoardTxt = new Text("");
+    turnBoardTxt.setX(125);
+    turnBoardTxt.setY(65);
+    turnBoardTxt.setFill(Color.BLACK);
+    root.getChildren().addAll(rectangle, turnBoardTxt);
+  }
+  public void updateTurnBoard(int turn, int round) {
+    Rectangle rectangle = new Rectangle(110, 50, 100, 50);
+    rectangle.setFill(Color.LIMEGREEN);
+    turnBoardTxt = new Text("Round: " + round + "\n" + "Turn : " + turn);
+    turnBoardTxt.setX(125);
+    turnBoardTxt.setY(65);
+    turnBoardTxt.setFill(Color.BLACK);
+    root.getChildren().addAll(rectangle, turnBoardTxt);
   }
 
   public void updateScoreBoard(Map<Integer, Double> score) {

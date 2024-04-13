@@ -299,9 +299,6 @@
         "second_id": 9,
         "command": [
           {
-            "AdjustActivePointsCommand": [1]
-          },
-          {
             "PlayerCompletedRoundCommand": []
           }
         ]
@@ -310,9 +307,6 @@
         "first_id": 9,
         "second_id": 14,
         "command": [
-          {
-            "AdjustActivePointsCommand": [1]
-          },
           {
             "PlayerCompletedRoundCommand": []
           }

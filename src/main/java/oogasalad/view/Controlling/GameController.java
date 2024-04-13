@@ -33,7 +33,6 @@ import org.apache.logging.log4j.Logger;
 public class GameController {
 
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
-  private final CollisionManager collisionManager;
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
   private int controllableID;
@@ -47,7 +46,6 @@ public class GameController {
     sceneManager = new SceneManager();
     sceneManager.makeTitleScreen(this);
     animationManager = new AnimationManager();
-    collisionManager = new CollisionManager();
   }
 
   public Scene getScene() {
@@ -82,7 +80,6 @@ public class GameController {
     getCurrentControllable(gameEngine.getGameRecord());
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScreen(this, compositeElement);
-    collisionManager.setNewCompositeElement(compositeElement);
   }
 
   private void getCurrentControllable(GameRecord gameRecord) {

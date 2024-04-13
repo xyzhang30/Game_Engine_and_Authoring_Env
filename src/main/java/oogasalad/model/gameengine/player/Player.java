@@ -65,6 +65,9 @@ public class Player {
     roundCompleted = isCompleted;
   }
 
+  public int getControllableId() {
+    return myControllables.get(myControllables.indexOf(activeControllable));
+  }
   protected void setFromRecord(PlayerRecord record) {
     variables.put("score", record.score());
   }

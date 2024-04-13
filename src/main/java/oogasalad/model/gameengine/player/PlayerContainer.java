@@ -14,7 +14,6 @@ public class PlayerContainer {
 
   public PlayerContainer(Map<Integer, Player> players) {
     myPlayers = players;
-    active = 1;
     playerHistory = new Stack<>();
     addPlayerHistory();
 

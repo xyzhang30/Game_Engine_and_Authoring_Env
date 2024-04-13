@@ -42,7 +42,7 @@ public class SceneManager {
     for(PlayerRecord p : gameRecord.players()) {
       scoreMap.put(p.playerId(), p.score());
     }
-    updateScoreBoard(scoreMap);
+    updateScoreTurnBoard(scoreMap, gameRecord.turn(), gameRecord.round());
     checkEndRound(gameRecord);
   }
 
@@ -83,7 +83,8 @@ public class SceneManager {
     scene.setRoot(transitionScreen.getRoot());
   }
 
-  public void updateScoreBoard(Map<Integer, Double> scoreMap) {
+  public void updateScoreTurnBoard(Map<Integer, Double> scoreMap, int turn, int round) {
     gameScreen.updateScoreBoard(scoreMap);
+    gameScreen.updateTurnBoard(turn, round);
   }
 }

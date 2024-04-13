@@ -161,4 +161,10 @@ public class Collidable {
   }
 
 
+  protected void stop() {
+    myVelocityX = 0;
+    myNextVelocityX = 0;
+    myVelocityY = 0;
+    myNextVelocityY = 0;
+  }
 }
