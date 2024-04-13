@@ -1,5 +1,6 @@
 package oogasalad.view.GameScreens;
 
+import java.util.Map;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -70,7 +71,7 @@ public class GameScreen extends UIScreen {
   private void createScene() {
     setupControlPane(); //This messes up the power bar key listening
     powerIndicator = setupPowerBar();
-    setupScoreBoard(0);
+    setupScoreBoard();
   }
 
 
@@ -78,19 +79,24 @@ public class GameScreen extends UIScreen {
     root.setTop(new ControlPane());
   }
 
-  private void setupScoreBoard(int score) {
+  private void setupScoreBoard() {
     Rectangle rectangle = new Rectangle(10, 50, 100, 50);
     rectangle.setFill(Color.LIMEGREEN);
-    scoreboardTxt = new Text("Score: " + score);
-    scoreboardTxt.setX(50);
-    scoreboardTxt.setY(100);
+    scoreboardTxt = new Text("SCOREBOARD");
+    scoreboardTxt.setX(25);
+    scoreboardTxt.setY(65);
     scoreboardTxt.setFill(Color.BLACK);
     root.getChildren().addAll(rectangle, scoreboardTxt);
   }
 
-  public void updateScoreBoard(double score) {
-    scoreboardTxt.setText("Score: " + score);
+  public void updateScoreBoard(Map<Integer, Double> score) {
+    StringBuilder scoreboardText = new StringBuilder("Score:\n");
+    for (Map.Entry<Integer, Double> entry : score.entrySet()) {
+      scoreboardText.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+    }
+    scoreboardTxt.setText(scoreboardText.toString());
   }
+
 
 
   private Rectangle setupPowerBar() {
