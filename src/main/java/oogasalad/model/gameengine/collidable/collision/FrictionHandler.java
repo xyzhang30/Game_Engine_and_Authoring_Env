@@ -18,43 +18,77 @@ public class FrictionHandler extends PhysicsHandler {
   protected Supplier<List<Double>> makeVelocityFunction(CollidableRecord c1, CollidableRecord c2,
       double dt) {
     return () -> {
-      // Assuming normal force calculation remains the same; adjust if considering angles
-      double normalForce = c1.mass() * g; // No angle considered here for simplicity
-      // Choose between static and kinetic friction based on the object's motion
-      double mu = c1.velocityX() == 0 && c1.velocityY() == 0 ? c2.staticMu() : c2.kineticMu();
+      //need to standardize angle from 0-90 for each case... wrote a method for this
+      double inclineAngleRadians = Math.toRadians(normalizeInclineAngle(c2.inclineAngle()));
+      double gravityComponent = Math.sin(inclineAngleRadians) * g;  // g is the acceleration due to gravity
 
-      // Calculate frictional force
-      double frictionForce = mu * normalForce;
+      double inclineAngle = Math.toRadians(c2.inclineAngle()); // Convert angle to radians for calculations
 
-      // Calculate frictional acceleration (a = F / m)
-      double frictionAcceleration = frictionForce / c1.mass();
-
-      // The velocity's magnitude for calculating unit direction vector
-      double velocityMagnitude = Math.sqrt(Math.pow(c1.velocityX(), 2) + Math.pow(c1.velocityY(), 2));
-
-      // Prevent division by zero when velocity is zero
-      if (velocityMagnitude == 0) {
-        return List.of(0.0, 0.0);
+      double gravityX = 0, gravityY = 0;
+      if (inclineAngle >= 0 && inclineAngle < 90) {  // Up to down
+        gravityY = gravityComponent;
+      } else if (inclineAngle >= 90 && inclineAngle < 180) {  // Down to up
+        gravityY = -gravityComponent;
+      } else if (inclineAngle >= 180 && inclineAngle < 270) {  // Left to right
+        gravityX = gravityComponent;
+      } else if (inclineAngle >= 270 && inclineAngle < 360) {  // Right to left
+        gravityX = -gravityComponent;
       }
 
-      // Unit vector components in the direction of velocity
-      double unitVelocityX = c1.velocityX() / velocityMagnitude;
-      double unitVelocityY = c1.velocityY() / velocityMagnitude;
+      // Components of gravity parallel and perpendicular to the incline
+//      double gParallelX = g * Math.sin(inclineAngle);
+//      double gParallelY = 0; // No vertical movement if incline is only horizontal
 
-      // Frictional deceleration components
-      double frictionDecelerationX = frictionAcceleration * unitVelocityX;
-      double frictionDecelerationY = frictionAcceleration * unitVelocityY;
+      // Initial velocity adjustments due to gravity along the incline
+      double initialVelocityX = c1.velocityX() + gravityX * dt;
+      double initialVelocityY = c1.velocityY() + gravityY * dt;
 
-      // New velocity components after applying friction (ensure it doesn't increase speed)
-      double newVelocityX = c1.velocityX() - frictionDecelerationX * dt;
-      double newVelocityY = c1.velocityY() - frictionDecelerationY * dt;
+      // Calculate the normal force considering the incline (assuming surface is aligned along x-axis)
+      double normalForce = c1.mass() * g * Math.cos(inclineAngle);
 
-      // Ensure velocity components do not switch signs due to over-application of friction
-      if (Math.signum(newVelocityX) != Math.signum(c1.velocityX())) newVelocityX = 0;
-      if (Math.signum(newVelocityY) != Math.signum(c1.velocityY())) newVelocityY = 0;
+      // Determine the appropriate friction coefficient
+      double mu = (initialVelocityX == 0 && initialVelocityY == 0) ? c2.staticMu() : c2.kineticMu();
+
+      // Calculate the magnitude of frictional force
+      double frictionForce = mu * normalForce;
+
+      // Calculate frictional deceleration
+      double velocityMagnitude = Math.sqrt(initialVelocityX * initialVelocityX + initialVelocityY * initialVelocityY);
+      double frictionDeceleration = frictionForce / c1.mass();
+
+      // Calculate the components of frictional deceleration
+      double unitVelocityX = (velocityMagnitude != 0) ? initialVelocityX / velocityMagnitude : 0;
+      double unitVelocityY = (velocityMagnitude != 0) ? initialVelocityY / velocityMagnitude : 0;
+
+      double frictionDecelerationX = frictionDeceleration * unitVelocityX * dt;
+      double frictionDecelerationY = frictionDeceleration * unitVelocityY * dt;
+
+      // Update velocities considering friction
+      double newVelocityX = initialVelocityX - frictionDecelerationX;
+      double newVelocityY = initialVelocityY - frictionDecelerationY;
+
+      // Prevent friction from reversing the direction of motion
+      if (Math.signum(newVelocityX) != Math.signum(initialVelocityX)) newVelocityX = 0;
+      if (Math.signum(newVelocityY) != Math.signum(initialVelocityY)) newVelocityY = 0;
 
       return List.of(newVelocityX, newVelocityY);
     };
+  }
+
+
+  private double normalizeInclineAngle(double angle) {
+    // Normalize the angle to 0-360
+    angle = angle % 360;
+
+    // Convert the angle to a 0-90 degree range
+    if (angle > 90 && angle <= 180) {
+      angle = 180 - angle; // Down to up
+    } else if (angle > 180 && angle <= 270) {
+      angle = angle - 180; // Left to right
+    } else if (angle > 270 && angle <= 360) {
+      angle = 360 - angle; // Right to left
+    }
+    return angle;
   }
 }
 
