@@ -20,6 +20,7 @@ public record CollidableObject(@JsonProperty("collidable_id") int collidableId,
                                List<Integer> color,
                                double staticFriction,
                                double kineticFriction,
+                               double inclineAngle,
                                String image
                                ) {
 
