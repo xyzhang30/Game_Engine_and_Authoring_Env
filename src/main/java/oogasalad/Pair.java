@@ -36,7 +36,7 @@ public class Pair {
 
   @Override
   public int hashCode() {
-    return hash(first, second);
+    return hash(Math.min(first, second), Math.max(first, second));
   }
 
   public String toString() {
