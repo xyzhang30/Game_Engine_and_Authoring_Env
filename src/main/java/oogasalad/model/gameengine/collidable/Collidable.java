@@ -14,6 +14,7 @@ public class Collidable {
   private final String myShape;
   private final double myStaticMu;
   private final double myKineticMu;
+  private final double myInclineAngle;
   private double myX;
   private double myY;
   private double myVelocityX;
@@ -26,7 +27,7 @@ public class Collidable {
   private Stack<List<Integer>> locationHistory;
 
   public Collidable(int id, double mass, double x, double y,
-      boolean visible, double staticMu, double kineticMu, double width, double height, String shape) {
+      boolean visible, double staticMu, double kineticMu, double inclineAngle, double width, double height, String shape) {
     myId = id;
     myMass = mass;
     myX = x;
@@ -41,6 +42,7 @@ public class Collidable {
     myShape = shape;
     myStaticMu = staticMu;
     myKineticMu = kineticMu;
+    myInclineAngle = inclineAngle;
 
   }
 
@@ -52,7 +54,7 @@ public class Collidable {
 
   public CollidableRecord getCollidableRecord() {
     return new CollidableRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible, myStaticMu, myKineticMu
-        , myWidth, myHeight);
+        , myInclineAngle, myWidth, myHeight);
   }
 
   protected void move(double dt) {
