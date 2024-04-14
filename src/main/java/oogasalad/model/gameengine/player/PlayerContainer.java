@@ -14,7 +14,6 @@ public class PlayerContainer {
 
   public PlayerContainer(Map<Integer, Player> players) {
     myPlayers = players;
-    active = 1;
     playerHistory = new Stack<>();
     addPlayerHistory();
 
@@ -50,7 +49,6 @@ public class PlayerContainer {
   }
 
 
-
   private void callSetFromRecord(PlayerRecord record) {
     getPlayer(record.playerId()).setFromRecord(record);
   }
@@ -69,5 +67,19 @@ public class PlayerContainer {
       }
     }
     return true;
+  }
+
+  public String toString() {
+    StringBuilder s = new StringBuilder();
+    for (Player p : myPlayers.values()) {
+      s.append("\n" + p.toString());
+    }
+    return s.toString();
+  }
+
+  public void startRound() {
+    for (Player p : myPlayers.values()) {
+      p.setRoundCompleted(false);
+    }
   }
 }

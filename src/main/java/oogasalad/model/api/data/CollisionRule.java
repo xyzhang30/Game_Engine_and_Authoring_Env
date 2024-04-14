@@ -2,7 +2,6 @@ package oogasalad.model.api.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import java.util.List;
 import java.util.Map;
 
