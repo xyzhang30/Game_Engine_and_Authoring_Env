@@ -105,4 +105,8 @@ public class CollidableContainer {
       c.stop();
     }
   }
+
+  public void setVisible(int controllableId) {
+    getCollidable(controllableId).setVisible(true);
+  }
 }

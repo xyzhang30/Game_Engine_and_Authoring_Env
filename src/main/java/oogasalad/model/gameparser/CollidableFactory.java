@@ -11,7 +11,7 @@ public class CollidableFactory {
         co.mass(),
         co.position().xPosition(),
         co.position().yPosition(),
-        co.properties().contains("visible"),
+        co.properties().contains("visible") && !co.properties().contains("controllable"),
         co.staticFriction(),
         co.kineticFriction(),
         co.dimension().xDimension(),

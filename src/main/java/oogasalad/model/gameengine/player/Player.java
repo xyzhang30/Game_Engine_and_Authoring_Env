@@ -19,7 +19,6 @@ public class Player {
   public Player(int id, List<Integer> controlable) {
     playerId = id;
     myControllables = controlable;
-    System.out.println(myControllables);
     roundCompleted = false;
     activeControllable = myControllables.get(0);
     variables = new HashMap<>();
