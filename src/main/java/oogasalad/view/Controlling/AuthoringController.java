@@ -8,7 +8,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -29,8 +28,7 @@ import oogasalad.view.AuthoringScreens.InteractionSelectionScreen;
 import oogasalad.view.AuthoringScreens.InteractionType;
 import oogasalad.view.AuthoringScreens.NonControllableElementSelection;
 import oogasalad.view.AuthoringScreens.NonControllableType;
-import org.apache.logging.log4j.core.net.ssl.SslConfiguration;
-import java.io.File;
+import oogasalad.view.savegame.BuilderDirector;
 
 /**
  * Class to handle transitions between authoring environment scenes and communications with backend
