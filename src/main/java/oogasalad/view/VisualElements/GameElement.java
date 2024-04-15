@@ -13,6 +13,7 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import oogasalad.model.api.CollidableRecord;
 import oogasalad.model.api.ViewCollidableRecord;
+import oogasalad.model.api.data.CollidableShape;
 import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
@@ -37,13 +38,13 @@ public class GameElement implements VisualElement {
       if (data.image().isEmpty()) {
         List<Integer> rgb = data.color();
         Color color = Color.rgb(rgb.get(0), rgb.get(1), rgb.get(2));
-        switch (data.shape().toLowerCase()) { // Convert to reflection at later date
-          case "circle" -> {
+        switch (data.shape()) { // Convert to reflection at later date
+          case ELLIPSE -> {
             Ellipse ellipse = new Ellipse(data.width(), data.height());
             ellipse.setFill(color);
             return ellipse;
           }
-          case "rectangle" -> {
+          case RECTANGLE -> {
             return new Rectangle(data.width(), data.height(), color);
           }
           default -> throw new InvalidShapeException("Invalid shape");
@@ -51,13 +52,13 @@ public class GameElement implements VisualElement {
       } else {
         Path imgPath = Paths.get(data.image());
         Image image = new Image(imgPath.toUri().toString());
-        switch (data.shape().toLowerCase()) {
-          case "circle" -> {
+        switch (data.shape()) {
+          case ELLIPSE -> {
             Ellipse ellipse = new Ellipse(data.width(), data.height());
             ellipse.setFill(new ImagePattern(image));
             return ellipse;
           }
-          case "rectangle" -> {
+          case RECTANGLE -> {
             Rectangle rectangle = new Rectangle(data.width(), data.height());
             rectangle.setFill(new ImagePattern(image));
             return rectangle;

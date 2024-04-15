@@ -2,7 +2,6 @@ package oogasalad.model.api.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import java.util.List;
 
 /**
@@ -10,7 +9,8 @@ import java.util.List;
  *
  * @author Judy He
  */
-@JsonPropertyOrder({"collidable_id", "properties", "mass", "position","shape", "dimension", "color", "staticFriction", "kineticFriction", "image"})
+@JsonPropertyOrder({"collidable_id", "properties", "mass", "position", "shape", "dimension",
+    "color", "staticFriction", "kineticFriction", "image"})
 public record CollidableObject(@JsonProperty("collidable_id") int collidableId,
                                List<String> properties,
                                double mass,
@@ -21,6 +21,6 @@ public record CollidableObject(@JsonProperty("collidable_id") int collidableId,
                                double staticFriction,
                                double kineticFriction,
                                String image
-                               ) {
+) {
 
 }
