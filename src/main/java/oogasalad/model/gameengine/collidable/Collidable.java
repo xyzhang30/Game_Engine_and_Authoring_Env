@@ -24,6 +24,7 @@ public class Collidable {
   private double myNextVelocityY;
   private boolean myVisible;
   private Controllable controllable;
+  private Ownable ownable;
 
   public Collidable(int id, double mass, double x, double y,
       boolean visible, double staticMu, double kineticMu, double width, double height,
@@ -43,6 +44,7 @@ public class Collidable {
     myStaticMu = staticMu;
     myKineticMu = kineticMu;
     controllable = new NullControllable();
+    ownable = new NullOwnable();
   }
 
   public void addControllable(Controllable controllable) {
@@ -161,6 +163,10 @@ public class Collidable {
 
   public void applyInitialVelocity(double magnitude, double direction) {
     controllable.applyInitialVelocity(magnitude, direction);
+  }
+
+  public void addOwnable(Ownable ownable) {
+    this.ownable = ownable;
   }
 }
 

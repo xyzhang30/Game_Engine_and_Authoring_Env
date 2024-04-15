@@ -3,6 +3,8 @@ package oogasalad.model.gameparser;
 import oogasalad.model.api.data.CollidableObject;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.DefaultControllable;
+import oogasalad.model.gameengine.collidable.DefaultOwnable;
+import oogasalad.model.gameengine.collidable.Ownable;
 
 public class CollidableFactory {
 
@@ -20,6 +22,7 @@ public class CollidableFactory {
         co.shape());
     if(co.properties().contains("controllable")) {
       c.addControllable(new DefaultControllable(c));
+      c.addOwnable(new DefaultOwnable());
     }
     return c;
   }
