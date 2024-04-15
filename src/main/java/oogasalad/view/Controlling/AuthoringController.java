@@ -240,7 +240,7 @@ public class AuthoringController {
         new Position(posMap.get(background).get(0), posMap.get(background).get(1)),
         shapeName, new Dimension(background.getLayoutBounds().getWidth(),
         background.getLayoutBounds().getHeight()), colorRgb, staticFriction, kineticFriction,
-        imgPath);
+        imgPath, background.getRotate());
     collidableObjects.add(collidableObject);
     collidableIdMap.put(background, collidableId);
     collidableId++;
@@ -260,7 +260,7 @@ public class AuthoringController {
         properties, Double.POSITIVE_INFINITY,
         new Position(50, 50),
         shapeName, new Dimension(20,
-        990), colorRgb, staticFriction, kineticFriction, imgPath);
+        990), colorRgb, staticFriction, kineticFriction, imgPath, 0);
     collidableObjects.add(collidableObject);
     collidableIdMap.put(wall1, collidableId);
     collidableId++;
@@ -270,7 +270,7 @@ public class AuthoringController {
         properties, Double.POSITIVE_INFINITY,
         new Position(1020, 50),
         shapeName, new Dimension(20,
-        990), colorRgb, staticFriction, kineticFriction, imgPath);
+        990), colorRgb, staticFriction, kineticFriction, imgPath, 0);
     collidableObjects.add(collidableObject);
     collidableIdMap.put(wall2, collidableId);
     collidableId++;
@@ -280,7 +280,7 @@ public class AuthoringController {
         properties, Double.POSITIVE_INFINITY,
         new Position(50, 50),
         shapeName, new Dimension(985,
-        20), colorRgb, staticFriction, kineticFriction, imgPath);
+        20), colorRgb, staticFriction, kineticFriction, imgPath, 0);
     collidableObjects.add(collidableObject);
     collidableIdMap.put(wall3, collidableId);
     collidableId++;
@@ -290,7 +290,7 @@ public class AuthoringController {
         properties, Double.POSITIVE_INFINITY,
         new Position(50, 1015),
         shapeName, new Dimension(985,
-        20), colorRgb, staticFriction, kineticFriction, imgPath);
+        20), colorRgb, staticFriction, kineticFriction, imgPath,0);
     collidableObjects.add(collidableObject);
     collidableIdMap.put(wall4, collidableId);
     collidableId++;
@@ -327,14 +327,14 @@ public class AuthoringController {
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(((Ellipse) shape).getRadiusX() * shape.getScaleX(),
                 ((Ellipse) shape).getRadiusY() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, imgPath);
+            colorRgb, 0.0, 0.0, imgPath, shape.getRotate());
       } else {
         collidableObject = new CollidableObject(collidableId,
             properties, mass,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(shape.getLayoutBounds().getWidth() * shape.getScaleX(),
                 shape.getLayoutBounds().getHeight() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, imgPath);
+            colorRgb, 0.0, 0.0, imgPath, shape.getRotate());
       }
 
       collidableObjects.add(collidableObject);
@@ -361,14 +361,14 @@ public class AuthoringController {
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(((Ellipse) shape).getRadiusX() * shape.getScaleX(),
                 ((Ellipse) shape).getRadiusY() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, imgPath);
+            colorRgb, 0.0, 0.0, imgPath, shape.getRotate());
       } else {
         collidableObject = new CollidableObject(collidableId,
             properties, 10,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(shape.getLayoutBounds().getWidth() * shape.getScaleX(),
                 shape.getLayoutBounds().getHeight() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, imgPath);
+            colorRgb, 0.0, 0.0, imgPath, shape.getRotate());
       }
 
       collidableObjects.add(collidableObject);
