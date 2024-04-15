@@ -12,4 +12,8 @@ public class DefaultOwnable implements Ownable {
   public double getTemporaryScore() {
     return score;
   }
+
+  public void incrementTemporaryScore() {
+    score++;
+  }
 }

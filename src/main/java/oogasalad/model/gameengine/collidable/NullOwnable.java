@@ -11,4 +11,8 @@ public class NullOwnable implements Ownable {
   public double getTemporaryScore() {
     return 0; //do nothing
   }
+
+  public void incrementTemporaryScore() {
+    //do nothing
+  }
 }

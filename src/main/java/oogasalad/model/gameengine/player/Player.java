@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import oogasalad.model.api.PlayerRecord;
+import oogasalad.model.gameengine.collidable.Controllable;
+import oogasalad.model.gameengine.collidable.Ownable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,20 +14,22 @@ public class Player {
   private static final Logger LOGGER = LogManager.getLogger(Player.class);
   private final int playerId;
   private final List<Integer> myControllables;
+  private List<Ownable> myOwnables;
   private final Map<String, Double> variables;
   private int activeControllable;
   private boolean roundCompleted = false;
   private int turnsCompleted;
 
-  public Player(int id, List<Integer> controlable) {
+  public Player(int id, List<Integer> controllables) {
     playerId = id;
-    myControllables = controlable;
+    myControllables = controllables;
     roundCompleted = false;
     turnsCompleted = 0;
     activeControllable = myControllables.get(0);
     variables = new HashMap<>();
     variables.put("score", 0.0);
   }
+
 
   public double getVariable(String variable) {
     return variables.getOrDefault(variable, 0.0);
@@ -46,10 +50,8 @@ public class Player {
   protected PlayerRecord getPlayerRecord(boolean active) {
     try {
       double score = variables.get("score");
-      for (String variable : variables.keySet()) {
-        if (variable.startsWith(":")) {
-          score += variables.get(variable);
-        }
+      for (Ownable o : myOwnables) {
+          score += o.getTemporaryScore();
       }
       return new PlayerRecord(playerId, score, activeControllable, active, myControllables);
     } catch (NullPointerException e) {
@@ -84,19 +86,15 @@ public class Player {
   }
 
   private void clearDelayedPoints() {
-    for (String variable : variables.keySet()) {
-      if (variable.startsWith(":")) {
-        variables.put(variable, 0.0);
-      }
+    for (Ownable o : myOwnables) {
+      o.setTemporaryScore(0);
     }
   }
 
   protected void applyDelayedScore() {
-    for (String variable : variables.keySet()) {
-      if (variable.startsWith(":")) {
-        variables.put("score", variables.get("score") + variables.get(variable));
-        variables.put(variable, 0.0);
-      }
+    for(Ownable o : myOwnables) {
+      variables.put("score", variables.get("score") + o.getTemporaryScore());
+      o.setTemporaryScore(0);
     }
   }
 

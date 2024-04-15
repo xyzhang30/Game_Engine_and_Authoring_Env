@@ -51,6 +51,10 @@ public class Collidable {
     this.controllable = controllable;
   }
 
+  public void addOwnable(Ownable ownable) {
+    this.ownable = ownable;
+  }
+
   protected void updatePostCollisionVelocity() {
     myVelocityY = myNextVelocityY;
     myVelocityX = myNextVelocityX;
@@ -165,9 +169,7 @@ public class Collidable {
     controllable.applyInitialVelocity(magnitude, direction);
   }
 
-  public void addOwnable(Ownable ownable) {
-    this.ownable = ownable;
-  }
+
 }
 
 

@@ -16,7 +16,6 @@ public class PlayerContainer {
     myPlayers = players;
     playerHistory = new Stack<>();
     addPlayerHistory();
-
   }
 
   public int getNumPlayers() {
