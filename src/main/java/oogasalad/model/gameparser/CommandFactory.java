@@ -6,9 +6,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.gameengine.command.Command;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CommandFactory {
 
+  private static final Logger LOGGER = LogManager.getLogger(CommandFactory.class);
   private static final String COMMAND_PATH = "command.";
 
   public static Command createCommand(String cmdName, List<Double> params)
@@ -18,7 +21,8 @@ public class CommandFactory {
       return (Command) clazz.getDeclaredConstructor(List.class).newInstance(params);
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              NoSuchMethodException | IllegalAccessException e) {
-      throw new InvalidCommandException("");
+      LOGGER.error("command " + cmdName + " is invalid");
+      throw new InvalidCommandException("invalid command");
     }
   }
 }
