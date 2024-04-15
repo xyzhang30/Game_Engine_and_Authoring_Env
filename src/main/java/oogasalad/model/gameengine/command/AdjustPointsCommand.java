@@ -1,10 +1,14 @@
 package oogasalad.model.gameengine.command;
 
 import java.util.List;
+import oogasalad.model.api.exception.InvalidParameterNumberException;
 import oogasalad.model.gameengine.GameEngine;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class AdjustPointsCommand extends AdjustPointsGivenPlayerCommand {
 
+  private static final Logger LOGGER = LogManager.getLogger(AdjustPointsCommand.class);
   private final List<Double> arguments;
 
   public AdjustPointsCommand(List<Double> arguments) {
@@ -14,7 +18,12 @@ public class AdjustPointsCommand extends AdjustPointsGivenPlayerCommand {
 
   @Override
   public void execute(GameEngine engine) {
-    adjust(engine, (int) Math.round(arguments.get(1)));
+    try {
+      adjust(engine, (int) Math.round(arguments.get(1)));
+    } catch (IndexOutOfBoundsException e){
+      LOGGER.error("Incorrect number of command parameters");
+      throw new InvalidParameterNumberException("Incorrect number of command parameters");
+    }
   }
 }
 
