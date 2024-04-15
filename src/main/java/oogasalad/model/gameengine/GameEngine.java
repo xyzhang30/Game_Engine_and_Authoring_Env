@@ -99,6 +99,7 @@ public class GameEngine implements ExternalGameEngine {
       staticState = false;
     }
     collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getControllableId());
+    System.out.println(collidables.getCollidableRecords());
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
         round, turn, gameOver, staticState);
   }
