@@ -17,7 +17,8 @@
       "staticFriction": 3.03873,
       "kineticFriction": 2.03873,
       "color": [124,252,0],
-      "image": ""
+      "image": "",
+      "direction": 0
     },
 
 
@@ -37,7 +38,8 @@
       "staticFriction": 3.03873,
       "kineticFriction": 2.03873,
       "color": [124,252,0],
-      "image": ""
+      "image": "",
+      "direction": 0
     },
 
     {
@@ -56,7 +58,8 @@
       "staticFriction": 3.03873,
       "kineticFriction": 2.03873,
       "color": [124,252,0],
-      "image": ""
+      "image": "",
+      "direction": 0
     },
 
     {
@@ -72,11 +75,11 @@
         "x_dimension": 334,
         "y_dimension": 300
       },
-
       "image": "",
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [230,159,0]
+      "color": [230,159,0],
+      "direction": 0
     },
 
     {
@@ -95,7 +98,8 @@
       "staticFriction": 34,
       "kineticFriction": 24,
       "color": [0,100,0],
-      "image": ""
+      "image": "",
+      "direction": 0
     },
 
     {
@@ -114,7 +118,8 @@
       "staticFriction": 9,
       "kineticFriction": 7,
       "color": [0,0,255],
-      "image": ""
+      "image": "",
+      "direction": 0
     },
 
     {
@@ -133,7 +138,8 @@
       "staticFriction": 3.03873,
       "kineticFriction": 2.03873,
       "color": [124,252,0],
-      "image": ""
+      "image": "",
+      "direction": 0
     },
 
     {
@@ -152,7 +158,8 @@
       "staticFriction": 0,
       "kineticFriction": 0,
       "color": [255,255,255],
-      "image": ""
+      "image": "",
+      "direction": 0
     },
 
 
@@ -172,7 +179,8 @@
       "staticFriction": 0,
       "kineticFriction": 0,
       "color": [0,0,0],
-      "image": ""
+      "image": "",
+      "direction": 0
     },
 
     {
@@ -191,7 +199,8 @@
       "staticFriction": 0,
       "kineticFriction": 0,
       "color": [0,0,0],
-      "image": ""
+      "image": "",
+      "direction": 0
     },
 
     {
@@ -210,7 +219,8 @@
       "staticFriction": 0,
       "kineticFriction": 0,
       "color": [0,0,0],
-      "image": ""
+      "image": "",
+      "direction": 0
     },
 
     {
@@ -229,7 +239,8 @@
       "staticFriction": 0,
       "kineticFriction": 0,
       "color": [0,0,0],
-      "image": ""
+      "image": "",
+      "direction": 0
     },
 
     {
@@ -249,7 +260,8 @@
       "staticFriction": 0,
       "kineticFriction": 0,
       "color": [0,0,0],
-      "image": ""
+      "image": "",
+      "direction": 0
     }
 
   ],

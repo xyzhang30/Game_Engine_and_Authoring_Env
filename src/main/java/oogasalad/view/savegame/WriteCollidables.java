@@ -1,28 +1,34 @@
-//package oogasalad.view.savegame;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Map;
-//import javafx.scene.paint.Color;
-//import javafx.scene.shape.Ellipse;
-//import javafx.scene.shape.Rectangle;
-//import javafx.scene.shape.Shape;
-//import oogasalad.model.api.data.CollidableObject;
-//import oogasalad.model.api.data.Dimension;
-//import oogasalad.model.api.data.Position;
-//import oogasalad.view.AuthoringScreens.NonControllableType;
-//
-//public class WriteCollidables {
-//
-//  public void writeCollidablesRecord(Map<Shape, Integer> collidableIdMap, List<Shape> controllables,
-//      Map<Shape, NonControllableType> nonControllableTypeMap, Map<Shape, String> imageMap,
-//      Map<Shape, List<Double>> posMap) {
-//    int collidableId = 0;
-//    List<CollidableObject> collidableObjects = new ArrayList<>();
-//    writeBackGround();
-//  }
-//
-//  private void writeBackGround() {
+package oogasalad.view.savegame;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import oogasalad.model.api.data.CollidableObject;
+import oogasalad.model.api.data.Dimension;
+import oogasalad.model.api.data.Position;
+import oogasalad.view.AuthoringScreens.NonControllableType;
+
+public class WriteCollidables {
+
+
+  public void writeControllables(){
+
+  }
+
+  public void writeCollidablesRecord(Map<Shape, Integer> collidableIdMap, List<Shape> controllables,
+      Map<Shape, NonControllableType> nonControllableTypeMap, Map<Shape, String> imageMap,
+      Map<Shape, List<Double>> posMap) {
+
+    int collidableId = 0;
+    List<CollidableObject> collidableObjects = new ArrayList<>();
+    writeBackGround();
+  }
+
+  private void writeBackGround() {
 //    List<Integer> colorRgb = List.of(0, 0, 0);
 //    String imgPath = "";
 //    if (background.getFill() instanceof Color) {
@@ -52,10 +58,10 @@
 //
 //    nonControllableTypeMap.remove(background);
 //
-//  }
-//
-//
-//  //
+  }
+
+
+  //
 //  private void writeCollidables(Map<Shape, Integer> collidableIdMap, List<Shape> controllables,
 //      Map<Shape, NonControllableType> nonControllableTypeMap, Map<Shape, String> imageMap,
 //      Map<Shape, List<Double>> posMap) {
@@ -228,4 +234,4 @@
 //    builderDirector.constructCollidableObjects(collidableObjects);
 //
 //  }
-//}
+}

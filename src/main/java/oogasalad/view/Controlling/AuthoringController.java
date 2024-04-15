@@ -21,6 +21,7 @@ import oogasalad.model.api.data.PlayerVariables;
 import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
+import oogasalad.model.gameengine.GameEngine;
 import oogasalad.view.AuthoringScreens.BackgroundSelectionScreen;
 import oogasalad.view.AuthoringScreens.ControllableElementSelectionScreen;
 import oogasalad.view.AuthoringScreens.ImageType;
@@ -29,6 +30,8 @@ import oogasalad.view.AuthoringScreens.InteractionType;
 import oogasalad.view.AuthoringScreens.NonControllableElementSelection;
 import oogasalad.view.AuthoringScreens.NonControllableType;
 import oogasalad.view.savegame.BuilderDirector;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Class to handle transitions between authoring environment scenes and communications with backend
@@ -40,6 +43,9 @@ public class AuthoringController {
   private Stage stage;
   private Rectangle background;
   private BuilderDirector builderDirector = new BuilderDirector();
+  private static final Logger LOGGER = LogManager.getLogger(AuthoringController.class);
+
+
 //  private List<Shape> controllables;
 //  private Map<Shape, NonControllableType> nonControllableTypeMap;
 
@@ -132,6 +138,7 @@ public class AuthoringController {
       builderDirector.writeGame(gameName);
       return true;
     } catch (RuntimeException e) {
+      LOGGER.error("error when writing game game data field");
       e.printStackTrace();
       return false;
     }
@@ -145,7 +152,6 @@ public class AuthoringController {
 
   private void writePlayer() {
     //HARD CODED FOR DEMO!
-    //QUESTION: WHICH COLLIDABLE WILL BE THE ONE PLAYER IS ASSIGNED TO IN THE DEMO WE DO??
     ParserPlayer player = new ParserPlayer(1, List.of(1));
 
     builderDirector.constructPlayers(List.of(player));
@@ -240,7 +246,7 @@ public class AuthoringController {
         new Position(posMap.get(background).get(0), posMap.get(background).get(1)),
         shapeName, new Dimension(background.getLayoutBounds().getWidth(),
         background.getLayoutBounds().getHeight()), colorRgb, staticFriction, kineticFriction,
-        imgPath);
+        imgPath, background.getRotate());
     collidableObjects.add(collidableObject);
     collidableIdMap.put(background, collidableId);
     collidableId++;
@@ -260,7 +266,7 @@ public class AuthoringController {
         properties, Double.POSITIVE_INFINITY,
         new Position(50, 50),
         shapeName, new Dimension(20,
-        990), colorRgb, staticFriction, kineticFriction, imgPath);
+        990), colorRgb, staticFriction, kineticFriction, imgPath, 0);
     collidableObjects.add(collidableObject);
     collidableIdMap.put(wall1, collidableId);
     collidableId++;
@@ -270,7 +276,7 @@ public class AuthoringController {
         properties, Double.POSITIVE_INFINITY,
         new Position(1020, 50),
         shapeName, new Dimension(20,
-        990), colorRgb, staticFriction, kineticFriction, imgPath);
+        990), colorRgb, staticFriction, kineticFriction, imgPath, 0);
     collidableObjects.add(collidableObject);
     collidableIdMap.put(wall2, collidableId);
     collidableId++;
@@ -280,7 +286,7 @@ public class AuthoringController {
         properties, Double.POSITIVE_INFINITY,
         new Position(50, 50),
         shapeName, new Dimension(985,
-        20), colorRgb, staticFriction, kineticFriction, imgPath);
+        20), colorRgb, staticFriction, kineticFriction, imgPath, 0);
     collidableObjects.add(collidableObject);
     collidableIdMap.put(wall3, collidableId);
     collidableId++;
@@ -290,7 +296,7 @@ public class AuthoringController {
         properties, Double.POSITIVE_INFINITY,
         new Position(50, 1015),
         shapeName, new Dimension(985,
-        20), colorRgb, staticFriction, kineticFriction, imgPath);
+        20), colorRgb, staticFriction, kineticFriction, imgPath,0);
     collidableObjects.add(collidableObject);
     collidableIdMap.put(wall4, collidableId);
     collidableId++;
@@ -327,14 +333,14 @@ public class AuthoringController {
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(((Ellipse) shape).getRadiusX() * shape.getScaleX(),
                 ((Ellipse) shape).getRadiusY() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, imgPath);
+            colorRgb, 0.0, 0.0, imgPath, shape.getRotate());
       } else {
         collidableObject = new CollidableObject(collidableId,
             properties, mass,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(shape.getLayoutBounds().getWidth() * shape.getScaleX(),
                 shape.getLayoutBounds().getHeight() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, imgPath);
+            colorRgb, 0.0, 0.0, imgPath, shape.getRotate());
       }
 
       collidableObjects.add(collidableObject);
@@ -361,14 +367,14 @@ public class AuthoringController {
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(((Ellipse) shape).getRadiusX() * shape.getScaleX(),
                 ((Ellipse) shape).getRadiusY() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, imgPath);
+            colorRgb, 0.0, 0.0, imgPath, shape.getRotate());
       } else {
         collidableObject = new CollidableObject(collidableId,
             properties, 10,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(shape.getLayoutBounds().getWidth() * shape.getScaleX(),
                 shape.getLayoutBounds().getHeight() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, imgPath);
+            colorRgb, 0.0, 0.0, imgPath, shape.getRotate());
       }
 
       collidableObjects.add(collidableObject);
