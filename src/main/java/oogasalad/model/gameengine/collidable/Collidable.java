@@ -23,7 +23,7 @@ public class Collidable {
   private double myNextVelocityX;
   private double myNextVelocityY;
   private boolean myVisible;
-  private Stack<List<Integer>> locationHistory;
+  private double delayedPoints;
 
   public Collidable(int id, double mass, double x, double y,
       boolean visible, double staticMu, double kineticMu, double width, double height,
@@ -42,7 +42,7 @@ public class Collidable {
     myShape = shape;
     myStaticMu = staticMu;
     myKineticMu = kineticMu;
-
+    delayedPoints = 0;
   }
 
   protected void updatePostCollisionVelocity() {
@@ -168,5 +168,12 @@ public class Collidable {
     myNextVelocityX = 0;
     myVelocityY = 0;
     myNextVelocityY = 0;
+  }
+
+  public void setDelayedPoints(double numPoints) {
+    delayedPoints = numPoints;
+  }
+  public double getDelayedPoints() {
+    return delayedPoints;
   }
 }

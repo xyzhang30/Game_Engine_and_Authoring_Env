@@ -80,6 +80,14 @@ public class PlayerContainer {
   public void startRound() {
     for (Player p : myPlayers.values()) {
       p.setRoundCompleted(false);
+      p.clearDelayedPoints();
     }
+  }
+
+  public void applyDelayedScores() {
+    for (Player p : myPlayers.values()) {
+      p.applyDelayedScore();
+    }
+
   }
 }

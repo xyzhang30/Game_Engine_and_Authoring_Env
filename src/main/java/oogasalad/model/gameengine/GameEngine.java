@@ -129,6 +129,7 @@ public class GameEngine implements ExternalGameEngine {
 
   public void advanceRound() {
     round++;
+    playerContainer.applyDelayedScores();
     startRound(loader);
   }
 
@@ -210,13 +211,6 @@ public class GameEngine implements ExternalGameEngine {
     staticStateStack.push(
         new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
             round, turn, gameOver, staticState));
-    // printStaticStateStack();
-  }
-
-  private void printStaticStateStack() {
-    for (GameRecord r : staticStateStack) {
-      System.out.print(r.players().get(0).score() + " ");
-    }
   }
 
 

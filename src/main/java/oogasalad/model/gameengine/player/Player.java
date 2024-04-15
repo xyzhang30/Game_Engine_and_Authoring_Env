@@ -43,7 +43,13 @@ public class Player {
 
   protected PlayerRecord getPlayerRecord(boolean active) {
     try {
-      return new PlayerRecord(playerId, variables.get("score"), activeControllable, active);
+      double score = variables.get("score");
+      for (String variable : variables.keySet()) {
+        if (variable.startsWith(":")) {
+          score += variables.get(variable);
+        }
+      }
+      return new PlayerRecord(playerId, score, activeControllable, active, myControllables);
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");
       return null;
@@ -75,4 +81,20 @@ public class Player {
     variables.put("score", record.score());
   }
 
+  public void clearDelayedPoints() {
+    for (String variable : variables.keySet()) {
+      if (variable.startsWith(":")) {
+        variables.put(variable, 0.0);
+      }
+    }
+  }
+
+  protected void applyDelayedScore() {
+    for (String variable : variables.keySet()) {
+      if (variable.startsWith(":")) {
+        variables.put("score", variables.get("score") + variables.get(variable));
+        variables.put(variable, 0.0);
+      }
+    }
+  }
 }

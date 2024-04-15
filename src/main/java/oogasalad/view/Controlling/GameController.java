@@ -88,7 +88,7 @@ public class GameController {
     activePlayer = gameRecord.turn();
     for(PlayerRecord p : gameRecord.players()) {
       if(p.playerId()==activePlayer) {
-        controllableID = p.myControllable();
+        controllableID = p.activeControllable();
         break;
       }
     }
