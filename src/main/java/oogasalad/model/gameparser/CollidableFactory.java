@@ -21,7 +21,6 @@ public class CollidableFactory {
     if(co.properties().contains("controllable")) {
       c.addControllable(new DefaultControllable(c));
     }
-
     return c;
   }
 }

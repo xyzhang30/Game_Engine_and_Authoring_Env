@@ -124,12 +124,25 @@ public class Collidable {
   }
 
 
-  private void setSpeed(double speedX, double speedY) {
+  private void setNextSpeed(double speedX, double speedY) {
     myNextVelocityX = speedX;
     myNextVelocityY = speedY;
   }
 
-  protected void calculateNewSpeeds(Supplier<List<Double>> firstInfo) {
+  private void setSpeed(double speedX, double speedY) {
+    myVelocityX = speedX;
+    myVelocityY = speedY;
+    myNextVelocityX = myVelocityX;
+    myNextVelocityY = myVelocityY;
+  }
+
+
+  protected void calculateNextSpeeds(Supplier<List<Double>> firstInfo) {
+    List<Double> newSpeeds = firstInfo.get();
+    setNextSpeed(newSpeeds.get(0), newSpeeds.get(1));
+  }
+
+  protected void calculateSpeeds(Supplier<List<Double>> firstInfo) {
     List<Double> newSpeeds = firstInfo.get();
     setSpeed(newSpeeds.get(0), newSpeeds.get(1));
   }
@@ -147,10 +160,8 @@ public class Collidable {
   }
 
   public void applyInitialVelocity(double magnitude, double direction) {
-    List<Double> lst = controllable.applyInitialVelocity(magnitude, direction);
-    myVelocityX = lst.get(0);
-    myVelocityY = lst.get(1);
-    myNextVelocityX = myVelocityX;
-    myNextVelocityY = myVelocityY;
+    controllable.applyInitialVelocity(magnitude, direction);
   }
 }
+
+

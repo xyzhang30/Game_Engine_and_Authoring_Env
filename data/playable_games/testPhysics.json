@@ -9,7 +9,7 @@
         "x_position": 0,
         "y_position": 0
       },
-      "shape": "circle",
+      "shape": "rectangle",
       "dimension": {
         "x_dimension": 20,
         "y_dimension": 20

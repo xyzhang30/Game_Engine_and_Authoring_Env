@@ -86,6 +86,7 @@ public class CollidableContainer {
       CollidableRecord record1 = records.get(i);
       Collidable collidable1 = myCollidables.get(record1.id());
 
+
       for (int j = i + 1; j < records.size(); j++) {
         CollidableRecord record2 = records.get(j);
         Collidable collidable2 = myCollidables.get(record2.id());
