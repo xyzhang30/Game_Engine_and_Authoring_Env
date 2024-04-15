@@ -7,6 +7,7 @@ public class AdvanceTurnCommand implements Command {
 
   private final List<Double> arguments;
 
+  @ExpectedParamNumber(0)
   public AdvanceTurnCommand(List<Double> arguments) {
     this.arguments = arguments;
   }

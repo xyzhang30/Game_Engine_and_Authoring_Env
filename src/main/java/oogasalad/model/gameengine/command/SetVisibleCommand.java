@@ -7,6 +7,7 @@ public class SetVisibleCommand implements Command {
 
   private final List<Double> arguments;
 
+  @ExpectedParamNumber(2)
   public SetVisibleCommand(List<Double> arguments) {
     this.arguments = arguments;
   }

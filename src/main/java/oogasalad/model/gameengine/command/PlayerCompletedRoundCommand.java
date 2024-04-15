@@ -7,6 +7,7 @@ public class PlayerCompletedRoundCommand implements Command {
 
   private final List<Double> arguments;
 
+  @ExpectedParamNumber(0)
   public PlayerCompletedRoundCommand(List<Double> arguments) {
     this.arguments = arguments;
   }

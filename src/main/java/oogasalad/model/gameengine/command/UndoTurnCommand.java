@@ -7,6 +7,7 @@ public class UndoTurnCommand implements Command {
 
   private final List<Double> arguments;
 
+  @ExpectedParamNumber(0)
   public UndoTurnCommand(List<Double> arguments) {
     this.arguments = arguments;
   }

@@ -7,6 +7,7 @@ public class MultiplySpeedCommand implements Command {
 
   private final List<Double> arguments;
 
+  @ExpectedParamNumber(2)
   public MultiplySpeedCommand(List<Double> arguments) {
     this.arguments = arguments;
   }

@@ -11,6 +11,7 @@ public abstract class AdjustPointsGivenPlayerCommand implements Command {
 
   private final List<Double> arguments;
 
+  @ExpectedParamNumber(1)
   public AdjustPointsGivenPlayerCommand(List<Double> arguments) {
     this.arguments = arguments;
   }

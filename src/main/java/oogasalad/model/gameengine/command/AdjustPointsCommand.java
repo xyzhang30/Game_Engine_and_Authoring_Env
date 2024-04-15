@@ -5,26 +5,34 @@ import oogasalad.model.api.exception.InvalidParameterNumberException;
 import oogasalad.model.gameengine.GameEngine;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.runners.Parameterized.Parameters;
 
 public class AdjustPointsCommand extends AdjustPointsGivenPlayerCommand {
 
   private static final Logger LOGGER = LogManager.getLogger(AdjustPointsCommand.class);
   private final List<Double> arguments;
 
+  @ExpectedParamNumber(2)
   public AdjustPointsCommand(List<Double> arguments) {
     super(arguments);
     this.arguments = arguments;
   }
 
   @Override
-  public void execute(GameEngine engine) throws InvalidParameterNumberException {
-    try {
-      adjust(engine, (int) Math.round(arguments.get(1)));
-    } catch (IndexOutOfBoundsException e){
-      LOGGER.error("Incorrect number of command parameters");
-      throw new InvalidParameterNumberException("Incorrect number of command parameters");
-    }
+  public void execute(GameEngine engine) {
+    adjust(engine, (int) Math.round(arguments.get(1)));
   }
+
+  //  @Override
+//  public void execute(GameEngine engine) throws InvalidParameterNumberException {
+//    try {
+//      adjust(engine, (int) Math.round(arguments.get(1)));
+//    } catch (IndexOutOfBoundsException e){
+//      LOGGER.error("Incorrect number of command parameters");
+//      throw new InvalidParameterNumberException("Incorrect number of command parameters");
+//    }
+//  }
+
 }
 
 //Backlog

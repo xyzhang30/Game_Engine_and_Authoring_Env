@@ -7,6 +7,7 @@ public class AdvanceRoundCommand implements Command {
 
   private final List<Double> arguments;
 
+  @ExpectedParamNumber(0)
   public AdvanceRoundCommand(List<Double> arguments) {
     this.arguments = arguments;
   }
