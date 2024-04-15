@@ -21,6 +21,7 @@ import oogasalad.model.api.data.PlayerVariables;
 import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
+import oogasalad.model.gameengine.GameEngine;
 import oogasalad.view.AuthoringScreens.BackgroundSelectionScreen;
 import oogasalad.view.AuthoringScreens.ControllableElementSelectionScreen;
 import oogasalad.view.AuthoringScreens.ImageType;
@@ -29,6 +30,8 @@ import oogasalad.view.AuthoringScreens.InteractionType;
 import oogasalad.view.AuthoringScreens.NonControllableElementSelection;
 import oogasalad.view.AuthoringScreens.NonControllableType;
 import oogasalad.view.savegame.BuilderDirector;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Class to handle transitions between authoring environment scenes and communications with backend
@@ -40,6 +43,9 @@ public class AuthoringController {
   private Stage stage;
   private Rectangle background;
   private BuilderDirector builderDirector = new BuilderDirector();
+  private static final Logger LOGGER = LogManager.getLogger(AuthoringController.class);
+
+
 //  private List<Shape> controllables;
 //  private Map<Shape, NonControllableType> nonControllableTypeMap;
 
@@ -132,6 +138,7 @@ public class AuthoringController {
       builderDirector.writeGame(gameName);
       return true;
     } catch (RuntimeException e) {
+      LOGGER.error("error when writing game game data field");
       e.printStackTrace();
       return false;
     }
@@ -145,7 +152,6 @@ public class AuthoringController {
 
   private void writePlayer() {
     //HARD CODED FOR DEMO!
-    //QUESTION: WHICH COLLIDABLE WILL BE THE ONE PLAYER IS ASSIGNED TO IN THE DEMO WE DO??
     ParserPlayer player = new ParserPlayer(1, List.of(1));
 
     builderDirector.constructPlayers(List.of(player));
