@@ -17,7 +17,7 @@ public class AdjustPointsCommand extends AdjustPointsGivenPlayerCommand {
   }
 
   @Override
-  public void execute(GameEngine engine) {
+  public void execute(GameEngine engine) throws InvalidParameterNumberException {
     try {
       adjust(engine, (int) Math.round(arguments.get(1)));
     } catch (IndexOutOfBoundsException e){
