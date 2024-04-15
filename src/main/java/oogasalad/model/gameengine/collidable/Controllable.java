@@ -1,5 +1,7 @@
 package oogasalad.model.gameengine.collidable;
 
+import java.util.List;
+
 public interface Controllable {
-  void applyInitialVelocity(double magnitude, double direction);
+  List<Double> applyInitialVelocity(double magnitude, double direction);
 }

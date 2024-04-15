@@ -118,6 +118,7 @@ public class PhysicsTest {
     gameEngine.update(.25);
     assertEquals(-10, container.getCollidableRecord(1).velocityX(), DELTA);
     assertEquals(10, container.getCollidableRecord(10).velocityX(), DELTA);
+
     gameEngine.update(.25);
 
     System.out.println(container.getCollidableRecord(1));
@@ -135,6 +136,7 @@ public class PhysicsTest {
     gameEngine.applyInitialVelocity(15, -Math.PI, 1);
     gameEngine.applyInitialVelocity(15, 0, 10);
     GameRecord r = gameEngine.update(.5);
+    System.out.println(gameEngine.getGameRecord());
     assertEquals(2.0, r.players().get(0).score(), DELTA);
   }
 

@@ -2,7 +2,6 @@ package oogasalad.model.gameengine.collidable;
 
 
 import java.util.List;
-import java.util.function.Supplier;
 
 public class DefaultControllable implements Controllable {
 
@@ -12,12 +11,7 @@ public class DefaultControllable implements Controllable {
   }
 
   @Override
-  public void applyInitialVelocity(double magnitude, double direction) {
-    Supplier<List<Double>> supplier = () -> {
-      double speedX = magnitude * Math.cos(direction);
-      double speedY = magnitude * Math.sin(direction);
-      return List.of(speedX, speedY);
-    };
-    collidable.calculateNewSpeeds(supplier);
-  }
+  public List<Double> applyInitialVelocity(double magnitude, double direction) {
+      return List.of(magnitude * Math.cos(direction), magnitude * Math.sin(direction));
+    }
 }

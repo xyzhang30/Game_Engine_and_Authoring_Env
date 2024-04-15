@@ -181,6 +181,7 @@ public class GameEngine implements ExternalGameEngine {
 
   private void handleCollisions(double dt) {
     Set<Pair> collisionPairs = collidables.getCollisionPairs();
+    System.out.println(collisionPairs);
     for (Pair collision : collisionPairs) {
       if (rules.physicsMap().containsKey(collision)) {
         rules.physicsMap().get(collision).handleCollision(collidables, dt);

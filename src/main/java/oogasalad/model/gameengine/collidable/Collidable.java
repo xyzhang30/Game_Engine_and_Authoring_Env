@@ -123,32 +123,10 @@ public class Collidable {
     myVisible = record.visible();
   }
 
-  //for debugging
-  @Override
-  public String toString() {
-    String sb = "{\n"
-        + "  \"myMass\": " + myMass + ",\n"
-        + "  \"myX\": " + myX + ",\n"
-        + "  \"myY\": " + myY + ",\n"
-        + "  \"myVelocityX\": " + myVelocityX + ",\n"
-        + "  \"myVelocityY\": " + myVelocityY + ",\n"
-        + "  \"myId\": " + myId + ",\n"
-        + "  \"myNextX\": " + myNextX + ",\n"
-        + "  \"myNextY\": " + myNextY + ",\n"
-        + "  \"myNextVelocityX\": " + myNextVelocityX + ",\n"
-        + "  \"myNextVelocityY\": " + myNextVelocityY + ",\n"
-        + "  \"myVisible\": " + myVisible + ",\n"
-        + "  \"myWidth\": " + myWidth + ",\n"
-        + "  \"myHeight\": " + myHeight + ",\n"
-        + "}\n";
-    return sb;
-  }
 
   private void setSpeed(double speedX, double speedY) {
     myNextVelocityX = speedX;
     myNextVelocityY = speedY;
-    myVelocityX = myNextVelocityX;
-    myVelocityY = myNextVelocityY;
   }
 
   protected void calculateNewSpeeds(Supplier<List<Double>> firstInfo) {
@@ -161,8 +139,6 @@ public class Collidable {
     myVelocityY *= factor;
   }
 
-
-
   protected void stop() {
     myVelocityX = 0;
     myNextVelocityX = 0;
@@ -171,6 +147,10 @@ public class Collidable {
   }
 
   public void applyInitialVelocity(double magnitude, double direction) {
-    controllable.applyInitialVelocity(magnitude, direction);
+    List<Double> lst = controllable.applyInitialVelocity(magnitude, direction);
+    myVelocityX = lst.get(0);
+    myVelocityY = lst.get(1);
+    myNextVelocityX = myVelocityX;
+    myNextVelocityY = myVelocityY;
   }
 }
