@@ -10,9 +10,7 @@ public class GamePanelEmbed {
   private final Rectangle clip;
 
   public GamePanelEmbed(CompositeElement elements){
-    GamePanel globalView = new GamePanel();
-    globalView.addGameContentNodes(elements);
-    GamePanelLocalView localView = new GamePanelLocalView(globalView.getPane());
+    GamePanel localView = new GamePanel(elements);
     panelView = new AnchorPane(localView.getPane());
     clip = new Rectangle();
     panelView.setClip(clip);

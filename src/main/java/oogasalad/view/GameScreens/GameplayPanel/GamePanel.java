@@ -4,25 +4,30 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import oogasalad.view.VisualElements.CompositeElement;
 
+/**
+ * Transforms a node
+ */
 public class GamePanel {
-  private final Pane globalView;
-  public GamePanel(){
-    globalView = new AnchorPane();
+  private final Pane localDisplay;
+  private final TransformableNode transformer;
+  public GamePanel(CompositeElement elements){
+    AnchorPane source = new AnchorPane();
+    for (int id : elements.idList()) {
+      source.getChildren().add(elements.getNode(id));
+    }
+    transformer = new TransformableNode(source);
+    localDisplay = new AnchorPane(transformer.getPane());
   }
   public Pane getPane(){
-    return globalView;
+    return localDisplay;
   }
-  public void addGameContentNodes(CompositeElement cm){
-    for (int i : cm.idList()) {
-      globalView.getChildren().add(cm.getNode(i));
-    }
+  public void setCamera(double x, double y, double w, double h){
+    transformer.setFocus(x,y);
   }
-  public void setDimensions(double width, double height){
-    double scaleX = width/globalView.getBoundsInLocal().getWidth();
-    double scaleY = height/globalView.getBoundsInLocal().getHeight();
-    globalView.setScaleX(scaleX);
-    globalView.setScaleY(scaleY);
-    globalView.setTranslateX(globalView.getBoundsInLocal().getCenterX()*(scaleX-1));
-    globalView.setTranslateY(globalView.getBoundsInLocal().getCenterY()*(scaleY-1));
+  public void zoomIn(){
+    transformer.zoom(1.05);
+  }
+  public void zoomOut(){
+    transformer.zoom(0.95);
   }
 }
