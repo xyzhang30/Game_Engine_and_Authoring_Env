@@ -54,7 +54,7 @@ public class GameLoaderModelTest {
 
     this.mockCollidableContainer = new CollidableContainer(collidables);
 
-    Player p1 = new Player(1, List.of(c2.getId()));
+    Player p1 = new Player(1);
 
     Map<Integer, Player> players = Map.of(1, p1);
 

@@ -45,6 +45,7 @@ public class GameLoaderModel extends GameLoader {
       BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList;
 
   private final GenericStaticStateHandler staticHandler;
+  private Map<Integer, Player> playerMap;
 
 
   /**
@@ -109,6 +110,10 @@ public class GameLoaderModel extends GameLoader {
         movables.add(co.collidableId());
       }
       collidables.put(co.collidableId(), createCollidable(co));
+      for(Player p : playerMap.values()) {
+        p.addOwnable(collidables.get(co.collidableId()));
+        p.addControllable(collidables.get(co.collidableId()));
+      }
       collidables.keySet().forEach(id -> addPairToPhysicsMap(co, id, conditionsList));
     });
 
@@ -141,9 +146,9 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private void createPlayerContainer() {
-    Map<Integer, Player> playerMap = new HashMap<>();
+    playerMap = new HashMap<>();
     gameData.getPlayers().forEach(p -> {
-      playerMap.put(p.playerId(), new Player(p.playerId(), p.myCollidable()));
+      playerMap.put(p.playerId(), new Player(p.playerId()));
     });
     this.playerContainer = new PlayerContainer(playerMap);
   }

@@ -1,9 +1,11 @@
 package oogasalad.model.gameengine.player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import oogasalad.model.api.PlayerRecord;
+import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.Controllable;
 import oogasalad.model.gameengine.collidable.Ownable;
 import org.apache.logging.log4j.LogManager;
@@ -13,19 +15,19 @@ public class Player {
 
   private static final Logger LOGGER = LogManager.getLogger(Player.class);
   private final int playerId;
-  private final List<Integer> myControllables;
-  private List<Ownable> myOwnables;
+  private final List<Collidable> myControllables;
+  private List<Collidable> myOwnables;
   private final Map<String, Double> variables;
-  private int activeControllable;
+  private Collidable activeControllable;
   private boolean roundCompleted = false;
   private int turnsCompleted;
 
-  public Player(int id, List<Integer> controllables) {
+  public Player(int id) {
     playerId = id;
-    myControllables = controllables;
+    myControllables = new ArrayList<>();
+    myOwnables = new ArrayList<>();
     roundCompleted = false;
     turnsCompleted = 0;
-    activeControllable = myControllables.get(0);
     variables = new HashMap<>();
     variables.put("score", 0.0);
   }
@@ -50,10 +52,10 @@ public class Player {
   protected PlayerRecord getPlayerRecord(boolean active) {
     try {
       double score = variables.get("score");
-      for (Ownable o : myOwnables) {
-          score += o.getTemporaryScore();
+      for (Collidable c : myOwnables) {
+          score += c.getOwnable().getTemporaryScore();
       }
-      return new PlayerRecord(playerId, score, activeControllable, active, myControllables);
+      return new PlayerRecord(playerId, score, activeControllable.getId(), active);
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");
       return null;
@@ -77,8 +79,8 @@ public class Player {
     roundCompleted = true;
   }
 
-  public int getControllableId() {
-    return myControllables.get(myControllables.indexOf(activeControllable));
+  public int getActiveControllable() {
+    return myControllables.get(myControllables.indexOf(activeControllable)).getId();
   }
 
   protected void setFromRecord(PlayerRecord record) {
@@ -86,15 +88,25 @@ public class Player {
   }
 
   private void clearDelayedPoints() {
-    for (Ownable o : myOwnables) {
-      o.setTemporaryScore(0);
+    for (Collidable c : myOwnables) {
+      c.getOwnable().setTemporaryScore(0);
+    }
+  }
+
+  public void addOwnable(Collidable c) {
+    myOwnables.add(c);
+  }
+  public void addControllable(Collidable c) {
+    myControllables.add(c);
+    if(activeControllable==null) {
+      activeControllable = myControllables.get(0);
     }
   }
 
   protected void applyDelayedScore() {
-    for(Ownable o : myOwnables) {
-      variables.put("score", variables.get("score") + o.getTemporaryScore());
-      o.setTemporaryScore(0);
+    for(Collidable c : myOwnables) {
+      variables.put("score", variables.get("score") + c.getOwnable().getTemporaryScore());
+      c.getOwnable().setTemporaryScore(0);
     }
   }
 

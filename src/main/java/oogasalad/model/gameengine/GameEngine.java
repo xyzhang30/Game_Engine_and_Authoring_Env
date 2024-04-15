@@ -8,9 +8,7 @@ import oogasalad.Pair;
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
-import oogasalad.model.gameengine.collidable.Controllable;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameparser.GameLoaderModel;
@@ -50,13 +48,13 @@ public class GameEngine implements ExternalGameEngine {
     gameOver = false;
     turn = 1; //first player ideally should have id 1
     staticState = true;
-    playerContainer.startRound();
-    playerContainer.setActive(turn);
     loader.makeLevel(round);
     collidables = loader.getCollidableContainer();
     rules = loader.getRulesRecord();
     collisionHandlers = rules.collisionHandlers();
-    collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getControllableId());
+    playerContainer.startRound();
+    playerContainer.setActive(turn);
+    collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getActiveControllable());
     collidables.addStaticStateCollidables();
     playerContainer.addPlayerHistory();
     staticStateStack = new Stack<>();
@@ -99,7 +97,7 @@ public class GameEngine implements ExternalGameEngine {
     } else {
       staticState = false;
     }
-    collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getControllableId());
+    collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getActiveControllable());
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
         round, turn, gameOver, staticState);
   }
@@ -230,7 +228,6 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   public void setActivesControllablesInvisible() {
-    int id = playerContainer.getPlayer(playerContainer.getActive()).getControllableId();
-    collidables.getCollidable(id).setVisible(false);
+    collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getActiveControllable());
   }
 }

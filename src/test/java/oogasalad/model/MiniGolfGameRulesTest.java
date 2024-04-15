@@ -74,6 +74,7 @@ public class MiniGolfGameRulesTest {
     gameEngine.applyInitialVelocity(25, Math.PI/4, 1);
     gameEngine.update(1);
     // updates ideally
+    System.out.println(gameEngine.getGameRecord());
     assertEquals(3.0, gameEngine.getRound(), DELTA);
     assertTrue( gameEngine.isOver());
   }
