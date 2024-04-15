@@ -2,11 +2,12 @@ package oogasalad.model.gameparser;
 
 import oogasalad.model.api.data.CollidableObject;
 import oogasalad.model.gameengine.collidable.Collidable;
+import oogasalad.model.gameengine.collidable.DefaultControllable;
 
 public class CollidableFactory {
 
   public static Collidable createCollidable(CollidableObject co) {
-    return new Collidable(
+    Collidable c = new Collidable(
         co.collidableId(),
         co.mass(),
         co.position().xPosition(),
@@ -17,5 +18,10 @@ public class CollidableFactory {
         co.dimension().xDimension(),
         co.dimension().yDimension(),
         co.shape());
+    if(co.properties().contains("controllable")) {
+      c.addControllable(new DefaultControllable(c));
+    }
+
+    return c;
   }
 }

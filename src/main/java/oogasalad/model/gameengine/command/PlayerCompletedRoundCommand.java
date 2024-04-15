@@ -18,3 +18,4 @@ public class PlayerCompletedRoundCommand implements Command {
     engine.setActivesControllablesInvisible();
   }
 }
+

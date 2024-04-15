@@ -23,7 +23,7 @@ public class Collidable {
   private double myNextVelocityX;
   private double myNextVelocityY;
   private boolean myVisible;
-  private double delayedPoints;
+  private Controllable controllable;
 
   public Collidable(int id, double mass, double x, double y,
       boolean visible, double staticMu, double kineticMu, double width, double height,
@@ -42,7 +42,11 @@ public class Collidable {
     myShape = shape;
     myStaticMu = staticMu;
     myKineticMu = kineticMu;
-    delayedPoints = 0;
+    controllable = new NullControllable();
+  }
+
+  public void addControllable(Controllable controllable) {
+    this.controllable = controllable;
   }
 
   protected void updatePostCollisionVelocity() {
@@ -65,13 +69,6 @@ public class Collidable {
   protected void update() {
     myX = myNextX;
     myY = myNextY;
-  }
-
-  public void applyInitialVelocity(double magnitude, double direction) {
-    myVelocityX = magnitude * Math.cos(direction);
-    myNextVelocityX = myVelocityX;
-    myVelocityY = magnitude * Math.sin(direction);
-    myNextVelocityY = myVelocityY;
   }
 
   protected double getVelocityX() {
@@ -150,6 +147,8 @@ public class Collidable {
   private void setSpeed(double speedX, double speedY) {
     myNextVelocityX = speedX;
     myNextVelocityY = speedY;
+    myVelocityX = myNextVelocityX;
+    myVelocityY = myNextVelocityY;
   }
 
   protected void calculateNewSpeeds(Supplier<List<Double>> firstInfo) {
@@ -163,6 +162,7 @@ public class Collidable {
   }
 
 
+
   protected void stop() {
     myVelocityX = 0;
     myNextVelocityX = 0;
@@ -170,10 +170,7 @@ public class Collidable {
     myNextVelocityY = 0;
   }
 
-  public void setDelayedPoints(double numPoints) {
-    delayedPoints = numPoints;
-  }
-  public double getDelayedPoints() {
-    return delayedPoints;
+  public void applyInitialVelocity(double magnitude, double direction) {
+    controllable.applyInitialVelocity(magnitude, direction);
   }
 }

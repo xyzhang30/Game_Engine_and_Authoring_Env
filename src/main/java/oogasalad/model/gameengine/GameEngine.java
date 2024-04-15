@@ -10,6 +10,7 @@ import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
+import oogasalad.model.gameengine.collidable.Controllable;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameparser.GameLoaderModel;
@@ -99,7 +100,6 @@ public class GameEngine implements ExternalGameEngine {
       staticState = false;
     }
     collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getControllableId());
-    System.out.println(collidables.getCollidableRecords());
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
         round, turn, gameOver, staticState);
   }
@@ -116,8 +116,7 @@ public class GameEngine implements ExternalGameEngine {
     LOGGER.info(" player " + turn + " apply initial velocity with magnitude " + magnitude + " and "
         + "direction "
         + direction * 180 / Math.PI);
-    Collidable collidable = collidables.getCollidable(id);
-    collidable.applyInitialVelocity(magnitude, direction);
+    collidables.getCollidable(id).applyInitialVelocity(magnitude,direction);
   }
 
   /**
