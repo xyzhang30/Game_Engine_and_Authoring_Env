@@ -15,11 +15,13 @@ public class Player {
   private final Map<String, Double> variables;
   private int activeControllable;
   private boolean roundCompleted = false;
+  private int turnsCompleted;
 
   public Player(int id, List<Integer> controlable) {
     playerId = id;
     myControllables = controlable;
     roundCompleted = false;
+    turnsCompleted = 0;
     activeControllable = myControllables.get(0);
     variables = new HashMap<>();
     variables.put("score", 0.0);
@@ -69,8 +71,8 @@ public class Player {
     return roundCompleted;
   }
 
-  public void setRoundCompleted(boolean isCompleted) {
-    roundCompleted = isCompleted;
+  public void completeRound() {
+    roundCompleted = true;
   }
 
   public int getControllableId() {
@@ -81,7 +83,7 @@ public class Player {
     variables.put("score", record.score());
   }
 
-  public void clearDelayedPoints() {
+  private void clearDelayedPoints() {
     for (String variable : variables.keySet()) {
       if (variable.startsWith(":")) {
         variables.put(variable, 0.0);
@@ -96,5 +98,19 @@ public class Player {
         variables.put(variable, 0.0);
       }
     }
+  }
+
+  public void completeTurn() {
+    turnsCompleted++;
+  }
+
+  protected int getTurnsCompleted() {
+    return turnsCompleted;
+  }
+
+  public void startRound() {
+    roundCompleted = false;
+    turnsCompleted = 0;
+    clearDelayedPoints();
   }
 }

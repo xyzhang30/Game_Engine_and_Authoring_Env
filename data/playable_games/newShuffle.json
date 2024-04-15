@@ -469,12 +469,13 @@
 
     "turn_policy" : "StandardTurnPolicy",
     "round_policy" : {
-      "AllPlayersCompletedRoundCondition" : [ ]
+      "NTurnsCompletedCondition" : [ 2 ]
     },
     "win_condition" : {
-      "NRoundsCompletedCondition" : [ 1 ]
+      "NRoundsCompletedCondition" : [ 2 ]
     },
     "advance_turn" : [ {
+      "PlayerCompletedTurnCommand": [],
       "AdvanceTurnCommand" : [ ]
     } ],
     "advance_round" : [ {

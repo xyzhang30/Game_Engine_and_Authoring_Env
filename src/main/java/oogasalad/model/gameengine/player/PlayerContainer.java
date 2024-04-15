@@ -79,8 +79,7 @@ public class PlayerContainer {
 
   public void startRound() {
     for (Player p : myPlayers.values()) {
-      p.setRoundCompleted(false);
-      p.clearDelayedPoints();
+      p.startRound();
     }
   }
 
@@ -88,6 +87,16 @@ public class PlayerContainer {
     for (Player p : myPlayers.values()) {
       p.applyDelayedScore();
     }
+
+  }
+
+  public boolean allPlayersCompletedNTurns(int turnsRequired) {
+    for (Player p : myPlayers.values()) {
+      if (!(p.getTurnsCompleted() >= turnsRequired)) {
+        return false;
+      }
+    }
+    return true;
 
   }
 }
