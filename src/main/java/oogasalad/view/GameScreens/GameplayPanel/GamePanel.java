@@ -12,12 +12,17 @@ public class GamePanel {
   public Pane getPane(){
     return globalView;
   }
-  public Pane getGlobalView(){
-    return globalView;
-  }
   public void addGameContentNodes(CompositeElement cm){
     for (int i : cm.idList()) {
       globalView.getChildren().add(cm.getNode(i));
     }
+  }
+  public void setDimensions(double width, double height){
+    double scaleX = width/globalView.getBoundsInLocal().getWidth();
+    double scaleY = height/globalView.getBoundsInLocal().getHeight();
+    globalView.setScaleX(scaleX);
+    globalView.setScaleY(scaleY);
+    globalView.setTranslateX(globalView.getBoundsInLocal().getCenterX()*(scaleX-1));
+    globalView.setTranslateY(globalView.getBoundsInLocal().getCenterY()*(scaleY-1));
   }
 }

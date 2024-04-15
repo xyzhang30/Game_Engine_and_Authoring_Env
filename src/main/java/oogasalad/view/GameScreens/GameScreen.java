@@ -39,6 +39,7 @@ public class GameScreen extends UIScreen {
 
     GamePanel gamePanel = new GamePanel();
     gamePanel.addGameContentNodes(compositeElement);
+    gamePanel.setDimensions(1000,1000);
 //    root.setCenter(gamePanel.getPane());
     gplv = new GamePanelLocalView(gamePanel.getPane());
     root.setCenter(gplv.getPane());

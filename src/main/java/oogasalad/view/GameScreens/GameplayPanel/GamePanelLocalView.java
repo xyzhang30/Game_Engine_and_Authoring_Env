@@ -6,32 +6,38 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Transforms a node
+ */
 public class GamePanelLocalView {
   private final Bounds sourceBounds;
-  private final Pane localView;
-  private final Rectangle camera;
+  private final Pane localDisplay;
+  private final Rectangle sourceView;
+  private final Rectangle destinationView;
   public GamePanelLocalView(Node source){
     sourceBounds = source.getBoundsInParent();
-    localView = new AnchorPane(source);
-    camera = new Rectangle();
+    localDisplay = new AnchorPane(source);
+    sourceView = new Rectangle();
+    destinationView = new Rectangle(0,0,800,800);
     setCamera(0,0,sourceBounds.getWidth(),sourceBounds.getHeight());
+    localDisplay.setClip(destinationView);
   }
   public Pane getPane(){
-    return localView;
+    return localDisplay;
   }
   public void setCamera(double x, double y, double w, double h){
-    camera.setX(x);
-    camera.setY(y);
-    camera.setWidth(w);
-    camera.setHeight(h);
+    sourceView.setX(x);
+    sourceView.setY(y);
+    sourceView.setWidth(w);
+    sourceView.setHeight(h);
     TransformToLocal();
   }
   public void TransformToLocal(){
-    double scaleX = camera.getWidth()/sourceBounds.getWidth();
-    double scaleY = camera.getHeight()/sourceBounds.getHeight();
-    localView.setScaleX(scaleX);
-    localView.setScaleY(scaleY);
-    localView.setTranslateX(sourceBounds.getCenterX()*(scaleX-1)-camera.getX());
-    localView.setTranslateY(sourceBounds.getCenterY()*(scaleY-1)-camera.getY());
+    double scaleX = destinationView.getWidth()/sourceView.getWidth();
+    double scaleY = destinationView.getHeight()/sourceView.getHeight();
+    localDisplay.setScaleX(scaleX);
+    localDisplay.setScaleY(scaleY);
+    localDisplay.setTranslateX(sourceBounds.getCenterX()*(scaleX-1)-sourceView.getX());
+    localDisplay.setTranslateY(sourceBounds.getCenterY()*(scaleY-1)-sourceView.getY());
   }
 }
