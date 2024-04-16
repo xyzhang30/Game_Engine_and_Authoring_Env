@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine.command;
+package oogasalad.model.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

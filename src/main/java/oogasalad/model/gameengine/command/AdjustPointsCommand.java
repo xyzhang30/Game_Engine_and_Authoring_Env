@@ -1,11 +1,10 @@
 package oogasalad.model.gameengine.command;
 
 import java.util.List;
-import oogasalad.model.api.exception.InvalidParameterNumberException;
+import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.gameengine.GameEngine;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.runners.Parameterized.Parameters;
 
 public class AdjustPointsCommand extends AdjustPointsGivenPlayerCommand {
 

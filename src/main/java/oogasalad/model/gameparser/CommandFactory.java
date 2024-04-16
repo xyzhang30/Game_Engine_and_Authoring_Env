@@ -8,7 +8,7 @@ import java.util.List;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidParameterNumberException;
 import oogasalad.model.gameengine.command.Command;
-import oogasalad.model.gameengine.command.ExpectedParamNumber;
+import oogasalad.model.annotations.ExpectedParamNumber;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,10 +30,10 @@ public class CommandFactory {
         int expectedParamNumber = annotation.value();
         System.out.println("command: "+cmdName);
         System.out.println("annotation param number: " + expectedParamNumber);
-        if (params.size() != expectedParamNumber) {
+        if (params.size() < expectedParamNumber) {
           LOGGER.error("missing parameters for command " + cmdName);
           throw new InvalidParameterNumberException("Expected " + expectedParamNumber +
-              " parameters for command " + cmdName);
+              " parameters for command " + cmdName + " but found " + params.size());
         }
       }
       return (Command) clazz.getDeclaredConstructor(List.class).newInstance(params);
