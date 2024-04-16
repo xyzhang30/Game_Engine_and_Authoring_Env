@@ -199,7 +199,7 @@ public class AuthoringController {
     advanceRound.add(roundCommandTwo);
 
     Rules rules = new Rules(collisionRules, turnPolicy, roundPolicy, winCondition, advanceTurn,
-        advanceRound);
+        advanceRound, "");
 
     builderDirector.constructRules(List.of(rules));
   }

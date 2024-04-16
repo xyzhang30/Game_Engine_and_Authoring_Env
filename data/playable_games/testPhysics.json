@@ -3,13 +3,13 @@
   "collidable_objects": [
     {
       "collidable_id": 1,
-      "properties": ["visible", "movable"],
+      "properties": ["visible", "movable", "controllable"],
       "mass": 0.04,
       "position": {
         "x_position": 0,
         "y_position": 0
       },
-      "shape": "circle",
+      "shape": "rectangle",
       "dimension": {
         "x_dimension": 20,
         "y_dimension": 20
@@ -156,7 +156,7 @@
     },
     {
       "collidable_id": 10,
-      "properties": ["visible", "movable"],
+      "properties": ["visible", "movable", "controllable"],
       "mass": 0.02,
       "position": {
         "x_position": -40,

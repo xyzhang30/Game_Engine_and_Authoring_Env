@@ -3,7 +3,7 @@
   "collidable_objects": [
     {
       "collidable_id": 1,
-      "properties": ["visible", "movable"],
+      "properties": ["visible", "movable", "controllable"],
       "mass": 100,
       "position": {
         "x_position": 0,
@@ -20,7 +20,7 @@
     },
     {
       "collidable_id": 2,
-      "properties": ["visible", "movable"],
+      "properties": ["visible", "movable", "controllable"],
       "mass": 100,
       "position": {
         "x_position": 50,

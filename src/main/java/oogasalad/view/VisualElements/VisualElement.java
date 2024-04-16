@@ -21,4 +21,5 @@ interface VisualElement {
    * @return Node  A javafx Node.
    */
   Node getNode();
+
 }

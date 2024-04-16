@@ -19,8 +19,8 @@ public abstract class PhysicsHandler {
     CollidableRecord cr2 = collidableContainer.getCollidableRecord(id2);
     Collidable c1 = collidableContainer.getCollidable(id1);
     Collidable c2 = collidableContainer.getCollidable(id2);
-    c1.calculateNewSpeeds(makeVelocityFunction(cr1, cr2, dt));
-    c2.calculateNewSpeeds(makeVelocityFunction(cr2, cr1, dt));
+    c1.calculateNextSpeeds(makeVelocityFunction(cr1, cr2, dt));
+    c2.calculateNextSpeeds(makeVelocityFunction(cr2, cr1, dt));
     c1.updatePostCollisionVelocity();
     c2.updatePostCollisionVelocity();
   }

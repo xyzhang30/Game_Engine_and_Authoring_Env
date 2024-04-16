@@ -3,6 +3,7 @@ package oogasalad.model.gameengine.player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 import oogasalad.model.api.PlayerRecord;
 
@@ -17,6 +18,10 @@ public class PlayerContainer {
     playerHistory = new Stack<>();
     addPlayerHistory();
 
+  }
+
+  public Set<Integer> getPlayerIds(){
+    return myPlayers.keySet();
   }
 
   public int getNumPlayers() {
@@ -79,7 +84,24 @@ public class PlayerContainer {
 
   public void startRound() {
     for (Player p : myPlayers.values()) {
-      p.setRoundCompleted(false);
+      p.startRound();
     }
+  }
+
+  public void applyDelayedScores() {
+    for (Player p : myPlayers.values()) {
+      p.applyDelayedScore();
+    }
+
+  }
+
+  public boolean allPlayersCompletedNTurns(int turnsRequired) {
+    for (Player p : myPlayers.values()) {
+      if (!(p.getTurnsCompleted() >= turnsRequired)) {
+        return false;
+      }
+    }
+    return true;
+
   }
 }

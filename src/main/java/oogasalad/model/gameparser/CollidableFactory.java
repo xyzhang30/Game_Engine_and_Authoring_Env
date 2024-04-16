@@ -1,21 +1,33 @@
 package oogasalad.model.gameparser;
 
+import java.util.Map;
 import oogasalad.model.api.data.CollidableObject;
 import oogasalad.model.gameengine.collidable.Collidable;
+import oogasalad.model.gameengine.collidable.DefaultControllable;
+import oogasalad.model.gameengine.collidable.DefaultOwnable;
+import oogasalad.model.gameengine.player.Player;
+import oogasalad.model.gameengine.player.PlayerContainer;
 
 public class CollidableFactory {
 
   public static Collidable createCollidable(CollidableObject co) {
-    return new Collidable(
+
+    Collidable c = new Collidable(
         co.collidableId(),
         co.mass(),
         co.position().xPosition(),
         co.position().yPosition(),
-        co.properties().contains("visible"),
+        co.properties().contains("visible") && !co.properties().contains("controllable"),
         co.staticFriction(),
         co.kineticFriction(),
         co.dimension().xDimension(),
         co.dimension().yDimension(),
         co.shape());
+    if(co.properties().contains("controllable")) {
+      c.addControllable(new DefaultControllable(c));
+//      c.addOwnable(new DefaultOwnable(c, collidablePlayerMap.get(c.getId())));
+      c.addOwnable(new DefaultOwnable(c));
+    }
+    return c;
   }
 }
