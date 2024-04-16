@@ -14,5 +14,10 @@ public class NullControllable implements Controllable {
     return collidable;
   }
 
+  @Override
+  public boolean canControl() {
+    return false;
+  }
+
   // Implement other Controllable interface methods if needed
 }

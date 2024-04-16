@@ -143,7 +143,7 @@ public class GameLoaderModel extends GameLoader {
   private void createPlayerContainer() {
     Map<Integer, Player> playerMap = new HashMap<>();
     gameData.getPlayers().forEach(p -> {
-      playerMap.put(p.playerId(), new Player(p.playerId(), p.myCollidable()));
+      playerMap.put(p.playerId(), new Player(p.playerId()));
     });
     this.playerContainer = new PlayerContainer(playerMap);
   }

@@ -21,7 +21,7 @@ public class CollidableFactory {
         co.shape());
     if(co.properties().contains("controllable")) {
       c.addControllable(new DefaultControllable(c));
-      c.addOwnable(new DefaultOwnable(c, PLAYER));
+      c.addOwnable(new DefaultOwnable(c));
     }
     return c;
   }

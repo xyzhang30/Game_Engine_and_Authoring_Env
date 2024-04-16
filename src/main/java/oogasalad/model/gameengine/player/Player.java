@@ -17,7 +17,7 @@ public class Player {
   private List<Controllable> myControllables;
   private List<Ownable> myOwnables;
   private final Map<String, Double> variables;
-  private Controllable activeControllable;
+  private int activeControllableIndex;
   private boolean roundCompleted = false;
   private int turnsCompleted;
   private double temporaryScore;
@@ -32,7 +32,6 @@ public class Player {
 
   public void addControllables(List<Controllable> controllables) {
     myControllables = controllables;
-    activeControllable = myControllables.get(0);
   }
   public void addOwnables(List<Ownable> ownables) {
     myOwnables = ownables;
@@ -44,9 +43,10 @@ public class Player {
   //TODO
   //later make this an abstraction
   public void updateActiveControllableId() {
-    activeControllable =
-        myControllables.get(
-            (myControllables.indexOf(activeControllable) + 1) % myControllables.size());
+    activeControllableIndex = (activeControllableIndex + 1) % myControllables.size();
+    while(!(myControllables.get(activeControllableIndex).canControl())) {
+      activeControllableIndex = (activeControllableIndex + 1) % myControllables.size();
+    }
   }
 
   public void setVariable(String key, double value) {
@@ -61,7 +61,9 @@ public class Player {
           score += variables.get(variable);
         }
       }
-      return new PlayerRecord(playerId, score, activeControllable.getCollidable().getId(), active);
+      return new PlayerRecord(playerId, score,
+          myControllables.get(activeControllableIndex).getCollidable().getId(),
+          active);
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");
       return null;
@@ -86,7 +88,7 @@ public class Player {
   }
 
   public int getControllableId() {
-    return activeControllable.getCollidable().getId();
+    return myControllables.get(activeControllableIndex).getCollidable().getId();
   }
 
   protected void setFromRecord(PlayerRecord record) {

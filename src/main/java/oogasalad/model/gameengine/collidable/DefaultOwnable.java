@@ -5,11 +5,9 @@ import oogasalad.model.gameengine.player.Player;
 public class DefaultOwnable implements Ownable {
 
   private double tempScore;
-  private Player player;
   private Collidable collidable;
-  public DefaultOwnable(Collidable c, Player p) {
+  public DefaultOwnable(Collidable c) {
     collidable = c;
-    player = p;
   }
   @Override
   public void setTemporaryScore(double tempScore) {
