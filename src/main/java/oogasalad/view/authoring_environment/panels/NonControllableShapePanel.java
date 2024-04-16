@@ -1,20 +1,15 @@
 package oogasalad.view.authoring_environment.panels;
 
-import java.util.HashMap;
-import java.util.Map;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Shape;
+import javafx.scene.layout.VBox;
 import oogasalad.view.authoring_environment.authoring_screens.NonControllableType;
 
 public class NonControllableShapePanel extends ShapePanel {
-  private final ComboBox<NonControllableType> nonControllableTypeDropdown = new ComboBox<>();;
-  private final Map<Shape, NonControllableType> nonControllableMap = new HashMap<>();;
-
-  public NonControllableShapePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
-      StackPane authoringBox) {
-    super(authoringProxy, shapeProxy, rootPane, authoringBox);
+  private ComboBox<NonControllableType> nonControllableTypeDropdown;
+  public NonControllableShapePanel (AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane, VBox containerVBox, StackPane canvas) {
+    super(authoringProxy, shapeProxy, rootPane, containerVBox, canvas);
   }
 
   @Override
@@ -29,13 +24,13 @@ public class NonControllableShapePanel extends ShapePanel {
     createNonControllableTypeSelection();
   }
   private void createNonControllableTypeSelection() {
-    nonControllableTypeDropdown.getItems()
-        .addAll(NonControllableType.SURFACE, NonControllableType.MOVABLE);
+    nonControllableTypeDropdown = new ComboBox<>();
+    nonControllableTypeDropdown.getItems().addAll(NonControllableType.SURFACE, NonControllableType.MOVABLE);
     nonControllableTypeDropdown.setPromptText("Select Obstacle Type");
     AnchorPane.setRightAnchor(nonControllableTypeDropdown, 50.0);
     AnchorPane.setBottomAnchor(nonControllableTypeDropdown, 300.0);
     nonControllableTypeDropdown.setPrefSize(200, 100);
-    rootPane.getChildren().add(nonControllableTypeDropdown);
+    containerVBox.getChildren().add(nonControllableTypeDropdown);
   }
 
   private void handleNonControllableTypeSelection() {
