@@ -287,7 +287,9 @@
         "second_id": 8,
         "command": [
           {
-            "UndoTurnCommand": []
+            "UndoTurnCommand": [],
+            "AddDelayedPointsCommand": [8,1]
+
           }
         ]
       }
@@ -310,6 +312,5 @@
       }
     ],
     "strike_policy": "IncrementPointStrikePolicy"
-
   }
 }

@@ -99,7 +99,6 @@
         "second_id": 3,
         "command": [
           {
-            "AdjustActivePointsCommand": [1.0],
             "SetVisibleCommand": [1.0, 0.0],
             "PlayerCompletedRoundCommand": [1.0]
           }
@@ -110,7 +109,6 @@
         "second_id": 3,
         "command": [
           {
-            "AdjustActivePointsCommand": [1.0],
             "SetVisibleCommand": [2.0, 0.0],
             "PlayerCompletedRoundCommand": [2.0]
           }
@@ -133,6 +131,7 @@
       {
         "AdvanceRoundCommand": []
       }
-    ]
+    ],
+    "strike_policy" : "IncrementPointStrikePolicy"
   }
 }

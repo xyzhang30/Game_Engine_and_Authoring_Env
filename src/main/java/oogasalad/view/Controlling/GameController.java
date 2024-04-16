@@ -89,6 +89,7 @@ public class GameController {
     for(PlayerRecord p : gameRecord.players()) {
       if(p.playerId()==activePlayer) {
         controllableID = p.activeControllable();
+        System.out.println(controllableID);
         break;
       }
     }

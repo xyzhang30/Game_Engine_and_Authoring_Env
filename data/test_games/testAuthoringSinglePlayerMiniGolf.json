@@ -108,6 +108,7 @@
       {
         "AdvanceRoundCommand": []
       }
-    ]
+    ],
+    "strike_policy" : "DoNothingStrikePolicy"
   }
 }
