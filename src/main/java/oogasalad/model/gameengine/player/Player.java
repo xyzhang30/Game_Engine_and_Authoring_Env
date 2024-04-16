@@ -42,11 +42,15 @@ public class Player {
 
   //TODO
   public void updateActiveControllableId() {
+    if(myControllables.size()>1){
+
     activeControllableIndex = (activeControllableIndex + 1) % myControllables.size();
-    while(!(myControllables.get(activeControllableIndex).canControl())) {
+    while (!(myControllables.get(activeControllableIndex).canControl())) {
       activeControllableIndex = (activeControllableIndex + 1) % myControllables.size();
     }
+    }
   }
+
 
   public void setVariable(String key, double value) {
     variables.put(key, value);

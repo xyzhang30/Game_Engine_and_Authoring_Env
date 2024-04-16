@@ -130,7 +130,7 @@ public class PhysicsTest {
   }
 
 
-  /**
+
 
   @Test
   public void testAdjustPointsCommand() {
@@ -138,14 +138,15 @@ public class PhysicsTest {
     gameEngine.getCollidableContainer().getCollidable(10).setVisible(true);
     gameEngine.applyInitialVelocity(20, -Math.PI, 1);
     gameEngine.applyInitialVelocity(20, 0, 10);
-    System.out.println(gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().x());
+    gameEngine.applyInitialVelocity(20, -Math.PI, 1);
     GameRecord r = gameEngine.update(1);
+
     System.out.println(gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().x());
     System.out.println(gameEngine.getCollidableContainer().getCollidable(10).getCollidableRecord().x());
 
     assertEquals(2.0, r.players().get(0).score(), DELTA);
   }
-   */
+
 
   @Test
   public void testUndoCommand() {
@@ -160,20 +161,21 @@ public class PhysicsTest {
   }
 
 
-  /**
+
 
   @Test
   public void testAdvanceTurnAndAdjustPoints() {
-    gameEngine.applyInitialVelocity(15, 0, 1);
+    gameEngine.applyInitialVelocity(1, 0, 1);
     assertEquals(1.0,gameEngine.getTurn(), DELTA);
     gameEngine.update(1);
     assertEquals(2.0,gameEngine.getTurn(), DELTA);
+    gameEngine.applyInitialVelocity(1, 0, 6);
     gameEngine.update(1);
     assertEquals(1.0,gameEngine.getTurn(), DELTA);
     GameRecord r = gameEngine.update(1);
     //note the ball belongs to player 1 so they get all the points
-    assertEquals(3.0, r.players().get(0).score(), DELTA);
+    assertEquals(1.0, r.players().get(0).score(), DELTA);
   }
-*/
+
 
 }

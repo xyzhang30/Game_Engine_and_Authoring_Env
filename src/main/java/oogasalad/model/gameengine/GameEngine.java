@@ -136,10 +136,9 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   public void advanceTurn() {
+    System.out.print("Advancing Turn currently " + turn + " now " );
     turn = rules.turnPolicy().getTurn();
-    while (playerContainer.getPlayer(turn).isRoundCompleted()) {
-      turn = rules.turnPolicy().getTurn();
-    }
+    System.out.println(turn );
   }
 
   public int getRound() {
