@@ -44,10 +44,14 @@ public class Collidable {
     myStaticMu = staticMu;
     myKineticMu = kineticMu;
     controllable = new NullControllable();
+    ownable = new NullOwnable();
   }
 
   public void addControllable(Controllable controllable) {
     this.controllable = controllable;
+  }
+  public void addOwnable(Ownable ownable) {
+    this.ownable = ownable;
   }
 
   protected void updatePostCollisionVelocity() {
