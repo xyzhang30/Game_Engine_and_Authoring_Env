@@ -18,11 +18,12 @@ public class StrikePolicyFactory {
   public static StrikePolicy createStrikePolicy(String policyName)
       throws InvalidCommandException {
     try {
+      System.out.println("policyName:"+policyName);
       Class<?> clazz = Class.forName(BASE_PATH + STRIKE_POLICY_PATH + policyName);
       return (StrikePolicy) clazz.getDeclaredConstructor().newInstance();
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              NoSuchMethodException | IllegalAccessException e) {
-      LOGGER.error("turn policy command " + policyName + " is invalid");
+      LOGGER.error("strike policy command " + policyName + " is invalid" + e.getMessage());
       throw new InvalidCommandException("invalid command");
     }
   }

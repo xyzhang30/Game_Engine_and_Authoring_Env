@@ -19,6 +19,7 @@ public class AdjustPointsCommand extends AdjustPointsGivenPlayerCommand {
 
   @Override
   public void execute(GameEngine engine) {
+    System.out.println("arguments"+arguments);
     adjust(engine, (int) Math.round(arguments.get(1)));
   }
 

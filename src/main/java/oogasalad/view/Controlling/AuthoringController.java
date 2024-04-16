@@ -198,8 +198,10 @@ public class AuthoringController {
     roundCommandTwo.put("AdjustActivePointsCommand", List.of(1.0));
     advanceRound.add(roundCommandTwo);
 
+    String strikePolicy = "DoNothingStrikePolicy";
+
     Rules rules = new Rules(collisionRules, turnPolicy, roundPolicy, winCondition, advanceTurn,
-        advanceRound, "");
+        advanceRound, strikePolicy);
 
     builderDirector.constructRules(List.of(rules));
   }

@@ -17,7 +17,7 @@ public class CommandExceptionTest {
   public void testMissingParamAdjustPointsCommand() {
     assertThrows(InvalidParameterNumberException.class, () -> {
       AdjustPointsCommand cmd = new AdjustPointsCommand(new ArrayList<>());
-      GameEngine gameEngine = new GameEngine("chapel");
+      GameEngine gameEngine = new GameEngine("ba");
       cmd.execute(gameEngine);
     });
   }

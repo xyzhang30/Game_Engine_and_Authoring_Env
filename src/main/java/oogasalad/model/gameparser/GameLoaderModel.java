@@ -195,6 +195,7 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private StrikePolicy createStrikePolicy() {
+    System.out.println("gamedata strike: "+gameData.getRules().strikePolicy());
     return StrikePolicyFactory.createStrikePolicy(gameData.getRules().strikePolicy());
   }
 
