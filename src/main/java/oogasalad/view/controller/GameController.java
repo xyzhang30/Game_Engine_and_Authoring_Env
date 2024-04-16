@@ -16,6 +16,7 @@ import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.AnimationManager;
 import oogasalad.view.SceneManager;
+import oogasalad.view.authoring_environment.NewAuthoringController;
 import oogasalad.view.visual_elements.CompositeElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -61,8 +62,10 @@ public class GameController {
   }
 
   public void openAuthorEnvironment() {
-    AuthoringController authoringController = new AuthoringController();
-    authoringController.startAuthoring();
+    NewAuthoringController newAuthoringController = new NewAuthoringController();
+    newAuthoringController.updateAuthoringScreen();
+//    AuthoringController authoringController = new AuthoringController();
+//    authoringController.startAuthoring();
   }
 
   /**
