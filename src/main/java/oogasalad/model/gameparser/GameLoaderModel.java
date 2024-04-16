@@ -29,6 +29,7 @@ import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameengine.statichandlers.GenericStaticStateHandler;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListBuilder;
+import oogasalad.model.gameengine.strike.StrikePolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -187,9 +188,14 @@ public class GameLoaderModel extends GameLoader {
     Condition winCondition = createCondition(gameData.getRules().winCondition());
     Condition roundPolicy = createCondition(gameData.getRules().roundPolicy());
     TurnPolicy turnPolicy = createTurnPolicy();
+    StrikePolicy strikePolicy = createStrikePolicy();
     rulesRecord = new RulesRecord(commandMap,
         winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy,
-        staticHandler);
+        staticHandler, strikePolicy);
+  }
+
+  private StrikePolicy createStrikePolicy() {
+    return StrikePolicyFactory.createStrikePolicy(gameData.getRules().strikePolicy());
   }
 
   private TurnPolicy createTurnPolicy() {

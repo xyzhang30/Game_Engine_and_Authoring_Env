@@ -480,6 +480,7 @@
     } ],
     "advance_round" : [ {
       "AdvanceRoundCommand" : [ ]
-    } ]
+    } ],
+    "strike_policy": "DoNothingStrikePolicy"
   }
 }
