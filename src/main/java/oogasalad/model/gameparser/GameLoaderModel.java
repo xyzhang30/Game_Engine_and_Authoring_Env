@@ -87,11 +87,11 @@ public class GameLoaderModel extends GameLoader {
 
   public void makeLevel(int id) {
     createCollidableContainer();
-    addPlayerControllables();
+    addPlayerCollidables();
     createRulesRecord();
   }
 
-  private void addPlayerControllables() {
+  private void addPlayerCollidables() {
     for (ParserPlayer parserPlayer : gameData.getPlayers()){
       int playerId = parserPlayer.playerId();
       List<Integer> playerControllableIds = parserPlayer.myCollidable();

@@ -144,6 +144,7 @@
           }
         ]
       }
-    ]
+    ],
+    "strike_policy": "DoNothingStrikePolicy"
   }
 }

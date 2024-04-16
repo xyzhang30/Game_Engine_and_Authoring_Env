@@ -165,6 +165,7 @@
       {
         "AdjustPointsCommand": [1.0,1.0]
       }
-    ]
+    ],
+    "strike_policy": "DoNothingStrikePolicy"
   }
 }
