@@ -146,7 +146,6 @@ public class ShapePanel implements Panel {
     System.out.println(shape.getTranslateX());
     System.out.println(shape.getTranslateY());
     if (isInAuthoringBox(shape)) {
-      containerVBox.getChildren().remove(shape);
 //      shape.setStrokeWidth(0);
       authoringProxy.addControllableShape(shape);
       Coordinate coordinate = new Coordinate(AnchorPane.getLeftAnchor(shape), AnchorPane.getTopAnchor(shape));
