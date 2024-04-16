@@ -1,0 +1,487 @@
+{
+  "gameName" : "newShuffle",
+  "collidable_objects" : [
+    {
+    "collidable_id" : 0,
+    "properties" : [ "collidable", "visible", "surface" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 0.0,
+      "y_position" : 0.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 990.0,
+      "y_dimension" : 990.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 7.0,
+    "kineticFriction" : 5.0,
+    "image" : "data/background_images/wood.jpg"
+  }, {
+    "collidable_id" : 1,
+    "properties" : [ "collidable", "visible", "movable" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 0.0,
+      "y_position" : 0.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 20.0,
+      "y_dimension" : 990.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 7.0,
+    "kineticFriction" : 5.0,
+    "image" : ""
+  }, {
+    "collidable_id" : 2,
+    "properties" : [ "collidable", "visible", "movable" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 970.0,
+      "y_position" : 0.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 20.0,
+      "y_dimension" : 990.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 7.0,
+    "kineticFriction" : 5.0,
+    "image" : ""
+  }, {
+    "collidable_id" : 3,
+    "properties" : [ "collidable", "visible", "movable" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 0.0,
+      "y_position" : 0.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 970.0,
+      "y_dimension" : 20.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 7.0,
+    "kineticFriction" : 5.0,
+    "image" : ""
+  }, {
+    "collidable_id" : 4,
+    "properties" : [ "collidable", "visible", "movable" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 0.0,
+      "y_position" : 970.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 990.0,
+      "y_dimension" : 20.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 7.0,
+    "kineticFriction" : 5.0,
+    "image" : ""
+  },
+    {
+      "collidable_id" : 6,
+      "properties" : [ "collidable", "visible", "surface" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 20,
+        "y_position" : 20
+      },
+      "shape" : "Rectangle",
+      "dimension" : {
+        "x_dimension" : 990,
+        "y_dimension" : 200
+      },
+      "color" : [ 0, 255, 0 ],
+      "staticFriction" : 0.0,
+      "kineticFriction" : 0.0,
+      "image" : ""
+    },  {
+      "collidable_id" : 8,
+      "properties" : [ "collidable", "visible", "surface" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 20,
+        "y_position" : 220
+      },
+      "shape" : "Rectangle",
+      "dimension" : {
+        "x_dimension" : 990,
+        "y_dimension" : 200
+      },
+      "color" : [ 255, 255, 0 ],
+      "staticFriction" : 0.0,
+      "kineticFriction" : 0.0,
+      "image" : ""
+    }, {
+      "collidable_id" : 9,
+      "properties" : [ "collidable", "visible", "surface" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 20,
+        "y_position" : 420
+      },
+      "shape" : "Rectangle",
+      "dimension" : {
+        "x_dimension" : 990,
+        "y_dimension" : 200
+      },
+      "color" : [ 255, 0, 0 ],
+      "staticFriction" : 0.0,
+      "kineticFriction" : 0.0,
+      "image" : ""
+    }, {
+      "collidable_id" : 10,
+      "properties" : [ "movable", "collidable", "controllable", "visible" ],
+      "mass" : 10.0,
+      "position" : {
+        "x_position" : 400.0,
+        "y_position" : 670.0
+      },
+      "shape" : "Circle",
+      "dimension" : {
+        "x_dimension" : 30.0,
+        "y_dimension" : 30.0
+      },
+      "color" : [ 0, 0, 100 ],
+      "staticFriction" : 0.0,
+      "kineticFriction" : 0.0,
+      "image" : ""
+    }, {
+      "collidable_id" : 11,
+      "properties" : [ "movable", "collidable", "controllable", "visible" ],
+      "mass" : 10.0,
+      "position" : {
+        "x_position" : 500,
+        "y_position" : 470.0
+      },
+      "shape" : "Circle",
+      "dimension" : {
+        "x_dimension" : 30.0,
+        "y_dimension" : 30.0
+      },
+      "color" : [ 0, 0, 100 ],
+      "staticFriction" : 0.0,
+      "kineticFriction" : 0.0,
+      "image" : ""
+    }, {
+      "collidable_id" : 12,
+      "properties" : [ "movable", "collidable", "controllable", "visible" ],
+      "mass" : 10.0,
+      "position" : {
+        "x_position" : 600,
+        "y_position" : 270.0
+      },
+      "shape" : "Circle",
+      "dimension" : {
+        "x_dimension" : 30.0,
+        "y_dimension" : 30.0
+      },
+      "color" : [ 0, 100, 0 ],
+      "staticFriction" : 0.0,
+      "kineticFriction" : 0.0,
+      "image" : ""
+    },
+    {
+      "collidable_id" : 13,
+      "properties" : [ "movable", "collidable", "controllable", "visible" ],
+      "mass" : 10.0,
+      "position" : {
+        "x_position" : 700.0,
+        "y_position" : 70.0
+      },
+      "shape" : "Circle",
+      "dimension" : {
+        "x_dimension" : 30.0,
+        "y_dimension" : 30.0
+      },
+      "color" : [ 0, 100, 0 ],
+      "staticFriction" : 0.0,
+      "kineticFriction" : 0.0,
+      "image" : ""
+    } ],
+  "players" : [ {
+    "player_id" : 1,
+    "my_collidable" : [ 10, 11 ]
+  },
+    {
+      "player_id" : 2,
+      "my_collidable" : [ 12, 13 ]
+    }],
+  "variables" : [ {
+    "global" : {
+      "max_turns" : 1,
+      "max_rounds" : 2
+    },
+    "player" : {
+      "strokes" : 0,
+      "finished" : 0
+    }
+  } ],
+  "rules" : {
+    "collisions" : [
+      {
+        "first_id": 6,
+        "second_id": 10,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [10, 3]
+          }
+        ]
+      },
+      {
+        "first_id": 6,
+        "second_id": 11,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [11, 3]
+          }
+        ]
+      }, {
+        "first_id": 6,
+        "second_id": 12,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [12, 3]
+          }
+        ]
+      },
+      {
+        "first_id": 6,
+        "second_id": 13,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [13, 3]
+          }
+        ]
+      },
+      {
+        "first_id": 8,
+        "second_id": 10,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [10, 2]
+          }
+        ]
+      },
+      {
+        "first_id": 8,
+        "second_id": 11,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [11, 2]
+          }
+        ]
+      }, {
+        "first_id": 8,
+        "second_id": 12,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [12, 2]
+          }
+        ]
+      },
+      {
+        "first_id": 8,
+        "second_id": 13,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [13, 2]
+          }
+        ]
+      },
+      {
+        "first_id": 9,
+        "second_id": 10,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [10, 1]
+          }
+        ]
+      },
+      {
+        "first_id": 9,
+        "second_id": 11,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [11, 1]
+          }
+        ]
+      }, {
+        "first_id": 9,
+        "second_id": 12,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [12, 1]
+          }
+        ]
+      },
+      {
+        "first_id": 9,
+        "second_id": 13,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [13, 1]
+          }
+        ]
+      },
+      {
+        "first_id": 2,
+        "second_id": 10,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [10, 0],
+            "SetVisibleCommand": [10, 0]
+
+          }
+        ]
+      },
+      {
+        "first_id": 2,
+        "second_id": 11,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [11, 0],
+            "SetVisibleCommand": [11, 0]
+          }
+        ]
+      },
+      {
+        "first_id": 2,
+        "second_id": 12,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [
+              12,
+              0
+            ],
+            "SetVisibleCommand": [
+              12,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "first_id": 2,
+        "second_id": 13,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [13, 0],
+            "SetVisibleCommand": [13, 0]
+          }
+        ]
+      },
+      {
+        "first_id": 1,
+        "second_id": 10,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [10, 0],
+            "SetVisibleCommand": [10, 0]
+
+          }
+        ]
+      },
+      {
+        "first_id": 1,
+        "second_id": 11,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [11, 0],
+            "SetVisibleCommand": [11, 0]
+
+          }
+        ]
+      },
+      {
+        "first_id": 1,
+        "second_id": 12,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [12, 0],
+            "SetVisibleCommand": [12, 0]
+
+          }
+        ]
+      },
+      {
+        "first_id": 1,
+        "second_id": 13,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [13, 0],
+            "SetVisibleCommand": [13, 0]
+
+          }
+        ]
+      },
+      {
+        "first_id": 3,
+        "second_id": 10,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [10, 0],
+            "SetVisibleCommand": [10, 0]
+          }
+        ]
+      },
+      {
+        "first_id": 3,
+        "second_id": 11,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [11, 0],
+            "SetVisibleCommand": [11, 0]
+
+          }
+        ]
+      },
+      {
+        "first_id": 3,
+        "second_id": 12,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [12, 0],
+            "SetVisibleCommand": [12, 0]
+          }
+        ]
+      },
+      {
+        "first_id": 3,
+        "second_id": 13,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [13, 0],
+            "SetVisibleCommand": [13, 0]
+          }
+        ]
+      }
+    ],
+
+
+    "turn_policy" : "StandardTurnPolicy",
+    "round_policy" : {
+      "NTurnsCompletedCondition" : [ 2 ]
+    },
+    "win_condition" : {
+      "NRoundsCompletedCondition" : [ 2 ]
+    },
+    "advance_turn" : [ {
+      "PlayerCompletedTurnCommand": [],
+      "AdvanceTurnCommand" : [ ]
+    } ],
+    "advance_round" : [ {
+      "AdvanceRoundCommand" : [ ]
+    } ],
+    "strike_policy": "DoNothingStrikePolicy"
+  }
+}
