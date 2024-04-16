@@ -2,6 +2,7 @@ package oogasalad.model.gameengine;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import oogasalad.Pair;
 import oogasalad.model.gameengine.collidable.PhysicsHandler;
 import oogasalad.model.gameengine.command.Command;
@@ -14,5 +15,6 @@ public record RulesRecord(Map<Pair, List<Command>> collisionHandlers,
                           List<Command> advanceRound,
                           Map<Pair, PhysicsHandler> physicsMap, TurnPolicy turnPolicy,
                           GenericStaticStateHandler staticStateHandler) {
+
 
 }

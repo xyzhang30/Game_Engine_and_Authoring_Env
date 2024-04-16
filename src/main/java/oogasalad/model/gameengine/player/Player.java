@@ -60,22 +60,13 @@ public class Player {
     try {
 //      System.out.println(variables.get("score"));
       double score = variables.get("score");
-      for (String variable : variables.keySet()) {
-        if (variable.startsWith(":")) {
-          score += variables.get(variable);
-        }
+      for (Ownable o : myOwnables) {
+        score += o.getTemporaryScore();
       }
       System.out.println();
       return new PlayerRecord(playerId, score,
           myControllables.get(activeControllableIndex).getCollidable().getId(),
           active);
-////      for (String variable : variables.keySet()) {
-////        if (variable.startsWith(":")) {
-////          score += variables.get(variable);
-////        }
-////      }
-//      System.out.println(activeControllable);
-//      return new PlayerRecord(playerId, score, activeControllable, active);
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");
       return null;
@@ -108,19 +99,14 @@ public class Player {
   }
 
   private void clearDelayedPoints() {
-    for (String variable : variables.keySet()) {
-      if (variable.startsWith(":")) {
-        variables.put(variable, 0.0);
-      }
+    for (Ownable o : myOwnables) {
+      o.setTemporaryScore(0);
     }
   }
 
   protected void applyDelayedScore() {
-    for (String variable : variables.keySet()) {
-      if (variable.startsWith(":")) {
-        variables.put("score", variables.get("score") + variables.get(variable));
-        variables.put(variable, 0.0);
-      }
+    for (Ownable o : myOwnables) {
+      variables.put("score", variables.get("score") + o.getTemporaryScore());
     }
   }
 

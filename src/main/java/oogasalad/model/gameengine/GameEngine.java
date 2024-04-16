@@ -50,11 +50,11 @@ public class GameEngine implements ExternalGameEngine {
     gameOver = false;
     turn = 1; //first player ideally should have id 1
     staticState = true;
-    playerContainer.startRound();
     playerContainer.setActive(turn);
     loader.makeLevel(round);
     collidables = loader.getCollidableContainer();
     rules = loader.getRulesRecord();
+    playerContainer.startRound();
     collisionHandlers = rules.collisionHandlers();
     collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getControllableId());
     collidables.addStaticStateCollidables();
@@ -117,6 +117,7 @@ public class GameEngine implements ExternalGameEngine {
         + "direction "
         + direction * 180 / Math.PI);
     collidables.getCollidable(id).applyInitialVelocity(magnitude,direction);
+    //rules.strikePolicy().accept(id, this);
   }
 
   /**
