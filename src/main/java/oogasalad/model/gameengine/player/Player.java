@@ -3,32 +3,40 @@ package oogasalad.model.gameengine.player;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.naming.ldap.Control;
 import oogasalad.model.api.PlayerRecord;
+import oogasalad.model.gameengine.collidable.Controllable;
 import oogasalad.model.gameengine.collidable.Ownable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Player implements Ownable {
+public class Player {
 
   private static final Logger LOGGER = LogManager.getLogger(Player.class);
   private final int playerId;
-  private final List<Integer> myControllables;
+  private List<Controllable> myControllables;
+  private List<Ownable> myOwnables;
   private final Map<String, Double> variables;
-  private int activeControllable;
+  private Controllable activeControllable;
   private boolean roundCompleted = false;
   private int turnsCompleted;
   private double temporaryScore;
 
-  public Player(int id, List<Integer> controlable) {
+  public Player(int id) {
     playerId = id;
-    myControllables = controlable;
     roundCompleted = false;
     turnsCompleted = 0;
-    activeControllable = myControllables.get(0);
     variables = new HashMap<>();
     variables.put("score", 0.0);
   }
 
+  public void addControllables(List<Controllable> controllables) {
+    myControllables = controllables;
+    activeControllable = myControllables.get(0);
+  }
+  public void addOwnables(List<Ownable> ownables) {
+    myOwnables = ownables;
+  }
   public double getVariable(String variable) {
     return variables.getOrDefault(variable, 0.0);
   }
@@ -53,7 +61,7 @@ public class Player implements Ownable {
           score += variables.get(variable);
         }
       }
-      return new PlayerRecord(playerId, score, activeControllable, active, myControllables);
+      return new PlayerRecord(playerId, score, activeControllable.getCollidable().getId(), active);
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");
       return null;
@@ -78,7 +86,7 @@ public class Player implements Ownable {
   }
 
   public int getControllableId() {
-    return myControllables.get(myControllables.indexOf(activeControllable));
+    return activeControllable.getCollidable().getId();
   }
 
   protected void setFromRecord(PlayerRecord record) {

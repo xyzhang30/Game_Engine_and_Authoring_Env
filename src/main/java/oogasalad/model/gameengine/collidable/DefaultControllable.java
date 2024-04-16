@@ -21,4 +21,9 @@ public class DefaultControllable implements Controllable {
     collidable.calculateSpeeds(supplier);
   }
 
+  @Override
+  public Collidable getCollidable() {
+    return collidable;
+  }
+
 }

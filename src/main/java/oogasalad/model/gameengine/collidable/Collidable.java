@@ -43,7 +43,7 @@ public class Collidable {
     myShape = shape;
     myStaticMu = staticMu;
     myKineticMu = kineticMu;
-    controllable = new NullControllable();
+    controllable = new NullControllable(this);
     ownable = new NullOwnable();
   }
 
