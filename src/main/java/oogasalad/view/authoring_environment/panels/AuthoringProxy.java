@@ -59,4 +59,28 @@ public class AuthoringProxy {
   public void updateScreen() {
     authoringController.updateAuthoringScreen();
   }
+
+  public String getGameName() {
+    return gameName;
+  }
+
+  public String getCurrentScreenTitle() {
+    return currentScreenTitle;
+  }
+
+  public NewAuthoringController getAuthoringController() {
+    return authoringController;
+  }
+
+  public Map<List<Shape>, Map<InteractionType, List<Double>>> getInteractionMap() {
+    return interactionMap;
+  }
+
+  public Map<Shape, String> getImageMap() {
+    return imageMap;
+  }
+
+  public Map<Shape, Coordinate> getShapePositionMap() {
+    return shapePositionMap;
+  }
 }
