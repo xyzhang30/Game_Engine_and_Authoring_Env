@@ -47,6 +47,9 @@ public class Player {
     while(!(myControllables.get(activeControllableIndex).canControl())) {
       activeControllableIndex = (activeControllableIndex + 1) % myControllables.size();
     }
+//    activeControllable =
+//        myControllables.get(
+//            (myControllables.indexOf(activeControllable) + 1) % myControllables.size()).getCollidable().getId();
   }
 
   public void setVariable(String key, double value) {
@@ -55,15 +58,24 @@ public class Player {
 
   protected PlayerRecord getPlayerRecord(boolean active) {
     try {
+//      System.out.println(variables.get("score"));
       double score = variables.get("score");
       for (String variable : variables.keySet()) {
         if (variable.startsWith(":")) {
           score += variables.get(variable);
         }
       }
+      System.out.println();
       return new PlayerRecord(playerId, score,
           myControllables.get(activeControllableIndex).getCollidable().getId(),
           active);
+////      for (String variable : variables.keySet()) {
+////        if (variable.startsWith(":")) {
+////          score += variables.get(variable);
+////        }
+////      }
+//      System.out.println(activeControllable);
+//      return new PlayerRecord(playerId, score, activeControllable, active);
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");
       return null;
@@ -126,8 +138,8 @@ public class Player {
     clearDelayedPoints();
   }
 
-  @Override
-  public void setTemporaryScore(double tempScore) {
-    temporaryScore = tempScore;
-  }
+//  @Override
+//  public void setTemporaryScore(double tempScore) {
+//    temporaryScore = tempScore;
+//  }
 }

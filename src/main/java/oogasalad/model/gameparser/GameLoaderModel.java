@@ -8,6 +8,8 @@ import java.util.Map.Entry;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import oogasalad.Pair;
+import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.api.data.CollidableObject;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidFileException;
@@ -43,9 +45,9 @@ public class GameLoaderModel extends GameLoader {
   private final List<Integer> movables;
   private List<Entry<BiPredicate<Integer, CollidableObject>,
       BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList;
+//  private Map<Integer, Player> collidablePlayerMap;
 
   private final GenericStaticStateHandler staticHandler;
-
 
   /**
    * Constructs a GameLoaderModel object with the specified ID.
@@ -80,7 +82,18 @@ public class GameLoaderModel extends GameLoader {
 
   public void makeLevel(int id) {
     createCollidableContainer();
+    addPlayerControllables();
     createRulesRecord();
+  }
+
+  private void addPlayerControllables() {
+    for (int playerId : playerContainer.getPlayerIds()){
+
+    }
+//    for (PlayerRecord playerRecord : getPlayerContainer().getPlayerRecords()){
+//      int controllableId = playerRecord.activeControllable();
+//      getPlayerContainer().getPlayer(playerRecord.playerId()).addControllables(List.of(collidableContainer.getCollidable(controllableId).getControllable()));
+//    }
   }
 
   /**
@@ -141,9 +154,12 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private void createPlayerContainer() {
+//    collidablePlayerMap = new HashMap<>();
     Map<Integer, Player> playerMap = new HashMap<>();
     gameData.getPlayers().forEach(p -> {
       playerMap.put(p.playerId(), new Player(p.playerId()));
+      Player player = new Player(p.playerId());
+      playerMap.put(p.playerId(), player);
     });
     this.playerContainer = new PlayerContainer(playerMap);
   }

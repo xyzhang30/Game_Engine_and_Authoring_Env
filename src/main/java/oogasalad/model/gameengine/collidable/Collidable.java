@@ -23,6 +23,8 @@ public class Collidable {
   private double myNextVelocityX;
   private double myNextVelocityY;
   private boolean myVisible;
+
+
   private Controllable controllable;
   private Ownable ownable;
 
@@ -53,7 +55,13 @@ public class Collidable {
   public void addOwnable(Ownable ownable) {
     this.ownable = ownable;
   }
+  public Controllable getControllable() {
+    return controllable;
+  }
 
+  public Ownable getOwnable() {
+    return ownable;
+  }
   protected void updatePostCollisionVelocity() {
     myVelocityY = myNextVelocityY;
     myVelocityX = myNextVelocityX;
