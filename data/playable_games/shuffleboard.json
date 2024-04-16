@@ -1,5 +1,5 @@
 {
-  "gameName" : "shuffleboard",
+  "gameName" : "newShuffle",
   "collidable_objects" : [ {
     "collidable_id" : 0,
     "properties" : [ "collidable", "visible", "surface" ],
@@ -85,69 +85,36 @@
     "staticFriction" : 7.0,
     "kineticFriction" : 5.0,
     "image" : ""
-  }, {
-    "collidable_id" : 5,
-    "properties" : [ "collidable", "visible", "surface" ],
-    "mass" : "Infinity",
-    "position" : {
-      "x_position" : 199.31446838378906,
-      "y_position" : 409.45281982421875
-    },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 679.37106918239,
-      "y_dimension" : 355.09433962264154
-    },
-    "color" : [ 255, 255, 255 ],
-    "staticFriction" : 0.0,
-    "kineticFriction" : 0.0,
-    "image" : ""
-  }, {
+  },
+    {
     "collidable_id" : 6,
     "properties" : [ "collidable", "visible", "surface" ],
     "mass" : "Infinity",
     "position" : {
-      "x_position" : 852.0,
-      "y_position" : 76.0
+      "x_position" : 50,
+      "y_position" : 64.72327423095703
     },
     "shape" : "Rectangle",
     "dimension" : {
-      "x_dimension" : 20.0,
-      "y_dimension" : 500.0
+      "x_dimension" : 990,
+      "y_dimension" : 108.55345911949688
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : [ 0, 255, 0 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "image" : ""
-  }, {
-    "collidable_id" : 7,
-    "properties" : [ "collidable", "visible", "surface" ],
-    "mass" : "Infinity",
-    "position" : {
-      "x_position" : 197.0,
-      "y_position" : 81.0
-    },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 20.0,
-      "y_dimension" : 500.0
-    },
-    "color" : [ 0, 0, 0 ],
-    "staticFriction" : 0.0,
-    "kineticFriction" : 0.0,
-    "image" : ""
-  }, {
+  },  {
     "collidable_id" : 8,
     "properties" : [ "collidable", "visible", "surface" ],
     "mass" : "Infinity",
     "position" : {
-      "x_position" : 205.4779815673828,
-      "y_position" : 252.6100616455078
+      "x_position" : 50,
+      "y_position" : 173.89308166503906
     },
     "shape" : "Rectangle",
     "dimension" : {
-      "x_dimension" : 667.0440251572328,
-      "y_dimension" : 154.7798742138365
+      "x_dimension" : 990,
+      "y_dimension" : 284.21383647798746
     },
     "color" : [ 255, 255, 0 ],
     "staticFriction" : 0.0,
@@ -158,15 +125,15 @@
     "properties" : [ "collidable", "visible", "surface" ],
     "mass" : "Infinity",
     "position" : {
-      "x_position" : 213.7421417236328,
-      "y_position" : 84.44654083251953
+      "x_position" : 50,
+      "y_position" : 464.13836669921875
     },
     "shape" : "Rectangle",
     "dimension" : {
-      "x_dimension" : 642.5157232704403,
-      "y_dimension" : 167.10691823899367
+      "x_dimension" : 990,
+      "y_dimension" : 265.7232704402516
     },
-    "color" : [ 0, 255, 0 ],
+    "color" : [ 255, 0, 0 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "image" : ""
@@ -175,15 +142,15 @@
     "properties" : [ "movable", "collidable", "controllable", "visible" ],
     "mass" : 10.0,
     "position" : {
-      "x_position" : 502.0,
-      "y_position" : 939.0
+      "x_position" : 557.0,
+      "y_position" : 932.0
     },
     "shape" : "Circle",
     "dimension" : {
       "x_dimension" : 30.0,
       "y_dimension" : 30.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : [ 0, 0, 100 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "image" : ""
@@ -192,15 +159,15 @@
     "properties" : [ "movable", "collidable", "controllable", "visible" ],
     "mass" : 10.0,
     "position" : {
-      "x_position" : 501.0,
-      "y_position" : 940.0
+      "x_position" : 555.0,
+      "y_position" : 935.0
     },
     "shape" : "Circle",
     "dimension" : {
       "x_dimension" : 30.0,
       "y_dimension" : 30.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : [ 0, 0, 100 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "image" : ""
@@ -209,23 +176,45 @@
     "properties" : [ "movable", "collidable", "controllable", "visible" ],
     "mass" : 10.0,
     "position" : {
-      "x_position" : 498.0,
-      "y_position" : 943.0
+      "x_position" : 552.0,
+      "y_position" : 939.0
     },
     "shape" : "Circle",
     "dimension" : {
       "x_dimension" : 30.0,
       "y_dimension" : 30.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : [ 0, 100, 0 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "image" : ""
-  } ],
+  },
+    {
+      "collidable_id" : 13,
+      "properties" : [ "movable", "collidable", "controllable", "visible" ],
+      "mass" : 10.0,
+      "position" : {
+        "x_position" : 552.0,
+        "y_position" : 939.0
+      },
+      "shape" : "Circle",
+      "dimension" : {
+        "x_dimension" : 30.0,
+        "y_dimension" : 30.0
+      },
+      "color" : [ 0, 100, 0 ],
+      "staticFriction" : 0.0,
+      "kineticFriction" : 0.0,
+      "image" : ""
+    } ],
   "players" : [ {
     "player_id" : 1,
-    "my_collidable" : [ 1, 6, 7 ]
-  } ],
+    "my_collidable" : [ 10, 11 ]
+  },
+    {
+      "player_id" : 2,
+      "my_collidable" : [ 12, 13 ]
+    }],
   "variables" : [ {
     "global" : {
       "max_turns" : 1,
@@ -237,23 +226,261 @@
     }
   } ],
   "rules" : {
-    "collisions" : [ ],
+    "collisions" : [
+      {
+        "first_id": 6,
+        "second_id": 10,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [10, 3]
+          }
+        ]
+      },
+      {
+      "first_id": 6,
+      "second_id": 11,
+      "command": [
+        {
+          "AddDelayedPointsCommand": [11, 3]
+        }
+      ]
+      }, {
+      "first_id": 6,
+      "second_id": 12,
+      "command": [
+        {
+          "AddDelayedPointsCommand": [12, 3]
+        }
+      ]
+      },
+      {
+        "first_id": 6,
+        "second_id": 13,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [13, 3]
+          }
+        ]
+      },
+      {
+        "first_id": 8,
+        "second_id": 10,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [10, 2]
+          }
+        ]
+      },
+      {
+        "first_id": 8,
+        "second_id": 11,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [11, 2]
+          }
+        ]
+      }, {
+        "first_id": 8,
+        "second_id": 12,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [12, 2]
+          }
+        ]
+      },
+      {
+        "first_id": 8,
+        "second_id": 13,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [13, 2]
+          }
+        ]
+      },
+      {
+        "first_id": 9,
+        "second_id": 10,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [10, 1]
+          }
+        ]
+      },
+      {
+        "first_id": 9,
+        "second_id": 11,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [11, 1]
+          }
+        ]
+      }, {
+        "first_id": 9,
+        "second_id": 12,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [12, 1]
+          }
+        ]
+      },
+      {
+        "first_id": 9,
+        "second_id": 13,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [13, 1]
+          }
+        ]
+      },
+      {
+        "first_id": 2,
+        "second_id": 10,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [10, 0],
+            "SetVisibleCommand": [10, 0]
+
+          }
+        ]
+      },
+      {
+        "first_id": 2,
+        "second_id": 11,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [11, 0],
+            "SetVisibleCommand": [11, 0]
+          }
+        ]
+      },
+      {
+        "first_id": 2,
+        "second_id": 12,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [
+              12,
+              0
+            ],
+            "SetVisibleCommand": [
+              12,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "first_id": 2,
+        "second_id": 13,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [13, 0],
+            "SetVisibleCommand": [13, 0]
+          }
+        ]
+      },
+      {
+        "first_id": 1,
+        "second_id": 10,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [10, 0],
+            "SetVisibleCommand": [10, 0]
+
+          }
+        ]
+      },
+      {
+        "first_id": 1,
+        "second_id": 11,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [11, 0],
+            "SetVisibleCommand": [11, 0]
+
+          }
+        ]
+      },
+      {
+        "first_id": 1,
+        "second_id": 12,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [12, 0],
+            "SetVisibleCommand": [12, 0]
+
+          }
+        ]
+      },
+      {
+        "first_id": 1,
+        "second_id": 13,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [13, 0],
+            "SetVisibleCommand": [13, 0]
+
+          }
+        ]
+      },
+      {
+        "first_id": 3,
+        "second_id": 10,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [10, 0],
+            "SetVisibleCommand": [10, 0]
+          }
+        ]
+      },
+      {
+        "first_id": 3,
+        "second_id": 11,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [11, 0],
+            "SetVisibleCommand": [11, 0]
+
+          }
+        ]
+      },
+      {
+        "first_id": 3,
+        "second_id": 12,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [12, 0],
+            "SetVisibleCommand": [12, 0]
+          }
+        ]
+      },
+      {
+        "first_id": 3,
+        "second_id": 13,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [13, 0],
+            "SetVisibleCommand": [13, 0]
+          }
+        ]
+      }
+    ],
+
+
     "turn_policy" : "StandardTurnPolicy",
     "round_policy" : {
-      "AllPlayersCompletedRoundCondition" : [ ]
+      "NTurnsCompletedCondition" : [ 2 ]
     },
     "win_condition" : {
-      "NRoundsCompletedCondition" : [ 1.0 ]
+      "NRoundsCompletedCondition" : [ 2 ]
     },
     "advance_turn" : [ {
+      "PlayerCompletedTurnCommand": [],
       "AdvanceTurnCommand" : [ ]
-    }, {
-      "AdjustActivePointsCommand" : [ 1.0 ]
     } ],
     "advance_round" : [ {
       "AdvanceRoundCommand" : [ ]
-    }, {
-      "AdjustActivePointsCommand" : [ 1.0 ]
-    } ]
+    } ],
+    "strike_policy": "DoNothingStrikePolicy"
   }
 }
