@@ -152,6 +152,7 @@ public class PhysicsTest {
     // Ensure the game starts without errors
     gameEngine.applyInitialVelocity(100, 0, 1);
     gameEngine.update(1);
+
     assertEquals(0.0,container.getCollidableRecord(1).velocityX(), DELTA);
     assertEquals(0.0,container.getCollidableRecord(1).velocityY(), DELTA);
     assertEquals(0.0,container.getCollidableRecord(1).x(), DELTA);

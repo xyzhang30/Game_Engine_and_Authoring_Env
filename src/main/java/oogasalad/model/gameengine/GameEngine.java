@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 import oogasalad.Pair;
+import oogasalad.model.api.CollidableRecord;
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
@@ -171,8 +172,10 @@ public class GameEngine implements ExternalGameEngine {
 
   public void toLastStaticState() {
     staticState = true;
+    for(CollidableRecord cr : collidables.getCollidableRecords()) {
+      collidables.getCollidable(cr.id()).getOwnable().setTemporaryScore(0);
+    }
     GameRecord newCurrentState = staticStateStack.pop();
-    System.out.println(newCurrentState);
     turn = newCurrentState.turn();
     round = newCurrentState.round();
     gameOver = newCurrentState.gameOver();
