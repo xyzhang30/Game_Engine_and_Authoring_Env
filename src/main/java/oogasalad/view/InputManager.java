@@ -2,8 +2,8 @@ package oogasalad.view;
 
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
-import oogasalad.view.VisualElements.InputIndicators.AngleIndicator;
-import oogasalad.view.VisualElements.InputIndicators.PowerIndicator;
+import oogasalad.view.visual_elements.input_indicators.AngleIndicator;
+import oogasalad.view.visual_elements.input_indicators.PowerIndicator;
 
 /**
  * Manager for user inputs.

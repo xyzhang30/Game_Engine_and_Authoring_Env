@@ -7,12 +7,12 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.view.Controlling.GameController;
-import oogasalad.view.GameScreens.GameScreen;
-import oogasalad.view.GameScreens.MenuScreen;
-import oogasalad.view.GameScreens.TitleScreen;
-import oogasalad.view.GameScreens.TransitionScreen;
-import oogasalad.view.VisualElements.CompositeElement;
+import oogasalad.view.controller.GameController;
+import oogasalad.view.game_environment.GameScreen;
+import oogasalad.view.game_environment.MenuScreen;
+import oogasalad.view.game_environment.TitleScreen;
+import oogasalad.view.game_environment.TransitionScreen;
+import oogasalad.view.visual_elements.CompositeElement;
 
 /**
  * Manages different screens (scenes) within the game, such as the title screen, menu screen, game screen, and transition screen.

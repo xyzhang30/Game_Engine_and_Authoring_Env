@@ -5,9 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import oogasalad.view.Controlling.AuthoringController;
-import oogasalad.view.Controlling.GameController;
-import oogasalad.view.GameScreens.TitleScreen;
+import oogasalad.view.controller.AuthoringController;
+import oogasalad.view.controller.GameController;
+import oogasalad.view.game_environment.TitleScreen;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 

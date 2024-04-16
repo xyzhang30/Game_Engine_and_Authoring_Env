@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.shape.Shape;
 import oogasalad.Pair;
-import oogasalad.view.VisualElements.CompositeElement;
+import oogasalad.view.visual_elements.CompositeElement;
 
 /**
  * Class to maintain intersections and detect which collisions are active

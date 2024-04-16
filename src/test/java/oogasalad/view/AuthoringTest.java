@@ -5,10 +5,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import oogasalad.view.GameScreens.TitleScreen;
+import oogasalad.view.game_environment.TitleScreen;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-import oogasalad.view.Controlling.GameController;
+import oogasalad.view.controller.GameController;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;

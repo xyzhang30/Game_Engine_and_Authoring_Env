@@ -3,7 +3,7 @@ package oogasalad.view;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import oogasalad.view.Controlling.GameController;
+import oogasalad.view.controller.GameController;
 
 /**
  * Class to manage animations
