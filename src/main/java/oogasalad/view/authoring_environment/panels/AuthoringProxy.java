@@ -13,6 +13,8 @@ import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
 import oogasalad.view.authoring_environment.authoring_screens.NonControllableType;
 
 public class AuthoringProxy {
+
+  // TODO: make sure that this is actually following the Proxy pattern
   private String gameName;
   private String currentScreenTitle;
   private NewAuthoringController authoringController;
