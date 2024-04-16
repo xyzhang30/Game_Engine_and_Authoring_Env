@@ -10,6 +10,7 @@ import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
+import oogasalad.model.gameengine.collidable.Controllable;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameparser.GameLoaderModel;
@@ -49,12 +50,13 @@ public class GameEngine implements ExternalGameEngine {
     gameOver = false;
     turn = 1; //first player ideally should have id 1
     staticState = true;
-    playerContainer.startRound();
     playerContainer.setActive(turn);
     loader.makeLevel(round);
     collidables = loader.getCollidableContainer();
     rules = loader.getRulesRecord();
+    playerContainer.startRound();
     collisionHandlers = rules.collisionHandlers();
+    collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getControllableId());
     collidables.addStaticStateCollidables();
     playerContainer.addPlayerHistory();
     staticStateStack = new Stack<>();
@@ -97,6 +99,7 @@ public class GameEngine implements ExternalGameEngine {
     } else {
       staticState = false;
     }
+    collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getControllableId());
     return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
         round, turn, gameOver, staticState);
   }
@@ -113,8 +116,8 @@ public class GameEngine implements ExternalGameEngine {
     LOGGER.info(" player " + turn + " apply initial velocity with magnitude " + magnitude + " and "
         + "direction "
         + direction * 180 / Math.PI);
-    Collidable collidable = collidables.getCollidable(id);
-    collidable.applyInitialVelocity(magnitude, direction);
+    collidables.getCollidable(id).applyInitialVelocity(magnitude,direction);
+    rules.strikePolicy().getStrikePolicy().accept(id, this);
   }
 
   /**
@@ -127,6 +130,7 @@ public class GameEngine implements ExternalGameEngine {
 
   public void advanceRound() {
     round++;
+    playerContainer.applyDelayedScores();
     startRound(loader);
   }
 
@@ -178,6 +182,7 @@ public class GameEngine implements ExternalGameEngine {
 
   private void handleCollisions(double dt) {
     Set<Pair> collisionPairs = collidables.getCollisionPairs();
+    System.out.println(collisionPairs);
     for (Pair collision : collisionPairs) {
       if (rules.physicsMap().containsKey(collision)) {
         rules.physicsMap().get(collision).handleCollision(collidables, dt);
@@ -208,13 +213,6 @@ public class GameEngine implements ExternalGameEngine {
     staticStateStack.push(
         new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
             round, turn, gameOver, staticState));
-    // printStaticStateStack();
-  }
-
-  private void printStaticStateStack() {
-    for (GameRecord r : staticStateStack) {
-      System.out.print(r.players().get(0).score() + " ");
-    }
   }
 
 

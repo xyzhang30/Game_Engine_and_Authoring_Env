@@ -7,13 +7,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import javax.naming.ldap.Control;
 import oogasalad.Pair;
+import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.api.data.CollidableObject;
+import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
+import oogasalad.model.gameengine.collidable.Controllable;
+import oogasalad.model.gameengine.collidable.Ownable;
 import oogasalad.model.gameengine.collidable.PhysicsHandler;
 import oogasalad.model.gameengine.collidable.collision.FrictionHandler;
 import oogasalad.model.gameengine.collidable.collision.MomentumHandler;
@@ -23,6 +29,7 @@ import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameengine.statichandlers.GenericStaticStateHandler;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListBuilder;
+import oogasalad.model.gameengine.strike.StrikePolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,9 +50,9 @@ public class GameLoaderModel extends GameLoader {
   private final List<Integer> movables;
   private List<Entry<BiPredicate<Integer, CollidableObject>,
       BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList;
+//  private Map<Integer, Player> collidablePlayerMap;
 
   private final GenericStaticStateHandler staticHandler;
-
 
   /**
    * Constructs a GameLoaderModel object with the specified ID.
@@ -80,7 +87,30 @@ public class GameLoaderModel extends GameLoader {
 
   public void makeLevel(int id) {
     createCollidableContainer();
+    addPlayerControllables();
     createRulesRecord();
+  }
+
+  private void addPlayerControllables() {
+    for (ParserPlayer parserPlayer : gameData.getPlayers()){
+      int playerId = parserPlayer.playerId();
+      List<Integer> playerControllableIds = parserPlayer.myCollidable();
+      List<Controllable> playerControllableObjects = new ArrayList<>();
+      for (int i : playerControllableIds){
+        playerControllableObjects.add(collidableContainer.getCollidable(i).getControllable());
+      }
+      playerContainer.getPlayer(playerId).addControllables(playerControllableObjects);
+
+      List<Ownable> playerOwnableObjects = new ArrayList<>();
+      for (int i : playerControllableIds){
+        playerOwnableObjects.add(collidableContainer.getCollidable(i).getOwnable());
+      }
+      playerContainer.getPlayer(playerId).addOwnables(playerOwnableObjects);
+    }
+//    for (PlayerRecord playerRecord : getPlayerContainer().getPlayerRecords()){
+//      int controllableId = playerRecord.activeControllable();
+//      getPlayerContainer().getPlayer(playerRecord.playerId()).addControllables(List.of(collidableContainer.getCollidable(controllableId).getControllable()));
+//    }
   }
 
   /**
@@ -141,9 +171,12 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private void createPlayerContainer() {
+//    collidablePlayerMap = new HashMap<>();
     Map<Integer, Player> playerMap = new HashMap<>();
     gameData.getPlayers().forEach(p -> {
-      playerMap.put(p.playerId(), new Player(p.playerId(), p.myCollidable()));
+      playerMap.put(p.playerId(), new Player(p.playerId()));
+      Player player = new Player(p.playerId());
+      playerMap.put(p.playerId(), player);
     });
     this.playerContainer = new PlayerContainer(playerMap);
   }
@@ -155,9 +188,14 @@ public class GameLoaderModel extends GameLoader {
     Condition winCondition = createCondition(gameData.getRules().winCondition());
     Condition roundPolicy = createCondition(gameData.getRules().roundPolicy());
     TurnPolicy turnPolicy = createTurnPolicy();
+    StrikePolicy strikePolicy = createStrikePolicy();
     rulesRecord = new RulesRecord(commandMap,
         winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy,
-        staticHandler);
+        staticHandler, strikePolicy);
+  }
+
+  private StrikePolicy createStrikePolicy() {
+    return StrikePolicyFactory.createStrikePolicy(gameData.getRules().strikePolicy());
   }
 
   private TurnPolicy createTurnPolicy() {

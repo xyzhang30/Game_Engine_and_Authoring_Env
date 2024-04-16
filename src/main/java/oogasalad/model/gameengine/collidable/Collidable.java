@@ -23,7 +23,10 @@ public class Collidable {
   private double myNextVelocityX;
   private double myNextVelocityY;
   private boolean myVisible;
-  private Stack<List<Integer>> locationHistory;
+
+
+  private Controllable controllable;
+  private Ownable ownable;
 
   public Collidable(int id, double mass, double x, double y,
       boolean visible, double staticMu, double kineticMu, double width, double height,
@@ -42,9 +45,23 @@ public class Collidable {
     myShape = shape;
     myStaticMu = staticMu;
     myKineticMu = kineticMu;
-
+    controllable = new NullControllable(this);
+    ownable = new NullOwnable();
   }
 
+  public void addControllable(Controllable controllable) {
+    this.controllable = controllable;
+  }
+  public void addOwnable(Ownable ownable) {
+    this.ownable = ownable;
+  }
+  public Controllable getControllable() {
+    return controllable;
+  }
+
+  public Ownable getOwnable() {
+    return ownable;
+  }
   protected void updatePostCollisionVelocity() {
     myVelocityY = myNextVelocityY;
     myVelocityX = myNextVelocityX;
@@ -65,13 +82,6 @@ public class Collidable {
   protected void update() {
     myX = myNextX;
     myY = myNextY;
-  }
-
-  public void applyInitialVelocity(double magnitude, double direction) {
-    myVelocityX = magnitude * Math.cos(direction);
-    myNextVelocityX = myVelocityX;
-    myVelocityY = magnitude * Math.sin(direction);
-    myNextVelocityY = myVelocityY;
   }
 
   protected double getVelocityX() {
@@ -126,33 +136,26 @@ public class Collidable {
     myVisible = record.visible();
   }
 
-  //for debugging
-  @Override
-  public String toString() {
-    String sb = "{\n"
-        + "  \"myMass\": " + myMass + ",\n"
-        + "  \"myX\": " + myX + ",\n"
-        + "  \"myY\": " + myY + ",\n"
-        + "  \"myVelocityX\": " + myVelocityX + ",\n"
-        + "  \"myVelocityY\": " + myVelocityY + ",\n"
-        + "  \"myId\": " + myId + ",\n"
-        + "  \"myNextX\": " + myNextX + ",\n"
-        + "  \"myNextY\": " + myNextY + ",\n"
-        + "  \"myNextVelocityX\": " + myNextVelocityX + ",\n"
-        + "  \"myNextVelocityY\": " + myNextVelocityY + ",\n"
-        + "  \"myVisible\": " + myVisible + ",\n"
-        + "  \"myWidth\": " + myWidth + ",\n"
-        + "  \"myHeight\": " + myHeight + ",\n"
-        + "}\n";
-    return sb;
-  }
 
-  private void setSpeed(double speedX, double speedY) {
+  private void setNextSpeed(double speedX, double speedY) {
     myNextVelocityX = speedX;
     myNextVelocityY = speedY;
   }
 
-  protected void calculateNewSpeeds(Supplier<List<Double>> firstInfo) {
+  private void setSpeed(double speedX, double speedY) {
+    myVelocityX = speedX;
+    myVelocityY = speedY;
+    myNextVelocityX = myVelocityX;
+    myNextVelocityY = myVelocityY;
+  }
+
+
+  protected void calculateNextSpeeds(Supplier<List<Double>> firstInfo) {
+    List<Double> newSpeeds = firstInfo.get();
+    setNextSpeed(newSpeeds.get(0), newSpeeds.get(1));
+  }
+
+  protected void calculateSpeeds(Supplier<List<Double>> firstInfo) {
     List<Double> newSpeeds = firstInfo.get();
     setSpeed(newSpeeds.get(0), newSpeeds.get(1));
   }
@@ -162,11 +165,16 @@ public class Collidable {
     myVelocityY *= factor;
   }
 
-
   protected void stop() {
     myVelocityX = 0;
     myNextVelocityX = 0;
     myVelocityY = 0;
     myNextVelocityY = 0;
   }
+
+  public void applyInitialVelocity(double magnitude, double direction) {
+    controllable.applyInitialVelocity(magnitude, direction);
+  }
 }
+
+

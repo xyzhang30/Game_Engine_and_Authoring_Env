@@ -297,7 +297,7 @@ public abstract class AuthoringScreen {
     Slider slider = new Slider();
     slider.setPrefWidth(200);
     slider.setMin(0.2);
-    slider.setMax(2);
+    slider.setMax(10);
     slider.setValue(1);
     slider.setShowTickLabels(true);
     slider.setShowTickMarks(true);

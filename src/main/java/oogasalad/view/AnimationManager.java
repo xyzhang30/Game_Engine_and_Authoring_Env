@@ -12,7 +12,7 @@ import oogasalad.view.Controlling.GameController;
  */
 public class AnimationManager {
 
-  private final int FRAMES_PER_SECOND = 60;
+  private final int FRAMES_PER_SECOND = 120;
   private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   private final Timeline animation;
 

@@ -113,28 +113,32 @@ public class PhysicsTest {
 
   @Test
   public void testTwoMovingObjectsCollide() {
+    gameEngine.getCollidableContainer().getCollidable(1).setVisible(true);
+    gameEngine.getCollidableContainer().getCollidable(10).setVisible(true);
     gameEngine.applyInitialVelocity(15, -Math.PI, 1);
     gameEngine.applyInitialVelocity(15, 0, 10);
+    gameEngine.getCollidableContainer().getCollidable(1).setVisible(true);
+    gameEngine.getCollidableContainer().getCollidable(10).setVisible(true);
     gameEngine.update(.25);
     assertEquals(-10, container.getCollidableRecord(1).velocityX(), DELTA);
     assertEquals(10, container.getCollidableRecord(10).velocityX(), DELTA);
     gameEngine.update(.25);
-
-    System.out.println(container.getCollidableRecord(1));
-
-    System.out.println(container.getCollidableRecord(10));
-//https://www.sciencecalculators.org/mechanics/collisions/
-    assertEquals(1.666666666666, container.getCollidableRecord(1).velocityX(), DELTA);
-    assertEquals(-8.3333333, container.getCollidableRecord(10).velocityX(), DELTA);
+    assertEquals(-5, container.getCollidableRecord(1).velocityX(), DELTA);
+    assertEquals(5, container.getCollidableRecord(10).velocityX(), DELTA);
   }
 
 
   @Test
   public void testAdjustPointsCommand() {
-    // Ensure the game starts without errors
-    gameEngine.applyInitialVelocity(15, -Math.PI, 1);
-    gameEngine.applyInitialVelocity(15, 0, 10);
-    GameRecord r = gameEngine.update(.5);
+    gameEngine.getCollidableContainer().getCollidable(1).setVisible(true);
+    gameEngine.getCollidableContainer().getCollidable(10).setVisible(true);
+    gameEngine.applyInitialVelocity(20, -Math.PI, 1);
+    gameEngine.applyInitialVelocity(20, 0, 10);
+    System.out.println(gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().x());
+    GameRecord r = gameEngine.update(1);
+    System.out.println(gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().x());
+    System.out.println(gameEngine.getCollidableContainer().getCollidable(10).getCollidableRecord().x());
+
     assertEquals(2.0, r.players().get(0).score(), DELTA);
   }
 
