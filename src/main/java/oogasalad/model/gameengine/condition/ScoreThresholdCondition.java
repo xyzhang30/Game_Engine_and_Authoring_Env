@@ -1,6 +1,7 @@
 package oogasalad.model.gameengine.condition;
 
 import java.util.List;
+import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.GameEngine;
 
@@ -8,6 +9,7 @@ public class ScoreThresholdCondition implements Condition {
 
   private final List<Double> arguments;
 
+  @ExpectedParamNumber(1)
   public ScoreThresholdCondition(List<Double> arguments) {
     this.arguments = arguments;
   }

@@ -4,10 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import oogasalad.model.api.PlayerRecord;
+import oogasalad.model.gameengine.collidable.Ownable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Player {
+public class Player implements Ownable {
 
   private static final Logger LOGGER = LogManager.getLogger(Player.class);
   private final int playerId;
@@ -16,6 +17,7 @@ public class Player {
   private int activeControllable;
   private boolean roundCompleted = false;
   private int turnsCompleted;
+  private double temporaryScore;
 
   public Player(int id, List<Integer> controlable) {
     playerId = id;
@@ -112,5 +114,10 @@ public class Player {
     roundCompleted = false;
     turnsCompleted = 0;
     clearDelayedPoints();
+  }
+
+  @Override
+  public void setTemporaryScore(double tempScore) {
+    temporaryScore = tempScore;
   }
 }

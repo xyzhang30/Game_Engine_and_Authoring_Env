@@ -1,6 +1,7 @@
 package oogasalad.model.gameengine.command;
 
 import java.util.List;
+import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.player.Player;
 
@@ -11,6 +12,7 @@ public abstract class AdjustPointsGivenPlayerCommand implements Command {
 
   private final List<Double> arguments;
 
+  @ExpectedParamNumber(1)
   public AdjustPointsGivenPlayerCommand(List<Double> arguments) {
     this.arguments = arguments;
   }

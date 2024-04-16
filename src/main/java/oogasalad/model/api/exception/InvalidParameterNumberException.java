@@ -1,13 +1,16 @@
 package oogasalad.model.api.exception;
 
-public class invalidParameterNumberException extends RuntimeException {
+/**
+ * @author Alisha Zhang
+ */
+public class InvalidParameterNumberException extends RuntimeException {
 
   /**
    * Initialize a new InvalidFileException given an error message
    *
    * @param message, error message to be displayed by GUI
    */
-  public invalidParameterNumberException(String message) {
+  public InvalidParameterNumberException(String message) {
     super(message);
   }
 
@@ -17,7 +20,7 @@ public class invalidParameterNumberException extends RuntimeException {
    * @param message, error message to be displayed by GUI
    * @param cause,   the exception that prompted the InvalidFileException
    */
-  public invalidParameterNumberException(String message, Throwable cause) {
+  public InvalidParameterNumberException(String message, Throwable cause) {
     super(message, cause);
   }
 
