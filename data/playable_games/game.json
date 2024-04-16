@@ -14,7 +14,8 @@
       "y_dimension" : 63.0
     },
     "color" : [ 0, 0, 0 ],
-    "friction" : 0.0,
+    "staticFriction" : 5,
+    "kineticFriction" : 2,
     "image" : "file:/C:/Users/dogao/Desktop/DukeYr3/CS308/projects/oogasalad_team01/data/controllable_images/golf%20ball.jpg"
   }, {
     "collidable_id" : 1,
@@ -30,7 +31,8 @@
       "y_dimension" : 63.0
     },
     "color" : [ 0, 0, 0 ],
-    "friction" : 0.0,
+    "staticFriction" : 5,
+    "kineticFriction" : 2,
     "image" : ""
   }, {
     "collidable_id" : 2,
@@ -46,7 +48,8 @@
       "y_dimension" : 990.0
     },
     "color" : [ 0, 0, 0 ],
-    "friction" : 0.0,
+    "staticFriction" : 5,
+    "kineticFriction" : 2,
     "image" : ""
   } ],
   "players" : [ {
