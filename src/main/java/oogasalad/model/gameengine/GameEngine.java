@@ -117,7 +117,7 @@ public class GameEngine implements ExternalGameEngine {
         + "direction "
         + direction * 180 / Math.PI);
     collidables.getCollidable(id).applyInitialVelocity(magnitude,direction);
-    //rules.strikePolicy().accept(id, this);
+    rules.strikePolicy().getStrikePolicy().accept(id, this);
   }
 
   /**

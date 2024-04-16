@@ -340,15 +340,14 @@
     },
     "advance_turn": [
       {
-        "AdjustActivePointsCommand": [1.0],
         "AdvanceTurnCommand": []
       }
     ],
     "advance_round": [
       {
-        "AdjustActivePointsCommand": [1.0],
         "AdvanceRoundCommand": []
       }
-    ]
+    ],
+    "strike_policy": "IncrementPointStrikePolicy"
   }
 }
