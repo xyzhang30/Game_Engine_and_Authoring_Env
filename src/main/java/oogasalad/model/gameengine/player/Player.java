@@ -3,7 +3,6 @@ package oogasalad.model.gameengine.player;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.naming.ldap.Control;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Controllable;
 import oogasalad.model.gameengine.collidable.Ownable;
@@ -63,7 +62,7 @@ public class Player {
         score += o.getTemporaryScore();
       }
       return new PlayerRecord(playerId, score,
-          myControllables.get(activeControllableIndex).getCollidable().getId(),
+          myControllables.get(activeControllableIndex).asCollidable().getId(),
           active);
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");
@@ -84,7 +83,7 @@ public class Player {
   }
 
   public int getControllableId() {
-    return myControllables.get(activeControllableIndex).getCollidable().getId();
+    return myControllables.get(activeControllableIndex).asCollidable().getId();
   }
 
   protected void setFromRecord(PlayerRecord record) {

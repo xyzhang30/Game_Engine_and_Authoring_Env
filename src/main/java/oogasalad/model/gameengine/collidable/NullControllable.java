@@ -10,7 +10,7 @@ public class NullControllable implements Controllable {
   public void applyInitialVelocity(double magnitude, double direction) {
 //do nothing
   }
-  public Collidable getCollidable() {
+  public Collidable asCollidable() {
     return collidable;
   }
 

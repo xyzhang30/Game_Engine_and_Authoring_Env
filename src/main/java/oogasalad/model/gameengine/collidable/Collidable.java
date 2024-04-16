@@ -62,6 +62,7 @@ public class Collidable {
   public Ownable getOwnable() {
     return ownable;
   }
+
   protected void updatePostCollisionVelocity() {
     myVelocityY = myNextVelocityY;
     myVelocityX = myNextVelocityX;
