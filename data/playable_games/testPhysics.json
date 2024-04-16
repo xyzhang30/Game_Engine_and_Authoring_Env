@@ -197,18 +197,6 @@
   "rules": {
     "collisions": [
       {
-        "first_id": 1,
-        "second_id": 10,
-        "command": [
-          {
-            "AdjustPointsCommand": [1.0,1.0]
-          },
-          {
-            "AdjustPointsCommand": [1.0,1.0]
-          }
-        ]
-      },
-      {
       "first_id": 1,
       "second_id": 5,
       "command": [
@@ -228,15 +216,13 @@
     "advance_turn": [
       {
         "AdvanceTurnCommand": []
-      },
-      {
-        "AdjustPointsCommand": [1.0,1.0]
       }
     ],
     "advance_round": [
       {
         "AdvanceRoundCommand": []
       }
-    ]
+    ],
+    "strike_policy": "IncrementPointStrikePolicy"
   }
 }

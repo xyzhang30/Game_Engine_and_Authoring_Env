@@ -41,15 +41,11 @@ public class Player {
   }
 
   //TODO
-  //later make this an abstraction
   public void updateActiveControllableId() {
     activeControllableIndex = (activeControllableIndex + 1) % myControllables.size();
     while(!(myControllables.get(activeControllableIndex).canControl())) {
       activeControllableIndex = (activeControllableIndex + 1) % myControllables.size();
     }
-//    activeControllable =
-//        myControllables.get(
-//            (myControllables.indexOf(activeControllable) + 1) % myControllables.size()).getCollidable().getId();
   }
 
   public void setVariable(String key, double value) {
@@ -58,12 +54,10 @@ public class Player {
 
   protected PlayerRecord getPlayerRecord(boolean active) {
     try {
-//      System.out.println(variables.get("score"));
       double score = variables.get("score");
       for (Ownable o : myOwnables) {
         score += o.getTemporaryScore();
       }
-      System.out.println();
       return new PlayerRecord(playerId, score,
           myControllables.get(activeControllableIndex).getCollidable().getId(),
           active);
@@ -77,11 +71,6 @@ public class Player {
     return playerId;
   }
 
-
-  //public String toString() {
-  //   return "ID " + playerId + "\n\tRoundCompleted " + roundCompleted + "\n\t" + "Score "
-  //    + variables.get("score")+"\n\t";
-  //}
   public boolean isRoundCompleted() {
     return roundCompleted;
   }
@@ -124,8 +113,4 @@ public class Player {
     clearDelayedPoints();
   }
 
-//  @Override
-//  public void setTemporaryScore(double tempScore) {
-//    temporaryScore = tempScore;
-//  }
 }

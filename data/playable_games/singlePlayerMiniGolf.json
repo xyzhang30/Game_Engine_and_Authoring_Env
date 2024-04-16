@@ -310,6 +310,5 @@
       }
     ],
     "strike_policy": "IncrementPointStrikePolicy"
-
   }
 }
