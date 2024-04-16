@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import oogasalad.Pair;
+import oogasalad.model.api.CollidableRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.api.ViewCollidableRecord;
@@ -80,13 +81,15 @@ public class GameController {
     getCurrentControllable(gameEngine.getGameRecord());
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScreen(this, compositeElement);
+    sceneManager.update(gameEngine.getGameRecord());
   }
 
   private void getCurrentControllable(GameRecord gameRecord) {
     activePlayer = gameRecord.turn();
     for(PlayerRecord p : gameRecord.players()) {
       if(p.playerId()==activePlayer) {
-        controllableID = p.myControllable();
+        controllableID = p.activeControllable();
+        System.out.println(controllableID);
         break;
       }
     }
@@ -103,6 +106,12 @@ public class GameController {
     GameRecord gameRecord = gameEngine.update(timeStep);
     boolean staticState = gameRecord.staticState();
     if (staticState) {
+      for(CollidableRecord r : gameRecord.collidables()) {
+        if(List.of(9,14,15,16).contains(r.id())) {
+          System.out.println(r);
+        }
+      }
+      System.out.println();
       sceneManager.enableHitting();
     }
     getCurrentControllable(gameRecord);

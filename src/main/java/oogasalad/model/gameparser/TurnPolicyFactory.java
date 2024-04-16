@@ -6,10 +6,13 @@ import java.lang.reflect.InvocationTargetException;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameengine.turn.TurnPolicy;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class TurnPolicyFactory {
 
   private static final String TURN_POLICY_PATH = "turn.";
+  private static final Logger LOGGER = LogManager.getLogger(TurnPolicyFactory.class);
 
   public static TurnPolicy createTurnPolicy(String policyName, PlayerContainer playerContainer)
       throws InvalidCommandException {
@@ -19,7 +22,8 @@ public class TurnPolicyFactory {
           .newInstance(playerContainer);
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              NoSuchMethodException | IllegalAccessException e) {
-      throw new InvalidCommandException("");
+      LOGGER.error("turn policy command " + policyName + " is invalid");
+      throw new InvalidCommandException("invalid command");
     }
   }
 }

@@ -7,7 +7,8 @@ import oogasalad.view.Window;
 /**
  * Feel free to completely change this code or delete it entirely.
  */
-public class Main extends Application {
+public class
+Main extends Application {
 
   @Override
   public void start(Stage primaryStage) {

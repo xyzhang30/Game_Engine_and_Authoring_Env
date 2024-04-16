@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import oogasalad.Pair;
 import oogasalad.model.api.exception.InvalidFileException;
+import oogasalad.model.gameengine.command.AddDelayedPointsCommand;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
@@ -21,11 +22,12 @@ import oogasalad.model.gameengine.condition.Condition;
 import oogasalad.model.gameengine.condition.NRoundsCompletedCondition;
 import oogasalad.model.gameengine.statichandlers.GenericStaticStateHandler;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListBuilder;
+import oogasalad.model.gameengine.strike.DoNothingStrikePolicy;
+import oogasalad.model.gameengine.strike.StrikePolicy;
 import oogasalad.model.gameengine.turn.StandardTurnPolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
-import oogasalad.model.gameengine.command.AdjustPointsCommand;
 import oogasalad.model.gameengine.command.AdvanceTurnCommand;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameparser.GameLoaderModel;
@@ -54,7 +56,7 @@ public class GameLoaderModelTest {
 
     this.mockCollidableContainer = new CollidableContainer(collidables);
 
-    Player p1 = new Player(1, List.of(c2.getId()));
+    Player p1 = new Player(1);
 
     Map<Integer, Player> players = Map.of(1, p1);
 
@@ -96,7 +98,7 @@ public class GameLoaderModelTest {
 
   @Test
   public void testParseRules() {
-    Command c1 = new AdjustPointsCommand(List.of(1.0,1.0));
+    Command c1 = new AddDelayedPointsCommand(List.of(1.0,1.0));
     Command c2 = new AdvanceTurnCommand(List.of());
     Map<Pair, List<Command>> collisionHandlers = Map.of(new Pair(2, 3), List.of(c1, c2));
     Condition winCondition = new NRoundsCompletedCondition(List.of(2.0));
@@ -104,7 +106,7 @@ public class GameLoaderModelTest {
     Condition roundPolicy = new AllPlayersCompletedRoundCondition(List.of());
 
     Command advanceC1 = new AdvanceTurnCommand(List.of());
-    Command advanceC2 = new AdjustPointsCommand(List.of(1.0, 1.0));
+    Command advanceC2 = new AddDelayedPointsCommand(List.of(1.0, 1.0));
     List<Command> advanceTurn = List.of(advanceC1, advanceC2);
 
     Command advanceC3 = new AdvanceRoundCommand(List.of());
@@ -113,7 +115,6 @@ public class GameLoaderModelTest {
     GenericStaticStateHandler mockStaticStateHandler = StaticStateHandlerLinkedListBuilder.buildLinkedList(List.of(
         "GameOverStaticStateHandler",
         "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
-
 
     Map<Pair, PhysicsHandler> physicsMap = new HashMap<>();
     physicsMap.put(new Pair(1, 2), new FrictionHandler(1, 2));
@@ -137,10 +138,12 @@ public class GameLoaderModelTest {
     physicsMap.put(new Pair(2, 7), new MomentumHandler(2, 7));
     physicsMap.put(new Pair(1, 7), new FrictionHandler(1, 7));
 
-    RulesRecord mockRulesRecord = new RulesRecord(collisionHandlers, winCondition, roundPolicy,
-        advanceTurn, advanceRound, physicsMap, mockTurnPolicy, mockStaticStateHandler);
+    StrikePolicy strikePolicy = new DoNothingStrikePolicy();
 
-    testGameLoaderModel.getCollidableContainer();
+    RulesRecord mockRulesRecord = new RulesRecord(collisionHandlers, winCondition, roundPolicy,
+        advanceTurn, advanceRound, physicsMap, mockTurnPolicy, mockStaticStateHandler, strikePolicy);
+
+
     assertThat(testGameLoaderModel.getRulesRecord()).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mockRulesRecord);
   }
 

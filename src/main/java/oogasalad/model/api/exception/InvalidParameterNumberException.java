@@ -1,5 +1,8 @@
 package oogasalad.model.api.exception;
 
+/**
+ * @author Alisha Zhang
+ */
 public class InvalidParameterNumberException extends RuntimeException {
 
   /**
