@@ -24,6 +24,7 @@ public class Collidable {
   private double myNextVelocityY;
   private boolean myVisible;
   private Controllable controllable;
+  private Ownable ownable;
 
   public Collidable(int id, double mass, double x, double y,
       boolean visible, double staticMu, double kineticMu, double width, double height,
