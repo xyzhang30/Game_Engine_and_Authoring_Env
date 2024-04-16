@@ -1,20 +1,15 @@
 package oogasalad.view.authoring_environment.panels;
 
-import java.util.List;
-import java.util.function.Consumer;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Shape;
+import javafx.scene.layout.VBox;
 
 public class ColorPanel implements Panel {
   private final ShapeProxy shapeProxy;
-  private final AnchorPane rootPane;
+  private final VBox containerVBox;
   private ColorPicker colorPicker;
-  private List<Consumer<Shape>> observers;
-
-  public ColorPanel(ShapeProxy shapeProxy, AnchorPane rootPane) {
-    this.rootPane = rootPane;
+  public ColorPanel(ShapeProxy shapeProxy, VBox containerVBox) {
+    this.containerVBox = containerVBox;
     this.shapeProxy = shapeProxy;
     createElements();
     handleEvents();
@@ -26,7 +21,7 @@ public class ColorPanel implements Panel {
     AnchorPane.setTopAnchor(colorPicker, 50.0);
     AnchorPane.setRightAnchor(colorPicker, 50.0);
     colorPicker.setId("colorPicker");
-    rootPane.getChildren().add(colorPicker);
+    containerVBox.getChildren().add(colorPicker);
   }
 
   @Override
