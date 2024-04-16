@@ -7,15 +7,18 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import javax.naming.ldap.Control;
 import oogasalad.Pair;
 import oogasalad.model.api.CollidableRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.api.data.CollidableObject;
+import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
+import oogasalad.model.gameengine.collidable.Controllable;
 import oogasalad.model.gameengine.collidable.PhysicsHandler;
 import oogasalad.model.gameengine.collidable.collision.FrictionHandler;
 import oogasalad.model.gameengine.collidable.collision.MomentumHandler;
@@ -87,8 +90,14 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private void addPlayerControllables() {
-    for (int playerId : playerContainer.getPlayerIds()){
-
+    for (ParserPlayer parserPlayer : gameData.getPlayers()){
+      int playerId = parserPlayer.playerId();
+      List<Integer> playerControllableIds = parserPlayer.myCollidable();
+      List<Controllable> playerControllableObjects = new ArrayList<>();
+      for (int i : playerControllableIds){
+        playerControllableObjects.add(collidableContainer.getCollidable(i).getControllable());
+      }
+      playerContainer.getPlayer(playerId).addControllables(playerControllableObjects);
     }
 //    for (PlayerRecord playerRecord : getPlayerContainer().getPlayerRecords()){
 //      int controllableId = playerRecord.activeControllable();
