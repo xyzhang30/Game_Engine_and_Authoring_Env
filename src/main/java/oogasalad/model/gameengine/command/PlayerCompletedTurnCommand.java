@@ -13,6 +13,7 @@ public class PlayerCompletedTurnCommand implements Command {
 
   @Override
   public void execute(GameEngine engine) {
+    System.out.print("TURN COMPLETED");
     engine.getPlayerContainer().getPlayer(engine.getPlayerContainer().getActive())
         .completeTurn();
   }

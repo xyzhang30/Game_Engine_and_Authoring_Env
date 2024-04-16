@@ -160,7 +160,7 @@
       "properties" : [ "movable", "collidable", "controllable", "visible" ],
       "mass" : 10.0,
       "position" : {
-        "x_position" : 500,
+        "x_position" : 500.0,
         "y_position" : 470.0
       },
       "shape" : "Circle",

@@ -32,6 +32,7 @@ public class Player {
 
   public void addControllables(List<Controllable> controllables) {
     myControllables = controllables;
+    activeControllableIndex = controllables.size()-1;
   }
   public void addOwnables(List<Ownable> ownables) {
     myOwnables = ownables;
@@ -43,7 +44,6 @@ public class Player {
   //TODO
   public void updateActiveControllableId() {
     if(myControllables.size()>1){
-
     activeControllableIndex = (activeControllableIndex + 1) % myControllables.size();
     while (!(myControllables.get(activeControllableIndex).canControl())) {
       activeControllableIndex = (activeControllableIndex + 1) % myControllables.size();
