@@ -1,12 +1,11 @@
 package oogasalad.view.authoring_environment.authoring_screens.AuthoringHandlers;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
-
-import java.io.File;
 import javafx.stage.Stage;
 import oogasalad.view.authoring_environment.authoring_screens.ImageType;
 
@@ -40,10 +39,10 @@ public class ImageHandler {
       case BACKGROUND -> {
         return path + "/data/background_images";
       }
-      case NONCONTROLLABLE_ELEMENT -> {
+      case NONSTRIKEABLE_ELEMENT -> {
         return path + "/data/noncontrollable_images";
       }
-      case CONTROLLABLE_ELEMENT -> {
+      case STRIKEABLE_ELEMENT -> {
         return path + "/data/controllable_images";
       }
       default -> {

@@ -4,6 +4,7 @@ import javafx.scene.Node;
 
 public interface PowerIndicator {
 
-  abstract void setPower(double power);
-  abstract Node getNode();
+  void setPower(double power);
+
+  Node getNode();
 }

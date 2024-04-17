@@ -1,8 +1,8 @@
 {
   "gameName": "sampleMiniGolf",
-  "collidable_objects": [
+  "game_objects": [
     {
-      "collidable_id": 1,
+      "gameobject_id": 1,
       "properties": ["visible", "surface"],
       "mass": 1e1000000,
       "position": {
@@ -22,7 +22,7 @@
 
 
     {
-      "collidable_id": 2,
+      "gameobject_id": 2,
       "properties": ["visible", "surface"],
       "mass": 1e1000000,
       "position": {
@@ -41,7 +41,7 @@
     },
 
     {
-      "collidable_id": 3,
+      "gameobject_id": 3,
       "properties": ["visible", "surface"],
       "mass": 1e1000000,
       "position": {
@@ -60,8 +60,8 @@
     },
 
     {
-      "collidable_id": 4,
-      "properties": ["visible", "movable"],
+      "gameobject_id": 4,
+      "properties": ["visible", "collidable"],
       "mass": 1e1000000,
       "position": {
         "x_position": 333,
@@ -80,7 +80,7 @@
     },
 
     {
-      "collidable_id": 5,
+      "gameobject_id": 5,
       "properties": ["visible", "surface"],
       "mass": 1e1000000,
       "position": {
@@ -99,7 +99,7 @@
     },
 
     {
-      "collidable_id": 6,
+      "gameobject_id": 6,
       "properties": ["visible","surface"],
       "mass": 1E1000000,
       "position": {
@@ -118,7 +118,7 @@
     },
 
     {
-      "collidable_id": 7,
+      "gameobject_id": 7,
       "properties": ["visible", "surface"],
       "mass": 1e1000000,
       "position": {
@@ -137,12 +137,12 @@
     },
 
     {
-      "collidable_id": 8,
-      "properties": ["visible", "movable", "controllable"],
+      "gameobject_id": 8,
+      "properties": ["visible", "collidable", "strikeable"],
       "mass": 0.04,
       "position": {
-        "x_position": 480,
-        "y_position": 200
+        "x_position": 800,
+        "y_position": 720
       },
       "shape": "Circle",
       "dimension": {
@@ -157,8 +157,8 @@
 
 
     {
-      "collidable_id": 9,
-      "properties": ["visible", "movable"],
+      "gameobject_id": 9,
+      "properties": ["visible", "collidable"],
       "mass": 1E10000000,
       "position": {
         "x_position": 480,
@@ -176,8 +176,8 @@
     },
 
     {
-      "collidable_id": 10,
-      "properties": ["visible", "movable"],
+      "gameobject_id": 10,
+      "properties": ["visible", "collidable"],
       "mass": 1e1000000,
       "position": {
         "x_position": 0,
@@ -195,8 +195,8 @@
     },
 
     {
-      "collidable_id": 11,
-      "properties": ["visible", "movable"],
+      "gameobject_id": 11,
+      "properties": ["visible", "collidable"],
       "mass": 1e1000000,
       "position": {
         "x_position": 0,
@@ -214,8 +214,8 @@
     },
 
     {
-      "collidable_id": 12,
-      "properties": ["visible", "movable"],
+      "gameobject_id": 12,
+      "properties": ["visible", "collidable"],
       "mass": 1e1000000,
       "position": {
         "x_position": 0,
@@ -233,8 +233,8 @@
     },
 
     {
-      "collidable_id": 13,
-      "properties": ["visible", "movable"],
+      "gameobject_id": 13,
+      "properties": ["visible", "collidable"],
       "mass": 1e1000000,
       "position": {
         "x_position": 980,
@@ -252,48 +252,12 @@
       "image": ""
     },
     {
-      "collidable_id": 14,
-      "properties": ["visible", "movable", "controllable"],
+      "gameobject_id": 14,
+      "properties": ["visible", "collidable", "strikeable"],
       "mass": 0.04,
       "position": {
         "x_position": 380,
         "y_position": 200
-      },
-      "shape": "Circle",
-      "dimension": {
-        "x_dimension": 10,
-        "y_dimension": 10
-      },
-      "staticFriction": 0,
-      "kineticFriction": 0,
-      "color": [255,255,255],
-      "image": ""
-    },
-    {
-      "collidable_id": 15,
-      "properties": ["visible", "movable", "controllable"],
-      "mass": 0.04,
-      "position": {
-        "x_position": 380,
-        "y_position": 300
-      },
-      "shape": "Circle",
-      "dimension": {
-        "x_dimension": 10,
-        "y_dimension": 10
-      },
-      "staticFriction": 0,
-      "kineticFriction": 0,
-      "color": [255,255,255],
-      "image": ""
-    },
-    {
-      "collidable_id": 16,
-      "properties": ["visible", "movable", "controllable"],
-      "mass": 0.04,
-      "position": {
-        "x_position": 480,
-        "y_position": 300
       },
       "shape": "Circle",
       "dimension": {
@@ -309,11 +273,7 @@
   "players": [
     {
       "player_id": 1,
-      "my_collidable": [8,15]
-    },
-    {
-      "player_id": 2,
-      "my_collidable": [14,16]
+      "my_strikeable": [8]
     }
   ],
   "variables": [
@@ -353,7 +313,10 @@
         "second_id": 8,
         "command": [
           {
-            "UndoTurnCommand": []
+            "LastStaticStateCommand": []
+          },
+          {
+            "AddDelayedPointsCommand": [8,1]
           }
         ]
       },
@@ -362,7 +325,10 @@
         "second_id": 14,
         "command": [
           {
-            "UndoTurnCommand": []
+            "LastStaticStateCommand": []
+          },
+          {
+            "AddDelayedPointsCommand": [14,1]
           }
         ]
       }
@@ -376,15 +342,14 @@
     },
     "advance_turn": [
       {
-        "AdjustActivePointsCommand": [1.0],
         "AdvanceTurnCommand": []
       }
     ],
     "advance_round": [
       {
-        "AdjustActivePointsCommand": [1.0],
         "AdvanceRoundCommand": []
       }
-    ]
+    ],
+    "strike_policy": "IncrementPointStrikePolicy"
   }
 }

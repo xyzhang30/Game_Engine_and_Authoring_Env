@@ -1,5 +1,10 @@
 package oogasalad.view;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -10,13 +15,6 @@ import oogasalad.view.controller.GameController;
 import oogasalad.view.game_environment.TitleScreen;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
-
-
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
 
 public class IntegratedAuthoringTests extends DukeApplicationTest {
 
@@ -37,7 +35,6 @@ public class IntegratedAuthoringTests extends DukeApplicationTest {
   public void testFlowFromTitleToBackgroundSelection() throws InterruptedException {
     clickOn("Author");
 
-
     mockAuthoringController = getMockAuthoringControllerInjectedIntoBackgroundScreen();
 
     setValue(lookup(".color-picker").query(), Color.BLUE);
@@ -50,8 +47,7 @@ public class IntegratedAuthoringTests extends DukeApplicationTest {
     assertTrue(latch.await(2, TimeUnit.SECONDS), "Timeout waiting for the screen to load.");
 
     for (Window window : Window.getWindows()) {
-      if (window instanceof Stage) {
-        Stage stage = (Stage) window;
+      if (window instanceof Stage stage) {
         if (stage.getTitle() != null && stage.getTitle().equals(title) && stage.isShowing()) {
           return true;
         }
@@ -61,6 +57,6 @@ public class IntegratedAuthoringTests extends DukeApplicationTest {
   }
 
   private AuthoringController getMockAuthoringControllerInjectedIntoBackgroundScreen() {
-     return mock(AuthoringController.class);
+    return mock(AuthoringController.class);
   }
 }

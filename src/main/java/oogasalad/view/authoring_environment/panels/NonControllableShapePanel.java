@@ -7,8 +7,11 @@ import javafx.scene.layout.VBox;
 import oogasalad.view.authoring_environment.authoring_screens.NonControllableType;
 
 public class NonControllableShapePanel extends ShapePanel {
+
   private ComboBox<NonControllableType> nonControllableTypeDropdown;
-  public NonControllableShapePanel (AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane, VBox containerVBox, StackPane canvas) {
+
+  public NonControllableShapePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy,
+      AnchorPane rootPane, VBox containerVBox, StackPane canvas) {
     super(authoringProxy, shapeProxy, rootPane, containerVBox, canvas);
   }
 
@@ -23,9 +26,11 @@ public class NonControllableShapePanel extends ShapePanel {
     super.createElements();
     createNonControllableTypeSelection();
   }
+
   private void createNonControllableTypeSelection() {
     nonControllableTypeDropdown = new ComboBox<>();
-    nonControllableTypeDropdown.getItems().addAll(NonControllableType.SURFACE, NonControllableType.MOVABLE);
+    nonControllableTypeDropdown.getItems()
+        .addAll(NonControllableType.SURFACE, NonControllableType.MOVABLE);
     nonControllableTypeDropdown.setPromptText("Select Obstacle Type");
     AnchorPane.setRightAnchor(nonControllableTypeDropdown, 50.0);
     AnchorPane.setBottomAnchor(nonControllableTypeDropdown, 300.0);

@@ -25,56 +25,62 @@ import oogasalad.view.authoring_environment.panels.ShapeProxy;
 public class AuthoringScreen {
 
   private final AnchorPane rootPane = new AnchorPane();
-//  private final StackPane rootPane = new StackPane(); // PASSED TO PANELS
+  //  private final StackPane rootPane = new StackPane(); // PASSED TO PANELS
   private final VBox containerVBox = new VBox(); // PASSED TO PANELS
   private final StackPane canvasPane = new StackPane();
   private final ShapeProxy shapeProxy = new ShapeProxy();
   private final AuthoringProxy authoringProxy = new AuthoringProxy();
-  ComboBox<String> screensDropDown = new ComboBox<>();
-  Text titleText = new Text();
   private final Scene scene;
   private final Container container = new Container();
+  ComboBox<String> screensDropDown = new ComboBox<>();
+  Text titleText = new Text();
 
   public AuthoringScreen() {
     createCanvas();
 //    createShapesPane();
     createContainerVBox();
-    createScreenSelectionDropDown(List.of("Background", "Controllable", "Non-Controllable", "Interaction"));
+    createScreenSelectionDropDown(List.of("Background", "Strikeable", "Non-Strikeable",
+        "Interaction"));
     handleScreenSelectionDropDown();
     createFinishButton();
     containerVBox.getChildren().add(titleText);
     scene = new Scene(rootPane, Window.SCREEN_WIDTH, Window.SCREEN_HEIGHT);
     setScene("Background");
   }
+
   private void resetScene() {
     containerVBox.getChildren().clear();
     containerVBox.getChildren().add(titleText);
+  }
+
+  public Scene getScene() {
+    return this.scene;
   }
 
   private void setScene(String screenTitle) {
     setTitle(screenTitle);
     // TODO: BAD DESIGN -> WHERE and HOW to set the Container?
     switch (screenTitle) {
-      case "Background" ->
-          container.setPanels(List.of(new ColorPanel(shapeProxy, containerVBox), new ImagePanel(authoringProxy, shapeProxy,
+      case "Background" -> container.setPanels(List.of(new ColorPanel(shapeProxy, containerVBox),
+          new ImagePanel(authoringProxy, shapeProxy,
               containerVBox)));
-      case "Controllable" ->
-          container.setPanels(List.of(new ColorPanel(shapeProxy, containerVBox), new ImagePanel(authoringProxy, shapeProxy,
+      case "Strikeable" -> container.setPanels(List.of(new ColorPanel(shapeProxy, containerVBox),
+          new ImagePanel(authoringProxy, shapeProxy,
               containerVBox), new ShapePanel(authoringProxy, shapeProxy, rootPane,
               containerVBox, canvasPane)));
-      case "Non-Controllable" ->
-          container.setPanels(List.of(new ColorPanel(shapeProxy, containerVBox), new ImagePanel(authoringProxy, shapeProxy,
-              containerVBox), new NonControllableShapePanel(authoringProxy, shapeProxy, rootPane,
-              containerVBox, canvasPane)));
+      case "Non-Strikeable" -> container.setPanels(
+          List.of(new ColorPanel(shapeProxy, containerVBox),
+              new ImagePanel(authoringProxy, shapeProxy,
+                  containerVBox),
+              new NonControllableShapePanel(authoringProxy, shapeProxy, rootPane,
+                  containerVBox, canvasPane)));
       case "Interaction" ->
           container.setPanels(List.of(new InteractionPanel(authoringProxy, shapeProxy, rootPane,
               containerVBox, canvasPane)));
     }
 
   }
-  public Scene getScene() {
-    return this.scene;
-  }
+
   private void setTitle(String title) {
     titleText.setText(title);
     titleText.setId("titleText");
@@ -115,7 +121,6 @@ public class AuthoringScreen {
     canvasPane.setId("canvasPane");
     AnchorPane.setTopAnchor(canvasPane, 50.0);
     AnchorPane.setLeftAnchor(canvasPane, 70.0);
-
 
     Rectangle background = new Rectangle(canvasWidth, canvasHeight);
     background.setId("background");
@@ -161,6 +166,7 @@ public class AuthoringScreen {
       }
     });
   }
+
   public AuthoringProxy getAuthoringProxy() {
     return authoringProxy;
   }

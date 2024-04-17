@@ -1,16 +1,17 @@
 package oogasalad.view.authoring_environment.authoring_screens.AuthoringHandlers;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
-import javafx.scene.layout.StackPane;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 
 public class ShapeHandler {
-  private List<Shape> selectableShapes = new ArrayList<>();
-  private Shape selectedShape = null;
+
   private final StackPane root;
+  private final List<Shape> selectableShapes = new ArrayList<>();
+  private Shape selectedShape = null;
   private Consumer<Shape> onShapeSelected;
 
   public ShapeHandler(StackPane root) {

@@ -8,13 +8,17 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 public class ShapeProxy {
+
   private Shape shape;
+
   public Shape getShape() {
     return shape;
   }
+
   public void setShape(Shape shape) {
     this.shape = shape;
   }
+
   public List<Shape> createTemplateShapes() {
     Rectangle rectangle = new Rectangle(100, 50, Color.BLACK);
     AnchorPane.setRightAnchor(rectangle, 150.0);

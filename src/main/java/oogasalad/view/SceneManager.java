@@ -15,8 +15,9 @@ import oogasalad.view.game_environment.TransitionScreen;
 import oogasalad.view.visual_elements.CompositeElement;
 
 /**
- * Manages different screens (scenes) within the game, such as the title screen, menu screen, game screen, and transition screen.
- * It updates and transitions between screens based on game state and player interactions.
+ * Manages different screens (scenes) within the game, such as the title screen, menu screen, game
+ * screen, and transition screen. It updates and transitions between screens based on game state and
+ * player interactions.
  *
  * @author Doga Ozmen
  */
@@ -37,9 +38,9 @@ public class SceneManager {
   }
 
   public void update(GameRecord gameRecord) {
-    compositeElement.update(gameRecord.collidables());
+    compositeElement.update(gameRecord.gameObjectRecords());
     Map<Integer, Double> scoreMap = new TreeMap<>();
-    for(PlayerRecord p : gameRecord.players()) {
+    for (PlayerRecord p : gameRecord.players()) {
       scoreMap.put(p.playerId(), p.score());
     }
     updateScoreTurnBoard(scoreMap, gameRecord.turn(), gameRecord.round());

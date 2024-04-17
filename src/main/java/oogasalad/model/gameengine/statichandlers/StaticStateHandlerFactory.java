@@ -8,11 +8,11 @@ public class StaticStateHandlerFactory {
 
   private static final String HANDLER_PATH = "oogasalad.model.gameengine.statichandlers.";
 
-  public static GenericStaticStateHandler createHandler(String className) {
+  public static StaticStateHandler createHandler(String className) {
     try {
       Class<?> clazz = Class.forName(HANDLER_PATH + className);
       Constructor<?> constructor = clazz.getConstructor();
-      return (GenericStaticStateHandler) constructor.newInstance();
+      return (StaticStateHandler) constructor.newInstance();
     } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException |
              InstantiationException | IllegalAccessException e) {
       throw new InvalidCommandException("");

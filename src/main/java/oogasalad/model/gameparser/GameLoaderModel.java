@@ -5,24 +5,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import oogasalad.Pair;
-import oogasalad.model.api.data.CollidableObject;
+import oogasalad.model.api.data.GameObjectProperties;
+import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.gameengine.RulesRecord;
-import oogasalad.model.gameengine.collidable.Collidable;
-import oogasalad.model.gameengine.collidable.CollidableContainer;
-import oogasalad.model.gameengine.collidable.PhysicsHandler;
-import oogasalad.model.gameengine.collidable.collision.FrictionHandler;
-import oogasalad.model.gameengine.collidable.collision.MomentumHandler;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
+import oogasalad.model.gameengine.gameobject.GameObject;
+import oogasalad.model.gameengine.gameobject.GameObjectContainer;
+import oogasalad.model.gameengine.gameobject.PhysicsHandler;
+import oogasalad.model.gameengine.gameobject.Strikeable;
+import oogasalad.model.gameengine.gameobject.collision.FrictionHandler;
+import oogasalad.model.gameengine.gameobject.collision.MomentumHandler;
+import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
-import oogasalad.model.gameengine.statichandlers.GenericStaticStateHandler;
-import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListBuilder;
+import oogasalad.model.gameengine.statichandlers.StaticStateHandler;
+import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListFactory;
+import oogasalad.model.gameengine.strike.StrikePolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,16 +41,15 @@ public class GameLoaderModel extends GameLoader {
 
   protected static final String BASE_PATH = "oogasalad.model.gameengine.";
   private static final Logger LOGGER = LogManager.getLogger(GameLoaderModel.class);
-  private PlayerContainer playerContainer;
-  private CollidableContainer collidableContainer;
-  private RulesRecord rulesRecord;
   private final Map<Pair, PhysicsHandler> physicsMap;
-  private final List<Integer> movables;
-  private List<Entry<BiPredicate<Integer, CollidableObject>,
+  private final List<Integer> collidables;
+  private final StaticStateHandler staticHandler;
+  private PlayerContainer playerContainer;
+  private GameObjectContainer gameObjectContainer;
+  private RulesRecord rulesRecord;
+//  private Map<Integer, Player> collidablePlayerMap;
+  private List<Entry<BiPredicate<Integer, GameObjectProperties>,
       BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList;
-
-  private final GenericStaticStateHandler staticHandler;
-
 
   /**
    * Constructs a GameLoaderModel object with the specified ID.
@@ -55,10 +59,10 @@ public class GameLoaderModel extends GameLoader {
   public GameLoaderModel(String gameTitle) throws InvalidFileException {
     super(gameTitle);
     createPlayerContainer();
-    movables = new ArrayList<>();
+    collidables = new ArrayList<>();
     physicsMap = new HashMap<>();
 
-    staticHandler = StaticStateHandlerLinkedListBuilder.buildLinkedList(List.of(
+    staticHandler = StaticStateHandlerLinkedListFactory.buildLinkedList(List.of(
         "GameOverStaticStateHandler",
         "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
     createCollisionTypeMap();
@@ -78,9 +82,37 @@ public class GameLoaderModel extends GameLoader {
   }
 
 
-  public void makeLevel(int id) {
-    createCollidableContainer();
+  public void prepareRound(int id) {
+    createGameObjectContainer();
+    addPlayerStrikeables();
     createRulesRecord();
+  }
+
+  private void addPlayerStrikeables() {
+    for (ParserPlayer parserPlayer : gameData.getPlayers()) {
+      int playerId = parserPlayer.playerId();
+      List<Integer> playerStrikeableIds = parserPlayer.myStrikeable();
+      List<Strikeable> playerStrikeableObjects = new ArrayList<>();
+      for (int i : playerStrikeableIds) {
+        Optional<Strikeable> optionalStrikeable = gameObjectContainer.getGameObject(i)
+            .getStrikeable();
+        optionalStrikeable.ifPresent(playerStrikeableObjects::add);
+
+      }
+      playerContainer.getPlayer(playerId).addStrikeables(playerStrikeableObjects);
+
+      List<Scoreable> playerScoreableObjects = new ArrayList<>();
+      for (int i : playerStrikeableIds) {
+        Optional<Scoreable> optionalStrikeable = gameObjectContainer.getGameObject(i)
+            .getScoreable();
+        optionalStrikeable.ifPresent(playerScoreableObjects::add);
+      }
+      playerContainer.getPlayer(playerId).addScoreables(playerScoreableObjects);
+    }
+//    for (PlayerRecord playerRecord : getPlayerContainer().getPlayerRecords()){
+//      int StrikeableId = playerRecord.activeStrikeable();
+//      getPlayerContainer().getPlayer(playerRecord.playerId()).addStrikeables(List.of(collidableContainer.getCollidable(StrikeableId).getStrikeable()));
+//    }
   }
 
   /**
@@ -88,8 +120,8 @@ public class GameLoaderModel extends GameLoader {
    *
    * @return The collidable container.
    */
-  public CollidableContainer getCollidableContainer() {
-    return collidableContainer;
+  public GameObjectContainer getGameObjectContainer() {
+    return gameObjectContainer;
   }
 
   /**
@@ -102,22 +134,22 @@ public class GameLoaderModel extends GameLoader {
     return rulesRecord;
   }
 
-  private void createCollidableContainer() {
-    Map<Integer, Collidable> collidables = new HashMap<>();
-    gameData.getCollidableObjects().forEach(co -> {
-      if (co.properties().contains("movable")) {
-        movables.add(co.collidableId());
+  private void createGameObjectContainer() {
+    Map<Integer, GameObject> gameObjects = new HashMap<>();
+    gameData.getGameObjects().forEach(co -> {
+      if (co.properties().contains("collidable")) {
+        this.collidables.add(co.collidableId());
       }
-      collidables.put(co.collidableId(), createCollidable(co));
-      collidables.keySet().forEach(id -> addPairToPhysicsMap(co, id, conditionsList));
+      gameObjects.put(co.collidableId(), createCollidable(co));
+      gameObjects.keySet().forEach(id -> addPairToPhysicsMap(co, id, conditionsList));
     });
 
-    this.collidableContainer = new CollidableContainer(collidables);
+    this.gameObjectContainer = new GameObjectContainer(gameObjects);
   }
 
-  private void addPairToPhysicsMap(CollidableObject co, Integer id,
-      List<Entry<BiPredicate<Integer, CollidableObject>, BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList) {
-    for (Entry<BiPredicate<Integer, CollidableObject>, BiFunction<Integer, Integer, PhysicsHandler>> entry : conditionsList) {
+  private void addPairToPhysicsMap(GameObjectProperties co, Integer id,
+      List<Entry<BiPredicate<Integer, GameObjectProperties>, BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList) {
+    for (Entry<BiPredicate<Integer, GameObjectProperties>, BiFunction<Integer, Integer, PhysicsHandler>> entry : conditionsList) {
       if (entry.getKey().test(id, co) && id != co.collidableId()) {
         physicsMap.put(new Pair(id, co.collidableId()), entry.getValue().apply(id,
             co.collidableId()));
@@ -129,21 +161,24 @@ public class GameLoaderModel extends GameLoader {
   private void createCollisionTypeMap() {
     conditionsList = new ArrayList<>();
     conditionsList.add(
-        Map.entry((key, co) -> movables.contains(key) && co.properties().contains("movable"),
+        Map.entry((key, co) -> collidables.contains(key) && co.properties().contains("collidable"),
             MomentumHandler::new));
     conditionsList.add(
-        Map.entry((key, co) -> movables.contains(key) || co.properties().contains("movable"),
+        Map.entry((key, co) -> collidables.contains(key) || co.properties().contains("collidable"),
             FrictionHandler::new));
   }
 
-  private Collidable createCollidable(CollidableObject co) {
+  private GameObject createCollidable(GameObjectProperties co) {
     return CollidableFactory.createCollidable(co);
   }
 
   private void createPlayerContainer() {
+//    collidablePlayerMap = new HashMap<>();
     Map<Integer, Player> playerMap = new HashMap<>();
     gameData.getPlayers().forEach(p -> {
-      playerMap.put(p.playerId(), new Player(p.playerId(), p.myCollidable()));
+      playerMap.put(p.playerId(), new Player(p.playerId()));
+      Player player = new Player(p.playerId());
+      playerMap.put(p.playerId(), player);
     });
     this.playerContainer = new PlayerContainer(playerMap);
   }
@@ -155,9 +190,15 @@ public class GameLoaderModel extends GameLoader {
     Condition winCondition = createCondition(gameData.getRules().winCondition());
     Condition roundPolicy = createCondition(gameData.getRules().roundPolicy());
     TurnPolicy turnPolicy = createTurnPolicy();
+    StrikePolicy strikePolicy = createStrikePolicy();
     rulesRecord = new RulesRecord(commandMap,
         winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy,
-        staticHandler);
+        staticHandler, strikePolicy);
+  }
+
+  private StrikePolicy createStrikePolicy() {
+    System.out.println("gamedata strike: " + gameData.getRules().strikePolicy());
+    return StrikePolicyFactory.createStrikePolicy(gameData.getRules().strikePolicy());
   }
 
   private TurnPolicy createTurnPolicy() {

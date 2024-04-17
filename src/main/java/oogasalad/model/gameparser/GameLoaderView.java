@@ -2,9 +2,13 @@ package oogasalad.model.gameparser;
 
 import java.util.ArrayList;
 import java.util.List;
-import oogasalad.model.api.ControllablesView;
-import oogasalad.model.api.ViewCollidableRecord;
-import oogasalad.model.api.data.CollidableObject;
+import oogasalad.model.api.StrikeablesView;
+import oogasalad.model.api.ViewGameObjectRecord;
+import oogasalad.model.api.data.GameObjectProperties;
+import oogasalad.model.api.data.GameObjectShape;
+import oogasalad.model.api.exception.InvalidShapeException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Concrete implementation of GameLoader for passing game data necessary for the View.
@@ -13,28 +17,30 @@ import oogasalad.model.api.data.CollidableObject;
  */
 public class GameLoaderView extends GameLoader {
 
-  private static final String RESOURCE_FOLDER_PATH = "src/main/resources/";
-  private static final String PROPERTIES_FILE_EXTENSION = ".properties";
-  private static final String COLLIDABLE_PROPERTIES_COMMENT = "collidable objects shape";
-  private static final String COLLIDABLE_CSS_ID_PREFIX = "collidable";
+  private static final Logger LOGGER = LogManager.getLogger(GameLoaderView.class);
 
-  private List<ViewCollidableRecord> viewCollidableRecords;
-  private ControllablesView controllablesView;
+//  private static final String RESOURCE_FOLDER_PATH = "src/main/resources/";
+//  private static final String PROPERTIES_FILE_EXTENSION = ".properties";
+//  private static final String COLLIDABLE_PROPERTIES_COMMENT = "collidable objects shape";
+//  private static final String COLLIDABLE_CSS_ID_PREFIX = "collidable";
 
-  public GameLoaderView(String gameName) {
+  private List<ViewGameObjectRecord> viewGameObjectRecords;
+  private StrikeablesView strikeablesView;
+
+  public GameLoaderView(String gameName) throws InvalidShapeException {
     super(gameName);
     createViewRecord();
   }
 
-  private void createViewRecord() {
-    List<Integer> controllableIds = new ArrayList<>();
-    viewCollidableRecords = new ArrayList<>();
-    for (CollidableObject o : gameData.getCollidableObjects()) {
-      if (o.properties().contains("controllable")) {
-        controllableIds.add(o.collidableId());
+  private void createViewRecord() throws InvalidShapeException {
+    List<Integer> strikeableIDs = new ArrayList<>();
+    viewGameObjectRecords = new ArrayList<>();
+    for (GameObjectProperties o : gameData.getGameObjects()) {
+      if (o.properties().contains("strikeable")) {
+        strikeableIDs.add(o.collidableId());
       }
       int id = o.collidableId();
-      String shape = o.shape();
+      GameObjectShape shape = matchShape(o.shape());
       List<Integer> colorRgb = new ArrayList<>();
       for (int i : o.color()) {
         colorRgb.add(validateRgbValue(i));
@@ -43,20 +49,31 @@ public class GameLoaderView extends GameLoader {
       double ydimension = o.dimension().yDimension();
       double startXpos = o.position().xPosition();
       double startYpos = o.position().yPosition();
-      ViewCollidableRecord viewCollidable = new ViewCollidableRecord(id, colorRgb, shape,
+      ViewGameObjectRecord viewCollidable = new ViewGameObjectRecord(id, colorRgb, shape,
           xdimension,
-          ydimension, startXpos, startYpos, o.image());
-      viewCollidableRecords.add(viewCollidable);
+          ydimension, startXpos, startYpos, o.image(), o.direction());
+      viewGameObjectRecords.add(viewCollidable);
     }
-    controllablesView = new ControllablesView(controllableIds);
+    strikeablesView = new StrikeablesView(strikeableIDs);
   }
 
-  public List<ViewCollidableRecord> getViewCollidableInfo() {
-    return viewCollidableRecords;
+  private GameObjectShape matchShape(String shape) throws InvalidShapeException {
+    return switch (shape) {
+      case "Circle" -> GameObjectShape.ELLIPSE;
+      case "Rectangle" -> GameObjectShape.RECTANGLE;
+      default -> {
+        LOGGER.error("Shape" + shape + " is not supported");
+        throw new InvalidShapeException("Shape " + shape + " is not supported");
+      }
+    };
   }
 
-  public ControllablesView getControllableIds() {
-    return controllablesView;
+  public List<ViewGameObjectRecord> getViewCollidableInfo() {
+    return viewGameObjectRecords;
+  }
+
+  public StrikeablesView getStrikeableIDs() {
+    return strikeablesView;
   }
 
   private int validateRgbValue(int colorValue) {

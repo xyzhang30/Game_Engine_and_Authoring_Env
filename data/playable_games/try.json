@@ -1,0 +1,179 @@
+{
+  "gameName" : "try",
+  "game_objects" : [ {
+    "gameobject_id" : 0,
+    "properties" : [ "visible", "surface" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 50.0,
+      "y_position" : 50.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 990.0,
+      "y_dimension" : 990.0
+    },
+    "color" : [ 255, 255, 255 ],
+    "staticFriction" : 7.0,
+    "kineticFriction" : 5.0,
+    "image" : "",
+    "direction" : 0.0
+  }, {
+    "gameobject_id" : 1,
+    "properties" : [ "visible" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 50.0,
+      "y_position" : 50.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 20.0,
+      "y_dimension" : 990.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 7.0,
+    "kineticFriction" : 5.0,
+    "image" : "",
+    "direction" : 0.0
+  }, {
+    "gameobject_id" : 2,
+    "properties" : [ "visible" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 1020.0,
+      "y_position" : 50.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 20.0,
+      "y_dimension" : 990.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 7.0,
+    "kineticFriction" : 5.0,
+    "image" : "",
+    "direction" : 0.0
+  }, {
+    "gameobject_id" : 3,
+    "properties" : [ "visible" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 50.0,
+      "y_position" : 50.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 985.0,
+      "y_dimension" : 20.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 7.0,
+    "kineticFriction" : 5.0,
+    "image" : "",
+    "direction" : 0.0
+  }, {
+    "gameobject_id" : 4,
+    "properties" : [ "visible" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 50.0,
+      "y_position" : 1015.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 985.0,
+      "y_dimension" : 20.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 7.0,
+    "kineticFriction" : 5.0,
+    "image" : "",
+    "direction" : 0.0
+  }, {
+    "gameobject_id" : 5,
+    "properties" : [ "visible", "collidable" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 851.0,
+      "y_position" : 498.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 100.0,
+      "y_dimension" : 50.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "image" : "",
+    "direction" : 0.0
+  }, {
+    "gameobject_id" : 6,
+    "properties" : [ "visible", "surface" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 700.0,
+      "y_position" : 569.0
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 30.0,
+      "y_dimension" : 30.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "image" : "",
+    "direction" : 0.0
+  }, {
+    "gameobject_id" : 7,
+    "properties" : [ "collidable", "strikeable", "visible" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 705.0,
+      "y_position" : 295.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 100.0,
+      "y_dimension" : 50.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "image" : "data/strikeable_images/basketball.jpg",
+    "direction" : 0.0
+  } ],
+  "players" : [ {
+    "player_id" : 1,
+    "my_strikeable" : [ 7 ]
+  } ],
+  "variables" : [ {
+    "global" : {
+      "max_turns" : 1,
+      "max_rounds" : 2
+    },
+    "player" : {
+      "strokes" : 0,
+      "finished" : 0
+    }
+  } ],
+  "rules" : {
+    "collisions" : [ ],
+    "turn_policy" : "StandardTurnPolicy",
+    "round_policy" : {
+      "AllPlayersCompletedRoundCondition" : [ ]
+    },
+    "win_condition" : {
+      "NRoundsCompletedCondition" : [ 1.0 ]
+    },
+    "advance_turn" : [ {
+      "AdvanceTurnCommand" : [ ]
+    } ],
+    "advance_round" : [ {
+      "AdvanceRoundCommand" : [ ]
+    } ],
+    "strike_policy" : "DoNothingStrikePolicy"
+  }
+}

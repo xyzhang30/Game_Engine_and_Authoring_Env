@@ -6,16 +6,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import oogasalad.view.controller.GameController;
 import oogasalad.view.Window;
+import oogasalad.view.controller.GameController;
 
 public abstract class UIScreen {
+
   double SCREEN_WIDTH = Window.SCREEN_WIDTH;
   double SCREEN_HEIGHT = Window.SCREEN_HEIGHT;
   GameController controller;
 
   public abstract Parent getRoot();
-  public void setScreen(double width, double height){
+
+  public void setScreen(double width, double height) {
     SCREEN_WIDTH = width;
     SCREEN_HEIGHT = height;
   }

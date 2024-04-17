@@ -30,8 +30,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import oogasalad.view.controller.AuthoringController;
 import oogasalad.view.Window;
+import oogasalad.view.controller.AuthoringController;
 
 /**
  * Parent class for all screens related to creating a new game in authoring environment
@@ -39,11 +39,14 @@ import oogasalad.view.Window;
  * @author Jordan Haytaian, Doga Ozmen
  */
 public abstract class AuthoringScreen {
-  Map<Shape, NonControllableType> nonControllableMap;
-  List<Shape> controllableList;
+
+  final int authoringBoxWidth = 980;
+  final int authoringBoxHeight = 980;
+  public StackPane authoringBox;
+  Map<Shape, NonStrikeableType> nonStrikeableMap;
+  List<Shape> strikeableList;
   double screenWidth = Window.SCREEN_WIDTH;
   double screenHeight = Window.SCREEN_HEIGHT;
-  public StackPane authoringBox;
   List<Shape> selectableShapes;
   Map<Shape, Boolean> newTemplateMap;
   AnchorPane root;
@@ -55,16 +58,14 @@ public abstract class AuthoringScreen {
   Slider ySlider;
   Slider angleSlider;
   Shape selectedShape;
-  final int authoringBoxWidth = 980;
-  final int authoringBoxHeight = 980;
   Map<Shape, List<Double>> posMap;
   Map<Shape, String> imageMap;
 
   public AuthoringScreen(AuthoringController controller, StackPane authoringBox,
-      Map<Shape, List<Double>> posMap, Map<Shape, NonControllableType> nonControllableMap,
-      List<Shape> controllableList, Map<Shape, String> imageMap) {
-    this.nonControllableMap = nonControllableMap;
-    this.controllableList = controllableList;
+      Map<Shape, List<Double>> posMap, Map<Shape, NonStrikeableType> nonStrikeableMap,
+      List<Shape> strikeableList, Map<Shape, String> imageMap) {
+    this.nonStrikeableMap = nonStrikeableMap;
+    this.strikeableList = strikeableList;
     this.posMap = posMap;
     this.imageMap = imageMap;
     this.controller = controller;
@@ -153,10 +154,9 @@ public abstract class AuthoringScreen {
     fileChooser.getExtensionFilters().addAll(
         new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
     );
-    File file =  fileChooser.showOpenDialog(new Stage());
+    File file = fileChooser.showOpenDialog(new Stage());
     return initialDirectory + FileSystems.getDefault().getSeparator() + file.getName();
   }
-
 
 
   /**
@@ -293,7 +293,7 @@ public abstract class AuthoringScreen {
     Slider slider = new Slider();
     slider.setPrefWidth(200);
     slider.setMin(0.2);
-    slider.setMax(2);
+    slider.setMax(10);
     slider.setValue(1);
     slider.setShowTickLabels(true);
     slider.setShowTickMarks(true);
@@ -402,16 +402,16 @@ public abstract class AuthoringScreen {
   private String getImageFolder(ImageType imageType) {
     switch (imageType) {
       case BACKGROUND -> {
-        return  "data/background_images";
+        return "data/background_images";
       }
-      case NONCONTROLLABLE_ELEMENT -> {
-        return  "data/noncontrollable_images";
+      case NONSTRIKEABLE_ELEMENT -> {
+        return "data/nonstrikeable_images";
       }
-      case CONTROLLABLE_ELEMENT -> {
-        return  "data/controllable_images";
+      case STRIKEABLE_ELEMENT -> {
+        return "data/strikeable_images";
       }
       default -> {
-        return  "data/";
+        return "data/";
       }
     }
   }

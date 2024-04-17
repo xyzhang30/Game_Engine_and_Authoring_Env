@@ -42,8 +42,8 @@ public class MenuScreen extends UIScreen {
     setToThemeFont(title, 100);
     title.setEffect(createDropShadow());
 
-    title.setX(SCREEN_WIDTH/2 - title.getLayoutBounds().getWidth()/2);
-    title.setY(SCREEN_HEIGHT*0.3 - title.getLayoutBounds().getHeight()/2);
+    title.setX(SCREEN_WIDTH / 2 - title.getLayoutBounds().getWidth() / 2);
+    title.setY(SCREEN_HEIGHT * 0.3 - title.getLayoutBounds().getHeight() / 2);
 
     root.getChildren().add(title);
   }
@@ -51,9 +51,9 @@ public class MenuScreen extends UIScreen {
   private void createMenu(List<String> titles) {
     ObservableList<String> observableList = FXCollections.observableList(titles);
     ListView<String> listView = new ListView<>(observableList);
-    listView.setPrefSize(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.5);
-    listView.setLayoutX(SCREEN_WIDTH/2 - listView.getPrefWidth()/2);
-    listView.setLayoutY(SCREEN_HEIGHT*0.3);
+    listView.setPrefSize(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.5);
+    listView.setLayoutX(SCREEN_WIDTH / 2 - listView.getPrefWidth() / 2);
+    listView.setLayoutY(SCREEN_HEIGHT * 0.3);
     addListViewEventHandling(listView);
     styleMenu(listView);
     root.getChildren().add(listView);

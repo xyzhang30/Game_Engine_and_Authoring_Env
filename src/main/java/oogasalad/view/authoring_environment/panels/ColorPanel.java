@@ -5,15 +5,18 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 public class ColorPanel implements Panel {
+
   private final ShapeProxy shapeProxy;
   private final VBox containerVBox;
   private ColorPicker colorPicker;
+
   public ColorPanel(ShapeProxy shapeProxy, VBox containerVBox) {
     this.containerVBox = containerVBox;
     this.shapeProxy = shapeProxy;
     createElements();
     handleEvents();
   }
+
   @Override
   public void createElements() {
     colorPicker = new ColorPicker();

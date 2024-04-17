@@ -1,9 +1,9 @@
 {
   "gameName": "testPhysics",
-  "collidable_objects": [
+  "game_objects": [
     {
-      "collidable_id": 1,
-      "properties": ["visible", "movable"],
+      "gameobject_id": 1,
+      "properties": ["visible", "collidable", "strikeable"],
       "mass": 100,
       "position": {
         "x_position": 0,
@@ -19,8 +19,8 @@
       "kineticFriction": 0
     },
     {
-      "collidable_id": 2,
-      "properties": ["visible", "movable"],
+      "gameobject_id": 2,
+      "properties": ["visible", "collidable", "strikeable"],
       "mass": 100,
       "position": {
         "x_position": 50,
@@ -36,8 +36,8 @@
       "kineticFriction": 0
     },
     {
-      "collidable_id": 3,
-      "properties": ["visible", "movable"],
+      "gameobject_id": 3,
+      "properties": ["visible", "collidable"],
       "mass": 1e1000000,
       "position": {
         "x_position": 25,
@@ -53,7 +53,7 @@
       "kineticFriction": 0
     },
     {
-      "collidable_id": 4,
+      "gameobject_id": 4,
       "properties": ["visible","surface"],
       "mass": 1e1000000,
       "position": {
@@ -73,11 +73,11 @@
   "players": [
     {
       "player_id": 1,
-      "my_collidable": [1]
+      "my_strikeable": [1]
     },
     {
       "player_id": 2,
-      "my_collidable": [2]
+      "my_strikeable": [2]
     }
   ],
   "variables": [
@@ -99,7 +99,6 @@
         "second_id": 3,
         "command": [
           {
-            "AdjustActivePointsCommand": [1.0],
             "SetVisibleCommand": [1.0, 0.0],
             "PlayerCompletedRoundCommand": [1.0]
           }
@@ -110,7 +109,6 @@
         "second_id": 3,
         "command": [
           {
-            "AdjustActivePointsCommand": [1.0],
             "SetVisibleCommand": [2.0, 0.0],
             "PlayerCompletedRoundCommand": [2.0]
           }
@@ -133,6 +131,7 @@
       {
         "AdvanceRoundCommand": []
       }
-    ]
+    ],
+    "strike_policy" : "IncrementPointStrikePolicy"
   }
 }

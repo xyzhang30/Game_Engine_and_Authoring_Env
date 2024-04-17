@@ -4,41 +4,36 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import oogasalad.view.visual_elements.CompositeElement;
 
+/**
+ * Transforms a node
+ */
 public class GamePanel {
-  private final Pane globalView;
-  private double scaleX;
-  private double scaleY;
-  private double offsetX;
-  private double offsetY;
-  public GamePanel(CompositeElement compositeElement){
-    globalView = new AnchorPane();
-    addGameContentNodes(compositeElement);
 
-    scaleX = 1;
-    scaleY = 1;
-    offsetX = 0;
-    offsetY = 0;
-  }
-  public Pane getGlobalView(){
-    return globalView;
-  }
-  public void addGameContentNodes(CompositeElement cm){
-    for (int i : cm.idList()) {
-      globalView.getChildren().add(cm.getNode(i));
+  private final Pane localDisplay;
+  private final TransformableNode transformer;
+
+  public GamePanel(CompositeElement elements) {
+    AnchorPane source = new AnchorPane();
+    for (int id : elements.idList()) {
+      source.getChildren().add(elements.getNode(id));
     }
+    transformer = new TransformableNode(source);
+    localDisplay = new AnchorPane(transformer.getPane());
   }
-  public void TransformLocal(){
-    globalView.setScaleX(scaleX);
-    globalView.setScaleY(scaleY);
-    globalView.setTranslateX(globalView.getBoundsInLocal().getCenterX()*(scaleX-1)-offsetX);
-    globalView.setTranslateY(globalView.getBoundsInLocal().getCenterY()*(scaleY-1)-offsetY);
+
+  public Pane getPane() {
+    return localDisplay;
   }
-  public void modifyScope(double del){
-    scaleX *= del;
-    scaleY *= del;
-    TransformLocal();
+
+  public void setCamera(double x, double y, double w, double h) {
+    transformer.setFocus(x, y);
   }
-  public Pane getPane(){
-    return globalView;
+
+  public void zoomIn() {
+    transformer.zoom(1.05);
+  }
+
+  public void zoomOut() {
+    transformer.zoom(0.95);
   }
 }

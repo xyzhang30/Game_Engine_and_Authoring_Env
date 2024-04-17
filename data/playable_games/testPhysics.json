@@ -1,15 +1,15 @@
 {
   "gameName": "testPhysics",
-  "collidable_objects": [
+  "game_objects": [
     {
-      "collidable_id": 1,
-      "properties": ["visible", "movable"],
+      "gameobject_id": 1,
+      "properties": ["visible", "collidable", "strikeable"],
       "mass": 0.04,
       "position": {
         "x_position": 0,
         "y_position": 0
       },
-      "shape": "circle",
+      "shape": "rectangle",
       "dimension": {
         "x_dimension": 20,
         "y_dimension": 20
@@ -19,8 +19,8 @@
       "kineticFriction": 0
     },
     {
-      "collidable_id": 2,
-      "properties": ["visible", "movable"],
+      "gameobject_id": 2,
+      "properties": ["visible", "collidable"],
       "mass": 100,
       "position": {
         "x_position": 50,
@@ -36,8 +36,8 @@
       "kineticFriction": 0
     },
     {
-      "collidable_id": 3,
-      "properties": ["visible", "movable"],
+      "gameobject_id": 3,
+      "properties": ["visible", "collidable"],
       "mass": 100,
       "position": {
         "x_position": -50,
@@ -53,8 +53,8 @@
       "kineticFriction": 0
     },
     {
-      "collidable_id": 4,
-      "properties": ["visible","movable"],
+      "gameobject_id": 4,
+      "properties": ["visible","collidable"],
       "mass": 1e1000000,
       "position": {
         "x_position": -110,
@@ -70,8 +70,8 @@
       "kineticFriction": 0
     },
     {
-      "collidable_id": 5,
-      "properties": ["visible","movable"],
+      "gameobject_id": 5,
+      "properties": ["visible","collidable"],
       "mass": 1e1000000,
       "position": {
         "x_position": 100,
@@ -87,16 +87,16 @@
       "kineticFriction": 0
     },
     {
-      "collidable_id": 6,
-      "properties": ["visible","movable"],
-      "mass": 1e1000000,
+      "gameobject_id": 6,
+      "properties": ["visible","collidable","strikeable"],
+      "mass": 10,
       "position": {
-        "x_position": -100,
-        "y_position": -110
+        "x_position": -20,
+        "y_position": -20
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 200,
+        "x_dimension": 10,
         "y_dimension": 10
       },
       "color": [255,255,255],
@@ -104,8 +104,8 @@
       "kineticFriction": 0
     },
     {
-      "collidable_id": 7,
-      "properties": ["visible","movable"],
+      "gameobject_id": 7,
+      "properties": ["visible","collidable"],
       "mass": 1e1000000,
       "position": {
         "x_position": -100,
@@ -121,7 +121,7 @@
       "kineticFriction": 0
     },
     {
-      "collidable_id": 8,
+      "gameobject_id": 8,
       "properties": ["visible", "surface"],
       "mass": 0,
       "position": {
@@ -138,7 +138,7 @@
       "kineticFriction": 0
     },
     {
-      "collidable_id": 9,
+      "gameobject_id": 9,
       "properties": ["visible", "surface"],
       "mass": 0,
       "position": {
@@ -155,8 +155,8 @@
       "kineticFriction": 2.03873
     },
     {
-      "collidable_id": 10,
-      "properties": ["visible", "movable"],
+      "gameobject_id": 10,
+      "properties": ["visible", "collidable", "strikeable"],
       "mass": 0.02,
       "position": {
         "x_position": -40,
@@ -175,11 +175,11 @@
   "players": [
     {
       "player_id": 1,
-      "my_collidable": [1]
+      "my_strikeable": [1]
     },
     {
       "player_id": 2,
-      "my_collidable": [6]
+      "my_strikeable": [6]
     }
   ],
   "variables": [
@@ -197,23 +197,14 @@
   "rules": {
     "collisions": [
       {
-        "first_id": 1,
-        "second_id": 10,
-        "command": [
-          {
-            "AdjustPointsCommand": [1.0,1.0]
-          },
-          {
-            "AdjustPointsCommand": [1.0,1.0]
-          }
-        ]
-      },
-      {
       "first_id": 1,
       "second_id": 5,
       "command": [
         {
-          "UndoTurnCommand": []
+          "LastStaticStateCommand": []
+        },
+        {
+          "AddDelayedPointsCommand": [1, 1]
         }
       ]
       }
@@ -228,15 +219,13 @@
     "advance_turn": [
       {
         "AdvanceTurnCommand": []
-      },
-      {
-        "AdjustPointsCommand": [1.0,1.0]
       }
     ],
     "advance_round": [
       {
         "AdvanceRoundCommand": []
       }
-    ]
+    ],
+    "strike_policy": "IncrementPointStrikePolicy"
   }
 }

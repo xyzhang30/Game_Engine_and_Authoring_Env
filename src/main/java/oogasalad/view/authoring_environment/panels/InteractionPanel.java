@@ -12,7 +12,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -21,6 +20,7 @@ import javafx.scene.shape.Shape;
 import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
 
 public class InteractionPanel implements Panel {
+
   private final ShapeProxy shapeProxy;
   private final AuthoringProxy authoringProxy;
   private final StackPane canvas;
@@ -30,10 +30,11 @@ public class InteractionPanel implements Panel {
   private CheckBox advanceTurnCheckBox;
   private CheckBox resetCheckBox;
   private CheckBox changeSpeedCheckBox;
-  private Set<Shape> clickedShapes = new HashSet<>();
+  private final Set<Shape> clickedShapes = new HashSet<>();
   private TextField gameNameTextField;
 
-  public InteractionPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane, VBox containerVBox, StackPane canvas) {
+  public InteractionPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
+      VBox containerVBox, StackPane canvas) {
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
     this.rootPane = rootPane;
@@ -84,13 +85,10 @@ public class InteractionPanel implements Panel {
 
     for (List<Shape> list : authoringProxy.getInteractionMap().keySet()) {
       if (list.containsAll(clickedShapes)) {
-        Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap().get(list);
-        if (currentInteractions.containsKey(InteractionType.RESET)) {
-          currentInteractions.remove(InteractionType.RESET);
-        }
-        if (currentInteractions.containsKey(InteractionType.CHANGE_SPEED)) {
-          currentInteractions.remove(InteractionType.CHANGE_SPEED);
-        }
+        Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap()
+            .get(list);
+        currentInteractions.remove(InteractionType.RESET);
+        currentInteractions.remove(InteractionType.CHANGE_SPEED);
         currentInteractions.put(InteractionType.ADVANCE, List.of((double) -1));
         return;
       }
@@ -108,13 +106,10 @@ public class InteractionPanel implements Panel {
 
     for (List<Shape> list : authoringProxy.getInteractionMap().keySet()) {
       if (list.containsAll(clickedShapes)) {
-        Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap().get(list);
-        if (currentInteractions.containsKey(InteractionType.ADVANCE)) {
-          currentInteractions.remove(InteractionType.ADVANCE);
-        }
-        if (currentInteractions.containsKey(InteractionType.CHANGE_SPEED)) {
-          currentInteractions.remove(InteractionType.CHANGE_SPEED);
-        }
+        Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap()
+            .get(list);
+        currentInteractions.remove(InteractionType.ADVANCE);
+        currentInteractions.remove(InteractionType.CHANGE_SPEED);
         currentInteractions.put(InteractionType.RESET, List.of((double) -1));
         return;
       }
@@ -131,13 +126,10 @@ public class InteractionPanel implements Panel {
 
     for (List<Shape> list : authoringProxy.getInteractionMap().keySet()) {
       if (list.containsAll(clickedShapes)) {
-        Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap().get(list);
-        if (currentInteractions.containsKey(InteractionType.RESET)) {
-          currentInteractions.remove(InteractionType.RESET);
-        }
-        if (currentInteractions.containsKey(InteractionType.ADVANCE)) {
-          currentInteractions.remove(InteractionType.ADVANCE);
-        }
+        Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap()
+            .get(list);
+        currentInteractions.remove(InteractionType.RESET);
+        currentInteractions.remove(InteractionType.ADVANCE);
         currentInteractions.put(InteractionType.CHANGE_SPEED, List.of((double) -1));
         return;
       }
@@ -173,7 +165,8 @@ public class InteractionPanel implements Panel {
         Integer points = Integer.parseInt(pointsText);
         for (List<Shape> list : authoringProxy.getInteractionMap().keySet()) {
           if (list.containsAll(clickedShapes)) {
-            Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap().get(list);
+            Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap()
+                .get(list);
             currentInteractions.put(InteractionType.SCORE, List.of((double) 1, (double) points));
             return;
           }

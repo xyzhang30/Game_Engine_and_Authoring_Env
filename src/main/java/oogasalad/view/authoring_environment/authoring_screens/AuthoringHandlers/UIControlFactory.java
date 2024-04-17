@@ -19,7 +19,8 @@ public class UIControlFactory {
    * @param action   the action to perform on button click.
    * @return the created Button.
    */
-  public static Button createButton(String text, int fontSize, double width, double height, Runnable action) {
+  public static Button createButton(String text, int fontSize, double width, double height,
+      Runnable action) {
     Button button = new Button(text);
     button.setFont(Font.font(fontSize));
     button.setPrefSize(width, height);
@@ -49,7 +50,8 @@ public class UIControlFactory {
    * @param onChange  the action to perform when the slider value changes.
    * @return the created Slider.
    */
-  public static Slider createSlider(double min, double max, double value, boolean showTicks, Runnable onChange) {
+  public static Slider createSlider(double min, double max, double value, boolean showTicks,
+      Runnable onChange) {
     Slider slider = new Slider(min, max, value);
     slider.setShowTickLabels(showTicks);
     slider.setShowTickMarks(showTicks);
@@ -58,7 +60,8 @@ public class UIControlFactory {
   }
 
   /**
-   * Creates a vertical box (VBox) container with predefined padding and spacing for layout purposes.
+   * Creates a vertical box (VBox) container with predefined padding and spacing for layout
+   * purposes.
    *
    * @param spacing the spacing between elements in the VBox.
    * @param padding the padding inside the VBox.
