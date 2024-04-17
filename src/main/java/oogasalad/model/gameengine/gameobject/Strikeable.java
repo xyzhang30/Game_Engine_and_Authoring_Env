@@ -29,8 +29,9 @@ public interface Strikeable {
   /**
    * Applies a velocity to the strikeable with the provided ID.
    *
-   * @param magnitude The magnitude of the force to apply.
-   * @param direction The direction of the force to apply.
+   * @param magnitude The magnitude of the new velocity.
+   * @param direction The direction of the new velocity with respect to the positive x-axis
+   *                      (in radians).
    */
 
   void applyInitialVelocity(double magnitude, double direction);
