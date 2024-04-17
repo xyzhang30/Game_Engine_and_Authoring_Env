@@ -77,6 +77,7 @@ public class SceneElementParser {
         parameters.put(parameterName, parameterValue);
       }
     }
+    System.out.println();
 
     return parameters;
   }

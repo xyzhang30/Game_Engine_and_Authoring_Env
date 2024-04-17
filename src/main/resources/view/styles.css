@@ -20,6 +20,13 @@
   -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
 }
 
+.game-text {
+  -fx-fill: #42bff5;
+  -fx-font-family: "Comic Sans MS", "Arial", sans-serif;
+  -fx-font-size: 20px;
+  -fx-font-weight: bold;
+}
+
 .title-text {
   -fx-fill: #349455;
   -fx-font-family: "Comic Sans MS", "Arial", sans-serif;

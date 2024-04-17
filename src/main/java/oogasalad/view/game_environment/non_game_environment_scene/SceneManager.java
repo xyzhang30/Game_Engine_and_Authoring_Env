@@ -39,6 +39,7 @@ public class SceneManager {
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
   private final String gameManagementElementsPath = "data/scene_elements/gameManagementElements.xml";
+  private final String gameStatElementsPath = "data/scene_elements/gameStatElements.xml";
 
 
   public SceneManager(GameController gameController) {
@@ -51,6 +52,7 @@ public class SceneManager {
   }
 
   public void createNonGameScene(SceneType sceneType) {
+    resetRoot();
     switch (sceneType) {
       case TITLE -> {
         createSceneElementsAndUpdateRoot(titleSceneElementsPath);
@@ -62,23 +64,6 @@ public class SceneManager {
       }
       case PAUSE -> {
       }
-    }
-
-  }
-
-  public void createSceneElementsAndUpdateRoot(String filePath) {
-    try {
-      List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(
-          filePath);
-      List<Node> sceneElements = sceneElementFactory.createSceneElements(sceneElementParameters);
-      root.getChildren().clear();
-      root.getChildren().addAll(sceneElements);
-    } catch (ParserConfigurationException e) {
-      //TODO: Exception Handling
-    } catch (SAXException e) {
-      //TODO: Exception Handling
-    } catch (IOException e) {
-      //TODO: Exception Handling
     }
   }
 
@@ -98,7 +83,9 @@ public class SceneManager {
 
   public void makeGameScreen(GameController controller, CompositeElement compositeElement) {
     this.compositeElement = compositeElement;
+    resetRoot();
     createSceneElementsAndUpdateRoot(gameManagementElementsPath);
+    createSceneElementsAndUpdateRoot(gameStatElementsPath);
 //    gameScreen = new GameScreen(controller, compositeElement);
 //    scene.setRoot(gameScreen.getRoot());
 //    gameScreen.initiateListening(scene);
@@ -121,5 +108,24 @@ public class SceneManager {
   public void updateScoreTurnBoard(Map<Integer, Double> scoreMap, int turn, int round) {
     gameScreen.updateScoreBoard(scoreMap);
     gameScreen.updateTurnBoard(turn, round);
+  }
+
+  private void createSceneElementsAndUpdateRoot(String filePath) {
+    try {
+      List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(
+          filePath);
+      List<Node> sceneElements = sceneElementFactory.createSceneElements(sceneElementParameters);
+      root.getChildren().addAll(sceneElements);
+    } catch (ParserConfigurationException e) {
+      //TODO: Exception Handling
+    } catch (SAXException e) {
+      //TODO: Exception Handling
+    } catch (IOException e) {
+      //TODO: Exception Handling
+    }
+  }
+
+  private void resetRoot() {
+    root.getChildren().clear();
   }
 }

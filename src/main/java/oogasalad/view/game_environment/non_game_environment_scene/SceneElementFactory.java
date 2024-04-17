@@ -52,7 +52,6 @@ public class SceneElementFactory {
         }
       }
     }
-
     return sceneElements;
   }
 
