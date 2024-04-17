@@ -1,9 +1,7 @@
 package oogasalad.view.AuthoringScreens;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,8 +11,6 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -43,8 +39,8 @@ import oogasalad.view.Window;
  * @author Jordan Haytaian, Doga Ozmen
  */
 public abstract class AuthoringScreen {
-  Map<Shape, NonControllableType> nonControllableMap;
-  List<Shape> controllableList;
+  Map<Shape, NonStrikeableType> nonStrikeableMap;
+  List<Shape> strikeableList;
   double screenWidth = Window.SCREEN_WIDTH;
   double screenHeight = Window.SCREEN_HEIGHT;
   public StackPane authoringBox;
@@ -65,10 +61,10 @@ public abstract class AuthoringScreen {
   Map<Shape, String> imageMap;
 
   public AuthoringScreen(AuthoringController controller, StackPane authoringBox,
-      Map<Shape, List<Double>> posMap, Map<Shape, NonControllableType> nonControllableMap,
-      List<Shape> controllableList, Map<Shape, String> imageMap) {
-    this.nonControllableMap = nonControllableMap;
-    this.controllableList = controllableList;
+      Map<Shape, List<Double>> posMap, Map<Shape, NonStrikeableType> nonStrikeableMap,
+      List<Shape> strikeableList, Map<Shape, String> imageMap) {
+    this.nonStrikeableMap = nonStrikeableMap;
+    this.strikeableList = strikeableList;
     this.posMap = posMap;
     this.imageMap = imageMap;
     this.controller = controller;
@@ -408,11 +404,11 @@ public abstract class AuthoringScreen {
       case BACKGROUND -> {
         return  "data/background_images";
       }
-      case NONCONTROLLABLE_ELEMENT -> {
-        return  "data/noncontrollable_images";
+      case NONSTRIKEABLE_ELEMENT -> {
+        return  "data/nonstrikeable_images";
       }
-      case CONTROLLABLE_ELEMENT -> {
-        return  "data/controllable_images";
+      case STRIKEABLE_ELEMENT -> {
+        return  "data/strikeable_images";
       }
       default -> {
         return  "data/";

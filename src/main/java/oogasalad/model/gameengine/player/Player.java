@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.collidable.Controllable;
-import oogasalad.model.gameengine.collidable.Ownable;
+import oogasalad.model.gameengine.gameobject.Strikeable;
+import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,10 +13,10 @@ public class Player {
 
   private static final Logger LOGGER = LogManager.getLogger(Player.class);
   private final int playerId;
-  private List<Controllable> myControllables;
-  private List<Ownable> myOwnables;
+  private List<Strikeable> myStrikeables;
+  private List<Scoreable> myScoreables;
   private final Map<String, Double> variables;
-  private int activeControllableIndex;
+  private int activeStrikeableIndex;
   private boolean roundCompleted = false;
   private int turnsCompleted;
   private double temporaryScore;
@@ -29,18 +29,18 @@ public class Player {
     variables.put("score", 0.0);
   }
 
-  public void addControllables(List<Controllable> controllables) {
-    myControllables = controllables;
-    activeControllableIndex = controllables.size()-1;
+  public void addStrikeables(List<Strikeable> strikeables) {
+    myStrikeables = strikeables;
+    activeStrikeableIndex = strikeables.size()-1;
   }
-  public void addOwnables(List<Ownable> ownables) {
-    myOwnables = ownables;
+  public void addScoreables(List<Scoreable> scoreables) {
+    myScoreables = scoreables;
   }
 
   //TODO
-  public void updateActiveControllableId() {
-    if(myControllables.size()>1){
-    activeControllableIndex = (activeControllableIndex + 1) % myControllables.size();
+  public void updateActiveStrikeableId() {
+    if(myStrikeables.size()>1){
+    activeStrikeableIndex = (activeStrikeableIndex + 1) % myStrikeables.size();
     }
   }
 
@@ -52,11 +52,11 @@ public class Player {
   protected PlayerRecord getPlayerRecord(boolean active) {
     try {
       double score = variables.get("score");
-      for (Ownable o : myOwnables) {
+      for (Scoreable o : myScoreables) {
         score += o.getTemporaryScore();
       }
       return new PlayerRecord(playerId, score,
-          myControllables.get(activeControllableIndex).asCollidable().getId(),
+          myStrikeables.get(activeStrikeableIndex).asGameObject().getId(),
           active);
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");
@@ -76,8 +76,11 @@ public class Player {
     roundCompleted = true;
   }
 
-  public int getControllableId() {
-    return myControllables.get(activeControllableIndex).asCollidable().getId();
+  public int getStrikeableID() {
+    System.out.println(myStrikeables);
+    System.out.println(activeStrikeableIndex);
+
+    return myStrikeables.get(activeStrikeableIndex).asGameObject().getId();
   }
 
   protected void setFromRecord(PlayerRecord record) {
@@ -85,13 +88,13 @@ public class Player {
   }
 
   private void clearDelayedPoints() {
-    for (Ownable o : myOwnables) {
+    for (Scoreable o : myScoreables) {
       o.setTemporaryScore(0);
     }
   }
 
   protected void applyDelayedScore() {
-    for (Ownable o : myOwnables) {
+    for (Scoreable o : myScoreables) {
       variables.put("score", variables.get("score") + o.getTemporaryScore());
     }
   }

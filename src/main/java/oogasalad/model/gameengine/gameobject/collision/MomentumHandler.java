@@ -1,9 +1,9 @@
-package oogasalad.model.gameengine.collidable.collision;
+package oogasalad.model.gameengine.gameobject.collision;
 
 import java.util.List;
 import java.util.function.Supplier;
-import oogasalad.model.api.CollidableRecord;
-import oogasalad.model.gameengine.collidable.PhysicsHandler;
+import oogasalad.model.api.GameObjectRecord;
+import oogasalad.model.gameengine.gameobject.PhysicsHandler;
 
 public class MomentumHandler extends PhysicsHandler {
 
@@ -11,7 +11,7 @@ public class MomentumHandler extends PhysicsHandler {
     super(id1, id2);
   }
 
-  protected Supplier<List<Double>> makeVelocityFunction(CollidableRecord c1, CollidableRecord c2,
+  protected Supplier<List<Double>> makeVelocityFunction(GameObjectRecord c1, GameObjectRecord c2,
       double dt) {
     return () -> {
       if (c2.mass() == Double.POSITIVE_INFINITY) {

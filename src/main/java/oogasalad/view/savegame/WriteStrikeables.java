@@ -3,28 +3,22 @@ package oogasalad.view.savegame;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import oogasalad.model.api.data.CollidableObject;
-import oogasalad.model.api.data.Dimension;
-import oogasalad.model.api.data.Position;
-import oogasalad.view.AuthoringScreens.NonControllableType;
+import oogasalad.model.api.data.GameObjectProperties;
+import oogasalad.view.AuthoringScreens.NonStrikeableType;
 
-public class WriteCollidables {
+public class WriteStrikeables {
 
 
-  public void writeControllables(){
 
-  }
 
-  public void writeCollidablesRecord(Map<Shape, Integer> collidableIdMap, List<Shape> controllables,
-      Map<Shape, NonControllableType> nonControllableTypeMap, Map<Shape, String> imageMap,
+  public void writeGameObjectProperties(Map<Shape, Integer> gameObjectIdMap,
+      List<Shape> strikeables,
+      Map<Shape, NonStrikeableType> nonStrikeableTypeMap, Map<Shape, String> imageMap,
       Map<Shape, List<Double>> posMap) {
 
-    int collidableId = 0;
-    List<CollidableObject> collidableObjects = new ArrayList<>();
+    int gameObjectId = 0;
+    List<GameObjectProperties> gameObjectProperties = new ArrayList<>();
     writeBackGround();
   }
 
@@ -41,7 +35,7 @@ public class WriteCollidables {
 //    List<String> properties = new ArrayList<>();
 //    properties.add("collidable");
 //    properties.add("visible");
-//    properties.add(nonControllableTypeMap.get(background).toString().toLowerCase());
+//    properties.add(nonStrikeableTypeMap.get(background).toString().toLowerCase());
 //    //double friction = 0.8;
 //    double staticFriction = 7;
 //    double kineticFriction = 5;
@@ -105,7 +99,7 @@ public class WriteCollidables {
 //    properties = new ArrayList<>();
 //    properties.add("collidable");
 //    properties.add("visible");
-//    properties.add("movable");
+//    properties.add("collidable");
 //    shapeName = "Rectangle";
 //    collidableObject = new CollidableObject(collidableId,
 //        properties, Double.POSITIVE_INFINITY,
@@ -204,7 +198,7 @@ public class WriteCollidables {
 //      } else {
 //        imgPath = imageMap.get(shape);
 //      }
-//      properties = List.of("movable", "collidable", "controllable", "visible");
+//      properties = List.of("collidable",  "strikeable", "visible");
 //      shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
 //      if (shape instanceof Ellipse) {
 //        collidableObject = new CollidableObject(collidableId,

@@ -5,13 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import oogasalad.view.AuthoringScreens.ImageType;
-import oogasalad.view.AuthoringScreens.NonControllableType;
+import oogasalad.view.AuthoringScreens.NonStrikeableType;
 import org.junit.jupiter.api.Test;
 import oogasalad.view.AuthoringScreens.BackgroundSelectionScreen;
 import oogasalad.view.Controlling.AuthoringController;
@@ -28,14 +25,14 @@ public class BackgroundSelectionScreenTest extends DukeApplicationTest {
   public void start(Stage stage) {
     StackPane authoringBox = new StackPane();
     Map<Shape, List<Double>> posMap = new HashMap<>();
-    Map<Shape, NonControllableType> nonControllableMap = new HashMap<>();
-    List<Shape> controllableList = new ArrayList<>();
+    Map<Shape, NonStrikeableType> nonStrikeableMap = new HashMap<>();
+    List<Shape> strikeableList = new ArrayList<>();
     Map<Shape, String> imageMap = new HashMap<>();
 
     mockController = mock(AuthoringController.class);
 
     BackgroundSelectionScreen screen = new BackgroundSelectionScreen(
-        mockController, authoringBox, posMap, nonControllableMap, controllableList, imageMap);
+        mockController, authoringBox, posMap, nonStrikeableMap, strikeableList, imageMap);
 
     Scene scene = screen.getScene();
     stage.setScene(scene);

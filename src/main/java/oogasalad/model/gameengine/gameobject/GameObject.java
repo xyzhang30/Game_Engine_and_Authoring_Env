@@ -1,12 +1,12 @@
-package oogasalad.model.gameengine.collidable;
+package oogasalad.model.gameengine.gameobject;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Stack;
 import java.util.function.Supplier;
-import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.GameObjectRecord;
+import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 
-public class Collidable {
+public class GameObject {
 
   private final double myMass;
   private final int myId;
@@ -26,10 +26,10 @@ public class Collidable {
   private boolean myVisible;
 
 
-  private Controllable controllable;
-  private Ownable ownable;
+  private Strikeable strikeable;
+  private Scoreable scoreable;
 
-  public Collidable(int id, double mass, double x, double y,
+  public GameObject(int id, double mass, double x, double y,
       boolean visible, double staticMu, double kineticMu, double width, double height,
       String shape) {
     myId = id;
@@ -48,18 +48,18 @@ public class Collidable {
     myKineticMu = kineticMu;
   }
 
-  public void addControllable(Controllable controllable) {
-    this.controllable = controllable;
+  public void addStrikeable(Strikeable strikeable) {
+    this.strikeable = strikeable;
   }
-  public void addOwnable(Ownable ownable) {
-    this.ownable = ownable;
+  public void addScoreable(Scoreable scoreable) {
+    this.scoreable = scoreable;
   }
-  public Optional<Controllable> getControllable() {
-    return Optional.ofNullable(controllable);
+  public Optional<Strikeable> getStrikeable() {
+    return Optional.ofNullable(strikeable);
   }
 
-  public Optional<Ownable> getOwnable() {
-    return Optional.ofNullable(ownable);
+  public Optional<Scoreable> getScoreable() {
+    return Optional.ofNullable(scoreable);
   }
 
   protected void updatePostCollisionVelocity() {
@@ -68,8 +68,8 @@ public class Collidable {
   }
 
 
-  public CollidableRecord getCollidableRecord() {
-    return new CollidableRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible,
+  public GameObjectRecord toGameObjectRecord() {
+    return new GameObjectRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible,
         myStaticMu, myKineticMu
         , myWidth, myHeight);
   }
@@ -124,7 +124,7 @@ public class Collidable {
     return myShape;
   }
 
-  protected void setFromRecord(CollidableRecord record) {
+  protected void setFromRecord(GameObjectRecord record) {
     myX = record.x();
     myY = record.y();
     myVelocityY = record.velocityY();
@@ -173,7 +173,7 @@ public class Collidable {
   }
 
   public void applyInitialVelocity(double magnitude, double direction) {
-    controllable.applyInitialVelocity(magnitude, direction);
+    strikeable.applyInitialVelocity(magnitude, direction);
   }
 }
 

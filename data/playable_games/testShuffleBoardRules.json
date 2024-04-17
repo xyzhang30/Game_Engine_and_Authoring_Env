@@ -1,9 +1,9 @@
 {
   "gameName" : "newShuffle",
-  "collidable_objects" : [
+  "game_objects" : [
     {
-    "collidable_id" : 0,
-    "properties" : [ "collidable", "visible", "surface" ],
+    "gameobject_id" : 0,
+    "properties" : [  "visible", "surface" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 0.0,
@@ -19,8 +19,8 @@
     "kineticFriction" : 5.0,
     "image" : "data/background_images/wood.jpg"
   }, {
-    "collidable_id" : 1,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 1,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 0.0,
@@ -36,8 +36,8 @@
     "kineticFriction" : 5.0,
     "image" : ""
   }, {
-    "collidable_id" : 2,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 2,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 970.0,
@@ -53,8 +53,8 @@
     "kineticFriction" : 5.0,
     "image" : ""
   }, {
-    "collidable_id" : 3,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 3,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 0.0,
@@ -70,8 +70,8 @@
     "kineticFriction" : 5.0,
     "image" : ""
   }, {
-    "collidable_id" : 4,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 4,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 0.0,
@@ -88,8 +88,8 @@
     "image" : ""
   },
     {
-      "collidable_id" : 6,
-      "properties" : [ "collidable", "visible", "surface" ],
+      "gameobject_id" : 6,
+      "properties" : [  "visible", "surface" ],
       "mass" : "Infinity",
       "position" : {
         "x_position" : 20,
@@ -105,8 +105,8 @@
       "kineticFriction" : 0.0,
       "image" : ""
     },  {
-      "collidable_id" : 8,
-      "properties" : [ "collidable", "visible", "surface" ],
+      "gameobject_id" : 8,
+      "properties" : [  "visible", "surface" ],
       "mass" : "Infinity",
       "position" : {
         "x_position" : 20,
@@ -122,8 +122,8 @@
       "kineticFriction" : 0.0,
       "image" : ""
     }, {
-      "collidable_id" : 9,
-      "properties" : [ "collidable", "visible", "surface" ],
+      "gameobject_id" : 9,
+      "properties" : [  "visible", "surface" ],
       "mass" : "Infinity",
       "position" : {
         "x_position" : 20,
@@ -139,8 +139,8 @@
       "kineticFriction" : 0.0,
       "image" : ""
     }, {
-      "collidable_id" : 10,
-      "properties" : [ "movable", "collidable", "controllable", "visible" ],
+      "gameobject_id" : 10,
+      "properties" : [ "collidable",  "strikeable", "visible" ],
       "mass" : 10.0,
       "position" : {
         "x_position" : 400.0,
@@ -156,8 +156,8 @@
       "kineticFriction" : 0.0,
       "image" : ""
     }, {
-      "collidable_id" : 11,
-      "properties" : [ "movable", "collidable", "controllable", "visible" ],
+      "gameobject_id" : 11,
+      "properties" : [ "collidable",  "strikeable", "visible" ],
       "mass" : 10.0,
       "position" : {
         "x_position" : 500.0,
@@ -173,8 +173,8 @@
       "kineticFriction" : 0.0,
       "image" : ""
     }, {
-      "collidable_id" : 12,
-      "properties" : [ "movable", "collidable", "controllable", "visible" ],
+      "gameobject_id" : 12,
+      "properties" : [ "collidable",  "strikeable", "visible" ],
       "mass" : 10.0,
       "position" : {
         "x_position" : 600,
@@ -191,8 +191,8 @@
       "image" : ""
     },
     {
-      "collidable_id" : 13,
-      "properties" : [ "movable", "collidable", "controllable", "visible" ],
+      "gameobject_id" : 13,
+      "properties" : [ "collidable",  "strikeable", "visible" ],
       "mass" : 10.0,
       "position" : {
         "x_position" : 700.0,
@@ -210,11 +210,11 @@
     } ],
   "players" : [ {
     "player_id" : 1,
-    "my_collidable" : [ 10, 11 ]
+    "my_strikeable" : [ 10, 11 ]
   },
     {
       "player_id" : 2,
-      "my_collidable" : [ 12, 13 ]
+      "my_strikeable" : [ 12, 13 ]
     }],
   "variables" : [ {
     "global" : {

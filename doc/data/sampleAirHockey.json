@@ -1,9 +1,9 @@
 {
   "gameName": "sampleAirHockey",
-  "collidable_objects": [
+  "game_objects": [
     {
-      "collidable_id": "01",
-      "properties": ["visible", "primary", "movable"],
+      "gameobject_id": "01",
+      "properties": ["visible", "primary", "collidable"],
       "player_ids": [],
       "position": {
         "x_position": 0,
@@ -15,7 +15,7 @@
       "color": [255,255,255]
     },
     {
-      "collidable_id": "02",
+      "gameobject_id": "02",
       "properties": ["visible"],
       "player_ids": ["01"],
       "position": {
@@ -28,7 +28,7 @@
       "color": [0,0,0]
     },
     {
-      "collidable_id": "03",
+      "gameobject_id": "03",
       "properties": ["visible"],
       "player_ids": ["02"],
       "position": {
@@ -41,8 +41,8 @@
       "color": [0,0,0]
     },
     {
-      "collidable_id": "04",
-      "properties": ["visible","tangible","movable"],
+      "gameobject_id": "04",
+      "properties": ["visible","tangible","collidable"],
       "player_ids": ["01"],
       "position": {
         "x_position": 0,
@@ -54,8 +54,8 @@
       "color": [165,165,165]
     },
     {
-      "collidable_id": "05",
-      "properties": ["visible","tangible","movable"],
+      "gameobject_id": "05",
+      "properties": ["visible","tangible","collidable"],
       "player_ids": ["02"],
       "position": {
         "x_position": 0,
@@ -69,7 +69,7 @@
       "color": [165,165,165]
     },
     {
-      "collidable_id": "06",
+      "gameobject_id": "06",
       "properties": ["visible"],
       "player_ids": [],
       "position": {

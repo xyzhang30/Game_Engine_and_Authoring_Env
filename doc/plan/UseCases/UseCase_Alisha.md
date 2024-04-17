@@ -12,7 +12,7 @@ private void generateStyleSheet(){
   try (PrintWriter writer = new PrintWriter(new FileWriter(defaultFolderPath + gameName))) {
     for (int i = 0; i < collidables.length(); i++) {
       JSONObject collidable = collidables.getJSONObject(i);
-      String id = collidable.getString("collidable_id");
+      String id = collidable.getString("gameobject_id");
       JSONArray colorArray = collidable.getJSONArray("color");
 
       int red = validateColorComponent(colorArray.getInt(0));

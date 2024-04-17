@@ -2,14 +2,11 @@ package oogasalad.model.gameparser;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.bytebuddy.build.BuildLogger.Adapter;
-import oogasalad.model.api.ControllablesView;
-import oogasalad.model.api.ViewCollidableRecord;
-import oogasalad.model.api.data.CollidableObject;
-import oogasalad.model.api.data.CollidableShape;
-import oogasalad.model.api.exception.InvalidImageException;
+import oogasalad.model.api.StrikeablesView;
+import oogasalad.model.api.ViewGameObjectRecord;
+import oogasalad.model.api.data.GameObjectProperties;
+import oogasalad.model.api.data.GameObjectShape;
 import oogasalad.model.api.exception.InvalidShapeException;
-import oogasalad.model.gameengine.GameEngine;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,8 +24,8 @@ public class GameLoaderView extends GameLoader {
 //  private static final String COLLIDABLE_PROPERTIES_COMMENT = "collidable objects shape";
 //  private static final String COLLIDABLE_CSS_ID_PREFIX = "collidable";
 
-  private List<ViewCollidableRecord> viewCollidableRecords;
-  private ControllablesView controllablesView;
+  private List<ViewGameObjectRecord> viewGameObjectRecords;
+  private StrikeablesView strikeablesView;
 
   public GameLoaderView(String gameName) throws InvalidShapeException {
     super(gameName);
@@ -36,14 +33,14 @@ public class GameLoaderView extends GameLoader {
   }
 
   private void createViewRecord() throws InvalidShapeException {
-    List<Integer> controllableIds = new ArrayList<>();
-    viewCollidableRecords = new ArrayList<>();
-    for (CollidableObject o : gameData.getCollidableObjects()) {
-      if (o.properties().contains("controllable")) {
-        controllableIds.add(o.collidableId());
+    List<Integer> strikeableIDs = new ArrayList<>();
+    viewGameObjectRecords = new ArrayList<>();
+    for (GameObjectProperties o : gameData.getGameObjects()) {
+      if (o.properties().contains("strikeable")) {
+        strikeableIDs.add(o.collidableId());
       }
       int id = o.collidableId();
-      CollidableShape shape = matchShape(o.shape());
+      GameObjectShape shape = matchShape(o.shape());
       List<Integer> colorRgb = new ArrayList<>();
       for (int i : o.color()) {
         colorRgb.add(validateRgbValue(i));
@@ -52,18 +49,18 @@ public class GameLoaderView extends GameLoader {
       double ydimension = o.dimension().yDimension();
       double startXpos = o.position().xPosition();
       double startYpos = o.position().yPosition();
-      ViewCollidableRecord viewCollidable = new ViewCollidableRecord(id, colorRgb, shape,
+      ViewGameObjectRecord viewCollidable = new ViewGameObjectRecord(id, colorRgb, shape,
           xdimension,
           ydimension, startXpos, startYpos, o.image(), o.direction());
-      viewCollidableRecords.add(viewCollidable);
+      viewGameObjectRecords.add(viewCollidable);
     }
-    controllablesView = new ControllablesView(controllableIds);
+    strikeablesView = new StrikeablesView(strikeableIDs);
   }
 
-  private CollidableShape matchShape(String shape) throws InvalidShapeException {
+  private GameObjectShape matchShape(String shape) throws InvalidShapeException {
     return switch (shape){
-      case "Circle" -> CollidableShape.ELLIPSE;
-      case "Rectangle" -> CollidableShape.RECTANGLE;
+      case "Circle" -> GameObjectShape.ELLIPSE;
+      case "Rectangle" -> GameObjectShape.RECTANGLE;
       default ->{
         LOGGER.error("Shape" + shape + " is not supported");
         throw new InvalidShapeException("Shape " + shape + " is not supported");
@@ -71,12 +68,12 @@ public class GameLoaderView extends GameLoader {
     };
   }
 
-  public List<ViewCollidableRecord> getViewCollidableInfo() {
-    return viewCollidableRecords;
+  public List<ViewGameObjectRecord> getViewCollidableInfo() {
+    return viewGameObjectRecords;
   }
 
-  public ControllablesView getControllableIds() {
-    return controllablesView;
+  public StrikeablesView getStrikeableIDs() {
+    return strikeablesView;
   }
 
   private int validateRgbValue(int colorValue) {

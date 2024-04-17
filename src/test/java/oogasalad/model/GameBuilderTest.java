@@ -37,7 +37,7 @@ public class GameBuilderTest {
     CollidableObject co1 = new CollidableObject(1, List.of("visible", "surface"),
         100.0, new Position(0, 0), "rectangle", new Dimension(500, 500),
         List.of(100, 200, 100), 3.03873, 2.03873, "sample.img");
-    CollidableObject co2 = new CollidableObject(2, List.of("visible", "movable"), 1.0,
+    CollidableObject co2 = new CollidableObject(2, List.of("visible", "collidable"), 1.0,
         new Position(250, 450), "circle", new Dimension(2, 2), List.of(255, 255, 255), 0.0, 0.0,"sample.img");
     CollidableObject co3 = new CollidableObject(3, List.of("visible", "surface"), 0.0,
         new Position(250, 50), "circle", new Dimension(5, 5), List.of(0, 0, 0), 0.0, 0.0,

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import oogasalad.model.api.data.GameData;
 import oogasalad.model.api.exception.InvalidJSONDataException;
-import oogasalad.model.gamebuilder.CollidablesBuilder;
+import oogasalad.model.gamebuilder.GameObjectsBuilder;
 import oogasalad.model.api.GameBuilder;
 import oogasalad.model.gamebuilder.PlayersBuilder;
 import oogasalad.model.gamebuilder.RulesBuilder;
@@ -33,8 +33,8 @@ public class BuilderDirector {
   }
 
   public <T> void constructCollidableObjects(List<T> fieldData) {
-    CollidablesBuilder collidablesBuilder = new CollidablesBuilder();
-    collidablesBuilder.buildGameField(gameData, fieldData);
+    GameObjectsBuilder gameObjectsBuilder = new GameObjectsBuilder();
+    gameObjectsBuilder.buildGameField(gameData, fieldData);
   }
 
   public <T> void constructPlayers(List<T> fieldData) {
@@ -55,7 +55,7 @@ public class BuilderDirector {
   public void writeGame(String fileName) throws InvalidJSONDataException {
     this.gameData.setGameName(fileName);
     ObjectMapper mapper = new ObjectMapper();
-    if (gameData.getCollidableObjects() == null || gameData.getPlayers() == null || gameData.getVariables() == null || gameData.getRules() == null) {
+    if (gameData.getGameObjects() == null || gameData.getPlayers() == null || gameData.getVariables() == null || gameData.getRules() == null) {
       LOGGER.error(resourceBundle.getString("NullJSONFieldError"));
       throw new InvalidJSONDataException(String.format(
           String.format(resourceBundle.getString("NullJSONFieldError"))));

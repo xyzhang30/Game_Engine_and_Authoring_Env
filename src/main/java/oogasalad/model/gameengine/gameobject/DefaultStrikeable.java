@@ -1,14 +1,14 @@
-package oogasalad.model.gameengine.collidable;
+package oogasalad.model.gameengine.gameobject;
 
 
 import java.util.List;
 import java.util.function.Supplier;
 
-public class DefaultControllable implements Controllable {
+public class DefaultStrikeable implements Strikeable {
 
-  private final Collidable collidable;
-  public DefaultControllable(Collidable c) {
-    collidable = c;
+  private final GameObject gameObject;
+  public DefaultStrikeable(GameObject go) {
+    gameObject = go;
   }
 
   @Override
@@ -18,12 +18,12 @@ public class DefaultControllable implements Controllable {
       double speedY = magnitude * Math.sin(direction);
       return List.of(speedX, speedY);
     };
-    collidable.calculateSpeeds(supplier);
+    gameObject.calculateSpeeds(supplier);
   }
 
   @Override
-  public Collidable asCollidable() {
-    return collidable;
+  public GameObject asGameObject() {
+    return gameObject;
   }
 
 }

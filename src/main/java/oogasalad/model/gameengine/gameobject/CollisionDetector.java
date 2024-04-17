@@ -1,24 +1,24 @@
-package oogasalad.model.gameengine.collidable;
+package oogasalad.model.gameengine.gameobject;
 
 public class CollisionDetector {
 
-  public boolean isColliding(Collidable collidable1, Collidable collidable2) {
-    String shape1 = collidable1.getShape();
-    String shape2 = collidable2.getShape();
+  public boolean isColliding(GameObject go1, GameObject go2) {
+    String shape1 = go1.getShape();
+    String shape2 = go2.getShape();
 
     // circle v. rectangle
     if ("Circle".equalsIgnoreCase(shape1) && "Rectangle".equalsIgnoreCase(shape2)) {
-      return checkCircleRectangleCollision(collidable1, collidable2);
+      return checkCircleRectangleCollision(go1, go2);
     } else if ("Rectangle".equalsIgnoreCase(shape1) && "Circle".equalsIgnoreCase(shape2)) {
-      return checkCircleRectangleCollision(collidable2, collidable1);
+      return checkCircleRectangleCollision(go2, go1);
     }
     // circle v. circle
     else if ("Circle".equalsIgnoreCase(shape1) && "Circle".equalsIgnoreCase(shape2)) {
-      return checkCircleCircleCollision(collidable1, collidable2);
+      return checkCircleCircleCollision(go1, go2);
     }
     // rectangle v. rectangle
     else if ("Rectangle".equalsIgnoreCase(shape1) && "Rectangle".equalsIgnoreCase(shape2)) {
-      return checkRectangleRectangleCollision(collidable1, collidable2);
+      return checkRectangleRectangleCollision(go1, go2);
     }
     //other shape combinations as we go on
     else {
@@ -28,7 +28,7 @@ public class CollisionDetector {
     return false;
   }
 
-  private boolean checkCircleRectangleCollision(Collidable circle, Collidable rectangle) {
+  private boolean checkCircleRectangleCollision(GameObject circle, GameObject rectangle) {
 
     double circleCenterX = circle.getX();
     double circleCenterY = circle.getY();
@@ -51,7 +51,7 @@ public class CollisionDetector {
     return (distanceX * distanceX + distanceY * distanceY) <= (circleRadius * circleRadius);
   }
 
-  private boolean checkCircleCircleCollision(Collidable circle1, Collidable circle2) {
+  private boolean checkCircleCircleCollision(GameObject circle1, GameObject circle2) {
     double x1 = circle1.getX(); // circle 1 x
     double y1 = circle1.getY(); // circle 2 x
     double radius1 = circle1.getWidth(); // circle 1 radius
@@ -69,7 +69,7 @@ public class CollisionDetector {
     return distanceCenters <= (radius1 + radius2);
   }
 
-  private boolean checkRectangleRectangleCollision(Collidable rect1, Collidable rect2) {
+  private boolean checkRectangleRectangleCollision(GameObject rect1, GameObject rect2) {
     double x1 = rect1.getX();
     double y1 = rect1.getY();
     double width1 = rect1.getWidth();

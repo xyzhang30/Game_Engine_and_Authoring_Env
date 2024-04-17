@@ -1,13 +1,11 @@
-package oogasalad.model;
+package oogasalad.model.gameengine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
-import oogasalad.model.gameengine.GameEngine;
-import oogasalad.model.gameengine.collidable.CollidableContainer;
-import oogasalad.model.gameparser.GameLoaderModel;
+import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
@@ -16,7 +14,7 @@ public class MiniGolfGameRulesTest {
 
 
   private GameEngine gameEngine;
-  private CollidableContainer container;
+  private GameObjectContainer container;
 
   private static final double DELTA = .0001;
 
@@ -25,11 +23,11 @@ public class MiniGolfGameRulesTest {
   @BeforeEach
   public void setUp() {
     gameEngine = new GameEngine(TITLE);
-    container = gameEngine.getCollidableContainer();
+    container = gameEngine.getGameObjectContainer();
   }
 
   private boolean isStatic(GameRecord r) {
-    for(CollidableRecord cr : r.collidables()) {
+    for(GameObjectRecord cr : r.gameObjectRecords()) {
       if(cr.visible() && (cr.velocityY()!=0 || cr.velocityX()!=0)) {
         return false;
       }

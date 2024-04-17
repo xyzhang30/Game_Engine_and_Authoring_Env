@@ -13,9 +13,9 @@ import oogasalad.model.gameengine.command.AddDelayedPointsCommand;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
-import oogasalad.model.gameengine.collidable.PhysicsHandler;
-import oogasalad.model.gameengine.collidable.collision.FrictionHandler;
-import oogasalad.model.gameengine.collidable.collision.MomentumHandler;
+import oogasalad.model.gameengine.gameobject.PhysicsHandler;
+import oogasalad.model.gameengine.gameobject.collision.FrictionHandler;
+import oogasalad.model.gameengine.gameobject.collision.MomentumHandler;
 import oogasalad.model.gameengine.command.AdvanceRoundCommand;
 import oogasalad.model.gameengine.condition.AllPlayersCompletedRoundCondition;
 import oogasalad.model.gameengine.condition.Condition;
@@ -26,8 +26,8 @@ import oogasalad.model.gameengine.strike.DoNothingStrikePolicy;
 import oogasalad.model.gameengine.strike.StrikePolicy;
 import oogasalad.model.gameengine.turn.StandardTurnPolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
-import oogasalad.model.gameengine.collidable.Collidable;
-import oogasalad.model.gameengine.collidable.CollidableContainer;
+import oogasalad.model.gameengine.gameobject.GameObject;
+import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import oogasalad.model.gameengine.command.AdvanceTurnCommand;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameparser.GameLoaderModel;
@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
 
 public class GameLoaderModelTest {
   GameLoaderModel testGameLoaderModel;
-  CollidableContainer mockCollidableContainer;
+  GameObjectContainer mockGameObjectContainer;
   PlayerContainer mockPlayerContainer;
   TurnPolicy mockTurnPolicy;
   @BeforeEach
@@ -44,17 +44,17 @@ public class GameLoaderModelTest {
     String gameTitle = "testSinglePlayerMiniGolf";
     this.testGameLoaderModel = new GameLoaderModel(gameTitle);
     testGameLoaderModel.makeLevel(1);
-    Collidable c1 = new Collidable(1, Double.POSITIVE_INFINITY, 0,0, true, 3.03873, 2.03873, 500, 500, "rectangle");
-    Collidable c2 = new Collidable(2, 1, 250, 450, true, 0, 0, 2, 2, "circle");
-    Collidable c3 = new Collidable(3, 0, 250,50, true, 0,0, 5, 5, "circle");
-    Collidable c4 = new Collidable(4, 200, 0, 0, true, 0,0, 500, 10, "rectangle");
-    Collidable c5 = new Collidable(5, 200, 0, 0, true, 0,0, 10, 500, "rectangle");
-    Collidable c6 = new Collidable(6, 200, 490, 0, true, 0,0, 10, 500, "rectangle");
-    Collidable c7 = new Collidable(7, 200, 0, 490, true, 0,0, 500, 10, "rectangle");
+    GameObject c1 = new GameObject(1, Double.POSITIVE_INFINITY, 0,0, true, 3.03873, 2.03873, 500, 500, "rectangle");
+    GameObject c2 = new GameObject(2, 1, 250, 450, true, 0, 0, 2, 2, "circle");
+    GameObject c3 = new GameObject(3, 0, 250,50, true, 0,0, 5, 5, "circle");
+    GameObject c4 = new GameObject(4, 200, 0, 0, true, 0,0, 500, 10, "rectangle");
+    GameObject c5 = new GameObject(5, 200, 0, 0, true, 0,0, 10, 500, "rectangle");
+    GameObject c6 = new GameObject(6, 200, 490, 0, true, 0,0, 10, 500, "rectangle");
+    GameObject c7 = new GameObject(7, 200, 0, 490, true, 0,0, 500, 10, "rectangle");
 
-    Map<Integer, Collidable> collidables = Map.of(1, c1, 2, c2, 3, c3, 4, c4, 5, c5, 6, c6, 7, c7);
+    Map<Integer, GameObject> collidables = Map.of(1, c1, 2, c2, 3, c3, 4, c4, 5, c5, 6, c6, 7, c7);
 
-    this.mockCollidableContainer = new CollidableContainer(collidables);
+    this.mockGameObjectContainer = new GameObjectContainer(collidables);
 
     Player p1 = new Player(1);
 
@@ -80,8 +80,9 @@ public class GameLoaderModelTest {
   }
 
   @Test
-  public void testParseCollidables() {
-    assertThat(testGameLoaderModel.getCollidableContainer()).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mockCollidableContainer);
+  public void testParseGameObjects() {
+    assertThat(testGameLoaderModel.getGameObjectContainer()).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(
+        mockGameObjectContainer);
   }
 
   @Test

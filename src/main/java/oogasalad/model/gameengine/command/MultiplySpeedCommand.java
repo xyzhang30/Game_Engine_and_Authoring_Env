@@ -15,7 +15,7 @@ public class MultiplySpeedCommand implements Command {
 
   @Override
   public void execute(GameEngine engine) {
-    engine.getCollidableContainer().getCollidable((int) Math.round(arguments.get(0)))
+    engine.getGameObjectContainer().getGameObject((int) Math.round(arguments.get(0)))
         .multiplySpeed(arguments.get(1));
   }
 }

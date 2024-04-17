@@ -1,6 +1,6 @@
 package oogasalad.model.api.data;
 
-public enum CollidableShape {
+public enum GameObjectShape {
   ELLIPSE,
   RECTANGLE
 }

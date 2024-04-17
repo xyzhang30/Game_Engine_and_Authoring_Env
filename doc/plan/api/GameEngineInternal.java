@@ -12,7 +12,7 @@ interface GameEngineInternal {
   interface GameManager {
 
     /**
-     * Handles collision between two collidables.
+     * Handles collision between two gameObjectRecords.
      *
      * @param id1 The ID of the first collidable.
      * @param id2 The ID of the second collidable.

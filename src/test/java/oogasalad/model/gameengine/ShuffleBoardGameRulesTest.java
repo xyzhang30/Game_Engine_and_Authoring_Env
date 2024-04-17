@@ -1,14 +1,12 @@
-package oogasalad.model;
+package oogasalad.model.gameengine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.GameEngine;
-import oogasalad.model.gameengine.collidable.CollidableContainer;
-import oogasalad.model.gameparser.GameLoaderModel;
+import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
@@ -19,14 +17,14 @@ public class ShuffleBoardGameRulesTest {
 
 
   private GameEngine gameEngine;
-  private CollidableContainer container;
+  private GameObjectContainer container;
 
   private static final double DELTA = .0001;
 
   private static  final String TITLE = "testShuffleboardRules";
 
   private boolean isStatic(GameRecord r) {
-    for(CollidableRecord cr : r.collidables()) {
+    for(GameObjectRecord cr : r.gameObjectRecords()) {
       if(cr.visible() && (cr.velocityY()!=0 || cr.velocityX()!=0)) {
         return false;
       }
@@ -38,7 +36,7 @@ public class ShuffleBoardGameRulesTest {
   public void setUp() {
     gameEngine = new GameEngine(TITLE);
 
-    container = gameEngine.getCollidableContainer();
+    container = gameEngine.getGameObjectContainer();
 
   }
 
@@ -66,7 +64,7 @@ public class ShuffleBoardGameRulesTest {
     shuffleRun(11);
     gameEngine.applyInitialVelocity(.01, angle, 13);
     shuffleRun(13);
-    System.out.println(container.getCollidableRecords());
+    System.out.println(container.toGameObjectRecords());
     assertEquals(1,gameEngine.getGameRecord().players().get(0).score());
     assertEquals(5,gameEngine.getGameRecord().players().get(1).score());
     assertEquals(2,gameEngine.getGameRecord().round());
@@ -78,7 +76,7 @@ public class ShuffleBoardGameRulesTest {
     System.out.println(gr);
     while(!isStatic(gr)) {
       gr = gameEngine.update(.05);
-      for(CollidableRecord r : gr.collidables()) {
+      for(GameObjectRecord r : gr.gameObjectRecords()) {
         if(r.id() == id) {
           scoreTestHelper(r, gr.players().get(id<=11 ? 0 : 1));
         }
@@ -86,7 +84,7 @@ public class ShuffleBoardGameRulesTest {
     }
   }
 
-  private void scoreTestHelper(CollidableRecord r, PlayerRecord p) {
+  private void scoreTestHelper(GameObjectRecord r, PlayerRecord p) {
     System.out.println("" + r.y() + " " + (p.score()));
     if(r.y() < 65) {
       assertEquals(0,p.score());

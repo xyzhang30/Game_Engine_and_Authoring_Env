@@ -7,18 +7,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-import oogasalad.Pair;
-import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.api.ViewCollidableRecord;
+import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.AnimationManager;
-import oogasalad.view.CollisionManager;
 import oogasalad.view.SceneManager;
 import oogasalad.view.VisualElements.CompositeElement;
 import org.apache.logging.log4j.LogManager;
@@ -36,7 +33,7 @@ public class GameController {
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
-  private int controllableID;
+  private int strikeableID;
   private int activePlayer;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
@@ -78,18 +75,18 @@ public class GameController {
   public void startGamePlay(String selectedGame) {
     gameLoaderView = new GameLoaderView(selectedGame);
     gameEngine = new GameEngine(selectedGame);
-    getCurrentControllable(gameEngine.getGameRecord());
+    getCurrentStrikeable(gameEngine.getGameRecord());
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScreen(this, compositeElement);
     sceneManager.update(gameEngine.getGameRecord());
   }
 
-  private void getCurrentControllable(GameRecord gameRecord) {
+  private void getCurrentStrikeable(GameRecord gameRecord) {
     activePlayer = gameRecord.turn();
     for(PlayerRecord p : gameRecord.players()) {
       if(p.playerId()==activePlayer) {
-        controllableID = p.activeControllable();
-        System.out.println(controllableID);
+        strikeableID = p.activeStrikeable();
+        System.out.println(strikeableID);
         break;
       }
     }
@@ -106,7 +103,7 @@ public class GameController {
     GameRecord gameRecord = gameEngine.update(timeStep);
     boolean staticState = gameRecord.staticState();
     if (staticState) {
-      for(CollidableRecord r : gameRecord.collidables()) {
+      for(GameObjectRecord r : gameRecord.gameObjectRecords()) {
         if(List.of(9,14,15,16).contains(r.id())) {
           System.out.println(r);
         }
@@ -114,7 +111,7 @@ public class GameController {
       System.out.println();
       sceneManager.enableHitting();
     }
-    getCurrentControllable(gameRecord);
+    getCurrentStrikeable(gameRecord);
     sceneManager.update(gameRecord);
     return staticState;
   }
@@ -129,7 +126,7 @@ public class GameController {
    */
   public void hitPointScoringObject(double fractionalVelocity, double angle) {
     gameEngine.applyInitialVelocity(700 * fractionalVelocity, angle,
-        controllableID); // The 8 has been hard
+        strikeableID); // The 8 has been hard
     // coded!
 
     animationManager.runAnimation(this);
@@ -161,7 +158,7 @@ public class GameController {
 
   private CompositeElement createCompositeElementFromGameLoader() {
     try {
-      List<ViewCollidableRecord> recordList = gameLoaderView.getViewCollidableInfo();
+      List<ViewGameObjectRecord> recordList = gameLoaderView.getViewCollidableInfo();
       return new CompositeElement(recordList);
     } catch (InvalidShapeException | InvalidImageException e) {
       System.out.println(e.getMessage());

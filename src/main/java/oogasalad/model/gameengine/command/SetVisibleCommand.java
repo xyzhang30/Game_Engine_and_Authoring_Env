@@ -17,7 +17,7 @@ public class SetVisibleCommand implements Command {
   public void execute(GameEngine engine) {
     int obj = (int) Math.round(arguments.get(0));
     int isVisible = (int) Math.round(arguments.get(1));
-    engine.getCollidableContainer().getCollidable(obj).setVisible(isVisible == 1.0);
+    engine.getGameObjectContainer().getGameObject(obj).setVisible(isVisible == 1.0);
   }
 }
 
