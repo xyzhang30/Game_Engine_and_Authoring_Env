@@ -83,7 +83,7 @@ public class GameLoaderModel extends GameLoader {
   }
 
 
-  public void makeLevel(int id) {
+  public void prepareRound(int id) {
     createGameObjectContainer();
     addPlayerStrikeables();
     createRulesRecord();

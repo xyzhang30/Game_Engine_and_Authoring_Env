@@ -37,6 +37,6 @@ public class NRoundsCompletedCondition implements Condition {
 
   @Override
   public boolean evaluate(GameEngine engine) {
-    return engine.getRound() > arguments.get(0);
+    return engine.restoreLastStaticGameRecord().round() > arguments.get(0);
   }
 }

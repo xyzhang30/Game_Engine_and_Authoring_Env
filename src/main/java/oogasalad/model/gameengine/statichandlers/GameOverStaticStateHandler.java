@@ -32,9 +32,7 @@ public class GameOverStaticStateHandler extends StaticStateHandler {
    */
   @Override
   protected void handleIt(GameEngine engine, RulesRecord rules) {
-     LOGGER.info(rules.winCondition().toString().substring(rules.winCondition().toString().lastIndexOf(
-          ".") + 1, rules.winCondition().toString().lastIndexOf("@")) + " (win condition) evaluated "
-          + "True");
+     LOGGER.info(rules.winCondition().getClass().getSimpleName()  + " (win cond) evaluated True");
       engine.endGame();
     }
   }

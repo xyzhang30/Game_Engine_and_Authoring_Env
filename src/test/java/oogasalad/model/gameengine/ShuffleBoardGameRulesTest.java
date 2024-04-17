@@ -65,9 +65,9 @@ public class ShuffleBoardGameRulesTest {
     gameEngine.applyInitialVelocity(.01, angle, 13);
     shuffleRun(13);
     System.out.println(container.toGameObjectRecords());
-    assertEquals(1,gameEngine.getGameRecord().players().get(0).score());
-    assertEquals(5,gameEngine.getGameRecord().players().get(1).score());
-    assertEquals(2,gameEngine.getGameRecord().round());
+    assertEquals(1,gameEngine.restoreLastStaticGameRecord().players().get(0).score());
+    assertEquals(5,gameEngine.restoreLastStaticGameRecord().players().get(1).score());
+    assertEquals(2,gameEngine.restoreLastStaticGameRecord().round());
   }
 
 

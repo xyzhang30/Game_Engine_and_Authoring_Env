@@ -75,10 +75,10 @@ public class GameController {
   public void startGamePlay(String selectedGame) {
     gameLoaderView = new GameLoaderView(selectedGame);
     gameEngine = new GameEngine(selectedGame);
-    getCurrentStrikeable(gameEngine.getGameRecord());
+    getCurrentStrikeable(gameEngine.restoreLastStaticGameRecord());
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScreen(this, compositeElement);
-    sceneManager.update(gameEngine.getGameRecord());
+    sceneManager.update(gameEngine.restoreLastStaticGameRecord());
   }
 
   private void getCurrentStrikeable(GameRecord gameRecord) {

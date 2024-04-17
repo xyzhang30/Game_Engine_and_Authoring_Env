@@ -43,7 +43,7 @@ public class GameLoaderModelTest {
   public void setup() {
     String gameTitle = "testSinglePlayerMiniGolf";
     this.testGameLoaderModel = new GameLoaderModel(gameTitle);
-    testGameLoaderModel.makeLevel(1);
+    testGameLoaderModel.prepareRound(1);
     GameObject c1 = new GameObject(1, Double.POSITIVE_INFINITY, 0,0, true, 3.03873, 2.03873, 500, 500, "rectangle");
     GameObject c2 = new GameObject(2, 1, 250, 450, true, 0, 0, 2, 2, "circle");
     GameObject c3 = new GameObject(3, 0, 250,50, true, 0,0, 5, 5, "circle");

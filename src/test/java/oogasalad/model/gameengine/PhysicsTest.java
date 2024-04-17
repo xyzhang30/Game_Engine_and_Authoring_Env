@@ -37,12 +37,12 @@ public class PhysicsTest {
     // Ensure the game starts without errors
 
     // Assert that the initial round and turn are as expected
-    assertEquals(1, gameEngine.getRound());
-    assertEquals(1, gameEngine.getTurn());
+    assertEquals(1, gameEngine.restoreLastStaticGameRecord().round());
+    assertEquals(1, gameEngine.restoreLastStaticGameRecord().turn());
     // Reset the game and verify that it's back to initial state
     gameEngine.reset();
-    assertEquals(1, gameEngine.getRound());
-    assertEquals(1, gameEngine.getTurn());
+    assertEquals(1, gameEngine.restoreLastStaticGameRecord().round());
+    assertEquals(1, gameEngine.restoreLastStaticGameRecord().turn());
   }
 
 
@@ -83,12 +83,11 @@ public class PhysicsTest {
   }
 
 
-  /**
+
   @Test
   public void testStop() {
     // Ensure the game starts without errors
     gameEngine.applyInitialVelocity(15, Math.PI/2, 1);
-    System.out.println(gameEngine.getCollidableContainer().getCollidableRecord(1));
     GameRecord r = gameEngine.update(1.0/4);
     System.out.println(r.gameObjectRecords().get(0));
     while(!isStatic(r)) {
@@ -96,10 +95,9 @@ public class PhysicsTest {
       System.out.println(r.gameObjectRecords().get(0));
 
     }
-    assertEquals(7.5, container.getCollidableRecord(1).y(), DELTA);
-    assertEquals(0, container.getCollidableRecord(1).velocityY(), DELTA);
+    assertEquals(7.5, gameEngine.getGameObjectContainer().getGameObjectRecord(1).y(), DELTA);
+    assertEquals(0, gameEngine.getGameObjectContainer().getGameObjectRecord(1).velocityY(), DELTA);
   }
-*/
 
   @Test
   public void testMoveAtAngle() {
@@ -165,12 +163,12 @@ public class PhysicsTest {
   @Test
   public void testAdvanceTurnAndAdjustPoints() {
     gameEngine.applyInitialVelocity(1, 0, 1);
-    assertEquals(1.0,gameEngine.getTurn(), DELTA);
+    assertEquals(1.0,gameEngine.restoreLastStaticGameRecord().turn(), DELTA);
     gameEngine.update(1);
-    assertEquals(2.0,gameEngine.getTurn(), DELTA);
+    assertEquals(2.0,gameEngine.restoreLastStaticGameRecord().turn(), DELTA);
     gameEngine.applyInitialVelocity(1, 0, 6);
     gameEngine.update(1);
-    assertEquals(1.0,gameEngine.getTurn(), DELTA);
+    assertEquals(1.0,gameEngine.restoreLastStaticGameRecord().turn(), DELTA);
     GameRecord r = gameEngine.update(1);
     //note the ball belongs to player 1 so they get all the points
     assertEquals(1.0, r.players().get(0).score(), DELTA);

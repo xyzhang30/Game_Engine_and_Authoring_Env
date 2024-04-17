@@ -40,7 +40,7 @@ public class ScoreThresholdCondition implements Condition {
   @Override
   public boolean evaluate(GameEngine engine) {
     double scoreThresh = arguments.get(0);
-    List<PlayerRecord> lst = engine.getImmutablePlayers();
+    List<PlayerRecord> lst = engine.getPlayerContainer().getPlayerRecords();
     for (PlayerRecord player : lst) {
       if (player.score() > scoreThresh) {
         return true;
