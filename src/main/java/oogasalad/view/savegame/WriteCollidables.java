@@ -199,7 +199,7 @@ public class WriteCollidables {
 //      } else {
 //        imgPath = imageMap.get(shape);
 //      }
-//      properties = List.of("movable", "collidable", "controllable", "visible");
+//      properties = List.of("movable",  "strikeable", "visible");
 //      shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
 //      if (shape instanceof Ellipse) {
 //        collidableObject = new CollidableObject(collidableId,

@@ -1,8 +1,8 @@
 {
   "gameName" : "newShuffle",
-  "collidable_objects" : [ {
-    "collidable_id" : 0,
-    "properties" : [ "collidable", "visible", "surface" ],
+  "game_objects" : [ {
+    "gameobject_id" : 0,
+    "properties" : [  "visible", "surface" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -18,8 +18,8 @@
     "kineticFriction" : 5.0,
     "image" : "data/background_images/wood.jpg"
   }, {
-    "collidable_id" : 1,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 1,
+    "properties" : [  "visible", "movable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -35,8 +35,8 @@
     "kineticFriction" : 5.0,
     "image" : ""
   }, {
-    "collidable_id" : 2,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 2,
+    "properties" : [  "visible", "movable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 1020.0,
@@ -52,8 +52,8 @@
     "kineticFriction" : 5.0,
     "image" : ""
   }, {
-    "collidable_id" : 3,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 3,
+    "properties" : [  "visible", "movable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -69,8 +69,8 @@
     "kineticFriction" : 5.0,
     "image" : ""
   }, {
-    "collidable_id" : 4,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 4,
+    "properties" : [  "visible", "movable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -87,8 +87,8 @@
     "image" : ""
   },
     {
-    "collidable_id" : 6,
-    "properties" : [ "collidable", "visible", "surface" ],
+    "gameobject_id" : 6,
+    "properties" : [  "visible", "surface" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50,
@@ -104,8 +104,8 @@
     "kineticFriction" : 0.0,
     "image" : ""
   },  {
-    "collidable_id" : 8,
-    "properties" : [ "collidable", "visible", "surface" ],
+    "gameobject_id" : 8,
+    "properties" : [  "visible", "surface" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50,
@@ -121,8 +121,8 @@
     "kineticFriction" : 0.0,
     "image" : ""
   }, {
-    "collidable_id" : 9,
-    "properties" : [ "collidable", "visible", "surface" ],
+    "gameobject_id" : 9,
+    "properties" : [  "visible", "surface" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50,
@@ -138,8 +138,8 @@
     "kineticFriction" : 0.0,
     "image" : ""
   }, {
-    "collidable_id" : 10,
-    "properties" : [ "movable", "collidable", "controllable", "visible" ],
+    "gameobject_id" : 10,
+    "properties" : [ "movable",  "strikeable", "visible" ],
     "mass" : 10.0,
     "position" : {
       "x_position" : 557.0,
@@ -155,8 +155,8 @@
     "kineticFriction" : 0.0,
     "image" : ""
   }, {
-    "collidable_id" : 11,
-    "properties" : [ "movable", "collidable", "controllable", "visible" ],
+    "gameobject_id" : 11,
+    "properties" : [ "movable",  "strikeable", "visible" ],
     "mass" : 10.0,
     "position" : {
       "x_position" : 555.0,
@@ -172,8 +172,8 @@
     "kineticFriction" : 0.0,
     "image" : ""
   }, {
-    "collidable_id" : 12,
-    "properties" : [ "movable", "collidable", "controllable", "visible" ],
+    "gameobject_id" : 12,
+    "properties" : [ "movable",  "strikeable", "visible" ],
     "mass" : 10.0,
     "position" : {
       "x_position" : 552.0,
@@ -190,8 +190,8 @@
     "image" : ""
   },
     {
-      "collidable_id" : 13,
-      "properties" : [ "movable", "collidable", "controllable", "visible" ],
+      "gameobject_id" : 13,
+      "properties" : [ "movable",  "strikeable", "visible" ],
       "mass" : 10.0,
       "position" : {
         "x_position" : 552.0,

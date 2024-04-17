@@ -33,7 +33,7 @@ public class GameController {
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
-  private int controllableID;
+  private int strikeableID;
   private int activePlayer;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
@@ -75,18 +75,18 @@ public class GameController {
   public void startGamePlay(String selectedGame) {
     gameLoaderView = new GameLoaderView(selectedGame);
     gameEngine = new GameEngine(selectedGame);
-    getCurrentControllable(gameEngine.getGameRecord());
+    getCurrentStrikeable(gameEngine.getGameRecord());
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScreen(this, compositeElement);
     sceneManager.update(gameEngine.getGameRecord());
   }
 
-  private void getCurrentControllable(GameRecord gameRecord) {
+  private void getCurrentStrikeable(GameRecord gameRecord) {
     activePlayer = gameRecord.turn();
     for(PlayerRecord p : gameRecord.players()) {
       if(p.playerId()==activePlayer) {
-        controllableID = p.activeControllable();
-        System.out.println(controllableID);
+        strikeableID = p.activeStrikeable();
+        System.out.println(strikeableID);
         break;
       }
     }
@@ -111,7 +111,7 @@ public class GameController {
       System.out.println();
       sceneManager.enableHitting();
     }
-    getCurrentControllable(gameRecord);
+    getCurrentStrikeable(gameRecord);
     sceneManager.update(gameRecord);
     return staticState;
   }
@@ -126,7 +126,7 @@ public class GameController {
    */
   public void hitPointScoringObject(double fractionalVelocity, double angle) {
     gameEngine.applyInitialVelocity(700 * fractionalVelocity, angle,
-        controllableID); // The 8 has been hard
+        strikeableID); // The 8 has been hard
     // coded!
 
     animationManager.runAnimation(this);

@@ -360,7 +360,7 @@ public class AuthoringController {
       } else {
         imgPath = imageMap.get(shape);
       }
-      properties = List.of("movable", "collidable", "controllable", "visible");
+      properties = List.of("movable",  "strikeable", "visible");
       shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
       if (shape instanceof Ellipse) {
         gameObjectProperty = new GameObjectProperties(collidableId,

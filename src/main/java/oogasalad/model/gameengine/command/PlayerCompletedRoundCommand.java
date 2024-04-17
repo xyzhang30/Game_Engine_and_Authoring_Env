@@ -17,7 +17,7 @@ public class PlayerCompletedRoundCommand implements Command {
   public void execute(GameEngine engine) {
     engine.getPlayerContainer().getPlayer(engine.getPlayerContainer().getActive())
         .completeRound();
-    engine.setActivesControllablesInvisible();
+    engine.setActivesStrikeablesInvisible();
   }
 }
 

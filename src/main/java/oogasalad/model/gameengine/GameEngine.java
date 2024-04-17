@@ -58,8 +58,8 @@ public class GameEngine implements ExternalGameEngine {
     rules = loader.getRulesRecord();
     playerContainer.startRound();
     collisionHandlers = rules.collisionHandlers();
-    playerContainer.getPlayer(1).updateActiveControllableId();
-    collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getControllableId());
+    playerContainer.getPlayer(1).updateActiveStrikeableId();
+    collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID());
     collidables.addStaticStateGameObjects();
     playerContainer.addPlayerHistory();
     staticStateStack = new Stack<>();
@@ -102,7 +102,7 @@ public class GameEngine implements ExternalGameEngine {
     } else {
       staticState = false;
     }
-    collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getControllableId());
+    collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID());
     return new GameRecord(collidables.toGameObjectRecords(), playerContainer.getPlayerRecords(),
         round, turn, gameOver, staticState);
   }
@@ -173,8 +173,8 @@ public class GameEngine implements ExternalGameEngine {
     staticState = true;
     for(GameObjectRecord cr : collidables.toGameObjectRecords()) {
       GameObject c = collidables.getGameObject(cr.id());
-      Optional<Scoreable> optionalOwnable = c.getScoreable();
-      optionalOwnable.ifPresent(ownable -> ownable.setTemporaryScore(0));
+      Optional<Scoreable> optionalScoreable = c.getScoreable();
+      optionalScoreable.ifPresent(scoreable -> scoreable.setTemporaryScore(0));
     }
     GameRecord newCurrentState = staticStateStack.pop();
     turn = newCurrentState.turn();
@@ -233,8 +233,8 @@ public class GameEngine implements ExternalGameEngine {
     return staticStateStack.peek();
   }
 
-  public void setActivesControllablesInvisible() {
-    int id = playerContainer.getPlayer(playerContainer.getActive()).getControllableId();
+  public void setActivesStrikeablesInvisible() {
+    int id = playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID();
     collidables.getGameObject(id).setVisible(false);
   }
 }

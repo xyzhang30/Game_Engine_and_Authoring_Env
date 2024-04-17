@@ -48,7 +48,7 @@ public class FrontendParser extends GameLoader {
    * Writes CSS for a single collidable object.
    */
   private void writeCollidableStyle(PrintWriter writer, JSONObject collidable) {
-    String id = String.valueOf(collidable.get("collidable_id"));
+    String id = String.valueOf(collidable.get("gameobject_id"));
     JSONArray colorArray = (JSONArray) collidable.get("color");
 
     String rgb = formatColor(colorArray);

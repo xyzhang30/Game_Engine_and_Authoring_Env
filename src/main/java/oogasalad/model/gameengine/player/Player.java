@@ -14,9 +14,9 @@ public class Player {
   private static final Logger LOGGER = LogManager.getLogger(Player.class);
   private final int playerId;
   private List<Strikeable> myStrikeables;
-  private List<Scoreable> myOwnables;
+  private List<Scoreable> myScoreables;
   private final Map<String, Double> variables;
-  private int activeControllableIndex;
+  private int activeStrikeableIndex;
   private boolean roundCompleted = false;
   private int turnsCompleted;
   private double temporaryScore;
@@ -29,18 +29,18 @@ public class Player {
     variables.put("score", 0.0);
   }
 
-  public void addControllables(List<Strikeable> strikeables) {
+  public void addStrikeables(List<Strikeable> strikeables) {
     myStrikeables = strikeables;
-    activeControllableIndex = strikeables.size()-1;
+    activeStrikeableIndex = strikeables.size()-1;
   }
-  public void addOwnables(List<Scoreable> ownables) {
-    myOwnables = ownables;
+  public void addScoreables(List<Scoreable> scoreables) {
+    myScoreables = scoreables;
   }
 
   //TODO
-  public void updateActiveControllableId() {
+  public void updateActiveStrikeableId() {
     if(myStrikeables.size()>1){
-    activeControllableIndex = (activeControllableIndex + 1) % myStrikeables.size();
+    activeStrikeableIndex = (activeStrikeableIndex + 1) % myStrikeables.size();
     }
   }
 
@@ -52,11 +52,11 @@ public class Player {
   protected PlayerRecord getPlayerRecord(boolean active) {
     try {
       double score = variables.get("score");
-      for (Scoreable o : myOwnables) {
+      for (Scoreable o : myScoreables) {
         score += o.getTemporaryScore();
       }
       return new PlayerRecord(playerId, score,
-          myStrikeables.get(activeControllableIndex).asGameObject().getId(),
+          myStrikeables.get(activeStrikeableIndex).asGameObject().getId(),
           active);
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");
@@ -76,8 +76,8 @@ public class Player {
     roundCompleted = true;
   }
 
-  public int getControllableId() {
-    return myStrikeables.get(activeControllableIndex).asGameObject().getId();
+  public int getStrikeableID() {
+    return myStrikeables.get(activeStrikeableIndex).asGameObject().getId();
   }
 
   protected void setFromRecord(PlayerRecord record) {
@@ -85,13 +85,13 @@ public class Player {
   }
 
   private void clearDelayedPoints() {
-    for (Scoreable o : myOwnables) {
+    for (Scoreable o : myScoreables) {
       o.setTemporaryScore(0);
     }
   }
 
   protected void applyDelayedScore() {
-    for (Scoreable o : myOwnables) {
+    for (Scoreable o : myScoreables) {
       variables.put("score", variables.get("score") + o.getTemporaryScore());
     }
   }

@@ -1,7 +1,7 @@
 {
   "gameName" : "generatedTestAuthoringMiniGolf",
-  "collidable_objects" : [ {
-    "collidable_id" : 1,
+  "game_objects" : [ {
+    "gameobject_id" : 1,
     "properties" : [ "visible", "surface" ],
     "mass" : 100.0,
     "position" : {
@@ -18,7 +18,7 @@
     "kineticFriction" : 2.03873,
     "image" : "sample.img"
   }, {
-    "collidable_id" : 2,
+    "gameobject_id" : 2,
     "properties" : [ "visible", "movable" ],
     "mass" : 1.0,
     "position" : {
@@ -35,7 +35,7 @@
     "kineticFriction" : 0.0,
     "image" : "sample.img"
   }, {
-    "collidable_id" : 3,
+    "gameobject_id" : 3,
     "properties" : [ "visible", "surface" ],
     "mass" : 0.0,
     "position" : {

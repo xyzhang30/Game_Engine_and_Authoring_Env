@@ -85,33 +85,33 @@ public class GameLoaderModel extends GameLoader {
 
   public void makeLevel(int id) {
     createCollidableContainer();
-    addPlayerControllables();
+    addPlayerStrikeables();
     createRulesRecord();
   }
 
-  private void addPlayerControllables() {
+  private void addPlayerStrikeables() {
     for (ParserPlayer parserPlayer : gameData.getPlayers()){
       int playerId = parserPlayer.playerId();
-      List<Integer> playerControllableIds = parserPlayer.myCollidable();
+      List<Integer> playerStrikeableIds = parserPlayer.myCollidable();
       List<Strikeable> playerStrikeableObjects = new ArrayList<>();
-      for (int i : playerControllableIds){
-        Optional<Strikeable> optionalControllable = gameObjectContainer.getGameObject(i).getStrikeable();
+      for (int i : playerStrikeableIds){
+        Optional<Strikeable> optionalStrikeable = gameObjectContainer.getGameObject(i).getStrikeable();
 
-        optionalControllable.ifPresent(playerStrikeableObjects::add);
+        optionalStrikeable.ifPresent(playerStrikeableObjects::add);
 
       }
-      playerContainer.getPlayer(playerId).addControllables(playerStrikeableObjects);
+      playerContainer.getPlayer(playerId).addStrikeables(playerStrikeableObjects);
 
-      List<Scoreable> playerOwnableObjects = new ArrayList<>();
-      for (int i : playerControllableIds){
-        Optional<Scoreable> optionalControllable = gameObjectContainer.getGameObject(i).getScoreable();
-        optionalControllable.ifPresent(playerOwnableObjects::add);
+      List<Scoreable> playerScoreableObjects = new ArrayList<>();
+      for (int i : playerStrikeableIds){
+        Optional<Scoreable> optionalStrikeable = gameObjectContainer.getGameObject(i).getScoreable();
+        optionalStrikeable.ifPresent(playerScoreableObjects::add);
       }
-      playerContainer.getPlayer(playerId).addOwnables(playerOwnableObjects);
+      playerContainer.getPlayer(playerId).addScoreables(playerScoreableObjects);
     }
 //    for (PlayerRecord playerRecord : getPlayerContainer().getPlayerRecords()){
-//      int controllableId = playerRecord.activeControllable();
-//      getPlayerContainer().getPlayer(playerRecord.playerId()).addControllables(List.of(collidableContainer.getCollidable(controllableId).getControllable()));
+//      int StrikeableId = playerRecord.activeStrikeable();
+//      getPlayerContainer().getPlayer(playerRecord.playerId()).addStrikeables(List.of(collidableContainer.getCollidable(StrikeableId).getStrikeable()));
 //    }
   }
 

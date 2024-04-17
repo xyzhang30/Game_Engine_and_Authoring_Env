@@ -2,7 +2,7 @@
   "gameName": "sampleMiniGolf",
   "collidable_objects": [
     {
-      "collidable_id": 1,
+      "gameobject_id": 1,
       "properties": ["visible", "surface"],
       "mass": 1e1000000,
       "position": {
@@ -20,7 +20,7 @@
 
 
     {
-      "collidable_id": 2,
+      "gameobject_id": 2,
       "properties": ["visible", "surface"],
       "mass": 1e1000000,
       "position": {
@@ -37,7 +37,7 @@
     },
 
     {
-      "collidable_id": 3,
+      "gameobject_id": 3,
       "properties": ["visible", "surface"],
       "mass": 1e1000000,
       "position": {
@@ -54,7 +54,7 @@
     },
 
     {
-      "collidable_id": 4,
+      "gameobject_id": 4,
       "properties": ["visible", "movable"],
       "mass": 1e1000000,
       "position": {
@@ -70,7 +70,7 @@
     },
 
     {
-      "collidable_id": 5,
+      "gameobject_id": 5,
       "properties": ["visible", "surface"],
       "mass": 1e1000000,
       "position": {
@@ -87,7 +87,7 @@
     },
 
     {
-      "collidable_id": 6,
+      "gameobject_id": 6,
       "properties": ["visible","surface"],
       "mass": 1E1000000,
       "position": {
@@ -103,7 +103,7 @@
     },
 
     {
-      "collidable_id": 7,
+      "gameobject_id": 7,
       "properties": ["visible", "surface"],
       "mass": 1e1000000,
       "position": {
@@ -120,7 +120,7 @@
     },
 
     {
-      "collidable_id": 8,
+      "gameobject_id": 8,
       "properties": ["visible", "movable"],
       "mass": 100,
       "position": {
@@ -137,7 +137,7 @@
 
 
     {
-      "collidable_id": 9,
+      "gameobject_id": 9,
       "properties": ["visible", "movable"],
       "mass": 1E10000000,
       "position": {
@@ -153,7 +153,7 @@
     },
 
     {
-      "collidable_id": 10,
+      "gameobject_id": 10,
       "properties": ["visible", "movable"],
       "mass": 1e1000000,
       "position": {
@@ -169,7 +169,7 @@
     },
 
     {
-      "collidable_id": 11,
+      "gameobject_id": 11,
       "properties": ["visible", "movable"],
       "mass": 1e1000000,
       "position": {
@@ -185,7 +185,7 @@
     },
 
     {
-      "collidable_id": 12,
+      "gameobject_id": 12,
       "properties": ["visible", "movable"],
       "mass": 1e1000000,
       "position": {
@@ -201,7 +201,7 @@
     },
 
     {
-      "collidable_id": 13,
+      "gameobject_id": 13,
       "properties": ["visible", "movable"],
       "mass": 1e1000000,
       "position": {

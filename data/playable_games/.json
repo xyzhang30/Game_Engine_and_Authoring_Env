@@ -1,8 +1,8 @@
 {
   "gameName" : "",
-  "collidable_objects" : [ {
-    "collidable_id" : 0,
-    "properties" : [ "collidable", "visible", "surface" ],
+  "game_objects" : [ {
+    "gameobject_id" : 0,
+    "properties" : [  "visible", "surface" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -18,8 +18,8 @@
     "kineticFriction" : 5.0,
     "image" : "data/background_images/grass.jpg"
   }, {
-    "collidable_id" : 1,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 1,
+    "properties" : [  "visible", "movable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -35,8 +35,8 @@
     "kineticFriction" : 5.0,
     "image" : ""
   }, {
-    "collidable_id" : 2,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 2,
+    "properties" : [  "visible", "movable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 1020.0,
@@ -52,8 +52,8 @@
     "kineticFriction" : 5.0,
     "image" : ""
   }, {
-    "collidable_id" : 3,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 3,
+    "properties" : [  "visible", "movable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -69,8 +69,8 @@
     "kineticFriction" : 5.0,
     "image" : ""
   }, {
-    "collidable_id" : 4,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 4,
+    "properties" : [  "visible", "movable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -86,8 +86,8 @@
     "kineticFriction" : 5.0,
     "image" : ""
   }, {
-    "collidable_id" : 5,
-    "properties" : [ "movable", "collidable", "controllable", "visible" ],
+    "gameobject_id" : 5,
+    "properties" : [ "movable",  "strikeable", "visible" ],
     "mass" : 10.0,
     "position" : {
       "x_position" : 869.0,

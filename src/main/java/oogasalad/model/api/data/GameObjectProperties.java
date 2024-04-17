@@ -9,9 +9,9 @@ import java.util.List;
  *
  * @author Judy He
  */
-@JsonPropertyOrder({"collidable_id", "properties", "mass", "position", "shape", "dimension",
+@JsonPropertyOrder({"gameobject_id", "properties", "mass", "position", "shape", "dimension",
     "color", "staticFriction", "kineticFriction", "image"})
-public record GameObjectProperties(@JsonProperty("collidable_id") int collidableId,
+public record GameObjectProperties(@JsonProperty("gameobject_id") int collidableId,
                                    List<String> properties,
                                    double mass,
                                    Position position,

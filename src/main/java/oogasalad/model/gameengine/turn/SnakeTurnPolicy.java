@@ -22,7 +22,7 @@ public class SnakeTurnPolicy implements TurnPolicy {
     } else {
       turn = (playerContainer.getActive() - 1 + numPlayers) % numPlayers;
     }
-    playerContainer.getPlayer(turn).updateActiveControllableId();
+    playerContainer.getPlayer(turn).updateActiveStrikeableId();
     return turn;
   }
 }

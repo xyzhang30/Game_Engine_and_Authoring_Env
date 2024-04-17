@@ -1,8 +1,8 @@
 {
   "gameName": "sampleMiniGolf",
-  "collidable_objects": [
+  "game_objects": [
     {
-      "collidable_id": 1,
+      "gameobject_id": 1,
       "properties": ["visible", "surface"],
       "mass": 1e1000000,
       "position": {
@@ -20,7 +20,7 @@
       "image": "sample.img"
     },
     {
-      "collidable_id": 2,
+      "gameobject_id": 2,
       "properties": ["visible","movable"],
       "mass": 1,
       "position": {
@@ -38,7 +38,7 @@
       "image": "sample.img"
     },
     {
-      "collidable_id": 3,
+      "gameobject_id": 3,
       "properties": ["visible", "surface"],
       "mass": 0,
       "position": {
@@ -56,7 +56,7 @@
       "image": "sample.img"
     },
     {
-      "collidable_id": 4,
+      "gameobject_id": 4,
       "properties": ["visible","movable"],
       "mass": 200,
       "position": {
@@ -74,7 +74,7 @@
       "image": "sample.img"
     },
     {
-      "collidable_id": 5,
+      "gameobject_id": 5,
       "properties": ["visible","movable"],
       "mass": 200,
       "position": {
@@ -92,7 +92,7 @@
       "image": "sample.img"
     },
     {
-      "collidable_id": 6,
+      "gameobject_id": 6,
       "properties": ["visible","movable"],
       "mass": 200,
       "position": {
@@ -110,7 +110,7 @@
       "image": "sample.img"
     },
     {
-      "collidable_id": 7,
+      "gameobject_id": 7,
       "properties": ["visible","movable"],
       "mass": 200,
       "position": {

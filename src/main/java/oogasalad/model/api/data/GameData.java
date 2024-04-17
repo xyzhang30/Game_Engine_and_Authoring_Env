@@ -8,11 +8,11 @@ import java.util.List;
  * Represents all JSON data configuring the game that gets serialized/deserialized into/from JSON
  */
 
-@JsonPropertyOrder({"gameName", "collidable_objects", "players", "variables", "rules"})
+@JsonPropertyOrder({"gameName", "game_objects", "players", "variables", "rules"})
 public class GameData {
 
   private @JsonProperty("gameName") String gameName;
-  private @JsonProperty("collidable_objects") List<GameObjectProperties> gameObjectProperties;
+  private @JsonProperty("game_objects") List<GameObjectProperties> gameObjectProperties;
   private List<ParserPlayer> players;
   private List<Variables> variables;
   private Rules rules;
@@ -33,13 +33,13 @@ public class GameData {
     this.gameName = gameName;
   }
 
-  public @JsonProperty("collidable_objects") List<GameObjectProperties> getGameObjects() {
+  public @JsonProperty("game_objects") List<GameObjectProperties> getGameObjects() {
     return gameObjectProperties;
   }
 
   public void setGameObject(
-      @JsonProperty("collidable_objects") List<GameObjectProperties> collidables) {
-    this.gameObjectProperties = collidables;
+      @JsonProperty("game_objects") List<GameObjectProperties> gameObjectProperties) {
+    this.gameObjectProperties = gameObjectProperties;
   }
 
   public List<ParserPlayer> getPlayers() {

@@ -2,7 +2,7 @@
   "gameName": "generatedTestAuthoringMiniGolf",
   "collidable_objects": [
     {
-      "collidable_id": 1,
+      "gameobject_id": 1,
       "properties": ["visible", "surface"],
       "mass": 100.0,
       "position": {
@@ -20,7 +20,7 @@
       "image": "sample.img"
     },
     {
-      "collidable_id": 2,
+      "gameobject_id": 2,
       "properties": ["visible","movable"],
       "mass": 1.0,
       "position": {
@@ -38,7 +38,7 @@
       "image": "sample.img"
     },
     {
-      "collidable_id": 3,
+      "gameobject_id": 3,
       "properties": ["visible", "surface"],
       "mass": 0.0,
       "position": {

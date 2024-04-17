@@ -14,13 +14,13 @@ public class CollidableFactory {
         co.mass(),
         co.position().xPosition(),
         co.position().yPosition(),
-        co.properties().contains("visible") && !co.properties().contains("controllable"),
+        co.properties().contains("visible") && !co.properties().contains("strikeable"),
         co.staticFriction(),
         co.kineticFriction(),
         co.dimension().xDimension(),
         co.dimension().yDimension(),
         co.shape());
-    if(co.properties().contains("controllable")) {
+    if(co.properties().contains("strikeable")) {
       c.addStrikeable(new DefaultStrikeable(c));
       c.addScoreable(new DefaultScoreable(c));
     }
