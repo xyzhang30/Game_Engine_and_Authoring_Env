@@ -32,4 +32,37 @@
     <event>LOAD</event>
   </node>
 
+  <node>
+    <type>BUTTON</type>
+    <text>Zoom In</text>
+    <width_factor>0.07</width_factor>
+    <height_factor>0.05</height_factor>
+    <x_layout_factor>0.9</x_layout_factor>
+    <y_layout_factor>0.6</y_layout_factor>
+    <styling>game-button</styling>
+    <event>ZOOM_IN</event>
+  </node>
+
+  <node>
+    <type>BUTTON</type>
+    <text>Reset Zoom</text>
+    <width_factor>0.07</width_factor>
+    <height_factor>0.05</height_factor>
+    <x_layout_factor>0.9</x_layout_factor>
+    <y_layout_factor>0.7</y_layout_factor>
+    <styling>game-button</styling>
+    <event>RESET_ZOOM</event>
+  </node>
+
+  <node>
+    <type>BUTTON</type>
+    <text>Zoom Out</text>
+    <width_factor>0.07</width_factor>
+    <height_factor>0.05</height_factor>
+    <x_layout_factor>0.9</x_layout_factor>
+    <y_layout_factor>0.8</y_layout_factor>
+    <styling>game-button</styling>
+    <event>ZOOM_OUT</event>
+  </node>
+
 </scene_elements>

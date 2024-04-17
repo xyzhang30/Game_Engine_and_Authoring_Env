@@ -13,6 +13,7 @@ import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.game_environment.GameScreen;
+import oogasalad.view.game_environment.GameplayPanel.GamePanel;
 import oogasalad.view.visual_elements.CompositeElement;
 import oogasalad.view.enums.SceneType;
 import org.xml.sax.SAXException;
@@ -83,12 +84,23 @@ public class SceneManager {
 
   public void makeGameScreen(GameController controller, CompositeElement compositeElement) {
     this.compositeElement = compositeElement;
-    resetRoot();
-    createSceneElementsAndUpdateRoot(gameManagementElementsPath);
-    createSceneElementsAndUpdateRoot(gameStatElementsPath);
+    addNonGameElementsToGame();
+    addGameElementsToGame();
+
 //    gameScreen = new GameScreen(controller, compositeElement);
 //    scene.setRoot(gameScreen.getRoot());
 //    gameScreen.initiateListening(scene);
+  }
+
+  private void addNonGameElementsToGame(){
+    resetRoot();
+    createSceneElementsAndUpdateRoot(gameManagementElementsPath);
+    createSceneElementsAndUpdateRoot(gameStatElementsPath);
+  }
+
+  private void addGameElementsToGame(){
+    GamePanel gamePanel = new GamePanel(compositeElement);
+    root.getChildren().add(gamePanel.getPane());
   }
 
   public void enableHitting() {

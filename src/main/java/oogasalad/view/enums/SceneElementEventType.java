@@ -6,5 +6,8 @@ public enum SceneElementEventType {
   START_GAME,
   PAUSE,
   SAVE,
-  LOAD
+  LOAD,
+  ZOOM_IN,
+  RESET_ZOOM,
+  ZOOM_OUT
 }

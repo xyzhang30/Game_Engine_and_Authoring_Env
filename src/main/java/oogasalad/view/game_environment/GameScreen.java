@@ -42,7 +42,6 @@ public class GameScreen {
     root = new BorderPane();
     this.controller = controller;
     ableToHit = true;
-
     gamePanel = new GamePanel(compositeElement);
     root.setCenter(gamePanel.getPane());
 
