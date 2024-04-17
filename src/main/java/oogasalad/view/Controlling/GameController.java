@@ -106,12 +106,6 @@ public class GameController {
     GameRecord gameRecord = gameEngine.update(timeStep);
     boolean staticState = gameRecord.staticState();
     if (staticState) {
-      for(CollidableRecord r : gameRecord.collidables()) {
-        if(List.of(9,14,15,16).contains(r.id())) {
-          System.out.println(r);
-        }
-      }
-      System.out.println();
       sceneManager.enableHitting();
     }
     getCurrentControllable(gameRecord);

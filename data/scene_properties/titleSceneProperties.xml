@@ -1,0 +1,8 @@
+<scene_properties>
+  <node>
+    <type>BUTTON</type>
+    <text>Play</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+  </node>
+</scene_properties>

@@ -1,10 +1,13 @@
 package oogasalad.view;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.TreeMap;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import oogasalad.model.api.GameRecord;
@@ -17,22 +20,41 @@ import oogasalad.view.GameScreens.TransitionScreen;
 import oogasalad.view.VisualElements.CompositeElement;
 
 /**
- * Manages different screens (scenes) within the game, such as the title screen, menu screen, game screen, and transition screen.
- * It updates and transitions between screens based on game state and player interactions.
+ * Manages different screens (scenes) within the game, such as the title screen, menu screen, game
+ * screen, and transition screen. It updates and transitions between screens based on game state and
+ * player interactions.
  *
  * @author Doga Ozmen
  */
 public class SceneManager {
 
   private final Scene scene;
+  private final SceneElementParser sceneElementParser;
   private CompositeElement compositeElement;
   private GameScreen gameScreen;
   private int currentRound = 1;
+  private final String titleScenePropertiesPath =
+      "src/main/java/oogasalad/view/TitleSceneProperties.properties";
 
 
   public SceneManager() {
     scene = new Scene(new Group());
+    sceneElementParser = new SceneElementParser();
   }
+
+  public void createScene(SceneType sceneType) {
+    switch (sceneType) {
+      case TITLE -> {
+        createSceneElements(titleScenePropertiesPath);
+      }
+    }
+
+  }
+
+  public void createSceneElements(){
+
+  }
+
 
   public Scene getScene() {
     return scene;
@@ -41,7 +63,7 @@ public class SceneManager {
   public void update(GameRecord gameRecord) {
     compositeElement.update(gameRecord.collidables());
     Map<Integer, Double> scoreMap = new TreeMap<>();
-    for(PlayerRecord p : gameRecord.players()) {
+    for (PlayerRecord p : gameRecord.players()) {
       scoreMap.put(p.playerId(), p.score());
     }
     updateScoreTurnBoard(scoreMap, gameRecord.turn(), gameRecord.round());
