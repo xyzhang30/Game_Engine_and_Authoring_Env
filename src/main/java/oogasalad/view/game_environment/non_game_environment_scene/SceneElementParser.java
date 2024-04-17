@@ -1,4 +1,4 @@
-package oogasalad.view.game_environment.game_environment_scene;
+package oogasalad.view.game_environment.non_game_environment_scene;
 
 import java.io.File;
 import java.io.IOException;

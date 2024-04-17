@@ -1,4 +1,4 @@
-package oogasalad.view.game_environment.game_environment_scene;
+package oogasalad.view.game_environment.non_game_environment_scene;
 
 import java.io.IOException;
 import java.util.List;
@@ -49,15 +49,13 @@ public class SceneManager {
         sceneElementHandler);
   }
 
-  public void createScene(SceneType sceneType) {
+  public void createNonGameScene(SceneType sceneType) {
     switch (sceneType) {
       case TITLE -> {
         createSceneElementsAndUpdateRoot(titleSceneElementsPath);
       }
       case MENU -> {
         createSceneElementsAndUpdateRoot(menuSceneElementsPath);
-      }
-      case GAME -> {
       }
       case TRANSITION -> {
       }

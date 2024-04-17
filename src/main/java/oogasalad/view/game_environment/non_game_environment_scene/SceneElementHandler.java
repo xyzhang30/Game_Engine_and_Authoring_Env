@@ -1,9 +1,9 @@
-package oogasalad.view.game_environment.game_environment_scene;
+package oogasalad.view.game_environment.non_game_environment_scene;
 
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import oogasalad.view.controller.GameController;
-import oogasalad.view.enums.SceneElementEvent;
+import oogasalad.view.enums.SceneElementEventType;
 
 public class SceneElementHandler {
   private final GameController gameController;
@@ -13,7 +13,7 @@ public class SceneElementHandler {
   }
 
   public void createElementHandler(Node node, String event) {
-    switch (SceneElementEvent.valueOf(event)) {
+    switch (SceneElementEventType.valueOf(event)) {
       case START_MENU -> {
         createStartMenuHandler(node);
       }

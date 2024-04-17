@@ -2,7 +2,6 @@ package oogasalad.view.controller;
 
 import java.util.List;
 import javafx.scene.Scene;
-import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
@@ -12,7 +11,7 @@ import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.authoring_environment.NewAuthoringController;
 import oogasalad.view.game_environment.AnimationManager;
-import oogasalad.view.game_environment.game_environment_scene.SceneManager;
+import oogasalad.view.game_environment.non_game_environment_scene.SceneManager;
 import oogasalad.view.enums.SceneType;
 import oogasalad.view.visual_elements.CompositeElement;
 import org.apache.logging.log4j.LogManager;
@@ -39,7 +38,7 @@ public class GameController {
 
   public GameController() {
     sceneManager = new SceneManager(this);
-    sceneManager.createScene(SceneType.TITLE);
+    sceneManager.createNonGameScene(SceneType.TITLE);
     animationManager = new AnimationManager();
   }
 
@@ -51,7 +50,7 @@ public class GameController {
    * Creates and displays menu screen
    */
   public void openMenuScreen() {
-    sceneManager.createScene(SceneType.MENU);
+    sceneManager.createNonGameScene(SceneType.MENU);
   }
 
   public void openTransitionScreen() {
