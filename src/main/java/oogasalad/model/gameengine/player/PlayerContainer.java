@@ -44,7 +44,7 @@ public class PlayerContainer {
   public List<PlayerRecord> getPlayerRecords() {
     List<PlayerRecord> ret = new ArrayList<>();
     for (Player p : myPlayers.values()) {
-      ret.add(p.getPlayerRecord(active == p.getId()));
+      ret.add(p.getPlayerRecord());
     }
     return ret;
   }

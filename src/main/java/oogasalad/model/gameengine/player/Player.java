@@ -49,15 +49,14 @@ public class Player {
     variables.put(key, value);
   }
 
-  protected PlayerRecord getPlayerRecord(boolean active) {
+  protected PlayerRecord getPlayerRecord() {
     try {
       double score = variables.get("score");
       for (Scoreable o : myScoreables) {
         score += o.getTemporaryScore();
       }
       return new PlayerRecord(playerId, score,
-          myStrikeables.get(activeStrikeableIndex).asGameObject().getId(),
-          active);
+          myStrikeables.get(activeStrikeableIndex).asGameObject().getId());
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");
       return null;
