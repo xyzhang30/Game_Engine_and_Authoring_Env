@@ -14,11 +14,11 @@ public abstract class PhysicsHandler {
     this.id2 = id2;
   }
 
-  public void handleCollision(CollidableContainer collidableContainer, double dt) {
-    CollidableRecord cr1 = collidableContainer.getCollidableRecord(id1);
-    CollidableRecord cr2 = collidableContainer.getCollidableRecord(id2);
-    Collidable c1 = collidableContainer.getCollidable(id1);
-    Collidable c2 = collidableContainer.getCollidable(id2);
+  public void handleCollision(GameObjectContainer gameObjectContainer, double dt) {
+    CollidableRecord cr1 = gameObjectContainer.getCollidableRecord(id1);
+    CollidableRecord cr2 = gameObjectContainer.getCollidableRecord(id2);
+    GameObject c1 = gameObjectContainer.getCollidable(id1);
+    GameObject c2 = gameObjectContainer.getCollidable(id2);
     c1.calculateNextSpeeds(makeVelocityFunction(cr1, cr2, dt));
     c2.calculateNextSpeeds(makeVelocityFunction(cr2, cr1, dt));
     c1.updatePostCollisionVelocity();

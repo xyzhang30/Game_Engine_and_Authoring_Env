@@ -10,8 +10,8 @@ import oogasalad.model.api.CollidableRecord;
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.collidable.Collidable;
-import oogasalad.model.gameengine.collidable.CollidableContainer;
+import oogasalad.model.gameengine.collidable.GameObject;
+import oogasalad.model.gameengine.collidable.GameObjectContainer;
 import oogasalad.model.gameengine.collidable.ownable.Scoreable;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.player.PlayerContainer;
@@ -29,7 +29,7 @@ public class GameEngine implements ExternalGameEngine {
   private final GameLoaderModel loader;
   private final PlayerContainer playerContainer;
   private RulesRecord rules;
-  private CollidableContainer collidables;
+  private GameObjectContainer collidables;
   private Map<Pair, List<Command>> collisionHandlers;
   private int round;
   private int turn;
@@ -161,7 +161,7 @@ public class GameEngine implements ExternalGameEngine {
     return playerContainer;
   }
 
-  public CollidableContainer getCollidableContainer() {
+  public GameObjectContainer getCollidableContainer() {
     return collidables;
   }
 
@@ -172,7 +172,7 @@ public class GameEngine implements ExternalGameEngine {
   public void toLastStaticState() {
     staticState = true;
     for(CollidableRecord cr : collidables.getCollidableRecords()) {
-      Collidable c = collidables.getCollidable(cr.id());
+      GameObject c = collidables.getCollidable(cr.id());
       Optional<Scoreable> optionalOwnable = c.getOwnable();
       optionalOwnable.ifPresent(ownable -> ownable.setTemporaryScore(0));
     }

@@ -4,8 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import oogasalad.model.api.CollidableRecord;
 import oogasalad.model.api.GameRecord;
-import oogasalad.model.gameengine.GameEngine;
-import oogasalad.model.gameengine.collidable.CollidableContainer;
+import oogasalad.model.gameengine.collidable.GameObjectContainer;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,7 @@ public class PhysicsTest {
 
 
   private GameEngine gameEngine;
-  private CollidableContainer container;
+  private GameObjectContainer container;
 
   private static final double DELTA = .0001;
 

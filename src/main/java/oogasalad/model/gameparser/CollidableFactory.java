@@ -1,15 +1,15 @@
 package oogasalad.model.gameparser;
 
 import oogasalad.model.api.data.CollidableObject;
-import oogasalad.model.gameengine.collidable.Collidable;
+import oogasalad.model.gameengine.collidable.GameObject;
 import oogasalad.model.gameengine.collidable.DefaultControllable;
 import oogasalad.model.gameengine.collidable.ownable.DefaultOwnable;
 
 public class CollidableFactory {
 
-  public static Collidable createCollidable(CollidableObject co) {
+  public static GameObject createCollidable(CollidableObject co) {
 
-    Collidable c = new Collidable(
+    GameObject c = new GameObject(
         co.collidableId(),
         co.mass(),
         co.position().xPosition(),

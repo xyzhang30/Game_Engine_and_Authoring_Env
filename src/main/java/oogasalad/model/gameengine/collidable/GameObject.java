@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 import oogasalad.model.api.CollidableRecord;
 import oogasalad.model.gameengine.collidable.ownable.Scoreable;
 
-public class Collidable {
+public class GameObject {
 
   private final double myMass;
   private final int myId;
@@ -29,7 +29,7 @@ public class Collidable {
   private Controllable controllable;
   private Scoreable ownable;
 
-  public Collidable(int id, double mass, double x, double y,
+  public GameObject(int id, double mass, double x, double y,
       boolean visible, double staticMu, double kineticMu, double width, double height,
       String shape) {
     myId = id;

@@ -6,8 +6,8 @@ import java.util.function.Supplier;
 
 public class DefaultControllable implements Controllable {
 
-  private final Collidable collidable;
-  public DefaultControllable(Collidable c) {
+  private final GameObject collidable;
+  public DefaultControllable(GameObject c) {
     collidable = c;
   }
 
@@ -22,7 +22,7 @@ public class DefaultControllable implements Controllable {
   }
 
   @Override
-  public Collidable asCollidable() {
+  public GameObject asCollidable() {
     return collidable;
   }
 

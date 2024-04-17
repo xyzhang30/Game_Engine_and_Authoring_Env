@@ -14,8 +14,8 @@ import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.gameengine.RulesRecord;
-import oogasalad.model.gameengine.collidable.Collidable;
-import oogasalad.model.gameengine.collidable.CollidableContainer;
+import oogasalad.model.gameengine.collidable.GameObject;
+import oogasalad.model.gameengine.collidable.GameObjectContainer;
 import oogasalad.model.gameengine.collidable.Controllable;
 import oogasalad.model.gameengine.collidable.ownable.Scoreable;
 import oogasalad.model.gameengine.collidable.PhysicsHandler;
@@ -42,7 +42,7 @@ public class GameLoaderModel extends GameLoader {
   protected static final String BASE_PATH = "oogasalad.model.gameengine.";
   private static final Logger LOGGER = LogManager.getLogger(GameLoaderModel.class);
   private PlayerContainer playerContainer;
-  private CollidableContainer collidableContainer;
+  private GameObjectContainer gameObjectContainer;
   private RulesRecord rulesRecord;
   private final Map<Pair, PhysicsHandler> physicsMap;
   private final List<Integer> movables;
@@ -95,7 +95,7 @@ public class GameLoaderModel extends GameLoader {
       List<Integer> playerControllableIds = parserPlayer.myCollidable();
       List<Controllable> playerControllableObjects = new ArrayList<>();
       for (int i : playerControllableIds){
-        Optional<Controllable> optionalControllable = collidableContainer.getCollidable(i).getControllable();
+        Optional<Controllable> optionalControllable = gameObjectContainer.getCollidable(i).getControllable();
 
         optionalControllable.ifPresent(playerControllableObjects::add);
 
@@ -104,7 +104,7 @@ public class GameLoaderModel extends GameLoader {
 
       List<Scoreable> playerOwnableObjects = new ArrayList<>();
       for (int i : playerControllableIds){
-        Optional<Scoreable> optionalControllable = collidableContainer.getCollidable(i).getOwnable();
+        Optional<Scoreable> optionalControllable = gameObjectContainer.getCollidable(i).getOwnable();
         optionalControllable.ifPresent(playerOwnableObjects::add);
       }
       playerContainer.getPlayer(playerId).addOwnables(playerOwnableObjects);
@@ -120,8 +120,8 @@ public class GameLoaderModel extends GameLoader {
    *
    * @return The collidable container.
    */
-  public CollidableContainer getCollidableContainer() {
-    return collidableContainer;
+  public GameObjectContainer getCollidableContainer() {
+    return gameObjectContainer;
   }
 
   /**
@@ -135,7 +135,7 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private void createCollidableContainer() {
-    Map<Integer, Collidable> collidables = new HashMap<>();
+    Map<Integer, GameObject> collidables = new HashMap<>();
     gameData.getCollidableObjects().forEach(co -> {
       if (co.properties().contains("movable")) {
         movables.add(co.collidableId());
@@ -144,7 +144,7 @@ public class GameLoaderModel extends GameLoader {
       collidables.keySet().forEach(id -> addPairToPhysicsMap(co, id, conditionsList));
     });
 
-    this.collidableContainer = new CollidableContainer(collidables);
+    this.gameObjectContainer = new GameObjectContainer(collidables);
   }
 
   private void addPairToPhysicsMap(CollidableObject co, Integer id,
@@ -168,7 +168,7 @@ public class GameLoaderModel extends GameLoader {
             FrictionHandler::new));
   }
 
-  private Collidable createCollidable(CollidableObject co) {
+  private GameObject createCollidable(CollidableObject co) {
     return CollidableFactory.createCollidable(co);
   }
 

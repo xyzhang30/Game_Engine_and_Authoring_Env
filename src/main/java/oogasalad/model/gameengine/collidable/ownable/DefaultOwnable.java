@@ -1,12 +1,12 @@
 package oogasalad.model.gameengine.collidable.ownable;
 
-import oogasalad.model.gameengine.collidable.Collidable;
+import oogasalad.model.gameengine.collidable.GameObject;
 
 public class DefaultOwnable implements Scoreable {
 
   private double tempScore;
-  private Collidable collidable;
-  public DefaultOwnable(Collidable c) {
+  private GameObject collidable;
+  public DefaultOwnable(GameObject c) {
     collidable = c;
   }
   @Override
@@ -24,7 +24,7 @@ public class DefaultOwnable implements Scoreable {
     tempScore++;
   }
 
-  public Collidable asCollidable() {
+  public GameObject asCollidable() {
     return collidable;
   }
 }
