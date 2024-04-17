@@ -1,11 +1,6 @@
 package oogasalad.view.Controlling;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javafx.scene.Scene;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
@@ -14,8 +9,8 @@ import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
-import oogasalad.view.AnimationManager;
-import oogasalad.view.SceneManager;
+import oogasalad.view.playing_scene.AnimationManager;
+import oogasalad.view.playing_scene.SceneManager;
 import oogasalad.view.enums.SceneType;
 import oogasalad.view.visual_elements.CompositeElement;
 import org.apache.logging.log4j.LogManager;

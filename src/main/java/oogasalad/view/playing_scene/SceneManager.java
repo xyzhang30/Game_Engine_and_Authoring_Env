@@ -1,5 +1,6 @@
-package oogasalad.view;
+package oogasalad.view.playing_scene;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import javafx.scene.Node;
@@ -27,7 +28,7 @@ public class SceneManager {
   private final Pane root;
   private final Scene scene;
   private final SceneElementParser sceneElementParser;
-  private final ElementStyler elementStyler;
+  private final SceneElementFactory sceneElementFactory;
   private CompositeElement compositeElement;
   private GameScreen gameScreen;
   private int currentRound = 1;
@@ -38,8 +39,8 @@ public class SceneManager {
   public SceneManager() {
     root = new Pane();
     scene = new Scene(root);
-    sceneElementParser = new SceneElementParser(SCREEN_WIDTH, SCREEN_HEIGHT);
-    elementStyler = new ElementStyler(root);
+    sceneElementParser = new SceneElementParser();
+    sceneElementFactory = new SceneElementFactory(root, SCREEN_WIDTH, SCREEN_HEIGHT);
   }
 
   public void createScene(SceneType sceneType) {
@@ -62,10 +63,10 @@ public class SceneManager {
 
   public void createSceneElementsAndUpdateRoot(String filePath) {
     try {
-      Map<Node, String> sceneElements = sceneElementParser.createElementsFromFile(filePath);
+      List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(filePath);
+      List<Node> sceneElements = sceneElementFactory.createSceneElements(sceneElementParameters);
       root.getChildren().clear();
-      root.getChildren().addAll(sceneElements.keySet());
-      elementStyler.style(sceneElements);
+      root.getChildren().addAll(sceneElements);
     } catch (Exception e) {
       //TODO: Exception Handling
     }

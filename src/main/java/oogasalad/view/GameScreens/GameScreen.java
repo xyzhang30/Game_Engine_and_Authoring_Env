@@ -1,7 +1,7 @@
 package oogasalad.view.GameScreens;
 
-import static oogasalad.view.SceneManager.SCREEN_HEIGHT;
-import static oogasalad.view.SceneManager.SCREEN_WIDTH;
+import static oogasalad.view.playing_scene.SceneManager.SCREEN_HEIGHT;
+import static oogasalad.view.playing_scene.SceneManager.SCREEN_WIDTH;
 
 import java.util.Map;
 import javafx.scene.Parent;

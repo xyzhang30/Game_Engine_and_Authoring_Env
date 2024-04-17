@@ -1,8 +1,6 @@
-package oogasalad.view;
+package oogasalad.view.playing_scene;
 
 import java.net.URL;
-import java.util.Map;
-import java.util.Map.Entry;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
@@ -16,12 +14,8 @@ public class ElementStyler {
     addStyleSheetToRoot();
   }
 
-  public void style(Map<Node, String> styleMap) {
-    for (Entry<Node, String> styleEntry : styleMap.entrySet()) {
-      Node node = styleEntry.getKey();
-      String style = styleEntry.getValue();
-      node.getStyleClass().add(style);
-    }
+  public void style(Node node, String style) {
+    node.getStyleClass().add(style);
   }
 
   private void addStyleSheetToRoot() {

@@ -1,4 +1,4 @@
-package oogasalad.view;
+package oogasalad.view.playing_scene;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -18,15 +18,6 @@ public class AnimationManager {
 
   public AnimationManager() {
     animation = new Timeline();
-  }
-
-  /**
-   * Getter for animation time step
-   *
-   * @return animation time step
-   */
-  public double getTimeStep() {
-    return SECOND_DELAY;
   }
 
   /**
