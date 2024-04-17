@@ -39,8 +39,8 @@ public class AuthoringScreen {
     createCanvas();
 //    createShapesPane();
     createContainerVBox();
-    createScreenSelectionDropDown(List.of("Background", "Strikeable", "Non-Strikeable",
-        "Interaction"));
+    createScreenSelectionDropDown(List.of("Background", "Game Objects", "Interactions",
+        "Policies"));
     handleScreenSelectionDropDown();
     createFinishButton();
     containerVBox.getChildren().add(titleText);
@@ -64,19 +64,16 @@ public class AuthoringScreen {
       case "Background" -> container.setPanels(List.of(new ColorPanel(shapeProxy, containerVBox),
           new ImagePanel(authoringProxy, shapeProxy,
               containerVBox)));
-      case "Strikeable" -> container.setPanels(List.of(new ColorPanel(shapeProxy, containerVBox),
-          new ImagePanel(authoringProxy, shapeProxy,
-              containerVBox), new ShapePanel(authoringProxy, shapeProxy, rootPane,
-              containerVBox, canvasPane)));
-      case "Non-Strikeable" -> container.setPanels(
+      case "Game Objects" -> container.setPanels(
           List.of(new ColorPanel(shapeProxy, containerVBox),
               new ImagePanel(authoringProxy, shapeProxy,
                   containerVBox),
               new NonControllableShapePanel(authoringProxy, shapeProxy, rootPane,
                   containerVBox, canvasPane)));
-      case "Interaction" ->
+      case "Interactions" ->
           container.setPanels(List.of(new InteractionPanel(authoringProxy, shapeProxy, rootPane,
               containerVBox, canvasPane)));
+      //case "Policies" ->
     }
 
   }
