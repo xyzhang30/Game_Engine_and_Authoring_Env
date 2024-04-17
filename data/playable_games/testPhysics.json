@@ -88,15 +88,15 @@
     },
     {
       "collidable_id": 6,
-      "properties": ["visible","movable"],
-      "mass": 1e1000000,
+      "properties": ["visible","movable","controllable"],
+      "mass": 10,
       "position": {
-        "x_position": -100,
-        "y_position": -110
+        "x_position": -20,
+        "y_position": -20
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 200,
+        "x_dimension": 10,
         "y_dimension": 10
       },
       "color": [255,255,255],

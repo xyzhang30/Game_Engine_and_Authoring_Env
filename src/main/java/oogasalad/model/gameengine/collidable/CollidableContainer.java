@@ -30,7 +30,6 @@ public class CollidableContainer {
   public boolean checkStatic() {
     for (Collidable c : myCollidables.values()) {
       if (c.getVisible() && (c.getVelocityX() != 0 || c.getVelocityY() != 0)) { //should it be
-        // getting current or
         return false;
       }
     }

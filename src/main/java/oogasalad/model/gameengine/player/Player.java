@@ -36,17 +36,11 @@ public class Player {
   public void addOwnables(List<Ownable> ownables) {
     myOwnables = ownables;
   }
-  public double getVariable(String variable) {
-    return variables.getOrDefault(variable, 0.0);
-  }
 
   //TODO
   public void updateActiveControllableId() {
     if(myControllables.size()>1){
     activeControllableIndex = (activeControllableIndex + 1) % myControllables.size();
-    while (!(myControllables.get(activeControllableIndex).canControl())) {
-      activeControllableIndex = (activeControllableIndex + 1) % myControllables.size();
-    }
     }
   }
 

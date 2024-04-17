@@ -1,6 +1,7 @@
 package oogasalad.model.gameengine.collidable;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 import java.util.function.Supplier;
 import oogasalad.model.api.CollidableRecord;
@@ -45,8 +46,6 @@ public class Collidable {
     myShape = shape;
     myStaticMu = staticMu;
     myKineticMu = kineticMu;
-    controllable = new NullControllable(this);
-    ownable = new NullOwnable();
   }
 
   public void addControllable(Controllable controllable) {
@@ -55,12 +54,12 @@ public class Collidable {
   public void addOwnable(Ownable ownable) {
     this.ownable = ownable;
   }
-  public Controllable getControllable() {
-    return controllable;
+  public Optional<Controllable> getControllable() {
+    return Optional.ofNullable(controllable);
   }
 
-  public Ownable getOwnable() {
-    return ownable;
+  public Optional<Ownable> getOwnable() {
+    return Optional.ofNullable(ownable);
   }
 
   protected void updatePostCollisionVelocity() {

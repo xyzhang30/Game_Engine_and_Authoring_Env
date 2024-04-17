@@ -23,4 +23,8 @@ public class DefaultOwnable implements Ownable {
   public void incrementTemporaryScore() {
     tempScore++;
   }
+
+  public Collidable asCollidable() {
+    return collidable;
+  }
 }

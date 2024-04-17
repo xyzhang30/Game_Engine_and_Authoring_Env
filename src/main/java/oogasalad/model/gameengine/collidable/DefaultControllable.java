@@ -26,9 +26,4 @@ public class DefaultControllable implements Controllable {
     return collidable;
   }
 
-  @Override
-  public boolean canControl() {
-    return true;
-  }
-
 }
