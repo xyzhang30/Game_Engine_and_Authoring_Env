@@ -133,4 +133,11 @@ public class GameController {
     }
   }
 
+  public void setSceneWidth(double width){
+    sceneManager.setWidth(width);
+  }
+  public void setSceneHeight(double height){
+    sceneManager.setHeight(height);
+  }
+
 }

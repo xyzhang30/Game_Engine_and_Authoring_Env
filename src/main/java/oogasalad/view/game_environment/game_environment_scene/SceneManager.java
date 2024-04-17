@@ -123,4 +123,10 @@ public class SceneManager {
     gameScreen.updateScoreBoard(scoreMap);
     gameScreen.updateTurnBoard(turn, round);
   }
+//  public void setWidth(double width){
+//    SCREEN_WIDTH = width;
+//  }
+//  public void setHeight(double height){
+//    SCREEN_HEIGHT = height;
+//  }
 }
