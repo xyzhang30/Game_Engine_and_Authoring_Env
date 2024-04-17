@@ -26,7 +26,6 @@ public class GameObjectContainer {
 
   private static final Logger LOGGER = LogManager.getLogger(GameObjectContainer.class);
   private final Map<Integer, GameObject> myGameObjects;
-  private final Stack<List<GameObjectRecord>> gameObjectHistory;
   private final CollisionDetector collisionDetector;
 
   /**
@@ -37,8 +36,7 @@ public class GameObjectContainer {
 
   public GameObjectContainer(Map<Integer, GameObject> gameObjects) {
     myGameObjects = gameObjects;
-    gameObjectHistory = new Stack<>();
-    gameObjectHistory.add(toGameObjectRecords());
+    addStaticStateGameObjects();
     collisionDetector = new CollisionDetector();
   }
 
@@ -122,7 +120,9 @@ public class GameObjectContainer {
    */
 
   public void addStaticStateGameObjects() {
-    gameObjectHistory.push(toGameObjectRecords());
+    for(GameObject go : myGameObjects.values()) {
+      go.addStaticStateGameObject();
+    }
   }
 
   /**
@@ -131,8 +131,8 @@ public class GameObjectContainer {
    */
 
   public void toLastStaticStateGameObjects() {
-    for (GameObjectRecord record : gameObjectHistory.peek()) {
-      callSetFromRecord(record);
+    for(GameObject go : myGameObjects.values()) {
+      go.toLastStaticStateGameObjects();
     }
   }
 
@@ -158,9 +158,6 @@ public class GameObjectContainer {
     return collisionPairs;
   }
 
-  //calls the GameObject setFromRecord to restore an individual GameObject from its record
-  private void callSetFromRecord(GameObjectRecord record) {
-    getGameObject(record.id()).setFromRecord(record);
-  }
+
 
 }

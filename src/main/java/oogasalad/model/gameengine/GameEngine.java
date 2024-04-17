@@ -163,7 +163,7 @@ public class GameEngine implements ExternalGameEngine {
     round = newCurrentState.round();
     gameOver = newCurrentState.gameOver();
     gameObjects.toLastStaticStateGameObjects();
-    playerContainer.toLastStaticStateVariables();
+    playerContainer.toLastStaticStatePlayers();
   }
 
   private void handleCollisions(double dt) {

@@ -1,6 +1,7 @@
 package oogasalad.model.gameengine.player;
 
 import java.util.List;
+import java.util.Stack;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.gameobject.Strikeable;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
@@ -28,6 +29,7 @@ public class Player {
   private boolean roundCompleted;
   private int turnsCompleted;
   private double score;
+  private Stack<PlayerRecord> playerHistory;
 
   /**
    * Initializes a player object given its unique id
@@ -39,7 +41,7 @@ public class Player {
     roundCompleted = false;
     turnsCompleted = 0;
     score = 0;
-
+    playerHistory = new Stack<>();
   }
 
   /**
@@ -133,10 +135,6 @@ public class Player {
   }
 
 
-  protected void setFromRecord(PlayerRecord record) {
-    score = record.score();
-  }
-
   /**
    * Applies delayed scores to the player's total score at the end of a turn.
    */
@@ -167,12 +165,23 @@ public class Player {
     }
   }
 
+  protected void addPlayerHistory() {
+    playerHistory.push(getPlayerRecord());
+  }
+
+
+  protected void toLastStaticStatePlayers() {
+      score = playerHistory.peek().score();
+  }
+
   //sets temporary score for player to 0
   private void clearDelayedPoints() {
     for (Scoreable o : myScoreables) {
       o.setTemporaryScore(0);
     }
   }
+
+
 
 
 

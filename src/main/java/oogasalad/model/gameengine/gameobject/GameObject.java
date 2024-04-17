@@ -2,6 +2,7 @@ package oogasalad.model.gameengine.gameobject;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Stack;
 import java.util.function.Supplier;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
@@ -47,6 +48,7 @@ public class GameObject {
   private boolean myVisible;
   private Strikeable strikeable;
   private Scoreable scoreable;
+  private Stack<GameObjectRecord> gameObjectHistory;
 
   /**
    * Initiates the GameObject
@@ -80,6 +82,7 @@ public class GameObject {
     myShape = shape;
     myStaticMu = staticMu;
     myKineticMu = kineticMu;
+    gameObjectHistory = new Stack<>();
   }
 
   /**
@@ -273,24 +276,6 @@ public class GameObject {
   }
 
   /**
-   * Sets the attributes of the GameObject based on the information provided by a GameObjectRecord.
-   * This is necessary for the LastStaticStateCommand
-   *
-   * @param record The GameObjectRecord containing the information to set.
-   */
-  protected void setFromRecord(GameObjectRecord record) {
-    myX = record.x();
-    myY = record.y();
-    myVelocityY = record.velocityY();
-    myVelocityX = record.velocityX();
-    myNextVelocityX = myVelocityX;
-    myNextVelocityY = myVelocityY;
-    myNextX = myX;
-    myNextY = myY;
-    myVisible = record.visible();
-  }
-
-  /**
    * Calculates and sets the next speeds of the GameObject based on the information provided by the
    * given Supplier function.
    *
@@ -326,6 +311,23 @@ public class GameObject {
   private void setSpeed(double speedX, double speedY) {
     myVelocityX = speedX;
     myVelocityY = speedY;
+  }
+
+  protected void toLastStaticStateGameObjects() {
+    GameObjectRecord record = gameObjectHistory.peek();
+    myX = record.x();
+    myY = record.y();
+    myVelocityY = record.velocityY();
+    myVelocityX = record.velocityX();
+    myNextVelocityX = myVelocityX;
+    myNextVelocityY = myVelocityY;
+    myNextX = myX;
+    myNextY = myY;
+    myVisible = record.visible();
+  }
+
+  public void addStaticStateGameObject() {
+    gameObjectHistory.push(toGameObjectRecord());
   }
 }
 

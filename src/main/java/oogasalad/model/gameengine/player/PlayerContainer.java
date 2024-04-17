@@ -3,25 +3,17 @@ package oogasalad.model.gameengine.player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
 import oogasalad.model.api.PlayerRecord;
 
 public class PlayerContainer {
 
   private final Map<Integer, Player> myPlayers;
-  private final Stack<List<PlayerRecord>> playerHistory;
   private int active;
 
   public PlayerContainer(Map<Integer, Player> players) {
     myPlayers = players;
-    playerHistory = new Stack<>();
     addPlayerHistory();
 
-  }
-
-  public Set<Integer> getPlayerIds(){
-    return myPlayers.keySet();
   }
 
   public int getNumPlayers() {
@@ -50,19 +42,11 @@ public class PlayerContainer {
   }
 
   public void addPlayerHistory() {
-    playerHistory.push(getPlayerRecords());
-  }
-
-
-  private void callSetFromRecord(PlayerRecord record) {
-    getPlayer(record.playerId()).setFromRecord(record);
-  }
-
-  public void toLastStaticStateVariables() {
-    for (PlayerRecord record : playerHistory.peek()) {
-      callSetFromRecord(record);
+    for(Player p : myPlayers.values()) {
+      p.addPlayerHistory();
     }
   }
+
 
   public boolean allPlayersCompletedRound() {
     for (Player p : myPlayers.values()) {
@@ -103,5 +87,11 @@ public class PlayerContainer {
     }
     return true;
 
+  }
+
+  public void toLastStaticStatePlayers() {
+    for(Player p : myPlayers.values()) {
+      p.toLastStaticStatePlayers();
+    }
   }
 }
