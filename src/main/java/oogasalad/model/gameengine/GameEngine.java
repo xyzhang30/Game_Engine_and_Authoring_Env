@@ -215,8 +215,4 @@ public class GameEngine implements ExternalGameEngine {
     return staticStateStack.peek();
   }
 
-  public void setActivesStrikeablesInvisible() {
-    int id = playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID();
-    gameObjects.getGameObject(id).setVisible(false);
-  }
 }
