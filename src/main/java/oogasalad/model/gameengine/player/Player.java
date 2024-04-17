@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.collidable.Controllable;
+import oogasalad.model.gameengine.collidable.Strikeable;
 import oogasalad.model.gameengine.collidable.ownable.Scoreable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +13,7 @@ public class Player {
 
   private static final Logger LOGGER = LogManager.getLogger(Player.class);
   private final int playerId;
-  private List<Controllable> myControllables;
+  private List<Strikeable> myStrikeables;
   private List<Scoreable> myOwnables;
   private final Map<String, Double> variables;
   private int activeControllableIndex;
@@ -29,9 +29,9 @@ public class Player {
     variables.put("score", 0.0);
   }
 
-  public void addControllables(List<Controllable> controllables) {
-    myControllables = controllables;
-    activeControllableIndex = controllables.size()-1;
+  public void addControllables(List<Strikeable> strikeables) {
+    myStrikeables = strikeables;
+    activeControllableIndex = strikeables.size()-1;
   }
   public void addOwnables(List<Scoreable> ownables) {
     myOwnables = ownables;
@@ -39,8 +39,8 @@ public class Player {
 
   //TODO
   public void updateActiveControllableId() {
-    if(myControllables.size()>1){
-    activeControllableIndex = (activeControllableIndex + 1) % myControllables.size();
+    if(myStrikeables.size()>1){
+    activeControllableIndex = (activeControllableIndex + 1) % myStrikeables.size();
     }
   }
 
@@ -56,7 +56,7 @@ public class Player {
         score += o.getTemporaryScore();
       }
       return new PlayerRecord(playerId, score,
-          myControllables.get(activeControllableIndex).asCollidable().getId(),
+          myStrikeables.get(activeControllableIndex).asGameObject().getId(),
           active);
     } catch (NullPointerException e) {
       LOGGER.warn("Invalid player");
@@ -77,7 +77,7 @@ public class Player {
   }
 
   public int getControllableId() {
-    return myControllables.get(activeControllableIndex).asCollidable().getId();
+    return myStrikeables.get(activeControllableIndex).asGameObject().getId();
   }
 
   protected void setFromRecord(PlayerRecord record) {

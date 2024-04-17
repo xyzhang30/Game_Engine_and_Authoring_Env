@@ -26,7 +26,7 @@ public class GameObject {
   private boolean myVisible;
 
 
-  private Controllable controllable;
+  private Strikeable strikeable;
   private Scoreable ownable;
 
   public GameObject(int id, double mass, double x, double y,
@@ -48,14 +48,14 @@ public class GameObject {
     myKineticMu = kineticMu;
   }
 
-  public void addControllable(Controllable controllable) {
-    this.controllable = controllable;
+  public void addControllable(Strikeable strikeable) {
+    this.strikeable = strikeable;
   }
   public void addOwnable(Scoreable ownable) {
     this.ownable = ownable;
   }
-  public Optional<Controllable> getControllable() {
-    return Optional.ofNullable(controllable);
+  public Optional<Strikeable> getControllable() {
+    return Optional.ofNullable(strikeable);
   }
 
   public Optional<Scoreable> getOwnable() {
@@ -173,7 +173,7 @@ public class GameObject {
   }
 
   public void applyInitialVelocity(double magnitude, double direction) {
-    controllable.applyInitialVelocity(magnitude, direction);
+    strikeable.applyInitialVelocity(magnitude, direction);
   }
 }
 

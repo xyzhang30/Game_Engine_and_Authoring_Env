@@ -1,6 +1,6 @@
 package oogasalad.model.gameengine.collidable;
 
-public interface Controllable {
+public interface Strikeable {
   void applyInitialVelocity(double magnitude, double direction);
-  GameObject asCollidable();
+  GameObject asGameObject();
 }

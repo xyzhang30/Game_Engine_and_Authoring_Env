@@ -4,10 +4,10 @@ package oogasalad.model.gameengine.collidable;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class DefaultControllable implements Controllable {
+public class DefaultStrikeable implements Strikeable {
 
   private final GameObject collidable;
-  public DefaultControllable(GameObject c) {
+  public DefaultStrikeable(GameObject c) {
     collidable = c;
   }
 
@@ -22,7 +22,7 @@ public class DefaultControllable implements Controllable {
   }
 
   @Override
-  public GameObject asCollidable() {
+  public GameObject asGameObject() {
     return collidable;
   }
 

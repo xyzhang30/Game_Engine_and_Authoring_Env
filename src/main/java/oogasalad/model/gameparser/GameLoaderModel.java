@@ -16,7 +16,7 @@ import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.collidable.GameObject;
 import oogasalad.model.gameengine.collidable.GameObjectContainer;
-import oogasalad.model.gameengine.collidable.Controllable;
+import oogasalad.model.gameengine.collidable.Strikeable;
 import oogasalad.model.gameengine.collidable.ownable.Scoreable;
 import oogasalad.model.gameengine.collidable.PhysicsHandler;
 import oogasalad.model.gameengine.collidable.collision.FrictionHandler;
@@ -93,14 +93,14 @@ public class GameLoaderModel extends GameLoader {
     for (ParserPlayer parserPlayer : gameData.getPlayers()){
       int playerId = parserPlayer.playerId();
       List<Integer> playerControllableIds = parserPlayer.myCollidable();
-      List<Controllable> playerControllableObjects = new ArrayList<>();
+      List<Strikeable> playerStrikeableObjects = new ArrayList<>();
       for (int i : playerControllableIds){
-        Optional<Controllable> optionalControllable = gameObjectContainer.getCollidable(i).getControllable();
+        Optional<Strikeable> optionalControllable = gameObjectContainer.getCollidable(i).getControllable();
 
-        optionalControllable.ifPresent(playerControllableObjects::add);
+        optionalControllable.ifPresent(playerStrikeableObjects::add);
 
       }
-      playerContainer.getPlayer(playerId).addControllables(playerControllableObjects);
+      playerContainer.getPlayer(playerId).addControllables(playerStrikeableObjects);
 
       List<Scoreable> playerOwnableObjects = new ArrayList<>();
       for (int i : playerControllableIds){
