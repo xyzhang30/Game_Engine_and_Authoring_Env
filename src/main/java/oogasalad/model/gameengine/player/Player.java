@@ -165,10 +165,17 @@ public class Player {
     }
   }
 
+  /**
+   * Adds the current state of the gameObject (as a record) to the history of the player
+   */
+
   protected void addPlayerHistory() {
     playerHistory.push(getPlayerRecord());
   }
 
+  /**
+   * Restores the previous state of the gameObject (as a record) to the history of the gameObject
+   */
 
   protected void toLastStaticStatePlayers() {
       score = playerHistory.peek().score();

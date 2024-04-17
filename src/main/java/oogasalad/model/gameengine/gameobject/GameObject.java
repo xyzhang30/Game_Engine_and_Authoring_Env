@@ -223,6 +223,9 @@ public class GameObject {
      strikeable.applyInitialVelocity(magnitude, direction);
   }
 
+  /**
+   * Allows for simultaneous updates of velocity after a collision
+   */
   protected void updatePostCollisionVelocity() {
     myVelocityY = myNextVelocityY;
     myVelocityX = myNextVelocityX;
@@ -301,17 +304,9 @@ public class GameObject {
     setNextSpeed(newSpeeds.get(0), newSpeeds.get(1));
   }
 
-  //Sets the next velocity of the GameObject.
-  private void setNextSpeed(double speedX, double speedY) {
-    myNextVelocityX = speedX;
-    myNextVelocityY = speedY;
-  }
-
-  //Sets the current velocity of the GameObject.
-  private void setSpeed(double speedX, double speedY) {
-    myVelocityX = speedX;
-    myVelocityY = speedY;
-  }
+  /**
+   * Restores the previous state of the gameObject (as a record) to the history of the gameObject
+   */
 
   protected void toLastStaticStateGameObjects() {
     GameObjectRecord record = gameObjectHistory.peek();
@@ -326,9 +321,27 @@ public class GameObject {
     myVisible = record.visible();
   }
 
+  /**
+   * Adds the current state of the gameObject (as a record) to the history of the gameObject
+   */
+
   public void addStaticStateGameObject() {
     gameObjectHistory.push(toGameObjectRecord());
   }
+
+
+  //Sets the next velocity of the GameObject.
+  private void setNextSpeed(double speedX, double speedY) {
+    myNextVelocityX = speedX;
+    myNextVelocityY = speedY;
+  }
+
+  //Sets the current velocity of the GameObject.
+  private void setSpeed(double speedX, double speedY) {
+    myVelocityX = speedX;
+    myVelocityY = speedY;
+  }
+
 }
 
 

@@ -116,7 +116,7 @@ public class GameObjectContainer {
   }
 
   /**
-   * Adds the current state of all GameObjects in the container to the history stack.
+   * Adds the current state of all GameObjects in the container to their respective history stack.
    */
 
   public void addStaticStateGameObjects() {
@@ -126,8 +126,7 @@ public class GameObjectContainer {
   }
 
   /**
-   * Restores each GameObject to its previous static state, by retrieving it from the top of the
-   * static history stack.
+   * Restores each GameObject to its previous static state
    */
 
   public void toLastStaticStateGameObjects() {
