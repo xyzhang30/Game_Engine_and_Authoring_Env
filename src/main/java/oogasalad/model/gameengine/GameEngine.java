@@ -76,10 +76,10 @@ public class GameEngine implements ExternalGameEngine {
   @Override
   public GameRecord update(double dt) {
     gameObjects.update(dt);
-    handleCollisions(dt); //private
+    handleCollisions(dt);
     if (gameObjects.checkStatic()) {
-      switchToCorrectStaticState(); //private
-      updateHistory(); //private
+      switchToCorrectStaticState();
+      updateHistory();
       staticState = true;
     } else {
       staticState = false;
