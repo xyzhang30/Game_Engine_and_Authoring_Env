@@ -60,7 +60,7 @@
     {
       "gameobject_id": 4,
       "name":"GREEN_4",
-      "properties": ["visible, moveable"],
+      "properties": ["visible, surface"],
       "mass": 1e1000000,
       "position": {
         "x_position": 333,
@@ -130,7 +130,7 @@
     {
       "gameobject_id": 8,
       "name": "BALL",
-      "properties": ["visible", "movable"],
+      "properties": ["visible", "collidable"],
       "mass": 100,
       "position": {
         "x_position": 490,
@@ -148,7 +148,7 @@
     {
       "gameobject_id": 9,
       "name": "HOLE",
-      "properties": ["visible", "movable"],
+      "properties": ["visible", "collidable"],
       "mass": 100,
       "position": {
         "x_position": 480,

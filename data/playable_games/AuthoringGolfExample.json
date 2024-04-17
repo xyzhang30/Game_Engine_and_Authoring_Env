@@ -19,7 +19,7 @@
     "image" : "data/background_images/grass.jpg"
   }, {
     "gameobject_id" : 1,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -36,7 +36,7 @@
     "image" : ""
   }, {
     "gameobject_id" : 2,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 1020.0,
@@ -53,7 +53,7 @@
     "image" : ""
   }, {
     "gameobject_id" : 3,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -70,7 +70,7 @@
     "image" : ""
   }, {
     "gameobject_id" : 4,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -87,7 +87,7 @@
     "image" : ""
   }, {
     "gameobject_id" : 5,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : 10.0,
     "position" : {
       "x_position" : 510.79998779296875,
@@ -104,7 +104,7 @@
     "image" : ""
   }, {
     "gameobject_id" : 6,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : 10.0,
     "position" : {
       "x_position" : 717.2000122070312,
@@ -138,7 +138,7 @@
     "image" : "/data/noncontrollable_images/sand.jpg"
   }, {
     "gameobject_id" : 8,
-    "properties" : [ "movable",  "strikeable", "visible" ],
+    "properties" : [ "collidable",  "strikeable", "visible" ],
     "mass" : 10.0,
     "position" : {
       "x_position" : 517.9000244140625,

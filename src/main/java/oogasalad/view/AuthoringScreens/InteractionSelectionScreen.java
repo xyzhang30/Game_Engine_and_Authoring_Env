@@ -380,7 +380,7 @@ public class InteractionSelectionScreen extends AuthoringScreen {
 
   private boolean slowIsOption() {
     for (Shape shape : clickedShapes) {
-      if (nonControllableMap.getOrDefault(shape, NonControllableType.MOVABLE)
+      if (nonControllableMap.getOrDefault(shape, NonControllableType.collidable)
           == NonControllableType.SURFACE) {
         return true;
       }

@@ -45,7 +45,7 @@ public class GameLoaderModel extends GameLoader {
   private GameObjectContainer gameObjectContainer;
   private RulesRecord rulesRecord;
   private final Map<Pair, PhysicsHandler> physicsMap;
-  private final List<Integer> movables;
+  private final List<Integer> collidables;
   private List<Entry<BiPredicate<Integer, GameObjectProperties>,
       BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList;
 //  private Map<Integer, Player> collidablePlayerMap;
@@ -60,7 +60,7 @@ public class GameLoaderModel extends GameLoader {
   public GameLoaderModel(String gameTitle) throws InvalidFileException {
     super(gameTitle);
     createPlayerContainer();
-    movables = new ArrayList<>();
+    collidables = new ArrayList<>();
     physicsMap = new HashMap<>();
 
     staticHandler = StaticStateHandlerLinkedListBuilder.buildLinkedList(List.of(
@@ -135,16 +135,16 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private void createCollidableContainer() {
-    Map<Integer, GameObject> collidables = new HashMap<>();
+    Map<Integer, GameObject> gameObjects = new HashMap<>();
     gameData.getGameObjects().forEach(co -> {
-      if (co.properties().contains("movable")) {
-        movables.add(co.collidableId());
+      if (co.properties().contains("collidable")) {
+        collidables.add(co.collidableId());
       }
-      collidables.put(co.collidableId(), createCollidable(co));
-      collidables.keySet().forEach(id -> addPairToPhysicsMap(co, id, conditionsList));
+      gameObjects.put(co.collidableId(), createCollidable(co));
+      gameObjects.keySet().forEach(id -> addPairToPhysicsMap(co, id, conditionsList));
     });
 
-    this.gameObjectContainer = new GameObjectContainer(collidables);
+    this.gameObjectContainer = new GameObjectContainer(gameObjects);
   }
 
   private void addPairToPhysicsMap(GameObjectProperties co, Integer id,
@@ -161,10 +161,10 @@ public class GameLoaderModel extends GameLoader {
   private void createCollisionTypeMap() {
     conditionsList = new ArrayList<>();
     conditionsList.add(
-        Map.entry((key, co) -> movables.contains(key) && co.properties().contains("movable"),
+        Map.entry((key, co) -> collidables.contains(key) && co.properties().contains("collidable"),
             MomentumHandler::new));
     conditionsList.add(
-        Map.entry((key, co) -> movables.contains(key) || co.properties().contains("movable"),
+        Map.entry((key, co) -> collidables.contains(key) || co.properties().contains("collidable"),
             FrictionHandler::new));
   }
 

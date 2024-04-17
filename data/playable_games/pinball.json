@@ -19,7 +19,7 @@
     "image" : "data/background_images/wood.jpg"
   }, {
     "gameobject_id" : 15,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -36,7 +36,7 @@
     "image" : ""
   }, {
     "gameobject_id" : 2,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 1020.0,
@@ -53,7 +53,7 @@
     "image" : ""
   }, {
     "gameobject_id" : 3,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -70,7 +70,7 @@
     "image" : ""
   }, {
     "gameobject_id" : 4,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -87,7 +87,7 @@
     "image" : ""
   }, {
     "gameobject_id" : 5,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 311.8060302734375,
@@ -104,7 +104,7 @@
     "image" : ""
   }, {
     "gameobject_id" : 6,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 465.0,
@@ -121,7 +121,7 @@
     "image" : "data/noncontrollable_images/tenpts.jpg"
   }, {
     "gameobject_id" : 7,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 562.3207397460938,
@@ -138,7 +138,7 @@
     "image" : "data/noncontrollable_images/questionMark.jpg"
   }, {
     "gameobject_id" : 8,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 366.7437438964844,
@@ -155,7 +155,7 @@
     "image" : "data/noncontrollable_images/speedUp.jpg"
   }, {
     "gameobject_id" : 9,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 752.20751953125,
@@ -172,7 +172,7 @@
     "image" : "data/noncontrollable_images/onept.jpg"
   }, {
     "gameobject_id" : 10,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 688.6100463867188,
@@ -189,7 +189,7 @@
     "image" : ""
   }, {
     "gameobject_id" : 11,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 749.5744018554688,
@@ -206,7 +206,7 @@
     "image" : "data/noncontrollable_images/speedUp.jpg"
   }, {
     "gameobject_id" : 12,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 364.69183349609375,
@@ -223,7 +223,7 @@
     "image" : ""
   }, {
     "gameobject_id" : 13,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 937.2972412109375,
@@ -240,7 +240,7 @@
     "image" : ""
   }, {
     "gameobject_id" : 14,
-    "properties" : [  "visible", "movable" ],
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 889.0429077148438,
@@ -258,7 +258,7 @@
   },
     {
       "gameobject_id" : 16,
-      "properties" : [  "visible", "movable" ],
+      "properties" : [  "visible", "collidable" ],
       "mass" : "Infinity",
       "position" : {
         "x_position" : 375,
@@ -276,7 +276,7 @@
     },
     {
     "gameobject_id" : 1,
-    "properties" : [ "movable",  "strikeable", "visible" ],
+    "properties" : [ "collidable",  "strikeable", "visible" ],
     "mass" : 10.0,
     "position" : {
       "x_position" : 967.298095703125,

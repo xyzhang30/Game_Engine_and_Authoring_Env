@@ -3,7 +3,7 @@
   "game_objects": [
     {
       "gameobject_id": 1,
-      "properties": ["visible", "movable", "strikeable"],
+      "properties": ["visible", "collidable", "strikeable"],
       "mass": 100,
       "position": {
         "x_position": 0,
@@ -20,7 +20,7 @@
     },
     {
       "gameobject_id": 2,
-      "properties": ["visible", "movable", "strikeable"],
+      "properties": ["visible", "collidable", "strikeable"],
       "mass": 100,
       "position": {
         "x_position": 50,
@@ -37,7 +37,7 @@
     },
     {
       "gameobject_id": 3,
-      "properties": ["visible", "movable"],
+      "properties": ["visible", "collidable"],
       "mass": 1e1000000,
       "position": {
         "x_position": 25,
