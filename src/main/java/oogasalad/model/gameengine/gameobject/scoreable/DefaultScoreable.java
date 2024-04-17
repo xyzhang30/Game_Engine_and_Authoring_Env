@@ -6,8 +6,8 @@ import oogasalad.model.gameengine.gameobject.GameObject;
  * The DefaultScoreable class represents a default implementation of the Scoreable interface.
  *
  * <p>This implementation maintains a temporary score for a GameObject and provides methods to
- * modify and retrieve this score. Additionally, it allows the GameObject to be converted into
- * a Scoreable object.
+ * modify and retrieve this score. Additionally, it allows the GameObject to be converted into a
+ * Scoreable object.
  *
  * <p>This class acts as an adapter between general GameObjects and GameObjects that are Scoreable.
  * By holding a reference to the Scoreable interface, GameObjects gain the ability to have a
@@ -18,7 +18,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 public class DefaultScoreable implements Scoreable {
 
   private double tempScore;
-  private GameObject gameObject;
+  private final GameObject gameObject;
 
   /**
    * Constructs a DefaultScoreable object with the specified GameObject.
@@ -30,16 +30,6 @@ public class DefaultScoreable implements Scoreable {
   }
 
   /**
-   * Sets the temporary score of the DefaultScoreable object.
-   *
-   * @param tempScore The temporary score to set.
-   */
-  @Override
-  public void setTemporaryScore(double tempScore) {
-    this.tempScore = tempScore;
-  }
-
-  /**
    * Retrieves the temporary score of the DefaultScoreable object.
    *
    * @return The temporary score of the DefaultScoreable object.
@@ -48,6 +38,16 @@ public class DefaultScoreable implements Scoreable {
   @Override
   public double getTemporaryScore() {
     return tempScore;
+  }
+
+  /**
+   * Sets the temporary score of the DefaultScoreable object.
+   *
+   * @param tempScore The temporary score to set.
+   */
+  @Override
+  public void setTemporaryScore(double tempScore) {
+    this.tempScore = tempScore;
   }
 
   /**

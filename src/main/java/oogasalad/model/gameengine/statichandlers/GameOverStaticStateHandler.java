@@ -5,8 +5,8 @@ import oogasalad.model.gameengine.RulesRecord;
 
 /**
  * The GameOverStaticStateHandler class represents a handler for the game over static state,
- * implementing logic to determine if the game over condition is met and take appropriate actions
- * if it is.
+ * implementing logic to determine if the game over condition is met and take appropriate actions if
+ * it is.
  *
  * @author Noah Loewy
  */
@@ -16,8 +16,9 @@ public class GameOverStaticStateHandler extends StaticStateHandler {
   /**
    * Checks if the GameOver condition specified in RulesRecord is satisfied by the current game
    * state.
+   *
    * @param engine The game engine instance.
-   * @param rules The rules record containing game rules and conditions.
+   * @param rules  The rules record containing game rules and conditions.
    * @return true, if the GameOver condition is met, otherwise false.
    */
   @Override
@@ -27,14 +28,15 @@ public class GameOverStaticStateHandler extends StaticStateHandler {
 
   /**
    * Calls the engine's end game function
+   *
    * @param engine The game engine instance.
-   * @param rules The rules record containing game rules and conditions.
+   * @param rules  The rules record containing game rules and conditions.
    */
   @Override
   protected void handleIt(GameEngine engine, RulesRecord rules) {
-     LOGGER.info(rules.winCondition().getClass().getSimpleName()  + " (win cond) evaluated True");
-      engine.endGame();
-    }
+    LOGGER.info(rules.winCondition().getClass().getSimpleName() + " (win cond) evaluated True");
+    engine.endGame();
   }
+}
 
 

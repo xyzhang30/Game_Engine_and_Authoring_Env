@@ -33,17 +33,18 @@ public class AddDelayedPointsCommand implements Command {
   }
 
   /**
-   * Executes the command to add delayed points to a Scoreable's temporary score. It retrieves
-   * the GameObject corresponding to the provided ID from the game engine, then sets the
-   * temporary score of the Scoreable (if the collidable provided is a scoreable) associated with
-   * the GameObject to the specified amount of points.
+   * Executes the command to add delayed points to a Scoreable's temporary score. It retrieves the
+   * GameObject corresponding to the provided ID from the game engine, then sets the temporary score
+   * of the Scoreable (if the collidable provided is a scoreable) associated with the GameObject to
+   * the specified amount of points.
    *
    * @param engine The game engine instance.
    */
 
   @Override
   public void execute(GameEngine engine) {
-    GameObject c = engine.getGameObjectContainer().getGameObject((int) Math.round(arguments.get(0)));
+    GameObject c = engine.getGameObjectContainer()
+        .getGameObject((int) Math.round(arguments.get(0)));
     Optional<Scoreable> optionalScoreable = c.getScoreable();
     optionalScoreable.ifPresent(scoreable -> scoreable.setTemporaryScore(arguments.get(1)));
   }

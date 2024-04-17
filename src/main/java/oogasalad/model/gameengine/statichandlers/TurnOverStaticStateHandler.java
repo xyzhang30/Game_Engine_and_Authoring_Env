@@ -5,8 +5,8 @@ import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.command.Command;
 
 /**
- * The TurnOverStaticStateHandler class represents a handler for the game over static state,
- * which takes action when it is detected that a turn is over.
+ * The TurnOverStaticStateHandler class represents a handler for the game over static state, which
+ * takes action when it is detected that a turn is over.
  *
  * @author Noah Loewy
  */
@@ -17,7 +17,7 @@ public class TurnOverStaticStateHandler extends StaticStateHandler {
    * state is reached and the round/game is not over.
    *
    * @param engine The game engine instance.
-   * @param rules The rules record containing game rules and conditions.
+   * @param rules  The rules record containing game rules and conditions.
    * @return true
    */
 
@@ -28,8 +28,9 @@ public class TurnOverStaticStateHandler extends StaticStateHandler {
 
   /**
    * Executes all the commands specified in the game rules' AdvanceTurn on the current Game State
+   *
    * @param engine The game engine instance.
-   * @param rules The rules record containing game rules and conditions.
+   * @param rules  The rules record containing game rules and conditions.
    */
 
   @Override

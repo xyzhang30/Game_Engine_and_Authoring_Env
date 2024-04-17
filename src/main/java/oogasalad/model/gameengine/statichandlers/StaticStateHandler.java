@@ -6,12 +6,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * The StaticStateHandler abstract class defines a contract for classes that handle static
- * game states, such as game over conditions, round completion events, and turn completion events.
+ * The StaticStateHandler abstract class defines a contract for classes that handle static game
+ * states, such as game over conditions, round completion events, and turn completion events.
  *
  * <p>Concrete implementations of the static state interface must provide logic for handling a
- * staticState, evaluating whether they can handle the current game state and specify the actions
- * to be taken if they can handle it.
+ * staticState, evaluating whether they can handle the current game state and specify the actions to
+ * be taken if they can handle it.
  *
  * @author Noah Loewy
  */
@@ -24,12 +24,11 @@ public abstract class StaticStateHandler {
 
 
   /**
-   * Handles the specified game engine and rules record based on the current static state.
-   * If this handler can't handle the state, it delegates the handling to the next handler
-   * in the chain.
+   * Handles the specified game engine and rules record based on the current static state. If this
+   * handler can't handle the state, it delegates the handling to the next handler in the chain.
    *
    * @param engine The game engine instance.
-   * @param rules The rules record containing game rules and conditions.
+   * @param rules  The rules record containing game rules and conditions.
    */
 
   public void handle(GameEngine engine, RulesRecord rules) {
@@ -77,21 +76,21 @@ public abstract class StaticStateHandler {
   }
 
   /**
-   * Determines whether this static state handler can handle the current game state, as specified
-   * by the game rules.
+   * Determines whether this static state handler can handle the current game state, as specified by
+   * the game rules.
    *
    * @param engine The game engine instance.
-   * @param rules The rules record containing game rules and conditions.
+   * @param rules  The rules record containing game rules and conditions.
    * @return True if this handler can handle the state, otherwise false.
    */
   protected abstract boolean canHandle(GameEngine engine, RulesRecord rules);
 
   /**
-   * Performs the actions associated with handling the current game state, as specified by the
-   * game rules.
+   * Performs the actions associated with handling the current game state, as specified by the game
+   * rules.
    *
    * @param engine The game engine instance.
-   * @param rules The rules record containing game rules and conditions.
+   * @param rules  The rules record containing game rules and conditions.
    */
   protected abstract void handleIt(GameEngine engine, RulesRecord rules);
 

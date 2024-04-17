@@ -10,11 +10,12 @@ import oogasalad.model.api.GameObjectRecord;
  * GameObjects involved in a collision and updating their velocities post-collision.
  *
  * <p>Subclasses of PhysicsHandler must implement the makeVelocityFunction method, which defines
- * the velocity function used to calculate the next speeds of the GameObjects involved in a collision.
+ * the velocity function used to calculate the next speeds of the GameObjects involved in a
+ * collision.
  *
  * <p>The use of the PhysicsHandler abstract class promotes modularity and extensibility in the
- * game engine's physics handling system, allowing for different collision handling strategies
- * to be implemented by subclasses.
+ * game engine's physics handling system, allowing for different collision handling strategies to be
+ * implemented by subclasses.
  *
  * @author Noah Loewy
  */
@@ -40,7 +41,7 @@ public abstract class PhysicsHandler {
    * concrete velocity function, and then synchronously updating their post-collision velocities.
    *
    * @param gameObjectContainer The container storing the GameObjects involved in the collision.
-   * @param dt The time step for the collision handling process.
+   * @param dt                  The time step for the collision handling process.
    */
   public void handleCollision(GameObjectContainer gameObjectContainer, double dt) {
     GameObjectRecord gor1 = gameObjectContainer.getGameObjectRecord(id1);
@@ -54,11 +55,11 @@ public abstract class PhysicsHandler {
   }
 
   /**
-   * Creates a Supplier function that calculates the next speeds of the GameObjects involved in
-   * a collision based on their GameObjectRecords and the time step. The function created depends
-   * on the specific types of the two colliding GameObjects, as different pairwise types
-   * of GameObjects require different methods of calculating velocity. The concrete
-   * implementations of the makeVelocityFunction are found in subclasses.
+   * Creates a Supplier function that calculates the next speeds of the GameObjects involved in a
+   * collision based on their GameObjectRecords and the time step. The function created depends on
+   * the specific types of the two colliding GameObjects, as different pairwise types of GameObjects
+   * require different methods of calculating velocity. The concrete implementations of the
+   * makeVelocityFunction are found in subclasses.
    *
    * @param c1 The GameObjectRecord of the first GameObject.
    * @param c2 The GameObjectRecord of the second GameObject.

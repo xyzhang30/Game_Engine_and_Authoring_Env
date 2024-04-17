@@ -9,12 +9,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * The Player class represents a player in the game environment, managing their turns, scores,
- * and state.
+ * The Player class represents a player in the game environment, managing their turns, scores, and
+ * state.
  *
  * <p> Most methods in this class are protected, restricting their access to subclasses
- * within the player package. This encapsulation ensures that only authorized components
- * can modify the internal state of player objects, namely PlayerContainer.
+ * within the player package. This encapsulation ensures that only authorized components can modify
+ * the internal state of player objects, namely PlayerContainer.
  *
  * @author Noah Loewy
  */
@@ -29,10 +29,11 @@ public class Player {
   private boolean roundCompleted;
   private int turnsCompleted;
   private double score;
-  private Stack<PlayerRecord> playerHistory;
+  private final Stack<PlayerRecord> playerHistory;
 
   /**
    * Initializes a player object given its unique id
+   *
    * @param id, the player's unique identifier
    */
 
@@ -52,11 +53,12 @@ public class Player {
 
   public void addStrikeables(List<Strikeable> strikeables) {
     myStrikeables = strikeables;
-    activeStrikeable = strikeables.get(strikeables.size()-1);
+    activeStrikeable = strikeables.get(strikeables.size() - 1);
   }
 
   /**
    * Adds the specified list of GameObjects that the player earns points from.
+   *
    * @param scoreables The list of strikeable objects to add.
    */
 
@@ -71,9 +73,9 @@ public class Player {
 
   //TODO iterator maybe?
   public void updateActiveStrikeable() {
-    if(myStrikeables.size()>1){
-    activeStrikeable =
-        myStrikeables.get((myStrikeables.indexOf(activeStrikeable) + 1) % myStrikeables.size());
+    if (myStrikeables.size() > 1) {
+      activeStrikeable =
+          myStrikeables.get((myStrikeables.indexOf(activeStrikeable) + 1) % myStrikeables.size());
     }
   }
 
@@ -114,8 +116,8 @@ public class Player {
   }
 
   /**
-   * Resets the state of the player's current round, turns, and delayed points at the beginning
-   * of a new round .
+   * Resets the state of the player's current round, turns, and delayed points at the beginning of a
+   * new round .
    */
 
   public void startRound() {
@@ -178,7 +180,7 @@ public class Player {
    */
 
   protected void toLastStaticStatePlayers() {
-      score = playerHistory.peek().score();
+    score = playerHistory.peek().score();
   }
 
   //sets temporary score for player to 0
@@ -187,9 +189,6 @@ public class Player {
       o.setTemporaryScore(0);
     }
   }
-
-
-
 
 
 }

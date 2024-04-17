@@ -5,8 +5,8 @@ import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.gameengine.GameEngine;
 
 /**
- * The AllPlayersCompletedRoundCondition evaluates if the current round has been completed by
- * every player in the game
+ * The AllPlayersCompletedRoundCondition evaluates if the current round has been completed by every
+ * player in the game
  *
  * @author Noah Loewy
  */
@@ -27,8 +27,8 @@ public class AllPlayersCompletedRoundCondition implements Condition {
   }
 
   /**
-   * Delegates the work to the PlayerContainers allPlayersCompletedRound function, which handles
-   * the logic for determining if every player has completed the current round
+   * Delegates the work to the PlayerContainers allPlayersCompletedRound function, which handles the
+   * logic for determining if every player has completed the current round
    *
    * @param engine the GameEngine instance
    */

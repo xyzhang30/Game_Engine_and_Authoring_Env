@@ -11,7 +11,8 @@ import java.util.function.Supplier;
  * <p>This implementation allows for initial velocity to be applied to a GameObject through means
  * other than a collision. They also have the capability to be converted into a GameObject.
  *
- * <p>This class acts as an adapter between general GameObjects and GameObjects that are Strikeable.
+ * <p>This class acts as an adapter between general GameObjects and GameObjects that are
+ * Strikeable.
  * By holding a reference to the Strikeable interface, GameObjects gain the ability to have an
  * initial velocity applied to them and be treated as Strikeable objects.
  *
@@ -39,8 +40,8 @@ public class DefaultStrikeable implements Strikeable {
    * calculateSpeeds method.
    *
    * @param magnitude The magnitude of the new velocity.
-   * @param direction The direction of the new velocity with respect to the positive x-axis
-   *                  (in radians).
+   * @param direction The direction of the new velocity with respect to the positive x-axis (in
+   *                  radians).
    */
 
   @Override

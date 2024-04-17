@@ -8,8 +8,8 @@ import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 
 /**
- * The GameObject class represents an object within the game environment that interacts with
- * physics and game mechanics.
+ * The GameObject class represents an object within the game environment that interacts with physics
+ * and game mechanics.
  *
  * <p>Instances of GameObject have attributes such as mass, position, velocity, visibility, and
  * dimensions. They can also be associated with Strikeable and Scoreable behaviors for gameplay
@@ -21,8 +21,8 @@ import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
  *
  * <p>Most setter methods are protected, so that they can only be updated by classes/interfaces
  * within the gameobject package, namely the PhysicsHandler and Strikeable (and their concrete
- * implementations), as well as the container for the GameObjects (which is used to encapsulate
- * the map from ids to GameObjects).
+ * implementations), as well as the container for the GameObjects (which is used to encapsulate the
+ * map from ids to GameObjects).
  *
  * @author Noah Loewy
  */
@@ -48,7 +48,7 @@ public class GameObject {
   private boolean myVisible;
   private Strikeable strikeable;
   private Scoreable scoreable;
-  private Stack<GameObjectRecord> gameObjectHistory;
+  private final Stack<GameObjectRecord> gameObjectHistory;
 
   /**
    * Initiates the GameObject
@@ -212,15 +212,15 @@ public class GameObject {
   }
 
   /**
-   * Calls the strikeable's applyInitialVelocity function, which updates the current velocity of
-   * the GameObject
+   * Calls the strikeable's applyInitialVelocity function, which updates the current velocity of the
+   * GameObject
    *
    * @param magnitude The magnitude of the new velocity.
-   * @param direction The direction of the new velocity with respect to the positive x-axis
-   *                      (in radians).
+   * @param direction The direction of the new velocity with respect to the positive x-axis (in
+   *                  radians).
    */
   public void applyInitialVelocity(double magnitude, double direction) {
-     strikeable.applyInitialVelocity(magnitude, direction);
+    strikeable.applyInitialVelocity(magnitude, direction);
   }
 
   /**

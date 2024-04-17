@@ -5,10 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Stack;
 import oogasalad.Pair;
 import oogasalad.model.api.GameObjectRecord;
-import oogasalad.model.gameengine.player.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -48,7 +46,7 @@ public class GameObjectContainer {
    */
 
   public GameObject getGameObject(int objectId) {
-    if(!myGameObjects.containsKey(objectId)) {
+    if (!myGameObjects.containsKey(objectId)) {
       LOGGER.warn("Game Object " + objectId + " not found");
     }
     return myGameObjects.get(objectId);
@@ -120,7 +118,7 @@ public class GameObjectContainer {
    */
 
   public void addStaticStateGameObjects() {
-    for(GameObject go : myGameObjects.values()) {
+    for (GameObject go : myGameObjects.values()) {
       go.addStaticStateGameObject();
     }
   }
@@ -130,13 +128,14 @@ public class GameObjectContainer {
    */
 
   public void toLastStaticStateGameObjects() {
-    for(GameObject go : myGameObjects.values()) {
+    for (GameObject go : myGameObjects.values()) {
       go.toLastStaticStateGameObjects();
     }
   }
 
   /**
    * //TODO JavaDoc
+   *
    * @author Konur Nordberg
    */
   public Set<Pair> getCollisionPairs() {
@@ -156,7 +155,6 @@ public class GameObjectContainer {
     }
     return collisionPairs;
   }
-
 
 
 }

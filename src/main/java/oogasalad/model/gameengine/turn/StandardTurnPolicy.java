@@ -4,9 +4,9 @@ import oogasalad.model.gameengine.player.PlayerContainer;
 
 /**
  * The StandardTurnPolicy class implements the TurnPolicy interface by defining a standard turn
- * policy where players take turns in a sequential order. This turn policy ensures that each
- * player takes a turn in order, skipping players who have completed their rounds until an active
- * player is found. Essentially, a circular list is used.
+ * policy where players take turns in a sequential order. This turn policy ensures that each player
+ * takes a turn in order, skipping players who have completed their rounds until an active player is
+ * found. Essentially, a circular list is used.
  */
 
 public class StandardTurnPolicy implements TurnPolicy {

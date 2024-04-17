@@ -28,15 +28,16 @@ public class MultiplySpeedCommand implements Command {
 
   /**
    * Executes the command to multiply the speed of a GameObject. It retrieves the GameObject
-   * corresponding to the provided ID from the game engine and multiplies its speed by the
-   * specified factor.
+   * corresponding to the provided ID from the game engine and multiplies its speed by the specified
+   * factor.
    *
    * @param engine The game engine instance.
    */
 
   @Override
   public void execute(GameEngine engine) {
-    GameObject gameObject = engine.getGameObjectContainer().getGameObject((int) Math.round(arguments.get(0)));
+    GameObject gameObject = engine.getGameObjectContainer()
+        .getGameObject((int) Math.round(arguments.get(0)));
     if (gameObject != null) {
       gameObject.multiplySpeed(arguments.get(1));
     }

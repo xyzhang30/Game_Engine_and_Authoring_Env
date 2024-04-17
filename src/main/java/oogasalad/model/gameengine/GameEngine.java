@@ -4,13 +4,13 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.Stack;
 import oogasalad.Pair;
-import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.ExternalGameEngine;
+import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
+import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
-import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.apache.logging.log4j.LogManager;
@@ -19,10 +19,11 @@ import org.apache.logging.log4j.Logger;
 /**
  * The GameEngine class represents the core engine of a game, managing the game's state,
  * progression, and interactions between game objects and players. It handles game updates, round
- * and turn advancements, collision detection, game over conditions, and restoration of game
- * state to previous static states.
+ * and turn advancements, collision detection, game over conditions, and restoration of game state
+ * to previous static states.
  *
- * <p>The engine is responsible for orchestrating the game's logic, including updating game objects,
+ * <p>The engine is responsible for orchestrating the game's logic, including updating game
+ * objects,
  * handling collisions, managing player turns and rounds, and tracking the game's progress.
  *
  * @author Noah Loewy
@@ -55,12 +56,10 @@ public class GameEngine implements ExternalGameEngine {
   }
 
 
-
-
   /**
-   * Represents a singular timestep in the game. Each time step, it calls functions that modify
-   * the GameObjects, Players, History, and GameEngine states, based on the placement of the
-   * GameObjects and their interactions with the user and each other
+   * Represents a singular timestep in the game. Each time step, it calls functions that modify the
+   * GameObjects, Players, History, and GameEngine states, based on the placement of the GameObjects
+   * and their interactions with the user and each other
    *
    * @return GameRecord object representing the current Game Objects, Scores, etc
    */
@@ -76,7 +75,8 @@ public class GameEngine implements ExternalGameEngine {
     } else {
       staticState = false;
     }
-    gameObjects.getGameObject(playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID()).setVisible(true);
+    gameObjects.getGameObject(
+        playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID()).setVisible(true);
     return new GameRecord(gameObjects.toGameObjectRecords(), playerContainer.getPlayerRecords(),
         round, turn, gameOver, staticState);
   }
@@ -91,8 +91,8 @@ public class GameEngine implements ExternalGameEngine {
   @Override
   public void applyInitialVelocity(double magnitude, double direction, int id) {
     LOGGER.info(" player " + turn + " apply initial velocity to GameObject " + id + " with "
-        + "magnitude " + magnitude +"and direction " + direction * 180 / Math.PI);
-    gameObjects.getGameObject(id).applyInitialVelocity(magnitude,direction);
+        + "magnitude " + magnitude + "and direction " + direction * 180 / Math.PI);
+    gameObjects.getGameObject(id).applyInitialVelocity(magnitude, direction);
     rules.strikePolicy().getStrikePolicy().accept(id, this);
   }
 
@@ -101,7 +101,6 @@ public class GameEngine implements ExternalGameEngine {
    */
   @Override
   public void reset() {
-
 
   }
 
@@ -199,7 +198,8 @@ public class GameEngine implements ExternalGameEngine {
       }
       if (rules.collisionHandlers().containsKey(collision)) {
         for (Command cmd : rules.collisionHandlers().get(collision)) {
-          LOGGER.info(cmd.getClass().getSimpleName() + " " + "(collision " + "info" + " - ) " + collision.getFirst() + " " + collision.getSecond());
+          LOGGER.info(cmd.getClass().getSimpleName() + " " + "(collision " + "info" + " - ) "
+              + collision.getFirst() + " " + collision.getSecond());
           cmd.execute(this);
         }
       }
@@ -216,7 +216,8 @@ public class GameEngine implements ExternalGameEngine {
     playerContainer.setActive(turn);
     loadRoundSpecificInformation(loader);
     playerContainer.getPlayer(1).updateActiveStrikeable();
-    gameObjects.getGameObject(playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID()).setVisible(true);
+    gameObjects.getGameObject(
+        playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID()).setVisible(true);
     playerContainer.startRound();
     addInitialStaticStateToHistory();
   }

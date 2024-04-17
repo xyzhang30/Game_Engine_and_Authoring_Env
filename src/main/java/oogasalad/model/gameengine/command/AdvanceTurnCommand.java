@@ -5,8 +5,8 @@ import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.gameengine.GameEngine;
 
 /**
- * The AdvanceYutnCommand handles the internal transition from one turn to another in the ooga
- * salad game engine
+ * The AdvanceYutnCommand handles the internal transition from one turn to another in the ooga salad
+ * game engine
  *
  * @author Noah Loewy
  */

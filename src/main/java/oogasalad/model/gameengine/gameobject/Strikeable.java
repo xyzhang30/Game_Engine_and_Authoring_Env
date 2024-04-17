@@ -8,18 +8,18 @@ package oogasalad.model.gameengine.gameobject;
  * other than a collision. They also have the capability to be converted into a GameObject.
  *
  * <p> Objects that implement this interface would include a golf ball, shuffle boarding puck, or
- * pinball, as you can apply a velocity to them by striking them with an external force (such as
- * a club, your hand, or spring), that is not represented in the game system.
+ * pinball, as you can apply a velocity to them by striking them with an external force (such as a
+ * club, your hand, or spring), that is not represented in the game system.
  *
  * <p>The adapter pattern is used to bridge the gap between general GameObjects and GameObjects
  * that are Strikeable. By holding a reference to the Strikeable, GameObjects have the ability to
- * have an initial velocity applied to them and be treated as Strikeable objects. This allows
- * for a flexible and modular design, where GameObjects can seamlessly integrate with components
- * that require Strikeable behavior.
+ * have an initial velocity applied to them and be treated as Strikeable objects. This allows for a
+ * flexible and modular design, where GameObjects can seamlessly integrate with components that
+ * require Strikeable behavior.
  *
  * <p>The adapter pattern promotes code reusability and adhere to the Single Responsibility
- * Principle, Encapsulation, and Open-Closed principles, as GameObjects can focus on their
- * primary functionality while still being adaptable to Strikeable behavior when needed.
+ * Principle, Encapsulation, and Open-Closed principles, as GameObjects can focus on their primary
+ * functionality while still being adaptable to Strikeable behavior when needed.
  *
  * @author Noah Loewy
  */
@@ -30,8 +30,8 @@ public interface Strikeable {
    * Applies a velocity to the strikeable with the provided ID.
    *
    * @param magnitude The magnitude of the new velocity.
-   * @param direction The direction of the new velocity with respect to the positive x-axis
-   *                      (in radians).
+   * @param direction The direction of the new velocity with respect to the positive x-axis (in
+   *                  radians).
    */
 
   void applyInitialVelocity(double magnitude, double direction);

@@ -18,8 +18,9 @@ public class RoundOverStaticStateHandler extends StaticStateHandler {
   /**
    * Checks if the RoundOver condition specified in RulesRecord is satisfied by the current game
    * state.
+   *
    * @param engine The game engine instance.
-   * @param rules The rules record containing game rules and conditions.
+   * @param rules  The rules record containing game rules and conditions.
    * @return true, if the RoundOver condition is met, otherwise false.
    */
 
@@ -30,15 +31,16 @@ public class RoundOverStaticStateHandler extends StaticStateHandler {
 
   /**
    * Executes all the commands specified in the game rules' AdvanceRound on the current Game State
+   *
    * @param engine The game engine instance.
-   * @param rules The rules record containing game rules and conditions.
+   * @param rules  The rules record containing game rules and conditions.
    */
 
   @Override
   protected void handleIt(GameEngine engine, RulesRecord rules) {
     LOGGER.info(rules.roundPolicy().getClass().getSimpleName() + " (round cond) evaluated True");
     for (Command cmd : rules.advanceRound()) {
-      LOGGER.info(cmd.getClass().getSimpleName()  + " (advance) ");
+      LOGGER.info(cmd.getClass().getSimpleName() + " (advance) ");
       cmd.execute(engine);
     }
     if (getPrev().canHandle(engine, rules)) {
