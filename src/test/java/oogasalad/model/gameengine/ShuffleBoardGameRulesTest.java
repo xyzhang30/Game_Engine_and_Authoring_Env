@@ -36,7 +36,7 @@ public class ShuffleBoardGameRulesTest {
   public void setUp() {
     gameEngine = new GameEngine(TITLE);
 
-    container = gameEngine.getCollidableContainer();
+    container = gameEngine.getGameObjectContainer();
 
   }
 

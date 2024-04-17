@@ -1,6 +1,6 @@
 {
   "gameName": "sampleMiniGolf",
-  "collidable_objects": [
+  "game_objects": [
     {
       "gameobject_id": 1,
       "properties": ["visible", "surface"],
@@ -220,7 +220,7 @@
   "players": [
     {
       "player_id": 1,
-      "my_collidable": 8
+      "my_strikeable": 8
     }
   ],
   "variables": [

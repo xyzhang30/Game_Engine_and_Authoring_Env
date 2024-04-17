@@ -1,6 +1,6 @@
 {
   "gameName": "sampleAirHockey",
-  "collidable_objects": [
+  "game_objects": [
     {
       "gameobject_id": "01",
       "properties": ["visible", "primary", "collidable"],

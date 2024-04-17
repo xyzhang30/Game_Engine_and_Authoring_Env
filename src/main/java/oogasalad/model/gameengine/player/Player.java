@@ -77,6 +77,9 @@ public class Player {
   }
 
   public int getStrikeableID() {
+    System.out.println(myStrikeables);
+    System.out.println(activeStrikeableIndex);
+
     return myStrikeables.get(activeStrikeableIndex).asGameObject().getId();
   }
 

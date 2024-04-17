@@ -84,7 +84,7 @@ public class GameLoaderModel extends GameLoader {
 
 
   public void makeLevel(int id) {
-    createCollidableContainer();
+    createGameObjectContainer();
     addPlayerStrikeables();
     createRulesRecord();
   }
@@ -92,11 +92,10 @@ public class GameLoaderModel extends GameLoader {
   private void addPlayerStrikeables() {
     for (ParserPlayer parserPlayer : gameData.getPlayers()){
       int playerId = parserPlayer.playerId();
-      List<Integer> playerStrikeableIds = parserPlayer.myCollidable();
+      List<Integer> playerStrikeableIds = parserPlayer.myStrikeable();
       List<Strikeable> playerStrikeableObjects = new ArrayList<>();
       for (int i : playerStrikeableIds){
         Optional<Strikeable> optionalStrikeable = gameObjectContainer.getGameObject(i).getStrikeable();
-
         optionalStrikeable.ifPresent(playerStrikeableObjects::add);
 
       }
@@ -120,7 +119,7 @@ public class GameLoaderModel extends GameLoader {
    *
    * @return The collidable container.
    */
-  public GameObjectContainer getCollidableContainer() {
+  public GameObjectContainer getGameObjectContainer() {
     return gameObjectContainer;
   }
 
@@ -134,11 +133,11 @@ public class GameLoaderModel extends GameLoader {
     return rulesRecord;
   }
 
-  private void createCollidableContainer() {
+  private void createGameObjectContainer() {
     Map<Integer, GameObject> gameObjects = new HashMap<>();
     gameData.getGameObjects().forEach(co -> {
       if (co.properties().contains("collidable")) {
-        collidables.add(co.collidableId());
+        this.collidables.add(co.collidableId());
       }
       gameObjects.put(co.collidableId(), createCollidable(co));
       gameObjects.keySet().forEach(id -> addPairToPhysicsMap(co, id, conditionsList));

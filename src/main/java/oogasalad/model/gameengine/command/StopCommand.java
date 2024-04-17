@@ -15,7 +15,7 @@ public class StopCommand implements Command {
 
   @Override
   public void execute(GameEngine engine) {
-    engine.getCollidableContainer().makeStatic();
+    engine.getGameObjectContainer().makeStatic();
   }
 
 }

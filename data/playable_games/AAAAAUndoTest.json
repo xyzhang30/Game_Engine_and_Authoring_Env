@@ -273,11 +273,11 @@
   "players": [
     {
       "player_id": 1,
-      "my_collidable": [8]
+      "my_strikeable": [8]
     },
     {
       "player_id": 2,
-      "my_collidable": [14]
+      "my_strikeable": [14]
     }
   ],
   "variables": [

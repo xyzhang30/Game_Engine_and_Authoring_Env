@@ -5,20 +5,19 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.shape.Shape;
 import oogasalad.model.api.data.GameObjectProperties;
-import oogasalad.view.AuthoringScreens.NonControllableType;
+import oogasalad.view.AuthoringScreens.NonStrikeableType;
 
-public class WriteCollidables {
+public class WriteStrikeables {
 
 
-  public void writeControllables(){
 
-  }
 
-  public void writeCollidablesRecord(Map<Shape, Integer> collidableIdMap, List<Shape> controllables,
-      Map<Shape, NonControllableType> nonControllableTypeMap, Map<Shape, String> imageMap,
+  public void writeGameObjectProperties(Map<Shape, Integer> gameObjectIdMap,
+      List<Shape> strikeables,
+      Map<Shape, NonStrikeableType> nonStrikeableTypeMap, Map<Shape, String> imageMap,
       Map<Shape, List<Double>> posMap) {
 
-    int collidableId = 0;
+    int gameObjectId = 0;
     List<GameObjectProperties> gameObjectProperties = new ArrayList<>();
     writeBackGround();
   }
@@ -36,7 +35,7 @@ public class WriteCollidables {
 //    List<String> properties = new ArrayList<>();
 //    properties.add("collidable");
 //    properties.add("visible");
-//    properties.add(nonControllableTypeMap.get(background).toString().toLowerCase());
+//    properties.add(nonStrikeableTypeMap.get(background).toString().toLowerCase());
 //    //double friction = 0.8;
 //    double staticFriction = 7;
 //    double kineticFriction = 5;

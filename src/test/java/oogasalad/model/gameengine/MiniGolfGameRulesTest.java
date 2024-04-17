@@ -23,7 +23,7 @@ public class MiniGolfGameRulesTest {
   @BeforeEach
   public void setUp() {
     gameEngine = new GameEngine(TITLE);
-    container = gameEngine.getCollidableContainer();
+    container = gameEngine.getGameObjectContainer();
   }
 
   private boolean isStatic(GameRecord r) {

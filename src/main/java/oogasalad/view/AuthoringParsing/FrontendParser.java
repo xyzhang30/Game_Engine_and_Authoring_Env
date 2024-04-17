@@ -24,10 +24,10 @@ public class FrontendParser extends GameLoader {
   private void generateStyleSheet() {
     String gameName = "sampleMiniGolf";
     try (PrintWriter writer = new PrintWriter(new FileWriter(gameName + ".css"))) {
-      JSONArray collidables = loadCollidables(); // Assuming this method retrieves your JSONArray of gameObjectRecords
-      for (Object o : collidables) {
-        if (o instanceof JSONObject collidable) {
-          writeCollidableStyle(writer, collidable);
+      JSONArray gameObjects = loadGameObjects(); // Assuming this method retrieves your JSONArray of gameObjectRecords
+      for (Object o : gameObjects) {
+        if (o instanceof JSONObject gameObject) {
+          writeGameObjectStyle(writer, gameObject);
         }
       }
     } catch (IOException e) {
@@ -39,7 +39,7 @@ public class FrontendParser extends GameLoader {
    * Loads and returns the JSONArray of collidable objects. This method assumes you have a way to
    * load or access your gameObjectRecords JSONArray.
    */
-  private JSONArray loadCollidables() {
+  private JSONArray loadGameObjects() {
     // Placeholder method body - you should implement this based on how your game data is loaded
     return new JSONArray(); // This should be replaced with actual loading logic
   }
@@ -47,9 +47,9 @@ public class FrontendParser extends GameLoader {
   /**
    * Writes CSS for a single collidable object.
    */
-  private void writeCollidableStyle(PrintWriter writer, JSONObject collidable) {
-    String id = String.valueOf(collidable.get("gameobject_id"));
-    JSONArray colorArray = (JSONArray) collidable.get("color");
+  private void writeGameObjectStyle(PrintWriter writer, JSONObject gameObject) {
+    String id = String.valueOf(gameObject.get("gameobject_id"));
+    JSONArray colorArray = (JSONArray) gameObject.get("color");
 
     String rgb = formatColor(colorArray);
     writer.println("#collidable_" + id + " {");

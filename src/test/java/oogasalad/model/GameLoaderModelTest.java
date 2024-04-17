@@ -80,8 +80,8 @@ public class GameLoaderModelTest {
   }
 
   @Test
-  public void testParseCollidables() {
-    assertThat(testGameLoaderModel.getCollidableContainer()).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(
+  public void testParseGameObjects() {
+    assertThat(testGameLoaderModel.getGameObjectContainer()).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(
         mockGameObjectContainer);
   }
 

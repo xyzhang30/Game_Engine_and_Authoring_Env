@@ -5,8 +5,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import oogasalad.view.AuthoringScreens.ControllableElementSelectionScreen;
-import oogasalad.view.AuthoringScreens.NonControllableType;
+import oogasalad.view.AuthoringScreens.StrikeableElementSelectionScreen;
+import oogasalad.view.AuthoringScreens.NonStrikeableType;
 import oogasalad.view.Controlling.AuthoringController;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.mock;
 
 public class StrikeableElementSelectionTest extends ApplicationTest {
 
-  private ControllableElementSelectionScreen screen;
+  private StrikeableElementSelectionScreen screen;
   private StackPane authoringBox;
   private Rectangle draggableRectangle;
   private AuthoringController mockController;
@@ -33,11 +33,11 @@ public class StrikeableElementSelectionTest extends ApplicationTest {
 
     authoringBox = new StackPane();
     Map<Shape, List<Double>> posMap = new HashMap<>();
-    Map<Shape, NonControllableType> nonControllableMap = new HashMap<>();
-    List<Shape> controllableList = new ArrayList<>();
+    Map<Shape, NonStrikeableType> nonStrikeableMap = new HashMap<>();
+    List<Shape> strikeableList = new ArrayList<>();
     Map<Shape, String> imageMap = new HashMap<>();
 
-    this.screen = new ControllableElementSelectionScreen(mockController, authoringBox, posMap, nonControllableMap, controllableList, imageMap);
+    this.screen = new StrikeableElementSelectionScreen(mockController, authoringBox, posMap, nonStrikeableMap, strikeableList, imageMap);
 
     stage.setScene(screen.getScene());
     stage.show();

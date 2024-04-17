@@ -21,7 +21,7 @@ public class PhysicsTest {
   @BeforeEach
   public void setUp() {
     gameEngine = new GameEngine("testPhysics");
-    container = gameEngine.getCollidableContainer();
+    container = gameEngine.getGameObjectContainer();
   }
 
   private boolean isStatic(GameRecord r) {
@@ -114,12 +114,12 @@ public class PhysicsTest {
 
   @Test
   public void testTwoMovingObjectsCollide() {
-    gameEngine.getCollidableContainer().getGameObject(1).setVisible(true);
-    gameEngine.getCollidableContainer().getGameObject(10).setVisible(true);
+    gameEngine.getGameObjectContainer().getGameObject(1).setVisible(true);
+    gameEngine.getGameObjectContainer().getGameObject(10).setVisible(true);
     gameEngine.applyInitialVelocity(15, -Math.PI, 1);
     gameEngine.applyInitialVelocity(15, 0, 10);
-    gameEngine.getCollidableContainer().getGameObject(1).setVisible(true);
-    gameEngine.getCollidableContainer().getGameObject(10).setVisible(true);
+    gameEngine.getGameObjectContainer().getGameObject(1).setVisible(true);
+    gameEngine.getGameObjectContainer().getGameObject(10).setVisible(true);
     gameEngine.update(.25);
     assertEquals(-10, container.getGameObjectRecord(1).velocityX(), DELTA);
     assertEquals(10, container.getGameObjectRecord(10).velocityX(), DELTA);
@@ -133,15 +133,15 @@ public class PhysicsTest {
 
   @Test
   public void testAdjustPointsCommand() {
-    gameEngine.getCollidableContainer().getGameObject(1).setVisible(true);
-    gameEngine.getCollidableContainer().getGameObject(10).setVisible(true);
+    gameEngine.getGameObjectContainer().getGameObject(1).setVisible(true);
+    gameEngine.getGameObjectContainer().getGameObject(10).setVisible(true);
     gameEngine.applyInitialVelocity(20, -Math.PI, 1);
     gameEngine.applyInitialVelocity(20, 0, 10);
     gameEngine.applyInitialVelocity(20, -Math.PI, 1);
     GameRecord r = gameEngine.update(1);
 
-    System.out.println(gameEngine.getCollidableContainer().getGameObject(1).toGameObjectRecord().x());
-    System.out.println(gameEngine.getCollidableContainer().getGameObject(10).toGameObjectRecord().x());
+    System.out.println(gameEngine.getGameObjectContainer().getGameObject(1).toGameObjectRecord().x());
+    System.out.println(gameEngine.getGameObjectContainer().getGameObject(10).toGameObjectRecord().x());
 
     assertEquals(2.0, r.players().get(0).score(), DELTA);
   }

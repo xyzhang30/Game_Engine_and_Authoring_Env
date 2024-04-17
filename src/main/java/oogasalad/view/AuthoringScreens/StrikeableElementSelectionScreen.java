@@ -15,16 +15,16 @@ import oogasalad.view.Controlling.AuthoringController;
  *
  * @author Jordan Haytaian, Doga Ozmen
  */
-public class ControllableElementSelectionScreen extends AuthoringScreen {
+public class StrikeableElementSelectionScreen extends AuthoringScreen {
 
-  private List<Shape> controllableList;
+  private List<Shape> strikeableList;
 
-  public ControllableElementSelectionScreen(AuthoringController controller,
+  public StrikeableElementSelectionScreen(AuthoringController controller,
       StackPane authoringBox, Map<Shape, List<Double>> posMap,
-      Map<Shape, NonControllableType> nonControllableMap,
-      List<Shape> controllableList, Map<Shape, String> imageMap) {
-    super(controller, authoringBox, posMap, nonControllableMap, controllableList, imageMap);
-    this.controllableList = controllableList;
+      Map<Shape, NonStrikeableType> nonStrikeableMap,
+      List<Shape> strikeableList, Map<Shape, String> imageMap) {
+    super(controller, authoringBox, posMap, nonStrikeableMap, strikeableList, imageMap);
+    this.strikeableList = strikeableList;
   }
 
   /**
@@ -32,7 +32,7 @@ public class ControllableElementSelectionScreen extends AuthoringScreen {
    */
   void createScene() {
     root = new AnchorPane();
-    createTitle("Controllable Selection");
+    createTitle("Strikeable Selection");
     root.getChildren().add(authoringBox);
     addElements();
     createSizeAndAngleSliders();
@@ -52,12 +52,12 @@ public class ControllableElementSelectionScreen extends AuthoringScreen {
       Bounds authoringBoxBounds = authoringBox.getBoundsInParent();
 
       if (authoringBoxBounds.contains(shapeBounds)) {
-        controllableList.add(shape);
+        strikeableList.add(shape);
       }
     }
-    controller.startNextSelection(ImageType.CONTROLLABLE_ELEMENT, authoringBox, posMap,
-        nonControllableMap,
-        controllableList, imageMap);
+    controller.startNextSelection(ImageType.STRIKEABLE_ELEMENT, authoringBox, posMap,
+        nonStrikeableMap,
+        strikeableList, imageMap);
   }
 
   /**
@@ -66,7 +66,7 @@ public class ControllableElementSelectionScreen extends AuthoringScreen {
    * @return enum to represent ball image type
    */
   ImageType getImageType() {
-    return ImageType.CONTROLLABLE_ELEMENT;
+    return ImageType.STRIKEABLE_ELEMENT;
   }
 
   /**

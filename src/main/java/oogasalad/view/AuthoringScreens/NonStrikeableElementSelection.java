@@ -19,18 +19,18 @@ import oogasalad.view.Controlling.AuthoringController;
  *
  * @author Jordan Haytaian, Doga Ozmen
  */
-public class NonControllableElementSelection extends AuthoringScreen {
+public class NonStrikeableElementSelection extends AuthoringScreen {
 
-  private ComboBox<NonControllableType> obstacleTypeComboBox;
+  private ComboBox<NonStrikeableType> obstacleTypeComboBox;
 
-  private Map<Shape, NonControllableType> obstacleTypeMap;
+  private Map<Shape, NonStrikeableType> obstacleTypeMap;
 
 
-  public NonControllableElementSelection(AuthoringController controller, StackPane authoringBox,
+  public NonStrikeableElementSelection(AuthoringController controller, StackPane authoringBox,
       Map<Shape, List<Double>> posMap,
-      Map<Shape, NonControllableType> nonControllableMap, List<Shape> controllableList,
+      Map<Shape, NonStrikeableType> nonStrikeableMap, List<Shape> strikeableList,
       Map<Shape, String> imageMap) {
-    super(controller, authoringBox, posMap, nonControllableMap, controllableList, imageMap);
+    super(controller, authoringBox, posMap, nonStrikeableMap, strikeableList, imageMap);
     obstacleTypeMap = new HashMap<>();
   }
 
@@ -39,7 +39,7 @@ public class NonControllableElementSelection extends AuthoringScreen {
    */
   void createScene() {
     root = new AnchorPane();
-    createTitle("NonControllable Selection");
+    createTitle("NonStrikeable Selection");
     root.getChildren().add(authoringBox);
     addElements();
     createSizeAndAngleSliders();
@@ -54,14 +54,14 @@ public class NonControllableElementSelection extends AuthoringScreen {
    * Updates object type to reflect type of currently selected object
    */
   void updateOptionSelections() {
-    NonControllableType type = obstacleTypeMap.getOrDefault(selectedShape, null);
+    NonStrikeableType type = obstacleTypeMap.getOrDefault(selectedShape, null);
     obstacleTypeComboBox.setValue(type);
   }
 
   void createTypeDropDown() {
     obstacleTypeComboBox = new ComboBox<>();
     obstacleTypeComboBox.getItems()
-        .addAll(NonControllableType.SURFACE, NonControllableType.collidable);
+        .addAll(NonStrikeableType.SURFACE, NonStrikeableType.COLLIDABLE);
     obstacleTypeComboBox.setPromptText("Select Obstacle Type");
     AnchorPane.setRightAnchor(obstacleTypeComboBox, 50.0);
     AnchorPane.setBottomAnchor(obstacleTypeComboBox, 300.0);
@@ -103,14 +103,14 @@ public class NonControllableElementSelection extends AuthoringScreen {
         Bounds authoringBoxBounds = authoringBox.getBoundsInParent();
 
         if (authoringBoxBounds.contains(shapeBounds)) {
-          NonControllableType type = obstacleTypeMap.get(shape);
-          nonControllableMap.put(shape, type);
+          NonStrikeableType type = obstacleTypeMap.get(shape);
+          nonStrikeableMap.put(shape, type);
         }
       }
 
-      controller.startNextSelection(ImageType.NONCONTROLLABLE_ELEMENT,
-          authoringBox, posMap, nonControllableMap,
-          controllableList, imageMap); // Adjust NEXT_TYPE to whatever comes next
+      controller.startNextSelection(ImageType.NONSTRIKEABLE_ELEMENT,
+          authoringBox, posMap, nonStrikeableMap,
+          strikeableList, imageMap); // Adjust NEXT_TYPE to whatever comes next
     } else {
       Alert alert = new Alert(AlertType.ERROR);
       alert.setTitle("Error");
@@ -127,6 +127,6 @@ public class NonControllableElementSelection extends AuthoringScreen {
    * @return enum to represent goal image type
    */
   ImageType getImageType() {
-    return ImageType.NONCONTROLLABLE_ELEMENT;
+    return ImageType.NONSTRIKEABLE_ELEMENT;
   }
 }

@@ -1,6 +1,6 @@
 package oogasalad.view.AuthoringScreens;
 
-public enum NonControllableType {
+public enum NonStrikeableType {
   SURFACE,
-  collidable
+  COLLIDABLE
 }

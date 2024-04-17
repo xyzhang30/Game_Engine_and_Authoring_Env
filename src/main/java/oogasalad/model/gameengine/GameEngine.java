@@ -29,7 +29,7 @@ public class GameEngine implements ExternalGameEngine {
   private final GameLoaderModel loader;
   private final PlayerContainer playerContainer;
   private RulesRecord rules;
-  private GameObjectContainer collidables;
+  private GameObjectContainer gameObjects;
   private Map<Pair, List<Command>> collisionHandlers;
   private int round;
   private int turn;
@@ -54,17 +54,17 @@ public class GameEngine implements ExternalGameEngine {
     staticState = true;
     playerContainer.setActive(turn);
     loader.makeLevel(round);
-    collidables = loader.getCollidableContainer();
+    gameObjects = loader.getGameObjectContainer();
     rules = loader.getRulesRecord();
-    playerContainer.startRound();
     collisionHandlers = rules.collisionHandlers();
     playerContainer.getPlayer(1).updateActiveStrikeableId();
-    collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID());
-    collidables.addStaticStateGameObjects();
+    gameObjects.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID());
+    playerContainer.startRound();
+    gameObjects.addStaticStateGameObjects();
     playerContainer.addPlayerHistory();
     staticStateStack = new Stack<>();
     staticStateStack.push(
-        new GameRecord(collidables.toGameObjectRecords(), playerContainer.getPlayerRecords(),
+        new GameRecord(gameObjects.toGameObjectRecords(), playerContainer.getPlayerRecords(),
             round, turn, gameOver, staticState));
   }
 
@@ -89,21 +89,21 @@ public class GameEngine implements ExternalGameEngine {
   /**
    * Provides view with updated GameState as immutable record after each frame
    *
-   * @return GameRecord object representing the current Collidables, Scores, etc
+   * @return GameRecord object representing the current Game Objects, Scores, etc
    */
   @Override
   public GameRecord update(double dt) {
-    collidables.update(dt);
+    gameObjects.update(dt);
     handleCollisions(dt); //private
-    if (collidables.checkStatic()) {
+    if (gameObjects.checkStatic()) {
       switchToCorrectStaticState(); //private
       updateHistory(); //private
       staticState = true;
     } else {
       staticState = false;
     }
-    collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID());
-    return new GameRecord(collidables.toGameObjectRecords(), playerContainer.getPlayerRecords(),
+    gameObjects.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID());
+    return new GameRecord(gameObjects.toGameObjectRecords(), playerContainer.getPlayerRecords(),
         round, turn, gameOver, staticState);
   }
 
@@ -119,7 +119,7 @@ public class GameEngine implements ExternalGameEngine {
     LOGGER.info(" player " + turn + " apply initial velocity with magnitude " + magnitude + " and "
         + "direction "
         + direction * 180 / Math.PI);
-    collidables.getGameObject(id).applyInitialVelocity(magnitude,direction);
+    gameObjects.getGameObject(id).applyInitialVelocity(magnitude,direction);
     rules.strikePolicy().getStrikePolicy().accept(id, this);
   }
 
@@ -161,8 +161,8 @@ public class GameEngine implements ExternalGameEngine {
     return playerContainer;
   }
 
-  public GameObjectContainer getCollidableContainer() {
-    return collidables;
+  public GameObjectContainer getGameObjectContainer() {
+    return gameObjects;
   }
 
   public void endGame() {
@@ -171,8 +171,8 @@ public class GameEngine implements ExternalGameEngine {
 
   public void toLastStaticState() {
     staticState = true;
-    for(GameObjectRecord cr : collidables.toGameObjectRecords()) {
-      GameObject c = collidables.getGameObject(cr.id());
+    for(GameObjectRecord cr : gameObjects.toGameObjectRecords()) {
+      GameObject c = gameObjects.getGameObject(cr.id());
       Optional<Scoreable> optionalScoreable = c.getScoreable();
       optionalScoreable.ifPresent(scoreable -> scoreable.setTemporaryScore(0));
     }
@@ -180,15 +180,15 @@ public class GameEngine implements ExternalGameEngine {
     turn = newCurrentState.turn();
     round = newCurrentState.round();
     gameOver = newCurrentState.gameOver();
-    collidables.toLastStaticStateGameObjects();
+    gameObjects.toLastStaticStateGameObjects();
     playerContainer.toLastStaticStateVariables();
   }
 
   private void handleCollisions(double dt) {
-    Set<Pair> collisionPairs = collidables.getCollisionPairs();
+    Set<Pair> collisionPairs = gameObjects.getCollisionPairs();
     for (Pair collision : collisionPairs) {
       if (rules.physicsMap().containsKey(collision)) {
-        rules.physicsMap().get(collision).handleCollision(collidables, dt);
+        rules.physicsMap().get(collision).handleCollision(gameObjects, dt);
       }
       if (collisionHandlers.containsKey(collision)) {
         for (Command cmd : collisionHandlers.get(collision)) {
@@ -212,9 +212,9 @@ public class GameEngine implements ExternalGameEngine {
   private void updateHistory() {
     staticState = true;
     playerContainer.addPlayerHistory();
-    collidables.addStaticStateGameObjects();
+    gameObjects.addStaticStateGameObjects();
     staticStateStack.push(
-        new GameRecord(collidables.toGameObjectRecords(), playerContainer.getPlayerRecords(),
+        new GameRecord(gameObjects.toGameObjectRecords(), playerContainer.getPlayerRecords(),
             round, turn, gameOver, staticState));
   }
 
@@ -235,6 +235,6 @@ public class GameEngine implements ExternalGameEngine {
 
   public void setActivesStrikeablesInvisible() {
     int id = playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID();
-    collidables.getGameObject(id).setVisible(false);
+    gameObjects.getGameObject(id).setVisible(false);
   }
 }
