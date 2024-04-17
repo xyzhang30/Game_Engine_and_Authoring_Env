@@ -37,12 +37,10 @@ public class GameController {
   private int activePlayer;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
-  private final String PLAYABLE_GAMES_DIRECTORY = "data/playable_games";
-  private final String TEST_FILE_IDENTIFIER = "test";
 
   public GameController() {
     sceneManager = new SceneManager();
-    sceneManager.createScene(SceneType.TITLE);
+    sceneManager.createScene(SceneType.MENU);
     animationManager = new AnimationManager();
   }
 
@@ -124,30 +122,6 @@ public class GameController {
     // coded!
 
     animationManager.runAnimation(this);
-  }
-
-
-  /**
-   * Gets the titles of all available games to play
-   *
-   * @return a list of the game titles
-   */
-  public List<String> getGameTitles() {
-    Set<String> files = listFiles(PLAYABLE_GAMES_DIRECTORY);
-    List<String> gameTitles = new ArrayList<>();
-    for (String file : files) {
-      if (!file.toLowerCase().contains(TEST_FILE_IDENTIFIER)) {
-        gameTitles.add(file.substring(0, file.indexOf(".")));
-      }
-    }
-    return gameTitles;
-  }
-
-  private Set<String> listFiles(String dir) {
-    return Stream.of(new File(dir).listFiles())
-        .filter(file -> !file.isDirectory())
-        .map(File::getName)
-        .collect(Collectors.toSet());
   }
 
   private CompositeElement createCompositeElementFromGameLoader() {

@@ -1,5 +1,8 @@
 package oogasalad.view.GameScreens;
 
+import static oogasalad.view.SceneManager.SCREEN_HEIGHT;
+import static oogasalad.view.SceneManager.SCREEN_WIDTH;
+
 import java.util.Map;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,7 +24,7 @@ import oogasalad.view.visual_elements.input_indicators.Arrow;
  * @ author Jordan Haytaian, Doga Ozmen
  */
 
-public class GameScreen extends UIScreen {
+public class GameScreen {
 
   private final double maxPower = SCREEN_HEIGHT*0.8;
   private final BorderPane root;
@@ -32,6 +35,8 @@ public class GameScreen extends UIScreen {
 
   private Text scoreboardTxt;
   private Text turnBoardTxt;
+
+  private GameController controller;
 
   public GameScreen(GameController controller, CompositeElement compositeElement) {
     root = new BorderPane();
@@ -64,7 +69,7 @@ public class GameScreen extends UIScreen {
     ableToHit = true;
   }
 
-  @Override
+
   public Parent getRoot() {
     return root;
   }
@@ -123,7 +128,6 @@ public class GameScreen extends UIScreen {
     Rectangle outline = new Rectangle(SCREEN_WIDTH*0.9, SCREEN_HEIGHT*0.1,
         SCREEN_WIDTH*0.07, SCREEN_HEIGHT*0.8);
     outline.setFill(Color.DARKGRAY);
-    outline.setEffect(createDropShadow());
 
     Rectangle powerIndicator = new Rectangle(SCREEN_WIDTH*0.91, SCREEN_HEIGHT*0.89,
         SCREEN_WIDTH*0.05, 10);

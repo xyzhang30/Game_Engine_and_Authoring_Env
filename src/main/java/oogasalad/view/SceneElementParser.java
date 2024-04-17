@@ -1,7 +1,13 @@
 package oogasalad.view;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -27,6 +33,8 @@ public class SceneElementParser {
   private final String xLayoutFactorTag = "x_layout_factor";
   private final String yLayoutFactorTag = "y_layout_factor";
   private final String styleTag = "styling";
+  private final String playableGameDir = "data/playable_games";
+  private final String testFileIdentifier = "test";
 
   public SceneElementParser(double screenWidth, double screenHeight) {
     this.screenWidth = screenWidth;
@@ -60,6 +68,9 @@ public class SceneElementParser {
       }
       case TEXT -> {
         createText(element, sceneElements);
+      }
+      case LISTVIEW -> {
+        createListView(element, sceneElements);
       }
     }
   }
@@ -102,7 +113,7 @@ public class SceneElementParser {
     sceneElements.put(text, style);
   }
 
-  private void createListView(Element element) {
+  private void createListView(Element element, Map<Node, String> sceneElements) {
     double widthFactor = Double.parseDouble(
         element.getElementsByTagName(widthFactorTag).item(0).getTextContent());
     double heightFactor = Double.parseDouble(
@@ -113,13 +124,28 @@ public class SceneElementParser {
         element.getElementsByTagName(yLayoutFactorTag).item(0).getTextContent());
     String style = element.getElementsByTagName(styleTag).item(0).getTextContent();
 
-    ObservableList<String> observableList = FXCollections.observableList(titles);
-    ListView<String> listView = new ListView<>(observableList);
+    ListView<String> listView = new ListView<>(getListOptions());
     listView.setPrefSize(screenWidth * widthFactor, screenHeight * heightFactor);
-    listView.setLayoutX(screenWidth * xLayoutFactor - listView.getPrefWidth()/2);
+    listView.setLayoutX(screenWidth * xLayoutFactor - listView.getPrefWidth() / 2);
     listView.setLayoutY(screenHeight * yLayoutFactor);
-    addListViewEventHandling(listView);
-    styleMenu(listView);
+
+    sceneElements.put(listView, style);
+  }
+
+  private ObservableList<String> getListOptions() {
+    Set<String> games = Stream.of(new File(playableGameDir).listFiles())
+        .filter(file -> !file.isDirectory())
+        .map(File::getName)
+        .collect(Collectors.toSet());
+
+    List<String> gameTitles = new ArrayList<>();
+    for (String filePath : games) {
+      if (!filePath.toLowerCase().contains(testFileIdentifier)) {
+        gameTitles.add(filePath.substring(0, filePath.indexOf(".")));
+      }
+    }
+
+    return FXCollections.observableList(gameTitles);
   }
 
 }

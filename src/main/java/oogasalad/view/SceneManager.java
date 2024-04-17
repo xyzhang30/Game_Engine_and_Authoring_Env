@@ -32,6 +32,7 @@ public class SceneManager {
   private GameScreen gameScreen;
   private int currentRound = 1;
   private final String titleSceneElementsPath = "data/scene_properties/titleSceneElements.xml";
+  private final String menuSceneElementsPath = "data/scene_properties/menuSceneElements.xml";
 
 
   public SceneManager() {

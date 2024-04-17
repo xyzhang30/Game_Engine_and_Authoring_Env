@@ -3,7 +3,6 @@ package oogasalad.view;
 import java.net.URL;
 import java.util.Map;
 import java.util.Map.Entry;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
