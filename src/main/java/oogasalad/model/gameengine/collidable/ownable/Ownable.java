@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine.collidable;
+package oogasalad.model.gameengine.collidable.ownable;
 
 public interface Ownable {
 

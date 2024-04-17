@@ -2,10 +2,9 @@ package oogasalad.model.gameengine.command;
 
 import java.util.List;
 import java.util.Optional;
-import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.collidable.Collidable;
-import oogasalad.model.gameengine.collidable.Ownable;
+import oogasalad.model.gameengine.collidable.ownable.Ownable;
 
 public class AddDelayedPointsCommand implements Command {
 

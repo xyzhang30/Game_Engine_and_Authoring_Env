@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Controllable;
-import oogasalad.model.gameengine.collidable.Ownable;
+import oogasalad.model.gameengine.collidable.ownable.Ownable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

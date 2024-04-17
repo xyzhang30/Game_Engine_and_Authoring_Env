@@ -2,9 +2,9 @@ package oogasalad.model.gameengine.collidable;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Stack;
 import java.util.function.Supplier;
 import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.gameengine.collidable.ownable.Ownable;
 
 public class Collidable {
 

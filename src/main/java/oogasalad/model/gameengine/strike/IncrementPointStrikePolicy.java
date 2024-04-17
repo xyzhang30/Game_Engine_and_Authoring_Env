@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.collidable.Collidable;
-import oogasalad.model.gameengine.collidable.Ownable;
+import oogasalad.model.gameengine.collidable.ownable.Ownable;
 
 public class IncrementPointStrikePolicy implements StrikePolicy {
 

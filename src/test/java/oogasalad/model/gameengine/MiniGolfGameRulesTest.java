@@ -1,4 +1,4 @@
-package oogasalad.model;
+package oogasalad.model.gameengine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
