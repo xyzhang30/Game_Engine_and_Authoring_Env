@@ -73,6 +73,10 @@ public class ShapePanel implements Panel {
     });
     shape.setOnMouseDragged(event -> setShapeOnCompleteDrag(shape, event));
     shape.setOnMouseReleased(event -> setShapeOnRelease(shape));
+
+
+
+
     // JavaFX drag and drop -> drop target
   }
 
@@ -140,6 +144,9 @@ public class ShapePanel implements Panel {
     System.out.println(authoringBoxBounds);
     return authoringBoxBounds.contains(shapeBounds);
   }
+
+
+
   private void setShapeOnRelease(Shape shape) {
     System.out.println("RELEASED");
     System.out.println(shape);

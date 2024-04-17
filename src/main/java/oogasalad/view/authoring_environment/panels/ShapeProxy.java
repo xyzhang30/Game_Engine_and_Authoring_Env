@@ -7,7 +7,7 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-public class ShapeProxy {
+public class ShapeProxy{
   private Shape shape;
   public Shape getShape() {
     return shape;
