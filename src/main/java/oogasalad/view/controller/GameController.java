@@ -2,10 +2,7 @@ package oogasalad.view.controller;
 
 import java.util.List;
 import javafx.scene.Scene;
-<<<<<<< HEAD:src/main/java/oogasalad/view/controller/GameController.java
 import oogasalad.model.api.GameObjectRecord;
-=======
->>>>>>> theme_styling:src/main/java/oogasalad/view/Controlling/GameController.java
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
@@ -13,15 +10,10 @@ import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
-<<<<<<< HEAD:src/main/java/oogasalad/view/controller/GameController.java
-import oogasalad.view.AnimationManager;
-import oogasalad.view.SceneManager;
 import oogasalad.view.authoring_environment.NewAuthoringController;
-=======
 import oogasalad.view.game_environment.AnimationManager;
 import oogasalad.view.game_environment.game_environment_scene.SceneManager;
 import oogasalad.view.enums.SceneType;
->>>>>>> theme_styling:src/main/java/oogasalad/view/Controlling/GameController.java
 import oogasalad.view.visual_elements.CompositeElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -110,15 +102,6 @@ public class GameController {
     GameRecord gameRecord = gameEngine.update(timeStep);
     boolean staticState = gameRecord.staticState();
     if (staticState) {
-<<<<<<< HEAD:src/main/java/oogasalad/view/controller/GameController.java
-      for (GameObjectRecord r : gameRecord.gameObjectRecords()) {
-        if (List.of(9, 14, 15, 16).contains(r.id())) {
-          System.out.println(r);
-        }
-      }
-      System.out.println();
-=======
->>>>>>> theme_styling:src/main/java/oogasalad/view/Controlling/GameController.java
       sceneManager.enableHitting();
     }
     getCurrentStrikeable(gameRecord);

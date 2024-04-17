@@ -11,8 +11,8 @@ import javafx.stage.Screen;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.view.Controlling.GameController;
-import oogasalad.view.GameScreens.GameScreen;
+import oogasalad.view.controller.GameController;
+import oogasalad.view.game_environment.GameScreen;
 import oogasalad.view.visual_elements.CompositeElement;
 import oogasalad.view.enums.SceneType;
 import org.xml.sax.SAXException;
@@ -76,9 +76,9 @@ public class SceneManager {
       root.getChildren().addAll(sceneElements);
     } catch (ParserConfigurationException e) {
       //TODO: Exception Handling
-    } catch (SAXException e){
+    } catch (SAXException e) {
       //TODO: Exception Handling
-    } catch (IOException e){
+    } catch (IOException e) {
       //TODO: Exception Handling
     }
   }
@@ -89,7 +89,7 @@ public class SceneManager {
   }
 
   public void update(GameRecord gameRecord) {
-    compositeElement.update(gameRecord.collidables());
+    compositeElement.update(gameRecord.gameObjectRecords());
     Map<Integer, Double> scoreMap = new TreeMap<>();
     for (PlayerRecord p : gameRecord.players()) {
       scoreMap.put(p.playerId(), p.score());

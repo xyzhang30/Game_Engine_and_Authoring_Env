@@ -2,7 +2,7 @@ package oogasalad.view.game_environment.game_environment_scene;
 
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import oogasalad.view.Controlling.GameController;
+import oogasalad.view.controller.GameController;
 import oogasalad.view.enums.SceneElementEvent;
 
 public class SceneElementHandler {
