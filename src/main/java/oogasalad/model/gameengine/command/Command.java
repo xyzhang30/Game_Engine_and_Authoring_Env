@@ -10,7 +10,7 @@ import oogasalad.model.gameengine.GameEngine;
  * objects are created using reflection.
  * <p>
  * This interface is a functional interface, meaning that it only provides a single method, execute,
- * which accepts a list of doubles representing the arguments for the command.
+ * which accepts a GameEngine to be updated. It's constructor takes in a list of its arguments.
  * <p>
  * Implementations of this interface define the behavior of specific commands
  * <p>

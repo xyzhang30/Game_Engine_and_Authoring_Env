@@ -2,7 +2,7 @@ package oogasalad.model.gameengine.statichandlers;
 
 import java.util.List;
 
-public class StaticStateHandlerLinkedListBuilder {
+public class StaticStateHandlerLinkedListFactory {
 
   public static GenericStaticStateHandler buildLinkedList(List<String> classNames) {
     GenericStaticStateHandler firstHandler = null;
