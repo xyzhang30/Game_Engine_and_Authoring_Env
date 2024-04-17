@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.collidable.Collidable;
-import oogasalad.model.gameengine.collidable.ownable.Ownable;
+import oogasalad.model.gameengine.collidable.ownable.Scoreable;
 
 public class IncrementPointStrikePolicy implements StrikePolicy {
 
@@ -12,8 +12,8 @@ public class IncrementPointStrikePolicy implements StrikePolicy {
   public BiConsumer<Integer, GameEngine> getStrikePolicy() {
     return (controllableId, engine) -> {
       Collidable c = engine.getCollidableContainer().getCollidable(controllableId);
-      Optional<Ownable> optionalOwnable = c.getOwnable();
-      optionalOwnable.ifPresent(Ownable::incrementTemporaryScore);
+      Optional<Scoreable> optionalOwnable = c.getOwnable();
+      optionalOwnable.ifPresent(Scoreable::incrementTemporaryScore);
     };
   }
 }

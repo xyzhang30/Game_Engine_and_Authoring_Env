@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 import oogasalad.model.api.CollidableRecord;
-import oogasalad.model.gameengine.collidable.ownable.Ownable;
+import oogasalad.model.gameengine.collidable.ownable.Scoreable;
 
 public class Collidable {
 
@@ -27,7 +27,7 @@ public class Collidable {
 
 
   private Controllable controllable;
-  private Ownable ownable;
+  private Scoreable ownable;
 
   public Collidable(int id, double mass, double x, double y,
       boolean visible, double staticMu, double kineticMu, double width, double height,
@@ -51,14 +51,14 @@ public class Collidable {
   public void addControllable(Controllable controllable) {
     this.controllable = controllable;
   }
-  public void addOwnable(Ownable ownable) {
+  public void addOwnable(Scoreable ownable) {
     this.ownable = ownable;
   }
   public Optional<Controllable> getControllable() {
     return Optional.ofNullable(controllable);
   }
 
-  public Optional<Ownable> getOwnable() {
+  public Optional<Scoreable> getOwnable() {
     return Optional.ofNullable(ownable);
   }
 

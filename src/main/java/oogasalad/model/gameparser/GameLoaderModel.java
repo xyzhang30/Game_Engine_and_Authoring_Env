@@ -17,7 +17,7 @@ import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.collidable.Controllable;
-import oogasalad.model.gameengine.collidable.ownable.Ownable;
+import oogasalad.model.gameengine.collidable.ownable.Scoreable;
 import oogasalad.model.gameengine.collidable.PhysicsHandler;
 import oogasalad.model.gameengine.collidable.collision.FrictionHandler;
 import oogasalad.model.gameengine.collidable.collision.MomentumHandler;
@@ -102,9 +102,9 @@ public class GameLoaderModel extends GameLoader {
       }
       playerContainer.getPlayer(playerId).addControllables(playerControllableObjects);
 
-      List<Ownable> playerOwnableObjects = new ArrayList<>();
+      List<Scoreable> playerOwnableObjects = new ArrayList<>();
       for (int i : playerControllableIds){
-        Optional<Ownable> optionalControllable = collidableContainer.getCollidable(i).getOwnable();
+        Optional<Scoreable> optionalControllable = collidableContainer.getCollidable(i).getOwnable();
         optionalControllable.ifPresent(playerOwnableObjects::add);
       }
       playerContainer.getPlayer(playerId).addOwnables(playerOwnableObjects);

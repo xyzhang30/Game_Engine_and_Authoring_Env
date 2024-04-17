@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.collidable.Collidable;
-import oogasalad.model.gameengine.collidable.ownable.Ownable;
+import oogasalad.model.gameengine.collidable.ownable.Scoreable;
 
 public class AddDelayedPointsCommand implements Command {
 
@@ -17,7 +17,7 @@ public class AddDelayedPointsCommand implements Command {
   @Override
   public void execute(GameEngine engine) {
     Collidable c = engine.getCollidableContainer().getCollidable((int) Math.round(arguments.get(0)));
-    Optional<Ownable> optionalOwnable = c.getOwnable();
+    Optional<Scoreable> optionalOwnable = c.getOwnable();
     optionalOwnable.ifPresent(ownable -> ownable.setTemporaryScore(arguments.get(1)));
   }
 

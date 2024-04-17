@@ -1,6 +1,6 @@
 package oogasalad.model.gameengine.collidable.ownable;
 
-public interface Ownable {
+public interface Scoreable {
 
   public void setTemporaryScore(double tempScore);
   public double getTemporaryScore();

@@ -12,7 +12,7 @@ import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
-import oogasalad.model.gameengine.collidable.ownable.Ownable;
+import oogasalad.model.gameengine.collidable.ownable.Scoreable;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameparser.GameLoaderModel;
@@ -173,7 +173,7 @@ public class GameEngine implements ExternalGameEngine {
     staticState = true;
     for(CollidableRecord cr : collidables.getCollidableRecords()) {
       Collidable c = collidables.getCollidable(cr.id());
-      Optional<Ownable> optionalOwnable = c.getOwnable();
+      Optional<Scoreable> optionalOwnable = c.getOwnable();
       optionalOwnable.ifPresent(ownable -> ownable.setTemporaryScore(0));
     }
     GameRecord newCurrentState = staticStateStack.pop();

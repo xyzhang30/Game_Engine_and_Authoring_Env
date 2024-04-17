@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Controllable;
-import oogasalad.model.gameengine.collidable.ownable.Ownable;
+import oogasalad.model.gameengine.collidable.ownable.Scoreable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,7 +14,7 @@ public class Player {
   private static final Logger LOGGER = LogManager.getLogger(Player.class);
   private final int playerId;
   private List<Controllable> myControllables;
-  private List<Ownable> myOwnables;
+  private List<Scoreable> myOwnables;
   private final Map<String, Double> variables;
   private int activeControllableIndex;
   private boolean roundCompleted = false;
@@ -33,7 +33,7 @@ public class Player {
     myControllables = controllables;
     activeControllableIndex = controllables.size()-1;
   }
-  public void addOwnables(List<Ownable> ownables) {
+  public void addOwnables(List<Scoreable> ownables) {
     myOwnables = ownables;
   }
 
@@ -52,7 +52,7 @@ public class Player {
   protected PlayerRecord getPlayerRecord(boolean active) {
     try {
       double score = variables.get("score");
-      for (Ownable o : myOwnables) {
+      for (Scoreable o : myOwnables) {
         score += o.getTemporaryScore();
       }
       return new PlayerRecord(playerId, score,
@@ -85,13 +85,13 @@ public class Player {
   }
 
   private void clearDelayedPoints() {
-    for (Ownable o : myOwnables) {
+    for (Scoreable o : myOwnables) {
       o.setTemporaryScore(0);
     }
   }
 
   protected void applyDelayedScore() {
-    for (Ownable o : myOwnables) {
+    for (Scoreable o : myOwnables) {
       variables.put("score", variables.get("score") + o.getTemporaryScore());
     }
   }
