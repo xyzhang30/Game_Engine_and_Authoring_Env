@@ -1,11 +1,11 @@
 package oogasalad.view.playing_scene;
 
 import javafx.scene.Node;
+import javafx.scene.control.ListView;
 import oogasalad.view.Controlling.GameController;
 import oogasalad.view.enums.SceneElementEvent;
 
 public class SceneElementHandler {
-
   private final GameController gameController;
 
   public SceneElementHandler(GameController gameController) {
@@ -20,6 +20,9 @@ public class SceneElementHandler {
       case START_AUTHORING -> {
         createStartAuthoringHandler(node);
       }
+      case START_GAME -> {
+        createStartGameHandler(node);
+      }
     }
 
   }
@@ -30,6 +33,16 @@ public class SceneElementHandler {
 
   private void createStartAuthoringHandler(Node node) {
     node.setOnMouseClicked(e -> gameController.openAuthorEnvironment());
+  }
+
+  private void createStartGameHandler(Node node) {
+    node.setOnMouseClicked(e -> {
+      String game = ((ListView<String>) node).getSelectionModel().getSelectedItem();
+      if (game != null) {
+        gameController.startGamePlay(game);
+      }
+    });
+
   }
 
 }

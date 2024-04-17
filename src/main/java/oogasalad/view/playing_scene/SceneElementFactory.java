@@ -13,7 +13,7 @@ import oogasalad.view.enums.SceneElementType;
 public class SceneElementFactory {
 
   private final SceneElementParser sceneElementParser;
-  private final SceneElementStyler elementStyler;
+  private final SceneElementStyler sceneElementStyler;
   private final SceneElementHandler sceneElementHandler;
   private final double screenWidth;
   private final double screenHeight;
@@ -29,7 +29,7 @@ public class SceneElementFactory {
   public SceneElementFactory(Pane root, double screenWidth, double screenHeight,
       SceneElementHandler sceneElementHandler) {
     sceneElementParser = new SceneElementParser();
-    elementStyler = new SceneElementStyler(root);
+    sceneElementStyler = new SceneElementStyler(root);
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
     this.sceneElementHandler = sceneElementHandler;
@@ -66,7 +66,7 @@ public class SceneElementFactory {
     String event = parameters.get(eventTag);
 
     Button button = new Button(displayText);
-    elementStyler.style(button, style);
+    sceneElementStyler.style(button, style);
     sceneElementHandler.createElementHandler(button, event);
 
     button.setPrefSize(screenWidth * widthFactor, screenHeight * heightFactor);
@@ -83,7 +83,7 @@ public class SceneElementFactory {
     String style = parameters.get(styleTag);
 
     Text text = new Text(displayText);
-    elementStyler.style(text, style);
+    sceneElementStyler.style(text, style);
 
     text.setLayoutX(screenWidth * xLayoutFactor - text.getLayoutBounds().getWidth() / 2);
     text.setLayoutY(screenHeight * yLayoutFactor - text.getLayoutBounds().getHeight() / 2);
@@ -97,9 +97,11 @@ public class SceneElementFactory {
     double xLayoutFactor = Double.parseDouble(parameters.get(xLayoutFactorTag));
     double yLayoutFactor = Double.parseDouble(parameters.get(yLayoutFactorTag));
     String style = parameters.get(styleTag);
+    String event = parameters.get(eventTag);
 
     ListView<String> listView = new ListView<>(sceneElementParser.getGameTitles());
-    elementStyler.style(listView, style);
+    sceneElementStyler.style(listView, style);
+    sceneElementHandler.createElementHandler(listView, event);
 
     listView.setPrefSize(screenWidth * widthFactor, screenHeight * heightFactor);
     listView.setLayoutX(screenWidth * xLayoutFactor - listView.getPrefWidth() / 2);

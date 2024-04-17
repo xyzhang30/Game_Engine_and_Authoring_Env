@@ -1,5 +1,6 @@
 package oogasalad.view.playing_scene;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -7,12 +8,14 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
+import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.view.Controlling.GameController;
 import oogasalad.view.GameScreens.GameScreen;
 import oogasalad.view.visual_elements.CompositeElement;
 import oogasalad.view.enums.SceneType;
+import org.xml.sax.SAXException;
 
 /**
  * Manages different screens (scenes) within the game, such as the title screen, menu screen, game
@@ -71,7 +74,11 @@ public class SceneManager {
       List<Node> sceneElements = sceneElementFactory.createSceneElements(sceneElementParameters);
       root.getChildren().clear();
       root.getChildren().addAll(sceneElements);
-    } catch (Exception e) {
+    } catch (ParserConfigurationException e) {
+      //TODO: Exception Handling
+    } catch (SAXException e){
+      //TODO: Exception Handling
+    } catch (IOException e){
       //TODO: Exception Handling
     }
   }
