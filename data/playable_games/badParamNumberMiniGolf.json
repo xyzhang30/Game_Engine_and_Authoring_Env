@@ -290,7 +290,7 @@
         "second_id": 8,
         "command": [
           {
-            "UndoTurnCommand": []
+            "LastStaticStateCommand": []
           }
         ]
       }

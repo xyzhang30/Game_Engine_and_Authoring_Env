@@ -69,7 +69,7 @@ interface GameEngineInternal {
      *
      * @return The current turn number.
      */
-    int getTurn();
+    int getGameRecord().turn();
 
     /**
      * Retrieves the current sub-turn number.

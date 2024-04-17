@@ -20,8 +20,8 @@ import oogasalad.model.gameengine.command.AdvanceRoundCommand;
 import oogasalad.model.gameengine.condition.AllPlayersCompletedRoundCondition;
 import oogasalad.model.gameengine.condition.Condition;
 import oogasalad.model.gameengine.condition.NRoundsCompletedCondition;
-import oogasalad.model.gameengine.statichandlers.GenericStaticStateHandler;
-import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListBuilder;
+import oogasalad.model.gameengine.statichandlers.StaticStateHandler;
+import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListFactory;
 import oogasalad.model.gameengine.strike.DoNothingStrikePolicy;
 import oogasalad.model.gameengine.strike.StrikePolicy;
 import oogasalad.model.gameengine.turn.StandardTurnPolicy;
@@ -43,7 +43,7 @@ public class GameLoaderModelTest {
   public void setup() {
     String gameTitle = "testSinglePlayerMiniGolf";
     this.testGameLoaderModel = new GameLoaderModel(gameTitle);
-    testGameLoaderModel.makeLevel(1);
+    testGameLoaderModel.prepareRound(1);
     GameObject c1 = new GameObject(1, Double.POSITIVE_INFINITY, 0,0, true, 3.03873, 2.03873, 500, 500, "rectangle");
     GameObject c2 = new GameObject(2, 1, 250, 450, true, 0, 0, 2, 2, "circle");
     GameObject c3 = new GameObject(3, 0, 250,50, true, 0,0, 5, 5, "circle");
@@ -113,7 +113,7 @@ public class GameLoaderModelTest {
     Command advanceC3 = new AdvanceRoundCommand(List.of());
     List<Command> advanceRound = List.of(advanceC3);
 
-    GenericStaticStateHandler mockStaticStateHandler = StaticStateHandlerLinkedListBuilder.buildLinkedList(List.of(
+    StaticStateHandler mockStaticStateHandler = StaticStateHandlerLinkedListFactory.buildLinkedList(List.of(
         "GameOverStaticStateHandler",
         "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
 

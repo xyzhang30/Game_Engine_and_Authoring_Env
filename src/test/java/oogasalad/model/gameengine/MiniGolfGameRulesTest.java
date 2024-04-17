@@ -38,23 +38,23 @@ public class MiniGolfGameRulesTest {
   @Test
   public void testRoundOfGolf() {
     gameEngine.applyInitialVelocity(0, 0, 1);
-    assertEquals(1.0,gameEngine.getTurn(), DELTA);
+    assertEquals(1.0,gameEngine.restoreLastStaticGameRecord().turn(), DELTA);
     gameEngine.update(1);
-    assertEquals(2.0,gameEngine.getTurn(), DELTA);
+    assertEquals(2.0,gameEngine.restoreLastStaticGameRecord().turn(), DELTA);
     gameEngine.applyInitialVelocity(25, 5*Math.PI/4, 2);
     GameRecord r = gameEngine.update(1);
     gameEngine.applyInitialVelocity(1, 0, 1);
     gameEngine.update(1);
-    assertEquals(1.0,gameEngine.getTurn(), DELTA);
+    assertEquals(1.0,gameEngine.restoreLastStaticGameRecord().turn(), DELTA);
     gameEngine.applyInitialVelocity(1, 0, 1);
     gameEngine.update(1);
-    assertEquals(1.0,gameEngine.getTurn(), DELTA);
+    assertEquals(1.0,gameEngine.restoreLastStaticGameRecord().turn(), DELTA);
     gameEngine.applyInitialVelocity(1, 0, 1);
     GameRecord r2 = gameEngine.update(1);
-    assertEquals(1.0,gameEngine.getTurn(), DELTA);
+    assertEquals(1.0,gameEngine.restoreLastStaticGameRecord().turn(), DELTA);
     gameEngine.applyInitialVelocity(30, Math.PI/4, 1);
     GameRecord r3 = gameEngine.update(1);
-    assertEquals(2.0, gameEngine.getRound(), DELTA);
+    assertEquals(2.0, gameEngine.restoreLastStaticGameRecord().round(), DELTA);
   }
 
   @Test
@@ -72,7 +72,7 @@ public class MiniGolfGameRulesTest {
     gameEngine.applyInitialVelocity(25, Math.PI/4, 1);
     gameEngine.update(1);
     // updates ideally
-    assertEquals(3.0, gameEngine.getRound(), DELTA);
+    assertEquals(3.0, gameEngine.restoreLastStaticGameRecord().round(), DELTA);
     assertTrue( gameEngine.isOver());
   }
 

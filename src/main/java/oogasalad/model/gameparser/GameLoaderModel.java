@@ -25,8 +25,8 @@ import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
-import oogasalad.model.gameengine.statichandlers.GenericStaticStateHandler;
-import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListBuilder;
+import oogasalad.model.gameengine.statichandlers.StaticStateHandler;
+import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListFactory;
 import oogasalad.model.gameengine.strike.StrikePolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
 import org.apache.logging.log4j.LogManager;
@@ -50,7 +50,7 @@ public class GameLoaderModel extends GameLoader {
       BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList;
 //  private Map<Integer, Player> collidablePlayerMap;
 
-  private final GenericStaticStateHandler staticHandler;
+  private final StaticStateHandler staticHandler;
 
   /**
    * Constructs a GameLoaderModel object with the specified ID.
@@ -63,7 +63,7 @@ public class GameLoaderModel extends GameLoader {
     collidables = new ArrayList<>();
     physicsMap = new HashMap<>();
 
-    staticHandler = StaticStateHandlerLinkedListBuilder.buildLinkedList(List.of(
+    staticHandler = StaticStateHandlerLinkedListFactory.buildLinkedList(List.of(
         "GameOverStaticStateHandler",
         "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
     createCollisionTypeMap();
@@ -83,7 +83,7 @@ public class GameLoaderModel extends GameLoader {
   }
 
 
-  public void makeLevel(int id) {
+  public void prepareRound(int id) {
     createGameObjectContainer();
     addPlayerStrikeables();
     createRulesRecord();

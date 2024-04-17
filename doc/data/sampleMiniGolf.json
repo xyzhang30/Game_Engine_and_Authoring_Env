@@ -181,7 +181,7 @@
         "second_id": 6,
         "command": [
           {
-            "UndoTurnCommand": []
+            "LastStaticStateCommand": []
           },
           {
             "AdjustPointsCommand": [1,1]

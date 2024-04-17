@@ -5,6 +5,10 @@ import java.util.function.Supplier;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.gameengine.gameobject.PhysicsHandler;
 
+/**
+ * @author Konur Nordberg
+ */
+
 public class FrictionHandler extends PhysicsHandler {
 
   private static final double C = 40;
