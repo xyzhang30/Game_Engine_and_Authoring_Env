@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 import oogasalad.model.api.ViewGameObjectRecord;
+import oogasalad.model.api.data.GameObjectShape;
 import oogasalad.model.gameparser.GameLoaderView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,9 +21,9 @@ public class GameLoaderViewTest {
     List<ViewGameObjectRecord> collidableRecords = loaderView.getViewCollidableInfo();
     for (ViewGameObjectRecord record : collidableRecords) {
       if (record.id() == 2 || record.id() == 3) {
-        assertEquals("circle", record.shape());
+        assertEquals(GameObjectShape.ELLIPSE, record.shape());
       } else {
-        assertEquals("rectangle", record.shape());
+        assertEquals(GameObjectShape.RECTANGLE, record.shape());
       }
     }
   }
