@@ -4,17 +4,19 @@ import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.command.Command;
 
-public class TurnOverStaticStateHandler extends GenericStaticStateHandler {
+public class TurnOverStaticStateHandler extends StaticStateHandler {
 
   @Override
-  public boolean canHandle(GameEngine engine, RulesRecord rules) {
+  protected boolean canHandle(GameEngine engine, RulesRecord rules) {
     return true;
   }
 
   @Override
-  public void handleIt(GameEngine engine, RulesRecord rules) {
+  protected void handleIt(GameEngine engine, RulesRecord rules) {
     for (Command cmd : rules.advanceTurn()) {
-      LOGGER.info(toLogForm(cmd) + " " + "(advance) ");
+      LOGGER.info( cmd.toString().substring(cmd.toString().lastIndexOf(
+          ".") + 1, cmd.toString().lastIndexOf("@")) + " (win condition) evaluated "
+          + "True" + " (advance) ");
       cmd.execute(engine);
     }
     if (getPrev().canHandle(engine, rules)) {

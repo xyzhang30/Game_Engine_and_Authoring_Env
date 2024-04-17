@@ -20,7 +20,7 @@ import oogasalad.model.gameengine.command.AdvanceRoundCommand;
 import oogasalad.model.gameengine.condition.AllPlayersCompletedRoundCondition;
 import oogasalad.model.gameengine.condition.Condition;
 import oogasalad.model.gameengine.condition.NRoundsCompletedCondition;
-import oogasalad.model.gameengine.statichandlers.GenericStaticStateHandler;
+import oogasalad.model.gameengine.statichandlers.StaticStateHandler;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListFactory;
 import oogasalad.model.gameengine.strike.DoNothingStrikePolicy;
 import oogasalad.model.gameengine.strike.StrikePolicy;
@@ -113,7 +113,7 @@ public class GameLoaderModelTest {
     Command advanceC3 = new AdvanceRoundCommand(List.of());
     List<Command> advanceRound = List.of(advanceC3);
 
-    GenericStaticStateHandler mockStaticStateHandler = StaticStateHandlerLinkedListFactory.buildLinkedList(List.of(
+    StaticStateHandler mockStaticStateHandler = StaticStateHandlerLinkedListFactory.buildLinkedList(List.of(
         "GameOverStaticStateHandler",
         "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
 

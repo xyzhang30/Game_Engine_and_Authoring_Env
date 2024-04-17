@@ -25,7 +25,7 @@ import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
-import oogasalad.model.gameengine.statichandlers.GenericStaticStateHandler;
+import oogasalad.model.gameengine.statichandlers.StaticStateHandler;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListFactory;
 import oogasalad.model.gameengine.strike.StrikePolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
@@ -50,7 +50,7 @@ public class GameLoaderModel extends GameLoader {
       BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList;
 //  private Map<Integer, Player> collidablePlayerMap;
 
-  private final GenericStaticStateHandler staticHandler;
+  private final StaticStateHandler staticHandler;
 
   /**
    * Constructs a GameLoaderModel object with the specified ID.

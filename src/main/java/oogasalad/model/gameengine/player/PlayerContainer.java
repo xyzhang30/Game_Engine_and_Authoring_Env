@@ -60,15 +60,30 @@ public class PlayerContainer {
     return myPlayers.get(playerId);
   }
 
-  //need some sort of set active players function in here??
+  /**
+   * Retrieves the ID of the currently active player.
+   *
+   * @return The ID of the active player.
+   */
   public int getActive() {
     return active;
   }
+
+  /**
+   * Sets the ID of the active player.
+   *
+   * @param newActive The ID of the player to set as active.
+   */
 
   public void setActive(int newActive) {
     active = newActive;
   }
 
+  /**
+   * Retrieves a list of PlayerRecord objects representing the current state of each player.
+   *
+   * @return A list of PlayerRecord objects.
+   */
   public List<PlayerRecord> getPlayerRecords() {
     List<PlayerRecord> ret = new ArrayList<>();
     for (Player p : myPlayers.values()) {
@@ -76,7 +91,6 @@ public class PlayerContainer {
     }
     return ret;
   }
-
 
   /**
    * Checks if all players have completed the current round.

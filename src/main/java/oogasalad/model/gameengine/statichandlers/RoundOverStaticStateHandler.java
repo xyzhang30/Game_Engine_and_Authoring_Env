@@ -4,18 +4,22 @@ import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.command.Command;
 
-public class RoundOverStaticStateHandler extends GenericStaticStateHandler {
+public class RoundOverStaticStateHandler extends StaticStateHandler {
 
   @Override
-  public boolean canHandle(GameEngine engine, RulesRecord rules) {
+  protected boolean canHandle(GameEngine engine, RulesRecord rules) {
     return rules.roundPolicy().evaluate(engine);
   }
 
   @Override
-  public void handleIt(GameEngine engine, RulesRecord rules) {
-    LOGGER.info(toLogForm(rules.roundPolicy()) + " (round condition) evaluated True");
+  protected void handleIt(GameEngine engine, RulesRecord rules) {
+    LOGGER.info(rules.roundPolicy().toString().substring(rules.roundPolicy().toString().lastIndexOf(
+        ".") + 1, rules.roundPolicy().toString().lastIndexOf("@")) + " (round condition) evaluated True");
+
     for (Command cmd : rules.advanceRound()) {
-      LOGGER.info(toLogForm(cmd) + " " + "(advance) ");
+      LOGGER.info(cmd.toString().substring(cmd.toString().lastIndexOf(".") + 1,
+          cmd.toString().lastIndexOf("@")) + " (advance) ");
+
       cmd.execute(engine);
     }
     if (getPrev().canHandle(engine, rules)) {
