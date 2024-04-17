@@ -1,13 +1,11 @@
 package oogasalad.view.controller;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javafx.scene.Scene;
+<<<<<<< HEAD:src/main/java/oogasalad/view/controller/GameController.java
 import oogasalad.model.api.GameObjectRecord;
+=======
+>>>>>>> theme_styling:src/main/java/oogasalad/view/Controlling/GameController.java
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
@@ -15,9 +13,15 @@ import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
+<<<<<<< HEAD:src/main/java/oogasalad/view/controller/GameController.java
 import oogasalad.view.AnimationManager;
 import oogasalad.view.SceneManager;
 import oogasalad.view.authoring_environment.NewAuthoringController;
+=======
+import oogasalad.view.game_environment.AnimationManager;
+import oogasalad.view.game_environment.game_environment_scene.SceneManager;
+import oogasalad.view.enums.SceneType;
+>>>>>>> theme_styling:src/main/java/oogasalad/view/Controlling/GameController.java
 import oogasalad.view.visual_elements.CompositeElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,8 +46,8 @@ public class GameController {
   private GameLoaderView gameLoaderView;
 
   public GameController() {
-    sceneManager = new SceneManager();
-    sceneManager.makeTitleScreen(this);
+    sceneManager = new SceneManager(this);
+    sceneManager.createScene(SceneType.TITLE);
     animationManager = new AnimationManager();
   }
 
@@ -55,11 +59,11 @@ public class GameController {
    * Creates and displays menu screen
    */
   public void openMenuScreen() {
-    sceneManager.makeMenuScreen(getGameTitles(), this);
+    sceneManager.createScene(SceneType.MENU);
   }
 
   public void openTransitionScreen() {
-    sceneManager.makeTransitionScreen();
+    //sceneManager.makeTransitionScreen();
   }
 
   public void openAuthorEnvironment() {
@@ -106,12 +110,15 @@ public class GameController {
     GameRecord gameRecord = gameEngine.update(timeStep);
     boolean staticState = gameRecord.staticState();
     if (staticState) {
+<<<<<<< HEAD:src/main/java/oogasalad/view/controller/GameController.java
       for (GameObjectRecord r : gameRecord.gameObjectRecords()) {
         if (List.of(9, 14, 15, 16).contains(r.id())) {
           System.out.println(r);
         }
       }
       System.out.println();
+=======
+>>>>>>> theme_styling:src/main/java/oogasalad/view/Controlling/GameController.java
       sceneManager.enableHitting();
     }
     getCurrentStrikeable(gameRecord);
@@ -130,30 +137,6 @@ public class GameController {
     // coded!
 
     animationManager.runAnimation(this);
-  }
-
-
-  /**
-   * Gets the titles of all available games to play
-   *
-   * @return a list of the game titles
-   */
-  public List<String> getGameTitles() {
-    Set<String> files = listFiles(PLAYABLE_GAMES_DIRECTORY);
-    List<String> gameTitles = new ArrayList<>();
-    for (String file : files) {
-      if (!file.toLowerCase().contains(TEST_FILE_IDENTIFIER)) {
-        gameTitles.add(file.substring(0, file.indexOf(".")));
-      }
-    }
-    return gameTitles;
-  }
-
-  private Set<String> listFiles(String dir) {
-    return Stream.of(new File(dir).listFiles())
-        .filter(file -> !file.isDirectory())
-        .map(File::getName)
-        .collect(Collectors.toSet());
   }
 
   private CompositeElement createCompositeElementFromGameLoader() {
