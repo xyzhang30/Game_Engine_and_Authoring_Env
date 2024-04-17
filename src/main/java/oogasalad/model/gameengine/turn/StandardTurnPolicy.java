@@ -19,7 +19,7 @@ public class StandardTurnPolicy implements TurnPolicy {
       turn = (turn % numPlayers) + 1;
       playerContainer.setActive(turn);
     }
-    playerContainer.getPlayer(turn).updateActiveStrikeableId();
+    playerContainer.getPlayer(turn).updateActiveStrikeable();
     return turn;
   }
 }

@@ -56,7 +56,7 @@ public class GameEngine implements ExternalGameEngine {
     gameObjects = loader.getGameObjectContainer();
     rules = loader.getRulesRecord();
     collisionHandlers = rules.collisionHandlers();
-    playerContainer.getPlayer(1).updateActiveStrikeableId();
+    playerContainer.getPlayer(1).updateActiveStrikeable();
     gameObjects.getGameObject(playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID()).setVisible(true);
     playerContainer.startRound();
     gameObjects.addStaticStateGameObjects();
