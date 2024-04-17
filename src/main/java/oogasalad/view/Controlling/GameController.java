@@ -20,6 +20,7 @@ import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.AnimationManager;
 import oogasalad.view.CollisionManager;
 import oogasalad.view.SceneManager;
+import oogasalad.view.SceneType;
 import oogasalad.view.VisualElements.CompositeElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,7 +46,7 @@ public class GameController {
 
   public GameController() {
     sceneManager = new SceneManager();
-    sceneManager.makeTitleScreen(this);
+    sceneManager.createScene(SceneType.TITLE);
     animationManager = new AnimationManager();
   }
 
@@ -57,11 +58,11 @@ public class GameController {
    * Creates and displays menu screen
    */
   public void openMenuScreen() {
-    sceneManager.makeMenuScreen(getGameTitles(), this);
+    //sceneManager.makeMenuScreen(getGameTitles(), this);
   }
 
   public void openTransitionScreen() {
-    sceneManager.makeTransitionScreen();
+    //sceneManager.makeTransitionScreen();
   }
 
   public void openAuthorEnvironment() {

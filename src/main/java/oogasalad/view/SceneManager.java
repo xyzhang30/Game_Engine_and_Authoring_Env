@@ -1,22 +1,18 @@
 package oogasalad.view;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.TreeMap;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Screen;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.view.Controlling.GameController;
 import oogasalad.view.GameScreens.GameScreen;
-import oogasalad.view.GameScreens.MenuScreen;
-import oogasalad.view.GameScreens.TitleScreen;
-import oogasalad.view.GameScreens.TransitionScreen;
 import oogasalad.view.VisualElements.CompositeElement;
 
 /**
@@ -28,31 +24,49 @@ import oogasalad.view.VisualElements.CompositeElement;
  */
 public class SceneManager {
 
+  public final static double SCREEN_WIDTH = Screen.getPrimary().getBounds().getWidth();
+  public final static double SCREEN_HEIGHT = Screen.getPrimary().getBounds().getHeight();
+  private final Group root;
   private final Scene scene;
   private final SceneElementParser sceneElementParser;
   private CompositeElement compositeElement;
   private GameScreen gameScreen;
   private int currentRound = 1;
-  private final String titleScenePropertiesPath =
-      "src/main/java/oogasalad/view/TitleSceneProperties.properties";
+  private final String titleSceneElementsPath = "data/scene_properties/titleSceneProperties.xml";
 
 
   public SceneManager() {
-    scene = new Scene(new Group());
-    sceneElementParser = new SceneElementParser();
+    root = new Group();
+    scene = new Scene(root);
+    sceneElementParser = new SceneElementParser(SCREEN_WIDTH, SCREEN_HEIGHT);
   }
 
   public void createScene(SceneType sceneType) {
     switch (sceneType) {
       case TITLE -> {
-        createSceneElements(titleScenePropertiesPath);
+        createSceneElementsAndUpdateRoot(titleSceneElementsPath);
+      }
+      case MENU -> {
+        //createSceneElementsAndUpdateRoot();
+      }
+      case GAME -> {
+      }
+      case TRANSITION -> {
+      }
+      case PAUSE -> {
       }
     }
 
   }
 
-  public void createSceneElements(){
-
+  public void createSceneElementsAndUpdateRoot(String filePath) {
+    try {
+      List<Node> sceneElements = sceneElementParser.createElementsFromFile(filePath);
+      root.getChildren().clear();
+      root.getChildren().addAll(sceneElements);
+    } catch (Exception e) {
+      //TODO: Exception Handling
+    }
   }
 
 
@@ -68,16 +82,6 @@ public class SceneManager {
     }
     updateScoreTurnBoard(scoreMap, gameRecord.turn(), gameRecord.round());
     checkEndRound(gameRecord);
-  }
-
-  public void makeTitleScreen(GameController controller) {
-    TitleScreen titleScreen = new TitleScreen(controller);
-    scene.setRoot(titleScreen.getRoot());
-  }
-
-  public void makeMenuScreen(List<String> titles, GameController controller) {
-    MenuScreen menuScreen = new MenuScreen(titles, controller);
-    scene.setRoot(menuScreen.getRoot());
   }
 
   public void makeGameScreen(GameController controller, CompositeElement compositeElement) {
@@ -99,12 +103,6 @@ public class SceneManager {
     if (gameRecord.gameOver()) {
       gameScreen.endRound(true);
     }
-  }
-
-
-  public void makeTransitionScreen() {
-    TransitionScreen transitionScreen = new TransitionScreen();
-    scene.setRoot(transitionScreen.getRoot());
   }
 
   public void updateScoreTurnBoard(Map<Integer, Double> scoreMap, int turn, int round) {
