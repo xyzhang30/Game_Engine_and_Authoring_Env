@@ -201,7 +201,7 @@
       "second_id": 5,
       "command": [
         {
-          "UndoTurnCommand": []
+          "LastStaticStateCommand": []
         },
         {
           "AddDelayedPointsCommand": [1, 1]

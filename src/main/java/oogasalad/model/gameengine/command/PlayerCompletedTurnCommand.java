@@ -13,7 +13,7 @@ import oogasalad.model.gameengine.GameEngine;
 public class PlayerCompletedTurnCommand implements Command {
 
   /**
-   * Constructs an instance of the PlayerCompletedRoundCommand. This constructor does not
+   * Constructs an instance of the PlayerCompletedTurnCommand. This constructor does not
    * actually do anything, and exists for the sake of consistency across commands.
    *
    * @param arguments An empty list.

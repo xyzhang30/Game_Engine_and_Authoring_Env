@@ -198,7 +198,7 @@ public class AuthoringController {
 
   private String matchCommandName(InteractionType type) {
     return switch (type) {
-      case RESET -> "UndoTurnCommand";
+      case RESET -> "LastStaticStateCommand";
       case ADVANCE -> "AdvanceRoundCommand";
       case SCORE -> "AdjustPointsCommand";
       case CHANGE_SPEED -> null;
