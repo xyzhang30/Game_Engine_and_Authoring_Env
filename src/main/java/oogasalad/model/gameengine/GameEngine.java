@@ -47,8 +47,7 @@ public class GameEngine implements ExternalGameEngine {
   /**
    * Starts the current game
    */
-  @Override
-  public void startRound(GameLoaderModel loader) {
+  private void startRound(GameLoaderModel loader) {
     gameOver = false;
     turn = 1; //first player ideally should have id 1
     staticState = true;
@@ -68,23 +67,6 @@ public class GameEngine implements ExternalGameEngine {
             round, turn, gameOver, staticState));
   }
 
-  /**
-   * Pauses the current game.
-   */
-
-  @Override
-  public void pause() {
-
-  }
-
-  /**
-   * Resumes the paused game
-   */
-
-  @Override
-  public void resume() {
-
-  }
 
   /**
    * Provides view with updated GameState as immutable record after each frame
