@@ -32,7 +32,7 @@
 ## Explanation
 #### Commonalities:
 Air hockey and mini golf are both physics-based games that involves
-* player-controllable object that applies a force/gives an initial velocity to the ball
+* player-strikeable object that applies a force/gives an initial velocity to the ball
 * collision detection and event-handling after specific collisions
 * the concept of turn/round/game and switching player permissions according to the current state of the game
 

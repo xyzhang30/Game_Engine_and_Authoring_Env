@@ -4,20 +4,35 @@ import java.util.List;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.gameengine.GameEngine;
 
+/**
+ * The PlayerCompletedRoundCommand class represents a command to mark the completion of a round by
+ * the active player in the game.
+ *
+ * @author Noah Loewy
+ */
+
 public class PlayerCompletedRoundCommand implements Command {
 
-  private final List<Double> arguments;
+  /**
+   * Constructs an instance of the PlayerCompletedRoundCommand. This constructor does not actually
+   * do anything, and exists for the sake of consistency across commands.
+   *
+   * @param arguments An empty list.
+   */
 
   @ExpectedParamNumber(0)
   public PlayerCompletedRoundCommand(List<Double> arguments) {
-    this.arguments = arguments;
+
   }
 
+  /**
+   * Executes the command to mark the completion of a round by the active player. It updates the
+   * game state to reflect the completion of the round by the active player.
+   *
+   * @param engine The game engine instance.
+   */
   @Override
   public void execute(GameEngine engine) {
-    engine.getPlayerContainer().getPlayer(engine.getPlayerContainer().getActive())
-        .completeRound();
-    engine.setActivesControllablesInvisible();
+    engine.getPlayerContainer().getPlayer(engine.getPlayerContainer().getActive()).completeRound();
   }
 }
-

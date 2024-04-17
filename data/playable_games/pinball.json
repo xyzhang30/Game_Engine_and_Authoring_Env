@@ -1,8 +1,8 @@
 {
   "gameName" : "pinball",
-  "collidable_objects" : [ {
-    "collidable_id" : 0,
-    "properties" : [ "collidable", "visible", "surface" ],
+  "game_objects" : [ {
+    "gameobject_id" : 0,
+    "properties" : [  "visible", "surface" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -18,8 +18,8 @@
     "kineticFriction" : 5.0,
     "image" : "data/background_images/wood.jpg"
   }, {
-    "collidable_id" : 15,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 15,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -35,8 +35,8 @@
     "kineticFriction" : 5.0,
     "image" : ""
   }, {
-    "collidable_id" : 2,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 2,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 1020.0,
@@ -52,8 +52,8 @@
     "kineticFriction" : 5.0,
     "image" : ""
   }, {
-    "collidable_id" : 3,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 3,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -69,8 +69,8 @@
     "kineticFriction" : 5.0,
     "image" : ""
   }, {
-    "collidable_id" : 4,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 4,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50.0,
@@ -86,8 +86,8 @@
     "kineticFriction" : 5.0,
     "image" : ""
   }, {
-    "collidable_id" : 5,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 5,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 311.8060302734375,
@@ -103,8 +103,8 @@
     "kineticFriction" : 0.0,
     "image" : ""
   }, {
-    "collidable_id" : 6,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 6,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 465.0,
@@ -120,8 +120,8 @@
     "kineticFriction" : 0.0,
     "image" : "data/noncontrollable_images/tenpts.jpg"
   }, {
-    "collidable_id" : 7,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 7,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 562.3207397460938,
@@ -137,8 +137,8 @@
     "kineticFriction" : 0.0,
     "image" : "data/noncontrollable_images/questionMark.jpg"
   }, {
-    "collidable_id" : 8,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 8,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 366.7437438964844,
@@ -154,8 +154,8 @@
     "kineticFriction" : 0.0,
     "image" : "data/noncontrollable_images/speedUp.jpg"
   }, {
-    "collidable_id" : 9,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 9,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 752.20751953125,
@@ -171,8 +171,8 @@
     "kineticFriction" : 0.0,
     "image" : "data/noncontrollable_images/onept.jpg"
   }, {
-    "collidable_id" : 10,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 10,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 688.6100463867188,
@@ -188,8 +188,8 @@
     "kineticFriction" : 0.0,
     "image" : ""
   }, {
-    "collidable_id" : 11,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 11,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 749.5744018554688,
@@ -205,8 +205,8 @@
     "kineticFriction" : 0.0,
     "image" : "data/noncontrollable_images/speedUp.jpg"
   }, {
-    "collidable_id" : 12,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 12,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 364.69183349609375,
@@ -222,8 +222,8 @@
     "kineticFriction" : 0.0,
     "image" : ""
   }, {
-    "collidable_id" : 13,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 13,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 937.2972412109375,
@@ -239,8 +239,8 @@
     "kineticFriction" : 0.0,
     "image" : ""
   }, {
-    "collidable_id" : 14,
-    "properties" : [ "collidable", "visible", "movable" ],
+    "gameobject_id" : 14,
+    "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 889.0429077148438,
@@ -257,8 +257,8 @@
     "image" : ""
   },
     {
-      "collidable_id" : 16,
-      "properties" : [ "collidable", "visible", "movable" ],
+      "gameobject_id" : 16,
+      "properties" : [  "visible", "collidable" ],
       "mass" : "Infinity",
       "position" : {
         "x_position" : 375,
@@ -275,8 +275,8 @@
       "image" : ""
     },
     {
-    "collidable_id" : 1,
-    "properties" : [ "movable", "collidable", "controllable", "visible" ],
+    "gameobject_id" : 1,
+    "properties" : [ "collidable",  "strikeable", "visible" ],
     "mass" : 10.0,
     "position" : {
       "x_position" : 967.298095703125,
@@ -294,7 +294,7 @@
   } ],
   "players" : [ {
     "player_id" : 1,
-    "my_collidable" : [ 1 ]
+    "my_strikeable" : [ 1 ]
   } ],
   "variables" : [ {
     "global" : {

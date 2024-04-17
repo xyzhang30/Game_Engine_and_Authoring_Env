@@ -24,10 +24,10 @@ public class ConditionFactory {
       Constructor<?> constructor = clazz.getConstructor(List.class);
       ExpectedParamNumber annotation = constructor.getAnnotation(ExpectedParamNumber.class);
 
-      System.out.println("is annotation null?: "+ annotation);
+      System.out.println("is annotation null?: " + annotation);
       if (annotation != null) {
         int expectedParamNumber = annotation.value();
-        System.out.println("command: "+conditionName);
+        System.out.println("command: " + conditionName);
         System.out.println("annotation param number: " + expectedParamNumber);
         if (params.size() < expectedParamNumber) {
           LOGGER.error("missing parameters for condition " + conditionName);

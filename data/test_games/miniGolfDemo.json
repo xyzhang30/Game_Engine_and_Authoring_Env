@@ -1,8 +1,8 @@
 {
   "gameName": "sampleMiniGolf",
-  "collidable_objects": [
+  "game_objects": [
     {
-      "collidable_id": 1,
+      "gameobject_id": 1,
       "properties": ["visible, surface"],
       "mass": 1e1000000,
       "position": {
@@ -17,8 +17,8 @@
       "color": [100,200,100]
     },
     {
-      "collidable_id": 2,
-      "properties": ["visible","movable"],
+      "gameobject_id": 2,
+      "properties": ["visible","collidable"],
       "mass": 1,
       "position": {
         "x_position": 250,
@@ -32,8 +32,8 @@
       "color": [255,255,255]
     },
     {
-      "collidable_id": 3,
-      "properties": ["visible", "movable"],
+      "gameobject_id": 3,
+      "properties": ["visible", "collidable"],
       "mass": 1,
       "position": {
         "x_position": 250,
@@ -47,7 +47,7 @@
       "color": [255,255,255]
     },
     {
-      "collidable_id": 4,
+      "gameobject_id": 4,
       "properties": ["visible", "surface"],
       "mass": 0,
       "position": {
@@ -62,8 +62,8 @@
       "color": [0,0,0]
     },
     {
-      "collidable_id": 5,
-      "properties": ["visible","movable"],
+      "gameobject_id": 5,
+      "properties": ["visible","collidable"],
       "mass": 200,
       "position": {
         "x_position": 0,
@@ -77,8 +77,8 @@
       "color": [0,0,0]
     },
     {
-      "collidable_id": 6,
-      "properties": ["visible","movable"],
+      "gameobject_id": 6,
+      "properties": ["visible","collidable"],
       "mass": 200,
       "position": {
         "x_position": 0,
@@ -92,8 +92,8 @@
       "color": [0,0,0]
     },
     {
-      "collidable_id": 7,
-      "properties": ["visible","movable"],
+      "gameobject_id": 7,
+      "properties": ["visible","collidable"],
       "mass": 200,
       "position": {
         "x_position": 490,
@@ -107,8 +107,8 @@
       "color": [0,0,0]
     },
     {
-      "collidable_id": 8,
-      "properties": ["visible","movable"],
+      "gameobject_id": 8,
+      "properties": ["visible","collidable"],
       "mass": 200,
       "position": {
         "x_position": 0,
