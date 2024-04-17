@@ -1,20 +1,17 @@
 package oogasalad.view;
 
-import java.net.URL;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
-import oogasalad.Main;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.view.Controlling.GameController;
 import oogasalad.view.GameScreens.GameScreen;
-import oogasalad.view.VisualElements.CompositeElement;
+import oogasalad.view.visual_elements.CompositeElement;
+import oogasalad.view.enums.SceneType;
 
 /**
  * Manages different screens (scenes) within the game, such as the title screen, menu screen, game

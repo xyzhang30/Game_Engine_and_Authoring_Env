@@ -1,4 +1,4 @@
-package oogasalad.view;
+package oogasalad.view.enums;
 
 public enum SceneType {
   TITLE,

@@ -3,7 +3,7 @@ package oogasalad.view.GameScreens.GameplayPanel;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
-import oogasalad.view.VisualElements.CompositeElement;
+import oogasalad.view.visual_elements.CompositeElement;
 
 public class GamePanelEmbed {
   private final Pane panelView;

@@ -1,4 +1,4 @@
-package oogasalad.view.VisualElements;
+package oogasalad.view.visual_elements;
 
 import javafx.scene.Node;
 import oogasalad.model.api.CollidableRecord;

@@ -1,0 +1,18 @@
+<scene_properties>
+  <node>
+    <type>LISTVIEW</type>
+    <width_factor>0.5</width_factor>
+    <height_factor>0.5</height_factor>
+    <x_layout_factor>0.5</x_layout_factor>
+    <y_layout_factor>0.3</y_layout_factor>
+    <styling>title-button</styling>
+  </node>
+
+  <node>
+    <type>TEXT</type>
+    <text>Game Options</text>
+    <x_layout_factor>0.35</x_layout_factor>
+    <y_layout_factor>0.3</y_layout_factor>
+    <styling>title-text</styling>
+  </node>
+</scene_properties>

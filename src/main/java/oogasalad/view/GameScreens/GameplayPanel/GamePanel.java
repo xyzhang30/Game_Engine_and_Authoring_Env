@@ -2,7 +2,7 @@ package oogasalad.view.GameScreens.GameplayPanel;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import oogasalad.view.VisualElements.CompositeElement;
+import oogasalad.view.visual_elements.CompositeElement;
 
 /**
  * Transforms a node

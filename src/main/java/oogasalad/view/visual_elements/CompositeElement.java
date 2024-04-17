@@ -1,4 +1,4 @@
-package oogasalad.view.VisualElements;
+package oogasalad.view.visual_elements;
 
 import java.util.HashMap;
 import java.util.List;

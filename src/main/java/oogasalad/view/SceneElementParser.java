@@ -2,13 +2,15 @@ package oogasalad.view;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import oogasalad.view.enums.SceneElementType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -100,8 +102,24 @@ public class SceneElementParser {
     sceneElements.put(text, style);
   }
 
-  private ListView createListView(Element element) {
-    return null;
+  private void createListView(Element element) {
+    double widthFactor = Double.parseDouble(
+        element.getElementsByTagName(widthFactorTag).item(0).getTextContent());
+    double heightFactor = Double.parseDouble(
+        element.getElementsByTagName(heightFactorTag).item(0).getTextContent());
+    double xLayoutFactor = Double.parseDouble(
+        element.getElementsByTagName(xLayoutFactorTag).item(0).getTextContent());
+    double yLayoutFactor = Double.parseDouble(
+        element.getElementsByTagName(yLayoutFactorTag).item(0).getTextContent());
+    String style = element.getElementsByTagName(styleTag).item(0).getTextContent();
+
+    ObservableList<String> observableList = FXCollections.observableList(titles);
+    ListView<String> listView = new ListView<>(observableList);
+    listView.setPrefSize(screenWidth * widthFactor, screenHeight * heightFactor);
+    listView.setLayoutX(screenWidth * xLayoutFactor - listView.getPrefWidth()/2);
+    listView.setLayoutY(screenHeight * yLayoutFactor);
+    addListViewEventHandling(listView);
+    styleMenu(listView);
   }
 
 }

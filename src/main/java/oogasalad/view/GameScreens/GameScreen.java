@@ -10,8 +10,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.Controlling.GameController;
 import oogasalad.view.GameScreens.GameplayPanel.GamePanel;
-import oogasalad.view.VisualElements.CompositeElement;
-import oogasalad.view.VisualElements.InputIndicators.Arrow;
+import oogasalad.view.visual_elements.CompositeElement;
+import oogasalad.view.visual_elements.input_indicators.Arrow;
 
 /**
  * Manages the game's graphical interface, including user inputs for controlling hit strength and
