@@ -14,15 +14,15 @@ import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.gameengine.RulesRecord;
-import oogasalad.model.gameengine.gameobject.GameObject;
-import oogasalad.model.gameengine.gameobject.GameObjectContainer;
-import oogasalad.model.gameengine.gameobject.Strikeable;
-import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
-import oogasalad.model.gameengine.gameobject.PhysicsHandler;
-import oogasalad.model.gameengine.gameobject.collision.FrictionHandler;
-import oogasalad.model.gameengine.gameobject.collision.MomentumHandler;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
+import oogasalad.model.gameengine.gameobject.GameObject;
+import oogasalad.model.gameengine.gameobject.GameObjectContainer;
+import oogasalad.model.gameengine.gameobject.PhysicsHandler;
+import oogasalad.model.gameengine.gameobject.Strikeable;
+import oogasalad.model.gameengine.gameobject.collision.FrictionHandler;
+import oogasalad.model.gameengine.gameobject.collision.MomentumHandler;
+import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandler;
@@ -41,16 +41,15 @@ public class GameLoaderModel extends GameLoader {
 
   protected static final String BASE_PATH = "oogasalad.model.gameengine.";
   private static final Logger LOGGER = LogManager.getLogger(GameLoaderModel.class);
+  private final Map<Pair, PhysicsHandler> physicsMap;
+  private final List<Integer> collidables;
+  private final StaticStateHandler staticHandler;
   private PlayerContainer playerContainer;
   private GameObjectContainer gameObjectContainer;
   private RulesRecord rulesRecord;
-  private final Map<Pair, PhysicsHandler> physicsMap;
-  private final List<Integer> collidables;
+//  private Map<Integer, Player> collidablePlayerMap;
   private List<Entry<BiPredicate<Integer, GameObjectProperties>,
       BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList;
-//  private Map<Integer, Player> collidablePlayerMap;
-
-  private final StaticStateHandler staticHandler;
 
   /**
    * Constructs a GameLoaderModel object with the specified ID.
@@ -90,20 +89,22 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private void addPlayerStrikeables() {
-    for (ParserPlayer parserPlayer : gameData.getPlayers()){
+    for (ParserPlayer parserPlayer : gameData.getPlayers()) {
       int playerId = parserPlayer.playerId();
       List<Integer> playerStrikeableIds = parserPlayer.myStrikeable();
       List<Strikeable> playerStrikeableObjects = new ArrayList<>();
-      for (int i : playerStrikeableIds){
-        Optional<Strikeable> optionalStrikeable = gameObjectContainer.getGameObject(i).getStrikeable();
+      for (int i : playerStrikeableIds) {
+        Optional<Strikeable> optionalStrikeable = gameObjectContainer.getGameObject(i)
+            .getStrikeable();
         optionalStrikeable.ifPresent(playerStrikeableObjects::add);
 
       }
       playerContainer.getPlayer(playerId).addStrikeables(playerStrikeableObjects);
 
       List<Scoreable> playerScoreableObjects = new ArrayList<>();
-      for (int i : playerStrikeableIds){
-        Optional<Scoreable> optionalStrikeable = gameObjectContainer.getGameObject(i).getScoreable();
+      for (int i : playerStrikeableIds) {
+        Optional<Scoreable> optionalStrikeable = gameObjectContainer.getGameObject(i)
+            .getScoreable();
         optionalStrikeable.ifPresent(playerScoreableObjects::add);
       }
       playerContainer.getPlayer(playerId).addScoreables(playerScoreableObjects);
@@ -196,7 +197,7 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private StrikePolicy createStrikePolicy() {
-    System.out.println("gamedata strike: "+gameData.getRules().strikePolicy());
+    System.out.println("gamedata strike: " + gameData.getRules().strikePolicy());
     return StrikePolicyFactory.createStrikePolicy(gameData.getRules().strikePolicy());
   }
 

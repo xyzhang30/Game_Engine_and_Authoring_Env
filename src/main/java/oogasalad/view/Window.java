@@ -2,7 +2,7 @@ package oogasalad.view;
 
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import oogasalad.view.Controlling.GameController;
+import oogasalad.view.controller.GameController;
 
 /**
  * Class to represent the stage and scene being shown to the user

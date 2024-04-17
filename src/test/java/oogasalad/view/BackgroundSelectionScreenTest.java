@@ -1,5 +1,7 @@
 package oogasalad.view;
 
+import static org.mockito.Mockito.mock;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,13 +10,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import oogasalad.view.AuthoringScreens.NonStrikeableType;
+import oogasalad.view.authoring_environment.authoring_screens.BackgroundSelectionScreen;
+import oogasalad.view.authoring_environment.authoring_screens.NonStrikeableType;
+import oogasalad.view.controller.AuthoringController;
 import org.junit.jupiter.api.Test;
-import oogasalad.view.AuthoringScreens.BackgroundSelectionScreen;
-import oogasalad.view.Controlling.AuthoringController;
 import util.DukeApplicationTest;
-
-import static org.mockito.Mockito.*;
 
 public class BackgroundSelectionScreenTest extends DukeApplicationTest {
 
@@ -57,8 +57,6 @@ public class BackgroundSelectionScreenTest extends DukeApplicationTest {
 //    verify(mockController, times(1)).startNextSelection(
 //        any(ImageType.class), any(StackPane.class), anyMap(), anyMap(), any(List.class), anyMap());
   }
-
-
 
 
 }

@@ -9,48 +9,51 @@ import java.util.List;
 import java.util.Map;
 import oogasalad.Pair;
 import oogasalad.model.api.exception.InvalidFileException;
-import oogasalad.model.gameengine.command.AddDelayedPointsCommand;
-import oogasalad.model.gameengine.player.Player;
-import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameengine.RulesRecord;
-import oogasalad.model.gameengine.gameobject.PhysicsHandler;
-import oogasalad.model.gameengine.gameobject.collision.FrictionHandler;
-import oogasalad.model.gameengine.gameobject.collision.MomentumHandler;
+import oogasalad.model.gameengine.command.AddDelayedPointsCommand;
 import oogasalad.model.gameengine.command.AdvanceRoundCommand;
+import oogasalad.model.gameengine.command.AdvanceTurnCommand;
+import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.AllPlayersCompletedRoundCondition;
 import oogasalad.model.gameengine.condition.Condition;
 import oogasalad.model.gameengine.condition.NRoundsCompletedCondition;
+import oogasalad.model.gameengine.gameobject.GameObject;
+import oogasalad.model.gameengine.gameobject.GameObjectContainer;
+import oogasalad.model.gameengine.gameobject.PhysicsHandler;
+import oogasalad.model.gameengine.gameobject.collision.FrictionHandler;
+import oogasalad.model.gameengine.gameobject.collision.MomentumHandler;
+import oogasalad.model.gameengine.player.Player;
+import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandler;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListFactory;
 import oogasalad.model.gameengine.strike.DoNothingStrikePolicy;
 import oogasalad.model.gameengine.strike.StrikePolicy;
 import oogasalad.model.gameengine.turn.StandardTurnPolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
-import oogasalad.model.gameengine.gameobject.GameObject;
-import oogasalad.model.gameengine.gameobject.GameObjectContainer;
-import oogasalad.model.gameengine.command.AdvanceTurnCommand;
-import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class GameLoaderModelTest {
+
   GameLoaderModel testGameLoaderModel;
   GameObjectContainer mockGameObjectContainer;
   PlayerContainer mockPlayerContainer;
   TurnPolicy mockTurnPolicy;
+
   @BeforeEach
   public void setup() {
     String gameTitle = "testSinglePlayerMiniGolf";
     this.testGameLoaderModel = new GameLoaderModel(gameTitle);
     testGameLoaderModel.prepareRound(1);
-    GameObject c1 = new GameObject(1, Double.POSITIVE_INFINITY, 0,0, true, 3.03873, 2.03873, 500, 500, "rectangle");
+    GameObject c1 = new GameObject(1, Double.POSITIVE_INFINITY, 0, 0, true, 3.03873, 2.03873, 500,
+        500, "rectangle");
     GameObject c2 = new GameObject(2, 1, 250, 450, true, 0, 0, 2, 2, "circle");
-    GameObject c3 = new GameObject(3, 0, 250,50, true, 0,0, 5, 5, "circle");
-    GameObject c4 = new GameObject(4, 200, 0, 0, true, 0,0, 500, 10, "rectangle");
-    GameObject c5 = new GameObject(5, 200, 0, 0, true, 0,0, 10, 500, "rectangle");
-    GameObject c6 = new GameObject(6, 200, 490, 0, true, 0,0, 10, 500, "rectangle");
-    GameObject c7 = new GameObject(7, 200, 0, 490, true, 0,0, 500, 10, "rectangle");
+    GameObject c3 = new GameObject(3, 0, 250, 50, true, 0, 0, 5, 5, "circle");
+    GameObject c4 = new GameObject(4, 200, 0, 0, true, 0, 0, 500, 10, "rectangle");
+    GameObject c5 = new GameObject(5, 200, 0, 0, true, 0, 0, 10, 500, "rectangle");
+    GameObject c6 = new GameObject(6, 200, 490, 0, true, 0, 0, 10, 500, "rectangle");
+    GameObject c7 = new GameObject(7, 200, 0, 490, true, 0, 0, 500, 10, "rectangle");
 
     Map<Integer, GameObject> collidables = Map.of(1, c1, 2, c2, 3, c3, 4, c4, 5, c5, 6, c6, 7, c7);
 
@@ -81,25 +84,28 @@ public class GameLoaderModelTest {
 
   @Test
   public void testParseGameObjects() {
-    assertThat(testGameLoaderModel.getGameObjectContainer()).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(
-        mockGameObjectContainer);
+    assertThat(testGameLoaderModel.getGameObjectContainer()).usingRecursiveComparison()
+        .ignoringCollectionOrder().isEqualTo(
+            mockGameObjectContainer);
   }
 
   @Test
   public void testParsePlayers() {
-    assertThat(testGameLoaderModel.getPlayerContainer()).usingRecursiveComparison().isEqualTo(mockPlayerContainer);
+    assertThat(testGameLoaderModel.getPlayerContainer()).usingRecursiveComparison()
+        .isEqualTo(mockPlayerContainer);
   }
 
   @Test
   public void testParseTurnPolicy() {
     TurnPolicy mockTurnPolicy = new StandardTurnPolicy(mockPlayerContainer);
-    assertThat(testGameLoaderModel.getRulesRecord().turnPolicy().getClass()).isEqualTo(mockTurnPolicy.getClass());
+    assertThat(testGameLoaderModel.getRulesRecord().turnPolicy().getClass()).isEqualTo(
+        mockTurnPolicy.getClass());
 
   }
 
   @Test
   public void testParseRules() {
-    Command c1 = new AddDelayedPointsCommand(List.of(1.0,1.0));
+    Command c1 = new AddDelayedPointsCommand(List.of(1.0, 1.0));
     Command c2 = new AdvanceTurnCommand(List.of());
     Map<Pair, List<Command>> collisionHandlers = Map.of(new Pair(2, 3), List.of(c1, c2));
     Condition winCondition = new NRoundsCompletedCondition(List.of(2.0));
@@ -113,9 +119,10 @@ public class GameLoaderModelTest {
     Command advanceC3 = new AdvanceRoundCommand(List.of());
     List<Command> advanceRound = List.of(advanceC3);
 
-    StaticStateHandler mockStaticStateHandler = StaticStateHandlerLinkedListFactory.buildLinkedList(List.of(
-        "GameOverStaticStateHandler",
-        "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
+    StaticStateHandler mockStaticStateHandler = StaticStateHandlerLinkedListFactory.buildLinkedList(
+        List.of(
+            "GameOverStaticStateHandler",
+            "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
 
     Map<Pair, PhysicsHandler> physicsMap = new HashMap<>();
     physicsMap.put(new Pair(1, 2), new FrictionHandler(1, 2));
@@ -142,12 +149,12 @@ public class GameLoaderModelTest {
     StrikePolicy strikePolicy = new DoNothingStrikePolicy();
 
     RulesRecord mockRulesRecord = new RulesRecord(collisionHandlers, winCondition, roundPolicy,
-        advanceTurn, advanceRound, physicsMap, mockTurnPolicy, mockStaticStateHandler, strikePolicy);
+        advanceTurn, advanceRound, physicsMap, mockTurnPolicy, mockStaticStateHandler,
+        strikePolicy);
 
-
-    assertThat(testGameLoaderModel.getRulesRecord()).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mockRulesRecord);
+    assertThat(testGameLoaderModel.getRulesRecord()).usingRecursiveComparison()
+        .ignoringCollectionOrder().isEqualTo(mockRulesRecord);
   }
-
 
 
 }

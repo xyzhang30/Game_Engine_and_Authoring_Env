@@ -6,8 +6,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
  * The Scoreable interface represents objects in the game engine that can have a temporary score.
  *
  * <p>Objects implementing this interface can have their temporary score modified and retrieved.
- * They
- * also have the capability to be converted into a GameObject.
+ * They also have the capability to be converted into a GameObject.
  *
  * <p> Objects that implement this interface would enclude Golf Balls, Soccer Goal's, and Shuffle
  * Boarding Weights, as their relative location/state can result in points being applied

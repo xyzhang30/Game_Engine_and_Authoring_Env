@@ -23,8 +23,8 @@ import org.apache.logging.log4j.Logger;
  * to previous static states.
  *
  * <p>The engine is responsible for orchestrating the game's logic, including updating game
- * objects,
- * handling collisions, managing player turns and rounds, and tracking the game's progress.
+ * objects, handling collisions, managing player turns and rounds, and tracking the game's
+ * progress.
  *
  * @author Noah Loewy
  */

@@ -17,8 +17,8 @@ import oogasalad.model.gameengine.gameobject.GameObject;
  */
 public class DefaultScoreable implements Scoreable {
 
-  private double tempScore;
   private final GameObject gameObject;
+  private double tempScore;
 
   /**
    * Constructs a DefaultScoreable object with the specified GameObject.

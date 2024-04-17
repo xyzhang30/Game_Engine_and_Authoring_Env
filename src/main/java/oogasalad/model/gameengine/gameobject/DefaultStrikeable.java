@@ -12,9 +12,8 @@ import java.util.function.Supplier;
  * other than a collision. They also have the capability to be converted into a GameObject.
  *
  * <p>This class acts as an adapter between general GameObjects and GameObjects that are
- * Strikeable.
- * By holding a reference to the Strikeable interface, GameObjects gain the ability to have an
- * initial velocity applied to them and be treated as Strikeable objects.
+ * Strikeable. By holding a reference to the Strikeable interface, GameObjects gain the ability to
+ * have an initial velocity applied to them and be treated as Strikeable objects.
  *
  * @author Noah Loewy
  */

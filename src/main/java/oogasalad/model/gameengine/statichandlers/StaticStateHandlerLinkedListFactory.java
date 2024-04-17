@@ -3,7 +3,8 @@ package oogasalad.model.gameengine.statichandlers;
 import java.util.List;
 
 /**
- * Factory class for building a linked list of static state handlers based on a list of class names.
+ * Factory class for building a linked list of static state handlers based on a list of class
+ * names.
  *
  * @author Noah Loewy
  */

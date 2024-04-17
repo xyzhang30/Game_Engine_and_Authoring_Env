@@ -5,11 +5,9 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.shape.Shape;
 import oogasalad.model.api.data.GameObjectProperties;
-import oogasalad.view.AuthoringScreens.NonStrikeableType;
+import oogasalad.view.authoring_environment.authoring_screens.NonStrikeableType;
 
 public class WriteStrikeables {
-
-
 
 
   public void writeGameObjectProperties(Map<Shape, Integer> gameObjectIdMap,
@@ -53,7 +51,6 @@ public class WriteStrikeables {
 //    nonControllableTypeMap.remove(background);
 //
   }
-
 
   //
 //  private void writeCollidables(Map<Shape, Integer> collidableIdMap, List<Shape> controllables,

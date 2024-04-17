@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.ArrayList;
 import oogasalad.model.api.exception.InvalidParameterNumberException;
 import oogasalad.model.gameengine.GameEngine;
-
 import oogasalad.model.gameengine.command.AddDelayedPointsCommand;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,8 @@
 package oogasalad.model.gameparser;
 
 import oogasalad.model.api.data.GameObjectProperties;
-import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.DefaultStrikeable;
+import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.scoreable.DefaultScoreable;
 
 public class CollidableFactory {
@@ -20,7 +20,7 @@ public class CollidableFactory {
         co.dimension().xDimension(),
         co.dimension().yDimension(),
         co.shape());
-    if(co.properties().contains("strikeable")) {
+    if (co.properties().contains("strikeable")) {
       c.addStrikeable(new DefaultStrikeable(c));
       c.addScoreable(new DefaultScoreable(c));
     }

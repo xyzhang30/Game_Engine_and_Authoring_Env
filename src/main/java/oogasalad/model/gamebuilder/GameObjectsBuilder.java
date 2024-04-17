@@ -2,8 +2,8 @@ package oogasalad.model.gamebuilder;
 
 import java.util.List;
 import oogasalad.model.api.GameBuilder;
-import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.GameData;
+import oogasalad.model.api.data.GameObjectProperties;
 
 public class GameObjectsBuilder implements GameBuilder {
 

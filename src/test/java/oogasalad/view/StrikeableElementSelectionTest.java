@@ -1,24 +1,23 @@
 package oogasalad.view;
 
-import javafx.scene.input.MouseButton;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Shape;
-import javafx.stage.Stage;
-import oogasalad.view.AuthoringScreens.StrikeableElementSelectionScreen;
-import oogasalad.view.AuthoringScreens.NonStrikeableType;
-import oogasalad.view.Controlling.AuthoringController;
-import org.junit.jupiter.api.Test;
-import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.util.WaitForAsyncUtils;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import javafx.stage.Stage;
+import oogasalad.view.authoring_environment.authoring_screens.NonStrikeableType;
+import oogasalad.view.authoring_environment.authoring_screens.StrikeableElementSelectionScreen;
+import oogasalad.view.controller.AuthoringController;
+import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.util.WaitForAsyncUtils;
 
 public class StrikeableElementSelectionTest extends ApplicationTest {
 
@@ -37,7 +36,8 @@ public class StrikeableElementSelectionTest extends ApplicationTest {
     List<Shape> strikeableList = new ArrayList<>();
     Map<Shape, String> imageMap = new HashMap<>();
 
-    this.screen = new StrikeableElementSelectionScreen(mockController, authoringBox, posMap, nonStrikeableMap, strikeableList, imageMap);
+    this.screen = new StrikeableElementSelectionScreen(mockController, authoringBox, posMap,
+        nonStrikeableMap, strikeableList, imageMap);
 
     stage.setScene(screen.getScene());
     stage.show();
@@ -56,11 +56,17 @@ public class StrikeableElementSelectionTest extends ApplicationTest {
     draggableRectangle = lookup("#draggableRectangle").query();
     assertNotNull(draggableRectangle, "Draggable rectangle was not found.");
 
-    double dragStartX = draggableRectangle.localToScreen(draggableRectangle.getBoundsInLocal()).getMinX() + draggableRectangle.getWidth() / 2;
-    double dragStartY = draggableRectangle.localToScreen(draggableRectangle.getBoundsInLocal()).getMinY() + draggableRectangle.getHeight() / 2;
+    double dragStartX =
+        draggableRectangle.localToScreen(draggableRectangle.getBoundsInLocal()).getMinX()
+            + draggableRectangle.getWidth() / 2;
+    double dragStartY =
+        draggableRectangle.localToScreen(draggableRectangle.getBoundsInLocal()).getMinY()
+            + draggableRectangle.getHeight() / 2;
 
-    double dropX = authoringBox.localToScreen(authoringBox.getBoundsInLocal()).getMinX() + authoringBox.getWidth() / 2;
-    double dropY = authoringBox.localToScreen(authoringBox.getBoundsInLocal()).getMinY() + authoringBox.getHeight() / 2;
+    double dropX = authoringBox.localToScreen(authoringBox.getBoundsInLocal()).getMinX()
+        + authoringBox.getWidth() / 2;
+    double dropY = authoringBox.localToScreen(authoringBox.getBoundsInLocal()).getMinY()
+        + authoringBox.getHeight() / 2;
 
     System.out.println("Drag start point: (" + dragStartX + ", " + dragStartY + ")");
     System.out.println("Drop point: (" + dropX + ", " + dropY + ")");
@@ -72,14 +78,14 @@ public class StrikeableElementSelectionTest extends ApplicationTest {
 
     WaitForAsyncUtils.waitForFxEvents();
 
-    System.out.println("Rectangle dropped: " + authoringBox.getChildren().contains(draggableRectangle));
+    System.out.println(
+        "Rectangle dropped: " + authoringBox.getChildren().contains(draggableRectangle));
 
     // Verify the rectangle is within the authoringBox
 //    interact(() -> {
 //      assertTrue(authoringBox.getChildren().contains(draggableRectangle), "The draggable rectangle should be within the authoring box.");
 //    });
   }
-
 
 
 }

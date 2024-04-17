@@ -23,13 +23,13 @@ public class Player {
 
   private static final Logger LOGGER = LogManager.getLogger(Player.class);
   private final int playerId;
+  private final Stack<PlayerRecord> playerHistory;
   private List<Strikeable> myStrikeables;
   private List<Scoreable> myScoreables;
   private Strikeable activeStrikeable;
   private boolean roundCompleted;
   private int turnsCompleted;
   private double score;
-  private final Stack<PlayerRecord> playerHistory;
 
   /**
    * Initializes a player object given its unique id

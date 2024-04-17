@@ -1,8 +1,6 @@
 package oogasalad.model;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 import java.util.List;
 import oogasalad.model.api.ViewGameObjectRecord;
@@ -13,15 +11,15 @@ import org.junit.jupiter.api.Test;
 public class GameLoaderViewTest {
 
   @BeforeEach
-  public void setup(){
+  public void setup() {
   }
 
   @Test
-  public void createCollidableRecordTest(){
+  public void createCollidableRecordTest() {
     GameLoaderView loaderView = new GameLoaderView("testSinglePlayerMiniGolf");
     List<ViewGameObjectRecord> collidableRecords = loaderView.getViewCollidableInfo();
-    for (ViewGameObjectRecord record : collidableRecords){
-      if (record.id() == 2 || record.id() == 3){
+    for (ViewGameObjectRecord record : collidableRecords) {
+      if (record.id() == 2 || record.id() == 3) {
         assertEquals("circle", record.shape());
       } else {
         assertEquals("rectangle", record.shape());
@@ -30,7 +28,7 @@ public class GameLoaderViewTest {
   }
 
   @Test
-  public void wrongRgbValueTest(){
+  public void wrongRgbValueTest() {
     GameLoaderView loaderView = new GameLoaderView("testBadRgbValue");
     List<ViewGameObjectRecord> collidableRecords = loaderView.getViewCollidableInfo();
     for (ViewGameObjectRecord record : collidableRecords) {

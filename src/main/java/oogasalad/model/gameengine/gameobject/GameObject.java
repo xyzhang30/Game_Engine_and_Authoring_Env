@@ -37,6 +37,7 @@ public class GameObject {
   private final String myShape;
   private final double myStaticMu;
   private final double myKineticMu;
+  private final Stack<GameObjectRecord> gameObjectHistory;
   private double myX;
   private double myY;
   private double myVelocityX;
@@ -48,7 +49,6 @@ public class GameObject {
   private boolean myVisible;
   private Strikeable strikeable;
   private Scoreable scoreable;
-  private final Stack<GameObjectRecord> gameObjectHistory;
 
   /**
    * Initiates the GameObject
