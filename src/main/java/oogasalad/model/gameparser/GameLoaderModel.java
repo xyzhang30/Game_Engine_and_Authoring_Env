@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import javax.naming.ldap.Control;
@@ -97,13 +98,17 @@ public class GameLoaderModel extends GameLoader {
       List<Integer> playerControllableIds = parserPlayer.myCollidable();
       List<Controllable> playerControllableObjects = new ArrayList<>();
       for (int i : playerControllableIds){
-        playerControllableObjects.add(collidableContainer.getCollidable(i).getControllable());
+        Optional<Controllable> optionalControllable = collidableContainer.getCollidable(i).getControllable();
+
+        optionalControllable.ifPresent(playerControllableObjects::add);
+
       }
       playerContainer.getPlayer(playerId).addControllables(playerControllableObjects);
 
       List<Ownable> playerOwnableObjects = new ArrayList<>();
       for (int i : playerControllableIds){
-        playerOwnableObjects.add(collidableContainer.getCollidable(i).getOwnable());
+        Optional<Ownable> optionalControllable = collidableContainer.getCollidable(i).getOwnable();
+        optionalControllable.ifPresent(playerOwnableObjects::add);
       }
       playerContainer.getPlayer(playerId).addOwnables(playerOwnableObjects);
     }

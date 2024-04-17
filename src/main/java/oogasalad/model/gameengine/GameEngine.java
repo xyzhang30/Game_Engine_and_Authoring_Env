@@ -2,6 +2,7 @@ package oogasalad.model.gameengine;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.Stack;
 import oogasalad.Pair;
@@ -12,6 +13,7 @@ import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.collidable.Collidable;
 import oogasalad.model.gameengine.collidable.CollidableContainer;
 import oogasalad.model.gameengine.collidable.Controllable;
+import oogasalad.model.gameengine.collidable.Ownable;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameparser.GameLoaderModel;
@@ -137,9 +139,7 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   public void advanceTurn() {
-    System.out.print("Advancing Turn currently " + turn + " now " );
     turn = rules.turnPolicy().getTurn();
-    System.out.println(turn );
   }
 
   public int getRound() {
@@ -173,7 +173,9 @@ public class GameEngine implements ExternalGameEngine {
   public void toLastStaticState() {
     staticState = true;
     for(CollidableRecord cr : collidables.getCollidableRecords()) {
-      collidables.getCollidable(cr.id()).getOwnable().setTemporaryScore(0);
+      Collidable c = collidables.getCollidable(cr.id());
+      Optional<Ownable> optionalOwnable = c.getOwnable();
+      optionalOwnable.ifPresent(ownable -> ownable.setTemporaryScore(0));
     }
     GameRecord newCurrentState = staticStateStack.pop();
     turn = newCurrentState.turn();
@@ -185,7 +187,6 @@ public class GameEngine implements ExternalGameEngine {
 
   private void handleCollisions(double dt) {
     Set<Pair> collisionPairs = collidables.getCollisionPairs();
-    System.out.println(collisionPairs);
     for (Pair collision : collisionPairs) {
       if (rules.physicsMap().containsKey(collision)) {
         rules.physicsMap().get(collision).handleCollision(collidables, dt);

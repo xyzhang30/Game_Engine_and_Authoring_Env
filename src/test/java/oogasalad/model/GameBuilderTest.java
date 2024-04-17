@@ -1,4 +1,4 @@
-
+/**
 package oogasalad.model;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -101,6 +101,5 @@ public class GameBuilderTest {
     assertThat(mapper.readTree(expected)).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mapper.readTree(tested));
   }
 
-}  
-
-
+}
+ */

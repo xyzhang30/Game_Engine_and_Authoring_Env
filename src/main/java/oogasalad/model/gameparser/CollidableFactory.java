@@ -25,7 +25,6 @@ public class CollidableFactory {
         co.shape());
     if(co.properties().contains("controllable")) {
       c.addControllable(new DefaultControllable(c));
-//      c.addOwnable(new DefaultOwnable(c, collidablePlayerMap.get(c.getId())));
       c.addOwnable(new DefaultOwnable(c));
     }
     return c;
