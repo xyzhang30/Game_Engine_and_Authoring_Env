@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine.collidable;
+package oogasalad.model.gameengine.gameobject;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,8 +15,8 @@ public class GameObjectContainer {
   private final Stack<List<GameObjectRecord>> gameObjectHistory;
   private final CollisionDetector collisionDetector;
 
-  public GameObjectContainer(Map<Integer, GameObject> collidables) {
-    myGameObjects = collidables;
+  public GameObjectContainer(Map<Integer, GameObject> gameObjects) {
+    myGameObjects = gameObjects;
     gameObjectHistory = new Stack<>();
     gameObjectHistory.add(toGameObjectRecords());
     collisionDetector = new CollisionDetector();
@@ -52,7 +52,7 @@ public class GameObjectContainer {
     return ret;
   }
 
-  public GameObjectRecord getCollidableRecord(int id) {
+  public GameObjectRecord getGameObjectRecord(int id) {
     List<GameObjectRecord> ret = toGameObjectRecords();
     for (GameObjectRecord record : ret) {
       if (record.id() == id) {
@@ -63,11 +63,11 @@ public class GameObjectContainer {
   }
 
 
-  public void addStaticStateCollidables() {
+  public void addStaticStateGameObjects() {
     gameObjectHistory.push(toGameObjectRecords());
   }
 
-  public void toLastStaticStateCollidables() {
+  public void toLastStaticStateGameObjects() {
     for (GameObjectRecord record : gameObjectHistory.peek()) {
       callSetFromRecord(record);
     }
@@ -106,7 +106,7 @@ public class GameObjectContainer {
     }
   }
 
-  public void setVisible(int controllableId) {
-    getGameObject(controllableId).setVisible(true);
+  public void setVisible(int id) {
+    getGameObject(id).setVisible(true);
   }
 }

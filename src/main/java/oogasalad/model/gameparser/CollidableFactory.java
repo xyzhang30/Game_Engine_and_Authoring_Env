@@ -1,13 +1,13 @@
 package oogasalad.model.gameparser;
 
-import oogasalad.model.api.data.CollidableObject;
-import oogasalad.model.gameengine.collidable.GameObject;
-import oogasalad.model.gameengine.collidable.DefaultStrikeable;
-import oogasalad.model.gameengine.collidable.ownable.DefaultScoreable;
+import oogasalad.model.api.data.GameObjectProperties;
+import oogasalad.model.gameengine.gameobject.GameObject;
+import oogasalad.model.gameengine.gameobject.DefaultStrikeable;
+import oogasalad.model.gameengine.gameobject.scoreable.DefaultScoreable;
 
 public class CollidableFactory {
 
-  public static GameObject createCollidable(CollidableObject co) {
+  public static GameObject createCollidable(GameObjectProperties co) {
 
     GameObject c = new GameObject(
         co.collidableId(),

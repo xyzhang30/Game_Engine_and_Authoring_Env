@@ -1,6 +1,6 @@
-package oogasalad.model.gameengine.collidable.ownable;
+package oogasalad.model.gameengine.gameobject.scoreable;
 
-import oogasalad.model.gameengine.collidable.GameObject;
+import oogasalad.model.gameengine.gameobject.GameObject;
 
 public interface Scoreable {
 

@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.api.ViewCollidableRecord;
+import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.gameengine.GameEngine;
@@ -103,7 +103,7 @@ public class GameController {
     GameRecord gameRecord = gameEngine.update(timeStep);
     boolean staticState = gameRecord.staticState();
     if (staticState) {
-      for(GameObjectRecord r : gameRecord.collidables()) {
+      for(GameObjectRecord r : gameRecord.gameObjectRecords()) {
         if(List.of(9,14,15,16).contains(r.id())) {
           System.out.println(r);
         }
@@ -158,7 +158,7 @@ public class GameController {
 
   private CompositeElement createCompositeElementFromGameLoader() {
     try {
-      List<ViewCollidableRecord> recordList = gameLoaderView.getViewCollidableInfo();
+      List<ViewGameObjectRecord> recordList = gameLoaderView.getViewCollidableInfo();
       return new CompositeElement(recordList);
     } catch (InvalidShapeException | InvalidImageException e) {
       System.out.println(e.getMessage());

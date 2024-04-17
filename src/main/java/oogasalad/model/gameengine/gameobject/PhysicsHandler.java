@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine.collidable;
+package oogasalad.model.gameengine.gameobject;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -15,8 +15,8 @@ public abstract class PhysicsHandler {
   }
 
   public void handleCollision(GameObjectContainer gameObjectContainer, double dt) {
-    GameObjectRecord gor1 = gameObjectContainer.getCollidableRecord(id1);
-    GameObjectRecord gor2 = gameObjectContainer.getCollidableRecord(id2);
+    GameObjectRecord gor1 = gameObjectContainer.getGameObjectRecord(id1);
+    GameObjectRecord gor2 = gameObjectContainer.getGameObjectRecord(id2);
     GameObject go1 = gameObjectContainer.getGameObject(id1);
     GameObject go2 = gameObjectContainer.getGameObject(id2);
     go1.calculateNextSpeeds(makeVelocityFunction(gor1, gor2, dt));

@@ -3,8 +3,8 @@ package oogasalad.model.gameengine.strike;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import oogasalad.model.gameengine.GameEngine;
-import oogasalad.model.gameengine.collidable.GameObject;
-import oogasalad.model.gameengine.collidable.ownable.Scoreable;
+import oogasalad.model.gameengine.gameobject.GameObject;
+import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 
 public class IncrementPointStrikePolicy implements StrikePolicy {
 

@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine.collidable;
+package oogasalad.model.gameengine.gameobject;
 
 
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.function.Supplier;
 
 public class DefaultStrikeable implements Strikeable {
 
-  private final GameObject collidable;
-  public DefaultStrikeable(GameObject c) {
-    collidable = c;
+  private final GameObject gameObject;
+  public DefaultStrikeable(GameObject go) {
+    gameObject = go;
   }
 
   @Override
@@ -18,12 +18,12 @@ public class DefaultStrikeable implements Strikeable {
       double speedY = magnitude * Math.sin(direction);
       return List.of(speedX, speedY);
     };
-    collidable.calculateSpeeds(supplier);
+    gameObject.calculateSpeeds(supplier);
   }
 
   @Override
   public GameObject asGameObject() {
-    return collidable;
+    return gameObject;
   }
 
 }

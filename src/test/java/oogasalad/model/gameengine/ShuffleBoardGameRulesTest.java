@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.collidable.GameObjectContainer;
+import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ public class ShuffleBoardGameRulesTest {
   private static  final String TITLE = "testShuffleboardRules";
 
   private boolean isStatic(GameRecord r) {
-    for(GameObjectRecord cr : r.collidables()) {
+    for(GameObjectRecord cr : r.gameObjectRecords()) {
       if(cr.visible() && (cr.velocityY()!=0 || cr.velocityX()!=0)) {
         return false;
       }
@@ -76,7 +76,7 @@ public class ShuffleBoardGameRulesTest {
     System.out.println(gr);
     while(!isStatic(gr)) {
       gr = gameEngine.update(.05);
-      for(GameObjectRecord r : gr.collidables()) {
+      for(GameObjectRecord r : gr.gameObjectRecords()) {
         if(r.id() == id) {
           scoreTestHelper(r, gr.players().get(id<=11 ? 0 : 1));
         }

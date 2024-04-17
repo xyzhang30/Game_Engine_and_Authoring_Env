@@ -37,7 +37,7 @@ public class SceneManager {
   }
 
   public void update(GameRecord gameRecord) {
-    compositeElement.update(gameRecord.collidables());
+    compositeElement.update(gameRecord.gameObjectRecords());
     Map<Integer, Double> scoreMap = new TreeMap<>();
     for(PlayerRecord p : gameRecord.players()) {
       scoreMap.put(p.playerId(), p.score());

@@ -1,10 +1,10 @@
-package oogasalad.model.gameengine.collidable;
+package oogasalad.model.gameengine.gameobject;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 import oogasalad.model.api.GameObjectRecord;
-import oogasalad.model.gameengine.collidable.ownable.Scoreable;
+import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 
 public class GameObject {
 

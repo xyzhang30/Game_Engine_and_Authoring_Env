@@ -2,14 +2,11 @@ package oogasalad.model.gameparser;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.bytebuddy.build.BuildLogger.Adapter;
 import oogasalad.model.api.ControllablesView;
-import oogasalad.model.api.ViewCollidableRecord;
-import oogasalad.model.api.data.CollidableObject;
+import oogasalad.model.api.ViewGameObjectRecord;
+import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.CollidableShape;
-import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
-import oogasalad.model.gameengine.GameEngine;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,7 +24,7 @@ public class GameLoaderView extends GameLoader {
 //  private static final String COLLIDABLE_PROPERTIES_COMMENT = "collidable objects shape";
 //  private static final String COLLIDABLE_CSS_ID_PREFIX = "collidable";
 
-  private List<ViewCollidableRecord> viewCollidableRecords;
+  private List<ViewGameObjectRecord> viewGameObjectRecords;
   private ControllablesView controllablesView;
 
   public GameLoaderView(String gameName) throws InvalidShapeException {
@@ -37,8 +34,8 @@ public class GameLoaderView extends GameLoader {
 
   private void createViewRecord() throws InvalidShapeException {
     List<Integer> controllableIds = new ArrayList<>();
-    viewCollidableRecords = new ArrayList<>();
-    for (CollidableObject o : gameData.getCollidableObjects()) {
+    viewGameObjectRecords = new ArrayList<>();
+    for (GameObjectProperties o : gameData.getGameObjects()) {
       if (o.properties().contains("controllable")) {
         controllableIds.add(o.collidableId());
       }
@@ -52,10 +49,10 @@ public class GameLoaderView extends GameLoader {
       double ydimension = o.dimension().yDimension();
       double startXpos = o.position().xPosition();
       double startYpos = o.position().yPosition();
-      ViewCollidableRecord viewCollidable = new ViewCollidableRecord(id, colorRgb, shape,
+      ViewGameObjectRecord viewCollidable = new ViewGameObjectRecord(id, colorRgb, shape,
           xdimension,
           ydimension, startXpos, startYpos, o.image(), o.direction());
-      viewCollidableRecords.add(viewCollidable);
+      viewGameObjectRecords.add(viewCollidable);
     }
     controllablesView = new ControllablesView(controllableIds);
   }
@@ -71,8 +68,8 @@ public class GameLoaderView extends GameLoader {
     };
   }
 
-  public List<ViewCollidableRecord> getViewCollidableInfo() {
-    return viewCollidableRecords;
+  public List<ViewGameObjectRecord> getViewCollidableInfo() {
+    return viewGameObjectRecords;
   }
 
   public ControllablesView getControllableIds() {

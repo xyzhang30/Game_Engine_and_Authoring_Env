@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.Node;
 import oogasalad.model.api.GameObjectRecord;
-import oogasalad.model.api.ViewCollidableRecord;
+import oogasalad.model.api.ViewGameObjectRecord;
 
 public class CompositeElement {
 
   private final Map<Integer, VisualElement> elementMap;
 
-  public CompositeElement(List<ViewCollidableRecord> recordList) {
+  public CompositeElement(List<ViewGameObjectRecord> recordList) {
     elementMap = new HashMap<>();
-    for (ViewCollidableRecord viewRecord : recordList) {
+    for (ViewGameObjectRecord viewRecord : recordList) {
       elementMap.putIfAbsent(viewRecord.id(), new GameElement(viewRecord));
     }
   }

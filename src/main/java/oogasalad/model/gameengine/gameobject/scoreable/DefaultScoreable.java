@@ -1,13 +1,13 @@
-package oogasalad.model.gameengine.collidable.ownable;
+package oogasalad.model.gameengine.gameobject.scoreable;
 
-import oogasalad.model.gameengine.collidable.GameObject;
+import oogasalad.model.gameengine.gameobject.GameObject;
 
 public class DefaultScoreable implements Scoreable {
 
   private double tempScore;
-  private GameObject collidable;
-  public DefaultScoreable(GameObject c) {
-    collidable = c;
+  private GameObject gameObject;
+  public DefaultScoreable(GameObject go) {
+    gameObject = go;
   }
   @Override
   public void setTemporaryScore(double tempScore) {
@@ -26,6 +26,6 @@ public class DefaultScoreable implements Scoreable {
 
   @Override
   public GameObject asGameObject() {
-    return collidable;
+    return gameObject;
   }
 }

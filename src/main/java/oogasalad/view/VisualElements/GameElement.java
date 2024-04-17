@@ -10,7 +10,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import oogasalad.model.api.GameObjectRecord;
-import oogasalad.model.api.ViewCollidableRecord;
+import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
 
@@ -22,14 +22,14 @@ public class GameElement implements VisualElement {
   private final Node myNode;
   private final int id;
 
-  public GameElement(ViewCollidableRecord viewData) throws InvalidShapeException {
+  public GameElement(ViewGameObjectRecord viewData) throws InvalidShapeException {
     id = viewData.id();
     myNode = makeShape(viewData);
     myNode.setTranslateX(viewData.startXpos());
     myNode.setTranslateY(viewData.startYpos());
   }
 
-  private Node makeShape(ViewCollidableRecord data) throws InvalidShapeException {
+  private Node makeShape(ViewGameObjectRecord data) throws InvalidShapeException {
     try {
       if (data.image().isEmpty()) {
         List<Integer> rgb = data.color();

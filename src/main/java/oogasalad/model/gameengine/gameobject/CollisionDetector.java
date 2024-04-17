@@ -1,24 +1,24 @@
-package oogasalad.model.gameengine.collidable;
+package oogasalad.model.gameengine.gameobject;
 
 public class CollisionDetector {
 
-  public boolean isColliding(GameObject collidable1, GameObject collidable2) {
-    String shape1 = collidable1.getShape();
-    String shape2 = collidable2.getShape();
+  public boolean isColliding(GameObject go1, GameObject go2) {
+    String shape1 = go1.getShape();
+    String shape2 = go2.getShape();
 
     // circle v. rectangle
     if ("Circle".equalsIgnoreCase(shape1) && "Rectangle".equalsIgnoreCase(shape2)) {
-      return checkCircleRectangleCollision(collidable1, collidable2);
+      return checkCircleRectangleCollision(go1, go2);
     } else if ("Rectangle".equalsIgnoreCase(shape1) && "Circle".equalsIgnoreCase(shape2)) {
-      return checkCircleRectangleCollision(collidable2, collidable1);
+      return checkCircleRectangleCollision(go2, go1);
     }
     // circle v. circle
     else if ("Circle".equalsIgnoreCase(shape1) && "Circle".equalsIgnoreCase(shape2)) {
-      return checkCircleCircleCollision(collidable1, collidable2);
+      return checkCircleCircleCollision(go1, go2);
     }
     // rectangle v. rectangle
     else if ("Rectangle".equalsIgnoreCase(shape1) && "Rectangle".equalsIgnoreCase(shape2)) {
-      return checkRectangleRectangleCollision(collidable1, collidable2);
+      return checkRectangleRectangleCollision(go1, go2);
     }
     //other shape combinations as we go on
     else {

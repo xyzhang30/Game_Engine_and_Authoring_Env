@@ -1,9 +1,9 @@
-package oogasalad.model.gameengine.collidable.collision;
+package oogasalad.model.gameengine.gameobject.collision;
 
 import java.util.List;
 import java.util.function.Supplier;
 import oogasalad.model.api.GameObjectRecord;
-import oogasalad.model.gameengine.collidable.PhysicsHandler;
+import oogasalad.model.gameengine.gameobject.PhysicsHandler;
 
 public class FrictionHandler extends PhysicsHandler {
 

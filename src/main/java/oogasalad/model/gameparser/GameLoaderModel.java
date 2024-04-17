@@ -9,18 +9,18 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import oogasalad.Pair;
-import oogasalad.model.api.data.CollidableObject;
+import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.gameengine.RulesRecord;
-import oogasalad.model.gameengine.collidable.GameObject;
-import oogasalad.model.gameengine.collidable.GameObjectContainer;
-import oogasalad.model.gameengine.collidable.Strikeable;
-import oogasalad.model.gameengine.collidable.ownable.Scoreable;
-import oogasalad.model.gameengine.collidable.PhysicsHandler;
-import oogasalad.model.gameengine.collidable.collision.FrictionHandler;
-import oogasalad.model.gameengine.collidable.collision.MomentumHandler;
+import oogasalad.model.gameengine.gameobject.GameObject;
+import oogasalad.model.gameengine.gameobject.GameObjectContainer;
+import oogasalad.model.gameengine.gameobject.Strikeable;
+import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
+import oogasalad.model.gameengine.gameobject.PhysicsHandler;
+import oogasalad.model.gameengine.gameobject.collision.FrictionHandler;
+import oogasalad.model.gameengine.gameobject.collision.MomentumHandler;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
 import oogasalad.model.gameengine.player.Player;
@@ -46,7 +46,7 @@ public class GameLoaderModel extends GameLoader {
   private RulesRecord rulesRecord;
   private final Map<Pair, PhysicsHandler> physicsMap;
   private final List<Integer> movables;
-  private List<Entry<BiPredicate<Integer, CollidableObject>,
+  private List<Entry<BiPredicate<Integer, GameObjectProperties>,
       BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList;
 //  private Map<Integer, Player> collidablePlayerMap;
 
@@ -136,7 +136,7 @@ public class GameLoaderModel extends GameLoader {
 
   private void createCollidableContainer() {
     Map<Integer, GameObject> collidables = new HashMap<>();
-    gameData.getCollidableObjects().forEach(co -> {
+    gameData.getGameObjects().forEach(co -> {
       if (co.properties().contains("movable")) {
         movables.add(co.collidableId());
       }
@@ -147,9 +147,9 @@ public class GameLoaderModel extends GameLoader {
     this.gameObjectContainer = new GameObjectContainer(collidables);
   }
 
-  private void addPairToPhysicsMap(CollidableObject co, Integer id,
-      List<Entry<BiPredicate<Integer, CollidableObject>, BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList) {
-    for (Entry<BiPredicate<Integer, CollidableObject>, BiFunction<Integer, Integer, PhysicsHandler>> entry : conditionsList) {
+  private void addPairToPhysicsMap(GameObjectProperties co, Integer id,
+      List<Entry<BiPredicate<Integer, GameObjectProperties>, BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList) {
+    for (Entry<BiPredicate<Integer, GameObjectProperties>, BiFunction<Integer, Integer, PhysicsHandler>> entry : conditionsList) {
       if (entry.getKey().test(id, co) && id != co.collidableId()) {
         physicsMap.put(new Pair(id, co.collidableId()), entry.getValue().apply(id,
             co.collidableId()));
@@ -168,7 +168,7 @@ public class GameLoaderModel extends GameLoader {
             FrictionHandler::new));
   }
 
-  private GameObject createCollidable(CollidableObject co) {
+  private GameObject createCollidable(GameObjectProperties co) {
     return CollidableFactory.createCollidable(co);
   }
 

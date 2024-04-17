@@ -12,7 +12,7 @@ import java.util.List;
 public class GameData {
 
   private @JsonProperty("gameName") String gameName;
-  private @JsonProperty("collidable_objects") List<CollidableObject> collidableObjects;
+  private @JsonProperty("collidable_objects") List<GameObjectProperties> gameObjectProperties;
   private List<ParserPlayer> players;
   private List<Variables> variables;
   private Rules rules;
@@ -33,13 +33,13 @@ public class GameData {
     this.gameName = gameName;
   }
 
-  public @JsonProperty("collidable_objects") List<CollidableObject> getCollidableObjects() {
-    return collidableObjects;
+  public @JsonProperty("collidable_objects") List<GameObjectProperties> getGameObjects() {
+    return gameObjectProperties;
   }
 
-  public void setCollidableObjects(
-      @JsonProperty("collidable_objects") List<CollidableObject> collidables) {
-    this.collidableObjects = collidables;
+  public void setGameObject(
+      @JsonProperty("collidable_objects") List<GameObjectProperties> collidables) {
+    this.gameObjectProperties = collidables;
   }
 
   public List<ParserPlayer> getPlayers() {

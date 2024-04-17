@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
-import oogasalad.model.gameengine.collidable.GameObjectContainer;
+import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ public class PhysicsTest {
   }
 
   private boolean isStatic(GameRecord r) {
-    for(GameObjectRecord cr : r.collidables()) {
+    for(GameObjectRecord cr : r.gameObjectRecords()) {
       if(cr.velocityY()!=0 || cr.velocityX()!=0) {
         return false;
       }
@@ -52,7 +52,7 @@ public class PhysicsTest {
 
     gameEngine.applyInitialVelocity(10, 0, 1);
     // Assert that the initial round and turn are as expected
-    assertEquals(10, container.getCollidableRecord(1).velocityX());
+    assertEquals(10, container.getGameObjectRecord(1).velocityX());
     assertEquals(1.0, gameEngine.getPlayerContainer().getPlayerRecords().get(0).score(), DELTA);
 
   }
@@ -62,10 +62,10 @@ public class PhysicsTest {
     // Ensure the game starts without errors
     gameEngine.applyInitialVelocity(10, 0, 1);
     // Assert that the initial round and turn are as expected
-    assertEquals(10, container.getCollidableRecord(1).velocityX());
+    assertEquals(10, container.getGameObjectRecord(1).velocityX());
     gameEngine.update(1.0/4.0);
-    assertEquals(2.5, container.getCollidableRecord(1).x(), DELTA);
-    assertEquals(5, container.getCollidableRecord(1).velocityX(), DELTA);
+    assertEquals(2.5, container.getGameObjectRecord(1).x(), DELTA);
+    assertEquals(5, container.getGameObjectRecord(1).velocityX(), DELTA);
   }
 
 
@@ -73,13 +73,13 @@ public class PhysicsTest {
   public void testMultipleUpdate() {
     // Ensure the game starts without errors
     gameEngine.applyInitialVelocity(15, 0, 1);
-    assertEquals(15, container.getCollidableRecord(1).velocityX(), DELTA);
+    assertEquals(15, container.getGameObjectRecord(1).velocityX(), DELTA);
     gameEngine.update(1.0/4);
-    assertEquals(15/4.0, container.getCollidableRecord(1).x(), DELTA);
-    assertEquals(10, container.getCollidableRecord(1).velocityX(), DELTA);
+    assertEquals(15/4.0, container.getGameObjectRecord(1).x(), DELTA);
+    assertEquals(10, container.getGameObjectRecord(1).velocityX(), DELTA);
     gameEngine.update(1.0/4);
-    assertEquals(25/4.0, container.getCollidableRecord(1).x(), DELTA);
-    assertEquals(5, container.getCollidableRecord(1).velocityX(), DELTA);
+    assertEquals(25/4.0, container.getGameObjectRecord(1).x(), DELTA);
+    assertEquals(5, container.getGameObjectRecord(1).velocityX(), DELTA);
   }
 
 
@@ -90,10 +90,10 @@ public class PhysicsTest {
     gameEngine.applyInitialVelocity(15, Math.PI/2, 1);
     System.out.println(gameEngine.getCollidableContainer().getCollidableRecord(1));
     GameRecord r = gameEngine.update(1.0/4);
-    System.out.println(r.collidables().get(0));
+    System.out.println(r.gameObjectRecords().get(0));
     while(!isStatic(r)) {
       r = gameEngine.update(1.0/4);
-      System.out.println(r.collidables().get(0));
+      System.out.println(r.gameObjectRecords().get(0));
 
     }
     assertEquals(7.5, container.getCollidableRecord(1).y(), DELTA);
@@ -105,11 +105,11 @@ public class PhysicsTest {
   public void testMoveAtAngle() {
     gameEngine.applyInitialVelocity(20, Math.PI/4, 1);
     gameEngine.update(.5);
-    System.out.println(container.getCollidableRecord(1));
-    assertEquals(10/Math.sqrt(2), container.getCollidableRecord(1).x(), DELTA);
-    assertEquals(10/Math.sqrt(2), container.getCollidableRecord(1).y(), DELTA);
-    assertEquals(10/Math.sqrt(2), container.getCollidableRecord(1).velocityX(), DELTA);
-    assertEquals(10/Math.sqrt(2), container.getCollidableRecord(1).velocityX(), DELTA);
+    System.out.println(container.getGameObjectRecord(1));
+    assertEquals(10/Math.sqrt(2), container.getGameObjectRecord(1).x(), DELTA);
+    assertEquals(10/Math.sqrt(2), container.getGameObjectRecord(1).y(), DELTA);
+    assertEquals(10/Math.sqrt(2), container.getGameObjectRecord(1).velocityX(), DELTA);
+    assertEquals(10/Math.sqrt(2), container.getGameObjectRecord(1).velocityX(), DELTA);
   }
 
   @Test
@@ -121,11 +121,11 @@ public class PhysicsTest {
     gameEngine.getCollidableContainer().getGameObject(1).setVisible(true);
     gameEngine.getCollidableContainer().getGameObject(10).setVisible(true);
     gameEngine.update(.25);
-    assertEquals(-10, container.getCollidableRecord(1).velocityX(), DELTA);
-    assertEquals(10, container.getCollidableRecord(10).velocityX(), DELTA);
+    assertEquals(-10, container.getGameObjectRecord(1).velocityX(), DELTA);
+    assertEquals(10, container.getGameObjectRecord(10).velocityX(), DELTA);
     gameEngine.update(.25);
-    assertEquals(-5, container.getCollidableRecord(1).velocityX(), DELTA);
-    assertEquals(5, container.getCollidableRecord(10).velocityX(), DELTA);
+    assertEquals(-5, container.getGameObjectRecord(1).velocityX(), DELTA);
+    assertEquals(5, container.getGameObjectRecord(10).velocityX(), DELTA);
   }
 
 
@@ -153,10 +153,10 @@ public class PhysicsTest {
     gameEngine.applyInitialVelocity(100, 0, 1);
     gameEngine.update(1);
 
-    assertEquals(0.0,container.getCollidableRecord(1).velocityX(), DELTA);
-    assertEquals(0.0,container.getCollidableRecord(1).velocityY(), DELTA);
-    assertEquals(0.0,container.getCollidableRecord(1).x(), DELTA);
-    assertEquals(0.0,container.getCollidableRecord(1).y(), DELTA);
+    assertEquals(0.0,container.getGameObjectRecord(1).velocityX(), DELTA);
+    assertEquals(0.0,container.getGameObjectRecord(1).velocityY(), DELTA);
+    assertEquals(0.0,container.getGameObjectRecord(1).x(), DELTA);
+    assertEquals(0.0,container.getGameObjectRecord(1).y(), DELTA);
   }
 
 

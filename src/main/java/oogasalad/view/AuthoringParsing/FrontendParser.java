@@ -24,7 +24,7 @@ public class FrontendParser extends GameLoader {
   private void generateStyleSheet() {
     String gameName = "sampleMiniGolf";
     try (PrintWriter writer = new PrintWriter(new FileWriter(gameName + ".css"))) {
-      JSONArray collidables = loadCollidables(); // Assuming this method retrieves your JSONArray of collidables
+      JSONArray collidables = loadCollidables(); // Assuming this method retrieves your JSONArray of gameObjectRecords
       for (Object o : collidables) {
         if (o instanceof JSONObject collidable) {
           writeCollidableStyle(writer, collidable);
@@ -37,7 +37,7 @@ public class FrontendParser extends GameLoader {
 
   /**
    * Loads and returns the JSONArray of collidable objects. This method assumes you have a way to
-   * load or access your collidables JSONArray.
+   * load or access your gameObjectRecords JSONArray.
    */
   private JSONArray loadCollidables() {
     // Placeholder method body - you should implement this based on how your game data is loaded

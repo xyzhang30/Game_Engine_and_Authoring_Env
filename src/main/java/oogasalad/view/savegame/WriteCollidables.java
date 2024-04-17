@@ -3,13 +3,8 @@ package oogasalad.view.savegame;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import oogasalad.model.api.data.CollidableObject;
-import oogasalad.model.api.data.Dimension;
-import oogasalad.model.api.data.Position;
+import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.view.AuthoringScreens.NonControllableType;
 
 public class WriteCollidables {
@@ -24,7 +19,7 @@ public class WriteCollidables {
       Map<Shape, List<Double>> posMap) {
 
     int collidableId = 0;
-    List<CollidableObject> collidableObjects = new ArrayList<>();
+    List<GameObjectProperties> gameObjectProperties = new ArrayList<>();
     writeBackGround();
   }
 

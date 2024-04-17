@@ -10,9 +10,9 @@ import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.collidable.GameObject;
-import oogasalad.model.gameengine.collidable.GameObjectContainer;
-import oogasalad.model.gameengine.collidable.ownable.Scoreable;
+import oogasalad.model.gameengine.gameobject.GameObject;
+import oogasalad.model.gameengine.gameobject.GameObjectContainer;
+import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameparser.GameLoaderModel;
@@ -60,7 +60,7 @@ public class GameEngine implements ExternalGameEngine {
     collisionHandlers = rules.collisionHandlers();
     playerContainer.getPlayer(1).updateActiveControllableId();
     collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getControllableId());
-    collidables.addStaticStateCollidables();
+    collidables.addStaticStateGameObjects();
     playerContainer.addPlayerHistory();
     staticStateStack = new Stack<>();
     staticStateStack.push(
@@ -180,7 +180,7 @@ public class GameEngine implements ExternalGameEngine {
     turn = newCurrentState.turn();
     round = newCurrentState.round();
     gameOver = newCurrentState.gameOver();
-    collidables.toLastStaticStateCollidables();
+    collidables.toLastStaticStateGameObjects();
     playerContainer.toLastStaticStateVariables();
   }
 
@@ -212,7 +212,7 @@ public class GameEngine implements ExternalGameEngine {
   private void updateHistory() {
     staticState = true;
     playerContainer.addPlayerHistory();
-    collidables.addStaticStateCollidables();
+    collidables.addStaticStateGameObjects();
     staticStateStack.push(
         new GameRecord(collidables.toGameObjectRecords(), playerContainer.getPlayerRecords(),
             round, turn, gameOver, staticState));
