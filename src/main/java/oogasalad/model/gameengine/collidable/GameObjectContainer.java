@@ -7,29 +7,29 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 import oogasalad.Pair;
-import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.GameObjectRecord;
 
 public class GameObjectContainer {
 
-  private final Map<Integer, GameObject> myCollidables;
-  private final Stack<List<CollidableRecord>> collidableHistory;
+  private final Map<Integer, GameObject> myGameObjects;
+  private final Stack<List<GameObjectRecord>> gameObjectHistory;
   private final CollisionDetector collisionDetector;
 
   public GameObjectContainer(Map<Integer, GameObject> collidables) {
-    myCollidables = collidables;
-    collidableHistory = new Stack<>();
-    collidableHistory.add(getCollidableRecords());
+    myGameObjects = collidables;
+    gameObjectHistory = new Stack<>();
+    gameObjectHistory.add(toGameObjectRecords());
     collisionDetector = new CollisionDetector();
   }
 
-  public GameObject getCollidable(int objectId) {
-    return myCollidables.get(objectId);
+  public GameObject getGameObject(int objectId) {
+    return myGameObjects.get(objectId);
   }
 
 
   public boolean checkStatic() {
-    for (GameObject c : myCollidables.values()) {
-      if (c.getVisible() && (c.getVelocityX() != 0 || c.getVelocityY() != 0)) { //should it be
+    for (GameObject go : myGameObjects.values()) {
+      if (go.getVisible() && (go.getVelocityX() != 0 || go.getVelocityY() != 0)) { //should it be
         return false;
       }
     }
@@ -38,23 +38,23 @@ public class GameObjectContainer {
   }
 
   public void update(double dt) {
-    for (GameObject c : myCollidables.values()) {
-      c.move(dt);
-      c.update();
+    for (GameObject go : myGameObjects.values()) {
+      go.move(dt);
+      go.update();
     }
   }
 
-  public List<CollidableRecord> getCollidableRecords() {
-    List<CollidableRecord> ret = new ArrayList<>();
-    for (GameObject collidable : myCollidables.values()) {
-      ret.add(collidable.getCollidableRecord());
+  public List<GameObjectRecord> toGameObjectRecords() {
+    List<GameObjectRecord> ret = new ArrayList<>();
+    for (GameObject go : myGameObjects.values()) {
+      ret.add(go.toGameObjectRecord());
     }
     return ret;
   }
 
-  public CollidableRecord getCollidableRecord(int id) {
-    List<CollidableRecord> ret = getCollidableRecords();
-    for (CollidableRecord record : ret) {
+  public GameObjectRecord getCollidableRecord(int id) {
+    List<GameObjectRecord> ret = toGameObjectRecords();
+    for (GameObjectRecord record : ret) {
       if (record.id() == id) {
         return record;
       }
@@ -64,34 +64,34 @@ public class GameObjectContainer {
 
 
   public void addStaticStateCollidables() {
-    collidableHistory.push(getCollidableRecords());
+    gameObjectHistory.push(toGameObjectRecords());
   }
 
   public void toLastStaticStateCollidables() {
-    for (CollidableRecord record : collidableHistory.peek()) {
+    for (GameObjectRecord record : gameObjectHistory.peek()) {
       callSetFromRecord(record);
     }
   }
 
-  private void callSetFromRecord(CollidableRecord record) {
-    getCollidable(record.id()).setFromRecord(record);
+  private void callSetFromRecord(GameObjectRecord record) {
+    getGameObject(record.id()).setFromRecord(record);
   }
 
   public Set<Pair> getCollisionPairs() {
     Set<Pair> collisionPairs = new HashSet<>();
-    List<CollidableRecord> records = getCollidableRecords();
+    List<GameObjectRecord> records = toGameObjectRecords();
 
     for (int i = 0; i < records.size(); i++) {
-      CollidableRecord record1 = records.get(i);
-      GameObject collidable1 = myCollidables.get(record1.id());
+      GameObjectRecord record1 = records.get(i);
+      GameObject gameObject1 = myGameObjects.get(record1.id());
 
 
       for (int j = i + 1; j < records.size(); j++) {
-        CollidableRecord record2 = records.get(j);
-        GameObject collidable2 = myCollidables.get(record2.id());
+        GameObjectRecord record2 = records.get(j);
+        GameObject gameObject2 = myGameObjects.get(record2.id());
 
-        if (collidable2.getVisible() && collidable1.getVisible() && collisionDetector.isColliding(
-            collidable1, collidable2)) {
+        if (gameObject2.getVisible() && gameObject1.getVisible() && collisionDetector.isColliding(
+            gameObject1, gameObject2)) {
           collisionPairs.add(new Pair(record1.id(), record2.id()));
         }
       }
@@ -101,12 +101,12 @@ public class GameObjectContainer {
 
 
   public void makeStatic() {
-    for (GameObject c : myCollidables.values()) {
+    for (GameObject c : myGameObjects.values()) {
       c.stop();
     }
   }
 
   public void setVisible(int controllableId) {
-    getCollidable(controllableId).setVisible(true);
+    getGameObject(controllableId).setVisible(true);
   }
 }

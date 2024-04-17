@@ -3,7 +3,7 @@ package oogasalad.model.gameengine;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.gameengine.collidable.GameObjectContainer;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +27,7 @@ public class MiniGolfGameRulesTest {
   }
 
   private boolean isStatic(GameRecord r) {
-    for(CollidableRecord cr : r.collidables()) {
+    for(GameObjectRecord cr : r.collidables()) {
       if(cr.visible() && (cr.velocityY()!=0 || cr.velocityX()!=0)) {
         return false;
       }

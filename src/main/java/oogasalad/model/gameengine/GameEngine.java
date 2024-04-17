@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.Stack;
 import oogasalad.Pair;
-import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
@@ -64,7 +64,7 @@ public class GameEngine implements ExternalGameEngine {
     playerContainer.addPlayerHistory();
     staticStateStack = new Stack<>();
     staticStateStack.push(
-        new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
+        new GameRecord(collidables.toGameObjectRecords(), playerContainer.getPlayerRecords(),
             round, turn, gameOver, staticState));
   }
 
@@ -103,7 +103,7 @@ public class GameEngine implements ExternalGameEngine {
       staticState = false;
     }
     collidables.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getControllableId());
-    return new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
+    return new GameRecord(collidables.toGameObjectRecords(), playerContainer.getPlayerRecords(),
         round, turn, gameOver, staticState);
   }
 
@@ -119,7 +119,7 @@ public class GameEngine implements ExternalGameEngine {
     LOGGER.info(" player " + turn + " apply initial velocity with magnitude " + magnitude + " and "
         + "direction "
         + direction * 180 / Math.PI);
-    collidables.getCollidable(id).applyInitialVelocity(magnitude,direction);
+    collidables.getGameObject(id).applyInitialVelocity(magnitude,direction);
     rules.strikePolicy().getStrikePolicy().accept(id, this);
   }
 
@@ -171,9 +171,9 @@ public class GameEngine implements ExternalGameEngine {
 
   public void toLastStaticState() {
     staticState = true;
-    for(CollidableRecord cr : collidables.getCollidableRecords()) {
-      GameObject c = collidables.getCollidable(cr.id());
-      Optional<Scoreable> optionalOwnable = c.getOwnable();
+    for(GameObjectRecord cr : collidables.toGameObjectRecords()) {
+      GameObject c = collidables.getGameObject(cr.id());
+      Optional<Scoreable> optionalOwnable = c.getScoreable();
       optionalOwnable.ifPresent(ownable -> ownable.setTemporaryScore(0));
     }
     GameRecord newCurrentState = staticStateStack.pop();
@@ -214,7 +214,7 @@ public class GameEngine implements ExternalGameEngine {
     playerContainer.addPlayerHistory();
     collidables.addStaticStateCollidables();
     staticStateStack.push(
-        new GameRecord(collidables.getCollidableRecords(), playerContainer.getPlayerRecords(),
+        new GameRecord(collidables.toGameObjectRecords(), playerContainer.getPlayerRecords(),
             round, turn, gameOver, staticState));
   }
 
@@ -235,6 +235,6 @@ public class GameEngine implements ExternalGameEngine {
 
   public void setActivesControllablesInvisible() {
     int id = playerContainer.getPlayer(playerContainer.getActive()).getControllableId();
-    collidables.getCollidable(id).setVisible(false);
+    collidables.getGameObject(id).setVisible(false);
   }
 }

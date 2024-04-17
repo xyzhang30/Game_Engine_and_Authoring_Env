@@ -2,7 +2,7 @@ package oogasalad.model.gameengine.collidable;
 
 import java.util.List;
 import java.util.function.Supplier;
-import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.GameObjectRecord;
 
 public abstract class PhysicsHandler {
 
@@ -15,17 +15,17 @@ public abstract class PhysicsHandler {
   }
 
   public void handleCollision(GameObjectContainer gameObjectContainer, double dt) {
-    CollidableRecord cr1 = gameObjectContainer.getCollidableRecord(id1);
-    CollidableRecord cr2 = gameObjectContainer.getCollidableRecord(id2);
-    GameObject c1 = gameObjectContainer.getCollidable(id1);
-    GameObject c2 = gameObjectContainer.getCollidable(id2);
-    c1.calculateNextSpeeds(makeVelocityFunction(cr1, cr2, dt));
-    c2.calculateNextSpeeds(makeVelocityFunction(cr2, cr1, dt));
-    c1.updatePostCollisionVelocity();
-    c2.updatePostCollisionVelocity();
+    GameObjectRecord gor1 = gameObjectContainer.getCollidableRecord(id1);
+    GameObjectRecord gor2 = gameObjectContainer.getCollidableRecord(id2);
+    GameObject go1 = gameObjectContainer.getGameObject(id1);
+    GameObject go2 = gameObjectContainer.getGameObject(id2);
+    go1.calculateNextSpeeds(makeVelocityFunction(gor1, gor2, dt));
+    go2.calculateNextSpeeds(makeVelocityFunction(gor2, gor1, dt));
+    go1.updatePostCollisionVelocity();
+    go2.updatePostCollisionVelocity();
   }
 
-  protected abstract Supplier<List<Double>> makeVelocityFunction(CollidableRecord c1,
-      CollidableRecord c2,
+  protected abstract Supplier<List<Double>> makeVelocityFunction(GameObjectRecord c1,
+      GameObjectRecord c2,
       double dt);
 }

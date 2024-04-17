@@ -21,8 +21,8 @@ public class CollidableFactory {
         co.dimension().yDimension(),
         co.shape());
     if(co.properties().contains("controllable")) {
-      c.addControllable(new DefaultStrikeable(c));
-      c.addOwnable(new DefaultScoreable(c));
+      c.addStrikeable(new DefaultStrikeable(c));
+      c.addScoreable(new DefaultScoreable(c));
     }
     return c;
   }

@@ -7,9 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-import oogasalad.Pair;
-import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.api.ViewCollidableRecord;
@@ -18,7 +16,6 @@ import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.AnimationManager;
-import oogasalad.view.CollisionManager;
 import oogasalad.view.SceneManager;
 import oogasalad.view.VisualElements.CompositeElement;
 import org.apache.logging.log4j.LogManager;
@@ -106,7 +103,7 @@ public class GameController {
     GameRecord gameRecord = gameEngine.update(timeStep);
     boolean staticState = gameRecord.staticState();
     if (staticState) {
-      for(CollidableRecord r : gameRecord.collidables()) {
+      for(GameObjectRecord r : gameRecord.collidables()) {
         if(List.of(9,14,15,16).contains(r.id())) {
           System.out.println(r);
         }

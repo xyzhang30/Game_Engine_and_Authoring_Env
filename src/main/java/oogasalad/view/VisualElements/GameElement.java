@@ -1,6 +1,5 @@
 package oogasalad.view.VisualElements;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -8,13 +7,10 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
-import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.ViewCollidableRecord;
-import oogasalad.model.api.data.CollidableShape;
-import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
 
@@ -88,7 +84,7 @@ public class GameElement implements VisualElement {
    * @param model This Element's corresponding model object.
    */
   @Override
-  public void update(CollidableRecord model) {
+  public void update(GameObjectRecord model) {
     myNode.setTranslateX(model.x());
     myNode.setTranslateY(model.y());
     myNode.setVisible(model.visible());

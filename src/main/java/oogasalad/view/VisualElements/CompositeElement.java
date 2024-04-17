@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.Node;
-import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.ViewCollidableRecord;
 
 public class CompositeElement {
@@ -23,8 +23,8 @@ public class CompositeElement {
    *
    * @param models The list of model data to sync to.
    */
-  public void update(List<CollidableRecord> models) {
-    for (CollidableRecord model : models) {
+  public void update(List<GameObjectRecord> models) {
+    for (GameObjectRecord model : models) {
       elementMap.get(model.id()).update(model);
     }
   }

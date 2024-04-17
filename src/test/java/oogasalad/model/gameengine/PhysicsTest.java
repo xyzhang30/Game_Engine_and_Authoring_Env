@@ -2,7 +2,7 @@ package oogasalad.model.gameengine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.gameengine.collidable.GameObjectContainer;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +25,7 @@ public class PhysicsTest {
   }
 
   private boolean isStatic(GameRecord r) {
-    for(CollidableRecord cr : r.collidables()) {
+    for(GameObjectRecord cr : r.collidables()) {
       if(cr.velocityY()!=0 || cr.velocityX()!=0) {
         return false;
       }
@@ -114,12 +114,12 @@ public class PhysicsTest {
 
   @Test
   public void testTwoMovingObjectsCollide() {
-    gameEngine.getCollidableContainer().getCollidable(1).setVisible(true);
-    gameEngine.getCollidableContainer().getCollidable(10).setVisible(true);
+    gameEngine.getCollidableContainer().getGameObject(1).setVisible(true);
+    gameEngine.getCollidableContainer().getGameObject(10).setVisible(true);
     gameEngine.applyInitialVelocity(15, -Math.PI, 1);
     gameEngine.applyInitialVelocity(15, 0, 10);
-    gameEngine.getCollidableContainer().getCollidable(1).setVisible(true);
-    gameEngine.getCollidableContainer().getCollidable(10).setVisible(true);
+    gameEngine.getCollidableContainer().getGameObject(1).setVisible(true);
+    gameEngine.getCollidableContainer().getGameObject(10).setVisible(true);
     gameEngine.update(.25);
     assertEquals(-10, container.getCollidableRecord(1).velocityX(), DELTA);
     assertEquals(10, container.getCollidableRecord(10).velocityX(), DELTA);
@@ -133,15 +133,15 @@ public class PhysicsTest {
 
   @Test
   public void testAdjustPointsCommand() {
-    gameEngine.getCollidableContainer().getCollidable(1).setVisible(true);
-    gameEngine.getCollidableContainer().getCollidable(10).setVisible(true);
+    gameEngine.getCollidableContainer().getGameObject(1).setVisible(true);
+    gameEngine.getCollidableContainer().getGameObject(10).setVisible(true);
     gameEngine.applyInitialVelocity(20, -Math.PI, 1);
     gameEngine.applyInitialVelocity(20, 0, 10);
     gameEngine.applyInitialVelocity(20, -Math.PI, 1);
     GameRecord r = gameEngine.update(1);
 
-    System.out.println(gameEngine.getCollidableContainer().getCollidable(1).getCollidableRecord().x());
-    System.out.println(gameEngine.getCollidableContainer().getCollidable(10).getCollidableRecord().x());
+    System.out.println(gameEngine.getCollidableContainer().getGameObject(1).toGameObjectRecord().x());
+    System.out.println(gameEngine.getCollidableContainer().getGameObject(10).toGameObjectRecord().x());
 
     assertEquals(2.0, r.players().get(0).score(), DELTA);
   }

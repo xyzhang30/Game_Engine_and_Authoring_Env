@@ -3,7 +3,7 @@ package oogasalad.model.gameengine.collidable;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
-import oogasalad.model.api.CollidableRecord;
+import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.gameengine.collidable.ownable.Scoreable;
 
 public class GameObject {
@@ -27,7 +27,7 @@ public class GameObject {
 
 
   private Strikeable strikeable;
-  private Scoreable ownable;
+  private Scoreable scoreable;
 
   public GameObject(int id, double mass, double x, double y,
       boolean visible, double staticMu, double kineticMu, double width, double height,
@@ -48,18 +48,18 @@ public class GameObject {
     myKineticMu = kineticMu;
   }
 
-  public void addControllable(Strikeable strikeable) {
+  public void addStrikeable(Strikeable strikeable) {
     this.strikeable = strikeable;
   }
-  public void addOwnable(Scoreable ownable) {
-    this.ownable = ownable;
+  public void addScoreable(Scoreable scoreable) {
+    this.scoreable = scoreable;
   }
-  public Optional<Strikeable> getControllable() {
+  public Optional<Strikeable> getStrikeable() {
     return Optional.ofNullable(strikeable);
   }
 
-  public Optional<Scoreable> getOwnable() {
-    return Optional.ofNullable(ownable);
+  public Optional<Scoreable> getScoreable() {
+    return Optional.ofNullable(scoreable);
   }
 
   protected void updatePostCollisionVelocity() {
@@ -68,8 +68,8 @@ public class GameObject {
   }
 
 
-  public CollidableRecord getCollidableRecord() {
-    return new CollidableRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible,
+  public GameObjectRecord toGameObjectRecord() {
+    return new GameObjectRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible,
         myStaticMu, myKineticMu
         , myWidth, myHeight);
   }
@@ -124,7 +124,7 @@ public class GameObject {
     return myShape;
   }
 
-  protected void setFromRecord(CollidableRecord record) {
+  protected void setFromRecord(GameObjectRecord record) {
     myX = record.x();
     myY = record.y();
     myVelocityY = record.velocityY();

@@ -95,7 +95,7 @@ public class GameLoaderModel extends GameLoader {
       List<Integer> playerControllableIds = parserPlayer.myCollidable();
       List<Strikeable> playerStrikeableObjects = new ArrayList<>();
       for (int i : playerControllableIds){
-        Optional<Strikeable> optionalControllable = gameObjectContainer.getCollidable(i).getControllable();
+        Optional<Strikeable> optionalControllable = gameObjectContainer.getGameObject(i).getStrikeable();
 
         optionalControllable.ifPresent(playerStrikeableObjects::add);
 
@@ -104,7 +104,7 @@ public class GameLoaderModel extends GameLoader {
 
       List<Scoreable> playerOwnableObjects = new ArrayList<>();
       for (int i : playerControllableIds){
-        Optional<Scoreable> optionalControllable = gameObjectContainer.getCollidable(i).getOwnable();
+        Optional<Scoreable> optionalControllable = gameObjectContainer.getGameObject(i).getScoreable();
         optionalControllable.ifPresent(playerOwnableObjects::add);
       }
       playerContainer.getPlayer(playerId).addOwnables(playerOwnableObjects);
