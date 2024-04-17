@@ -136,6 +136,25 @@ public class GameObject {
     myVisible = record.visible();
   }
 
+  protected void calculateNextSpeeds(Supplier<List<Double>> firstInfo) {
+    List<Double> newSpeeds = firstInfo.get();
+    setNextSpeed(newSpeeds.get(0), newSpeeds.get(1));
+  }
+
+  protected void calculateSpeeds(Supplier<List<Double>> firstInfo) {
+    List<Double> newSpeeds = firstInfo.get();
+    setSpeed(newSpeeds.get(0), newSpeeds.get(1));
+    setNextSpeed(newSpeeds.get(0), newSpeeds.get(1));
+  }
+
+  public void multiplySpeed(double factor) {//dont love that this is public
+    myVelocityX *= factor;
+    myVelocityY *= factor;
+  }
+
+  public void applyInitialVelocity(double magnitude, double direction) {
+    strikeable.applyInitialVelocity(magnitude, direction);
+  }
 
   private void setNextSpeed(double speedX, double speedY) {
     myNextVelocityX = speedX;
@@ -145,35 +164,6 @@ public class GameObject {
   private void setSpeed(double speedX, double speedY) {
     myVelocityX = speedX;
     myVelocityY = speedY;
-    myNextVelocityX = myVelocityX;
-    myNextVelocityY = myVelocityY;
-  }
-
-
-  protected void calculateNextSpeeds(Supplier<List<Double>> firstInfo) {
-    List<Double> newSpeeds = firstInfo.get();
-    setNextSpeed(newSpeeds.get(0), newSpeeds.get(1));
-  }
-
-  protected void calculateSpeeds(Supplier<List<Double>> firstInfo) {
-    List<Double> newSpeeds = firstInfo.get();
-    setSpeed(newSpeeds.get(0), newSpeeds.get(1));
-  }
-
-  public void multiplySpeed(double factor) {//dont love that this is public
-    myVelocityX *= factor;
-    myVelocityY *= factor;
-  }
-
-  protected void stop() {
-    myVelocityX = 0;
-    myNextVelocityX = 0;
-    myVelocityY = 0;
-    myNextVelocityY = 0;
-  }
-
-  public void applyInitialVelocity(double magnitude, double direction) {
-    strikeable.applyInitialVelocity(magnitude, direction);
   }
 }
 

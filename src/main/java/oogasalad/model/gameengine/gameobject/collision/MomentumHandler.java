@@ -5,6 +5,10 @@ import java.util.function.Supplier;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.gameengine.gameobject.PhysicsHandler;
 
+/**
+ * @author Konur Nordberg
+ */
+
 public class MomentumHandler extends PhysicsHandler {
 
   public MomentumHandler(int id1, int id2) {

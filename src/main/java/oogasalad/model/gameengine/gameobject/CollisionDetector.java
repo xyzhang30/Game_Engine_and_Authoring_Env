@@ -1,5 +1,9 @@
 package oogasalad.model.gameengine.gameobject;
 
+/**
+ * @author Konur Nordberg
+ */
+
 public class CollisionDetector {
 
   public boolean isColliding(GameObject go1, GameObject go2) {

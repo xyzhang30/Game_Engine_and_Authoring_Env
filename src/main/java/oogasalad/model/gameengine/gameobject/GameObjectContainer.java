@@ -26,14 +26,12 @@ public class GameObjectContainer {
     return myGameObjects.get(objectId);
   }
 
-
   public boolean checkStatic() {
     for (GameObject go : myGameObjects.values()) {
       if (go.getVisible() && (go.getVelocityX() != 0 || go.getVelocityY() != 0)) { //should it be
         return false;
       }
     }
-
     return true;
   }
 
@@ -62,7 +60,6 @@ public class GameObjectContainer {
     return null;
   }
 
-
   public void addStaticStateGameObjects() {
     gameObjectHistory.push(toGameObjectRecords());
   }
@@ -80,16 +77,12 @@ public class GameObjectContainer {
   public Set<Pair> getCollisionPairs() {
     Set<Pair> collisionPairs = new HashSet<>();
     List<GameObjectRecord> records = toGameObjectRecords();
-
     for (int i = 0; i < records.size(); i++) {
       GameObjectRecord record1 = records.get(i);
       GameObject gameObject1 = myGameObjects.get(record1.id());
-
-
       for (int j = i + 1; j < records.size(); j++) {
         GameObjectRecord record2 = records.get(j);
         GameObject gameObject2 = myGameObjects.get(record2.id());
-
         if (gameObject2.getVisible() && gameObject1.getVisible() && collisionDetector.isColliding(
             gameObject1, gameObject2)) {
           collisionPairs.add(new Pair(record1.id(), record2.id()));
@@ -99,14 +92,4 @@ public class GameObjectContainer {
     return collisionPairs;
   }
 
-
-  public void makeStatic() {
-    for (GameObject c : myGameObjects.values()) {
-      c.stop();
-    }
-  }
-
-  public void setVisible(int id) {
-    getGameObject(id).setVisible(true);
-  }
 }

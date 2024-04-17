@@ -57,7 +57,7 @@ public class GameEngine implements ExternalGameEngine {
     rules = loader.getRulesRecord();
     collisionHandlers = rules.collisionHandlers();
     playerContainer.getPlayer(1).updateActiveStrikeableId();
-    gameObjects.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID());
+    gameObjects.getGameObject(playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID()).setVisible(true);
     playerContainer.startRound();
     gameObjects.addStaticStateGameObjects();
     playerContainer.addPlayerHistory();
@@ -84,7 +84,7 @@ public class GameEngine implements ExternalGameEngine {
     } else {
       staticState = false;
     }
-    gameObjects.setVisible(playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID());
+    gameObjects.getGameObject(playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID()).setVisible(true);
     return new GameRecord(gameObjects.toGameObjectRecords(), playerContainer.getPlayerRecords(),
         round, turn, gameOver, staticState);
   }
