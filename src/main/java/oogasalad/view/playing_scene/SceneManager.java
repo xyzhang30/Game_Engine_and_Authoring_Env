@@ -29,18 +29,21 @@ public class SceneManager {
   private final Scene scene;
   private final SceneElementParser sceneElementParser;
   private final SceneElementFactory sceneElementFactory;
+  private final SceneElementHandler sceneElementHandler;
   private CompositeElement compositeElement;
   private GameScreen gameScreen;
   private int currentRound = 1;
-  private final String titleSceneElementsPath = "data/scene_properties/titleSceneElements.xml";
-  private final String menuSceneElementsPath = "data/scene_properties/menuSceneElements.xml";
+  private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
+  private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
 
 
-  public SceneManager() {
+  public SceneManager(GameController gameController) {
     root = new Pane();
     scene = new Scene(root);
     sceneElementParser = new SceneElementParser();
-    sceneElementFactory = new SceneElementFactory(root, SCREEN_WIDTH, SCREEN_HEIGHT);
+    sceneElementHandler = new SceneElementHandler(gameController);
+    sceneElementFactory = new SceneElementFactory(root, SCREEN_WIDTH, SCREEN_HEIGHT,
+        sceneElementHandler);
   }
 
   public void createScene(SceneType sceneType) {
@@ -63,7 +66,8 @@ public class SceneManager {
 
   public void createSceneElementsAndUpdateRoot(String filePath) {
     try {
-      List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(filePath);
+      List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(
+          filePath);
       List<Node> sceneElements = sceneElementFactory.createSceneElements(sceneElementParameters);
       root.getChildren().clear();
       root.getChildren().addAll(sceneElements);

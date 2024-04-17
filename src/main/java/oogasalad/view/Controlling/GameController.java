@@ -34,8 +34,8 @@ public class GameController {
   private GameLoaderView gameLoaderView;
 
   public GameController() {
-    sceneManager = new SceneManager();
-    sceneManager.createScene(SceneType.MENU);
+    sceneManager = new SceneManager(this);
+    sceneManager.createScene(SceneType.TITLE);
     animationManager = new AnimationManager();
   }
 
@@ -47,7 +47,7 @@ public class GameController {
    * Creates and displays menu screen
    */
   public void openMenuScreen() {
-    //sceneManager.makeMenuScreen(getGameTitles(), this);
+    sceneManager.createScene(SceneType.MENU);
   }
 
   public void openTransitionScreen() {
@@ -76,8 +76,8 @@ public class GameController {
 
   private void getCurrentControllable(GameRecord gameRecord) {
     activePlayer = gameRecord.turn();
-    for(PlayerRecord p : gameRecord.players()) {
-      if(p.playerId()==activePlayer) {
+    for (PlayerRecord p : gameRecord.players()) {
+      if (p.playerId() == activePlayer) {
         controllableID = p.activeControllable();
         System.out.println(controllableID);
         break;
@@ -104,10 +104,7 @@ public class GameController {
   }
 
   /**
-
-
-   /**
-   * Sends velocity and angle to back end to simulate hitting point scoring object
+   * /** Sends velocity and angle to back end to simulate hitting point scoring object
    *
    * @param fractionalVelocity velocity as fraction of maxVelocity
    */

@@ -4,12 +4,12 @@ import java.net.URL;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
-public class ElementStyler {
+public class SceneElementStyler {
 
   private final Pane root;
   private final String cssPath = "/view/styles.css";
 
-  public ElementStyler(Pane root) {
+  public SceneElementStyler(Pane root) {
     this.root = root;
     addStyleSheetToRoot();
   }

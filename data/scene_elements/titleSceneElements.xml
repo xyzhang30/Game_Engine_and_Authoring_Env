@@ -1,4 +1,4 @@
-<scene_properties>
+<scene_elements>
   <node>
     <type>BUTTON</type>
     <text>Play</text>
@@ -7,6 +7,7 @@
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.4</y_layout_factor>
     <styling>title-button</styling>
+    <event>START_MENU</event>
   </node>
 
   <node>
@@ -17,6 +18,7 @@
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.6</y_layout_factor>
     <styling>title-button</styling>
+    <event>START_AUTHORING</event>
   </node>
 
   <node>
@@ -26,4 +28,4 @@
     <y_layout_factor>0.3</y_layout_factor>
     <styling>title-text</styling>
   </node>
-</scene_properties>
+</scene_elements>

@@ -13,7 +13,8 @@ import oogasalad.view.enums.SceneElementType;
 public class SceneElementFactory {
 
   private final SceneElementParser sceneElementParser;
-  private final ElementStyler elementStyler;
+  private final SceneElementStyler elementStyler;
+  private final SceneElementHandler sceneElementHandler;
   private final double screenWidth;
   private final double screenHeight;
   private final String typeTag = "type";
@@ -23,12 +24,15 @@ public class SceneElementFactory {
   private final String xLayoutFactorTag = "x_layout_factor";
   private final String yLayoutFactorTag = "y_layout_factor";
   private final String styleTag = "styling";
+  private final String eventTag = "event";
 
-  public SceneElementFactory(Pane root, double screenWidth, double screenHeight) {
+  public SceneElementFactory(Pane root, double screenWidth, double screenHeight,
+      SceneElementHandler sceneElementHandler) {
     sceneElementParser = new SceneElementParser();
-    elementStyler = new ElementStyler(root);
+    elementStyler = new SceneElementStyler(root);
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
+    this.sceneElementHandler = sceneElementHandler;
   }
 
   public List<Node> createSceneElements(List<Map<String, String>> parameterList) {
@@ -36,7 +40,6 @@ public class SceneElementFactory {
 
     for (Map<String, String> parameterMap : parameterList) {
       String type = parameterMap.get(typeTag);
-
       switch (SceneElementType.valueOf(type)) {
         case BUTTON -> {
           sceneElements.add(createButton(parameterMap));
@@ -60,9 +63,11 @@ public class SceneElementFactory {
     double xLayoutFactor = Double.parseDouble(parameters.get(xLayoutFactorTag));
     double yLayoutFactor = Double.parseDouble(parameters.get(yLayoutFactorTag));
     String style = parameters.get(styleTag);
+    String event = parameters.get(eventTag);
 
     Button button = new Button(displayText);
     elementStyler.style(button, style);
+    sceneElementHandler.createElementHandler(button, event);
 
     button.setPrefSize(screenWidth * widthFactor, screenHeight * heightFactor);
     button.setLayoutX(screenWidth * xLayoutFactor - button.getWidth() / 2);

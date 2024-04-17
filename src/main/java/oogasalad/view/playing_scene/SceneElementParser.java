@@ -69,8 +69,8 @@ public class SceneElementParser {
     for (int i = 0; i < children.getLength(); i++) {
       Node child = children.item(i);
       if (child.getNodeType() == Node.ELEMENT_NODE) {
-        String parameterName = element.getTagName();
-        String parameterValue = element.getTextContent();
+        String parameterName = ((Element) child).getTagName();
+        String parameterValue = child.getTextContent();
         parameters.put(parameterName, parameterValue);
       }
     }

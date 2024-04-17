@@ -1,4 +1,4 @@
-<scene_properties>
+<scene_elements>
   <node>
     <type>LISTVIEW</type>
     <width_factor>0.5</width_factor>
@@ -15,4 +15,4 @@
     <y_layout_factor>0.2</y_layout_factor>
     <styling>title-text</styling>
   </node>
-</scene_properties>
+</scene_elements>
