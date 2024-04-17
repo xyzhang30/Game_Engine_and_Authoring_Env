@@ -3,6 +3,7 @@ package oogasalad.model.api;
 import java.util.List;
 
 /**
+ * An immutable object representing the current state of the game
  *
  * @param gameObjectRecords A list of immutable GameObjects, representing the state of each
  *                          GameObject, including its position, velocity, visibility, and size
