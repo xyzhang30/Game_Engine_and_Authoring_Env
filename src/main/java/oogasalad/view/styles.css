@@ -1,8 +1,0 @@
-.title-button {
-  -fx-background-color: #42bff5;
-  -fx-text-fill: #ffffff;
-  -fx-font-family: "Comic Sans MS", "Arial", sans-serif;
-  -fx-font-size: 100px;
-  -fx-font-weight: bold;
-  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);
-}

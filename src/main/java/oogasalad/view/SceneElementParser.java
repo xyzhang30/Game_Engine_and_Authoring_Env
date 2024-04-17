@@ -1,7 +1,8 @@
 package oogasalad.view;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -23,14 +24,15 @@ public class SceneElementParser {
   private final String heightFactorTag = "height_factor";
   private final String xLayoutFactorTag = "x_layout_factor";
   private final String yLayoutFactorTag = "y_layout_factor";
+  private final String styleTag = "styling";
 
   public SceneElementParser(double screenWidth, double screenHeight) {
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
   }
 
-  public List<Node> createElementsFromFile(String filePath) throws Exception {
-    List<Node> sceneElements = new ArrayList<>();
+  public Map<Node, String> createElementsFromFile(String filePath) throws Exception {
+    Map<Node, String> sceneElements = new HashMap<>();
     DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
     DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
     Document doc = documentBuilder.parse(filePath);
@@ -42,28 +44,25 @@ public class SceneElementParser {
 
     for (int i = 0; i < nodeList.getLength(); i++) {
       Element element = (Element) nodeList.item(i);
-      sceneElements.add(createSceneElement(element));
+      createSceneElement(element, sceneElements);
     }
 
     return sceneElements;
   }
 
-  private Node createSceneElement(Element element) {
+  private void createSceneElement(Element element, Map<Node, String> sceneElements) {
     String type = element.getElementsByTagName(typeTag).item(0).getTextContent();
     switch (SceneElementType.valueOf(type)) {
       case BUTTON -> {
-        return createButton(element);
+        createButton(element, sceneElements);
       }
       case TEXT -> {
-        return createText(element);
-      }
-      default -> {
-        return null;
+        createText(element, sceneElements);
       }
     }
   }
 
-  private Button createButton(Element element) {
+  private void createButton(Element element, Map<Node, String> sceneElements) {
     String displayText = element.getElementsByTagName(textTag).item(0).getTextContent();
     double widthFactor = Double.parseDouble(
         element.getElementsByTagName(widthFactorTag).item(0).getTextContent());
@@ -73,31 +72,36 @@ public class SceneElementParser {
         element.getElementsByTagName(xLayoutFactorTag).item(0).getTextContent());
     double yLayoutFactor = Double.parseDouble(
         element.getElementsByTagName(yLayoutFactorTag).item(0).getTextContent());
+    String style = element.getElementsByTagName(styleTag).item(0).getTextContent();
 
     Button button = new Button(displayText);
-    button.setPrefSize(screenWidth * widthFactor, screenHeight * heightFactor);
-    button.setLayoutX(screenWidth * xLayoutFactor - button.getWidth()/2);
-    button.setLayoutY(screenHeight * yLayoutFactor - button.getHeight()/2);
 
-    return button;
+    button.setPrefSize(screenWidth * widthFactor, screenHeight * heightFactor);
+    button.setLayoutX(screenWidth * xLayoutFactor - button.getWidth() / 2);
+    button.setLayoutY(screenHeight * yLayoutFactor - button.getHeight() / 2);
+
+    sceneElements.put(button, style);
   }
 
-  private Text createText(Element element){
+  private void createText(Element element, Map<Node, String> sceneElements) {
     String displayText = element.getElementsByTagName(textTag).item(0).getTextContent();
     double xLayoutFactor = Double.parseDouble(
         element.getElementsByTagName(xLayoutFactorTag).item(0).getTextContent());
     double yLayoutFactor = Double.parseDouble(
         element.getElementsByTagName(yLayoutFactorTag).item(0).getTextContent());
+    String style = element.getElementsByTagName(styleTag).item(0).getTextContent();
 
     Text text = new Text(displayText);
-    text.setLayoutX(screenWidth * xLayoutFactor - text.getLayoutBounds().getWidth()/2);
-    text.setLayoutY(screenHeight * yLayoutFactor - text.getLayoutBounds().getHeight()/2);
+    text.getStyleClass().add(style);
 
-    return text;
+    text.setLayoutX(screenWidth * xLayoutFactor - text.getLayoutBounds().getWidth() / 2);
+    text.setLayoutY(screenHeight * yLayoutFactor - text.getLayoutBounds().getHeight() / 2);
+
+    sceneElements.put(text, style);
   }
 
   private ListView createListView(Element element) {
-
+    return null;
   }
 
 }

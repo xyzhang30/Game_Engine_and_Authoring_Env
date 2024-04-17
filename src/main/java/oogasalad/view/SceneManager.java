@@ -1,14 +1,15 @@
 package oogasalad.view;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
+import oogasalad.Main;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.view.Controlling.GameController;
@@ -26,19 +27,21 @@ public class SceneManager {
 
   public final static double SCREEN_WIDTH = Screen.getPrimary().getBounds().getWidth();
   public final static double SCREEN_HEIGHT = Screen.getPrimary().getBounds().getHeight();
-  private final Group root;
+  private final Pane root;
   private final Scene scene;
   private final SceneElementParser sceneElementParser;
+  private final ElementStyler elementStyler;
   private CompositeElement compositeElement;
   private GameScreen gameScreen;
   private int currentRound = 1;
-  private final String titleSceneElementsPath = "data/scene_properties/titleSceneProperties.xml";
+  private final String titleSceneElementsPath = "data/scene_properties/titleSceneElements.xml";
 
 
   public SceneManager() {
-    root = new Group();
+    root = new Pane();
     scene = new Scene(root);
     sceneElementParser = new SceneElementParser(SCREEN_WIDTH, SCREEN_HEIGHT);
+    elementStyler = new ElementStyler(root);
   }
 
   public void createScene(SceneType sceneType) {
@@ -47,7 +50,7 @@ public class SceneManager {
         createSceneElementsAndUpdateRoot(titleSceneElementsPath);
       }
       case MENU -> {
-        //createSceneElementsAndUpdateRoot();
+        createSceneElementsAndUpdateRoot(menuSceneElementsPath);
       }
       case GAME -> {
       }
@@ -61,9 +64,10 @@ public class SceneManager {
 
   public void createSceneElementsAndUpdateRoot(String filePath) {
     try {
-      List<Node> sceneElements = sceneElementParser.createElementsFromFile(filePath);
+      Map<Node, String> sceneElements = sceneElementParser.createElementsFromFile(filePath);
       root.getChildren().clear();
-      root.getChildren().addAll(sceneElements);
+      root.getChildren().addAll(sceneElements.keySet());
+      elementStyler.style(sceneElements);
     } catch (Exception e) {
       //TODO: Exception Handling
     }
