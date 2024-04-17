@@ -120,7 +120,7 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   public void advanceTurn() {
-    turn = rules.turnPolicy().getTurn();
+    turn = rules.turnPolicy().getNextTurn();
   }
 
   public int getRound() {
