@@ -76,7 +76,7 @@ public class GameController {
     getCurrentStrikeable(gameEngine.restoreLastStaticGameRecord());
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScreen(this, compositeElement);
-    sceneManager.update(gameEngine.restoreLastStaticGameRecord());
+    //sceneManager.update(gameEngine.restoreLastStaticGameRecord());
   }
 
   private void getCurrentStrikeable(GameRecord gameRecord) {

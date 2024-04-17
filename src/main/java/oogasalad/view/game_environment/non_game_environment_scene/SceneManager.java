@@ -38,6 +38,7 @@ public class SceneManager {
   private int currentRound = 1;
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
+  private final String gameManagementElementsPath = "data/scene_elements/gameManagementElements.xml";
 
 
   public SceneManager(GameController gameController) {
@@ -81,7 +82,6 @@ public class SceneManager {
     }
   }
 
-
   public Scene getScene() {
     return scene;
   }
@@ -98,9 +98,10 @@ public class SceneManager {
 
   public void makeGameScreen(GameController controller, CompositeElement compositeElement) {
     this.compositeElement = compositeElement;
-    gameScreen = new GameScreen(controller, compositeElement);
-    scene.setRoot(gameScreen.getRoot());
-    gameScreen.initiateListening(scene);
+    createSceneElementsAndUpdateRoot(gameManagementElementsPath);
+//    gameScreen = new GameScreen(controller, compositeElement);
+//    scene.setRoot(gameScreen.getRoot());
+//    gameScreen.initiateListening(scene);
   }
 
   public void enableHitting() {
