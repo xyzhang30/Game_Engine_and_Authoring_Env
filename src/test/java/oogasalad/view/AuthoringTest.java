@@ -21,7 +21,7 @@ public class AuthoringTest extends ApplicationTest {
 
   @Override
   public void start(Stage stage) {
-    controller = new GameController();
+    controller = new GameController(stage.widthProperty(),stage.heightProperty());
     TitleScreen screen = new TitleScreen(controller);
     testRoot = screen.getRoot();
     stage.setScene(new Scene(testRoot));

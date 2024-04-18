@@ -27,6 +27,7 @@ public class GamePanel {
 
   public void setCamera(double x, double y, double w, double h) {
     transformer.setFocus(x, y);
+    transformer.sizeToBounds(w,h);
   }
 
   public void zoomIn() {

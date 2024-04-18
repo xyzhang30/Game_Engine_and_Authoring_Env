@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.stage.Screen;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
@@ -26,8 +26,8 @@ import org.xml.sax.SAXException;
  */
 public class SceneManager {
 
-  public final static double SCREEN_WIDTH = Screen.getPrimary().getBounds().getWidth();
-  public final static double SCREEN_HEIGHT = Screen.getPrimary().getBounds().getHeight();
+  private final ReadOnlyDoubleProperty screenWidthObserver;
+  private final ReadOnlyDoubleProperty screenHeightObserver;
   private final Pane root;
   private final Scene scene;
   private final SceneElementParser sceneElementParser;
@@ -40,13 +40,16 @@ public class SceneManager {
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
 
 
-  public SceneManager(GameController gameController) {
+  public SceneManager(GameController control, ReadOnlyDoubleProperty w, ReadOnlyDoubleProperty h) {
     root = new Pane();
     scene = new Scene(root);
     sceneElementParser = new SceneElementParser();
-    sceneElementHandler = new SceneElementHandler(gameController);
-    sceneElementFactory = new SceneElementFactory(root, SCREEN_WIDTH, SCREEN_HEIGHT,
+    sceneElementHandler = new SceneElementHandler(control);
+    sceneElementFactory = new SceneElementFactory(root, 1000, 1000,
         sceneElementHandler);
+
+    screenWidthObserver = w;
+    screenHeightObserver = h;
   }
 
   public void createScene(SceneType sceneType) {
@@ -103,6 +106,13 @@ public class SceneManager {
     gameScreen = new GameScreen(controller, compositeElement);
     scene.setRoot(gameScreen.getRoot());
     gameScreen.initiateListening(scene);
+
+    screenWidthObserver.addListener((observable, oldValue, newValue)->{
+      gameScreen.setWidth(newValue.doubleValue());
+    });
+    screenHeightObserver.addListener((observable, oldValue, newValue) -> {
+      gameScreen.setHeight(newValue.doubleValue());
+    });
   }
 
   public void enableHitting() {
@@ -122,11 +132,5 @@ public class SceneManager {
   public void updateScoreTurnBoard(Map<Integer, Double> scoreMap, int turn, int round) {
     gameScreen.updateScoreBoard(scoreMap);
     gameScreen.updateTurnBoard(turn, round);
-  }
-  public void setWidth(double width){
-//    SCREEN_WIDTH = width;
-  }
-  public void setHeight(double height){
-//    SCREEN_HEIGHT = height;
   }
 }
