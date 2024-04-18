@@ -7,12 +7,14 @@ import java.util.TreeMap;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.game_environment.GameScreen;
+import oogasalad.view.game_environment.GameplayPanel.TransformableNode;
 import oogasalad.view.visual_elements.CompositeElement;
 import oogasalad.view.enums.SceneType;
 import org.xml.sax.SAXException;
@@ -75,8 +77,20 @@ public class SceneManager {
       List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(
           filePath);
       List<Node> sceneElements = sceneElementFactory.createSceneElements(sceneElementParameters);
-      root.getChildren().clear();
-      root.getChildren().addAll(sceneElements);
+
+      AnchorPane sol = new AnchorPane();
+      sol.getChildren().setAll(sceneElements);
+      TransformableNode tf = new TransformableNode(sol);
+      tf.sizeToBounds(screenWidthObserver.get(), screenHeightObserver.get());
+      screenWidthObserver.addListener((observable, oldValue, newValue)->{
+        tf.sizeToBounds(newValue.doubleValue(), screenHeightObserver.get());
+      });
+      screenHeightObserver.addListener((observable, oldValue, newValue) -> {
+        tf.sizeToBounds(screenWidthObserver.get(), newValue.doubleValue());
+      });
+
+      root.getChildren().setAll(tf.getPane());
+
     } catch (ParserConfigurationException e) {
       //TODO: Exception Handling
     } catch (SAXException e) {
