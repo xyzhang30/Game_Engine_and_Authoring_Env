@@ -2,8 +2,10 @@ package oogasalad.model.gameengine.statichandlers;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.api.exception.InvalidCommandException;
 
+@IsCommand(isCommand = false)
 public class StaticStateHandlerFactory {
 
   private static final String HANDLER_PATH = "oogasalad.model.gameengine.statichandlers.";

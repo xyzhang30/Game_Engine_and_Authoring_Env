@@ -14,7 +14,8 @@ import oogasalad.model.api.data.PlayerVariables;
 import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
 import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
-import oogasalad.view.authoring_environment.authoring_screens.NonControllableType;
+import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
+import oogasalad.view.authoring_environment.panels.GameObjectAttributesContainer;
 import oogasalad.view.controller.BuilderDirector;
 
 /**
@@ -80,12 +81,11 @@ public class NewAuthoringController {
 
   public void endAuthoring(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
-      List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap,
-      Map<Shape, String> imageMap, Map<Shape, Coordinate> posMap) {
+      Map<Shape, GameObjectAttributesContainer> gameObjectMap, Map<Shape, String> imageMap,
+      Map<Shape, Coordinate> posMap) {
     System.out.println(gameName);
     System.out.println(interactionMap);
-    System.out.println(controllables);
-    System.out.println(nonControllableTypeMap);
+    System.out.println(gameObjectMap);
     System.out.println(imageMap);
     System.out.println(posMap);
 
@@ -109,7 +109,7 @@ public class NewAuthoringController {
 
   private boolean submitGame(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
-      List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap,
+      List<Shape> controllables, Map<Shape, GameObjectType> nonControllableTypeMap,
       Map<Shape, String> imageMap, Map<Shape, Coordinate> posMap) {
     try {
       Map<Shape, Integer> collidableIdMap = new HashMap<>();
@@ -200,7 +200,7 @@ public class NewAuthoringController {
   }
 
   private void writeCollidables(Map<Shape, Integer> collidableIdMap, List<Shape> controllables,
-      Map<Shape, NonControllableType> nonControllableTypeMap, Map<Shape, String> imageMap,
+      Map<Shape, GameObjectType> nonControllableTypeMap, Map<Shape, String> imageMap,
       Map<Shape, Coordinate> posMap) {
 //    int collidableId = 0;
     List<GameObjectProperties> collidableObjects = new ArrayList<>();
@@ -223,7 +223,7 @@ public class NewAuthoringController {
 //    double staticFriction = 7;
 //    double kineticFriction = 5;
 //    String shapeName = "Rectangle";
-//    CollidableObject collidableObject = new CollidableObject(collidableId,
+//    GameObject collidableObject = new GameObject(collidableId,
 //        properties, Float.POSITIVE_INFINITY,
 //        new Position(posMap.get(background).x(), posMap.get(background).y()),
 //        shapeName, new Dimension(background.getLayoutBounds().getWidth(),

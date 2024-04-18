@@ -7,11 +7,11 @@ import javafx.scene.layout.VBox;
 public class ColorPanel implements Panel {
 
   private final ShapeProxy shapeProxy;
-  private final VBox containerVBox;
+  private final AnchorPane containerPane;
   private ColorPicker colorPicker;
 
-  public ColorPanel(ShapeProxy shapeProxy, VBox containerVBox) {
-    this.containerVBox = containerVBox;
+  public ColorPanel(ShapeProxy shapeProxy, AnchorPane containerPane) {
+    this.containerPane = containerPane;
     this.shapeProxy = shapeProxy;
     createElements();
     handleEvents();
@@ -24,7 +24,7 @@ public class ColorPanel implements Panel {
     AnchorPane.setTopAnchor(colorPicker, 50.0);
     AnchorPane.setRightAnchor(colorPicker, 50.0);
     colorPicker.setId("colorPicker");
-    containerVBox.getChildren().add(colorPicker);
+    containerPane.getChildren().add(colorPicker);
   }
 
   @Override

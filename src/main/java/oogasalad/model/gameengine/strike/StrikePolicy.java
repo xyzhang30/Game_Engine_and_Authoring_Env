@@ -1,6 +1,7 @@
 package oogasalad.model.gameengine.strike;
 
 import java.util.function.BiConsumer;
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 
 
@@ -13,6 +14,7 @@ import oogasalad.model.gameengine.GameEngine;
  */
 
 @FunctionalInterface
+@IsCommand(isCommand = false)
 public interface StrikePolicy {
 
   /**

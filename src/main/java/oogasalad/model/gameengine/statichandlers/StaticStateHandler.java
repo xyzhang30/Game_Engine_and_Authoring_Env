@@ -1,5 +1,6 @@
 package oogasalad.model.gameengine.statichandlers;
 
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.RulesRecord;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +16,7 @@ import org.apache.logging.log4j.Logger;
  *
  * @author Noah Loewy
  */
+@IsCommand(isCommand = false)
 public abstract class StaticStateHandler {
 
   protected static final Logger LOGGER = LogManager.getLogger(StaticStateHandler.class);

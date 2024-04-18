@@ -1,7 +1,9 @@
 package oogasalad.model.gameengine.condition;
 
 import java.util.List;
+import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.GameEngine;
 
@@ -12,6 +14,8 @@ import oogasalad.model.gameengine.GameEngine;
  * @author Noah Loewy
  */
 
+@IsCommand(isCommand = true)
+@CommandHelpInfo(description = "")
 public class ScoreThresholdCondition implements Condition {
 
   private final List<Double> arguments;
