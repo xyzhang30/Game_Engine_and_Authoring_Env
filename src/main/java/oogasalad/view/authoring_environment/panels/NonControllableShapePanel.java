@@ -28,6 +28,7 @@ public class NonControllableShapePanel extends ShapePanel {
     super.createElements();
     createGameObjectTypeSelection();
     createSurfaceOptions();
+    createCollidableOptions();
   }
 
   private void createGameObjectTypeSelection() {
@@ -62,6 +63,45 @@ public class NonControllableShapePanel extends ShapePanel {
 
     containerPane.getChildren()
         .addAll(kFrictionTextField, kFriction, sFrictionTextField, sFriction);
+  }
+
+  private void createCollidableOptions() {
+    createCollidableTypeOptions();
+    createCollidableParameterOptions();
+  }
+
+  private void createCollidableTypeOptions() {
+    ComboBox<String> collidableTypeDropDown = new ComboBox<>();
+    collidableTypeDropDown.getItems()
+        .addAll("STRIKEABLE", "CONTROLLABLE", "NON-CONTROLLABLE");
+    collidableTypeDropDown.setPromptText("Select Collidable Type");
+    AnchorPane.setRightAnchor(collidableTypeDropDown, 300.0);
+    AnchorPane.setTopAnchor(collidableTypeDropDown, 200.0);
+    collidableTypeDropDown.setPrefSize(200, 50);
+    containerPane.getChildren().add(collidableTypeDropDown);
+  }
+
+  private void createCollidableParameterOptions() {
+    TextField massTextField = new TextField();
+    massTextField.setPrefSize(40, 20);
+    AnchorPane.setRightAnchor(massTextField, 450.0);
+    AnchorPane.setTopAnchor(massTextField, 270.0);
+
+    Label mass = new Label("Mass");
+    AnchorPane.setRightAnchor(mass, 410.0);
+    AnchorPane.setTopAnchor(mass, 270.0);
+
+    TextField elasticityTextField = new TextField();
+    elasticityTextField.setPrefSize(40, 20);
+    AnchorPane.setRightAnchor(elasticityTextField, 450.0);
+    AnchorPane.setTopAnchor(elasticityTextField, 310.0);
+
+    Label elasticity = new Label("Elasticity");
+    AnchorPane.setRightAnchor(elasticity, 390.0);
+    AnchorPane.setTopAnchor(elasticity, 310.0);
+
+    containerPane.getChildren()
+        .addAll(massTextField, mass, elasticityTextField, elasticity);
   }
 
   private void handleNonControllableTypeSelection() {
