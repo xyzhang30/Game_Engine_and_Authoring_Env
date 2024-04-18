@@ -1,11 +1,11 @@
 package oogasalad.view.authoring_environment.panels;
 
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
 
 public class NonControllableShapePanel extends ShapePanel {
@@ -29,6 +29,7 @@ public class NonControllableShapePanel extends ShapePanel {
     createGameObjectTypeSelection();
     createSurfaceOptions();
     createCollidableOptions();
+    createMakePlayers();
   }
 
   private void createGameObjectTypeSelection() {
@@ -68,6 +69,7 @@ public class NonControllableShapePanel extends ShapePanel {
   private void createCollidableOptions() {
     createCollidableTypeOptions();
     createCollidableParameterOptions();
+    createScoreableOption();
   }
 
   private void createCollidableTypeOptions() {
@@ -102,6 +104,24 @@ public class NonControllableShapePanel extends ShapePanel {
 
     containerPane.getChildren()
         .addAll(massTextField, mass, elasticityTextField, elasticity);
+  }
+
+  private void createScoreableOption(){
+    CheckBox scoreableCheckBox = new CheckBox();
+    scoreableCheckBox.setPrefSize(20, 20);
+    AnchorPane.setRightAnchor(scoreableCheckBox, 470.0);
+    AnchorPane.setTopAnchor(scoreableCheckBox, 350.0);
+
+    Label scoreable = new Label("Scoreable");
+    AnchorPane.setRightAnchor(scoreable, 400.0);
+    AnchorPane.setTopAnchor(scoreable, 350.0);
+
+    containerPane.getChildren()
+        .addAll(scoreableCheckBox, scoreable);
+  }
+
+  private void createMakePlayers(){
+
   }
 
   private void handleNonControllableTypeSelection() {
