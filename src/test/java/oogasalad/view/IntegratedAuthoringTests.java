@@ -25,7 +25,7 @@
 //  @Override
 //  public void start(Stage stage) {
 //    this.mainStage = stage;
-//    gameController = new GameController();
+//    gameController = new GameController(stage.widthProperty(),stage.heightProperty());
 //    TitleScreen titleScreen = new TitleScreen(gameController);
 //    stage.setScene(new Scene(titleScreen.getRoot()));
 //    stage.show();

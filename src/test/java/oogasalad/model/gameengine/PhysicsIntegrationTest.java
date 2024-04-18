@@ -8,7 +8,7 @@ import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class PhysicsTest {
+public class PhysicsIntegrationTest {
 
 
   private static final double DELTA = .0001;

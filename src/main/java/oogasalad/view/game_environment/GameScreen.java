@@ -1,8 +1,5 @@
 package oogasalad.view.game_environment;
 
-import static oogasalad.view.game_environment.game_environment_scene.SceneManager.SCREEN_HEIGHT;
-import static oogasalad.view.game_environment.game_environment_scene.SceneManager.SCREEN_WIDTH;
-
 import java.util.Map;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,8 +22,9 @@ import oogasalad.view.visual_elements.input_indicators.Arrow;
  */
 
 public class GameScreen {
-
-  private final double maxPower = SCREEN_HEIGHT * 0.8;
+  private double screenWidth;
+  private double screenHeight;
+  private final double maxPower = 800;
   private final BorderPane root;
   private final GamePanel gamePanel;
   private boolean ableToHit;
@@ -46,6 +44,7 @@ public class GameScreen {
     gamePanel = new GamePanel(compositeElement);
     root.setCenter(gamePanel.getPane());
 
+
     setupAngleIndicator();
 
     createScene();
@@ -55,9 +54,7 @@ public class GameScreen {
 
   private void setupAngleIndicator() {
     // Assume arrow starts at the middle bottom of the scene and points upwards initially
-    angleArrow = new Arrow(
-        SCREEN_WIDTH * 0.85, SCREEN_HEIGHT * 0.8, SCREEN_WIDTH * 0.85,
-        SCREEN_HEIGHT * 0.7);
+    angleArrow = new Arrow(800,800,800,750);
 
     root.getChildren().add(angleArrow.getLine()); // Add the arrow line to the root pane
   }
@@ -126,12 +123,12 @@ public class GameScreen {
 
 
   private Rectangle setupPowerBar() {
-    Rectangle outline = new Rectangle(SCREEN_WIDTH * 0.9, SCREEN_HEIGHT * 0.1,
-        SCREEN_WIDTH * 0.07, SCREEN_HEIGHT * 0.8);
+    Rectangle outline = new Rectangle(900, 100,
+        70, 800);
     outline.setFill(Color.DARKGRAY);
 
-    Rectangle powerIndicator = new Rectangle(SCREEN_WIDTH * 0.91, SCREEN_HEIGHT * 0.89,
-        SCREEN_WIDTH * 0.05, 10);
+    Rectangle powerIndicator = new Rectangle(910, 890,
+        50, 10);
     powerIndicator.setFill(Color.DARKRED);
     powerIndicator.toFront();
 
@@ -191,10 +188,6 @@ public class GameScreen {
         gamePanel.zoomIn();
         break;
       }
-      case W: {
-        gamePanel.setCamera(-100, -100, 0, 0);
-        break;
-      }
     }
   }
 
@@ -204,10 +197,16 @@ public class GameScreen {
     }
 
   }
-
-  //this would need to be a for loop and loop through all the ids of elements
-//  public void addCompElement(CompositeElement compositeElement){
-//    root.getChildren().add(compositeElement.getNode());
-//  }
+  public void setWidth(double width){
+    screenWidth = width;
+    calibrateDimensions();
+  }
+  public void setHeight(double height){
+    screenHeight = height;
+    calibrateDimensions();
+  }
+  public void calibrateDimensions(){
+    gamePanel.setCamera(0,0,screenWidth*0.9,screenHeight*0.9);
+  }
 
 }
