@@ -1,17 +1,13 @@
-package oogasalad.model.gameengine.player;
+package oogasalad.model.gameengine;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import java.util.Map;
-import oogasalad.model.gameengine.turn.TurnPolicy;
 import org.junit.jupiter.api.Test;
-import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.condition.AllPlayersCompletedRoundCondition;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
