@@ -14,8 +14,9 @@ import oogasalad.model.api.data.PlayerVariables;
 import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
 import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
-import oogasalad.view.authoring_environment.authoring_screens.NonControllableType;
+import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
 import oogasalad.view.controller.BuilderDirector;
+import oogasalad.view.controller.GameController;
 
 /**
  * Class to handle transitions between authoring environment scenes and communications with backend
@@ -80,7 +81,7 @@ public class NewAuthoringController {
 
   public void endAuthoring(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
-      List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap,
+      List<Shape> controllables, Map<Shape, GameObjectType> nonControllableTypeMap,
       Map<Shape, String> imageMap, Map<Shape, Coordinate> posMap) {
     System.out.println(gameName);
     System.out.println(interactionMap);
@@ -109,7 +110,7 @@ public class NewAuthoringController {
 
   private boolean submitGame(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
-      List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap,
+      List<Shape> controllables, Map<Shape, GameObjectType> nonControllableTypeMap,
       Map<Shape, String> imageMap, Map<Shape, Coordinate> posMap) {
     try {
       Map<Shape, Integer> collidableIdMap = new HashMap<>();
@@ -200,7 +201,7 @@ public class NewAuthoringController {
   }
 
   private void writeCollidables(Map<Shape, Integer> collidableIdMap, List<Shape> controllables,
-      Map<Shape, NonControllableType> nonControllableTypeMap, Map<Shape, String> imageMap,
+      Map<Shape, GameObjectType> nonControllableTypeMap, Map<Shape, String> imageMap,
       Map<Shape, Coordinate> posMap) {
 //    int collidableId = 0;
     List<GameObjectProperties> collidableObjects = new ArrayList<>();

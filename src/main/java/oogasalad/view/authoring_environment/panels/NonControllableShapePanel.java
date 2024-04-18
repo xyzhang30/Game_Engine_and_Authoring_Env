@@ -4,15 +4,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import oogasalad.view.authoring_environment.authoring_screens.NonControllableType;
+import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
 
 public class NonControllableShapePanel extends ShapePanel {
 
-  private ComboBox<NonControllableType> nonControllableTypeDropdown;
+  private ComboBox<GameObjectType> nonControllableTypeDropdown;
 
   public NonControllableShapePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy,
-      AnchorPane rootPane, VBox containerVBox, StackPane canvas) {
-    super(authoringProxy, shapeProxy, rootPane, containerVBox, canvas);
+      AnchorPane rootPane, AnchorPane containerPane, StackPane canvas) {
+    super(authoringProxy, shapeProxy, rootPane, containerPane, canvas);
   }
 
   @Override
@@ -28,20 +28,23 @@ public class NonControllableShapePanel extends ShapePanel {
   }
 
   private void createNonControllableTypeSelection() {
+    System.out.println("new");
     nonControllableTypeDropdown = new ComboBox<>();
     nonControllableTypeDropdown.getItems()
-        .addAll(NonControllableType.SURFACE, NonControllableType.MOVABLE);
+        .addAll(GameObjectType.SURFACE, GameObjectType.COLLIDABLE);
     nonControllableTypeDropdown.setPromptText("Select Obstacle Type");
-    AnchorPane.setRightAnchor(nonControllableTypeDropdown, 50.0);
-    AnchorPane.setBottomAnchor(nonControllableTypeDropdown, 300.0);
-    nonControllableTypeDropdown.setPrefSize(200, 100);
-    containerVBox.getChildren().add(nonControllableTypeDropdown);
+    AnchorPane.setRightAnchor(nonControllableTypeDropdown, 300.0);
+    AnchorPane.setTopAnchor(nonControllableTypeDropdown, 50.0);
+    System.out.println("here");
+    nonControllableTypeDropdown.setPrefSize(200, 50);
+    containerPane.getChildren().add(nonControllableTypeDropdown);
   }
 
   private void handleNonControllableTypeSelection() {
     nonControllableTypeDropdown.valueProperty().addListener((obs, oldVal, nonControllableType) -> {
       if (shapeProxy.getShape() != null && nonControllableType != null) {
         authoringProxy.addNonControllableShape(shapeProxy.getShape(), nonControllableType);
+
       }
     });
   }

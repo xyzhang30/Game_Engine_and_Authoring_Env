@@ -54,7 +54,7 @@ public class WriteStrikeables {
 
   //
 //  private void writeCollidables(Map<Shape, Integer> collidableIdMap, List<Shape> controllables,
-//      Map<Shape, NonControllableType> nonControllableTypeMap, Map<Shape, String> imageMap,
+//      Map<Shape, GameObjectType> nonControllableTypeMap, Map<Shape, String> imageMap,
 //      Map<Shape, List<Double>> posMap) {
 //    int collidableId = 0;
 //    List<CollidableObject> collidableObjects = new ArrayList<>();

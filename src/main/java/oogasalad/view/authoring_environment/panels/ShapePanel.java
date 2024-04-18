@@ -23,7 +23,7 @@ public class ShapePanel implements Panel {
   protected final AuthoringProxy authoringProxy;
   protected final StackPane canvas;
   protected final AnchorPane rootPane;
-  protected final VBox containerVBox;
+  protected final AnchorPane containerPane;
   private final List<Shape> templateShapes = new ArrayList<>();
   private Coordinate startPos;
   private Coordinate translatePos;
@@ -32,11 +32,11 @@ public class ShapePanel implements Panel {
   private Slider angleSlider;
 
   public ShapePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
-      VBox containerVBox, StackPane canvas) {
+      AnchorPane containerPane, StackPane canvas) {
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
     this.rootPane = rootPane;
-    this.containerVBox = containerVBox;
+    this.containerPane = containerPane;
     this.canvas = canvas;
     createElements();
     handleEvents();
@@ -46,7 +46,7 @@ public class ShapePanel implements Panel {
   public void createElements() {
     createSizeAndAngleSliders(); // strategy
     templateShapes.addAll(shapeProxy.createTemplateShapes()); // strategy
-    containerVBox.getChildren().addAll(templateShapes);
+    containerPane.getChildren().addAll(templateShapes);
   }
 
   @Override
@@ -122,7 +122,7 @@ public class ShapePanel implements Panel {
 
     templateShapes.add(duplicateShape);
     handleShapeEvents(duplicateShape);
-    containerVBox.getChildren().add(duplicateShape);
+    containerPane.getChildren().add(duplicateShape);
 
     startPos = new Coordinate(event.getSceneX(), event.getSceneY());
     translatePos = new Coordinate(shape.getTranslateX(), shape.getTranslateY());
@@ -184,7 +184,7 @@ public class ShapePanel implements Panel {
     angleSlider.valueProperty().addListener((observable, oldValue, newValue) ->
         changeAngle(newValue.doubleValue()));
 
-    containerVBox.getChildren().add(sliderContainerBox);
+    containerPane.getChildren().add(sliderContainerBox);
   }
 
   private Slider createAngleSlider(VBox sliderContainerBox) {

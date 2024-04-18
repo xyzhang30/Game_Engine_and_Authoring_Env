@@ -1,6 +1,6 @@
 package oogasalad.view.authoring_environment.authoring_screens;
 
-public enum NonControllableType {
+public enum GameObjectType {
   SURFACE,
-  MOVABLE
+  COLLIDABLE,
 }
