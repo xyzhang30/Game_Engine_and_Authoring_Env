@@ -1,6 +1,7 @@
 package oogasalad.model.gameengine.strike;
 
 import java.util.function.BiConsumer;
+import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 
@@ -15,6 +16,7 @@ import oogasalad.model.gameengine.GameEngine;
  */
 
 @IsCommand(isCommand = true)
+@CommandHelpInfo(description = "")
 public class DoNothingStrikePolicy implements StrikePolicy {
 
   public DoNothingStrikePolicy(){}

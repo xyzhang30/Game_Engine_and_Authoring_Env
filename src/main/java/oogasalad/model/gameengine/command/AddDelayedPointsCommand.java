@@ -2,6 +2,7 @@ package oogasalad.model.gameengine.command;
 
 import java.util.List;
 import java.util.Optional;
+import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
@@ -16,6 +17,7 @@ import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
  */
 
 @IsCommand(isCommand = true)
+@CommandHelpInfo(description = "")
 public class AddDelayedPointsCommand implements Command {
 
   private final List<Double> arguments;

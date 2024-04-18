@@ -1,5 +1,6 @@
 package oogasalad.model.gameengine.statichandlers;
 
+import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.RulesRecord;
@@ -12,6 +13,7 @@ import oogasalad.model.gameengine.RulesRecord;
  * @author Noah Loewy
  */
 @IsCommand(isCommand = true)
+@CommandHelpInfo(description = "")
 public class GameOverStaticStateHandler extends StaticStateHandler {
 
   /**
