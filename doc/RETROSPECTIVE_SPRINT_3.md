@@ -56,10 +56,20 @@ authoring environment when needed.
 ### Judy
 
 * Work done this Sprint
+  * For this sprint, I worked on refactoring the authoring environment. I made numerous abstractions including Panel and Container, and implemented the Proxy pattern (ShapeProxy, AuthoringProxy) for enabling a common pointer to the current selected shape and keeping track of creation of items like GameObject, Collidable, and Surface. This eliminated the need for multiple authoring screen classes. There is only one class, AuthoringScreen, now for displaying the authoring environment. Rather than generating a new window for each page, the authoring environment now includes a dropdown listing the different possible pages. When a page is selected, the screen re-populates itself, particularly the Container section. This allows for more flexibility as the user can now go back and forth between different configuration pages.   
 
 * Plan for next Sprint?
+  * Debug drag/drop shape from shape templates.
+  * Using the AuthoringProxy to successfully save all configured data from the authoring environment.
+  * Refactor Panel classes.
+  * Refactor AuthoringScreen class, specifically the part where permanent UI elements are initializes (finishButton, page dropdown, canvas).
+  * Remove hard-coding in all parts of the authoring environment.
+  * Move the order of different combination of Panel for each page to a data file. 
 
 * Blockers/Issues in your way
+  * Determining the best way to refactor the Panel classes.
+  * Debugging the drag/drop of shapes from shape templates.
+  * Sourcing the set-up of pages of the authoring environment from data files.   
 
 ### Alisha
 
