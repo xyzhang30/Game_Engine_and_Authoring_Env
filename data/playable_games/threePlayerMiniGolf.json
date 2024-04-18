@@ -141,8 +141,8 @@
       "properties": ["visible", "collidable", "strikeable"],
       "mass": 0.04,
       "position": {
-        "x_position": 800,
-        "y_position": 720
+        "x_position": 500,
+        "y_position": 800
       },
       "shape": "Circle",
       "dimension": {
@@ -256,8 +256,26 @@
       "properties": ["visible", "collidable", "strikeable"],
       "mass": 0.04,
       "position": {
-        "x_position": 380,
-        "y_position": 200
+        "x_position": 500,
+        "y_position": 800
+      },
+      "shape": "Circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [255,255,255],
+      "image": ""
+    },
+    {
+      "gameobject_id": 15,
+      "properties": ["visible", "collidable", "strikeable"],
+      "mass": 0.04,
+      "position": {
+        "x_position": 500,
+        "y_position": 800
       },
       "shape": "Circle",
       "dimension": {
@@ -269,11 +287,20 @@
       "color": [255,255,255],
       "image": ""
     }
+
   ],
   "players": [
     {
       "player_id": 1,
       "my_strikeable": [8]
+    },
+    {
+      "player_id": 2,
+      "my_strikeable": [14]
+    },
+    {
+      "player_id": 3,
+      "my_strikeable": [15]
     }
   ],
   "variables": [

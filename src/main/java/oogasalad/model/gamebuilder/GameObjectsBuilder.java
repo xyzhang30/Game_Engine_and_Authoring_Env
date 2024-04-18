@@ -13,3 +13,4 @@ public class GameObjectsBuilder implements GameBuilder {
     gameData.setGameObject(cos);
   }
 }
+
