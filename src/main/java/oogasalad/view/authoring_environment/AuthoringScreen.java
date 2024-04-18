@@ -124,7 +124,7 @@ public class AuthoringScreen {
     StackPane.setAlignment(background, Pos.TOP_LEFT);
 
     shapeProxy.setShape(background);
-    authoringProxy.addNonControllableShape(background, GameObjectType.SURFACE);
+    //authoringProxy.addNonControllableShape(background, GameObjectType.SURFACE);
 //    authoringProxy.getAuthoringController().setBackground(background);
     rootPane.getChildren().add(canvasPane);
     canvasPane.getChildren().add(background);

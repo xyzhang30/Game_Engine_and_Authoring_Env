@@ -27,9 +27,7 @@ import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
  * @author Noah Loewy
  */
 
-
 public class GameObject {
-
   private final double myMass;
   private final int myId;
   private final double myWidth;

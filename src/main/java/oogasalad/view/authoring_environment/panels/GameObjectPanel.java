@@ -186,7 +186,6 @@ public class GameObjectPanel extends ShapePanel {
   private void handleGameObjectTypeSelection() {
     gameObjectTypeDropdown.valueProperty().addListener((obs, oldVal, gameObjectType) -> {
       if (shapeProxy.getShape() != null && gameObjectType != null) {
-        authoringProxy.addNonControllableShape(shapeProxy.getShape(), gameObjectType);
         updateSelectionOptions(gameObjectType);
       }
     });

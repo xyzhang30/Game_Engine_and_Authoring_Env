@@ -114,7 +114,7 @@ public class ShapePanel implements Panel {
     templateShapes.remove(shape);
     shapeProxy.setShape(shape);
     shape.setStroke(Color.GREEN);
-    shape.setId(String.valueOf(authoringProxy.getControllables().size() + 1));
+    //shape.setId(String.valueOf(authoringProxy.getControllables().size() + 1));
 
     // JavaFX drag and drop -> drop target - example, labe Reflection
     Shape duplicateShape = shape.getClass().getDeclaredConstructor()
@@ -154,7 +154,7 @@ public class ShapePanel implements Panel {
     System.out.println(shape.getTranslateY());
     if (isInAuthoringBox(shape)) {
 //      shape.setStrokeWidth(0);
-      authoringProxy.addControllableShape(shape);
+      //authoringProxy.addControllableShape(shape);
       Coordinate coordinate = new Coordinate(AnchorPane.getLeftAnchor(shape),
           AnchorPane.getTopAnchor(shape));
       authoringProxy.addShapePosition(shape, coordinate);
