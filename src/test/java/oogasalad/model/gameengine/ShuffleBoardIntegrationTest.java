@@ -15,7 +15,7 @@ public class ShuffleBoardIntegrationTest {
 
 
   private static final double DELTA = .0001;
-  private static final String TITLE = "testShuffleboardRules";
+  private static final String TITLE = "shuffleTest";
   private GameEngine gameEngine;
   private GameObjectContainer container;
 
