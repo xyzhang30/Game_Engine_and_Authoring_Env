@@ -204,6 +204,7 @@
       "AdvanceRoundCommand" : [ ]
     }, {
       "AdjustActivePointsCommand" : [ 1.0 ]
-    } ]
+    } ],
+    "strike_policy": "DoNothingStrikePolicy"
   }
 }

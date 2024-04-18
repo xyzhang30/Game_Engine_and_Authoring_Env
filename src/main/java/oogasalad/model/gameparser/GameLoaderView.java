@@ -59,8 +59,8 @@ public class GameLoaderView extends GameLoader {
 
   private GameObjectShape matchShape(String shape) throws InvalidShapeException {
     return switch (shape) {
-      case "Circle" -> GameObjectShape.ELLIPSE;
-      case "Rectangle" -> GameObjectShape.RECTANGLE;
+      case "Circle", "circle" -> GameObjectShape.ELLIPSE;
+      case "Rectangle", "rectangle" -> GameObjectShape.RECTANGLE;
       default -> {
         LOGGER.error("Shape" + shape + " is not supported");
         throw new InvalidShapeException("Shape " + shape + " is not supported");
