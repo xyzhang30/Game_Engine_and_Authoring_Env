@@ -6,6 +6,7 @@ import java.util.Map;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import oogasalad.view.enums.SceneElementType;
@@ -35,20 +36,20 @@ public class SceneElementFactory {
     this.sceneElementHandler = sceneElementHandler;
   }
 
-  public List<Node> createSceneElements(List<Map<String, String>> parameterList) {
-    List<Node> sceneElements = new ArrayList<>();
+  public Pane createSceneElements(List<Map<String, String>> parameterList) {
+    AnchorPane sceneElements = new AnchorPane();
 
     for (Map<String, String> parameterMap : parameterList) {
       String type = parameterMap.get(typeTag);
       switch (SceneElementType.valueOf(type)) {
         case BUTTON -> {
-          sceneElements.add(createButton(parameterMap));
+          sceneElements.getChildren().add(createButton(parameterMap));
         }
         case TEXT -> {
-          sceneElements.add(createText(parameterMap));
+          sceneElements.getChildren().add(createText(parameterMap));
         }
         case LISTVIEW -> {
-          sceneElements.add(createListView(parameterMap));
+          sceneElements.getChildren().add(createListView(parameterMap));
         }
       }
     }
