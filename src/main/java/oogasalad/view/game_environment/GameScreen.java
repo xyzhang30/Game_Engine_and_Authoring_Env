@@ -44,7 +44,7 @@ public class GameScreen {
     gamePanel = new GamePanel(compositeElement);
     root.setCenter(gamePanel.getPane());
 
-    
+
     setupAngleIndicator();
 
     createScene();
@@ -188,10 +188,6 @@ public class GameScreen {
         gamePanel.zoomIn();
         break;
       }
-      case W: {
-        gamePanel.setCamera(-100, -100, 0, 0);
-        break;
-      }
     }
   }
 
@@ -210,7 +206,7 @@ public class GameScreen {
     calibrateDimensions();
   }
   public void calibrateDimensions(){
-    gamePanel.setCamera(1,1,screenWidth*0.8,screenHeight*0.8);
+    gamePanel.setCamera(0,0,screenWidth*0.9,screenHeight*0.9);
   }
 
 }

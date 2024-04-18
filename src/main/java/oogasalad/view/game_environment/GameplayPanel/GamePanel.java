@@ -1,40 +1,58 @@
 package oogasalad.view.game_environment.GameplayPanel;
 
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import oogasalad.view.visual_elements.CompositeElement;
 
 /**
  * Transforms a node
  */
 public class GamePanel {
+  private final TransformableNode mapTransformer;
+  private final TransformableNode screenTransformer;
+  private final Rectangle localMapFrame;
 
-  private final Pane localDisplay;
-  private final TransformableNode transformer;
-
-  public GamePanel(CompositeElement elements) {
-    AnchorPane source = new AnchorPane();
+  public GamePanel(CompositeElement modelElements) {
+    mapTransformer = new TransformableNode(buildMapView(modelElements));
+    localMapFrame = new Rectangle(800,800);
+    screenTransformer = new TransformableNode(buildLocalView());
+  }
+  private Pane buildMapView(CompositeElement elements){
+    AnchorPane mapViewBase = new AnchorPane();
     for (int id : elements.idList()) {
-      source.getChildren().add(elements.getNode(id));
+      mapViewBase.getChildren().add(elements.getNode(id));
     }
-    transformer = new TransformableNode(source);
-    localDisplay = new AnchorPane(transformer.getPane());
+    return mapViewBase;
+  }
+  private Pane buildLocalView(){
+    Pane gameMap = mapTransformer.getPane();
+    gameMap.setClip(localMapFrame);
+    AnchorPane localView = new AnchorPane(gameMap);
+    mapTransformer.sizeToBounds(localMapFrame.getWidth(),localMapFrame.getHeight());
+
+    // Add some local view indicator elements here
+    gameMap.setStyle("-fx-background-color: #FF0000;");
+    localView.setStyle("-fx-background-color: #DDAAFF;");
+
+    return localView;
   }
 
   public Pane getPane() {
-    return localDisplay;
+    return screenTransformer.getPane();
   }
 
   public void setCamera(double x, double y, double w, double h) {
-    transformer.setFocus(x, y);
-    transformer.sizeToBounds(w,h);
+    screenTransformer.sizeToBounds(w,h);
   }
 
   public void zoomIn() {
-    transformer.zoom(1.05);
+    mapTransformer.zoom(1.05);
   }
 
   public void zoomOut() {
-    transformer.zoom(0.95);
+    mapTransformer.zoom(0.95);
   }
 }
