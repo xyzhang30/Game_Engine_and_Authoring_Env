@@ -14,7 +14,7 @@ import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
 
 public class GameObjectPanel extends ShapePanel {
 
-  private ComboBox<GameObjectType> nonControllableTypeDropdown;
+  private ComboBox<GameObjectType> gameObjectTypeDropdown;
   private ComboBox<String> collidableTypeDropDown;
   private TextField kFrictionTextField;
   private TextField sFrictionTextField;
@@ -39,7 +39,9 @@ public class GameObjectPanel extends ShapePanel {
   @Override
   public void handleEvents() {
     super.handleEvents();
-    handleNonControllableTypeSelection();
+    //handleGameObjectTypeSelection();
+    handlePlayerAssignment();
+    handleAddAndRemovePlayers();
   }
 
   @Override
@@ -52,17 +54,18 @@ public class GameObjectPanel extends ShapePanel {
     createPlayerAssignment();
     setCollidableOptionVisibility(false);
     setSurfaceOptionVisibility(false);
+    setPlayerAssignmentVisibility(false);
   }
 
   private void createGameObjectTypeSelection() {
-    nonControllableTypeDropdown = new ComboBox<>();
-    nonControllableTypeDropdown.getItems()
+    gameObjectTypeDropdown = new ComboBox<>();
+    gameObjectTypeDropdown.getItems()
         .addAll(GameObjectType.SURFACE, GameObjectType.COLLIDABLE);
-    nonControllableTypeDropdown.setPromptText("Select Obstacle Type");
-    AnchorPane.setRightAnchor(nonControllableTypeDropdown, 300.0);
-    AnchorPane.setTopAnchor(nonControllableTypeDropdown, 50.0);
-    nonControllableTypeDropdown.setPrefSize(200, 50);
-    containerPane.getChildren().add(nonControllableTypeDropdown);
+    gameObjectTypeDropdown.setPromptText("Select Obstacle Type");
+    AnchorPane.setRightAnchor(gameObjectTypeDropdown, 300.0);
+    AnchorPane.setTopAnchor(gameObjectTypeDropdown, 50.0);
+    gameObjectTypeDropdown.setPrefSize(200, 50);
+    containerPane.getChildren().add(gameObjectTypeDropdown);
   }
 
   private void createSurfaceOptions() {
@@ -180,7 +183,16 @@ public class GameObjectPanel extends ShapePanel {
         .addAll(removePlayerButton, addPlayerButton, numPlayersLabel, numPlayers);
   }
 
-  private void handleNonControllableTypeSelection() {
+  private void handleGameObjectTypeSelection() {
+    gameObjectTypeDropdown.valueProperty().addListener((obs, oldVal, gameObjectType) -> {
+      if (shapeProxy.getShape() != null && gameObjectType != null) {
+        authoringProxy.addNonControllableShape(shapeProxy.getShape(), gameObjectType);
+        updateSelectionOptions(gameObjectType);
+      }
+    });
+  }
+
+  private void handleAddAndRemovePlayers() {
     addPlayerButton.setOnMouseClicked(e -> {
       authoringProxy.increaseNumPlayers();
       playerAssignmentListView.getItems().add("Player " + authoringProxy.getNumPlayers());
@@ -194,11 +206,22 @@ public class GameObjectPanel extends ShapePanel {
         numPlayers.setText(String.valueOf(authoringProxy.getNumPlayers()));
       }
     });
+  }
 
-    nonControllableTypeDropdown.valueProperty().addListener((obs, oldVal, gameObjectType) -> {
-      if (shapeProxy.getShape() != null && gameObjectType != null) {
-        authoringProxy.addNonControllableShape(shapeProxy.getShape(), gameObjectType);
-        updateSelectionOptions(gameObjectType);
+  private void handlePlayerAssignment() {
+    scoreableCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+      if (newValue) {
+        setPlayerAssignmentVisibility(true);
+      } else {
+        setPlayerAssignmentVisibility(false);
+      }
+    });
+
+    collidableTypeDropDown.valueProperty().addListener((obs, oldVal, collidableType) -> {
+      if (collidableType.equals("STRIKEABLE") || collidableType.equals("CONTROLLABLE")) {
+        setPlayerAssignmentVisibility(true);
+      } else {
+        setPlayerAssignmentVisibility(false);
       }
     });
   }
@@ -228,5 +251,9 @@ public class GameObjectPanel extends ShapePanel {
     elasticity.setVisible(visibility);
     scoreableCheckBox.setVisible(visibility);
     scoreable.setVisible(visibility);
+  }
+
+  private void setPlayerAssignmentVisibility(boolean visibility) {
+    playerAssignmentListView.setVisible(visibility);
   }
 }
