@@ -134,7 +134,7 @@ public class PolicyPanel implements Panel{
     Stage popupStage = new Stage();
     popupStage.setTitle("Specify Command Parameters");
 
-    Label label = new Label(item+":");
+    Label label = new Label(item+": (expected " + numParam + ")");
     VBox vbox = new VBox(label);
 
     for (int i = 0; i < numParam; i ++){
