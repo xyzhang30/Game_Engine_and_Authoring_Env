@@ -1,5 +1,6 @@
 package oogasalad.view.authoring_environment.panels;
 
+import java.util.function.Consumer;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -205,6 +206,15 @@ public class GameObjectPanel extends ShapePanel {
         numPlayers.setText(String.valueOf(authoringProxy.getNumPlayers()));
       }
     });
+  }
+
+  private void updateProxyMapWithTextFieldInput(TextField textField,
+      Consumer<String> inputConsumer) {
+    if (textField.isVisible()) {
+      String inputText = textField.getText();
+      textField.clear();
+      inputConsumer.accept(inputText);
+    }
   }
 
   private void handlePlayerAssignment() {
