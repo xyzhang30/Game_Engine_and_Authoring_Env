@@ -18,6 +18,7 @@ import oogasalad.view.authoring_environment.panels.ColorPanel;
 import oogasalad.view.authoring_environment.panels.ImagePanel;
 import oogasalad.view.authoring_environment.panels.InteractionPanel;
 import oogasalad.view.authoring_environment.panels.GameObjectPanel;
+import oogasalad.view.authoring_environment.panels.PolicyPanel;
 import oogasalad.view.authoring_environment.panels.ShapeProxy;
 
 public class AuthoringScreen {
@@ -71,7 +72,7 @@ public class AuthoringScreen {
       case "Interactions" ->
           container.setPanels(List.of(new InteractionPanel(authoringProxy, shapeProxy, rootPane,
               containerPane, canvasPane)));
-      //case "Policies" ->
+      case "Policies" -> container.setPanels(List.of(new PolicyPanel(authoringProxy, shapeProxy, rootPane, containerPane, canvasPane)));
     }
 
   }
