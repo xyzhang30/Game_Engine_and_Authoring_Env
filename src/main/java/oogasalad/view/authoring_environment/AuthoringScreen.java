@@ -83,7 +83,7 @@ public class AuthoringScreen {
     // TODO: REMOVE HARD-CODING
     titleText.setFont(Font.font("Arial", 30));
     AnchorPane.setTopAnchor(titleText, 5.0);
-    AnchorPane.setLeftAnchor(titleText, 50.0);
+    AnchorPane.setLeftAnchor(titleText, 400.0);
   }
 
 //  private void createShapesPane() {

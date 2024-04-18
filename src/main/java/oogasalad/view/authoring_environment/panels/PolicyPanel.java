@@ -60,11 +60,12 @@ public class PolicyPanel implements Panel{
   private void createPolicySelectionDropdown(String policyNameLabel, boolean singleChoice, String commandPackage, int heightIdx) {
     Label label = new Label(policyNameLabel);
     AnchorPane.setTopAnchor(label,50.0*heightIdx);
+    AnchorPane.setLeftAnchor(label,350.0);
     List<String> availableCommands = getAvailableCommands(commandPackage);
     if (singleChoice) {
       ComboBox<String> comboBox = new ComboBox<>();
       AnchorPane.setLeftAnchor(comboBox, 500.0);
-      AnchorPane.setTopAnchor(comboBox,100.0*heightIdx);
+      AnchorPane.setTopAnchor(comboBox,50.0*heightIdx);
       // Add items to the ComboBox
       comboBox.getItems().addAll(availableCommands);
       // Set a default value
@@ -78,8 +79,10 @@ public class PolicyPanel implements Panel{
       CheckComboBox<String> checkComboBox = new CheckComboBox<>(
           FXCollections.observableArrayList(availableCommands)
       );
+      checkComboBox.setMaxWidth(300);
       containerPane.getChildren().addAll(label,checkComboBox);
-      AnchorPane.setTopAnchor(checkComboBox,100.0);
+      AnchorPane.setLeftAnchor(checkComboBox, 500.0);
+      AnchorPane.setTopAnchor(checkComboBox,50.0*heightIdx);
       checkComboBox.setId(policyNameLabel);
     }
   }
