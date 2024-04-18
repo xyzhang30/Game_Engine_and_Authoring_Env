@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -18,7 +17,7 @@ import oogasalad.view.authoring_environment.panels.AuthoringProxy;
 import oogasalad.view.authoring_environment.panels.ColorPanel;
 import oogasalad.view.authoring_environment.panels.ImagePanel;
 import oogasalad.view.authoring_environment.panels.InteractionPanel;
-import oogasalad.view.authoring_environment.panels.NonControllableShapePanel;
+import oogasalad.view.authoring_environment.panels.GameObjectPanel;
 import oogasalad.view.authoring_environment.panels.ShapeProxy;
 
 public class AuthoringScreen {
@@ -67,7 +66,7 @@ public class AuthoringScreen {
           List.of(new ColorPanel(shapeProxy, containerPane),
               new ImagePanel(authoringProxy, shapeProxy,
                   containerPane),
-              new NonControllableShapePanel(authoringProxy, shapeProxy, rootPane,
+              new GameObjectPanel(authoringProxy, shapeProxy, rootPane,
                   containerPane, canvasPane)));
       case "Interactions" ->
           container.setPanels(List.of(new InteractionPanel(authoringProxy, shapeProxy, rootPane,

@@ -4,13 +4,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
 
-public class NonControllableShapePanel extends ShapePanel {
+public class GameObjectPanel extends ShapePanel {
 
   private ComboBox<GameObjectType> nonControllableTypeDropdown;
   private ComboBox<String> collidableTypeDropDown;
@@ -18,6 +20,7 @@ public class NonControllableShapePanel extends ShapePanel {
   private TextField sFrictionTextField;
   private TextField massTextField;
   private TextField elasticityTextField;
+  private ListView<String> playerAssignmentListView;
   private CheckBox scoreableCheckBox;
   private Button addPlayerButton;
   private Button removePlayerButton;
@@ -28,7 +31,7 @@ public class NonControllableShapePanel extends ShapePanel {
   private Label elasticity;
   private Label scoreable;
 
-  public NonControllableShapePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy,
+  public GameObjectPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy,
       AnchorPane rootPane, AnchorPane containerPane, StackPane canvas) {
     super(authoringProxy, shapeProxy, rootPane, containerPane, canvas);
   }
@@ -46,6 +49,7 @@ public class NonControllableShapePanel extends ShapePanel {
     createSurfaceOptions();
     createCollidableOptions();
     createMakePlayers();
+    createPlayerAssignment();
     setCollidableOptionVisibility(false);
     setSurfaceOptionVisibility(false);
   }
@@ -88,6 +92,21 @@ public class NonControllableShapePanel extends ShapePanel {
     createCollidableTypeOptions();
     createCollidableParameterOptions();
     createScoreableOption();
+  }
+
+  private void createPlayerAssignment() {
+    playerAssignmentListView = new ListView<String>();
+
+    for (int currPlayerNum = 1; currPlayerNum <= authoringProxy.getNumPlayers(); currPlayerNum++) {
+      playerAssignmentListView.getItems().add("Player " + currPlayerNum);
+    }
+
+    playerAssignmentListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    AnchorPane.setRightAnchor(playerAssignmentListView, 300.0);
+    AnchorPane.setTopAnchor(playerAssignmentListView, 400.0);
+    playerAssignmentListView.setPrefSize(200, 150);
+
+    containerPane.getChildren().add(playerAssignmentListView);
   }
 
   private void createCollidableTypeOptions() {
@@ -164,11 +183,13 @@ public class NonControllableShapePanel extends ShapePanel {
   private void handleNonControllableTypeSelection() {
     addPlayerButton.setOnMouseClicked(e -> {
       authoringProxy.increaseNumPlayers();
+      playerAssignmentListView.getItems().add("Player " + authoringProxy.getNumPlayers());
       numPlayers.setText(String.valueOf(authoringProxy.getNumPlayers()));
     });
 
     removePlayerButton.setOnMouseClicked(e -> {
       if (authoringProxy.getNumPlayers() > 1) {
+        playerAssignmentListView.getItems().remove("Player " + authoringProxy.getNumPlayers());
         authoringProxy.decreaseNumPlayers();
         numPlayers.setText(String.valueOf(authoringProxy.getNumPlayers()));
       }
