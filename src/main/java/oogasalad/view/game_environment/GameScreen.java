@@ -44,6 +44,7 @@ public class GameScreen {
     gamePanel = new GamePanel(compositeElement);
     root.setCenter(gamePanel.getPane());
 
+    
     setupAngleIndicator();
 
     createScene();
