@@ -13,12 +13,10 @@ import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.data.PlayerVariables;
 import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
-import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
 import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
-import oogasalad.view.authoring_environment.panels.GameObjectPropertiesContainer;
+import oogasalad.view.authoring_environment.panels.GameObjectAttributesContainer;
 import oogasalad.view.controller.BuilderDirector;
-import oogasalad.view.controller.GameController;
 
 /**
  * Class to handle transitions between authoring environment scenes and communications with backend
@@ -83,7 +81,7 @@ public class NewAuthoringController {
 
   public void endAuthoring(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
-      Map<Shape, GameObjectPropertiesContainer> gameObjectMap, Map<Shape, String> imageMap,
+      Map<Shape, GameObjectAttributesContainer> gameObjectMap, Map<Shape, String> imageMap,
       Map<Shape, Coordinate> posMap) {
     System.out.println(gameName);
     System.out.println(interactionMap);

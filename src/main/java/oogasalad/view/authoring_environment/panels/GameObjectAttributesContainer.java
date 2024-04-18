@@ -2,7 +2,7 @@ package oogasalad.view.authoring_environment.panels;
 
 import java.util.List;
 
-public class GameObjectPropertiesContainer {
+public class GameObjectAttributesContainer {
 
   private String imagePath;
   private List<String> properties;
@@ -15,7 +15,7 @@ public class GameObjectPropertiesContainer {
   private double width;
   private double height;
 
-  public GameObjectPropertiesContainer() {
+  public GameObjectAttributesContainer() {
 
   }
 
