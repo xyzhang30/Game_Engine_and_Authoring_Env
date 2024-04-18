@@ -6,11 +6,23 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
 
 public class NonControllableShapePanel extends ShapePanel {
 
   private ComboBox<GameObjectType> nonControllableTypeDropdown;
+  private ComboBox<String> collidableTypeDropDown;
+  private TextField kFrictionTextField;
+  private TextField sFrictionTextField;
+  private TextField massTextField;
+  private TextField elasticityTextField;
+  private CheckBox scoreableCheckBox;
+  private Label kFriction;
+  private Label sFriction;
+  private Label mass;
+  private Label elasticity;
+  private Label scoreable;
 
   public NonControllableShapePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy,
       AnchorPane rootPane, AnchorPane containerPane, StackPane canvas) {
@@ -44,21 +56,21 @@ public class NonControllableShapePanel extends ShapePanel {
   }
 
   private void createSurfaceOptions() {
-    TextField kFrictionTextField = new TextField();
+    kFrictionTextField = new TextField();
     kFrictionTextField.setPrefSize(40, 20);
     AnchorPane.setRightAnchor(kFrictionTextField, 450.0);
     AnchorPane.setTopAnchor(kFrictionTextField, 120.0);
 
-    Label kFriction = new Label("Kinetic Friction Coefficient");
+    kFriction = new Label("Kinetic Friction Coefficient");
     AnchorPane.setRightAnchor(kFriction, 300.0);
     AnchorPane.setTopAnchor(kFriction, 120.0);
 
-    TextField sFrictionTextField = new TextField();
+    sFrictionTextField = new TextField();
     sFrictionTextField.setPrefSize(40, 20);
     AnchorPane.setRightAnchor(sFrictionTextField, 450.0);
     AnchorPane.setTopAnchor(sFrictionTextField, 160.0);
 
-    Label sFriction = new Label("Static Friction Coefficient");
+    sFriction = new Label("Static Friction Coefficient");
     AnchorPane.setRightAnchor(sFriction, 300.0);
     AnchorPane.setTopAnchor(sFriction, 160.0);
 
@@ -73,7 +85,7 @@ public class NonControllableShapePanel extends ShapePanel {
   }
 
   private void createCollidableTypeOptions() {
-    ComboBox<String> collidableTypeDropDown = new ComboBox<>();
+    collidableTypeDropDown = new ComboBox<>();
     collidableTypeDropDown.getItems()
         .addAll("STRIKEABLE", "CONTROLLABLE", "NON-CONTROLLABLE");
     collidableTypeDropDown.setPromptText("Select Collidable Type");
@@ -84,21 +96,21 @@ public class NonControllableShapePanel extends ShapePanel {
   }
 
   private void createCollidableParameterOptions() {
-    TextField massTextField = new TextField();
+    massTextField = new TextField();
     massTextField.setPrefSize(40, 20);
     AnchorPane.setRightAnchor(massTextField, 450.0);
     AnchorPane.setTopAnchor(massTextField, 270.0);
 
-    Label mass = new Label("Mass");
+    mass = new Label("Mass");
     AnchorPane.setRightAnchor(mass, 410.0);
     AnchorPane.setTopAnchor(mass, 270.0);
 
-    TextField elasticityTextField = new TextField();
+    elasticityTextField = new TextField();
     elasticityTextField.setPrefSize(40, 20);
     AnchorPane.setRightAnchor(elasticityTextField, 450.0);
     AnchorPane.setTopAnchor(elasticityTextField, 310.0);
 
-    Label elasticity = new Label("Elasticity");
+    elasticity = new Label("Elasticity");
     AnchorPane.setRightAnchor(elasticity, 390.0);
     AnchorPane.setTopAnchor(elasticity, 310.0);
 
@@ -106,13 +118,13 @@ public class NonControllableShapePanel extends ShapePanel {
         .addAll(massTextField, mass, elasticityTextField, elasticity);
   }
 
-  private void createScoreableOption(){
-    CheckBox scoreableCheckBox = new CheckBox();
+  private void createScoreableOption() {
+    scoreableCheckBox = new CheckBox();
     scoreableCheckBox.setPrefSize(20, 20);
     AnchorPane.setRightAnchor(scoreableCheckBox, 470.0);
     AnchorPane.setTopAnchor(scoreableCheckBox, 350.0);
 
-    Label scoreable = new Label("Scoreable");
+    scoreable = new Label("Scoreable");
     AnchorPane.setRightAnchor(scoreable, 400.0);
     AnchorPane.setTopAnchor(scoreable, 350.0);
 
@@ -120,15 +132,43 @@ public class NonControllableShapePanel extends ShapePanel {
         .addAll(scoreableCheckBox, scoreable);
   }
 
-  private void createMakePlayers(){
+  private void createMakePlayers() {
 
   }
 
   private void handleNonControllableTypeSelection() {
-    nonControllableTypeDropdown.valueProperty().addListener((obs, oldVal, nonControllableType) -> {
-      if (shapeProxy.getShape() != null && nonControllableType != null) {
-        authoringProxy.addNonControllableShape(shapeProxy.getShape(), nonControllableType);
+    nonControllableTypeDropdown.valueProperty().addListener((obs, oldVal, gameObjectType) -> {
+      if (shapeProxy.getShape() != null && gameObjectType != null) {
+        authoringProxy.addNonControllableShape(shapeProxy.getShape(), gameObjectType);
+        updateSelectionOptions(gameObjectType);
       }
     });
+  }
+
+  private void updateSelectionOptions(GameObjectType gameObjectType) {
+    if (gameObjectType == GameObjectType.COLLIDABLE) {
+      setSurfaceOptionVisibility(false);
+      setCollidableOptionVisibility(true);
+    } else if (gameObjectType == GameObjectType.SURFACE) {
+      setSurfaceOptionVisibility(true);
+      setCollidableOptionVisibility(false);
+    }
+  }
+
+  private void setSurfaceOptionVisibility(boolean visibilty) {
+    kFrictionTextField.setVisible(visibilty);
+    sFrictionTextField.setVisible(visibilty);
+    kFriction.setVisible(visibilty);
+    sFriction.setVisible(visibilty);
+  }
+
+  private void setCollidableOptionVisibility(boolean visibility) {
+    collidableTypeDropDown.setVisible(visibility);
+    massTextField.setVisible(visibility);
+    mass.setVisible(visibility);
+    elasticityTextField.setVisible(visibility);
+    elasticity.setVisible(visibility);
+    scoreableCheckBox.setVisible(visibility);
+    scoreable.setVisible(visibility);
   }
 }
