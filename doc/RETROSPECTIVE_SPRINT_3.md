@@ -28,10 +28,14 @@ One major blocker that I am facing is the unfinished authoring enviornment, as i
 ### Doga
 
 * Work done this Sprint
+  * Worked on planning/helping with the refactoring of the authoring environment. Specifically, the splitting of the
+  AuthoringScreen to different functionality and UI component based classes.
 
 * Plan for next Sprint?
+  * Continue refactoring; implement transition and pause screens; make more view tests; improve the look of the game (visuals/graphicsg)
 
 * Blockers/Issues in your way
+  * The refactoring is very extensive and time-consuming. In addition, I can't begin writing more view authoring environment tests until the refactoring is finished.
 
 ### Judy
 
