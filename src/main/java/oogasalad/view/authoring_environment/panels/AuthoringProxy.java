@@ -15,8 +15,10 @@ import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
 public class AuthoringProxy {
 
   private final Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap = new HashMap<>();
-  private final Map<Shape, Map<String, String>> gameObjectMap = new HashMap<>();
+  private final Map<Shape, GameObjectPropertiesContainer> gameObjectMap = new HashMap<>();
+  //TODO: transfer imageMap functionality to gameObjectMap
   private final Map<Shape, String> imageMap = new HashMap<>();
+  //TODO: transfer shapePosition functionality to gameObjectMap
   private final Map<Shape, Coordinate> shapePositionMap = new HashMap<>();
   // TODO: make sure that this is actually following the Proxy pattern
   private String gameName;
@@ -33,7 +35,7 @@ public class AuthoringProxy {
     interactionMap.put(shapes, interaction);
   }
 
-  public Map<Shape, Map<String, String>> getGameObjectMap() {
+  public Map<Shape, GameObjectPropertiesContainer> getGameObjectMap() {
     return gameObjectMap;
   }
 

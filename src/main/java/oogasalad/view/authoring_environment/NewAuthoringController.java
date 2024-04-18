@@ -16,6 +16,7 @@ import oogasalad.model.api.data.Variables;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
 import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
+import oogasalad.view.authoring_environment.panels.GameObjectPropertiesContainer;
 import oogasalad.view.controller.BuilderDirector;
 import oogasalad.view.controller.GameController;
 
@@ -82,7 +83,7 @@ public class NewAuthoringController {
 
   public void endAuthoring(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
-      Map<Shape, Map<String, String>> gameObjectMap, Map<Shape, String> imageMap,
+      Map<Shape, GameObjectPropertiesContainer> gameObjectMap, Map<Shape, String> imageMap,
       Map<Shape, Coordinate> posMap) {
     System.out.println(gameName);
     System.out.println(interactionMap);
