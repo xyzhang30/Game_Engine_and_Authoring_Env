@@ -153,9 +153,6 @@
         "second_id": 3,
         "command": [
           {
-            "AdjustPointsCommand": [1.0,1.0]
-          },
-          {
             "AdvanceTurnCommand": []
           }
         ]
@@ -171,15 +168,13 @@
     "advance_turn": [
       {
         "AdvanceTurnCommand": []
-      },
-      {
-        "AdjustPointsCommand": [1.0,1.0]
       }
     ],
     "advance_round": [
       {
         "AdvanceRoundCommand": []
       }
-    ]
+    ],
+    "strike_policy": "DoNothingStrikePolicy"
   }
 }

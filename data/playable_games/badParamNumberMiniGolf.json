@@ -278,9 +278,6 @@
         "second_id": 9,
         "command": [
           {
-            "AdjustPointsCommand": [1,1]
-          },
-          {
             "AdvanceRoundCommand": []
           }
         ]
@@ -300,21 +297,18 @@
       "AllPlayersCompletedRoundCondition": []
     },
     "win_condition": {
-      "NRoundsCompletedCondition": [1]
+      "NRoundsCompletedCondition": []
     },
     "advance_turn": [
       {
         "AdvanceTurnCommand": []
-      },
-      {
-        "AdjustActivePointsCommand": []
       }
     ],
     "advance_round": [
       {
-        "AdjustActivePointsCommand": [1.0],
         "AdvanceRoundCommand": []
       }
-    ]
+    ],
+    "strike_policy": "DoNothingStrikePolicy"
   }
 }
