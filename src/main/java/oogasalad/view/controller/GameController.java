@@ -1,6 +1,7 @@
 package oogasalad.view.controller;
 
 import java.util.List;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.Scene;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
@@ -36,8 +37,9 @@ public class GameController {
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
 
-  public GameController() {
-    sceneManager = new SceneManager(this);
+
+  public GameController(ReadOnlyDoubleProperty width, ReadOnlyDoubleProperty height) {
+    sceneManager = new SceneManager(this, width, height);
     sceneManager.createNonGameScene(SceneType.TITLE);
     animationManager = new AnimationManager();
   }
@@ -131,5 +133,4 @@ public class GameController {
       return null;
     }
   }
-
 }

@@ -1,5 +1,6 @@
 package oogasalad.model.gameengine.condition;
 
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 
 
@@ -31,6 +32,7 @@ import oogasalad.model.gameengine.GameEngine;
  */
 
 @FunctionalInterface
+@IsCommand(isCommand = false)
 public interface Condition {
 
   /**

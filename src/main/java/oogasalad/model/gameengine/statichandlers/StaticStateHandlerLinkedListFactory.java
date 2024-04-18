@@ -1,6 +1,7 @@
 package oogasalad.model.gameengine.statichandlers;
 
 import java.util.List;
+import oogasalad.model.annotations.IsCommand;
 
 /**
  * Factory class for building a linked list of static state handlers based on a list of class
@@ -9,6 +10,7 @@ import java.util.List;
  * @author Noah Loewy
  */
 
+@IsCommand(isCommand = false)
 public class StaticStateHandlerLinkedListFactory {
 
   /**

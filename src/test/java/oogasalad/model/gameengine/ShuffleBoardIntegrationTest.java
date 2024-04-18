@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class ShuffleBoardGameRulesTest {
+public class ShuffleBoardIntegrationTest {
 
 
   private static final double DELTA = .0001;
-  private static final String TITLE = "testShuffleboardRules";
+  private static final String TITLE = "shuffleTest";
   private GameEngine gameEngine;
   private GameObjectContainer container;
 

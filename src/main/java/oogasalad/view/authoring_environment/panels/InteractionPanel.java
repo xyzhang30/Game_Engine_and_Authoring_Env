@@ -25,7 +25,7 @@ public class InteractionPanel implements Panel {
   private final AuthoringProxy authoringProxy;
   private final StackPane canvas;
   private final AnchorPane rootPane;
-  private final VBox containerVBox;
+  private final AnchorPane containerPane;
   private TextField pointPrompt;
   private CheckBox advanceTurnCheckBox;
   private CheckBox resetCheckBox;
@@ -34,11 +34,11 @@ public class InteractionPanel implements Panel {
   private TextField gameNameTextField;
 
   public InteractionPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
-      VBox containerVBox, StackPane canvas) {
+      AnchorPane containerPane, StackPane canvas) {
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
     this.rootPane = rootPane;
-    this.containerVBox = containerVBox;
+    this.containerPane = containerPane;
     this.canvas = canvas;
     createElements();
     handleEvents();
@@ -66,6 +66,14 @@ public class InteractionPanel implements Panel {
     changeSpeedCheckBox = new CheckBox("Change Speed");
     changeSpeedCheckBox.setId("changeSpeedCheckBox");
 
+    AnchorPane.setTopAnchor(advanceTurnCheckBox, 50.0);
+    AnchorPane.setLeftAnchor(advanceTurnCheckBox, 100.0);
+    AnchorPane.setTopAnchor(resetCheckBox, 100.0);
+    AnchorPane.setLeftAnchor(resetCheckBox, 100.0);
+    AnchorPane.setTopAnchor(changeSpeedCheckBox, 150.0);
+    AnchorPane.setLeftAnchor(changeSpeedCheckBox, 100.0);
+
+
     advanceTurnCheckBox.setDisable(true);
     resetCheckBox.setDisable(true);
     changeSpeedCheckBox.setDisable(true);
@@ -76,7 +84,7 @@ public class InteractionPanel implements Panel {
 
     changeSpeedCheckBox.setPrefSize(150, 150);
 
-    containerVBox.getChildren().addAll(advanceTurnCheckBox, resetCheckBox, changeSpeedCheckBox);
+    containerPane.getChildren().addAll(advanceTurnCheckBox, resetCheckBox, changeSpeedCheckBox);
   }
 
   private void handleAdvance() {
@@ -147,15 +155,15 @@ public class InteractionPanel implements Panel {
     pointPrompt.setPrefSize(75, 75);
 
     Label label = new Label("Points Scored on Collision");
-    AnchorPane.setRightAnchor(label, 75.0);
-    AnchorPane.setBottomAnchor(label, 250.0);
+    AnchorPane.setLeftAnchor(label, 100.0);
+    AnchorPane.setTopAnchor(label, 50.0);
 
     HBox pointPromptContainer = new HBox(pointPrompt);
     pointPromptContainer.setMaxSize(75, 75);
     AnchorPane.setRightAnchor(pointPromptContainer, 100.0);
     AnchorPane.setBottomAnchor(pointPromptContainer, 150.0);
 
-    containerVBox.getChildren().addAll(label, pointPromptContainer);
+    containerPane.getChildren().addAll(label, pointPromptContainer);
   }
 
   private void handlePointPrompt(KeyCode event) {

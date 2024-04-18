@@ -2,91 +2,91 @@
   "gameName" : "newShuffle",
   "game_objects" : [
     {
-    "gameobject_id" : 0,
-    "properties" : [  "visible", "surface" ],
-    "mass" : "Infinity",
-    "position" : {
-      "x_position" : 0.0,
-      "y_position" : 0.0
+      "gameobject_id" : 0,
+      "properties" : [  "visible", "surface" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 0.0,
+        "y_position" : 0.0
+      },
+      "shape" : "Rectangle",
+      "dimension" : {
+        "x_dimension" : 990.0,
+        "y_dimension" : 990.0
+      },
+      "color" : [ 0, 0, 0 ],
+      "staticFriction" : 7.0,
+      "kineticFriction" : 5.0,
+      "image" : "data/background_images/wood.jpg"
+    }, {
+      "gameobject_id" : 1,
+      "properties" : [  "visible", "collidable" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 0.0,
+        "y_position" : 0.0
+      },
+      "shape" : "Rectangle",
+      "dimension" : {
+        "x_dimension" : 20.0,
+        "y_dimension" : 990.0
+      },
+      "color" : [ 0, 0, 0 ],
+      "staticFriction" : 7.0,
+      "kineticFriction" : 5.0,
+      "image" : ""
+    }, {
+      "gameobject_id" : 2,
+      "properties" : [  "visible", "collidable" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 970.0,
+        "y_position" : 0.0
+      },
+      "shape" : "Rectangle",
+      "dimension" : {
+        "x_dimension" : 20.0,
+        "y_dimension" : 990.0
+      },
+      "color" : [ 0, 0, 0 ],
+      "staticFriction" : 7.0,
+      "kineticFriction" : 5.0,
+      "image" : ""
+    }, {
+      "gameobject_id" : 3,
+      "properties" : [  "visible", "collidable" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 0.0,
+        "y_position" : 0.0
+      },
+      "shape" : "Rectangle",
+      "dimension" : {
+        "x_dimension" : 970.0,
+        "y_dimension" : 20.0
+      },
+      "color" : [ 0, 0, 0 ],
+      "staticFriction" : 7.0,
+      "kineticFriction" : 5.0,
+      "image" : ""
+    }, {
+      "gameobject_id" : 4,
+      "properties" : [  "visible", "collidable" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 0.0,
+        "y_position" : 970.0
+      },
+      "shape" : "Rectangle",
+      "dimension" : {
+        "x_dimension" : 990.0,
+        "y_dimension" : 20.0
+      },
+      "color" : [ 0, 0, 0 ],
+      "staticFriction" : 7.0,
+      "kineticFriction" : 5.0,
+      "image" : ""
     },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 990.0,
-      "y_dimension" : 990.0
-    },
-    "color" : [ 0, 0, 0 ],
-    "staticFriction" : 7.0,
-    "kineticFriction" : 5.0,
-    "image" : "data/background_images/wood.jpg"
-  }, {
-    "gameobject_id" : 1,
-    "properties" : [  "visible", "collidable" ],
-    "mass" : "Infinity",
-    "position" : {
-      "x_position" : 0.0,
-      "y_position" : 0.0
-    },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 20.0,
-      "y_dimension" : 990.0
-    },
-    "color" : [ 0, 0, 0 ],
-    "staticFriction" : 7.0,
-    "kineticFriction" : 5.0,
-    "image" : ""
-  }, {
-    "gameobject_id" : 2,
-    "properties" : [  "visible", "collidable" ],
-    "mass" : "Infinity",
-    "position" : {
-      "x_position" : 970.0,
-      "y_position" : 0.0
-    },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 20.0,
-      "y_dimension" : 990.0
-    },
-    "color" : [ 0, 0, 0 ],
-    "staticFriction" : 7.0,
-    "kineticFriction" : 5.0,
-    "image" : ""
-  }, {
-    "gameobject_id" : 3,
-    "properties" : [  "visible", "collidable" ],
-    "mass" : "Infinity",
-    "position" : {
-      "x_position" : 0.0,
-      "y_position" : 0.0
-    },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 970.0,
-      "y_dimension" : 20.0
-    },
-    "color" : [ 0, 0, 0 ],
-    "staticFriction" : 7.0,
-    "kineticFriction" : 5.0,
-    "image" : ""
-  }, {
-    "gameobject_id" : 4,
-    "properties" : [  "visible", "collidable" ],
-    "mass" : "Infinity",
-    "position" : {
-      "x_position" : 0.0,
-      "y_position" : 970.0
-    },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 990.0,
-      "y_dimension" : 20.0
-    },
-    "color" : [ 0, 0, 0 ],
-    "staticFriction" : 7.0,
-    "kineticFriction" : 5.0,
-    "image" : ""
-  },
     {
       "gameobject_id" : 6,
       "properties" : [  "visible", "surface" ],

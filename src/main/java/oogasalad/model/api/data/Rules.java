@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.List;
 import java.util.Map;
+import oogasalad.model.annotations.ChoiceType;
 
 /**
  * Represents the JSON data for all rules (collision, static check) in the game.

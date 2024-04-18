@@ -1,6 +1,9 @@
 package oogasalad.model.gameengine.condition;
 
 import java.util.List;
+import oogasalad.model.annotations.CommandHelpInfo;
+import oogasalad.model.annotations.ExpectedParamNumber;
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 
 /**
@@ -10,6 +13,8 @@ import oogasalad.model.gameengine.GameEngine;
  * @author Noah Loewy
  */
 
+@IsCommand(isCommand = true)
+@CommandHelpInfo(description = "")
 public class NTurnsCompletedCondition implements Condition {
 
   private final List<Double> arguments;
@@ -21,6 +26,7 @@ public class NTurnsCompletedCondition implements Condition {
    *                  completed by each player for the condition to evaluate to true.
    */
 
+  @ExpectedParamNumber(1)
   public NTurnsCompletedCondition(List<Double> arguments) {
     this.arguments = arguments;
   }

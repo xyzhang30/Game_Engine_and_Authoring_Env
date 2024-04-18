@@ -20,7 +20,7 @@ public class Window {
   }
 
   public Window(Stage stage, int id) {
-    GameController controller = new GameController();
+    GameController controller = new GameController(stage.widthProperty(), stage.heightProperty());
     stage.setScene(controller.getScene());
     stage.setTitle(TITLE); // Port this hard coding into data.
 //    stage.setWidth(SCREEN_WIDTH * 0.8);
