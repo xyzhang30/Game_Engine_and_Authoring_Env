@@ -16,7 +16,8 @@
     "color" : [ 100, 200, 100 ],
     "staticFriction" : 3.03873,
     "kineticFriction" : 2.03873,
-    "image" : "sample.img"
+    "image" : "sample.img",
+    "direction" : 0.0
   }, {
     "gameobject_id" : 2,
     "properties" : [ "visible", "collidable" ],
@@ -33,7 +34,8 @@
     "color" : [ 255, 255, 255 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
-    "image" : "sample.img"
+    "image" : "sample.img",
+    "direction" : 0.0
   }, {
     "gameobject_id" : 3,
     "properties" : [ "visible", "surface" ],
@@ -50,7 +52,8 @@
     "color" : [ 0, 0, 0 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
-    "image" : "sample.img"
+    "image" : "sample.img",
+    "direction" : 0.0
   } ],
   "players" : [ {
     "player_id" : 1,
