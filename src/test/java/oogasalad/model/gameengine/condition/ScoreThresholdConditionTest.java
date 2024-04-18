@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine;
+package oogasalad.model.gameengine.condition;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
 
+import oogasalad.model.gameengine.GameEngine;
 import org.junit.jupiter.api.Test;
 import oogasalad.model.gameengine.condition.ScoreThresholdCondition;
 import oogasalad.model.api.PlayerRecord;
