@@ -39,7 +39,7 @@ public class GameObjectPanel extends ShapePanel {
   @Override
   public void handleEvents() {
     super.handleEvents();
-    //handleGameObjectTypeSelection();
+    handleGameObjectTypeSelection();
     handlePlayerAssignment();
     handleAddAndRemovePlayers();
   }
@@ -221,7 +221,9 @@ public class GameObjectPanel extends ShapePanel {
       if (collidableType.equals("STRIKEABLE") || collidableType.equals("CONTROLLABLE")) {
         setPlayerAssignmentVisibility(true);
       } else {
-        setPlayerAssignmentVisibility(false);
+        if (!scoreableCheckBox.isSelected()) {
+          setPlayerAssignmentVisibility(false);
+        }
       }
     });
   }
