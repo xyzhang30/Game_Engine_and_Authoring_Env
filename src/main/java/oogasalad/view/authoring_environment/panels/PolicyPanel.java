@@ -97,15 +97,15 @@ public class PolicyPanel implements Panel{
       AnchorPane.setTopAnchor(checkComboBox,50.0*heightIdx);
       checkComboBox.setId(policyNameLabel);
 
-//      checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c -> {
-//        while (c.next()) {
-//          if (c.wasAdded()) {
-//            for (String selectedCommand : c.getAddedSubList()) {
-//              enterParam(commandPackage, selectedCommand);
-//            }
-//          }
-//        }
-//      });
+      checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c -> {
+        while (c.next()) {
+          if (c.wasAdded()) {
+            for (String selectedCommand : c.getAddedSubList()) {
+              enterParam(commandPackage, selectedCommand);
+            }
+          }
+        }
+      });
     }
   }
 

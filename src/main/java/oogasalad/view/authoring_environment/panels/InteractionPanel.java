@@ -1,10 +1,14 @@
 package oogasalad.view.authoring_environment.panels;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -17,9 +21,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Shape;
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
 
 public class InteractionPanel implements Panel {
+
+  private static final String COMMAND_PACKAGE_PATH = "src/main/java/oogasalad/model/gameengine/command/";
+  private static final String REFLECTION_COMMAND_PACKAGE_PATH = "src.main.java.oogasalad.model.gameengine.command.";
 
   private final ShapeProxy shapeProxy;
   private final AuthoringProxy authoringProxy;
@@ -32,6 +40,7 @@ public class InteractionPanel implements Panel {
   private CheckBox changeSpeedCheckBox;
   private final Set<Shape> clickedShapes = new HashSet<>();
   private TextField gameNameTextField;
+
 
   public InteractionPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
       AnchorPane containerPane, StackPane canvas) {
@@ -46,9 +55,58 @@ public class InteractionPanel implements Panel {
 
   @Override
   public void createElements() {
-    createCheckBoxes();
-    createPointOptions();
+//    createCheckBoxes();
+//    createPointOptions();
+    Label label = new Label("ON COLLISION: ");
+    AnchorPane.setTopAnchor(label,50.0);
+    AnchorPane.setLeftAnchor(label,350.0);
+
   }
+
+
+  private List<String> getAvailableCommands() {
+    Path path = Paths.get(COMMAND_PACKAGE_PATH);
+    File packageDir = path.toFile();
+    List<String> commands = new ArrayList<>();
+    System.out.println("packageDir.isDirectory() "+ packageDir.isDirectory());
+    if (packageDir.isDirectory()) {
+      for (File file : Objects.requireNonNull(packageDir.listFiles())){
+        String name = file.getName();
+        if (name.endsWith(".java")) {
+          try {
+            String className = name.substring(0, name.length() - 5); // Remove ".java" extension
+            Class<?> clazz = Class.forName(
+                REFLECTION_COMMAND_PACKAGE_PATH + className);
+            boolean isCommand = clazz.getDeclaredAnnotation(IsCommand.class).isCommand();
+            if (isCommand) {
+              commands.add(className);
+            }
+          } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+          }
+        }
+      }
+//      File[] files = packageDir.listFiles((dir, name) -> {
+//        if (name.endsWith(".java")) {
+//          try {
+//            String className = name.substring(0, name.length() - 5); // Remove ".java" extension
+//            Class<?> clazz = Class.forName(
+//                REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + className);
+//            boolean isCommand = clazz.getDeclaredAnnotation(IsCommand.class).isCommand();
+//            if (isCommand) {
+//              commands.add(className);
+//            }
+//            return isCommand;
+//          } catch (ClassNotFoundException e) {
+//            e.printStackTrace(); // Handle or log the exception
+//          }
+//        }
+//        return false; // Default return value if class is not found or is not annotated
+//      });
+    }
+    return commands;
+  }
+
 
   @Override
   public void handleEvents() {
