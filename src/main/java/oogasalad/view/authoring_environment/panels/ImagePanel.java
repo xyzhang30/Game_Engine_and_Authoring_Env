@@ -16,11 +16,11 @@ public class ImagePanel implements Panel {
 
   private final ShapeProxy shapeProxy;
   private final AuthoringProxy authoringProxy;
-  private final VBox containerVBox;
+  private final AnchorPane containerPane;
   private Button imageButton;
 
-  public ImagePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, VBox containerVBox) {
-    this.containerVBox = containerVBox;
+  public ImagePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane containerPane) {
+    this.containerPane = containerPane;
     this.authoringProxy = authoringProxy;
     this.shapeProxy = shapeProxy;
     createElements();
@@ -34,14 +34,14 @@ public class ImagePanel implements Panel {
     imageButton.setPrefSize(200, 100);
     AnchorPane.setTopAnchor(imageButton, 160.0);
     AnchorPane.setRightAnchor(imageButton, 50.0);
-    containerVBox.getChildren().add(imageButton);
+    containerPane.getChildren().add(imageButton);
 
   }
 
   @Override
   public void handleEvents() {
     imageButton.setOnAction(event -> {
-      String relativePath = chooseImage((Text) containerVBox.lookup("#titleText"));
+      String relativePath = chooseImage((Text) containerPane.lookup("#titleText"));
       if (relativePath != null && shapeProxy.getShape() != null) {
         authoringProxy.addImage(shapeProxy.getShape(), relativePath);
         System.out.println(relativePath);

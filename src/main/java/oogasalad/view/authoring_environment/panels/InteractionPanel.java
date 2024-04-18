@@ -25,7 +25,7 @@ public class InteractionPanel implements Panel {
   private final AuthoringProxy authoringProxy;
   private final StackPane canvas;
   private final AnchorPane rootPane;
-  private final VBox containerVBox;
+  private final AnchorPane containerPane;
   private TextField pointPrompt;
   private CheckBox advanceTurnCheckBox;
   private CheckBox resetCheckBox;
@@ -34,11 +34,11 @@ public class InteractionPanel implements Panel {
   private TextField gameNameTextField;
 
   public InteractionPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
-      VBox containerVBox, StackPane canvas) {
+      AnchorPane containerPane, StackPane canvas) {
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
     this.rootPane = rootPane;
-    this.containerVBox = containerVBox;
+    this.containerPane = containerPane;
     this.canvas = canvas;
     createElements();
     handleEvents();
@@ -76,7 +76,7 @@ public class InteractionPanel implements Panel {
 
     changeSpeedCheckBox.setPrefSize(150, 150);
 
-    containerVBox.getChildren().addAll(advanceTurnCheckBox, resetCheckBox, changeSpeedCheckBox);
+    containerPane.getChildren().addAll(advanceTurnCheckBox, resetCheckBox, changeSpeedCheckBox);
   }
 
   private void handleAdvance() {
@@ -155,7 +155,7 @@ public class InteractionPanel implements Panel {
     AnchorPane.setRightAnchor(pointPromptContainer, 100.0);
     AnchorPane.setBottomAnchor(pointPromptContainer, 150.0);
 
-    containerVBox.getChildren().addAll(label, pointPromptContainer);
+    containerPane.getChildren().addAll(label, pointPromptContainer);
   }
 
   private void handlePointPrompt(KeyCode event) {

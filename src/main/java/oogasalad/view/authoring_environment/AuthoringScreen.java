@@ -13,20 +13,19 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oogasalad.view.Window;
-import oogasalad.view.authoring_environment.authoring_screens.NonControllableType;
+import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
 import oogasalad.view.authoring_environment.panels.AuthoringProxy;
 import oogasalad.view.authoring_environment.panels.ColorPanel;
 import oogasalad.view.authoring_environment.panels.ImagePanel;
 import oogasalad.view.authoring_environment.panels.InteractionPanel;
 import oogasalad.view.authoring_environment.panels.NonControllableShapePanel;
-import oogasalad.view.authoring_environment.panels.ShapePanel;
 import oogasalad.view.authoring_environment.panels.ShapeProxy;
 
 public class AuthoringScreen {
 
   private final AnchorPane rootPane = new AnchorPane();
   //  private final StackPane rootPane = new StackPane(); // PASSED TO PANELS
-  private final VBox containerVBox = new VBox(); // PASSED TO PANELS
+  private final AnchorPane containerPane = new AnchorPane(); // PASSED TO PANELS
   private final StackPane canvasPane = new StackPane();
   private final ShapeProxy shapeProxy = new ShapeProxy();
   private final AuthoringProxy authoringProxy = new AuthoringProxy();
@@ -38,19 +37,19 @@ public class AuthoringScreen {
   public AuthoringScreen() {
     createCanvas();
 //    createShapesPane();
-    createContainerVBox();
+    createContainerPane();
     createScreenSelectionDropDown(List.of("Background", "Game Objects", "Interactions",
         "Policies"));
     handleScreenSelectionDropDown();
     createFinishButton();
-    containerVBox.getChildren().add(titleText);
+    containerPane.getChildren().add(titleText);
     scene = new Scene(rootPane, Window.SCREEN_WIDTH, Window.SCREEN_HEIGHT);
     setScene("Background");
   }
 
   private void resetScene() {
-    containerVBox.getChildren().clear();
-    containerVBox.getChildren().add(titleText);
+    containerPane.getChildren().clear();
+    containerPane.getChildren().add(titleText);
   }
 
   public Scene getScene() {
@@ -61,18 +60,18 @@ public class AuthoringScreen {
     setTitle(screenTitle);
     // TODO: BAD DESIGN -> WHERE and HOW to set the Container?
     switch (screenTitle) {
-      case "Background" -> container.setPanels(List.of(new ColorPanel(shapeProxy, containerVBox),
+      case "Background" -> container.setPanels(List.of(new ColorPanel(shapeProxy, containerPane),
           new ImagePanel(authoringProxy, shapeProxy,
-              containerVBox)));
+              containerPane)));
       case "Game Objects" -> container.setPanels(
-          List.of(new ColorPanel(shapeProxy, containerVBox),
+          List.of(new ColorPanel(shapeProxy, containerPane),
               new ImagePanel(authoringProxy, shapeProxy,
-                  containerVBox),
+                  containerPane),
               new NonControllableShapePanel(authoringProxy, shapeProxy, rootPane,
-                  containerVBox, canvasPane)));
+                  containerPane, canvasPane)));
       case "Interactions" ->
           container.setPanels(List.of(new InteractionPanel(authoringProxy, shapeProxy, rootPane,
-              containerVBox, canvasPane)));
+              containerPane, canvasPane)));
       //case "Policies" ->
     }
 
@@ -98,16 +97,15 @@ public class AuthoringScreen {
 //    rootPane.getChildren().add(rootPane);
 //  }
 
-  private void createContainerVBox() {
+  private void createContainerPane() {
     // TODO: REMOVE HARD-CODING
     int width = 500;
     int height = 980;
-    containerVBox.setMaxSize(width, height);
-    containerVBox.setId("rootPane");
-    containerVBox.setSpacing(20.0);
-    AnchorPane.setTopAnchor(containerVBox, 30.0);
-    AnchorPane.setRightAnchor(containerVBox, 30.0);
-    rootPane.getChildren().add(containerVBox);
+    containerPane.setMaxSize(width, height);
+    containerPane.setId("rootPane");
+    AnchorPane.setTopAnchor(containerPane, 30.0);
+    AnchorPane.setRightAnchor(containerPane, 30.0);
+    rootPane.getChildren().add(containerPane);
   }
 
   private void createCanvas() {
@@ -127,7 +125,7 @@ public class AuthoringScreen {
     StackPane.setAlignment(background, Pos.TOP_LEFT);
 
     shapeProxy.setShape(background);
-    authoringProxy.addNonControllableShape(background, NonControllableType.SURFACE);
+    authoringProxy.addNonControllableShape(background, GameObjectType.SURFACE);
 //    authoringProxy.getAuthoringController().setBackground(background);
     rootPane.getChildren().add(canvasPane);
     canvasPane.getChildren().add(background);

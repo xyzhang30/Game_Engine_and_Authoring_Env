@@ -10,13 +10,13 @@ import oogasalad.view.api.exception.MissingNonControllableTypeException;
 import oogasalad.view.authoring_environment.Coordinate;
 import oogasalad.view.authoring_environment.NewAuthoringController;
 import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
-import oogasalad.view.authoring_environment.authoring_screens.NonControllableType;
+import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
 
 public class AuthoringProxy {
 
   private final Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap = new HashMap<>();
   private final List<Shape> controllables = new ArrayList<>();
-  private final Map<Shape, NonControllableType> nonControllableMap = new HashMap<>();
+  private final Map<Shape, GameObjectType> nonControllableMap = new HashMap<>();
   private final Map<Shape, String> imageMap = new HashMap<>();
   private final Map<Shape, Coordinate> shapePositionMap = new HashMap<>();
   // TODO: make sure that this is actually following the Proxy pattern
@@ -37,11 +37,11 @@ public class AuthoringProxy {
     controllables.add(controllable);
   }
 
-  public Map<Shape, NonControllableType> getNonControllableMap() {
+  public Map<Shape, GameObjectType> getNonControllableMap() {
     return nonControllableMap;
   }
 
-  public void addNonControllableShape(Shape shape, NonControllableType nonControllableType) {
+  public void addNonControllableShape(Shape shape, GameObjectType nonControllableType) {
     nonControllableMap.put(shape, nonControllableType);
   }
 
