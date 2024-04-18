@@ -159,6 +159,7 @@ public class Player {
       for (Scoreable o : myScoreables) {
         tempScore += o.getTemporaryScore();
       }
+
       return new PlayerRecord(playerId, tempScore,
           activeStrikeable.asGameObject().getId());
     } catch (NullPointerException e) {
