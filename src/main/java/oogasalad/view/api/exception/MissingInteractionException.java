@@ -1,7 +1,8 @@
 package oogasalad.view.api.exception;
 
 /**
- * The MissingInteractionException extends RuntimeException to handle error when an interaction is not defined for a pair of shapes
+ * The MissingInteractionException extends RuntimeException to handle error when an interaction is
+ * not defined for a pair of shapes
  *
  * @author Judy He
  */

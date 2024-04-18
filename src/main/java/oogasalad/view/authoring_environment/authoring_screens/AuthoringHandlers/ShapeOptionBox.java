@@ -9,6 +9,7 @@ import javafx.scene.shape.Shape;
 import oogasalad.view.authoring_environment.authoring_screens.ImageType;
 
 public class ShapeOptionBox {
+
   private VBox container;
   private Shape selectedShape;
   private ColorPicker colorPicker;
@@ -55,7 +56,7 @@ public class ShapeOptionBox {
     this.selectedShape = shape;
   }
 
-  public void setImageType(ImageType imageType){
+  public void setImageType(ImageType imageType) {
     this.imageType = imageType;
   }
 }

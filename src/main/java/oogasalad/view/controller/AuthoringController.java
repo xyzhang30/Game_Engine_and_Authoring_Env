@@ -12,9 +12,9 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import oogasalad.model.api.data.CollidableObject;
 import oogasalad.model.api.data.CollisionRule;
 import oogasalad.model.api.data.Dimension;
+import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.GlobalVariables;
 import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.data.PlayerVariables;
@@ -22,12 +22,14 @@ import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
 import oogasalad.view.authoring_environment.authoring_screens.BackgroundSelectionScreen;
-import oogasalad.view.authoring_environment.authoring_screens.ControllableElementSelectionScreen;
 import oogasalad.view.authoring_environment.authoring_screens.ImageType;
 import oogasalad.view.authoring_environment.authoring_screens.InteractionSelectionScreen;
 import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
-import oogasalad.view.authoring_environment.authoring_screens.NonControllableElementSelection;
-import oogasalad.view.authoring_environment.authoring_screens.NonControllableType;
+import oogasalad.view.authoring_environment.authoring_screens.NonStrikeableElementSelection;
+import oogasalad.view.authoring_environment.authoring_screens.NonStrikeableType;
+import oogasalad.view.authoring_environment.authoring_screens.StrikeableElementSelectionScreen;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Class to handle transitions between authoring environment scenes and communications with backend
@@ -36,20 +38,18 @@ import oogasalad.view.authoring_environment.authoring_screens.NonControllableTyp
  */
 public class AuthoringController {
 
-  private Stage stage;
+  private static final Logger LOGGER = LogManager.getLogger(AuthoringController.class);
+  private final Stage stage;
   private Rectangle background;
-  private BuilderDirector builderDirector = new BuilderDirector();
-//  private List<Shape> controllables;
-//  private Map<Shape, NonControllableType> nonControllableTypeMap;
+  private final BuilderDirector builderDirector = new BuilderDirector();
+
 
   public AuthoringController() {
     stage = new Stage();
-//    controllables = new ArrayList<>();
-//    nonControllableTypeMap = new HashMap<>();
   }
 
   public void startAuthoring() {
-    Map<Shape, NonControllableType> map = new HashMap<>();
+    Map<Shape, NonStrikeableType> map = new HashMap<>();
     BackgroundSelectionScreen scene = new BackgroundSelectionScreen(
         this, new StackPane(), new HashMap<>(), map, new ArrayList<>(),
         new HashMap<>());
@@ -65,27 +65,27 @@ public class AuthoringController {
    */
   public void startNextSelection(ImageType imageType, StackPane authoringBox,
       Map<Shape, List<Double>> posMap,
-      Map<Shape, NonControllableType> nonControllableMap, List<Shape> controllableList,
+      Map<Shape, NonStrikeableType> nonStrikeableMap, List<Shape> strikeableList,
       Map<Shape, String> imageMap) {
     switch (imageType) {
       case BACKGROUND -> {
-        ControllableElementSelectionScreen controllableElementSelectionScreen =
-            new ControllableElementSelectionScreen(this, authoringBox, posMap, nonControllableMap,
-                controllableList, imageMap);
+        StrikeableElementSelectionScreen strikeableElementSelectionScreen =
+            new StrikeableElementSelectionScreen(this, authoringBox, posMap, nonStrikeableMap,
+                strikeableList, imageMap);
         // System.out.println("finished background, getting controllable");
-        stage.setScene(controllableElementSelectionScreen.getScene());
+        stage.setScene(strikeableElementSelectionScreen.getScene());
       }
-      case CONTROLLABLE_ELEMENT -> {
-        NonControllableElementSelection nonControllableElementSelection =
-            new NonControllableElementSelection(this, authoringBox, posMap, nonControllableMap,
-                controllableList, imageMap);
+      case STRIKEABLE_ELEMENT -> {
+        NonStrikeableElementSelection nonStrikeableElementSelection =
+            new NonStrikeableElementSelection(this, authoringBox, posMap, nonStrikeableMap,
+                strikeableList, imageMap);
         //System.out.println("finished controllable, getting noncontrollable");
-        stage.setScene(nonControllableElementSelection.getScene());
+        stage.setScene(nonStrikeableElementSelection.getScene());
       }
-      case NONCONTROLLABLE_ELEMENT -> {
+      case NONSTRIKEABLE_ELEMENT -> {
         InteractionSelectionScreen interactionSelectionScreen
-            = new InteractionSelectionScreen(this, authoringBox, posMap, nonControllableMap,
-            controllableList, imageMap);
+            = new InteractionSelectionScreen(this, authoringBox, posMap, nonStrikeableMap,
+            strikeableList, imageMap);
         //System.out.println("finished noncontrollable, getting interaction");
         stage.setScene(interactionSelectionScreen.getScene());
       }
@@ -98,10 +98,10 @@ public class AuthoringController {
 
   public void endAuthoring(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
-      List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap,
+      List<Shape> strikeables, Map<Shape, NonStrikeableType> nonStrikeableTypeMap,
       Map<Shape, String> imageMap, Map<Shape, List<Double>> posMap) {
-    boolean saveGameSuccess = submitGame(gameName, interactionMap, controllables,
-        nonControllableTypeMap, imageMap, posMap);
+    boolean saveGameSuccess = submitGame(gameName, interactionMap, strikeables,
+        nonStrikeableTypeMap, imageMap, posMap);
     Alert alert = new Alert(AlertType.INFORMATION);
     if (saveGameSuccess) {
       alert.setTitle("Save Game Success");
@@ -120,17 +120,18 @@ public class AuthoringController {
 
   private boolean submitGame(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
-      List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap,
+      List<Shape> strikeables, Map<Shape, NonStrikeableType> nonStrikeableTypeMap,
       Map<Shape, String> imageMap, Map<Shape, List<Double>> posMap) {
     try {
-      Map<Shape, Integer> collidableIdMap = new HashMap<>();
-      writeCollidables(collidableIdMap, controllables, nonControllableTypeMap, imageMap, posMap);
+      Map<Shape, Integer> gameObjectIdMap = new HashMap<>();
+      writeGameObjects(gameObjectIdMap, strikeables, nonStrikeableTypeMap, imageMap, posMap);
       writePlayer();
       writeVariables();
-      writeRules(interactionMap, collidableIdMap);
+      writeRules(interactionMap, gameObjectIdMap);
       builderDirector.writeGame(gameName);
       return true;
     } catch (RuntimeException e) {
+      LOGGER.error("error when writing game game data field");
       e.printStackTrace();
       return false;
     }
@@ -144,7 +145,6 @@ public class AuthoringController {
 
   private void writePlayer() {
     //HARD CODED FOR DEMO!
-    //QUESTION: WHICH COLLIDABLE WILL BE THE ONE PLAYER IS ASSIGNED TO IN THE DEMO WE DO??
     ParserPlayer player = new ParserPlayer(1, List.of(1));
 
     builderDirector.constructPlayers(List.of(player));
@@ -161,10 +161,6 @@ public class AuthoringController {
           collisionCommand.put(matchCommandName(type), interactionMap.get(pair).get(type));
         }
       }
-      for (Shape shape : collidableIdMap.keySet()) {
-        System.out.println("ID: " + collidableIdMap.get(shape));
-      }
-      System.out.println("FIRST ID: " + collidableIdMap.get(pair.get(0)));
       CollisionRule collisionRule = new CollisionRule(collidableIdMap.get(pair.get(0)),
           collidableIdMap.get(pair.get(1)), List.of(collisionCommand));
 
@@ -184,37 +180,35 @@ public class AuthoringController {
     turnCommandOne.put("AdvanceTurnCommand", new ArrayList<>());
     advanceTurn.add(turnCommandOne);
     Map<String, List<Double>> turnCommandTwo = new HashMap<>();
-    turnCommandTwo.put("AdjustActivePointsCommand", List.of(1.0));
-    advanceTurn.add(turnCommandTwo);
 
     List<Map<String, List<Double>>> advanceRound = new ArrayList<>();
     Map<String, List<Double>> roundCommandOne = new HashMap<>();
     roundCommandOne.put("AdvanceRoundCommand", new ArrayList<>());
     advanceRound.add(roundCommandOne);
     Map<String, List<Double>> roundCommandTwo = new HashMap<>();
-    roundCommandTwo.put("AdjustActivePointsCommand", List.of(1.0));
-    advanceRound.add(roundCommandTwo);
+
+    String strikePolicy = "DoNothingStrikePolicy";
 
     Rules rules = new Rules(collisionRules, turnPolicy, roundPolicy, winCondition, advanceTurn,
-        advanceRound);
+        advanceRound, strikePolicy);
 
     builderDirector.constructRules(List.of(rules));
   }
 
   private String matchCommandName(InteractionType type) {
     return switch (type) {
-      case RESET -> "UndoTurnCommand";
+      case RESET -> "LastStaticStateCommand";
       case ADVANCE -> "AdvanceRoundCommand";
       case SCORE -> "AdjustPointsCommand";
       case CHANGE_SPEED -> null;
     };
   }
 
-  private void writeCollidables(Map<Shape, Integer> collidableIdMap, List<Shape> controllables,
-      Map<Shape, NonControllableType> nonControllableTypeMap, Map<Shape, String> imageMap,
+  private void writeGameObjects(Map<Shape, Integer> collidableIdMap, List<Shape> strikeables,
+      Map<Shape, NonStrikeableType> nonStrikeableTypeMap, Map<Shape, String> imageMap,
       Map<Shape, List<Double>> posMap) {
-    int collidableId = 0;
-    List<CollidableObject> collidableObjects = new ArrayList<>();
+    int gameObjectId = 0;
+    List<GameObjectProperties> gameObjectProperties = new ArrayList<>();
 
     //handling background first
     List<Integer> colorRgb = List.of(0, 0, 0);
@@ -227,75 +221,72 @@ public class AuthoringController {
       imgPath = imageMap.get(background);
     }
     List<String> properties = new ArrayList<>();
-    properties.add("collidable");
     properties.add("visible");
-    properties.add(nonControllableTypeMap.get(background).toString().toLowerCase());
+    properties.add(nonStrikeableTypeMap.get(background).toString().toLowerCase());
     //double friction = 0.8;
     double staticFriction = 7;
     double kineticFriction = 5;
     String shapeName = "Rectangle";
-    CollidableObject collidableObject = new CollidableObject(collidableId,
+    GameObjectProperties gameObjectProperty = new GameObjectProperties(gameObjectId,
         properties, Float.POSITIVE_INFINITY,
         new Position(posMap.get(background).get(0), posMap.get(background).get(1)),
         shapeName, new Dimension(background.getLayoutBounds().getWidth(),
         background.getLayoutBounds().getHeight()), colorRgb, staticFriction, kineticFriction,
-        imgPath);
-    collidableObjects.add(collidableObject);
-    collidableIdMap.put(background, collidableId);
-    collidableId++;
+        imgPath, background.getRotate());
+    gameObjectProperties.add(gameObjectProperty);
+    collidableIdMap.put(background, gameObjectId);
+    gameObjectId++;
 
-    nonControllableTypeMap.remove(background);
+    nonStrikeableTypeMap.remove(background);
 
     //walls
     Rectangle wall1 = new Rectangle(50, 50, 20, 990);
     colorRgb = List.of(0, 0, 0);
     imgPath = "";
     properties = new ArrayList<>();
-    properties.add("collidable");
     properties.add("visible");
-    properties.add("movable");
     shapeName = "Rectangle";
-    collidableObject = new CollidableObject(collidableId,
+    gameObjectProperty = new GameObjectProperties(gameObjectId,
         properties, Double.POSITIVE_INFINITY,
         new Position(50, 50),
         shapeName, new Dimension(20,
-        990), colorRgb, staticFriction, kineticFriction, imgPath);
-    collidableObjects.add(collidableObject);
-    collidableIdMap.put(wall1, collidableId);
-    collidableId++;
+        990), colorRgb, staticFriction, kineticFriction, imgPath, 0);
+    gameObjectProperties.add(gameObjectProperty);
+    collidableIdMap.put(wall1, gameObjectId);
+    gameObjectId++;
 
     Rectangle wall2 = new Rectangle(1020, 50, 20, 990);
-    collidableObject = new CollidableObject(collidableId,
+    gameObjectProperty = new GameObjectProperties(gameObjectId,
         properties, Double.POSITIVE_INFINITY,
         new Position(1020, 50),
         shapeName, new Dimension(20,
-        990), colorRgb, staticFriction, kineticFriction, imgPath);
-    collidableObjects.add(collidableObject);
-    collidableIdMap.put(wall2, collidableId);
-    collidableId++;
+        990), colorRgb, staticFriction, kineticFriction, imgPath, 0);
+    gameObjectProperties.add(gameObjectProperty);
+    collidableIdMap.put(wall2, gameObjectId);
+    gameObjectId++;
 
     Rectangle wall3 = new Rectangle(50, 50, 990, 20);
-    collidableObject = new CollidableObject(collidableId,
+    gameObjectProperty = new GameObjectProperties(gameObjectId,
         properties, Double.POSITIVE_INFINITY,
         new Position(50, 50),
         shapeName, new Dimension(985,
-        20), colorRgb, staticFriction, kineticFriction, imgPath);
-    collidableObjects.add(collidableObject);
-    collidableIdMap.put(wall3, collidableId);
-    collidableId++;
+        20), colorRgb, staticFriction, kineticFriction, imgPath, 0);
+    gameObjectProperties.add(gameObjectProperty);
+    collidableIdMap.put(wall3, gameObjectId);
+    gameObjectId++;
 
     Rectangle wall4 = new Rectangle(50, 1020, 990, 20);
-    collidableObject = new CollidableObject(collidableId,
+    gameObjectProperty = new GameObjectProperties(gameObjectId,
         properties, Double.POSITIVE_INFINITY,
         new Position(50, 1015),
         shapeName, new Dimension(985,
-        20), colorRgb, staticFriction, kineticFriction, imgPath);
-    collidableObjects.add(collidableObject);
-    collidableIdMap.put(wall4, collidableId);
-    collidableId++;
+        20), colorRgb, staticFriction, kineticFriction, imgPath, 0);
+    gameObjectProperties.add(gameObjectProperty);
+    collidableIdMap.put(wall4, gameObjectId);
+    gameObjectId++;
 
     //noncontrollables
-    for (Shape shape : nonControllableTypeMap.keySet()) {
+    for (Shape shape : nonStrikeableTypeMap.keySet()) {
       colorRgb = List.of(0, 0, 0);
       imgPath = "";
       if (shape.getFill() instanceof Color) {
@@ -306,43 +297,41 @@ public class AuthoringController {
         imgPath = imageMap.get(shape);
       }
       properties = new ArrayList<>();
-      properties.add("collidable");
       properties.add("visible");
-      properties.add(nonControllableTypeMap.get(shape).toString().toLowerCase());
+      properties.add(nonStrikeableTypeMap.get(shape).toString().toLowerCase());
       staticFriction =
-          (nonControllableTypeMap.get(shape).toString().equalsIgnoreCase("surface")) ? 3.03873
+          (nonStrikeableTypeMap.get(shape).toString().equalsIgnoreCase("surface")) ? 3.03873
               : 0.0;
       kineticFriction =
-          (nonControllableTypeMap.get(shape).toString().equalsIgnoreCase("surface")) ? 2.03873
+          (nonStrikeableTypeMap.get(shape).toString().equalsIgnoreCase("surface")) ? 2.03873
               : 0.0;
       double mass =
-          (nonControllableTypeMap.get(shape).toString().equalsIgnoreCase("Surface"))
+          (nonStrikeableTypeMap.get(shape).toString().equalsIgnoreCase("Surface"))
               ? Double.POSITIVE_INFINITY
               : 10.0;
       shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
       if (shape instanceof Ellipse) {
-        collidableObject = new CollidableObject(collidableId,
+        gameObjectProperty = new GameObjectProperties(gameObjectId,
             properties, mass,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(((Ellipse) shape).getRadiusX() * shape.getScaleX(),
                 ((Ellipse) shape).getRadiusY() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, imgPath);
+            colorRgb, 0.0, 0.0, imgPath, shape.getRotate());
       } else {
-        collidableObject = new CollidableObject(collidableId,
+        gameObjectProperty = new GameObjectProperties(gameObjectId,
             properties, mass,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(shape.getLayoutBounds().getWidth() * shape.getScaleX(),
                 shape.getLayoutBounds().getHeight() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, imgPath);
+            colorRgb, 0.0, 0.0, imgPath, shape.getRotate());
       }
 
-      collidableObjects.add(collidableObject);
-      collidableIdMap.put(shape, collidableId);
-      collidableId++;
+      gameObjectProperties.add(gameObjectProperty);
+      collidableIdMap.put(shape, gameObjectId);
+      gameObjectId++;
     }
 
-    //controllables
-    for (Shape shape : controllables) {
+    for (Shape shape : strikeables) {
       colorRgb = List.of(0, 0, 0);
       imgPath = "";
       if (shape.getFill() instanceof Color) {
@@ -352,34 +341,34 @@ public class AuthoringController {
       } else {
         imgPath = imageMap.get(shape);
       }
-      properties = List.of("movable", "collidable", "controllable", "visible");
+      properties = List.of("collidable", "strikeable", "visible");
       shapeName = (shape instanceof Ellipse) ? "Circle" : "Rectangle";
       if (shape instanceof Ellipse) {
-        collidableObject = new CollidableObject(collidableId,
+        gameObjectProperty = new GameObjectProperties(gameObjectId,
             properties, 10,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(((Ellipse) shape).getRadiusX() * shape.getScaleX(),
                 ((Ellipse) shape).getRadiusY() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, imgPath);
+            colorRgb, 0.0, 0.0, imgPath, shape.getRotate());
       } else {
-        collidableObject = new CollidableObject(collidableId,
+        gameObjectProperty = new GameObjectProperties(gameObjectId,
             properties, 10,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(shape.getLayoutBounds().getWidth() * shape.getScaleX(),
                 shape.getLayoutBounds().getHeight() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, imgPath);
+            colorRgb, 0.0, 0.0, imgPath, shape.getRotate());
       }
 
-      collidableObjects.add(collidableObject);
-      collidableIdMap.put(shape, collidableId);
-      collidableId++;
+      gameObjectProperties.add(gameObjectProperty);
+      collidableIdMap.put(shape, gameObjectId);
+      gameObjectId++;
     }
 
     for (Shape shape : collidableIdMap.keySet()) {
       System.out.println("ID in collidablewrite: " + collidableIdMap.get(shape));
     }
 
-    builderDirector.constructCollidableObjects(collidableObjects);
+    builderDirector.constructCollidableObjects(gameObjectProperties);
 
   }
 

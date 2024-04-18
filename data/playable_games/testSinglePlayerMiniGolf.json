@@ -1,8 +1,8 @@
 {
   "gameName": "sampleMiniGolf",
-  "collidable_objects": [
+  "game_objects": [
     {
-      "collidable_id": 1,
+      "gameobject_id": 1,
       "properties": ["visible", "surface"],
       "mass": 1e1000000,
       "position": {
@@ -20,8 +20,8 @@
       "image": "sample.img"
     },
     {
-      "collidable_id": 2,
-      "properties": ["visible","movable"],
+      "gameobject_id": 2,
+      "properties": ["visible","collidable"],
       "mass": 1,
       "position": {
         "x_position": 250,
@@ -38,7 +38,7 @@
       "image": "sample.img"
     },
     {
-      "collidable_id": 3,
+      "gameobject_id": 3,
       "properties": ["visible", "surface"],
       "mass": 0,
       "position": {
@@ -56,8 +56,8 @@
       "image": "sample.img"
     },
     {
-      "collidable_id": 4,
-      "properties": ["visible","movable"],
+      "gameobject_id": 4,
+      "properties": ["visible","collidable"],
       "mass": 200,
       "position": {
         "x_position": 0,
@@ -74,8 +74,8 @@
       "image": "sample.img"
     },
     {
-      "collidable_id": 5,
-      "properties": ["visible","movable"],
+      "gameobject_id": 5,
+      "properties": ["visible","collidable"],
       "mass": 200,
       "position": {
         "x_position": 0,
@@ -92,8 +92,8 @@
       "image": "sample.img"
     },
     {
-      "collidable_id": 6,
-      "properties": ["visible","movable"],
+      "gameobject_id": 6,
+      "properties": ["visible","collidable"],
       "mass": 200,
       "position": {
         "x_position": 490,
@@ -110,8 +110,8 @@
       "image": "sample.img"
     },
     {
-      "collidable_id": 7,
-      "properties": ["visible","movable"],
+      "gameobject_id": 7,
+      "properties": ["visible","collidable"],
       "mass": 200,
       "position": {
         "x_position": 0,
@@ -131,7 +131,7 @@
   "players": [
     {
       "player_id": 1,
-      "my_collidable": [2]
+      "my_strikeable": [2]
     }
   ],
   "variables": [
@@ -153,9 +153,6 @@
         "second_id": 3,
         "command": [
           {
-            "AdjustPointsCommand": [1.0,1.0]
-          },
-          {
             "AdvanceTurnCommand": []
           }
         ]
@@ -171,15 +168,13 @@
     "advance_turn": [
       {
         "AdvanceTurnCommand": []
-      },
-      {
-        "AdjustPointsCommand": [1.0,1.0]
       }
     ],
     "advance_round": [
       {
         "AdvanceRoundCommand": []
       }
-    ]
+    ],
+    "strike_policy": "DoNothingStrikePolicy"
   }
 }

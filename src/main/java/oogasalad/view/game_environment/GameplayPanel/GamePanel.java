@@ -1,44 +1,58 @@
 package oogasalad.view.game_environment.GameplayPanel;
 
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import oogasalad.view.visual_elements.CompositeElement;
 
+/**
+ * Transforms a node
+ */
 public class GamePanel {
-  private final Pane globalView;
-  private double scaleX;
-  private double scaleY;
-  private double offsetX;
-  private double offsetY;
-  public GamePanel(CompositeElement compositeElement){
-    globalView = new AnchorPane();
-    addGameContentNodes(compositeElement);
+  private final TransformableNode mapTransformer;
+  private final TransformableNode screenTransformer;
+  private final Rectangle localMapFrame;
 
-    scaleX = 1;
-    scaleY = 1;
-    offsetX = 0;
-    offsetY = 0;
+  public GamePanel(CompositeElement modelElements) {
+    mapTransformer = new TransformableNode(buildMapView(modelElements));
+    localMapFrame = new Rectangle(800,800);
+    screenTransformer = new TransformableNode(buildLocalView());
   }
-  public Pane getGlobalView(){
-    return globalView;
-  }
-  public void addGameContentNodes(CompositeElement cm){
-    for (int i : cm.idList()) {
-      globalView.getChildren().add(cm.getNode(i));
+  private Pane buildMapView(CompositeElement elements){
+    AnchorPane mapViewBase = new AnchorPane();
+    for (int id : elements.idList()) {
+      mapViewBase.getChildren().add(elements.getNode(id));
     }
+    return mapViewBase;
   }
-  public void TransformLocal(){
-    globalView.setScaleX(scaleX);
-    globalView.setScaleY(scaleY);
-    globalView.setTranslateX(globalView.getBoundsInLocal().getCenterX()*(scaleX-1)-offsetX);
-    globalView.setTranslateY(globalView.getBoundsInLocal().getCenterY()*(scaleY-1)-offsetY);
+  private Pane buildLocalView(){
+    Pane gameMap = mapTransformer.getPane();
+    gameMap.setClip(localMapFrame);
+    AnchorPane localView = new AnchorPane(gameMap);
+    mapTransformer.sizeToBounds(localMapFrame.getWidth(),localMapFrame.getHeight());
+
+    // Add some local view indicator elements here
+    gameMap.setStyle("-fx-background-color: #FF0000;");
+    localView.setStyle("-fx-background-color: #DDAAFF;");
+
+    return localView;
   }
-  public void modifyScope(double del){
-    scaleX *= del;
-    scaleY *= del;
-    TransformLocal();
+
+  public Pane getPane() {
+    return screenTransformer.getPane();
   }
-  public Pane getPane(){
-    return globalView;
+
+  public void setCamera(double x, double y, double w, double h) {
+    screenTransformer.sizeToBounds(w,h);
+  }
+
+  public void zoomIn() {
+    mapTransformer.zoom(1.05);
+  }
+
+  public void zoomOut() {
+    mapTransformer.zoom(0.95);
   }
 }

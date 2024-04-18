@@ -2,7 +2,6 @@ package oogasalad.view.authoring_environment.authoring_controls;
 
 public class ShapeDisplayControl {
 
-
 //  public void changeAngle(double angle) {
 //    shape.setRotate(angle);
 //  }

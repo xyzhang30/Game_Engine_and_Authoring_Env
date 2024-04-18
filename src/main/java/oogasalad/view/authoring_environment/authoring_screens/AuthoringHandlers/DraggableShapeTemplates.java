@@ -7,7 +7,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 public class DraggableShapeTemplates {
-  private Pane container;
+
+  private final Pane container;
 
   public DraggableShapeTemplates(Pane container) {
     this.container = container;
@@ -55,6 +56,7 @@ public class DraggableShapeTemplates {
 
   // Records relative x and y co-ordinates.
   private static class Delta {
+
     double x, y;
   }
 }

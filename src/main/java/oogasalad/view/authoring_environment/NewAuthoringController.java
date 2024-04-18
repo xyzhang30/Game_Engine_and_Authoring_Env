@@ -4,29 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import oogasalad.model.api.data.CollidableObject;
 import oogasalad.model.api.data.CollisionRule;
-import oogasalad.model.api.data.Dimension;
+import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.GlobalVariables;
 import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.data.PlayerVariables;
-import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
-import oogasalad.view.authoring_environment.authoring_screens.ControllableElementSelectionScreen;
-import oogasalad.view.authoring_environment.authoring_screens.ImageType;
-import oogasalad.view.authoring_environment.authoring_screens.InteractionSelectionScreen;
 import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
-import oogasalad.view.authoring_environment.authoring_screens.NonControllableElementSelection;
-import oogasalad.view.authoring_environment.authoring_screens.NonControllableType;
+import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
+import oogasalad.view.authoring_environment.panels.GameObjectAttributesContainer;
 import oogasalad.view.controller.BuilderDirector;
 
 /**
@@ -38,13 +27,14 @@ public class NewAuthoringController {
 
   private final Stage stage;
   private final AuthoringScreen authoringScreen = new AuthoringScreen();
-//  private Rectangle background;
+  //  private Rectangle background;
   private final BuilderDirector builderDirector = new BuilderDirector();
 
   public NewAuthoringController() {
     stage = new Stage();
     authoringScreen.getAuthoringProxy().setAuthoringController(this);
   }
+
   public void updateAuthoringScreen() {
     stage.setScene(authoringScreen.getScene());
     stage.show();
@@ -91,12 +81,11 @@ public class NewAuthoringController {
 
   public void endAuthoring(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
-      List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap,
-      Map<Shape, String> imageMap, Map<Shape, Coordinate> posMap) {
+      Map<Shape, GameObjectAttributesContainer> gameObjectMap, Map<Shape, String> imageMap,
+      Map<Shape, Coordinate> posMap) {
     System.out.println(gameName);
     System.out.println(interactionMap);
-    System.out.println(controllables);
-    System.out.println(nonControllableTypeMap);
+    System.out.println(gameObjectMap);
     System.out.println(imageMap);
     System.out.println(posMap);
 
@@ -120,7 +109,7 @@ public class NewAuthoringController {
 
   private boolean submitGame(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
-      List<Shape> controllables, Map<Shape, NonControllableType> nonControllableTypeMap,
+      List<Shape> controllables, Map<Shape, GameObjectType> nonControllableTypeMap,
       Map<Shape, String> imageMap, Map<Shape, Coordinate> posMap) {
     try {
       Map<Shape, Integer> collidableIdMap = new HashMap<>();
@@ -196,7 +185,7 @@ public class NewAuthoringController {
     advanceRound.add(roundCommandTwo);
 
     Rules rules = new Rules(collisionRules, turnPolicy, roundPolicy, winCondition, advanceTurn,
-        advanceRound);
+        advanceRound, "DoNothingStrikePolicy");
 
     builderDirector.constructRules(List.of(rules));
   }
@@ -211,10 +200,10 @@ public class NewAuthoringController {
   }
 
   private void writeCollidables(Map<Shape, Integer> collidableIdMap, List<Shape> controllables,
-      Map<Shape, NonControllableType> nonControllableTypeMap, Map<Shape, String> imageMap,
-      Map<Shape,  Coordinate> posMap) {
+      Map<Shape, GameObjectType> nonControllableTypeMap, Map<Shape, String> imageMap,
+      Map<Shape, Coordinate> posMap) {
 //    int collidableId = 0;
-    List<CollidableObject> collidableObjects = new ArrayList<>();
+    List<GameObjectProperties> collidableObjects = new ArrayList<>();
 
 //    //handling background first
 //    List<Integer> colorRgb = List.of(0, 0, 0);
@@ -234,7 +223,7 @@ public class NewAuthoringController {
 //    double staticFriction = 7;
 //    double kineticFriction = 5;
 //    String shapeName = "Rectangle";
-//    CollidableObject collidableObject = new CollidableObject(collidableId,
+//    GameObject collidableObject = new GameObject(collidableId,
 //        properties, Float.POSITIVE_INFINITY,
 //        new Position(posMap.get(background).x(), posMap.get(background).y()),
 //        shapeName, new Dimension(background.getLayoutBounds().getWidth(),

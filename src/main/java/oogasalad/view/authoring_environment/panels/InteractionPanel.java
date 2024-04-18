@@ -12,7 +12,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -21,23 +20,25 @@ import javafx.scene.shape.Shape;
 import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
 
 public class InteractionPanel implements Panel {
+
   private final ShapeProxy shapeProxy;
   private final AuthoringProxy authoringProxy;
   private final StackPane canvas;
   private final AnchorPane rootPane;
-  private final VBox containerVBox;
+  private final AnchorPane containerPane;
   private TextField pointPrompt;
   private CheckBox advanceTurnCheckBox;
   private CheckBox resetCheckBox;
   private CheckBox changeSpeedCheckBox;
-  private Set<Shape> clickedShapes = new HashSet<>();
+  private final Set<Shape> clickedShapes = new HashSet<>();
   private TextField gameNameTextField;
 
-  public InteractionPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane, VBox containerVBox, StackPane canvas) {
+  public InteractionPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
+      AnchorPane containerPane, StackPane canvas) {
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
     this.rootPane = rootPane;
-    this.containerVBox = containerVBox;
+    this.containerPane = containerPane;
     this.canvas = canvas;
     createElements();
     handleEvents();
@@ -65,6 +66,14 @@ public class InteractionPanel implements Panel {
     changeSpeedCheckBox = new CheckBox("Change Speed");
     changeSpeedCheckBox.setId("changeSpeedCheckBox");
 
+    AnchorPane.setTopAnchor(advanceTurnCheckBox, 50.0);
+    AnchorPane.setLeftAnchor(advanceTurnCheckBox, 100.0);
+    AnchorPane.setTopAnchor(resetCheckBox, 100.0);
+    AnchorPane.setLeftAnchor(resetCheckBox, 100.0);
+    AnchorPane.setTopAnchor(changeSpeedCheckBox, 150.0);
+    AnchorPane.setLeftAnchor(changeSpeedCheckBox, 100.0);
+
+
     advanceTurnCheckBox.setDisable(true);
     resetCheckBox.setDisable(true);
     changeSpeedCheckBox.setDisable(true);
@@ -75,7 +84,7 @@ public class InteractionPanel implements Panel {
 
     changeSpeedCheckBox.setPrefSize(150, 150);
 
-    containerVBox.getChildren().addAll(advanceTurnCheckBox, resetCheckBox, changeSpeedCheckBox);
+    containerPane.getChildren().addAll(advanceTurnCheckBox, resetCheckBox, changeSpeedCheckBox);
   }
 
   private void handleAdvance() {
@@ -84,13 +93,10 @@ public class InteractionPanel implements Panel {
 
     for (List<Shape> list : authoringProxy.getInteractionMap().keySet()) {
       if (list.containsAll(clickedShapes)) {
-        Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap().get(list);
-        if (currentInteractions.containsKey(InteractionType.RESET)) {
-          currentInteractions.remove(InteractionType.RESET);
-        }
-        if (currentInteractions.containsKey(InteractionType.CHANGE_SPEED)) {
-          currentInteractions.remove(InteractionType.CHANGE_SPEED);
-        }
+        Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap()
+            .get(list);
+        currentInteractions.remove(InteractionType.RESET);
+        currentInteractions.remove(InteractionType.CHANGE_SPEED);
         currentInteractions.put(InteractionType.ADVANCE, List.of((double) -1));
         return;
       }
@@ -108,13 +114,10 @@ public class InteractionPanel implements Panel {
 
     for (List<Shape> list : authoringProxy.getInteractionMap().keySet()) {
       if (list.containsAll(clickedShapes)) {
-        Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap().get(list);
-        if (currentInteractions.containsKey(InteractionType.ADVANCE)) {
-          currentInteractions.remove(InteractionType.ADVANCE);
-        }
-        if (currentInteractions.containsKey(InteractionType.CHANGE_SPEED)) {
-          currentInteractions.remove(InteractionType.CHANGE_SPEED);
-        }
+        Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap()
+            .get(list);
+        currentInteractions.remove(InteractionType.ADVANCE);
+        currentInteractions.remove(InteractionType.CHANGE_SPEED);
         currentInteractions.put(InteractionType.RESET, List.of((double) -1));
         return;
       }
@@ -131,13 +134,10 @@ public class InteractionPanel implements Panel {
 
     for (List<Shape> list : authoringProxy.getInteractionMap().keySet()) {
       if (list.containsAll(clickedShapes)) {
-        Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap().get(list);
-        if (currentInteractions.containsKey(InteractionType.RESET)) {
-          currentInteractions.remove(InteractionType.RESET);
-        }
-        if (currentInteractions.containsKey(InteractionType.ADVANCE)) {
-          currentInteractions.remove(InteractionType.ADVANCE);
-        }
+        Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap()
+            .get(list);
+        currentInteractions.remove(InteractionType.RESET);
+        currentInteractions.remove(InteractionType.ADVANCE);
         currentInteractions.put(InteractionType.CHANGE_SPEED, List.of((double) -1));
         return;
       }
@@ -155,15 +155,15 @@ public class InteractionPanel implements Panel {
     pointPrompt.setPrefSize(75, 75);
 
     Label label = new Label("Points Scored on Collision");
-    AnchorPane.setRightAnchor(label, 75.0);
-    AnchorPane.setBottomAnchor(label, 250.0);
+    AnchorPane.setLeftAnchor(label, 100.0);
+    AnchorPane.setTopAnchor(label, 50.0);
 
     HBox pointPromptContainer = new HBox(pointPrompt);
     pointPromptContainer.setMaxSize(75, 75);
     AnchorPane.setRightAnchor(pointPromptContainer, 100.0);
     AnchorPane.setBottomAnchor(pointPromptContainer, 150.0);
 
-    containerVBox.getChildren().addAll(label, pointPromptContainer);
+    containerPane.getChildren().addAll(label, pointPromptContainer);
   }
 
   private void handlePointPrompt(KeyCode event) {
@@ -173,7 +173,8 @@ public class InteractionPanel implements Panel {
         Integer points = Integer.parseInt(pointsText);
         for (List<Shape> list : authoringProxy.getInteractionMap().keySet()) {
           if (list.containsAll(clickedShapes)) {
-            Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap().get(list);
+            Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap()
+                .get(list);
             currentInteractions.put(InteractionType.SCORE, List.of((double) 1, (double) points));
             return;
           }

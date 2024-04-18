@@ -4,16 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.Node;
-import oogasalad.model.api.CollidableRecord;
-import oogasalad.model.api.ViewCollidableRecord;
+import oogasalad.model.api.GameObjectRecord;
+import oogasalad.model.api.ViewGameObjectRecord;
 
 public class CompositeElement {
 
   private final Map<Integer, VisualElement> elementMap;
 
-  public CompositeElement(List<ViewCollidableRecord> recordList) {
+  public CompositeElement(List<ViewGameObjectRecord> recordList) {
     elementMap = new HashMap<>();
-    for (ViewCollidableRecord viewRecord : recordList) {
+    for (ViewGameObjectRecord viewRecord : recordList) {
       elementMap.putIfAbsent(viewRecord.id(), new GameElement(viewRecord));
     }
   }
@@ -23,8 +23,8 @@ public class CompositeElement {
    *
    * @param models The list of model data to sync to.
    */
-  public void update(List<CollidableRecord> models) {
-    for (CollidableRecord model : models) {
+  public void update(List<GameObjectRecord> models) {
+    for (GameObjectRecord model : models) {
       elementMap.get(model.id()).update(model);
     }
   }

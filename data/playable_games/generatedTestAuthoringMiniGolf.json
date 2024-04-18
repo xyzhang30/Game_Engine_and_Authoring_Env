@@ -1,7 +1,7 @@
 {
   "gameName" : "generatedTestAuthoringMiniGolf",
-  "collidable_objects" : [ {
-    "collidable_id" : 1,
+  "game_objects" : [ {
+    "gameobject_id" : 1,
     "properties" : [ "visible", "surface" ],
     "mass" : 100.0,
     "position" : {
@@ -16,10 +16,11 @@
     "color" : [ 100, 200, 100 ],
     "staticFriction" : 3.03873,
     "kineticFriction" : 2.03873,
-    "image" : "sample.img"
+    "image" : "sample.img",
+    "direction" : 0.0
   }, {
-    "collidable_id" : 2,
-    "properties" : [ "visible", "movable" ],
+    "gameobject_id" : 2,
+    "properties" : [ "visible", "collidable" ],
     "mass" : 1.0,
     "position" : {
       "x_position" : 250.0,
@@ -33,9 +34,10 @@
     "color" : [ 255, 255, 255 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
-    "image" : "sample.img"
+    "image" : "sample.img",
+    "direction" : 0.0
   }, {
-    "collidable_id" : 3,
+    "gameobject_id" : 3,
     "properties" : [ "visible", "surface" ],
     "mass" : 0.0,
     "position" : {
@@ -50,11 +52,12 @@
     "color" : [ 0, 0, 0 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
-    "image" : "sample.img"
+    "image" : "sample.img",
+    "direction" : 0.0
   } ],
   "players" : [ {
     "player_id" : 1,
-    "my_collidable" : [ 2 ]
+    "my_strikeable" : [ 2 ]
   } ],
   "variables" : [ {
     "global" : {
@@ -90,6 +93,7 @@
     } ],
     "advance_round" : [ {
       "AdvanceRoundCommand" : [ ]
-    } ]
+    } ],
+    "strike_policy" : "DoNothingStrikePolicy"
   }
 }

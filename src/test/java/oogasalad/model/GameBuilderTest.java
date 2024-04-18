@@ -1,4 +1,3 @@
-
 package oogasalad.model;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -10,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import oogasalad.model.api.data.CollidableObject;
 import oogasalad.model.api.data.CollisionRule;
 import oogasalad.model.api.data.Dimension;
 import oogasalad.model.api.data.GlobalVariables;
@@ -23,6 +21,7 @@ import oogasalad.model.api.exception.InvalidJSONDataException;
 import oogasalad.view.controller.BuilderDirector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import oogasalad.model.api.data.GameObjectProperties;
 
 public class GameBuilderTest {
 
@@ -34,14 +33,9 @@ public class GameBuilderTest {
   public void setup() {
     this.testBuilderDirector = new BuilderDirector();
 
-    CollidableObject co1 = new CollidableObject(1, List.of("visible", "surface"),
-        100.0, new Position(0, 0), "rectangle", new Dimension(500, 500),
-        List.of(100, 200, 100), 3.03873, 2.03873, "sample.img");
-    CollidableObject co2 = new CollidableObject(2, List.of("visible", "movable"), 1.0,
-        new Position(250, 450), "circle", new Dimension(2, 2), List.of(255, 255, 255), 0.0, 0.0,"sample.img");
-    CollidableObject co3 = new CollidableObject(3, List.of("visible", "surface"), 0.0,
-        new Position(250, 50), "circle", new Dimension(5, 5), List.of(0, 0, 0), 0.0, 0.0,
-        "sample.img");
+    GameObjectProperties co1 = new GameObjectProperties(1, List.of("visible", "surface"), 100.0, new Position(0, 0), "rectangle", new Dimension(500, 500), List.of(100, 200, 100), 3.03873, 2.03873, "sample.img",0);
+    GameObjectProperties co2 = new GameObjectProperties(2, List.of("visible", "collidable"), 1.0, new Position(250, 450), "circle", new Dimension(2, 2), List.of(255, 255, 255), 0.0, 0.0,"sample.img",0);
+    GameObjectProperties co3 = new GameObjectProperties(3, List.of("visible", "surface"), 0.0, new Position(250, 50), "circle", new Dimension(5, 5), List.of(0, 0, 0), 0.0, 0.0, "sample.img",0);
 
     this.testBuilderDirector.constructCollidableObjects(List.of(co1, co2, co3));
 
@@ -58,7 +52,6 @@ public class GameBuilderTest {
     Rules rules = getRules();
 
     this.testBuilderDirector.constructRules(List.of(rules));
-
   }
 
   private static Rules getRules() {
@@ -72,12 +65,13 @@ public class GameBuilderTest {
     Map<String, List<Double>> advance1 = Map.of("AdvanceTurnCommand", List.of());
     Map<String, List<Double>> advance2 = Map.of("AdjustPointsCommand", List.of(1.0, 1.0));
     Map<String, List<Double>> advance3 = Map.of("AdvanceRoundCommand", List.of());
-    return new Rules(List.of(collisionRule), turnPolicy, roundPolicy, winConditions, List.of(advance1, advance2), List.of(advance3));
+    String strikePolicy = "DoNothingStrikePolicy";
+
+    return new Rules(List.of(collisionRule), turnPolicy, roundPolicy, winConditions, List.of(advance1, advance2), List.of(advance3), strikePolicy);
   }
 
   @Test
   public void testInvalidJSONData() {
-
     InvalidJSONDataException exception = assertThrows(InvalidJSONDataException.class, () -> {
       BuilderDirector invalidGameBuilder = new BuilderDirector();
       invalidGameBuilder.writeGame("testAuthoringMiniGolf");
@@ -87,7 +81,6 @@ public class GameBuilderTest {
     String actualMessage = exception.getMessage();
 
     assertTrue(actualMessage.contains(expectedMessage));
-
   }
 
   @Test
@@ -99,7 +92,4 @@ public class GameBuilderTest {
 
     assertThat(mapper.readTree(expected)).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(mapper.readTree(tested));
   }
-
-}  
-
-
+}

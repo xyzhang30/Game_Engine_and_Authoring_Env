@@ -14,8 +14,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import oogasalad.view.authoring_environment.Coordinate;
 
@@ -25,7 +23,7 @@ public class ShapePanel implements Panel {
   protected final AuthoringProxy authoringProxy;
   protected final StackPane canvas;
   protected final AnchorPane rootPane;
-  protected final VBox containerVBox;
+  protected final AnchorPane containerPane;
   private final List<Shape> templateShapes = new ArrayList<>();
   private Coordinate startPos;
   private Coordinate translatePos;
@@ -33,24 +31,27 @@ public class ShapePanel implements Panel {
   private Slider ySlider;
   private Slider angleSlider;
 
-  public ShapePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane, VBox containerVBox, StackPane canvas) {
+  public ShapePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
+      AnchorPane containerPane, StackPane canvas) {
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
     this.rootPane = rootPane;
-    this.containerVBox = containerVBox;
+    this.containerPane = containerPane;
     this.canvas = canvas;
     createElements();
     handleEvents();
   }
+
   @Override
   public void createElements() {
     createSizeAndAngleSliders(); // strategy
     templateShapes.addAll(shapeProxy.createTemplateShapes()); // strategy
-    containerVBox.getChildren().addAll(templateShapes);
+    containerPane.getChildren().addAll(templateShapes);
   }
+
   @Override
   public void handleEvents() {
-    for (Shape shape: templateShapes) {
+    for (Shape shape : templateShapes) {
       handleShapeEvents(shape);
     }
   }
@@ -80,7 +81,7 @@ public class ShapePanel implements Panel {
     // JavaFX drag and drop -> drop target
   }
 
-//  private void addElements() {
+  //  private void addElements() {
 //    for (Shape shape : shapePositionMap.keySet()) {
 //      shape.setOnMousePressed(null);
 //      shape.setOnMouseClicked(null);
@@ -95,8 +96,7 @@ public class ShapePanel implements Panel {
     shape.setStroke(Color.YELLOW);
     if (shape.getStrokeWidth() != 0) {
       shape.setStrokeWidth(5);
-    }
-    else {
+    } else {
       shape.setStrokeWidth(0);
     }
     updateSlider(shape.getScaleX(), shape.getScaleY(), shape.getRotate());
@@ -106,6 +106,7 @@ public class ShapePanel implements Panel {
 //      }
 //    }
   }
+
   private void setShapeOnDrag(Shape shape, MouseEvent event)
       throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
     // TODO: make a copy for keeping a template -> BETTER DESGIN?
@@ -117,26 +118,31 @@ public class ShapePanel implements Panel {
     templateShapes.remove(shape);
     shapeProxy.setShape(shape);
     shape.setStroke(Color.GREEN);
-    shape.setId(String.valueOf(authoringProxy.getControllables().size()+1));
+    //shape.setId(String.valueOf(authoringProxy.getControllables().size() + 1));
 
     // JavaFX drag and drop -> drop target - example, labe Reflection
-    Shape duplicateShape = shape.getClass().getDeclaredConstructor().newInstance(); // TODO: Handle exception
+    Shape duplicateShape = shape.getClass().getDeclaredConstructor()
+        .newInstance(); // TODO: Handle exception
 
     templateShapes.add(duplicateShape);
     handleShapeEvents(duplicateShape);
-    containerVBox.getChildren().add(duplicateShape);
+    containerPane.getChildren().add(duplicateShape);
 
     startPos = new Coordinate(event.getSceneX(), event.getSceneY());
     translatePos = new Coordinate(shape.getTranslateX(), shape.getTranslateY());
   }
+
   private void setShapeOnCompleteDrag(Shape shape, MouseEvent event) {
     System.out.println("DRAGGED");
     System.out.println(shape);
-    Coordinate offset = new Coordinate(event.getSceneX() - startPos.x(), event.getSceneY() - startPos.y());
-    Coordinate newTranslatePos = new Coordinate(translatePos.x() + offset.x(), translatePos.y() + offset.y());
+    Coordinate offset = new Coordinate(event.getSceneX() - startPos.x(),
+        event.getSceneY() - startPos.y());
+    Coordinate newTranslatePos = new Coordinate(translatePos.x() + offset.x(),
+        translatePos.y() + offset.y());
     shape.setTranslateX(newTranslatePos.x());
     shape.setTranslateY(newTranslatePos.y());
   }
+
   private boolean isInAuthoringBox(Shape shape) {
     Bounds shapeBounds = shape.getBoundsInParent();
     Bounds authoringBoxBounds = canvas.getBoundsInParent();
@@ -145,8 +151,6 @@ public class ShapePanel implements Panel {
     return authoringBoxBounds.contains(shapeBounds);
   }
 
-
-
   private void setShapeOnRelease(Shape shape) {
     System.out.println("RELEASED");
     System.out.println(shape);
@@ -154,14 +158,15 @@ public class ShapePanel implements Panel {
     System.out.println(shape.getTranslateY());
     if (isInAuthoringBox(shape)) {
 //      shape.setStrokeWidth(0);
-      authoringProxy.addControllableShape(shape);
-      Coordinate coordinate = new Coordinate(AnchorPane.getLeftAnchor(shape), AnchorPane.getTopAnchor(shape));
+      //authoringProxy.addControllableShape(shape);
+      Coordinate coordinate = new Coordinate(AnchorPane.getLeftAnchor(shape),
+          AnchorPane.getTopAnchor(shape));
       authoringProxy.addShapePosition(shape, coordinate);
-    }
-    else {
+    } else {
       shape.setVisible(false);
     }
   }
+
   private void createSizeAndAngleSliders() {
     VBox sliderContainerBox = new VBox();
     sliderContainerBox.setPrefSize(200, 10);
@@ -183,8 +188,9 @@ public class ShapePanel implements Panel {
     angleSlider.valueProperty().addListener((observable, oldValue, newValue) ->
         changeAngle(newValue.doubleValue()));
 
-    containerVBox.getChildren().add(sliderContainerBox);
+    containerPane.getChildren().add(sliderContainerBox);
   }
+
   private Slider createAngleSlider(VBox sliderContainerBox) {
     Slider slider = new Slider();
     slider.setPrefWidth(200);
@@ -204,6 +210,7 @@ public class ShapePanel implements Panel {
     sliderContainerBox.getChildren().add(sliderContainer);
     return slider;
   }
+
   private Slider createSizeSlider(String labelText, VBox sliderContainerBox) {
     Slider slider = new Slider();
     slider.setPrefWidth(200);
@@ -222,17 +229,21 @@ public class ShapePanel implements Panel {
     sliderContainerBox.getChildren().add(sliderContainer);
     return slider;
   }
+
   private void updateSlider(double xScale, double yScale, double angle) {
     xSlider.setValue(xScale);
     ySlider.setValue(yScale);
     angleSlider.setValue(angle);
   }
+
   private void changeAngle(double angle) {
     shapeProxy.getShape().setRotate(angle);
   }
+
   private void changeXSize(double xScale) {
     shapeProxy.getShape().setScaleX(xScale);
   }
+
   private void changeYSize(double yScale) {
     shapeProxy.getShape().setScaleY(yScale);
   }

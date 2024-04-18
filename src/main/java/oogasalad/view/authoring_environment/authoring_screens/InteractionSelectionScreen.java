@@ -26,13 +26,13 @@ import oogasalad.view.controller.AuthoringController;
 
 public class InteractionSelectionScreen extends AuthoringScreen {
 
-  private Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap = new HashMap<>();
-  private Map<Shape, List<Double>> posMap = new HashMap<>();
+  private final Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap = new HashMap<>();
+  private final Map<Shape, List<Double>> posMap = new HashMap<>();
   private TextField pointPrompt;
   private CheckBox advanceTurnCheckBox;
   private CheckBox resetCheckBox;
   private CheckBox changeSpeedCheckBox;
-  private Set<Shape> clickedShapes = new HashSet<>();
+  private final Set<Shape> clickedShapes = new HashSet<>();
   private TextField gameNameTextField;
   private Stage gameNameStage;
   private Button submitGameNameButton;
@@ -40,9 +40,9 @@ public class InteractionSelectionScreen extends AuthoringScreen {
 
   public InteractionSelectionScreen(AuthoringController controller, StackPane authoringBox,
       Map<Shape, List<Double>> posMap,
-      Map<Shape, NonControllableType> nonControllableTypeMap, List<Shape> controllableList,
+      Map<Shape, NonStrikeableType> nonStrikeableTypeMap, List<Shape> strikeableList,
       Map<Shape, String> imageMap) {
-    super(controller, authoringBox, posMap, nonControllableTypeMap, controllableList, imageMap);
+    super(controller, authoringBox, posMap, nonStrikeableTypeMap, strikeableList, imageMap);
   }
 
   /**
@@ -88,13 +88,13 @@ public class InteractionSelectionScreen extends AuthoringScreen {
   }
 
   void endSelection() {
-    for (Shape shape : controllableList) {
+    for (Shape shape : strikeableList) {
       List<Double> posList = new ArrayList<>();
       posList.add(shape.localToScene(shape.getBoundsInLocal()).getMinX());
       posList.add(shape.localToScene(shape.getBoundsInLocal()).getMinY());
       posMap.put(shape, posList);
     }
-    for (Shape shape : nonControllableMap.keySet()) {
+    for (Shape shape : nonStrikeableMap.keySet()) {
       List<Double> posList = new ArrayList<>();
       posList.add(shape.localToScene(shape.getBoundsInLocal()).getMinX());
       posList.add(shape.localToScene(shape.getBoundsInLocal()).getMinY());
@@ -126,7 +126,7 @@ public class InteractionSelectionScreen extends AuthoringScreen {
       submitGameNameButton.setOnAction(e -> {
         gameNameStage.close();
         String gameName = gameNameTextField.getText();
-        controller.endAuthoring(gameName, interactionMap, controllableList, nonControllableMap,
+        controller.endAuthoring(gameName, interactionMap, strikeableList, nonStrikeableMap,
             imageMap, posMap);
       });
     }
@@ -173,12 +173,8 @@ public class InteractionSelectionScreen extends AuthoringScreen {
       for (List<Shape> list : interactionMap.keySet()) {
         if (list.containsAll(clickedShapes)) {
           Map<InteractionType, List<Double>> currentInteractions = interactionMap.get(list);
-          if (currentInteractions.containsKey(InteractionType.RESET)) {
-            currentInteractions.remove(InteractionType.RESET);
-          }
-          if (currentInteractions.containsKey(InteractionType.CHANGE_SPEED)) {
-            currentInteractions.remove(InteractionType.CHANGE_SPEED);
-          }
+          currentInteractions.remove(InteractionType.RESET);
+          currentInteractions.remove(InteractionType.CHANGE_SPEED);
           currentInteractions.put(InteractionType.ADVANCE, List.of((double) -1));
           return;
         }
@@ -198,12 +194,8 @@ public class InteractionSelectionScreen extends AuthoringScreen {
       for (List<Shape> list : interactionMap.keySet()) {
         if (list.containsAll(clickedShapes)) {
           Map<InteractionType, List<Double>> currentInteractions = interactionMap.get(list);
-          if (currentInteractions.containsKey(InteractionType.ADVANCE)) {
-            currentInteractions.remove(InteractionType.ADVANCE);
-          }
-          if (currentInteractions.containsKey(InteractionType.CHANGE_SPEED)) {
-            currentInteractions.remove(InteractionType.CHANGE_SPEED);
-          }
+          currentInteractions.remove(InteractionType.ADVANCE);
+          currentInteractions.remove(InteractionType.CHANGE_SPEED);
           currentInteractions.put(InteractionType.RESET, List.of((double) -1));
           return;
         }
@@ -223,12 +215,8 @@ public class InteractionSelectionScreen extends AuthoringScreen {
       for (List<Shape> list : interactionMap.keySet()) {
         if (list.containsAll(clickedShapes)) {
           Map<InteractionType, List<Double>> currentInteractions = interactionMap.get(list);
-          if (currentInteractions.containsKey(InteractionType.RESET)) {
-            currentInteractions.remove(InteractionType.RESET);
-          }
-          if (currentInteractions.containsKey(InteractionType.ADVANCE)) {
-            currentInteractions.remove(InteractionType.ADVANCE);
-          }
+          currentInteractions.remove(InteractionType.RESET);
+          currentInteractions.remove(InteractionType.ADVANCE);
           currentInteractions.put(InteractionType.CHANGE_SPEED, List.of((double) -1));
           return;
         }
@@ -336,41 +324,39 @@ public class InteractionSelectionScreen extends AuthoringScreen {
 
 
   private void setUpShapes() {
-    for (Shape shape : controllableList) {
+    for (Shape shape : strikeableList) {
       makeMultiSelectable(shape);
     }
-    for (Shape shape : nonControllableMap.keySet()) {
+    for (Shape shape : nonStrikeableMap.keySet()) {
       makeMultiSelectable(shape);
     }
   }
 
   private boolean canInteract() {
-    int numControllables = getNumClickedControllables();
-    if (numControllables > 0) {
-      if (numControllables == 2) {
+    int numStrikeables = getNumClickedStrikeables();
+    if (numStrikeables > 0) {
+      if (numStrikeables == 2) {
         return true;
       }
-      if (getNumClickedNonControllables() > 0) {
-        return true;
-      }
+      return getNumClickedNonStrikeables() > 0;
     }
     return false;
   }
 
-  private int getNumClickedControllables() {
+  private int getNumClickedStrikeables() {
     int count = 0;
     for (Shape shape : clickedShapes) {
-      if (controllableList.contains(shape)) {
+      if (strikeableList.contains(shape)) {
         count++;
       }
     }
     return count;
   }
 
-  private int getNumClickedNonControllables() {
+  private int getNumClickedNonStrikeables() {
     int count = 0;
     for (Shape shape : clickedShapes) {
-      if (nonControllableMap.keySet().contains(shape)) {
+      if (nonStrikeableMap.containsKey(shape)) {
         count++;
       }
     }
@@ -379,8 +365,8 @@ public class InteractionSelectionScreen extends AuthoringScreen {
 
   private boolean slowIsOption() {
     for (Shape shape : clickedShapes) {
-      if (nonControllableMap.getOrDefault(shape, NonControllableType.MOVABLE)
-          == NonControllableType.SURFACE) {
+      if (nonStrikeableMap.getOrDefault(shape, NonStrikeableType.COLLIDABLE)
+          == NonStrikeableType.SURFACE) {
         return true;
       }
     }
