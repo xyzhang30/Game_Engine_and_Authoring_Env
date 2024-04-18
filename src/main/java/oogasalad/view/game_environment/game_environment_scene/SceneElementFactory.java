@@ -38,6 +38,8 @@ public class SceneElementFactory {
 
   public Pane createSceneElements(List<Map<String, String>> parameterList) {
     AnchorPane sceneElements = new AnchorPane();
+    sceneElements.setPrefWidth(screenWidth);
+    sceneElements.setPrefHeight(screenHeight);
 
     for (Map<String, String> parameterMap : parameterList) {
       String type = parameterMap.get(typeTag);
