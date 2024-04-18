@@ -1,6 +1,7 @@
 package oogasalad.model.gameengine.command;
 
 import java.util.List;
+import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 
@@ -21,6 +22,7 @@ public class PlayerCompletedTurnCommand implements Command {
    * @param arguments An empty list.
    */
 
+  @ExpectedParamNumber(0)
   public PlayerCompletedTurnCommand(List<Double> arguments) {
 
   }

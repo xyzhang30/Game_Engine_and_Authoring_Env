@@ -1,24 +1,30 @@
 package oogasalad.view.authoring_environment.panels;
 
-import java.awt.Choice;
 import java.io.File;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.RecordComponent;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 import oogasalad.model.annotations.AvailableCommands;
 import oogasalad.model.annotations.ChoiceType;
+import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.view.authoring_environment.authoring_screens.PolicyType;
 import org.controlsfx.control.CheckComboBox;
+import java.lang.reflect.Constructor;
 
 public class PolicyPanel implements Panel{
 
@@ -74,6 +80,12 @@ public class PolicyPanel implements Panel{
       comboBox.setId(policyNameLabel);
       // Add the ComboBox to the containerPane
       containerPane.getChildren().addAll(label,comboBox);
+
+      comboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+        if (newValue != null) {
+          enterParam(commandPackage, newValue);
+        }
+      });
     } else {
 //      String[] options = {"Option 1", "Option 2", "Option 3", "Option 4", "Option 5"};
       CheckComboBox<String> checkComboBox = new CheckComboBox<>(
@@ -84,7 +96,57 @@ public class PolicyPanel implements Panel{
       AnchorPane.setLeftAnchor(checkComboBox, 500.0);
       AnchorPane.setTopAnchor(checkComboBox,50.0*heightIdx);
       checkComboBox.setId(policyNameLabel);
+
+//      checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c -> {
+//        while (c.next()) {
+//          if (c.wasAdded()) {
+//            for (String selectedCommand : c.getAddedSubList()) {
+//              enterParam(commandPackage, selectedCommand);
+//            }
+//          }
+//        }
+//      });
     }
+  }
+
+  private void enterParam(String commandPackage, String newValue) {
+    System.out.println("selected:" + REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue);
+    String classPath = REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue;
+    try {
+      Class<?> clazz = Class.forName(
+          classPath);
+
+      Constructor<?> constructor;
+      if (!commandPackage.equals("strike") && !commandPackage.equals("turn")){
+        constructor = clazz.getConstructor(List.class);
+        if (constructor.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredConstructor(List.class).getAnnotation(ExpectedParamNumber.class).value() != 0){
+          int numParam = constructor.getAnnotation(ExpectedParamNumber.class).value();
+          enterParamsPopup(numParam, newValue);
+        }
+      }
+    } catch (NoSuchMethodException | ClassNotFoundException e) {
+//      throw new RuntimeException(e);
+      e.printStackTrace();
+    }
+  }
+
+  private void enterParamsPopup(int numParam, String item) {
+    Stage popupStage = new Stage();
+    popupStage.setTitle("Specify Command Parameters");
+
+    Label label = new Label(item+":");
+    VBox vbox = new VBox(label);
+
+    for (int i = 0; i < numParam; i ++){
+      TextArea input = new TextArea();
+      input.setId(String.valueOf(i));
+      vbox.getChildren().add(input);
+    }
+    Scene scene = new Scene(vbox, 500, 300);
+    popupStage.setScene(scene);
+
+    popupStage.setResizable(false);
+    popupStage.show();
   }
 
   private List<String> getAvailableCommands(String commandPackage) {
