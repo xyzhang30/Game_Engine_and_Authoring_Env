@@ -13,6 +13,7 @@ import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.data.PlayerVariables;
 import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
+import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
 import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
 import oogasalad.view.controller.BuilderDirector;
@@ -81,12 +82,11 @@ public class NewAuthoringController {
 
   public void endAuthoring(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
-      List<Shape> controllables, Map<Shape, GameObjectType> nonControllableTypeMap,
-      Map<Shape, String> imageMap, Map<Shape, Coordinate> posMap) {
+      Map<Shape, Map<String, String>> gameObjectMap, Map<Shape, String> imageMap,
+      Map<Shape, Coordinate> posMap) {
     System.out.println(gameName);
     System.out.println(interactionMap);
-    System.out.println(controllables);
-    System.out.println(nonControllableTypeMap);
+    System.out.println(gameObjectMap);
     System.out.println(imageMap);
     System.out.println(posMap);
 
@@ -224,7 +224,7 @@ public class NewAuthoringController {
 //    double staticFriction = 7;
 //    double kineticFriction = 5;
 //    String shapeName = "Rectangle";
-//    CollidableObject collidableObject = new CollidableObject(collidableId,
+//    GameObject collidableObject = new GameObject(collidableId,
 //        properties, Float.POSITIVE_INFINITY,
 //        new Position(posMap.get(background).x(), posMap.get(background).y()),
 //        shapeName, new Dimension(background.getLayoutBounds().getWidth(),

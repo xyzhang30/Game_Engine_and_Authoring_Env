@@ -15,17 +15,17 @@ import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
 public class AuthoringProxy {
 
   private final Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap = new HashMap<>();
-  private final List<Shape> controllables = new ArrayList<>();
-  private final Map<Shape, GameObjectType> nonControllableMap = new HashMap<>();
+  private final Map<Shape, Map<String, String>> gameObjectMap = new HashMap<>();
   private final Map<Shape, String> imageMap = new HashMap<>();
   private final Map<Shape, Coordinate> shapePositionMap = new HashMap<>();
   // TODO: make sure that this is actually following the Proxy pattern
   private String gameName;
   private String currentScreenTitle;
   private NewAuthoringController authoringController;
+  private int numPlayers;
 
-  public List<Shape> getControllables() {
-    return controllables;
+  public AuthoringProxy() {
+    initializeNumPlayers();
   }
 
   public void addShapeInteraction(List<Shape> shapes,
@@ -33,16 +33,8 @@ public class AuthoringProxy {
     interactionMap.put(shapes, interaction);
   }
 
-  public void addControllableShape(Shape controllable) {
-    controllables.add(controllable);
-  }
-
-  public Map<Shape, GameObjectType> getNonControllableMap() {
-    return nonControllableMap;
-  }
-
-  public void addNonControllableShape(Shape shape, GameObjectType nonControllableType) {
-    nonControllableMap.put(shape, nonControllableType);
+  public Map<Shape, Map<String, String>> getGameObjectMap() {
+    return gameObjectMap;
   }
 
   public void addImage(Shape shape, String relativePath) {
@@ -55,7 +47,7 @@ public class AuthoringProxy {
 
   public void completeAuthoring()
       throws MissingInteractionException, MissingNonControllableTypeException {
-    authoringController.endAuthoring(gameName, interactionMap, controllables, nonControllableMap,
+    authoringController.endAuthoring(gameName, interactionMap, gameObjectMap,
         imageMap, shapePositionMap);
   }
 
@@ -98,5 +90,21 @@ public class AuthoringProxy {
 
   public Map<Shape, Coordinate> getShapePositionMap() {
     return shapePositionMap;
+  }
+
+  public int getNumPlayers() {
+    return numPlayers;
+  }
+
+  public void increaseNumPlayers() {
+    numPlayers++;
+  }
+
+  public void decreaseNumPlayers() {
+    numPlayers--;
+  }
+
+  public void initializeNumPlayers() {
+    numPlayers = 1;
   }
 }
