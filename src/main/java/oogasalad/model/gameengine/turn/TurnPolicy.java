@@ -1,5 +1,7 @@
 package oogasalad.model.gameengine.turn;
 
+import oogasalad.model.annotations.IsCommand;
+
 /**
  * The TurnPolicy interface defines a contract for classes implementing different turn policies
  * within a game engine.
@@ -9,6 +11,7 @@ package oogasalad.model.gameengine.turn;
  */
 
 @FunctionalInterface
+@IsCommand(isCommand = false)
 public interface TurnPolicy {
 
   /**

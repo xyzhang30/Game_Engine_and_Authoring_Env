@@ -1,5 +1,6 @@
 package oogasalad.model.gameengine.statichandlers;
 
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.command.Command;
@@ -10,6 +11,8 @@ import oogasalad.model.gameengine.command.Command;
  *
  * @author Noah Loewy
  */
+
+@IsCommand(isCommand = true)
 public class TurnOverStaticStateHandler extends StaticStateHandler {
 
   /**

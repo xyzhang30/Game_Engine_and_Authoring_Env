@@ -2,6 +2,7 @@ package oogasalad.model.gameengine.command;
 
 import java.util.List;
 import oogasalad.model.annotations.ExpectedParamNumber;
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
 
@@ -10,7 +11,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
  *
  * @author Noah Loewy
  */
-
+@IsCommand(isCommand = true)
 public class MultiplySpeedCommand implements Command {
 
   private final List<Double> arguments;

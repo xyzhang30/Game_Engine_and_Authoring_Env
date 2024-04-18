@@ -2,6 +2,7 @@ package oogasalad.model.gameengine.strike;
 
 import java.util.Optional;
 import java.util.function.BiConsumer;
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
@@ -16,6 +17,7 @@ import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
  * that might occur if attempting to directly invoke methods on a null reference. If the strikeable
  * is also a scoreable, the temporary score is incremented. Otherwise, no action is taken.
  */
+@IsCommand(isCommand = true)
 public class IncrementPointStrikePolicy implements StrikePolicy {
 
   /**

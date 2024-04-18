@@ -1,6 +1,7 @@
 package oogasalad.model.gameengine.condition;
 
 import java.util.List;
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 
 /**
@@ -10,6 +11,7 @@ import oogasalad.model.gameengine.GameEngine;
  * @author Noah Loewy
  */
 
+@IsCommand(isCommand = true)
 public class NTurnsCompletedCondition implements Condition {
 
   private final List<Double> arguments;

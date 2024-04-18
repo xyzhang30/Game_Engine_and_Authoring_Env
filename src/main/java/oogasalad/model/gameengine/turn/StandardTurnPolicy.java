@@ -1,5 +1,6 @@
 package oogasalad.model.gameengine.turn;
 
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.player.PlayerContainer;
 
 /**
@@ -9,6 +10,7 @@ import oogasalad.model.gameengine.player.PlayerContainer;
  * found. Essentially, a circular list is used.
  */
 
+@IsCommand(isCommand = true)
 public class StandardTurnPolicy implements TurnPolicy {
 
   private final PlayerContainer playerContainer;

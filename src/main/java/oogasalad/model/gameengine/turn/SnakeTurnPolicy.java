@@ -1,5 +1,6 @@
 package oogasalad.model.gameengine.turn;
 
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.player.PlayerContainer;
 
 /**
@@ -12,6 +13,7 @@ import oogasalad.model.gameengine.player.PlayerContainer;
  * @author Noah Loewy
  */
 
+@IsCommand(isCommand = true)
 public class SnakeTurnPolicy implements TurnPolicy {
 
   private final PlayerContainer playerContainer;
