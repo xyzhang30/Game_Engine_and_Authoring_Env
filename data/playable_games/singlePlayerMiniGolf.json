@@ -16,6 +16,7 @@
       },
       "staticFriction": 3.03873,
       "kineticFriction": 2.03873,
+      "inclineAngle": 0,
       "color": [124,252,0],
       "image": ""
     },
@@ -55,6 +56,7 @@
       },
       "staticFriction": 3.03873,
       "kineticFriction": 2.03873,
+      "inclineAngle": 80,
       "color": [124,252,0],
       "image": ""
     },
@@ -113,6 +115,7 @@
       },
       "staticFriction": 9,
       "kineticFriction": 7,
+      "inclineAngle": 0,
       "color": [0,0,255],
       "image": ""
     },
@@ -132,6 +135,7 @@
       },
       "staticFriction": 3.03873,
       "kineticFriction": 2.03873,
+      "inclineAngle": 0,
       "color": [124,252,0],
       "image": ""
     },
@@ -151,6 +155,7 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
+      "inclineAngle": 0,
       "color": [255,255,255],
       "image": ""
     },
@@ -171,6 +176,7 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
+      "inclineAngle": 0,
       "color": [0,0,0],
       "image": ""
     },
@@ -190,6 +196,7 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
+      "inclineAngle": 0,
       "color": [0,0,0],
       "image": ""
     },
@@ -209,6 +216,7 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
+      "inclineAngle": 0,
       "color": [0,0,0],
       "image": ""
     },
@@ -228,6 +236,7 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
+      "inclineAngle": 0,
       "color": [0,0,0],
       "image": ""
     },
@@ -248,6 +257,7 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
+      "inclineAngle": 0,
       "color": [0,0,0],
       "image": ""
     }

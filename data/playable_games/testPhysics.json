@@ -16,7 +16,8 @@
       },
       "color": [100,200,100],
       "staticFriction": 0,
-      "kineticFriction": 0
+      "kineticFriction": 0,
+      "inclineAngle": 0
     },
     {
       "collidable_id": 2,
@@ -33,7 +34,8 @@
       },
       "color": [100,200,100],
       "staticFriction": 0,
-      "kineticFriction": 0
+      "kineticFriction": 0,
+      "inclineAngle": 0
     },
     {
       "collidable_id": 3,
@@ -50,7 +52,8 @@
       },
       "color": [100,200,100],
       "staticFriction": 0,
-      "kineticFriction": 0
+      "kineticFriction": 0,
+      "inclineAngle": 0
     },
     {
       "collidable_id": 4,
@@ -67,7 +70,8 @@
       },
       "color": [255,255,255],
       "staticFriction": 0,
-      "kineticFriction": 0
+      "kineticFriction": 0,
+      "inclineAngle": 0
     },
     {
       "collidable_id": 5,
@@ -84,7 +88,8 @@
       },
       "color": [255,255,255],
       "staticFriction": 0,
-      "kineticFriction": 0
+      "kineticFriction": 0,
+      "inclineAngle": 0
     },
     {
       "collidable_id": 6,
@@ -101,7 +106,8 @@
       },
       "color": [255,255,255],
       "staticFriction": 0,
-      "kineticFriction": 0
+      "kineticFriction": 0,
+      "inclineAngle": 0
     },
     {
       "collidable_id": 7,
@@ -118,7 +124,8 @@
       },
       "color": [255,255,255],
       "staticFriction": 0,
-      "kineticFriction": 0
+      "kineticFriction": 0,
+      "inclineAngle": 0
     },
     {
       "collidable_id": 8,
@@ -135,7 +142,8 @@
       },
       "color": [0,0,0],
       "staticFriction": 0,
-      "kineticFriction": 0
+      "kineticFriction": 0,
+      "inclineAngle": 0
     },
     {
       "collidable_id": 9,
@@ -152,7 +160,8 @@
       },
       "color": [0,0,0],
       "staticFriction": 3.03873,
-      "kineticFriction": 2.03873
+      "kineticFriction": 2.03873,
+      "inclineAngle": 0
     },
     {
       "collidable_id": 10,
@@ -169,8 +178,10 @@
       },
       "color": [0,0,0],
       "staticFriction": 0,
-      "kineticFriction": 0
+      "kineticFriction": 0,
+      "inclineAngle": 0
     }
+
   ],
   "players": [
     {

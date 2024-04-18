@@ -1,6 +1,7 @@
 package oogasalad.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import oogasalad.model.api.CollidableRecord;
 import oogasalad.model.api.GameRecord;

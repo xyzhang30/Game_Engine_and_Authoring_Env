@@ -70,6 +70,7 @@ public class FrictionHandler extends PhysicsHandler {
       // Prevent friction from reversing the direction of motion
       if (Math.signum(newVelocityX) != Math.signum(initialVelocityX)) newVelocityX = 0;
       if (Math.signum(newVelocityY) != Math.signum(initialVelocityY)) newVelocityY = 0;
+      System.out.println("dt: " + dt + List.of(newVelocityX, newVelocityY));
 
       return List.of(newVelocityX, newVelocityY);
     };

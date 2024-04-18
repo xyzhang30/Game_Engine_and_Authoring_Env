@@ -236,12 +236,13 @@ public class AuthoringController {
     //double friction = 0.8;
     double staticFriction = 7;
     double kineticFriction = 5;
+    double inclineAngle = 0;
     String shapeName = "Rectangle";
     CollidableObject collidableObject = new CollidableObject(collidableId,
         properties, Float.POSITIVE_INFINITY,
         new Position(posMap.get(background).get(0), posMap.get(background).get(1)),
         shapeName, new Dimension(background.getLayoutBounds().getWidth(),
-        background.getLayoutBounds().getHeight()), colorRgb, staticFriction, kineticFriction,
+        background.getLayoutBounds().getHeight()), colorRgb, staticFriction, kineticFriction, inclineAngle,
         imgPath);
     collidableObjects.add(collidableObject);
     collidableIdMap.put(background, collidableId);
@@ -262,7 +263,7 @@ public class AuthoringController {
         properties, Double.POSITIVE_INFINITY,
         new Position(50, 50),
         shapeName, new Dimension(20,
-        990), colorRgb, staticFriction, kineticFriction, imgPath);
+        990), colorRgb, staticFriction, kineticFriction, inclineAngle, imgPath);
     collidableObjects.add(collidableObject);
     collidableIdMap.put(wall1, collidableId);
     collidableId++;
@@ -272,7 +273,7 @@ public class AuthoringController {
         properties, Double.POSITIVE_INFINITY,
         new Position(1020, 50),
         shapeName, new Dimension(20,
-        990), colorRgb, staticFriction, kineticFriction, imgPath);
+        990), colorRgb, staticFriction, kineticFriction, inclineAngle, imgPath);
     collidableObjects.add(collidableObject);
     collidableIdMap.put(wall2, collidableId);
     collidableId++;
@@ -282,7 +283,7 @@ public class AuthoringController {
         properties, Double.POSITIVE_INFINITY,
         new Position(50, 50),
         shapeName, new Dimension(985,
-        20), colorRgb, staticFriction, kineticFriction, imgPath);
+        20), colorRgb, staticFriction, kineticFriction, inclineAngle, imgPath);
     collidableObjects.add(collidableObject);
     collidableIdMap.put(wall3, collidableId);
     collidableId++;
@@ -292,7 +293,7 @@ public class AuthoringController {
         properties, Double.POSITIVE_INFINITY,
         new Position(50, 1015),
         shapeName, new Dimension(985,
-        20), colorRgb, staticFriction, kineticFriction, imgPath);
+        20), colorRgb, staticFriction, kineticFriction, inclineAngle, imgPath);
     collidableObjects.add(collidableObject);
     collidableIdMap.put(wall4, collidableId);
     collidableId++;
@@ -329,14 +330,14 @@ public class AuthoringController {
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(((Ellipse) shape).getRadiusX() * shape.getScaleX(),
                 ((Ellipse) shape).getRadiusY() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, imgPath);
+            colorRgb, 0.0, 0.0, 0.0, imgPath);
       } else {
         collidableObject = new CollidableObject(collidableId,
             properties, mass,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(shape.getLayoutBounds().getWidth() * shape.getScaleX(),
                 shape.getLayoutBounds().getHeight() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, imgPath);
+            colorRgb, 0.0, 0.0, 0.0, imgPath);
       }
 
       collidableObjects.add(collidableObject);
@@ -363,14 +364,14 @@ public class AuthoringController {
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(((Ellipse) shape).getRadiusX() * shape.getScaleX(),
                 ((Ellipse) shape).getRadiusY() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, imgPath);
+            colorRgb, 0.0, 0.0, 0.0, imgPath);
       } else {
         collidableObject = new CollidableObject(collidableId,
             properties, 10,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(shape.getLayoutBounds().getWidth() * shape.getScaleX(),
                 shape.getLayoutBounds().getHeight() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, imgPath);
+            colorRgb, 0.0, 0.0, 0.0, imgPath);
       }
 
       collidableObjects.add(collidableObject);

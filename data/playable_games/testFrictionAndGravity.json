@@ -1,0 +1,216 @@
+{
+  "gameName": "testFrictionAndGravity",
+  "collidable_objects": [
+    {
+      "collidable_id": 1,
+      "properties": ["visible", "movable"],
+      "mass": 0.04,
+      "position": {
+        "x_position": -100,
+        "y_position": -175
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 20,
+        "y_dimension": 20
+      },
+      "color": [100,200,100],
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "inclineAngle": 0
+    },
+    {
+      "collidable_id": 2,
+      "properties": ["visible", "movable"],
+      "mass": 0.04,
+      "position": {
+        "x_position": 100,
+        "y_position": -50
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 20,
+        "y_dimension": 20
+      },
+      "color": [100,200,100],
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "inclineAngle": 0
+    },
+    {
+      "collidable_id": 3,
+      "properties": ["visible", "movable"],
+      "mass": 0.04,
+      "position": {
+        "x_position": -175,
+        "y_position": 75
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 20,
+        "y_dimension": 20
+      },
+      "color": [100,200,100],
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "inclineAngle": 0
+    },
+    {
+      "collidable_id": 4,
+      "properties": ["visible", "movable"],
+      "mass": 0.04,
+      "position": {
+        "x_position": 175,
+        "y_position": 75
+      },
+      "shape": "circle",
+      "dimension": {
+        "x_dimension": 20,
+        "y_dimension": 20
+      },
+      "color": [100,200,100],
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "inclineAngle": 0
+    },
+    {
+      "collidable_id": 5,
+      "properties": ["visible", "surface"],
+      "mass": 0,
+      "position": {
+        "x_position": -150,
+        "y_position": -200
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 100,
+        "y_dimension": 17500000
+      },
+      "color": [0,0,0],
+      "staticFriction": 3.03873,
+      "kineticFriction": 2.03873,
+      "inclineAngle": 80
+    },
+    {
+      "collidable_id": 6,
+      "properties": ["visible", "surface"],
+      "mass": 0,
+      "position": {
+        "x_position": 50,
+        "y_position": -200
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 100,
+        "y_dimension": 175
+      },
+      "color": [0,0,0],
+      "staticFriction": 3.03873,
+      "kineticFriction": 2.03873,
+      "inclineAngle": 150
+    },
+    {
+      "collidable_id": 7,
+      "properties": ["visible", "surface"],
+      "mass": 0,
+      "position": {
+        "x_position": -200,
+        "y_position": 25
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 150,
+        "y_dimension": 100
+      },
+      "color": [0,0,0],
+      "staticFriction": 3.03873,
+      "kineticFriction": 2.03873,
+      "inclineAngle": 240
+    },
+    {
+      "collidable_id": 8,
+      "properties": ["visible", "surface"],
+      "mass": 0,
+      "position": {
+        "x_position": 50,
+        "y_position": 25
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 150,
+        "y_dimension": 100
+      },
+      "color": [0,0,0],
+      "staticFriction": 3.03873,
+      "kineticFriction": 2.03873,
+      "inclineAngle": 330
+    }
+  ],
+  "players": [
+    {
+      "player_id": 1,
+      "my_collidable": [1]
+    },
+    {
+      "player_id": 2,
+      "my_collidable": [6]
+    }
+  ],
+  "variables": [
+    {
+      "global": {
+        "max_turns": 1,
+        "max_rounds": 2
+      },
+      "player": {
+        "strokes": 0,
+        "finished": 0
+      }
+    }
+  ],
+  "rules": {
+    "collisions": [
+      {
+        "first_id": 1,
+        "second_id": 10,
+        "command": [
+          {
+            "AdjustPointsCommand": [1.0,1.0]
+          },
+          {
+            "AdjustPointsCommand": [1.0,1.0]
+          }
+        ]
+      },
+      {
+        "first_id": 1,
+        "second_id": 5,
+        "command": [
+          {
+            "UndoTurnCommand": []
+          }
+        ]
+      }
+    ],
+    "turn_policy": "StandardTurnPolicy",
+    "round_policy": {
+      "AllPlayersCompletedRoundCondition": []
+    },
+    "win_condition": {
+      "NRoundsCompletedCondition": [2.0]
+    },
+    "advance_turn": [
+      {
+        "AdvanceTurnCommand": []
+      },
+      {
+        "AdjustPointsCommand": [1.0,1.0]
+      }
+    ],
+    "advance_round": [
+      {
+        "AdvanceRoundCommand": []
+      }
+    ]
+  }
+}
