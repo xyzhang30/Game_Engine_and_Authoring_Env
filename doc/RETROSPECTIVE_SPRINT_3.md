@@ -74,10 +74,20 @@ authoring environment when needed.
 ### Alisha
 
 * Work done this Sprint
+  * Added exception handling for commands through annotation
+  * Updated parser and builder according to changes in model
+  * Added new annotations mostly for commands and rule types
+  * Made new policies panel for the authoring environment 
 
 * Plan for next Sprint?
+  * Finish the interactions and policies authoring part as soon as possible
+  * Update record creation according to authoring environment changes
+    * Maybe separate out rules and objects/layout into separate JSON files + allow users to upload existing rules when authoring new game
+  * Make the player login/profile frontend (maybe also the leaderboard?)
+  * Add error handling + warnings to the authoring environment + make logging work better
 
 * Blockers/Issues in your way
+  * Finding a good way to pass all data from authoring environment into the records
 
 ### Jordan
 
