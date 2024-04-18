@@ -156,5 +156,9 @@ public class GameObjectContainer {
     return collisionPairs;
   }
 
+  public GameObject getMyGameObject(int id){
+    return myGameObjects.get(2);
+  }
+
 
 }

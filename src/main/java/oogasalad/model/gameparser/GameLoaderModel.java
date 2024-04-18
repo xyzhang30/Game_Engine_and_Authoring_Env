@@ -100,6 +100,8 @@ public class GameLoaderModel extends GameLoader {
         optionalStrikeable.ifPresent(playerStrikeableObjects::add);
 
       }
+      System.out.println("strikables: "+ playerStrikeableObjects );
+
       playerContainer.getPlayer(playerId).addStrikeables(playerStrikeableObjects);
 
       List<Scoreable> playerScoreableObjects = new ArrayList<>();
@@ -109,6 +111,8 @@ public class GameLoaderModel extends GameLoader {
         optionalStrikeable.ifPresent(playerScoreableObjects::add);
       }
       playerContainer.getPlayer(playerId).addScoreables(playerScoreableObjects);
+
+
     }
 //    for (PlayerRecord playerRecord : getPlayerContainer().getPlayerRecords()){
 //      int StrikeableId = playerRecord.activeStrikeable();

@@ -9,6 +9,7 @@ public class CollidableFactory {
 
   public static GameObject createCollidable(GameObjectProperties co) {
 
+    //strikeables are not visible at first before the first hit
     GameObject c = new GameObject(
         co.collidableId(),
         co.mass(),

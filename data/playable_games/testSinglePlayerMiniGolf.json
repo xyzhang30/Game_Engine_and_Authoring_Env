@@ -21,7 +21,7 @@
     },
     {
       "gameobject_id": 2,
-      "properties": ["visible","collidable"],
+      "properties": ["visible","collidable", "strikeable"],
       "mass": 1,
       "position": {
         "x_position": 250,
