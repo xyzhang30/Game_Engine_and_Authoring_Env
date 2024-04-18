@@ -213,7 +213,9 @@ public class GameObjectPanel extends ShapePanel {
       if (newValue) {
         setPlayerAssignmentVisibility(true);
       } else {
-        setPlayerAssignmentVisibility(false);
+        if (collidableTypeDropDown.getValue().equals("NON-CONTROLLABLE")) {
+          setPlayerAssignmentVisibility(false);
+        }
       }
     });
 
