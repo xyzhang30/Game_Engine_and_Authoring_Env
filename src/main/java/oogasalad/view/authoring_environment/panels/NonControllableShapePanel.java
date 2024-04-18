@@ -1,5 +1,6 @@
 package oogasalad.view.authoring_environment.panels;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -18,6 +19,9 @@ public class NonControllableShapePanel extends ShapePanel {
   private TextField massTextField;
   private TextField elasticityTextField;
   private CheckBox scoreableCheckBox;
+  private Button addPlayerButton;
+  private Button removePlayerButton;
+  private Text numPlayers;
   private Label kFriction;
   private Label sFriction;
   private Label mass;
@@ -42,6 +46,8 @@ public class NonControllableShapePanel extends ShapePanel {
     createSurfaceOptions();
     createCollidableOptions();
     createMakePlayers();
+    setCollidableOptionVisibility(false);
+    setSurfaceOptionVisibility(false);
   }
 
   private void createGameObjectTypeSelection() {
@@ -133,10 +139,41 @@ public class NonControllableShapePanel extends ShapePanel {
   }
 
   private void createMakePlayers() {
+    Label numPlayersLabel = new Label("Number of Players");
+    AnchorPane.setTopAnchor(numPlayersLabel, 525.0);
+    AnchorPane.setRightAnchor(numPlayersLabel, 90.0);
 
+    removePlayerButton = new Button("-");
+    removePlayerButton.setPrefSize(50, 50);
+    AnchorPane.setRightAnchor(removePlayerButton, 175.0);
+    AnchorPane.setTopAnchor(removePlayerButton, 550.0);
+
+    addPlayerButton = new Button("+");
+    addPlayerButton.setPrefSize(50, 50);
+    AnchorPane.setRightAnchor(addPlayerButton, 50.0);
+    AnchorPane.setTopAnchor(addPlayerButton, 550.0);
+
+    numPlayers = new Text(String.valueOf(authoringProxy.getNumPlayers()));
+    AnchorPane.setRightAnchor(numPlayers, 130.0);
+    AnchorPane.setTopAnchor(numPlayers, 565.0);
+
+    containerPane.getChildren()
+        .addAll(removePlayerButton, addPlayerButton, numPlayersLabel, numPlayers);
   }
 
   private void handleNonControllableTypeSelection() {
+    addPlayerButton.setOnMouseClicked(e -> {
+      authoringProxy.increaseNumPlayers();
+      numPlayers.setText(String.valueOf(authoringProxy.getNumPlayers()));
+    });
+
+    removePlayerButton.setOnMouseClicked(e -> {
+      if (authoringProxy.getNumPlayers() > 1) {
+        authoringProxy.decreaseNumPlayers();
+        numPlayers.setText(String.valueOf(authoringProxy.getNumPlayers()));
+      }
+    });
+
     nonControllableTypeDropdown.valueProperty().addListener((obs, oldVal, gameObjectType) -> {
       if (shapeProxy.getShape() != null && gameObjectType != null) {
         authoringProxy.addNonControllableShape(shapeProxy.getShape(), gameObjectType);
@@ -155,11 +192,11 @@ public class NonControllableShapePanel extends ShapePanel {
     }
   }
 
-  private void setSurfaceOptionVisibility(boolean visibilty) {
-    kFrictionTextField.setVisible(visibilty);
-    sFrictionTextField.setVisible(visibilty);
-    kFriction.setVisible(visibilty);
-    sFriction.setVisible(visibilty);
+  private void setSurfaceOptionVisibility(boolean visibility) {
+    kFrictionTextField.setVisible(visibility);
+    sFrictionTextField.setVisible(visibility);
+    kFriction.setVisible(visibility);
+    sFriction.setVisible(visibility);
   }
 
   private void setCollidableOptionVisibility(boolean visibility) {

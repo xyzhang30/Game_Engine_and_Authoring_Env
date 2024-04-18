@@ -23,6 +23,11 @@ public class AuthoringProxy {
   private String gameName;
   private String currentScreenTitle;
   private NewAuthoringController authoringController;
+  private int numPlayers;
+
+  public AuthoringProxy() {
+    initializeNumPlayers();
+  }
 
   public List<Shape> getControllables() {
     return controllables;
@@ -98,5 +103,21 @@ public class AuthoringProxy {
 
   public Map<Shape, Coordinate> getShapePositionMap() {
     return shapePositionMap;
+  }
+
+  public int getNumPlayers() {
+    return numPlayers;
+  }
+
+  public void increaseNumPlayers() {
+    numPlayers++;
+  }
+
+  public void decreaseNumPlayers() {
+    numPlayers--;
+  }
+
+  public void initializeNumPlayers() {
+    numPlayers = 1;
   }
 }
