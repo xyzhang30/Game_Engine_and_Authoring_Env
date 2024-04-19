@@ -76,11 +76,9 @@ public class SceneManager {
     try {
       List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(
           filePath);
-      List<Node> sceneElements = sceneElementFactory.createSceneElements(sceneElementParameters);
+      Pane sceneElements = sceneElementFactory.createSceneElements(sceneElementParameters);
 
-      AnchorPane sol = new AnchorPane();
-      sol.getChildren().setAll(sceneElements);
-      TransformableNode tf = new TransformableNode(sol);
+      TransformableNode tf = new TransformableNode(sceneElements);
       tf.sizeToBounds(screenWidthObserver.get(), screenHeightObserver.get());
       screenWidthObserver.addListener((observable, oldValue, newValue)->{
         tf.sizeToBounds(newValue.doubleValue(), screenHeightObserver.get());
