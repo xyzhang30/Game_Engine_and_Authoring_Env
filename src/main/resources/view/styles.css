@@ -42,4 +42,9 @@
   -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
 }
 
+.pause-sheen {
+  -fx-fill: #f0f0f0;
+  -fx-opacity: 0.75;
+}
+
 

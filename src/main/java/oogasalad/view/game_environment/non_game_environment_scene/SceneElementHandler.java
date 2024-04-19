@@ -17,16 +17,24 @@ public class SceneElementHandler {
   }
 
   public void createElementHandler(Node node, String event) {
+    checkForSceneChangeEvent(node, event);
+    checkForZoomEvent(node, event);
+    checkForGamePlayChangeEvent(node, event);
+  }
+
+  private void checkForGamePlayChangeEvent(Node node, String event){
     switch (SceneElementEventType.valueOf(event)) {
-      case START_MENU -> {
-        createStartMenuHandler(node);
+      case PAUSE -> {
+        createPauseHandler(node);
       }
-      case START_AUTHORING -> {
-        createStartAuthoringHandler(node);
+      case RESUME -> {
+        createResumeHandler(node);
       }
-      case START_GAME -> {
-        createStartGameHandler(node);
-      }
+    }
+  }
+
+  private void checkForZoomEvent(Node node, String event) {
+    switch (SceneElementEventType.valueOf(event)) {
       case ZOOM_IN -> {
         createZoomInHandler(node);
       }
@@ -37,6 +45,21 @@ public class SceneElementHandler {
         createZoomResetHandler(node);
       }
     }
+  }
+
+  private void checkForSceneChangeEvent(Node node, String event) {
+    switch (SceneElementEventType.valueOf(event)) {
+      case START_MENU -> {
+        createStartMenuHandler(node);
+      }
+      case START_AUTHORING -> {
+        createStartAuthoringHandler(node);
+      }
+      case START_GAME -> {
+        createStartGameHandler(node);
+      }
+    }
+
   }
 
   private void createStartMenuHandler(Node node) {
@@ -66,6 +89,14 @@ public class SceneElementHandler {
 
   private void createZoomResetHandler(Node node) {
     node.setOnMouseClicked(e -> sceneManager.panelZoomReset());
+  }
+
+  private void createPauseHandler(Node node){
+    node.setOnMouseClicked((e -> gameController.pauseGame()));
+  }
+
+  private void createResumeHandler(Node node){
+    node.setOnMouseClicked(e -> gameController.resumeGame());
   }
 
 }

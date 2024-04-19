@@ -33,14 +33,15 @@ public class SceneManager {
   private final Scene scene;
   private final SceneElementParser sceneElementParser;
   private final SceneElementFactory sceneElementFactory;
-  private final SceneElementHandler sceneElementHandler;
   private CompositeElement compositeElement;
   private GameScreen gameScreen;
   private GamePanel gamePanel;
+  private Pane pauseElements;
   private int currentRound = 1;
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
   private final String gameManagementElementsPath = "data/scene_elements/gameManagementElements.xml";
+  private final String pausePath = "data/scene_elements/pauseElements.xml";
   //private final String gameStatElementsPath = "data/scene_elements/gameStatElements.xml";
 
 
@@ -54,25 +55,33 @@ public class SceneManager {
     scene = new Scene(root);
 
     sceneElementParser = new SceneElementParser();
-    sceneElementHandler = new SceneElementHandler(gameController, this);
     sceneElementFactory = new SceneElementFactory(root, 1000, 1000,
-        sceneElementHandler);
+        new SceneElementHandler(gameController, this));
   }
 
   public void createNonGameScene(SceneType sceneType) {
-    resetRoot();
     switch (sceneType) {
       case TITLE -> {
-        createSceneElementsAndUpdateRoot(titleSceneElementsPath);
+        resetRoot();
+        root.getChildren().add(createSceneElements(titleSceneElementsPath));
       }
       case MENU -> {
-        createSceneElementsAndUpdateRoot(menuSceneElementsPath);
+        resetRoot();
+        root.getChildren().add(createSceneElements(menuSceneElementsPath));
       }
       case TRANSITION -> {
       }
       case PAUSE -> {
+        //TODO: Make pause sheen the size of the gameboard
+        if (!root.getChildren().contains(pauseElements)) {
+          root.getChildren().add(pauseElements);
+        }
       }
     }
+  }
+
+  public void removePauseSheen() {
+    root.getChildren().remove(pauseElements);
   }
 
   public void panelZoomIn() {
@@ -87,29 +96,26 @@ public class SceneManager {
     //TODO: write this
   }
 
-  public void createSceneElementsAndUpdateRoot(String filePath) {
+  public Pane createSceneElements(String filePath) {
     try {
       List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(
           filePath);
       Pane sceneElements = sceneElementFactory.createSceneElements(sceneElementParameters);
 
-      TransformableNode tf = new TransformableNode(sceneElements);
-      tf.sizeToBounds(screenWidthObserver.get(), screenHeightObserver.get());
+      TransformableNode transformableNode = new TransformableNode(sceneElements);
+      transformableNode.sizeToBounds(screenWidthObserver.get(), screenHeightObserver.get());
       screenWidthObserver.addListener((observable, oldValue, newValue) -> {
-        tf.sizeToBounds(newValue.doubleValue(), screenHeightObserver.get());
+        transformableNode.sizeToBounds(newValue.doubleValue(), screenHeightObserver.get());
       });
       screenHeightObserver.addListener((observable, oldValue, newValue) -> {
-        tf.sizeToBounds(screenWidthObserver.get(), newValue.doubleValue());
+        transformableNode.sizeToBounds(screenWidthObserver.get(), newValue.doubleValue());
       });
 
-      root.getChildren().setAll(tf.getPane());
+      return transformableNode.getPane();
 
-    } catch (ParserConfigurationException e) {
+    } catch (ParserConfigurationException | SAXException | IOException e) {
       //TODO: Exception Handling
-    } catch (SAXException e) {
-      //TODO: Exception Handling
-    } catch (IOException e) {
-      //TODO: Exception Handling
+      return null;
     }
   }
 
@@ -129,6 +135,7 @@ public class SceneManager {
 
   public void makeGameScreen(GameController controller, CompositeElement compositeElement) {
     this.compositeElement = compositeElement;
+    pauseElements = createSceneElements(pausePath);
     addNonGameElementsToGame();
     addGameElementsToGame();
 
@@ -139,7 +146,7 @@ public class SceneManager {
 
   private void addNonGameElementsToGame() {
     resetRoot();
-    createSceneElementsAndUpdateRoot(gameManagementElementsPath);
+    root.getChildren().add(createSceneElements(gameManagementElementsPath));
   }
 
   private void addGameElementsToGame() {

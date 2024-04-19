@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.enums.SceneElementType;
 
@@ -52,6 +53,9 @@ public class SceneElementFactory {
         }
         case LISTVIEW -> {
           sceneElements.getChildren().add(createListView(parameterMap));
+        }
+        case RECTANGLE -> {
+          sceneElements.getChildren().add(createRectangle(parameterMap));
         }
       }
     }
@@ -110,6 +114,23 @@ public class SceneElementFactory {
     listView.setLayoutY(screenHeight * yLayoutFactor);
 
     return listView;
+  }
+
+  private Rectangle createRectangle(Map<String, String> parameters) {
+    double widthFactor = Double.parseDouble(parameters.get(widthFactorTag));
+    double heightFactor = Double.parseDouble(parameters.get(heightFactorTag));
+    double xLayoutFactor = Double.parseDouble(parameters.get(xLayoutFactorTag));
+    double yLayoutFactor = Double.parseDouble(parameters.get(yLayoutFactorTag));
+    String style = parameters.get(styleTag);
+
+    Rectangle rectangle = new Rectangle(screenWidth * widthFactor,
+        screenHeight * heightFactor);
+    sceneElementStyler.style(rectangle, style);
+
+    rectangle.setLayoutX(screenWidth * xLayoutFactor);
+    rectangle.setLayoutY(screenHeight * yLayoutFactor);
+
+    return rectangle;
   }
 
 }
