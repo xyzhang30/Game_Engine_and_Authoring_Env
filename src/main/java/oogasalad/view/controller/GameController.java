@@ -30,8 +30,6 @@ public class GameController {
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
-  private final String PLAYABLE_GAMES_DIRECTORY = "data/playable_games";
-  private final String TEST_FILE_IDENTIFIER = "test";
   private int strikeableID;
   private int activePlayer;
   private GameEngine gameEngine;
@@ -46,13 +44,6 @@ public class GameController {
 
   public Scene getScene() {
     return sceneManager.getScene();
-  }
-
-  /**
-   * Creates and displays menu screen
-   */
-  public void openMenuScreen() {
-    sceneManager.createNonGameScene(SceneType.MENU);
   }
 
   public void openTransitionScreen() {

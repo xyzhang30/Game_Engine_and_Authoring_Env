@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import javafx.beans.property.ReadOnlyDoubleProperty;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
@@ -38,23 +36,27 @@ public class SceneManager {
   private final SceneElementHandler sceneElementHandler;
   private CompositeElement compositeElement;
   private GameScreen gameScreen;
+  private GamePanel gamePanel;
   private int currentRound = 1;
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
   private final String gameManagementElementsPath = "data/scene_elements/gameManagementElements.xml";
-  private final String gameStatElementsPath = "data/scene_elements/gameStatElements.xml";
+  //private final String gameStatElementsPath = "data/scene_elements/gameStatElements.xml";
 
 
-  public SceneManager(GameController control, ReadOnlyDoubleProperty w, ReadOnlyDoubleProperty h) {
+  public SceneManager(GameController gameController, ReadOnlyDoubleProperty screenWidthObserver,
+      ReadOnlyDoubleProperty screenHeightObserver) {
+
+    this.screenWidthObserver = screenWidthObserver;
+    this.screenHeightObserver = screenHeightObserver;
+
     root = new Pane();
     scene = new Scene(root);
+
     sceneElementParser = new SceneElementParser();
-    sceneElementHandler = new SceneElementHandler(control);
+    sceneElementHandler = new SceneElementHandler(gameController, this);
     sceneElementFactory = new SceneElementFactory(root, 1000, 1000,
         sceneElementHandler);
-
-    screenWidthObserver = w;
-    screenHeightObserver = h;
   }
 
   public void createNonGameScene(SceneType sceneType) {
@@ -73,6 +75,18 @@ public class SceneManager {
     }
   }
 
+  public void panelZoomIn() {
+    gamePanel.zoomIn();
+  }
+
+  public void panelZoomOut() {
+    gamePanel.zoomOut();
+  }
+
+  public void panelZoomReset() {
+    //TODO: write this
+  }
+
   public void createSceneElementsAndUpdateRoot(String filePath) {
     try {
       List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(
@@ -81,7 +95,7 @@ public class SceneManager {
 
       TransformableNode tf = new TransformableNode(sceneElements);
       tf.sizeToBounds(screenWidthObserver.get(), screenHeightObserver.get());
-      screenWidthObserver.addListener((observable, oldValue, newValue)->{
+      screenWidthObserver.addListener((observable, oldValue, newValue) -> {
         tf.sizeToBounds(newValue.doubleValue(), screenHeightObserver.get());
       });
       screenHeightObserver.addListener((observable, oldValue, newValue) -> {
@@ -123,14 +137,13 @@ public class SceneManager {
 //    gameScreen.initiateListening(scene);
   }
 
-  private void addNonGameElementsToGame(){
+  private void addNonGameElementsToGame() {
     resetRoot();
     createSceneElementsAndUpdateRoot(gameManagementElementsPath);
-    createSceneElementsAndUpdateRoot(gameStatElementsPath);
   }
 
-  private void addGameElementsToGame(){
-    GamePanel gamePanel = new GamePanel(compositeElement);
+  private void addGameElementsToGame() {
+    gamePanel = new GamePanel(compositeElement);
     root.getChildren().add(gamePanel.getPane());
   }
 

@@ -4,12 +4,16 @@ import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.enums.SceneElementEventType;
+import oogasalad.view.enums.SceneType;
 
 public class SceneElementHandler {
-  private final GameController gameController;
 
-  public SceneElementHandler(GameController gameController) {
+  private final GameController gameController;
+  private final SceneManager sceneManager;
+
+  public SceneElementHandler(GameController gameController, SceneManager sceneManager) {
     this.gameController = gameController;
+    this.sceneManager = sceneManager;
   }
 
   public void createElementHandler(Node node, String event) {
@@ -23,12 +27,20 @@ public class SceneElementHandler {
       case START_GAME -> {
         createStartGameHandler(node);
       }
+      case ZOOM_IN -> {
+        createZoomInHandler(node);
+      }
+      case ZOOM_OUT -> {
+        createZoomOutHandler(node);
+      }
+      case RESET_ZOOM -> {
+        createZoomResetHandler(node);
+      }
     }
-
   }
 
   private void createStartMenuHandler(Node node) {
-    node.setOnMouseClicked(e -> gameController.openMenuScreen());
+    node.setOnMouseClicked(e -> sceneManager.createNonGameScene(SceneType.MENU));
   }
 
   private void createStartAuthoringHandler(Node node) {
@@ -42,7 +54,18 @@ public class SceneElementHandler {
         gameController.startGamePlay(game);
       }
     });
+  }
 
+  private void createZoomInHandler(Node node) {
+    node.setOnMouseClicked(e -> sceneManager.panelZoomIn());
+  }
+
+  private void createZoomOutHandler(Node node) {
+    node.setOnMouseClicked(e -> sceneManager.panelZoomOut());
+  }
+
+  private void createZoomResetHandler(Node node) {
+    node.setOnMouseClicked(e -> sceneManager.panelZoomReset());
   }
 
 }

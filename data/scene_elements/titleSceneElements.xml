@@ -12,7 +12,7 @@
 
   <node>
     <type>BUTTON</type>
-    <text>Author</text>
+    <text>Create</text>
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.35</x_layout_factor>
@@ -24,7 +24,7 @@
   <node>
     <type>TEXT</type>
     <text>Fysics Fun</text>
-    <x_layout_factor>0.35</x_layout_factor>
+    <x_layout_factor>0.32</x_layout_factor>
     <y_layout_factor>0.3</y_layout_factor>
     <styling>title-text</styling>
   </node>

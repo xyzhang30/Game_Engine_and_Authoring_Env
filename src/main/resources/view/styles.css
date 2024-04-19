@@ -1,42 +1,42 @@
 .root {
-  -fx-background-color: #edecaf;
+  -fx-background-color: #f0f0f0;
 }
 
 .title-button {
-  -fx-background-color: #42bff5;
+  -fx-background-color: #FF851B;
   -fx-text-fill: #ffffff;
-  -fx-font-family: "Comic Sans MS", "Arial", sans-serif;
+  -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 50px;
   -fx-font-weight: bold;
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
 }
 
 .game-button {
-  -fx-background-color: #42bff5;
+  -fx-background-color: #0074D9;
   -fx-text-fill: #ffffff;
-  -fx-font-family: "Comic Sans MS", "Arial", sans-serif;
+  -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 15px;
   -fx-font-weight: bold;
   -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
 }
 
 .game-text {
-  -fx-fill: #42bff5;
-  -fx-font-family: "Comic Sans MS", "Arial", sans-serif;
+  -fx-fill: #0074D9;
+  -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 20px;
   -fx-font-weight: bold;
 }
 
 .title-text {
-  -fx-fill: #349455;
-  -fx-font-family: "Comic Sans MS", "Arial", sans-serif;
+  -fx-fill: #0074D9;
+  -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 100px;
   -fx-font-weight: bold;
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
 }
 
 .menu-game-options {
-  -fx-font-family: "Comic Sans MS", "Arial", sans-serif;
+  -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 30px;
   -fx-font-weight: bold;
   -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
