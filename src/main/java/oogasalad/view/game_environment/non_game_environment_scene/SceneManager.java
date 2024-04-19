@@ -136,15 +136,11 @@ public class SceneManager {
   public void makeGameScreen(GameController controller, CompositeElement compositeElement) {
     this.compositeElement = compositeElement;
     pauseElements = createSceneElements(pausePath);
-    addNonGameElementsToGame();
+    addGameManagementElementsToGame();
     addGameElementsToGame();
-
-//    gameScreen = new GameScreen(controller, compositeElement);
-//    scene.setRoot(gameScreen.getRoot());
-//    gameScreen.initiateListening(scene);
   }
 
-  private void addNonGameElementsToGame() {
+  private void addGameManagementElementsToGame() {
     resetRoot();
     root.getChildren().add(createSceneElements(gameManagementElementsPath));
   }
@@ -168,9 +164,9 @@ public class SceneManager {
     }
   }
 
-  public void updateScoreTurnBoard(Map<Integer, Double> scoreMap, int turn, int round) {
-    gameScreen.updateScoreBoard(scoreMap);
-    gameScreen.updateTurnBoard(turn, round);
+  private void updateScoreTurnBoard(Map<Integer, Double> scoreMap, int turn, int round) {
+    //gameScreen.updateScoreBoard(scoreMap);
+    //gameScreen.updateTurnBoard(turn, round);
   }
 
   private void resetRoot() {
