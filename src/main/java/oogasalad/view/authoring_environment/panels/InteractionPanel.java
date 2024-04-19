@@ -1,6 +1,8 @@
 package oogasalad.view.authoring_environment.panels;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -10,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
@@ -21,13 +25,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Shape;
+import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
+import org.controlsfx.control.CheckComboBox;
 
 public class InteractionPanel implements Panel {
 
-  private static final String COMMAND_PACKAGE_PATH = "src/main/java/oogasalad/model/gameengine/command/";
-  private static final String REFLECTION_COMMAND_PACKAGE_PATH = "src.main.java.oogasalad.model.gameengine.command.";
+  private static final String COMMAND_PACKAGE_PATH = "src/main/java/oogasalad/model/gameengine/command";
+  private static final String REFLECTION_COMMAND_PACKAGE_PATH = "oogasalad.model.gameengine.command";
 
   private final ShapeProxy shapeProxy;
   private final AuthoringProxy authoringProxy;
@@ -60,9 +66,43 @@ public class InteractionPanel implements Panel {
     Label label = new Label("ON COLLISION: ");
     AnchorPane.setTopAnchor(label,50.0);
     AnchorPane.setLeftAnchor(label,350.0);
+    List<String> availableCommands = getAvailableCommands();
 
+    CheckComboBox<String> checkComboBox = new CheckComboBox<>(
+        FXCollections.observableArrayList(availableCommands)
+    );
+    checkComboBox.setMaxWidth(300);
+    containerPane.getChildren().addAll(label,checkComboBox);
+    AnchorPane.setLeftAnchor(checkComboBox, 500.0);
+    AnchorPane.setTopAnchor(checkComboBox,50.0);
+    checkComboBox.setId("collision");
+
+    checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c -> {
+      while (c.next()) {
+        if (c.wasAdded()) {
+          for (String selectedCommand : c.getAddedSubList()) {
+            enterParam(selectedCommand);
+          }
+        }
+      }
+    });
   }
 
+  private void enterParam(String newValue) {
+    System.out.println("selected:" +REFLECTION_COMMAND_PACKAGE_PATH + "." + newValue);
+    String classPath = REFLECTION_COMMAND_PACKAGE_PATH + "." + newValue;
+    try {
+      System.out.println("path: "+classPath);
+      Class<?> clazz = Class.forName(classPath);
+      Constructor<?> constructor = clazz.getConstructor(List.class);
+      if (constructor.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredConstructor(List.class).getAnnotation(ExpectedParamNumber.class).value() != 0){
+        int numParam = constructor.getAnnotation(ExpectedParamNumber.class).value();
+        PolicyPanel.enterParamsPopup(numParam, newValue);
+      }
+    } catch (NoSuchMethodException | ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
 
   private List<String> getAvailableCommands() {
     Path path = Paths.get(COMMAND_PACKAGE_PATH);
@@ -75,8 +115,7 @@ public class InteractionPanel implements Panel {
         if (name.endsWith(".java")) {
           try {
             String className = name.substring(0, name.length() - 5); // Remove ".java" extension
-            Class<?> clazz = Class.forName(
-                REFLECTION_COMMAND_PACKAGE_PATH + className);
+            Class<?> clazz = Class.forName(REFLECTION_COMMAND_PACKAGE_PATH + "." + className);
             boolean isCommand = clazz.getDeclaredAnnotation(IsCommand.class).isCommand();
             if (isCommand) {
               commands.add(className);
@@ -110,40 +149,40 @@ public class InteractionPanel implements Panel {
 
   @Override
   public void handleEvents() {
-    advanceTurnCheckBox.setOnMouseClicked(e -> handleAdvance());
-    resetCheckBox.setOnMouseClicked(e -> handleReset());
-    changeSpeedCheckBox.setOnMouseClicked(e -> handleChangeSpeed());
-    pointPrompt.setOnKeyPressed(e -> handlePointPrompt(e.getCode()));
+//    advanceTurnCheckBox.setOnMouseClicked(e -> handleAdvance());
+//    resetCheckBox.setOnMouseClicked(e -> handleReset());
+//    changeSpeedCheckBox.setOnMouseClicked(e -> handleChangeSpeed());
+//    pointPrompt.setOnKeyPressed(e -> handlePointPrompt(e.getCode()));
   }
 
-  private void createCheckBoxes() {
-    advanceTurnCheckBox = new CheckBox("Advance");
-    advanceTurnCheckBox.setId("advanceTurnCheckBox");
-    resetCheckBox = new CheckBox("Reset");
-    resetCheckBox.setId("resetCheckBox");
-    changeSpeedCheckBox = new CheckBox("Change Speed");
-    changeSpeedCheckBox.setId("changeSpeedCheckBox");
-
-    AnchorPane.setTopAnchor(advanceTurnCheckBox, 50.0);
-    AnchorPane.setLeftAnchor(advanceTurnCheckBox, 100.0);
-    AnchorPane.setTopAnchor(resetCheckBox, 100.0);
-    AnchorPane.setLeftAnchor(resetCheckBox, 100.0);
-    AnchorPane.setTopAnchor(changeSpeedCheckBox, 150.0);
-    AnchorPane.setLeftAnchor(changeSpeedCheckBox, 100.0);
-
-
-    advanceTurnCheckBox.setDisable(true);
-    resetCheckBox.setDisable(true);
-    changeSpeedCheckBox.setDisable(true);
-
-    advanceTurnCheckBox.setPrefSize(150, 150);
-
-    resetCheckBox.setPrefSize(150, 150);
-
-    changeSpeedCheckBox.setPrefSize(150, 150);
-
-    containerPane.getChildren().addAll(advanceTurnCheckBox, resetCheckBox, changeSpeedCheckBox);
-  }
+//  private void createCheckBoxes() {
+//    advanceTurnCheckBox = new CheckBox("Advance");
+//    advanceTurnCheckBox.setId("advanceTurnCheckBox");
+//    resetCheckBox = new CheckBox("Reset");
+//    resetCheckBox.setId("resetCheckBox");
+//    changeSpeedCheckBox = new CheckBox("Change Speed");
+//    changeSpeedCheckBox.setId("changeSpeedCheckBox");
+//
+//    AnchorPane.setTopAnchor(advanceTurnCheckBox, 50.0);
+//    AnchorPane.setLeftAnchor(advanceTurnCheckBox, 100.0);
+//    AnchorPane.setTopAnchor(resetCheckBox, 100.0);
+//    AnchorPane.setLeftAnchor(resetCheckBox, 100.0);
+//    AnchorPane.setTopAnchor(changeSpeedCheckBox, 150.0);
+//    AnchorPane.setLeftAnchor(changeSpeedCheckBox, 100.0);
+//
+//
+//    advanceTurnCheckBox.setDisable(true);
+//    resetCheckBox.setDisable(true);
+//    changeSpeedCheckBox.setDisable(true);
+//
+//    advanceTurnCheckBox.setPrefSize(150, 150);
+//
+//    resetCheckBox.setPrefSize(150, 150);
+//
+//    changeSpeedCheckBox.setPrefSize(150, 150);
+//
+//    containerPane.getChildren().addAll(advanceTurnCheckBox, resetCheckBox, changeSpeedCheckBox);
+//  }
 
   private void handleAdvance() {
     resetCheckBox.setSelected(false);
@@ -207,22 +246,22 @@ public class InteractionPanel implements Panel {
 
   }
 
-  private void createPointOptions() {
-    pointPrompt = new TextField();
-    pointPrompt.setEditable(false);
-    pointPrompt.setPrefSize(75, 75);
-
-    Label label = new Label("Points Scored on Collision");
-    AnchorPane.setLeftAnchor(label, 100.0);
-    AnchorPane.setTopAnchor(label, 50.0);
-
-    HBox pointPromptContainer = new HBox(pointPrompt);
-    pointPromptContainer.setMaxSize(75, 75);
-    AnchorPane.setRightAnchor(pointPromptContainer, 100.0);
-    AnchorPane.setBottomAnchor(pointPromptContainer, 150.0);
-
-    containerPane.getChildren().addAll(label, pointPromptContainer);
-  }
+//  private void createPointOptions() {
+//    pointPrompt = new TextField();
+//    pointPrompt.setEditable(false);
+//    pointPrompt.setPrefSize(75, 75);
+//
+//    Label label = new Label("Points Scored on Collision");
+//    AnchorPane.setLeftAnchor(label, 100.0);
+//    AnchorPane.setTopAnchor(label, 50.0);
+//
+//    HBox pointPromptContainer = new HBox(pointPrompt);
+//    pointPromptContainer.setMaxSize(75, 75);
+//    AnchorPane.setRightAnchor(pointPromptContainer, 100.0);
+//    AnchorPane.setBottomAnchor(pointPromptContainer, 150.0);
+//
+//    containerPane.getChildren().addAll(label, pointPromptContainer);
+//  }
 
   private void handlePointPrompt(KeyCode event) {
     if (event == KeyCode.ENTER) {

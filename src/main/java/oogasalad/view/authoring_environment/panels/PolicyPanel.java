@@ -80,7 +80,8 @@ public class PolicyPanel implements Panel{
       comboBox.setId(policyNameLabel);
       // Add the ComboBox to the containerPane
       containerPane.getChildren().addAll(label,comboBox);
-
+      comboBox.setMinWidth(300);
+      comboBox.setMaxWidth(300);
       comboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue != null) {
           enterParam(commandPackage, newValue);
@@ -91,6 +92,7 @@ public class PolicyPanel implements Panel{
       CheckComboBox<String> checkComboBox = new CheckComboBox<>(
           FXCollections.observableArrayList(availableCommands)
       );
+      checkComboBox.setMinWidth(300);
       checkComboBox.setMaxWidth(300);
       containerPane.getChildren().addAll(label,checkComboBox);
       AnchorPane.setLeftAnchor(checkComboBox, 500.0);
@@ -113,9 +115,8 @@ public class PolicyPanel implements Panel{
     System.out.println("selected:" + REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue);
     String classPath = REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue;
     try {
-      Class<?> clazz = Class.forName(
-          classPath);
-
+      System.out.println("path: "+classPath);
+      Class<?> clazz = Class.forName(classPath);
       Constructor<?> constructor;
       if (!commandPackage.equals("strike") && !commandPackage.equals("turn")){
         constructor = clazz.getConstructor(List.class);
@@ -130,7 +131,7 @@ public class PolicyPanel implements Panel{
     }
   }
 
-  private void enterParamsPopup(int numParam, String item) {
+  public static void enterParamsPopup(int numParam, String item) {
     Stage popupStage = new Stage();
     popupStage.setTitle("Specify Command Parameters");
 
