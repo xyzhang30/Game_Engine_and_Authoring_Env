@@ -56,7 +56,7 @@ public class PolicyPanel implements Panel{
       if (policyType.isAnnotationPresent(ChoiceType.class)) {
         ChoiceType choiceTypeAnnotation = policyType.getAnnotation(ChoiceType.class);
         AvailableCommands availableCommands = policyType.getAnnotation(AvailableCommands.class);
-//        System.out.println("annotation:" + choiceTypeAnnotation);
+
         createPolicySelectionDropdown(policyLabel, choiceTypeAnnotation.singleChoice(), availableCommands.commandPackage(), heightidx);
       }
     heightidx ++;
@@ -72,13 +72,11 @@ public class PolicyPanel implements Panel{
       ComboBox<String> comboBox = new ComboBox<>();
       AnchorPane.setLeftAnchor(comboBox, 500.0);
       AnchorPane.setTopAnchor(comboBox,50.0*heightIdx);
-      // Add items to the ComboBox
+
       comboBox.getItems().addAll(availableCommands);
-      // Set a default value
-//      comboBox.setValue("");
       comboBox.setPromptText("Select command...");
       comboBox.setId(policyNameLabel);
-      // Add the ComboBox to the containerPane
+
       containerPane.getChildren().addAll(label,comboBox);
       comboBox.setMinWidth(300);
       comboBox.setMaxWidth(300);
@@ -88,7 +86,6 @@ public class PolicyPanel implements Panel{
         }
       });
     } else {
-//      String[] options = {"Option 1", "Option 2", "Option 3", "Option 4", "Option 5"};
       CheckComboBox<String> checkComboBox = new CheckComboBox<>(
           FXCollections.observableArrayList(availableCommands)
       );
@@ -126,7 +123,6 @@ public class PolicyPanel implements Panel{
         }
       }
     } catch (NoSuchMethodException | ClassNotFoundException e) {
-//      throw new RuntimeException(e);
       e.printStackTrace();
     }
   }
@@ -169,10 +165,10 @@ public class PolicyPanel implements Panel{
             }
             return isCommand;
           } catch (ClassNotFoundException e) {
-            e.printStackTrace(); // Handle or log the exception
+            e.printStackTrace();
           }
         }
-        return false; // Default return value if class is not found or is not annotated
+        return false;
       });
     }
     return commands;

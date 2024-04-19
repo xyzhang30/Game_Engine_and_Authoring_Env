@@ -124,24 +124,7 @@ public class InteractionPanel implements Panel {
             e.printStackTrace();
           }
         }
-      }
-//      File[] files = packageDir.listFiles((dir, name) -> {
-//        if (name.endsWith(".java")) {
-//          try {
-//            String className = name.substring(0, name.length() - 5); // Remove ".java" extension
-//            Class<?> clazz = Class.forName(
-//                REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + className);
-//            boolean isCommand = clazz.getDeclaredAnnotation(IsCommand.class).isCommand();
-//            if (isCommand) {
-//              commands.add(className);
-//            }
-//            return isCommand;
-//          } catch (ClassNotFoundException e) {
-//            e.printStackTrace(); // Handle or log the exception
-//          }
-//        }
-//        return false; // Default return value if class is not found or is not annotated
-//      });
+}
     }
     return commands;
   }
@@ -149,40 +132,7 @@ public class InteractionPanel implements Panel {
 
   @Override
   public void handleEvents() {
-//    advanceTurnCheckBox.setOnMouseClicked(e -> handleAdvance());
-//    resetCheckBox.setOnMouseClicked(e -> handleReset());
-//    changeSpeedCheckBox.setOnMouseClicked(e -> handleChangeSpeed());
-//    pointPrompt.setOnKeyPressed(e -> handlePointPrompt(e.getCode()));
   }
-
-//  private void createCheckBoxes() {
-//    advanceTurnCheckBox = new CheckBox("Advance");
-//    advanceTurnCheckBox.setId("advanceTurnCheckBox");
-//    resetCheckBox = new CheckBox("Reset");
-//    resetCheckBox.setId("resetCheckBox");
-//    changeSpeedCheckBox = new CheckBox("Change Speed");
-//    changeSpeedCheckBox.setId("changeSpeedCheckBox");
-//
-//    AnchorPane.setTopAnchor(advanceTurnCheckBox, 50.0);
-//    AnchorPane.setLeftAnchor(advanceTurnCheckBox, 100.0);
-//    AnchorPane.setTopAnchor(resetCheckBox, 100.0);
-//    AnchorPane.setLeftAnchor(resetCheckBox, 100.0);
-//    AnchorPane.setTopAnchor(changeSpeedCheckBox, 150.0);
-//    AnchorPane.setLeftAnchor(changeSpeedCheckBox, 100.0);
-//
-//
-//    advanceTurnCheckBox.setDisable(true);
-//    resetCheckBox.setDisable(true);
-//    changeSpeedCheckBox.setDisable(true);
-//
-//    advanceTurnCheckBox.setPrefSize(150, 150);
-//
-//    resetCheckBox.setPrefSize(150, 150);
-//
-//    changeSpeedCheckBox.setPrefSize(150, 150);
-//
-//    containerPane.getChildren().addAll(advanceTurnCheckBox, resetCheckBox, changeSpeedCheckBox);
-//  }
 
   private void handleAdvance() {
     resetCheckBox.setSelected(false);
@@ -245,23 +195,6 @@ public class InteractionPanel implements Panel {
     }
 
   }
-
-//  private void createPointOptions() {
-//    pointPrompt = new TextField();
-//    pointPrompt.setEditable(false);
-//    pointPrompt.setPrefSize(75, 75);
-//
-//    Label label = new Label("Points Scored on Collision");
-//    AnchorPane.setLeftAnchor(label, 100.0);
-//    AnchorPane.setTopAnchor(label, 50.0);
-//
-//    HBox pointPromptContainer = new HBox(pointPrompt);
-//    pointPromptContainer.setMaxSize(75, 75);
-//    AnchorPane.setRightAnchor(pointPromptContainer, 100.0);
-//    AnchorPane.setBottomAnchor(pointPromptContainer, 150.0);
-//
-//    containerPane.getChildren().addAll(label, pointPromptContainer);
-//  }
 
   private void handlePointPrompt(KeyCode event) {
     if (event == KeyCode.ENTER) {

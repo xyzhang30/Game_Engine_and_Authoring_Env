@@ -11,7 +11,7 @@ import oogasalad.view.authoring_environment.NewAuthoringController;
 import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
 
 public class AuthoringProxy {
-
+  
   private final Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap = new HashMap<>();
   private final Map<Shape, GameObjectAttributesContainer> gameObjectMap = new HashMap<>();
   //TODO: transfer imageMap functionality to gameObjectMap

@@ -186,7 +186,9 @@ public class GameLoaderModel extends GameLoader {
 
   private void createRulesRecord() {
     Map<Pair, List<Command>> commandMap = createCommandMap();
+    System.out.println("advanceTurnCmds");
     List<Command> advanceTurnCmds = createAdvanceCommands(gameData.getRules().advanceTurn());
+    System.out.println("Advance Rounds:");
     List<Command> advanceRoundCmds = createAdvanceCommands(gameData.getRules().advanceRound());
     Condition winCondition = createCondition(gameData.getRules().winCondition());
     Condition roundPolicy = createCondition(gameData.getRules().roundPolicy());
@@ -216,12 +218,11 @@ public class GameLoaderModel extends GameLoader {
     }
   }
 
-  private List<Command> createAdvanceCommands(List<Map<String, List<Double>>> commands) {
+  private List<Command> createAdvanceCommands(Map<String, List<Double>> commands) {
     List<Command> ret = new ArrayList<>();
-    commands.forEach(commandsToParams -> {
-      commandsToParams.keySet().forEach(s -> {
-        ret.add(CommandFactory.createCommand(s, commandsToParams.get(s)));
-      });
+    commands.keySet().forEach(command -> {
+      ret.add(CommandFactory.createCommand(command, commands.get(command)));
+      System.out.println("command:"+command + " "+ commands.get(command));
     });
     return ret;
   }
