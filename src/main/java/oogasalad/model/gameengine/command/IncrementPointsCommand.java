@@ -30,7 +30,8 @@ public class IncrementPointsCommand implements Command {
    *                  points should be incremented
    */
 
-  @ExpectedParamNumber(value = 1, paramDescription = {"(double) game object ID to add"})
+  @ExpectedParamNumber(value = 2, paramDescription = {"(double) game object ID to add",
+      "(double) number of points to add"})
   public IncrementPointsCommand(List<Double> arguments) {
     this.arguments = arguments;
   }
@@ -45,7 +46,7 @@ public class IncrementPointsCommand implements Command {
   public void execute(GameEngine engine) {
     Optional<Scoreable> optionalScoreable =
         engine.getGameObjectContainer().getGameObject((int) Math.round(arguments.get(0))).getScoreable();
-    optionalScoreable.ifPresent(Scoreable::incrementTemporaryScore);
+    optionalScoreable.ifPresent(scoreable -> scoreable.incrementTemporaryScore(arguments.get(1)));
   }
 
 }

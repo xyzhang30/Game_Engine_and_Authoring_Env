@@ -160,7 +160,7 @@
         "command": [
           {
             "IncrementPointsCommand": [
-              10
+              10,1
             ],
             "SetVisibleCommand": [
               8,
@@ -175,7 +175,7 @@
         "command": [
           {
             "IncrementPointsCommand": [
-              10
+              10,1
             ],
             "SetVisibleCommand": [
               9,
