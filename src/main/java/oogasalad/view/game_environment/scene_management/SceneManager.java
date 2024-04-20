@@ -1,4 +1,4 @@
-package oogasalad.view.game_environment.non_game_environment_scene;
+package oogasalad.view.game_environment.scene_management;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,7 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.game_environment.GameScreen;
-import oogasalad.view.game_environment.GameplayPanel.GamePanel;
+import oogasalad.view.game_environment.GamePanel;
 import oogasalad.view.visual_elements.CompositeElement;
 import oogasalad.view.enums.SceneType;
 import org.xml.sax.SAXException;

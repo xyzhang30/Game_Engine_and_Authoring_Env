@@ -9,7 +9,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.controller.GameController;
-import oogasalad.view.game_environment.GameplayPanel.GamePanel;
 import oogasalad.view.visual_elements.CompositeElement;
 import oogasalad.view.visual_elements.input_indicators.Arrow;
 

@@ -1,4 +1,4 @@
-package oogasalad.view.game_environment;
+package oogasalad.view.game_environment.scene_management;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

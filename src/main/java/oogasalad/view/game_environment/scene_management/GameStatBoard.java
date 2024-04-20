@@ -1,4 +1,4 @@
-package oogasalad.view.game_environment.non_game_environment_scene;
+package oogasalad.view.game_environment.scene_management;
 
 import java.util.ArrayList;
 import java.util.List;

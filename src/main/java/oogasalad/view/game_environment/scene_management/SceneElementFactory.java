@@ -1,9 +1,7 @@
-package oogasalad.view.game_environment.non_game_environment_scene;
+package oogasalad.view.game_environment.scene_management;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
