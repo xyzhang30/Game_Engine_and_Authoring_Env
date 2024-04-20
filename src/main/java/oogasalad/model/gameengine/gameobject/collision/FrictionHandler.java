@@ -80,7 +80,7 @@ public class FrictionHandler extends PhysicsHandler {
         newVelocityX = 0;
       if (Math.signum(newVelocityY) != Math.signum(initialVelocityY))
         newVelocityY = 0;
-      //System.out.println("dt: " + dt + List.of(newVelocityX, newVelocityY));
+      System.out.println("dt: " + dt + List.of(newVelocityX, newVelocityY));
 
       return List.of(newVelocityX, newVelocityY);
 
