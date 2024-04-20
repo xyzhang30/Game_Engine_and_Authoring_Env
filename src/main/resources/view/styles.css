@@ -32,6 +32,7 @@
   -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 100px;
   -fx-font-weight: bold;
+  -fx-alignment: center;
   -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
 }
 

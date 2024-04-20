@@ -47,9 +47,9 @@ public class GameStatBoard {
     createRoundDisplay(round);
 
     statContainer.getChildren().addAll(roundDisplay, turnDisplay, scoreListDisplay);
-    statContainer.setPrefSize(500, 500);
-    statContainer.setLayoutX(500);
-    statContainer.setLayoutY(500);
+    //TODO: Remove this hard coding
+    statContainer.setLayoutX(1000);
+    statContainer.setLayoutY(200);
     statContainer.setAlignment(Pos.CENTER);
   }
 

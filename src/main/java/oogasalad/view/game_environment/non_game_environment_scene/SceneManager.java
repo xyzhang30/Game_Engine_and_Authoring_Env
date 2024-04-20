@@ -133,7 +133,7 @@ public class SceneManager {
     this.compositeElement = compositeElement;
     pauseElements = createSceneElements(pausePath);
     addGameManagementElementsToGame(gameRecord);
-    //addGameElementsToGame();
+    addGameElementsToGame();
   }
 
   private void addGameManagementElementsToGame(GameRecord gameRecord) {
@@ -148,12 +148,11 @@ public class SceneManager {
     gamePanel = new GamePanel(compositeElement);
     root.getChildren().add(gamePanel.getPane());
   }
+  //refactor methods below here
 
   public void enableHitting() {
     gameScreen.enableHitting();
   }
-
-  //refactor methods below here
 
   public void checkEndRound(GameRecord gameRecord) {
     if (gameRecord.round() != currentRound) {
