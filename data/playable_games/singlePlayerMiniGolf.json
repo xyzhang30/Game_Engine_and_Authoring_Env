@@ -57,7 +57,7 @@
       },
       "staticFriction": 3.03873,
       "kineticFriction": 2.03873,
-      "inclineAngle": 80,
+      "inclineAngle": 0,
       "color": [124,252,0],
       "image": "",
       "direction": 0
