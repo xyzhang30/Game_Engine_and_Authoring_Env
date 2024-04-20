@@ -36,6 +36,7 @@ public class AuthoringProxy {
 
   public void addNoParamPolicies(String type, String command){
     policies.put(type, command);
+    System.out.println("ALL POLICIES:"+policies);
   }
 
   public void addConditionsCommandsWithParam(String type, String commandName, List<Double> params){
@@ -43,6 +44,7 @@ public class AuthoringProxy {
       conditionsCommands.put(type, new HashMap<>());
     }
     conditionsCommands.get(type).put(commandName,params);
+    System.out.println("ALL CONDITIONS:"+conditionsCommands);
   }
 
   public Map<Shape, GameObjectAttributesContainer> getGameObjectMap() {
