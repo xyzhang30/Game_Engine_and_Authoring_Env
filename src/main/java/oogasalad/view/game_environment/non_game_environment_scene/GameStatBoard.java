@@ -2,12 +2,8 @@ package oogasalad.view.game_environment.non_game_environment_scene;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TreeMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -89,19 +85,10 @@ public class GameStatBoard {
   }
 
   private ObservableList<String> createScoreListItems(List<PlayerRecord> players) {
-    Map<Integer, Double> scoreMap = getPlayersIdsAndScoresFromRecord(players);
     List<String> scores = new ArrayList<>();
-    for (Entry<Integer, Double> player : scoreMap.entrySet()) {
-      scores.add(playerText + player.getKey() + playerScoreSeparator + player.getValue());
+    for (PlayerRecord player : players) {
+      scores.add(playerText + player.playerId() + playerScoreSeparator + player.score());
     }
     return FXCollections.observableList(scores);
-  }
-
-  private Map<Integer, Double> getPlayersIdsAndScoresFromRecord(List<PlayerRecord> players) {
-    Map<Integer, Double> scoreMap = new TreeMap<>();
-    for (PlayerRecord p : players) {
-      scoreMap.put(p.playerId(), p.score());
-    }
-    return scoreMap;
   }
 }
