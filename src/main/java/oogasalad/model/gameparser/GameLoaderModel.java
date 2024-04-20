@@ -193,18 +193,28 @@ public class GameLoaderModel extends GameLoader {
     TurnPolicy turnPolicy = createTurnPolicy();
     StrikePolicy strikePolicy = createStrikePolicy();
     PlayerRecordComparator comp = createRankComparator();
-    StaticChecker checker = createStaticChecker();
+    StaticChecker checker = createStaticChecker(gameData.getRules().staticChecker());
     System.out.println(checker);
     rulesRecord = new RulesRecord(commandMap,
         winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy,
         staticHandler, strikePolicy, comp, checker);
   }
 
-  private StaticChecker createStaticChecker() {
-    return StaticCheckerFactory.createStaticChecker(gameData.getRules().staticCheckerType(),
-        gameData.getRules().staticCheckerParams());
+//  private StaticChecker createStaticChecker() {
+//    return StaticCheckerFactory.createStaticChecker(gameData.getRules().staticCheckerType(),
+//        gameData.getRules().staticCheckerParams());
+//
+//  }
 
+  private StaticChecker createStaticChecker(Map<String, List<Integer>> staticChecker) {
+    if (staticChecker.keySet().iterator().hasNext()) {
+      String checkerName = staticChecker.keySet().iterator().next();
+      return StaticCheckerFactory.createStaticChecker(checkerName, staticChecker.get(checkerName));
+    } else {
+      throw new InvalidCommandException("");
+    }
   }
+
 
   private PlayerRecordComparator createRankComparator() {
     return PlayerRankComparatorFactory.createRankComparator(gameData.getRules().rankComparator());

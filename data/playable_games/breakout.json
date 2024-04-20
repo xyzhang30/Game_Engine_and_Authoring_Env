@@ -200,6 +200,8 @@
     },
     "strike_policy": "DoNothingStrikePolicy",
     "rank_comparator": "HighestScoreComparator",
-    "static_checker_type": "VisibilityStaticChecker",
-    "static_checker_params": [8,9]  }
+    "static_checker": {
+      "VisibilityStaticChecker": [8,9]
+    }
+  }
 }

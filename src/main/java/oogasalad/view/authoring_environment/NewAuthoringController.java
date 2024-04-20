@@ -186,9 +186,12 @@ public class NewAuthoringController {
     advanceRound.put("AdjustActivePointsCommand", List.of(1.0));
 //    advanceRound.add(roundCommandTwo);
 
+    Map<String, List<Integer>> staticChecker = new HashMap<>();
+    staticChecker.put("VelocityStaticChecker", List.of());
+
     Rules rules = new Rules(collisionRules, turnPolicy, roundPolicy, winCondition,
         advanceTurn, advanceRound, "DoNothingStrikePolicy", "HighestScoreComparator",
-        "VelocityStaticChecker", List.of());
+        staticChecker);
 
     builderDirector.constructRules(List.of(rules));
   }

@@ -343,7 +343,10 @@
             "LastStaticStateCommand": []
           },
           {
-            "AddDelayedPointsCommand": [8,1]
+            "AddDelayedPointsCommand": [
+              8,
+              1
+            ]
           }
         ]
       },
@@ -355,7 +358,10 @@
             "LastStaticStateCommand": []
           },
           {
-            "AddDelayedPointsCommand": [14,1]
+            "AddDelayedPointsCommand": [
+              14,
+              1
+            ]
           }
         ]
       }
@@ -365,17 +371,20 @@
       "AllPlayersCompletedRoundCondition": []
     },
     "win_condition": {
-      "NRoundsCompletedCondition": [2]
+      "NRoundsCompletedCondition": [
+        2
+      ]
     },
     "advance_turn": {
       "AdvanceTurnCommand": []
     },
-    "advance_round":{
+    "advance_round": {
       "AdvanceRoundCommand": []
     },
-
     "strike_policy": "IncrementPointStrikePolicy",
     "rank_comparator": "LowestScoreComparator",
-    "static_checker_type": "VelocityStaticChecker",
-    "static_checker_params": []  }
+    "static_checker": {
+      "VelocityStaticChecker": []
+    }
+  }
 }
