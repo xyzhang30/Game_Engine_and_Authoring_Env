@@ -40,7 +40,6 @@ public class SceneManager {
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
   private final String gameManagementElementsPath = "data/scene_elements/gameManagementElements.xml";
   private final String pausePath = "data/scene_elements/pauseElements.xml";
-  //private final String gameStatElementsPath = "data/scene_elements/gameStatElements.xml";
 
 
   public SceneManager(GameController gameController, double screenWidth,

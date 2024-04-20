@@ -46,13 +46,13 @@ public class GameController {
   }
 
   public void pauseGame() {
-    //TODO: pause animation
     sceneManager.createNonGameScene(SceneType.PAUSE);
+    animationManager.pauseAnimation();
   }
 
   public void resumeGame() {
-    //TODO: resume animation
     sceneManager.removePauseSheen();
+    animationManager.resumeAnimation();
   }
 
   public void openTransitionScreen() {
