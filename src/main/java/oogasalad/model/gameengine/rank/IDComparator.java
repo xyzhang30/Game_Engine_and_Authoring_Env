@@ -4,6 +4,8 @@ import oogasalad.model.api.PlayerRecord;
 
 /**
  * A comparator for sorting PlayerRecords based on their player IDs.
+ *
+ * @author Noah Loewy
  */
 public class IDComparator extends PlayerRecordComparator {
 

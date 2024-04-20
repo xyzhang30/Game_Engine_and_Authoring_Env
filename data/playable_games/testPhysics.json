@@ -222,8 +222,8 @@
     "advance_round":{
       "AdvanceRoundCommand": []
     },
-
     "strike_policy": "IncrementPointStrikePolicy",
-    "rank_comparator": "IDComparator"
-  }
+    "rank_comparator": "LowestScoreComparator",
+    "static_checker_type": "VelocityStaticChecker",
+    "static_checker_params": []  }
 }

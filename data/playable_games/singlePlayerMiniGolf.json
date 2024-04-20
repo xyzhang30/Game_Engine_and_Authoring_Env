@@ -320,6 +320,7 @@
       "AdvanceRoundCommand": []
     },
     "strike_policy": "IncrementPointStrikePolicy",
-    "rank_comparator": "LowestScoreComparator"
-  }
+    "rank_comparator": "LowestScoreComparator",
+    "static_checker_type": "VelocityStaticChecker",
+    "static_checker_params": []  }
 }

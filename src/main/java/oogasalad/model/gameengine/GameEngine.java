@@ -68,7 +68,8 @@ public class GameEngine implements ExternalGameEngine {
   public GameRecord update(double dt) {
     gameObjects.update(dt);
     handleCollisions(dt);
-    if (gameObjects.checkStatic()) {
+    if (gameObjects.checkStatic(rules.checker())) {
+      System.out.println(1);
       switchToCorrectStaticState();
       updateHistory();
       staticState = true;
@@ -211,6 +212,7 @@ public class GameEngine implements ExternalGameEngine {
   // loader.
 
   private void startRound(GameLoaderModel loader) {
+    System.out.println(loader);
     gameOver = false;
     turn = 1; //first player ideally should have id 1
     staticState = true;

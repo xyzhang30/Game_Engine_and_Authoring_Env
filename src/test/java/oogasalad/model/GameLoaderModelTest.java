@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import oogasalad.Pair;
 import oogasalad.model.api.exception.InvalidFileException;
+import oogasalad.model.gameengine.checkstatic.VelocityStaticChecker;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.command.AddDelayedPointsCommand;
 import oogasalad.model.gameengine.command.AdvanceRoundCommand;
@@ -151,7 +152,7 @@ public class GameLoaderModelTest {
 
     RulesRecord mockRulesRecord = new RulesRecord(collisionHandlers, winCondition, roundPolicy,
         advanceTurn, advanceRound, physicsMap, mockTurnPolicy, mockStaticStateHandler,
-        strikePolicy, new HighestScoreComparator());
+        strikePolicy, new HighestScoreComparator(), new VelocityStaticChecker(List.of()));
 
     assertThat(testGameLoaderModel.getRulesRecord()).usingRecursiveComparison()
         .ignoringCollectionOrder().isEqualTo(mockRulesRecord);
