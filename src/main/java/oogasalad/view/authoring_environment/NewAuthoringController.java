@@ -168,24 +168,26 @@ public class NewAuthoringController {
     Map<String, List<Double>> winCondition = new HashMap<>();
     winCondition.put("NRoundsCompletedCondition", List.of((double) 1));
 
-    List<Map<String, List<Double>>> advanceTurn = new ArrayList<>();
+//    List<Map<String, List<Double>>> advanceTurn = new ArrayList<>();
+    Map<String, List<Double>> advanceTurn = new HashMap<>();
     Map<String, List<Double>> turnCommandOne = new HashMap<>();
-    turnCommandOne.put("AdvanceTurnCommand", new ArrayList<>());
-    advanceTurn.add(turnCommandOne);
+    advanceTurn.put("AdvanceTurnCommand", new ArrayList<>());
+//    advanceTurn.add(turnCommandOne);
     Map<String, List<Double>> turnCommandTwo = new HashMap<>();
-    turnCommandTwo.put("AdjustActivePointsCommand", List.of(1.0));
-    advanceTurn.add(turnCommandTwo);
+    advanceTurn.put("AdjustActivePointsCommand", List.of(1.0));
+//    advanceTurn.add(turnCommandTwo);
 
-    List<Map<String, List<Double>>> advanceRound = new ArrayList<>();
+//    List<Map<String, List<Double>>> advanceRound = new ArrayList<>();
+    Map<String, List<Double>> advanceRound = new HashMap<>();
     Map<String, List<Double>> roundCommandOne = new HashMap<>();
-    roundCommandOne.put("AdvanceRoundCommand", new ArrayList<>());
-    advanceRound.add(roundCommandOne);
+    advanceRound.put("AdvanceRoundCommand", new ArrayList<>());
+//    advanceRound.add(roundCommandOne);
     Map<String, List<Double>> roundCommandTwo = new HashMap<>();
-    roundCommandTwo.put("AdjustActivePointsCommand", List.of(1.0));
-    advanceRound.add(roundCommandTwo);
+    advanceRound.put("AdjustActivePointsCommand", List.of(1.0));
+//    advanceRound.add(roundCommandTwo);
 
-    Rules rules = new Rules(collisionRules, turnPolicy, roundPolicy, winCondition, advanceTurn,
-        advanceRound, "DoNothingStrikePolicy", "HighestScoreComparator");
+    Rules rules = new Rules(collisionRules, turnPolicy, roundPolicy, winCondition,
+        advanceTurn, advanceRound, "DoNothingStrikePolicy", "HighestScoreComparator");
 
     builderDirector.constructRules(List.of(rules));
   }
