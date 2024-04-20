@@ -20,4 +20,9 @@ public @interface ExpectedParamNumber {
    * @return int value of the expected size of the param list
    */
   int value();
+
+  /**
+   * @return arrayList of strings, specifies what each param needs to be
+   */
+  String[] paramDescription() default {};
 }
