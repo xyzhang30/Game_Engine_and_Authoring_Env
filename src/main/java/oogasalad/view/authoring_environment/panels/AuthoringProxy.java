@@ -47,6 +47,14 @@ public class AuthoringProxy {
     System.out.println("ALL CONDITIONS:"+conditionsCommands);
   }
 
+  public void removeConditionsCommandsWithParam(String type, String commandName){
+    if (!conditionsCommands.containsKey(type)){
+      return;
+    }
+    conditionsCommands.get(type).remove(commandName);
+    System.out.println("ALL CONDITIONS:"+conditionsCommands);
+  }
+
   public Map<Shape, GameObjectAttributesContainer> getGameObjectMap() {
     return gameObjectMap;
   }

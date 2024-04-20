@@ -40,10 +40,7 @@ public class InteractionPanel implements Panel {
   private final StackPane canvas;
   private final AnchorPane rootPane;
   private final AnchorPane containerPane;
-  private TextField pointPrompt;
-  private CheckBox advanceTurnCheckBox;
-  private CheckBox resetCheckBox;
-  private CheckBox changeSpeedCheckBox;
+
   private final Set<Shape> clickedShapes = new HashSet<>();
   private TextField gameNameTextField;
 
@@ -61,8 +58,6 @@ public class InteractionPanel implements Panel {
 
   @Override
   public void createElements() {
-//    createCheckBoxes();
-//    createPointOptions();
     Label label = new Label("ON COLLISION: ");
     AnchorPane.setTopAnchor(label,50.0);
     AnchorPane.setLeftAnchor(label,350.0);
@@ -124,7 +119,7 @@ public class InteractionPanel implements Panel {
             e.printStackTrace();
           }
         }
-}
+      }
     }
     return commands;
   }
@@ -132,97 +127,7 @@ public class InteractionPanel implements Panel {
 
   @Override
   public void handleEvents() {
-  }
 
-  private void handleAdvance() {
-    resetCheckBox.setSelected(false);
-    changeSpeedCheckBox.setSelected(false);
-
-    for (List<Shape> list : authoringProxy.getInteractionMap().keySet()) {
-      if (list.containsAll(clickedShapes)) {
-        Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap()
-            .get(list);
-        currentInteractions.remove(InteractionType.RESET);
-        currentInteractions.remove(InteractionType.CHANGE_SPEED);
-        currentInteractions.put(InteractionType.ADVANCE, List.of((double) -1));
-        return;
-      }
-    }
-    List<Shape> shapeList = new ArrayList<>(clickedShapes);
-    Map<InteractionType, List<Double>> currentInteractions = new HashMap<>();
-    currentInteractions.put(InteractionType.ADVANCE, List.of((double) -1));
-    authoringProxy.addShapeInteraction(shapeList, currentInteractions);
-
-  }
-
-  private void handleReset() {
-    advanceTurnCheckBox.setSelected(false);
-    changeSpeedCheckBox.setSelected(false);
-
-    for (List<Shape> list : authoringProxy.getInteractionMap().keySet()) {
-      if (list.containsAll(clickedShapes)) {
-        Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap()
-            .get(list);
-        currentInteractions.remove(InteractionType.ADVANCE);
-        currentInteractions.remove(InteractionType.CHANGE_SPEED);
-        currentInteractions.put(InteractionType.RESET, List.of((double) -1));
-        return;
-      }
-    }
-    List<Shape> shapeList = new ArrayList<>(clickedShapes);
-    Map<InteractionType, List<Double>> currentInteractions = new HashMap<>();
-    currentInteractions.put(InteractionType.RESET, List.of((double) -1));
-    authoringProxy.addShapeInteraction(shapeList, currentInteractions);
-  }
-
-  private void handleChangeSpeed() {
-    advanceTurnCheckBox.setSelected(false);
-    resetCheckBox.setSelected(false);
-
-    for (List<Shape> list : authoringProxy.getInteractionMap().keySet()) {
-      if (list.containsAll(clickedShapes)) {
-        Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap()
-            .get(list);
-        currentInteractions.remove(InteractionType.RESET);
-        currentInteractions.remove(InteractionType.ADVANCE);
-        currentInteractions.put(InteractionType.CHANGE_SPEED, List.of((double) -1));
-        return;
-      }
-      List<Shape> shapeList = new ArrayList<>(clickedShapes);
-      Map<InteractionType, List<Double>> currentInteractions = new HashMap<>();
-      currentInteractions.put(InteractionType.CHANGE_SPEED, List.of((double) -1));
-      authoringProxy.addShapeInteraction(shapeList, currentInteractions);
-    }
-
-  }
-
-  private void handlePointPrompt(KeyCode event) {
-    if (event == KeyCode.ENTER) {
-      String pointsText = pointPrompt.getText();
-      try {
-        Integer points = Integer.parseInt(pointsText);
-        for (List<Shape> list : authoringProxy.getInteractionMap().keySet()) {
-          if (list.containsAll(clickedShapes)) {
-            Map<InteractionType, List<Double>> currentInteractions = authoringProxy.getInteractionMap()
-                .get(list);
-            currentInteractions.put(InteractionType.SCORE, List.of((double) 1, (double) points));
-            return;
-          }
-        }
-
-        List<Shape> shapeList = new ArrayList<>(clickedShapes);
-        Map<InteractionType, List<Double>> currentInteractions = new HashMap<>();
-        currentInteractions.put(InteractionType.SCORE, List.of((double) 1, (double) points));
-        authoringProxy.addShapeInteraction(shapeList, currentInteractions);
-
-      } catch (NumberFormatException e) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText("Please Enter an Integer");
-        alert.showAndWait();
-      }
-    }
   }
 
 

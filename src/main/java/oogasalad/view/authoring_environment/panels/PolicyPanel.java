@@ -298,6 +298,10 @@ public class PolicyPanel implements Panel{
             for (String selectedCommand : c.getAddedSubList()) {
               enterParam(checkComboBox.getId(),commandPackageMap.get(multiChoiceCheckBoxes.get(checkComboBox)), selectedCommand);
             }
+          } if (c.wasRemoved()) {
+            for (String removedCommand : c.getRemoved()) {
+              authoringProxy.removeConditionsCommandsWithParam(checkComboBox.getId(), removedCommand);
+            }
           }
         }
       });
