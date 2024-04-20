@@ -132,6 +132,7 @@
         "AdvanceRoundCommand": []
       }
     ],
-    "strike_policy" : "IncrementPointStrikePolicy"
+    "strike_policy" : "IncrementPointStrikePolicy",
+    "rank_comparator": "IDComparator"
   }
 }
