@@ -192,7 +192,7 @@ public class AuthoringController {
     String strikePolicy = "DoNothingStrikePolicy";
 
     Rules rules = new Rules(collisionRules, turnPolicy, roundPolicy, winCondition, advanceTurn,
-        advanceRound, strikePolicy);
+        advanceRound, strikePolicy, "HighestScoreComparator");
 
     builderDirector.constructRules(List.of(rules));
   }

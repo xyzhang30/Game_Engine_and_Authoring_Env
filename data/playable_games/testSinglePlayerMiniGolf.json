@@ -175,6 +175,7 @@
         "AdvanceRoundCommand": []
       }
     ],
-    "strike_policy": "DoNothingStrikePolicy"
+    "strike_policy": "DoNothingStrikePolicy",
+    "rank_comparator": "LowestScoreComparator"
   }
 }

@@ -31,6 +31,7 @@ import oogasalad.model.gameengine.strike.StrikePolicy;
 import oogasalad.model.gameengine.turn.StandardTurnPolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
 import oogasalad.model.gameparser.GameLoaderModel;
+import oogasalad.model.gameengine.rank.HighestScoreComparator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -150,7 +151,7 @@ public class GameLoaderModelTest {
 
     RulesRecord mockRulesRecord = new RulesRecord(collisionHandlers, winCondition, roundPolicy,
         advanceTurn, advanceRound, physicsMap, mockTurnPolicy, mockStaticStateHandler,
-        strikePolicy);
+        strikePolicy, new HighestScoreComparator());
 
     assertThat(testGameLoaderModel.getRulesRecord()).usingRecursiveComparison()
         .ignoringCollectionOrder().isEqualTo(mockRulesRecord);
