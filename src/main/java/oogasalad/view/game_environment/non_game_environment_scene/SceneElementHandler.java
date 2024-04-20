@@ -3,6 +3,7 @@ package oogasalad.view.game_environment.non_game_environment_scene;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.enums.SceneElementEventType;
@@ -12,12 +13,16 @@ public class SceneElementHandler {
 
   private final GameController gameController;
   private final SceneManager sceneManager;
+  private final int angleIncrement;
   private double maxPower;
   private double minPower;
+  private Rectangle powerMeter;
+  private Polygon angleArrow;
 
   public SceneElementHandler(GameController gameController, SceneManager sceneManager) {
     this.gameController = gameController;
     this.sceneManager = sceneManager;
+    angleIncrement = 5;
   }
 
   public void createElementHandler(Node node, String event) {
@@ -76,6 +81,9 @@ public class SceneElementHandler {
         getMinPower(node);
         createPowerHandler(node);
       }
+      case SET_ANGLE -> {
+        setAngleArrow(node);
+      }
     }
   }
 
@@ -125,45 +133,67 @@ public class SceneElementHandler {
   }
 
   private void createPowerHandler(Node node) {
+    powerMeter = (Rectangle) node;
     Scene scene = sceneManager.getScene();
-    Rectangle powerMeter = (Rectangle) node;
     scene.getRoot().setOnKeyPressed(e -> {
       switch (e.getCode()) {
         case UP: {
-          increasePower(powerMeter);
+          increasePower();
           break;
         }
         case DOWN: {
-          decreasePower(powerMeter);
+          decreasePower();
+          break;
+        }
+        case LEFT: {
+          decreaseAngle();
+          break;
+        }
+        case RIGHT: {
+          increaseAngle();
           break;
         }
         case ENTER: {
-          handleStrike(powerMeter);
+          handleStrike();
           break;
         }
       }
     });
   }
 
-  private void increasePower(Rectangle powerMeter) {
+  private void decreaseAngle() {
+    if (angleArrow.getRotate() > -180) {
+      angleArrow.setRotate(angleArrow.getRotate() - angleIncrement);
+    }
+  }
+
+  private void increaseAngle() {
+    if (angleArrow.getRotate() < 180) {
+      angleArrow.setRotate(angleArrow.getRotate() + angleIncrement);
+    }
+  }
+
+  private void increasePower() {
     if (powerMeter.getHeight() < maxPower - 3 * minPower) {
       powerMeter.setLayoutY(powerMeter.getLayoutY() - 10);
       powerMeter.setHeight(powerMeter.getHeight() + 10);
     }
   }
 
-  private void decreasePower(Rectangle powerMeter) {
+  private void decreasePower() {
     if (powerMeter.getHeight() > 2 * minPower) {
       powerMeter.setLayoutY(powerMeter.getLayoutY() + 10);
       powerMeter.setHeight(powerMeter.getHeight() - 10);
     }
   }
 
-  private void handleStrike(Rectangle powerMeter) {
-    //double angle = Math.toRadians(angleArrow.getAngle() - 90);
+  private void handleStrike() {
+    double angle = angleArrow.getRotate();
     double fractionalVelocity = powerMeter.getHeight() / maxPower;
-    //TODO: remove hard coded angle
-    gameController.hitPointScoringObject(fractionalVelocity, 0.45);
+    gameController.hitPointScoringObject(fractionalVelocity, angle);
   }
 
+  private void setAngleArrow(Node node) {
+    angleArrow = (Polygon) node;
+  }
 }

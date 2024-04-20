@@ -85,4 +85,16 @@
     <event>SET_POWER</event>
   </node>
 
+  <node>
+    <type>ARROW</type>
+    <x_layout>1200</x_layout>
+    <y_layout>850</y_layout>
+    <stem_width>5</stem_width>
+    <stem_height>60</stem_height>
+    <arrow_width_offset>5</arrow_width_offset>
+    <arrow_height_offset>8</arrow_height_offset>
+    <styling>angle-arrow</styling>
+    <event>SET_ANGLE</event>
+  </node>
+
 </scene_elements>

@@ -26,6 +26,12 @@ public class SceneElementFactory {
   private final String heightFactorTag = "height_factor";
   private final String xLayoutFactorTag = "x_layout_factor";
   private final String yLayoutFactorTag = "y_layout_factor";
+  private final String xLayoutTag = "x_layout";
+  private final String yLayoutTag = "y_layout";
+  private final String stemWidthTag = "stem_width";
+  private final String stemHeightTag = "stem_height";
+  private final String arrowWidthOffsetTag = "arrow_width_offset";
+  private final String arrowHeightOffsetTag = "arrow_height_offset";
   private final String styleTag = "styling";
   private final String eventTag = "event";
 
@@ -143,15 +149,40 @@ public class SceneElementFactory {
   }
 
   private Polygon createArrow(Map<String, String> parameters) {
-    double widthFactor = Double.parseDouble(parameters.get(widthFactorTag));
-    double heightFactor = Double.parseDouble(parameters.get(heightFactorTag));
-    double xLayoutFactor = Double.parseDouble(parameters.get(xLayoutFactorTag));
-    double yLayoutFactor = Double.parseDouble(parameters.get(yLayoutFactorTag));
+    double xPos = Integer.parseInt(parameters.get(xLayoutTag));
+    double yPos = Integer.parseInt(parameters.get(yLayoutTag));
+    double stemWidth = Integer.parseInt(parameters.get(stemWidthTag));
+    double stemHeight = Integer.parseInt(parameters.get(stemHeightTag));
+    double arrowWidthOffset = Integer.parseInt(parameters.get(arrowWidthOffsetTag));
+    double arrowHeightOffset = Integer.parseInt(parameters.get(arrowHeightOffsetTag));
     String style = parameters.get(styleTag);
     String event = parameters.get(eventTag);
 
-    double[] arrowPoints = {0, 0, 100, 50, 0, 100, 30, 50};
-    Polygon arrow = new Polygon(arrowPoints);
+    double x1 = xPos;
+    double y1 = yPos;
+    double x2 = xPos + stemWidth;
+    double y2 = yPos;
+    double x3 = xPos + stemWidth;
+    double y3 = yPos - stemHeight;
+    double x4 = xPos + stemWidth + arrowWidthOffset;
+    double y4 = yPos - stemHeight;
+    double x5 = xPos + stemWidth / 2;
+    double y5 = yPos - stemHeight - arrowHeightOffset;
+    double x6 = xPos - arrowWidthOffset;
+    double y6 = yPos - stemHeight;
+    double x7 = xPos;
+    double y7 = yPos - stemHeight;
+
+    Polygon arrow = new Polygon();
+    arrow.getPoints().addAll(
+        x1, y1,  // Tail
+        x2, y2,  // Shaft
+        x3, y3,  // Base of arrowhead
+        x4, y4,  // Tip of arrowhead
+        x5, y5,  // Arrowhead side
+        x6, y6,  // Arrowhead side
+        x7, y7   // Closing the shape back at the tail
+    );
     sceneElementStyler.style(arrow, style);
     sceneElementHandler.createElementHandler(arrow, event);
 

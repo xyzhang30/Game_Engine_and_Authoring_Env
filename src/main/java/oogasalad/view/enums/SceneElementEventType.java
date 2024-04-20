@@ -12,5 +12,6 @@ public enum SceneElementEventType {
   RESET_ZOOM,
   ZOOM_OUT,
   POWER_HEIGHT,
-  SET_POWER
+  SET_POWER,
+  SET_ANGLE
 }
