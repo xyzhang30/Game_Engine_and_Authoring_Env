@@ -86,15 +86,14 @@
     "win_condition" : {
       "NRoundsCompletedCommand" : [ 2.0 ]
     },
-    "advance_turn" : [ {
-      "AdvanceTurnCommand" : [ ]
-    }, {
+    "advance_turn" : {
+      "AdvanceTurnCommand" : [ ],
       "AdjustPointsCommand" : [ 1.0, 1.0 ]
-    } ],
-    "advance_round" : [ {
+    },
+    "advance_round" : {
       "AdvanceRoundCommand" : [ ]
-    } ],
+    },
     "strike_policy" : "DoNothingStrikePolicy",
-    "rank_comparator": "LowestScoreComparator"
+    "rank_comparator" : "HighestScoreComparator"
   }
 }

@@ -69,7 +69,9 @@ public class GameBuilderTest {
     String strikePolicy = "DoNothingStrikePolicy";
 
     return new Rules(List.of(collisionRule), turnPolicy, roundPolicy, winConditions,
-        List.of(advance1, advance2), List.of(advance3), strikePolicy, "HighestScoreComparator");
+        Map.of("AdvanceTurnCommand", List.of(), "AdjustPointsCommand", List.of(1.0, 1.0)),
+        Map.of("AdvanceRoundCommand", List.of()), strikePolicy,
+        "HighestScoreComparator");
   }
 
   @Test

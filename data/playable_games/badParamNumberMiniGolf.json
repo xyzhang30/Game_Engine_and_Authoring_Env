@@ -299,16 +299,17 @@
     "win_condition": {
       "NRoundsCompletedCondition": []
     },
-    "advance_turn": [
+    "advance_turn":
       {
         "AdvanceTurnCommand": []
       }
-    ],
-    "advance_round": [
+    ,
+    "advance_round":
       {
         "AdvanceRoundCommand": []
       }
-    ],
-    "strike_policy": "DoNothingStrikePolicy"
+    ,
+    "strike_policy": "DoNothingStrikePolicy",
+    "rank_comparator" : "HighestScoreComparator"
   }
 }
