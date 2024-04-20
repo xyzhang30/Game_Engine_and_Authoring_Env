@@ -55,12 +55,12 @@ public class GameStatBoard {
   }
 
   private void createTurnDisplay(int turn) {
-    turnDisplay = new Text(turnText + turn);
+    turnDisplay = new Text(turnText + playerText + turn);
     turnDisplay.getStyleClass().add(textStyleTag);
   }
 
   private void updateTurn(int turn) {
-    turnDisplay.setText(turnText + turn);
+    turnDisplay.setText(turnText + playerText + turn);
   }
 
   private void createRoundDisplay(int round) {

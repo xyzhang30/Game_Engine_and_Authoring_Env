@@ -68,7 +68,6 @@ public class SceneElementHandler {
   }
 
   private void checkForStrikingEvent(Node node, String event) {
-    System.out.println(SceneElementEventType.valueOf(event));
     switch (SceneElementEventType.valueOf(event)) {
       case POWER_HEIGHT -> {
         getMaxPower(node);
@@ -154,14 +153,13 @@ public class SceneElementHandler {
   }
 
   private void decreasePower(Rectangle powerMeter) {
-    if (powerMeter.getHeight() > minPower) {
+    if (powerMeter.getHeight() > 2 * minPower) {
       powerMeter.setLayoutY(powerMeter.getLayoutY() + 10);
       powerMeter.setHeight(powerMeter.getHeight() - 10);
     }
   }
 
   private void handleStrike(Rectangle powerMeter) {
-    //ableToHit = false;
     //double angle = Math.toRadians(angleArrow.getAngle() - 90);
     double fractionalVelocity = powerMeter.getHeight() / maxPower;
     //TODO: remove hard coded angle

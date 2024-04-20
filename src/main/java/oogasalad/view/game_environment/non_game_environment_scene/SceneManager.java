@@ -3,7 +3,6 @@ package oogasalad.view.game_environment.non_game_environment_scene;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javax.xml.parsers.ParserConfigurationException;
@@ -111,7 +110,7 @@ public class SceneManager {
     compositeElement.update(gameRecord.gameObjectRecords());
     gameStatBoard.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
     checkEndRound(gameRecord);
-    System.out.println(scene.getFocusOwner());
+    root.requestFocus();
   }
 
   public void makeGameScreen(GameController controller, CompositeElement compositeElement,
@@ -137,10 +136,6 @@ public class SceneManager {
     root.getChildren().add(gamePanel.getPane());
   }
   //refactor methods below here
-
-  public void enableHitting() {
-    gameScreen.enableHitting();
-  }
 
   public void checkEndRound(GameRecord gameRecord) {
     if (gameRecord.round() != currentRound) {

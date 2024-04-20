@@ -33,12 +33,14 @@ public class GameController {
   private int activePlayer;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
+  private boolean ableToStrike;
 
 
   public GameController(double width, double height) {
     sceneManager = new SceneManager(this, width, height);
     sceneManager.createNonGameScene(SceneType.TITLE);
     animationManager = new AnimationManager();
+    ableToStrike = true;
   }
 
   public Scene getScene() {
@@ -103,7 +105,7 @@ public class GameController {
     GameRecord gameRecord = gameEngine.update(timeStep);
     boolean staticState = gameRecord.staticState();
     if (staticState) {
-      sceneManager.enableHitting();
+      ableToStrike = true;
     }
     getCurrentStrikeable(gameRecord);
     sceneManager.update(gameRecord);
@@ -116,11 +118,12 @@ public class GameController {
    * @param fractionalVelocity velocity as fraction of maxVelocity
    */
   public void hitPointScoringObject(double fractionalVelocity, double angle) {
-    gameEngine.applyInitialVelocity(700 * fractionalVelocity, angle,
-        strikeableID); // The 8 has been hard
-    // coded!
-
-    animationManager.runAnimation(this);
+    if (ableToStrike) {
+      gameEngine.applyInitialVelocity(700 * fractionalVelocity, angle,
+          strikeableID);
+      ableToStrike = false;
+      animationManager.runAnimation(this);
+    }
   }
 
   private CompositeElement createCompositeElementFromGameLoader() {
