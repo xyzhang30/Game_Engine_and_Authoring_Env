@@ -144,7 +144,7 @@ public class PolicyPanel implements Panel{
     }
   }
 
-  private void enterParam(String commandType, String commandPackage, String newValue) {
+  private List<Double> enterParam(String commandType, String commandPackage, String newValue) {
     System.out.println("selected:" + REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue);
     String classPath = REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue;
     try {
@@ -157,19 +157,24 @@ public class PolicyPanel implements Panel{
         if (constructor.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredConstructor(List.class).getAnnotation(ExpectedParamNumber.class).value() != 0){
           //prompt user to enter param
           int numParam = constructor.getAnnotation(ExpectedParamNumber.class).value();
-          List<Double> paramList = enterParamsPopup(numParam, newValue);
-          //saving with user-specified params
-          saveSelectionWithParam(commandType, newValue, paramList);
+          //get and return the params from popup
+          return enterParamsPopup(numParam, newValue);
+//          //saving with user-specified params
+//          saveSelectionWithParam(commandType, newValue, paramList);
         } else {
-          //save with empty param list
-          saveSelectionWithParam(commandType, newValue, new ArrayList<Double>());
+          //command does not take in params -- return empty param list
+          return new ArrayList<>();
+//          //save with empty param list
+//          saveSelectionWithParam(commandType, newValue, new ArrayList<Double>());
         }
       } else {
-        //commands that don't take in arguments (turn policy and strike policy)
+        //commands that don't take in arguments (turn policy and strike policy) -- call save directly (because no need to distinguish between adding a command and replacing a command based on whether it's a combobox or a checkcombobox)
         saveSelectionNoParam(commandType, newValue);
+        return null;
       }
     } catch (NoSuchMethodException | ClassNotFoundException e) {
       e.printStackTrace();
+      return null;
     }
   }
 
@@ -180,13 +185,13 @@ public class PolicyPanel implements Panel{
     authoringProxy.addNoParamPolicies(commandType, commandName);
   }
 
-  private void saveSelectionWithParam(String commandType, String commandName, List<Double> params) {
-    System.out.println("---SAVING TO PROXY | WITH PARAM ---");
-    System.out.println("commandType: "+commandType);
-    System.out.println("commandName: "+commandName);
-    System.out.println("paramList: "+params);
-    authoringProxy.addConditionsCommandsWithParam(commandType, commandName, params);
-  }
+//  private void saveSelectionWithParam(String commandType, String commandName, List<Double> params) {
+//    System.out.println("---SAVING TO PROXY | WITH PARAM ---");
+//    System.out.println("commandType: "+commandType);
+//    System.out.println("commandName: "+commandName);
+//    System.out.println("paramList: "+params);
+//    authoringProxy.addConditionsCommandsWithParam(commandType, commandName, params);
+//  }
 
   public static List<Double> enterParamsPopup(int numParam, String item) {
     Stage popupStage = new Stage();
@@ -222,7 +227,6 @@ public class PolicyPanel implements Panel{
         boolean allFilled = textAreas.stream().noneMatch(textArea -> textArea.getText().trim().isEmpty());
         confirmSaveParam.setDisable(!allFilled);
       });
-
     }
 
     confirmSaveParam.setOnAction(e -> {
@@ -285,7 +289,14 @@ public class PolicyPanel implements Panel{
     for (ComboBox<String> comboBox : singleChoiceComboxBoxes.keySet()){
       comboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue != null) {
-          enterParam(comboBox.getId(), commandPackageMap.get(singleChoiceComboxBoxes.get(comboBox)), newValue); //commandPackage, newValue
+          List<Double> params = enterParam(comboBox.getId(), commandPackageMap.get(singleChoiceComboxBoxes.get(comboBox)), newValue); //commandPackage, newValue
+          if (params != null){
+            System.out.println("---REPLACING TO PROXY | WITH PARAM ---");
+            System.out.println("commandType: "+comboBox.getId());
+            System.out.println("commandName: "+newValue);
+            System.out.println("paramList: "+params);
+            authoringProxy.replaceConditionsCommandsWithParam(comboBox.getId(), newValue, params);
+          }
         }
       });
     }
@@ -296,7 +307,10 @@ public class PolicyPanel implements Panel{
         while (c.next()) {
           if (c.wasAdded()) {
             for (String selectedCommand : c.getAddedSubList()) {
-              enterParam(checkComboBox.getId(),commandPackageMap.get(multiChoiceCheckBoxes.get(checkComboBox)), selectedCommand);
+              List<Double> params = enterParam(checkComboBox.getId(),commandPackageMap.get(multiChoiceCheckBoxes.get(checkComboBox)), selectedCommand);
+              if (params != null){
+                authoringProxy.addConditionsCommandsWithParam(checkComboBox.getId(), selectedCommand, params);
+              }
             }
           } if (c.wasRemoved()) {
             for (String removedCommand : c.getRemoved()) {
@@ -306,6 +320,5 @@ public class PolicyPanel implements Panel{
         }
       });
     }
-
   }
 }

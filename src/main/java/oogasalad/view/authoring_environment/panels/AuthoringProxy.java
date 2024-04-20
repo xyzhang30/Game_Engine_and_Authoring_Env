@@ -47,6 +47,12 @@ public class AuthoringProxy {
     System.out.println("ALL CONDITIONS:"+conditionsCommands);
   }
 
+  public void replaceConditionsCommandsWithParam(String type, String commandName, List<Double> params){
+    conditionsCommands.put(type, new HashMap<>());
+    conditionsCommands.get(type).put(commandName,params);
+    System.out.println("ALL CONDITIONS:"+conditionsCommands);
+  }
+
   public void removeConditionsCommandsWithParam(String type, String commandName){
     if (!conditionsCommands.containsKey(type)){
       return;
