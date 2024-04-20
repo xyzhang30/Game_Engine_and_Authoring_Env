@@ -186,8 +186,8 @@ public class NewAuthoringController {
     advanceRound.put("AdjustActivePointsCommand", List.of(1.0));
 //    advanceRound.add(roundCommandTwo);
 
-    Rules rules = new Rules(collisionRules, turnPolicy, roundPolicy, winCondition, advanceTurn,
-        advanceRound, "DoNothingStrikePolicy", "HighestScoreComparator");
+    Rules rules = new Rules(collisionRules, turnPolicy, roundPolicy, winCondition,
+        advanceTurn, advanceRound, "DoNothingStrikePolicy", "HighestScoreComparator");
 
     builderDirector.constructRules(List.of(rules));
   }

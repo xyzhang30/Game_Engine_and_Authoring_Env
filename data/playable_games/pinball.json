@@ -367,11 +367,10 @@
     "advance_turn" : [ {
     }
     ],
-    "advance_round" : [ {
-      "AdvanceRoundCommand" : [ ]
-    }, {
+    "advance_round" : {
+      "AdvanceRoundCommand" : [ ],
       "AdjustActivePointsCommand" : [ 1.0 ]
-    } ],
+    },
     "rank_comparator": "HighestScoreComparator"
   }
 }
