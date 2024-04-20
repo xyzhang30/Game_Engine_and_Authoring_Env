@@ -76,10 +76,11 @@ public class GameController {
   public void startGamePlay(String selectedGame) {
     gameLoaderView = new GameLoaderView(selectedGame);
     gameEngine = new GameEngine(selectedGame);
-    getCurrentStrikeable(gameEngine.restoreLastStaticGameRecord());
+    GameRecord gameRecord = gameEngine.restoreLastStaticGameRecord();
+    getCurrentStrikeable(gameRecord);
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
-    sceneManager.makeGameScreen(this, compositeElement);
-    sceneManager.update(gameEngine.restoreLastStaticGameRecord());
+    sceneManager.makeGameScreen(this, compositeElement, gameRecord);
+    sceneManager.update(gameRecord);
   }
 
   private void getCurrentStrikeable(GameRecord gameRecord) {
@@ -87,7 +88,6 @@ public class GameController {
     for (PlayerRecord p : gameRecord.players()) {
       if (p.playerId() == activePlayer) {
         strikeableID = p.activeStrikeable();
-        System.out.println(strikeableID);
         break;
       }
     }

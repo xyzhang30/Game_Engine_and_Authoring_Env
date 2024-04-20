@@ -47,4 +47,13 @@
   -fx-opacity: 0.75;
 }
 
+.score-list {
+  -fx-font-family: "Impact", "Arial", sans-serif;
+  -fx-font-size: 15px;
+  -fx-font-weight: bold;
+  -fx-max-width: 150;
+  -fx-max-height: 150;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+}
+
 

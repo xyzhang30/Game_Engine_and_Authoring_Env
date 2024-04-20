@@ -34,6 +34,7 @@ public class SceneManager {
   private final SceneElementParser sceneElementParser;
   private final SceneElementFactory sceneElementFactory;
   private CompositeElement compositeElement;
+  private GameStatBoard gameStatBoard;
   private GameScreen gameScreen;
   private GamePanel gamePanel;
   private Pane pauseElements;
@@ -125,24 +126,24 @@ public class SceneManager {
 
   public void update(GameRecord gameRecord) {
     compositeElement.update(gameRecord.gameObjectRecords());
-    Map<Integer, Double> scoreMap = new TreeMap<>();
-    for (PlayerRecord p : gameRecord.players()) {
-      scoreMap.put(p.playerId(), p.score());
-    }
-    updateScoreTurnBoard(scoreMap, gameRecord.turn(), gameRecord.round());
+    gameStatBoard.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
     checkEndRound(gameRecord);
   }
 
-  public void makeGameScreen(GameController controller, CompositeElement compositeElement) {
+  public void makeGameScreen(GameController controller, CompositeElement compositeElement,
+      GameRecord gameRecord) {
     this.compositeElement = compositeElement;
     pauseElements = createSceneElements(pausePath);
-    addGameManagementElementsToGame();
-    addGameElementsToGame();
+    addGameManagementElementsToGame(gameRecord);
+    //addGameElementsToGame();
   }
 
-  private void addGameManagementElementsToGame() {
+  private void addGameManagementElementsToGame(GameRecord gameRecord) {
     resetRoot();
-    root.getChildren().add(createSceneElements(gameManagementElementsPath));
+    Pane sceneElements = createSceneElements(gameManagementElementsPath);
+    gameStatBoard = new GameStatBoard(gameRecord.players(), gameRecord.turn(), gameRecord.round());
+    root.getChildren().addAll(sceneElements, gameStatBoard.getContainer());
+
   }
 
   private void addGameElementsToGame() {
@@ -154,6 +155,7 @@ public class SceneManager {
     gameScreen.enableHitting();
   }
 
+  //refactor methods below here
 
   public void checkEndRound(GameRecord gameRecord) {
     if (gameRecord.round() != currentRound) {
@@ -162,11 +164,6 @@ public class SceneManager {
     if (gameRecord.gameOver()) {
       gameScreen.endRound(true);
     }
-  }
-
-  private void updateScoreTurnBoard(Map<Integer, Double> scoreMap, int turn, int round) {
-    //gameScreen.updateScoreBoard(scoreMap);
-    //gameScreen.updateTurnBoard(turn, round);
   }
 
   private void resetRoot() {
