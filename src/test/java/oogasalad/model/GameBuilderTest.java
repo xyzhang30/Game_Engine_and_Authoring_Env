@@ -71,7 +71,7 @@ public class GameBuilderTest {
     return new Rules(List.of(collisionRule), turnPolicy, roundPolicy, winConditions,
         Map.of("AdvanceTurnCommand", List.of(), "AdjustPointsCommand", List.of(1.0, 1.0)),
         Map.of("AdvanceRoundCommand", List.of()), strikePolicy,
-        "HighestScoreComparator");
+        "HighestScoreComparator", "VelocityStaticChecker", List.of());
   }
 
   @Test

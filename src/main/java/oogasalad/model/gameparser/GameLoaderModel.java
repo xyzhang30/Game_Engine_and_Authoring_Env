@@ -13,6 +13,7 @@ import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidFileException;
+import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
@@ -192,9 +193,17 @@ public class GameLoaderModel extends GameLoader {
     TurnPolicy turnPolicy = createTurnPolicy();
     StrikePolicy strikePolicy = createStrikePolicy();
     PlayerRecordComparator comp = createRankComparator();
+    StaticChecker checker = createStaticChecker();
+    System.out.println(checker);
     rulesRecord = new RulesRecord(commandMap,
         winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy,
-        staticHandler, strikePolicy, comp);
+        staticHandler, strikePolicy, comp, checker);
+  }
+
+  private StaticChecker createStaticChecker() {
+    return StaticCheckerFactory.createStaticChecker(gameData.getRules().staticCheckerType(),
+        gameData.getRules().staticCheckerParams());
+
   }
 
   private PlayerRecordComparator createRankComparator() {

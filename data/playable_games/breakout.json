@@ -1,5 +1,5 @@
 {
-  "gameName" : "newShuffle",
+  "gameName" : "Breakout",
   "game_objects" : [ {
     "gameobject_id" : 0,
     "properties" : [  "visible", "surface" ],
@@ -86,24 +86,7 @@
     "kineticFriction" : 0,
     "image" : ""
   },
-    {
-      "gameobject_id" : 6,
-      "properties" : [  "visible", "collidable" ],
-      "mass" : "Infinity",
-      "position" : {
-        "x_position" : 50,
-        "y_position" : 64.72327423095703
-      },
-      "shape" : "Rectangle",
-      "dimension" : {
-        "x_dimension" : 990,
-        "y_dimension" : 108.55345911949688
-      },
-      "color" : [ 0, 255, 0 ],
-      "staticFriction" : 0.0,
-      "kineticFriction" : 0.0,
-      "image" : ""
-    },  {
+     {
       "gameobject_id" : 8,
       "properties" : [  "visible", "collidable" ],
       "mass" : "Infinity",
@@ -172,24 +155,6 @@
   "rules" : {
     "collisions" : [
       {
-        "first_id": 6,
-        "second_id": 10,
-        "command": [
-          {
-            "IncrementPointsCommand": [
-              10
-            ],
-            "SetVisibleCommand": [
-              6,
-              0.0
-            ]
-          },
-          {
-            "PlayerCompletedRoundCommand": []
-          }
-        ]
-      },
-      {
         "first_id": 8,
         "second_id": 10,
         "command": [
@@ -201,9 +166,6 @@
               8,
               0.0
             ]
-          },
-          {
-            "PlayerCompletedRoundCommand": []
           }
         ]
       },
@@ -219,9 +181,6 @@
               9,
               0.0
             ]
-          },
-          {
-            "PlayerCompletedRoundCommand": []
           }
         ]
       }
@@ -229,21 +188,18 @@
 
     "turn_policy" : "StandardTurnPolicy",
     "round_policy" : {
-      "NTurnsCompletedCondition" : [ 2 ]
+      "GameObjectsNotVisibleCondition" : [8,9]
     },
     "win_condition" : {
-      "NRoundsCompletedCondition" : [ 2 ]
+      "NRoundsCompletedCondition" : [ 1 ]
     },
     "advance_turn" : {
-      "PlayerCompletedTurnCommand": [],
-      "AdvanceTurnCommand": []
     },
-
     "advance_round" : {
       "AdvanceRoundCommand": []
     },
-
     "strike_policy": "DoNothingStrikePolicy",
-    "rank_comparator": "HighestScoreComparator"
-  }
+    "rank_comparator": "HighestScoreComparator",
+    "static_checker_type": "VisibilityStaticChecker",
+    "static_checker_params": [8,9]  }
 }

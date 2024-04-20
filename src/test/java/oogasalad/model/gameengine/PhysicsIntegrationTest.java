@@ -129,16 +129,12 @@ public class PhysicsIntegrationTest {
     gameEngine.getGameObjectContainer().getGameObject(1).setVisible(true);
     gameEngine.getGameObjectContainer().getGameObject(10).setVisible(true);
     gameEngine.applyInitialVelocity(20, -Math.PI, 1);
+    GameRecord r = gameEngine.update(1);
+    System.out.println(r.players());
     gameEngine.applyInitialVelocity(20, 0, 10);
     gameEngine.applyInitialVelocity(20, -Math.PI, 1);
-    GameRecord r = gameEngine.update(1);
-
-    System.out.println(
-        gameEngine.getGameObjectContainer().getGameObject(1).toGameObjectRecord().x());
-    System.out.println(
-        gameEngine.getGameObjectContainer().getGameObject(10).toGameObjectRecord().x());
-
-    assertEquals(2.0, r.players().get(0).score(), DELTA);
+    GameRecord r2 = gameEngine.update(10);
+    assertEquals(2.0, r2.players().get(1).score(), DELTA);
   }
 
 
@@ -165,6 +161,7 @@ public class PhysicsIntegrationTest {
     gameEngine.update(1);
     assertEquals(1.0, gameEngine.restoreLastStaticGameRecord().turn(), DELTA);
     GameRecord r = gameEngine.update(1);
+    System.out.println(r.players());
     //note the ball belongs to player 1 so they get all the points
     assertEquals(1.0, r.players().get(0).score(), DELTA);
   }
