@@ -4,6 +4,7 @@ public enum SceneElementType {
   BUTTON,
   TEXT,
   LISTVIEW,
-  RECTANGLE
+  RECTANGLE,
+  ARROW
 
 }

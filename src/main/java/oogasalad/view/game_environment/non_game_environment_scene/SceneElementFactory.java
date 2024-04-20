@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.enums.SceneElementType;
@@ -56,6 +57,9 @@ public class SceneElementFactory {
         }
         case RECTANGLE -> {
           sceneElements.getChildren().add(createRectangle(parameterMap));
+        }
+        case ARROW -> {
+          sceneElements.getChildren().add(createArrow(parameterMap));
         }
       }
     }
@@ -136,6 +140,22 @@ public class SceneElementFactory {
     rectangle.setLayoutY(screenHeight * yLayoutFactor);
 
     return rectangle;
+  }
+
+  private Polygon createArrow(Map<String, String> parameters) {
+    double widthFactor = Double.parseDouble(parameters.get(widthFactorTag));
+    double heightFactor = Double.parseDouble(parameters.get(heightFactorTag));
+    double xLayoutFactor = Double.parseDouble(parameters.get(xLayoutFactorTag));
+    double yLayoutFactor = Double.parseDouble(parameters.get(yLayoutFactorTag));
+    String style = parameters.get(styleTag);
+    String event = parameters.get(eventTag);
+
+    double[] arrowPoints = {0, 0, 100, 50, 0, 100, 30, 50};
+    Polygon arrow = new Polygon(arrowPoints);
+    sceneElementStyler.style(arrow, style);
+    sceneElementHandler.createElementHandler(arrow, event);
+
+    return arrow;
   }
 
 }
