@@ -64,8 +64,6 @@ public class ShapePanel implements Panel {
     shape.setOnMouseReleased(event -> setShapeOnRelease((Shape) event.getSource()));
   }
 
-
-
   private void handleMousePressed(MouseEvent event) {
     Shape shape = (Shape) event.getSource();
     try {
@@ -112,14 +110,13 @@ public class ShapePanel implements Panel {
     }
   }
 
-
   private void setShapeOnClick(Shape shape) {
     shapeProxy.setShape(shape);
     shape.setStroke(Color.YELLOW);
     if (shape.getStrokeWidth() != 0) {
-      shape.setStrokeWidth(5);
-    } else {
       shape.setStrokeWidth(0);
+    } else {
+      shape.setStrokeWidth(5);
     }
     updateSlider(shape.getScaleX(), shape.getScaleY(), shape.getRotate());
   }

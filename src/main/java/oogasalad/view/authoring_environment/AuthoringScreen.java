@@ -155,6 +155,7 @@ public class AuthoringScreen {
     screensDropDown.valueProperty().addListener((obs, oldVal, selectedScreen) -> {
       if (selectedScreen != null) {
         resetScene();
+        shapeProxy.setShape(null);
         setScene(selectedScreen);
         authoringProxy.setCurrentScreenTitle(selectedScreen);
         authoringProxy.updateScreen();
