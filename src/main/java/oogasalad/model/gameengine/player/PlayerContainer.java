@@ -88,6 +88,8 @@ public class PlayerContainer {
   public List<PlayerRecord> getSortedPlayerRecords(PlayerRecordComparator comp) {
     List<PlayerRecord> ret = fetchRecords();
     ret.sort(comp);
+
+
     return ret;
   }
 
@@ -96,6 +98,7 @@ public class PlayerContainer {
     for (Player p : myPlayers.values()) {
       ret.add(p.getPlayerRecord());
     }
+    System.out.println(ret);
     return ret;
   }
 

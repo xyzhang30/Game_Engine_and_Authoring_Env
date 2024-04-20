@@ -23,15 +23,6 @@ public class MiniGolfGameRulesIntegrationTest {
     container = gameEngine.getGameObjectContainer();
   }
 
-  private boolean isStatic(GameRecord r) {
-    for (GameObjectRecord cr : r.gameObjectRecords()) {
-      if (cr.visible() && (cr.velocityY() != 0 || cr.velocityX() != 0)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   @Test
   public void testRoundOfGolf() {
     gameEngine.applyInitialVelocity(0, 0, 1);
