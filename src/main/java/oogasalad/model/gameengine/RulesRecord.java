@@ -3,6 +3,7 @@ package oogasalad.model.gameengine;
 import java.util.List;
 import java.util.Map;
 import oogasalad.Pair;
+import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
 import oogasalad.model.gameengine.gameobject.PhysicsHandler;
@@ -35,7 +36,7 @@ public record RulesRecord(Map<Pair, List<Command>> collisionHandlers,
                           List<Command> advanceRound,
                           Map<Pair, PhysicsHandler> physicsMap, TurnPolicy turnPolicy,
                           StaticStateHandler staticStateHandler, StrikePolicy strikePolicy,
-                          PlayerRecordComparator rank) {
+                          PlayerRecordComparator rank, StaticChecker checker) {
 
 
 

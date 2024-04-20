@@ -11,8 +11,7 @@ import oogasalad.model.annotations.ChoiceType;
  *
  * @author Judy He, Alisha Zhang
  */
-@JsonPropertyOrder({"collisions", "turn_policy", "round_policy", "win_condition", "advance_turn",
-    "advance_round"})
+
 public record Rules(List<CollisionRule> collisions,
                     @JsonProperty("turn_policy") String turnPolicy,
                     @JsonProperty("round_policy") Map<String, List<Double>> roundPolicy,
@@ -20,8 +19,11 @@ public record Rules(List<CollisionRule> collisions,
                     @JsonProperty("advance_turn") Map<String, List<Double>> advanceTurn,
                     @JsonProperty("advance_round") Map<String, List<Double>> advanceRound,
                     @JsonProperty("strike_policy") String strikePolicy,
-                    @JsonProperty("rank_comparator") String rankComparator
+                    @JsonProperty("rank_comparator") String rankComparator,
+                    @JsonProperty("static_checker_type") String staticCheckerType,
+                    @JsonProperty("static_checker_params") List<Integer> staticCheckerParams){
 
-) {
+
+
 
 }

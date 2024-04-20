@@ -5,6 +5,8 @@ import oogasalad.model.api.PlayerRecord;
 
 /**
  * An abstract class to define custom comparators for sorting PlayerRecords.
+ *
+ * @author Noah Loewy
  */
 public abstract class PlayerRecordComparator implements Comparator<PlayerRecord> {
 

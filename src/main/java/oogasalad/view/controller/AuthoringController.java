@@ -193,7 +193,7 @@ public class AuthoringController {
 
     Rules rules = new Rules(collisionRules, turnPolicy, roundPolicy, winCondition,
         advanceTurn,
-        advanceRound, strikePolicy, "HighestScoreComparator");
+        advanceRound, strikePolicy, "HighestScoreComparator", "VelocityStaticChecker", List.of());
 
     builderDirector.constructRules(List.of(rules));
   }

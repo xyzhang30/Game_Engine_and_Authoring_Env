@@ -4,6 +4,8 @@ import oogasalad.model.api.PlayerRecord;
 
 /**
  * A comparator for sorting PlayerRecords based on the highest score.
+ *
+ * @author Noah Loewy
  */
 public class HighestScoreComparator extends PlayerRecordComparator {
 
