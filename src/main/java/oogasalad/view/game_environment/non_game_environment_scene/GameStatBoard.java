@@ -72,7 +72,6 @@ public class GameStatBoard {
   }
 
   private void updateScore(List<PlayerRecord> players) {
-    Map<Integer, Double> scoreMap = getPlayersIdsAndScoresFromRecord(players);
     scoreListDisplay.getItems().clear();
     scoreListDisplay.setItems(createScoreListItems(players));
   }

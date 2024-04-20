@@ -32,4 +32,12 @@ public class AnimationManager {
     }));
     animation.play();
   }
+
+  public void pauseAnimation(){
+    animation.pause();
+  }
+
+  public void resumeAnimation(){
+    animation.play();
+  }
 }
