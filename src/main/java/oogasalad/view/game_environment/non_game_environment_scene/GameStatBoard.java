@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -18,8 +19,8 @@ public class GameStatBoard {
   private final String playerScoreSeparator = ": ";
   private final String turnText = "Turn: ";
   private final String roundText = "Round: ";
-  private final String scoreText = "Score";
   private final String scoreListStyleTag = "score-list";
+  private final String textStyleTag = "game-text";
   private ListView<String> scoreListDisplay;
   private Text turnDisplay;
   private Text roundDisplay;
@@ -41,19 +42,20 @@ public class GameStatBoard {
 
   private void createGameStatBoardDisplay(List<PlayerRecord> players, int turn, int round) {
     statContainer = new VBox();
-    Text scoreTitle = createScoreTitle();
     createScoreListDisplay(players);
     createTurnDisplay(turn);
     createRoundDisplay(round);
 
-    statContainer.getChildren().addAll(roundDisplay, turnDisplay, scoreTitle, scoreListDisplay);
+    statContainer.getChildren().addAll(roundDisplay, turnDisplay, scoreListDisplay);
     statContainer.setPrefSize(500, 500);
     statContainer.setLayoutX(500);
     statContainer.setLayoutY(500);
+    statContainer.setAlignment(Pos.CENTER);
   }
 
   private void createTurnDisplay(int turn) {
     turnDisplay = new Text(turnText + turn);
+    turnDisplay.getStyleClass().add(textStyleTag);
   }
 
   private void updateTurn(int turn) {
@@ -62,6 +64,7 @@ public class GameStatBoard {
 
   private void createRoundDisplay(int round) {
     roundDisplay = new Text(roundText + round);
+    roundDisplay.getStyleClass().add(textStyleTag);
   }
 
   private void updateRound(int round) {
@@ -88,11 +91,6 @@ public class GameStatBoard {
       scores.add(playerText + player.getKey() + playerScoreSeparator + player.getValue());
     }
     return FXCollections.observableList(scores);
-  }
-
-  private Text createScoreTitle() {
-    Text scoreTitle = new Text(scoreText);
-    return scoreTitle;
   }
 
   private Map<Integer, Double> getPlayersIdsAndScoresFromRecord(List<PlayerRecord> players) {
