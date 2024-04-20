@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.List;
 
 /**
- * Represents the JSON data for a collidable object in the game.
+ * Represents the JSON data for a game object.
  *
  * @author Judy He
  */

@@ -1,5 +1,6 @@
 package oogasalad.view.authoring_environment.panels;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ public class AuthoringProxy {
   private final Map<String, String> policies = new HashMap<>();
   private final Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap = new HashMap<>();
   private final Map<Shape, GameObjectAttributesContainer> gameObjectMap = new HashMap<>();
+  private final Map<Integer, List<Integer>> playersMap = new HashMap<>();
   //TODO: transfer imageMap functionality to gameObjectMap
   private final Map<Shape, String> imageMap = new HashMap<>();
   //TODO: transfer shapePosition functionality to gameObjectMap
@@ -34,6 +36,10 @@ public class AuthoringProxy {
     interactionMap.put(shapes, interaction);
   }
 
+  public Map<Integer, List<Integer>> getPlayers () {
+    return playersMap;
+  }
+
   public void addNoParamPolicies(String type, String command){
     policies.put(type, command);
   }
@@ -48,19 +54,21 @@ public class AuthoringProxy {
   public Map<Shape, GameObjectAttributesContainer> getGameObjectMap() {
     return gameObjectMap;
   }
+  public void setGameObject(Shape shape, GameObjectAttributesContainer gameObjectAttributesContainer) {
+    this.gameObjectMap.put(shape, gameObjectAttributesContainer);
+  }
 
   public void addImage(Shape shape, String relativePath) {
     imageMap.put(shape, relativePath);
   }
 
-  public void addShapePosition(Shape shape, Coordinate position) {
+  public void setShapePosition(Shape shape, Coordinate position) {
     shapePositionMap.put(shape, position);
   }
 
   public void completeAuthoring()
       throws MissingInteractionException, MissingNonControllableTypeException {
-    authoringController.endAuthoring(gameName, interactionMap, gameObjectMap,
-        imageMap, shapePositionMap);
+    authoringController.endAuthoring(gameName, interactionMap, gameObjectMap, playersMap);
   }
 
   public void updateScreen() {

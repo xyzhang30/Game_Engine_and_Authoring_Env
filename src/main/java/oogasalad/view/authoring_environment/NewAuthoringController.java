@@ -81,13 +81,11 @@ public class NewAuthoringController {
 
   public void endAuthoring(String gameName,
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
-      Map<Shape, GameObjectAttributesContainer> gameObjectMap, Map<Shape, String> imageMap,
-      Map<Shape, Coordinate> posMap) {
+      Map<Shape, GameObjectAttributesContainer> gameObjectMap, Map<Integer, List<Integer>> playersMap) {
     System.out.println(gameName);
     System.out.println(interactionMap);
     System.out.println(gameObjectMap);
-    System.out.println(imageMap);
-    System.out.println(posMap);
+    System.out.println(playersMap);
 
 //    boolean saveGameSuccess = submitGame(gameName, interactionMap, controllables,
 //        nonControllableTypeMap, imageMap, posMap);

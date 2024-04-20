@@ -12,13 +12,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oogasalad.view.Window;
-import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
 import oogasalad.view.authoring_environment.panels.AuthoringProxy;
 import oogasalad.view.authoring_environment.panels.ColorPanel;
 import oogasalad.view.authoring_environment.panels.ImagePanel;
 import oogasalad.view.authoring_environment.panels.InteractionPanel;
-import oogasalad.view.authoring_environment.panels.GameObjectPanel;
 import oogasalad.view.authoring_environment.panels.PolicyPanel;
+import oogasalad.view.authoring_environment.panels.ShapePanel;
 import oogasalad.view.authoring_environment.panels.ShapeProxy;
 
 public class AuthoringScreen {
@@ -67,7 +66,7 @@ public class AuthoringScreen {
           List.of(new ColorPanel(shapeProxy, containerPane),
               new ImagePanel(authoringProxy, shapeProxy,
                   containerPane),
-              new GameObjectPanel(authoringProxy, shapeProxy, rootPane,
+              new ShapePanel(authoringProxy, shapeProxy, rootPane,
                   containerPane, canvasPane)));
       case "Interactions" ->
           container.setPanels(List.of(new InteractionPanel(authoringProxy, shapeProxy, rootPane,
@@ -118,7 +117,8 @@ public class AuthoringScreen {
     AnchorPane.setLeftAnchor(canvasPane, 70.0);
 
     Rectangle background = new Rectangle(canvasWidth, canvasHeight);
-    background.setId("background");
+    background.setId(String.valueOf(shapeProxy.getShapeCount()));
+    shapeProxy.setShapeCount(shapeProxy.getShapeCount()+1);
     background.setStroke(Color.BLACK);
     background.setFill(Color.WHITE);
     background.setStrokeWidth(10);
@@ -136,7 +136,10 @@ public class AuthoringScreen {
     Button finishButton = new Button("Finish");
     finishButton.setId("finishButton");
     finishButton.setPrefSize(100, 50);
-    finishButton.setOnMouseClicked(event -> authoringProxy.completeAuthoring());
+    finishButton.setOnMouseClicked(event -> {
+      authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
+      authoringProxy.completeAuthoring();
+    });
     AnchorPane.setBottomAnchor(finishButton, 50.0);
     AnchorPane.setRightAnchor(finishButton, 50.0);
     rootPane.getChildren().add(finishButton);
@@ -154,6 +157,7 @@ public class AuthoringScreen {
   private void handleScreenSelectionDropDown() {
     screensDropDown.valueProperty().addListener((obs, oldVal, selectedScreen) -> {
       if (selectedScreen != null) {
+        authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
         resetScene();
         shapeProxy.setShape(null);
         setScene(selectedScreen);
