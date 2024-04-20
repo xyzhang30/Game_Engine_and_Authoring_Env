@@ -44,10 +44,12 @@ public interface Scoreable {
   void setTemporaryScore(double tempScore);
 
   /**
-   * Increments the temporary score of the Scoreable object by a default value.
+   * Increments the temporary score of the Scoreable object by amt.
+   *
+   * @param amt is number to increment by
    */
 
-  void incrementTemporaryScore();
+  void incrementTemporaryScore(double amt);
 
   /**
    * Converts the Scoreable object into a GameObject.

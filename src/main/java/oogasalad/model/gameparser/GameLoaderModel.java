@@ -13,6 +13,7 @@ import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidFileException;
+import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
@@ -29,6 +30,7 @@ import oogasalad.model.gameengine.statichandlers.StaticStateHandler;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListFactory;
 import oogasalad.model.gameengine.strike.StrikePolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
+import oogasalad.model.gameengine.rank.PlayerRecordComparator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -110,10 +112,6 @@ public class GameLoaderModel extends GameLoader {
       }
       playerContainer.getPlayer(playerId).addScoreables(playerScoreableObjects);
     }
-//    for (PlayerRecord playerRecord : getPlayerContainer().getPlayerRecords()){
-//      int StrikeableId = playerRecord.activeStrikeable();
-//      getPlayerContainer().getPlayer(playerRecord.playerId()).addStrikeables(List.of(collidableContainer.getCollidable(StrikeableId).getStrikeable()));
-//    }
   }
 
   /**
@@ -194,13 +192,25 @@ public class GameLoaderModel extends GameLoader {
     Condition roundPolicy = createCondition(gameData.getRules().roundPolicy());
     TurnPolicy turnPolicy = createTurnPolicy();
     StrikePolicy strikePolicy = createStrikePolicy();
+    PlayerRecordComparator comp = createRankComparator();
+    StaticChecker checker = createStaticChecker();
+    System.out.println(checker);
     rulesRecord = new RulesRecord(commandMap,
         winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy,
-        staticHandler, strikePolicy);
+        staticHandler, strikePolicy, comp, checker);
+  }
+
+  private StaticChecker createStaticChecker() {
+    return StaticCheckerFactory.createStaticChecker(gameData.getRules().staticCheckerType(),
+        gameData.getRules().staticCheckerParams());
+
+  }
+
+  private PlayerRecordComparator createRankComparator() {
+    return PlayerRankComparatorFactory.createRankComparator(gameData.getRules().rankComparator());
   }
 
   private StrikePolicy createStrikePolicy() {
-    System.out.println("gamedata strike: " + gameData.getRules().strikePolicy());
     return StrikePolicyFactory.createStrikePolicy(gameData.getRules().strikePolicy());
   }
 

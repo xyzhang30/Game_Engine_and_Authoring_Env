@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import oogasalad.Pair;
 import oogasalad.model.api.GameObjectRecord;
+import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -58,9 +59,9 @@ public class GameObjectContainer {
    * @return True if all visible GameObjects are static, otherwise false.
    */
 
-  public boolean checkStatic() {
+  public boolean checkStatic(StaticChecker checker) {
     for (GameObject go : myGameObjects.values()) {
-      if (go.getVisible() && (go.getVelocityX() != 0 || go.getVelocityY() != 0)) { //should it be
+      if (!checker.isStatic(go.toGameObjectRecord())){
         return false;
       }
     }

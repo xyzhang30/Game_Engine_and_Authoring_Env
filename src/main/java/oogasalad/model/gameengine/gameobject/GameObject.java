@@ -35,6 +35,7 @@ public class GameObject {
   private final String myShape;
   private final double myStaticMu;
   private final double myKineticMu;
+  private final double myInclineAngle;
   private final Stack<GameObjectRecord> gameObjectHistory;
   private double myX;
   private double myY;
@@ -58,13 +59,14 @@ public class GameObject {
    * @param visible,   the visibility state
    * @param staticMu,  the static coefficient of friction
    * @param kineticMu, the kinetic coefficient of friction
+   * @param inclineAngle, the angle of incline if it is a surface (degrees)
    * @param width,     the width of the game object (in meters)
    * @param height,    the height of the game object (in meters)
    * @param shape,     the shape of the game object (string representation)
    */
 
   public GameObject(int id, double mass, double x, double y,
-      boolean visible, double staticMu, double kineticMu, double width, double height,
+      boolean visible, double staticMu, double kineticMu, double inclineAngle, double width, double height,
       String shape) {
     myId = id;
     myMass = mass;
@@ -80,6 +82,7 @@ public class GameObject {
     myShape = shape;
     myStaticMu = staticMu;
     myKineticMu = kineticMu;
+    myInclineAngle = inclineAngle;
     gameObjectHistory = new Stack<>();
   }
 
@@ -130,7 +133,7 @@ public class GameObject {
   public GameObjectRecord toGameObjectRecord() {
     return new GameObjectRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible,
         myStaticMu, myKineticMu
-        , myWidth, myHeight);
+        , myInclineAngle, myWidth, myHeight);
   }
 
   /**

@@ -16,6 +16,7 @@
     "color" : [ 100, 200, 100 ],
     "staticFriction" : 3.03873,
     "kineticFriction" : 2.03873,
+    "inclineAngle" : 0.0,
     "image" : "sample.img",
     "direction" : 0.0
   }, {
@@ -34,6 +35,7 @@
     "color" : [ 255, 255, 255 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
     "image" : "sample.img",
     "direction" : 0.0
   }, {
@@ -52,6 +54,7 @@
     "color" : [ 0, 0, 0 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
     "image" : "sample.img",
     "direction" : 0.0
   } ],
@@ -86,14 +89,16 @@
     "win_condition" : {
       "NRoundsCompletedCommand" : [ 2.0 ]
     },
-    "advance_turn" : [ {
-      "AdvanceTurnCommand" : [ ]
-    }, {
+    "advance_turn" : {
+      "AdvanceTurnCommand" : [ ],
       "AdjustPointsCommand" : [ 1.0, 1.0 ]
-    } ],
-    "advance_round" : [ {
+    },
+    "advance_round" : {
       "AdvanceRoundCommand" : [ ]
-    } ],
-    "strike_policy" : "DoNothingStrikePolicy"
+    },
+    "strike_policy" : "DoNothingStrikePolicy",
+    "rank_comparator" : "HighestScoreComparator",
+    "static_checker_type" : "VelocityStaticChecker",
+    "static_checker_params" : [ ]
   }
 }
