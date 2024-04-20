@@ -311,6 +311,10 @@ public class GameObject {
 
   protected void toLastStaticStateGameObjects() {
     GameObjectRecord record = gameObjectHistory.peek();
+    assignValuesFromRecord(record);
+  }
+
+  private void assignValuesFromRecord(GameObjectRecord record) {
     myX = record.x();
     myY = record.y();
     myVelocityY = record.velocityY();
@@ -343,6 +347,9 @@ public class GameObject {
     myVelocityY = speedY;
   }
 
+  public void toStartingState() {
+    assignValuesFromRecord(gameObjectHistory.get(0));
+  }
 }
 
 
