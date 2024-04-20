@@ -27,7 +27,6 @@ public class SceneElementHandler {
 
   public void createElementHandler(Node node, String event) {
     checkForSceneChangeEvent(node, event);
-    checkForZoomEvent(node, event);
     checkForGamePlayChangeEvent(node, event);
     checkForStrikingEvent(node, event);
   }
@@ -39,20 +38,6 @@ public class SceneElementHandler {
       }
       case RESUME -> {
         createResumeHandler(node);
-      }
-    }
-  }
-
-  private void checkForZoomEvent(Node node, String event) {
-    switch (SceneElementEventType.valueOf(event)) {
-      case ZOOM_IN -> {
-        createZoomInHandler(node);
-      }
-      case ZOOM_OUT -> {
-        createZoomOutHandler(node);
-      }
-      case RESET_ZOOM -> {
-        createZoomResetHandler(node);
       }
     }
   }
@@ -102,18 +87,6 @@ public class SceneElementHandler {
         gameController.startGamePlay(game);
       }
     });
-  }
-
-  private void createZoomInHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.panelZoomIn());
-  }
-
-  private void createZoomOutHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.panelZoomOut());
-  }
-
-  private void createZoomResetHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.panelZoomReset());
   }
 
   private void createPauseHandler(Node node) {

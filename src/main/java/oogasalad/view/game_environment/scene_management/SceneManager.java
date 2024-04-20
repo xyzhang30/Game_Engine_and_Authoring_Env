@@ -8,8 +8,7 @@ import javafx.scene.layout.Pane;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
 import oogasalad.view.controller.GameController;
-import oogasalad.view.game_environment.GameScreen;
-import oogasalad.view.game_environment.GamePanel;
+import oogasalad.view.game_environment.GameBoard;
 import oogasalad.view.visual_elements.CompositeElement;
 import oogasalad.view.enums.SceneType;
 import org.xml.sax.SAXException;
@@ -31,10 +30,8 @@ public class SceneManager {
   private final SceneElementFactory sceneElementFactory;
   private CompositeElement compositeElement;
   private GameStatBoard gameStatBoard;
-  private GameScreen gameScreen;
-  private GamePanel gamePanel;
   private Pane pauseElements;
-  private int currentRound = 1;
+  private GameBoard gameBoard;
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
   private final String gameManagementElementsPath = "data/scene_elements/gameManagementElements.xml";
@@ -76,18 +73,6 @@ public class SceneManager {
 
   public void removePauseSheen() {
     root.getChildren().remove(pauseElements);
-  }
-
-  public void panelZoomIn() {
-    gamePanel.zoomIn();
-  }
-
-  public void panelZoomOut() {
-    gamePanel.zoomOut();
-  }
-
-  public void panelZoomReset() {
-    //TODO: write this
   }
 
   public Pane createSceneElements(String filePath) {
@@ -132,21 +117,22 @@ public class SceneManager {
   }
 
   private void addGameElementsToGame() {
-    gamePanel = new GamePanel(compositeElement);
-    root.getChildren().add(gamePanel.getPane());
-  }
-  //refactor methods below here
-
-  public void checkEndRound(GameRecord gameRecord) {
-    if (gameRecord.round() != currentRound) {
-      currentRound = gameRecord.round();
-    }
-    if (gameRecord.gameOver()) {
-      gameScreen.endRound(true);
-    }
+    gameBoard = new GameBoard(compositeElement);
+    root.getChildren().add(gameBoard.getPane());
   }
 
   private void resetRoot() {
     root.getChildren().clear();
+  }
+
+
+  //TODO: Refactor end round
+  public void checkEndRound(GameRecord gameRecord) {
+//    if (gameRecord.round() != currentRound) {
+//      currentRound = gameRecord.round();
+//    }
+//    if (gameRecord.gameOver()) {
+//      //transition
+//    }
   }
 }
