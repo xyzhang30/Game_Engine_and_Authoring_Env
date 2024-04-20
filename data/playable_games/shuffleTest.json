@@ -475,13 +475,14 @@
     "win_condition" : {
       "NRoundsCompletedCondition" : [ 2 ]
     },
-    "advance_turn" : [ {
+    "advance_turn" :  {
       "PlayerCompletedTurnCommand": [],
       "AdvanceTurnCommand" : [ ]
-    } ],
-    "advance_round" : [ {
-      "AdvanceRoundCommand" : [ ]
-    } ],
-    "strike_policy": "DoNothingStrikePolicy"
+    } ,
+    "advance_round" : {
+      "AdvanceRoundCommand": []
+    },
+    "strike_policy": "DoNothingStrikePolicy",
+    "rank_comparator": "IDComparator"
   }
 }

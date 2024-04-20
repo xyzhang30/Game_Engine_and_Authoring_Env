@@ -1,5 +1,5 @@
 {
-  "gameName" : "",
+  "gameName" : "pinball",
   "game_objects" : [ {
     "gameobject_id" : 0,
     "properties" : [  "visible", "surface" ],
@@ -10,15 +10,15 @@
     },
     "shape" : "Rectangle",
     "dimension" : {
-      "x_dimension" : 990.0,
-      "y_dimension" : 990.0
+      "x_dimension" : 980.0,
+      "y_dimension" : 980.0
     },
     "color" : [ 0, 0, 0 ],
     "staticFriction" : 7.0,
     "kineticFriction" : 5.0,
-    "image" : "data/background_images/grass.jpg"
+    "image" : "data/background_images/wood.jpg"
   }, {
-    "gameobject_id" : 1,
+    "gameobject_id" : 15,
     "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
@@ -87,13 +87,30 @@
     "image" : ""
   }, {
     "gameobject_id" : 5,
-    "properties" : [ "collidable",  "strikeable", "visible" ],
-    "mass" : 10.0,
+    "properties" : [  "visible", "collidable" ],
+    "mass" : "Infinity",
     "position" : {
-      "x_position" : 869.0,
-      "y_position" : 352.0
+      "x_position" : 311.8060302734375,
+      "y_position" : 95.09272766113281
     },
-    "shape" : "Circle",
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 50,
+      "y_dimension" : 900
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "image" : ""
+  }, {
+    "gameobject_id" : 6,
+    "properties" : [  "visible", "collidable" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 465.0,
+      "y_position" : 280.0
+    },
+    "shape" : "Rectangle",
     "dimension" : {
       "x_dimension" : 30.0,
       "y_dimension" : 30.0
@@ -101,8 +118,180 @@
     "color" : [ 0, 0, 0 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
+    "image" : "data/noncontrollable_images/tenpts.jpg"
+  }, {
+    "gameobject_id" : 7,
+    "properties" : [  "visible", "collidable" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 562.3207397460938,
+      "y_position" : 445.71697998046875
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 70,
+      "y_dimension" : 70
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "image" : "data/noncontrollable_images/questionMark.jpg"
+  }, {
+    "gameobject_id" : 8,
+    "properties" : [  "visible", "collidable" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 366.7437438964844,
+      "y_position" : 631.9937744140625
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 38.36477987421383,
+      "y_dimension" : 185.59748427672957
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "image" : "data/noncontrollable_images/speedUp.jpg"
+  }, {
+    "gameobject_id" : 9,
+    "properties" : [  "visible", "collidable" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 752.20751953125,
+      "y_position" : 282.2075500488281
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 45,
+      "y_dimension" : 45
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "image" : "data/noncontrollable_images/onept.jpg"
+  }, {
+    "gameobject_id" : 10,
+    "properties" : [  "visible", "collidable" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 688.6100463867188,
+      "y_position" : 880.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 204.77987421383654,
+      "y_dimension" : 50.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
     "image" : ""
-  } ],
+  }, {
+    "gameobject_id" : 11,
+    "properties" : [  "visible", "collidable" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 749.5744018554688,
+      "y_position" : 631.2633666992188
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 44.52830188679248,
+      "y_dimension" : 170.18867924528303
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "image" : "data/noncontrollable_images/speedUp.jpg"
+  }, {
+    "gameobject_id" : 12,
+    "properties" : [  "visible", "collidable" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 364.69183349609375,
+      "y_position" : 879.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 198.61635220125788,
+      "y_dimension" : 50.0
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "image" : ""
+  }, {
+    "gameobject_id" : 13,
+    "properties" : [  "visible", "collidable" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 937.2972412109375,
+      "y_position" : 62.22500991821289
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 20.0,
+      "y_dimension" : 96.22641509433963
+    },
+    "color" : [ 0, 0, 0 ],
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "image" : ""
+  }, {
+    "gameobject_id" : 14,
+    "properties" : [  "visible", "collidable" ],
+    "mass" : "Infinity",
+    "position" : {
+      "x_position" : 889.0429077148438,
+      "y_position" : 203.40032958984375
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 50.0,
+      "y_dimension" : 800.0
+    },
+    "color" : [ 0, 255, 0 ],
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "image" : ""
+  },
+    {
+      "gameobject_id" : 16,
+      "properties" : [  "visible", "collidable" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 375,
+        "y_position" : 900
+      },
+      "shape" : "Rectangle",
+      "dimension" : {
+        "x_dimension" : 500,
+        "y_dimension" : 50.0
+      },
+      "color" : [ 255, 0, 0 ],
+      "staticFriction" : 0.0,
+      "kineticFriction" : 0.0,
+      "image" : ""
+    },
+    {
+      "gameobject_id" : 1,
+      "properties" : [ "collidable",  "strikeable", "visible" ],
+      "mass" : 10.0,
+      "position" : {
+        "x_position" : 967.298095703125,
+        "y_position" : 993.4151000976562
+      },
+      "shape" : "Circle",
+      "dimension" : {
+        "x_dimension" : 10,
+        "y_dimension" : 10
+      },
+      "color" : [ 0, 0, 0 ],
+      "staticFriction" : 0.0,
+      "kineticFriction" : 0.0,
+      "image" : "data/controllable_images/golf ball.jpg"
+    } ],
   "players" : [ {
     "player_id" : 1,
     "my_strikeable" : [ 1 ]
@@ -118,22 +307,70 @@
     }
   } ],
   "rules" : {
-    "collisions" : [ ],
+    "collisions" : [
+      {
+        "first_id": 1,
+        "second_id": 6,
+        "command": [
+          {
+            "AdjustActivePointsCommand": [10]
+          }
+        ]
+      },
+      {
+        "first_id": 1,
+        "second_id": 9,
+        "command": [
+          {
+            "AdjustActivePointsCommand": [1]
+          }
+        ]
+      },
+      {
+        "first_id": 1,
+        "second_id": 8,
+        "command": [
+          {
+            "MultiplySpeedCommand": [1,3]
+          }
+        ]
+      },
+      {
+        "first_id": 1,
+        "second_id": 11,
+        "command": [
+          {
+            "MultiplySpeedCommand": [1, 3]
+          }
+        ]
+      },
+      {
+        "first_id": 1,
+        "second_id": 16,
+        "command": [
+          {
+            "AdjustActivePointsCommand": [-50]
+          },
+          {
+            "PlayerCompletedRoundCommand": []
+          }
+        ]
+      }
+    ],
     "turn_policy" : "StandardTurnPolicy",
     "round_policy" : {
       "AllPlayersCompletedRoundCondition" : [ ]
     },
     "win_condition" : {
-      "NRoundsCompletedCondition" : [ 1.0 ]
+      "NRoundsCompletedCondition" : [ 3.0 ]
     },
-    "advance_turn" : {
-      "AdvanceTurnCommand" : [ ],
-      "AdjustActivePointsCommand" : [ 1.0 ]
-    },
+    "advance_turn" :  {
+    }
+    ,
     "advance_round" : {
-      "AdvanceRoundCommand" : [ ],
-      "AdjustActivePointsCommand" : [ 1.0 ]
+      "AdvanceRoundCommand": [],
+      "AdjustActivePointsCommand": [1.0]
     },
-    "strike_policy": "DoNothingStrikePolicy"
+    "rank_comparator": "HighestScoreComparator"
   }
 }

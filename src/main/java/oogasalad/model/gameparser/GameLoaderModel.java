@@ -29,6 +29,7 @@ import oogasalad.model.gameengine.statichandlers.StaticStateHandler;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListFactory;
 import oogasalad.model.gameengine.strike.StrikePolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
+import oogasalad.model.gameengine.rank.PlayerRecordComparator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -110,10 +111,6 @@ public class GameLoaderModel extends GameLoader {
       }
       playerContainer.getPlayer(playerId).addScoreables(playerScoreableObjects);
     }
-//    for (PlayerRecord playerRecord : getPlayerContainer().getPlayerRecords()){
-//      int StrikeableId = playerRecord.activeStrikeable();
-//      getPlayerContainer().getPlayer(playerRecord.playerId()).addStrikeables(List.of(collidableContainer.getCollidable(StrikeableId).getStrikeable()));
-//    }
   }
 
   /**
@@ -194,13 +191,17 @@ public class GameLoaderModel extends GameLoader {
     Condition roundPolicy = createCondition(gameData.getRules().roundPolicy());
     TurnPolicy turnPolicy = createTurnPolicy();
     StrikePolicy strikePolicy = createStrikePolicy();
+    PlayerRecordComparator comp = createRankComparator();
     rulesRecord = new RulesRecord(commandMap,
         winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy,
-        staticHandler, strikePolicy);
+        staticHandler, strikePolicy, comp);
+  }
+
+  private PlayerRecordComparator createRankComparator() {
+    return PlayerRankComparatorFactory.createRankComparator(gameData.getRules().rankComparator());
   }
 
   private StrikePolicy createStrikePolicy() {
-    System.out.println("gamedata strike: " + gameData.getRules().strikePolicy());
     return StrikePolicyFactory.createStrikePolicy(gameData.getRules().strikePolicy());
   }
 

@@ -122,16 +122,14 @@
     "win_condition": {
       "NRoundsCompletedCondition": [2.0]
     },
-    "advance_turn": [
-      {
-        "AdvanceTurnCommand": []
-      }
-    ],
-    "advance_round": [
-      {
-        "AdvanceRoundCommand": []
-      }
-    ],
-    "strike_policy" : "IncrementPointStrikePolicy"
+    "advance_turn": {
+      "AdvanceTurnCommand": []
+    },
+    "advance_round":{
+      "AdvanceRoundCommand": []
+    },
+
+    "strike_policy" : "IncrementPointStrikePolicy",
+    "rank_comparator": "IDComparator"
   }
 }

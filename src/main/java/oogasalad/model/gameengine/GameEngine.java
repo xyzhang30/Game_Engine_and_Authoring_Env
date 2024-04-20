@@ -77,7 +77,8 @@ public class GameEngine implements ExternalGameEngine {
     }
     gameObjects.getGameObject(
         playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID()).setVisible(true);
-    return new GameRecord(gameObjects.toGameObjectRecords(), playerContainer.getPlayerRecords(),
+    return new GameRecord(gameObjects.toGameObjectRecords(),
+        playerContainer.getSortedPlayerRecords(rules.rank()),
         round, turn, gameOver, staticState);
   }
 
@@ -235,7 +236,8 @@ public class GameEngine implements ExternalGameEngine {
     playerContainer.addPlayerHistory();
     staticStateStack = new Stack<>();
     staticStateStack.push(
-        new GameRecord(gameObjects.toGameObjectRecords(), playerContainer.getPlayerRecords(),
+        new GameRecord(gameObjects.toGameObjectRecords(), playerContainer.getSortedPlayerRecords(
+            rules.rank()),
             round, turn, gameOver, staticState));
   }
 
@@ -253,7 +255,8 @@ public class GameEngine implements ExternalGameEngine {
     playerContainer.addPlayerHistory();
     gameObjects.addStaticStateGameObjects();
     staticStateStack.push(
-        new GameRecord(gameObjects.toGameObjectRecords(), playerContainer.getPlayerRecords(),
+        new GameRecord(gameObjects.toGameObjectRecords(),
+            playerContainer.getSortedPlayerRecords(rules.rank()),
             round, turn, gameOver, staticState));
   }
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import oogasalad.model.api.PlayerRecord;
+import oogasalad.model.gameengine.rank.PlayerRecordComparator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -82,14 +83,22 @@ public class PlayerContainer {
   /**
    * Retrieves a list of PlayerRecord objects representing the current state of each player.
    *
+   * @param comp, a comparator defining the ordering of PlayerRecords
+   * @return A list of PlayerRecord objects.
+   */
+  public List<PlayerRecord> getSortedPlayerRecords(PlayerRecordComparator comp) {
+    List<PlayerRecord> ret = fetchRecords();
+    ret.sort(comp);
+    return ret;
+  }
+
+  /**
+   * Retrieves a list of PlayerRecord objects representing the current state of each player.
+   *
    * @return A list of PlayerRecord objects.
    */
   public List<PlayerRecord> getPlayerRecords() {
-    List<PlayerRecord> ret = new ArrayList<>();
-    for (Player p : myPlayers.values()) {
-      ret.add(p.getPlayerRecord());
-    }
-    return ret;
+    return fetchRecords();
   }
 
   /**
@@ -164,5 +173,14 @@ public class PlayerContainer {
     for (Player p : myPlayers.values()) {
       p.toLastStaticStatePlayers();
     }
+  }
+
+  //fetches list of player records in no particular order
+  private List<PlayerRecord> fetchRecords() {
+    List<PlayerRecord> ret = new ArrayList<>();
+    for (Player p : myPlayers.values()) {
+      ret.add(p.getPlayerRecord());
+    }
+    return ret;
   }
 }

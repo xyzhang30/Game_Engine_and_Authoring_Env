@@ -476,11 +476,14 @@
     },
     "advance_turn" : {
       "PlayerCompletedTurnCommand": [],
-      "AdvanceTurnCommand" : [ ]
-    } ,
-    "advance_round" : {
-      "AdvanceRoundCommand" : [ ]
+      "AdvanceTurnCommand": []
     },
-    "strike_policy": "DoNothingStrikePolicy"
+
+    "advance_round" : {
+      "AdvanceRoundCommand": []
+    },
+
+    "strike_policy": "DoNothingStrikePolicy",
+    "rank_comparator": "HighestScoreComparator"
   }
 }

@@ -68,7 +68,10 @@ public class GameBuilderTest {
     Map<String, List<Double>> advance3 = Map.of("AdvanceRoundCommand", List.of());
     String strikePolicy = "DoNothingStrikePolicy";
 
-    return new Rules(List.of(collisionRule), turnPolicy, roundPolicy, winConditions, List.of(advance1, advance2), List.of(advance3), strikePolicy);
+    return new Rules(List.of(collisionRule), turnPolicy, roundPolicy, winConditions,
+        Map.of("AdvanceTurnCommand", List.of(), "AdjustPointsCommand", List.of(1.0, 1.0)),
+        Map.of("AdvanceRoundCommand", List.of()), strikePolicy,
+        "HighestScoreComparator");
   }
 
   @Test
