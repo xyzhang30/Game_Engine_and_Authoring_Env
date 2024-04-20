@@ -481,6 +481,7 @@
     "advance_round" : [ {
       "AdvanceRoundCommand" : [ ]
     } ],
-    "strike_policy": "DoNothingStrikePolicy"
+    "strike_policy": "DoNothingStrikePolicy",
+    "rank_comparator": "HighestScoreComparator"
   }
 }

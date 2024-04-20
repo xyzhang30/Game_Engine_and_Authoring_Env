@@ -19,7 +19,9 @@ public record Rules(List<CollisionRule> collisions,
                     @JsonProperty("win_condition") Map<String, List<Double>> winCondition,
                     @JsonProperty("advance_turn") List<Map<String, List<Double>>> advanceTurn,
                     @JsonProperty("advance_round") List<Map<String, List<Double>>> advanceRound,
-                    @JsonProperty("strike_policy") String strikePolicy
+                    @JsonProperty("strike_policy") String strikePolicy,
+                    @JsonProperty("rank_comparator") String rankComparator
+
 ) {
 
 }
