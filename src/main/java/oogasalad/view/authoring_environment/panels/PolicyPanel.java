@@ -12,9 +12,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -142,7 +144,7 @@ public class PolicyPanel implements Panel{
     }
   }
 
-  private void enterParam(String commandType, String commandPackage, String newValue) {
+  private List<Double> enterParam(String commandType, String commandPackage, String newValue) {
     System.out.println("selected:" + REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue);
     String classPath = REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue;
     try {
@@ -153,19 +155,26 @@ public class PolicyPanel implements Panel{
         //commands that takes in arguments (or empty param list)
         constructor = clazz.getConstructor(List.class);
         if (constructor.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredConstructor(List.class).getAnnotation(ExpectedParamNumber.class).value() != 0){
-          //saving with user-specified params
+          //prompt user to enter param
           int numParam = constructor.getAnnotation(ExpectedParamNumber.class).value();
-          List<Double> paramList = enterParamsPopup(numParam, newValue);
+          //get and return the params from popup
+          return enterParamsPopup(numParam, newValue);
+//          //saving with user-specified params
+//          saveSelectionWithParam(commandType, newValue, paramList);
         } else {
-          //save with empty param list
-          saveSelectionWithParam(commandType, newValue, new ArrayList<Double>());
+          //command does not take in params -- return empty param list
+          return new ArrayList<>();
+//          //save with empty param list
+//          saveSelectionWithParam(commandType, newValue, new ArrayList<Double>());
         }
       } else {
-        //commands that don't take in arguments (turn policy and strike policy)
+        //commands that don't take in arguments (turn policy and strike policy) -- call save directly (because no need to distinguish between adding a command and replacing a command based on whether it's a combobox or a checkcombobox)
         saveSelectionNoParam(commandType, newValue);
+        return null;
       }
     } catch (NoSuchMethodException | ClassNotFoundException e) {
       e.printStackTrace();
+      return null;
     }
   }
 
@@ -176,33 +185,75 @@ public class PolicyPanel implements Panel{
     authoringProxy.addNoParamPolicies(commandType, commandName);
   }
 
-  private void saveSelectionWithParam(String commandType, String commandName, ArrayList<Double> params) {
-    System.out.println("---SAVING TO PROXY | WITH PARAM ---");
-    System.out.println("commandType: "+commandType);
-    System.out.println("commandName: "+commandName);
-    System.out.println("paramList: "+params);
-    authoringProxy.addConditionsCommandsWithParam(commandType, commandName, params);
-  }
+//  private void saveSelectionWithParam(String commandType, String commandName, List<Double> params) {
+//    System.out.println("---SAVING TO PROXY | WITH PARAM ---");
+//    System.out.println("commandType: "+commandType);
+//    System.out.println("commandName: "+commandName);
+//    System.out.println("paramList: "+params);
+//    authoringProxy.addConditionsCommandsWithParam(commandType, commandName, params);
+//  }
 
   public static List<Double> enterParamsPopup(int numParam, String item) {
     Stage popupStage = new Stage();
     popupStage.setTitle("Specify Command Parameters");
 
+    List<Double> params = new ArrayList<>();
+
     Label label = new Label(item+": (expected " + numParam + ")");
     VBox vbox = new VBox(label);
+
+    List<TextArea> textAreas = new ArrayList<>();
 
     for (int i = 0; i < numParam; i ++){
       TextArea input = new TextArea();
       input.setId(String.valueOf(i));
+      textAreas.add(input);
       vbox.getChildren().add(input);
     }
+
+    Button confirmSaveParam = new Button("save");
+    confirmSaveParam.setDisable(true); //confirm button shouldn't do anything before user enters all params
+
+    for (TextArea area : textAreas) {
+      //only allow users to enter digits and the decimal point
+      area.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+        String character = event.getCharacter();
+        if (!character.matches("[0-9.]")) {
+          event.consume();
+        }
+      });
+      //only enable the confirm save button when user has entered all required params
+      area.textProperty().addListener((observable, oldValue, newValue) -> {
+        boolean allFilled = textAreas.stream().noneMatch(textArea -> textArea.getText().trim().isEmpty());
+        confirmSaveParam.setDisable(!allFilled);
+      });
+    }
+
+    confirmSaveParam.setOnAction(e -> {
+      for (TextArea area : textAreas) {
+        String text = area.getText();
+        if (!text.isEmpty()) {
+          try {
+            double value = Double.parseDouble(text);
+            params.add(value);
+          } catch (NumberFormatException ex) {
+            // Handle invalid input
+            System.out.println("Invalid input: " + text);
+          }
+        }
+      }
+      popupStage.close();
+    });
+
+    vbox.getChildren().add(confirmSaveParam);
+
     Scene scene = new Scene(vbox, 500, 300);
     popupStage.setScene(scene);
 
     popupStage.setResizable(false);
-    popupStage.show();
+    popupStage.showAndWait();
 
-    return new ArrayList<>();
+    return params;
   }
 
   private List<String> getAvailableCommands(String commandPackage) {
@@ -238,14 +289,16 @@ public class PolicyPanel implements Panel{
     for (ComboBox<String> comboBox : singleChoiceComboxBoxes.keySet()){
       comboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue != null) {
-          enterParam(comboBox.getId(), commandPackageMap.get(singleChoiceComboxBoxes.get(comboBox)), newValue); //commandPackage, newValue
+          List<Double> params = enterParam(comboBox.getId(), commandPackageMap.get(singleChoiceComboxBoxes.get(comboBox)), newValue); //commandPackage, newValue
+          if (params != null){
+            System.out.println("---REPLACING TO PROXY | WITH PARAM ---");
+            System.out.println("commandType: "+comboBox.getId());
+            System.out.println("commandName: "+newValue);
+            System.out.println("paramList: "+params);
+            authoringProxy.replaceConditionsCommandsWithParam(comboBox.getId(), newValue, params);
+          }
         }
       });
-      //have the listeners call the add param + save to proxy
-
-      //for policy ones call proxy without sending param list
-      //for the ones without popups, call proxy immediately after selection with an empty param list
-      //for the ones that do, call proxy after the param popup is saved. (add save/cancel button)
     }
 
     //add listeners for the multi-choice checkComboBoxes
@@ -254,18 +307,18 @@ public class PolicyPanel implements Panel{
         while (c.next()) {
           if (c.wasAdded()) {
             for (String selectedCommand : c.getAddedSubList()) {
-              enterParam(checkComboBox.getId(),commandPackageMap.get(multiChoiceCheckBoxes.get(checkComboBox)), selectedCommand);
+              List<Double> params = enterParam(checkComboBox.getId(),commandPackageMap.get(multiChoiceCheckBoxes.get(checkComboBox)), selectedCommand);
+              if (params != null){
+                authoringProxy.addConditionsCommandsWithParam(checkComboBox.getId(), selectedCommand, params);
+              }
+            }
+          } if (c.wasRemoved()) {
+            for (String removedCommand : c.getRemoved()) {
+              authoringProxy.removeConditionsCommandsWithParam(checkComboBox.getId(), removedCommand);
             }
           }
         }
       });
-      //have the listeners call the add param + save to proxy
-
-      //for policy ones call proxy without sending param list
-      //for the ones without popups, call proxy immediately after selection with an empty param list
-      //for the ones that do, call proxy after the param popup is saved. (add save/cancel button)
-
     }
-
   }
 }
