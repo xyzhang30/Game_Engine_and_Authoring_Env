@@ -5,10 +5,12 @@ import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -16,7 +18,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import oogasalad.model.annotations.AvailableCommands;
 import oogasalad.model.annotations.ChoiceType;
@@ -32,8 +33,17 @@ public class PolicyPanel implements Panel{
   private final StackPane canvas;
   private final AnchorPane rootPane;
   private final AnchorPane containerPane;
+
+  private Map<String, String> commandPackageMap = new HashMap<>();
+  private Map<ComboBox<String>, String> singleChoiceComboxBoxes = new HashMap<>();
+  private Map<CheckComboBox<String>, String> multiChoiceCheckBoxes = new HashMap<>();
+  private Map<CheckComboBox<String>, ListChangeListener<String>> multiChoiceEventListeners = new HashMap<>();
+  private Map<ComboBox<String>, ChangeListener<String>> singleChoiceEventListeners = new HashMap<>();
+
   private static final String GAME_ENGINE_PACKAGE_PATH = "src/main/java/oogasalad/model/gameengine/";
   private static final String REFLECTION_ENGINE_PACKAGE_PATH = "oogasalad.model.gameengine.";
+
+
 
   public PolicyPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
       AnchorPane containerPane, StackPane canvas) {
@@ -42,6 +52,13 @@ public class PolicyPanel implements Panel{
     this.containerPane = containerPane;
     this.canvas = canvas;
     createElements();
+    System.out.println("comboboxs");
+    for (ComboBox<String> c : singleChoiceComboxBoxes.keySet()){
+      System.out.println(c + " - policytypename: " + singleChoiceComboxBoxes.get(c));
+    }
+    for (String s : commandPackageMap.keySet()){
+      System.out.println(s + " is using " + commandPackageMap.get(s));
+    }
     handleEvents();
   }
 
@@ -51,12 +68,13 @@ public class PolicyPanel implements Panel{
     int heightidx = 1;
     for (Field policyType : fields) {
       String policyLabel = String.join(" ",policyType.getName().split("_")) + ": ";
+      String policyNameConcat = String.join("",policyType.getName().toLowerCase().split("_"));
       System.out.println(policyLabel);
 
       if (policyType.isAnnotationPresent(ChoiceType.class)) {
         ChoiceType choiceTypeAnnotation = policyType.getAnnotation(ChoiceType.class);
         AvailableCommands availableCommands = policyType.getAnnotation(AvailableCommands.class);
-
+        commandPackageMap.put(policyNameConcat, availableCommands.commandPackage());
         createPolicySelectionDropdown(policyLabel, choiceTypeAnnotation.singleChoice(), availableCommands.commandPackage(), heightidx);
       }
     heightidx ++;
@@ -68,6 +86,8 @@ public class PolicyPanel implements Panel{
     AnchorPane.setTopAnchor(label,50.0*heightIdx);
     AnchorPane.setLeftAnchor(label,350.0);
     List<String> availableCommands = getAvailableCommands(commandPackage);
+    String ruleTypeName = String.join("", policyNameLabel.toLowerCase().split(" "));
+    ruleTypeName = ruleTypeName.substring(0, ruleTypeName.length() - 1);
     if (singleChoice) {
       ComboBox<String> comboBox = new ComboBox<>();
       AnchorPane.setLeftAnchor(comboBox, 500.0);
@@ -75,16 +95,24 @@ public class PolicyPanel implements Panel{
 
       comboBox.getItems().addAll(availableCommands);
       comboBox.setPromptText("Select command...");
-      comboBox.setId(policyNameLabel);
+      comboBox.setId(ruleTypeName);
 
       containerPane.getChildren().addAll(label,comboBox);
       comboBox.setMinWidth(300);
       comboBox.setMaxWidth(300);
-      comboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-        if (newValue != null) {
-          enterParam(commandPackage, newValue);
-        }
-      });
+
+//      ChangeListener<String> comboBoxListener = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+//        if (newValue != null) {
+//          enterParam(commandPackage, newValue);
+//        }
+//      };
+//
+//      comboBox.valueProperty().addListener(comboBoxListener);
+
+      singleChoiceComboxBoxes.put(comboBox, comboBox.getId());
+
+//      singleChoiceEventListeners.put(comboBox,comboBoxListener);
+
     } else {
       CheckComboBox<String> checkComboBox = new CheckComboBox<>(
           FXCollections.observableArrayList(availableCommands)
@@ -94,21 +122,27 @@ public class PolicyPanel implements Panel{
       containerPane.getChildren().addAll(label,checkComboBox);
       AnchorPane.setLeftAnchor(checkComboBox, 500.0);
       AnchorPane.setTopAnchor(checkComboBox,50.0*heightIdx);
-      checkComboBox.setId(policyNameLabel);
+      checkComboBox.setId(ruleTypeName);
 
-      checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c -> {
-        while (c.next()) {
-          if (c.wasAdded()) {
-            for (String selectedCommand : c.getAddedSubList()) {
-              enterParam(commandPackage, selectedCommand);
-            }
-          }
-        }
-      });
+//      ListChangeListener<String> checkComboBoxListener = c -> {
+//        while (c.next()) {
+//          if (c.wasAdded()) {
+//            for (String selectedCommand : c.getAddedSubList()) {
+//              enterParam(commandPackage, selectedCommand);
+//            }
+//          }
+//        }
+//      };
+//
+//      checkComboBox.getCheckModel().getCheckedItems().addListener(checkComboBoxListener);
+
+      multiChoiceCheckBoxes.put(checkComboBox, checkComboBox.getId());
+
+//      multiChoiceEventListeners.put(checkComboBox,checkComboBoxListener);
     }
   }
 
-  private void enterParam(String commandPackage, String newValue) {
+  private void enterParam(String commandType, String commandPackage, String newValue) {
     System.out.println("selected:" + REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue);
     String classPath = REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue;
     try {
@@ -116,18 +150,41 @@ public class PolicyPanel implements Panel{
       Class<?> clazz = Class.forName(classPath);
       Constructor<?> constructor;
       if (!commandPackage.equals("strike") && !commandPackage.equals("turn")){
+        //commands that takes in arguments (or empty param list)
         constructor = clazz.getConstructor(List.class);
         if (constructor.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredConstructor(List.class).getAnnotation(ExpectedParamNumber.class).value() != 0){
+          //saving with user-specified params
           int numParam = constructor.getAnnotation(ExpectedParamNumber.class).value();
-          enterParamsPopup(numParam, newValue);
+          List<Double> paramList = enterParamsPopup(numParam, newValue);
+        } else {
+          //save with empty param list
+          saveSelectionWithParam(commandType, newValue, new ArrayList<Double>());
         }
+      } else {
+        //commands that don't take in arguments (turn policy and strike policy)
+        saveSelectionNoParam(commandType, newValue);
       }
     } catch (NoSuchMethodException | ClassNotFoundException e) {
       e.printStackTrace();
     }
   }
 
-  public static void enterParamsPopup(int numParam, String item) {
+  private void saveSelectionNoParam(String commandType, String commandName) {
+    System.out.println("---SAVING TO PROXY | NO PARAM ---");
+    System.out.println("commandType: "+commandType);
+    System.out.println("commandName: "+commandName);
+    authoringProxy.addNoParamPolicies(commandType, commandName);
+  }
+
+  private void saveSelectionWithParam(String commandType, String commandName, ArrayList<Double> params) {
+    System.out.println("---SAVING TO PROXY | WITH PARAM ---");
+    System.out.println("commandType: "+commandType);
+    System.out.println("commandName: "+commandName);
+    System.out.println("paramList: "+params);
+    authoringProxy.addConditionsCommandsWithParam(commandType, commandName, params);
+  }
+
+  public static List<Double> enterParamsPopup(int numParam, String item) {
     Stage popupStage = new Stage();
     popupStage.setTitle("Specify Command Parameters");
 
@@ -144,13 +201,14 @@ public class PolicyPanel implements Panel{
 
     popupStage.setResizable(false);
     popupStage.show();
+
+    return new ArrayList<>();
   }
 
   private List<String> getAvailableCommands(String commandPackage) {
     Path path = Paths.get(GAME_ENGINE_PACKAGE_PATH + commandPackage);
     File packageDir = path.toFile();
     List<String> commands = new ArrayList<>();
-    System.out.println();
     System.out.println("packageDir.isDirectory() "+ packageDir.isDirectory());
     if (packageDir.isDirectory()) {
       File[] files = packageDir.listFiles((dir, name) -> {
@@ -176,6 +234,38 @@ public class PolicyPanel implements Panel{
 
   @Override
   public void handleEvents() {
+    // loop through each comboBox + add listeners
+    for (ComboBox<String> comboBox : singleChoiceComboxBoxes.keySet()){
+      comboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+        if (newValue != null) {
+          enterParam(comboBox.getId(), commandPackageMap.get(singleChoiceComboxBoxes.get(comboBox)), newValue); //commandPackage, newValue
+        }
+      });
+      //have the listeners call the add param + save to proxy
+
+      //for policy ones call proxy without sending param list
+      //for the ones without popups, call proxy immediately after selection with an empty param list
+      //for the ones that do, call proxy after the param popup is saved. (add save/cancel button)
+    }
+
+    //add listeners for the multi-choice checkComboBoxes
+    for (CheckComboBox<String> checkComboBox : multiChoiceCheckBoxes.keySet()){
+      checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c -> {
+        while (c.next()) {
+          if (c.wasAdded()) {
+            for (String selectedCommand : c.getAddedSubList()) {
+              enterParam(checkComboBox.getId(),commandPackageMap.get(multiChoiceCheckBoxes.get(checkComboBox)), selectedCommand);
+            }
+          }
+        }
+      });
+      //have the listeners call the add param + save to proxy
+
+      //for policy ones call proxy without sending param list
+      //for the ones without popups, call proxy immediately after selection with an empty param list
+      //for the ones that do, call proxy after the param popup is saved. (add save/cancel button)
+
+    }
 
   }
 }
