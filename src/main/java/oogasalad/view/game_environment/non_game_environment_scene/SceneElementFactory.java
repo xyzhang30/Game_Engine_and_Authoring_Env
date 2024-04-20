@@ -109,7 +109,7 @@ public class SceneElementFactory {
     sceneElementStyler.style(listView, style);
     sceneElementHandler.createElementHandler(listView, event);
 
-    listView.setMaxSize(screenWidth * widthFactor, screenHeight * heightFactor);
+    listView.setPrefSize(screenWidth * widthFactor, screenHeight * heightFactor);
     listView.setLayoutX(screenWidth * xLayoutFactor - listView.getPrefWidth() / 2);
     listView.setLayoutY(screenHeight * yLayoutFactor);
 

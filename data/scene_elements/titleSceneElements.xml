@@ -24,7 +24,7 @@
   <node>
     <type>TEXT</type>
     <text>Fysics Fun</text>
-    <x_layout_factor>0.32</x_layout_factor>
+    <x_layout_factor>0.38</x_layout_factor>
     <y_layout_factor>0.3</y_layout_factor>
     <styling>title-text</styling>
   </node>

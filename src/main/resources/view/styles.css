@@ -2,6 +2,11 @@
   -fx-background-color: #f0f0f0;
 }
 
+.list-cell {
+  -fx-text-fill: #FF851B;
+  -fx-alignment: center;
+}
+
 .title-button {
   -fx-background-color: #FF851B;
   -fx-text-fill: #ffffff;
@@ -17,14 +22,15 @@
   -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 15px;
   -fx-font-weight: bold;
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
 }
 
 .game-text {
-  -fx-fill: #FF851B;;
+  -fx-fill: #0074D9;;
   -fx-font-family: "Impact", "Arial", sans-serif;
-  -fx-font-size: 20px;
+  -fx-font-size: 30px;
   -fx-font-weight: bold;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
 }
 
 .title-text {
@@ -40,7 +46,7 @@
   -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 30px;
   -fx-font-weight: bold;
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
 }
 
 .pause-sheen {
@@ -54,12 +60,12 @@
   -fx-font-weight: bold;
   -fx-max-width: 150;
   -fx-max-height: 150;
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
 }
 
 .stat-container {
   -fx-alignment: center;
-  -fx-spacing: 10px;
+  -fx-spacing: 20px;
 }
 
 

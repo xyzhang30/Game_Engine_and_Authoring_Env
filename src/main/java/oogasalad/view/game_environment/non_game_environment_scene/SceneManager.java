@@ -11,7 +11,6 @@ import oogasalad.model.api.GameRecord;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.game_environment.GameScreen;
 import oogasalad.view.game_environment.GameplayPanel.GamePanel;
-import oogasalad.view.game_environment.GameplayPanel.TransformableNode;
 import oogasalad.view.visual_elements.CompositeElement;
 import oogasalad.view.enums.SceneType;
 import org.xml.sax.SAXException;
@@ -25,8 +24,8 @@ import org.xml.sax.SAXException;
  */
 public class SceneManager {
 
-  private final ReadOnlyDoubleProperty screenWidthObserver;
-  private final ReadOnlyDoubleProperty screenHeightObserver;
+  private final double screenWidth;
+  private final double screenHeight;
   private final Pane root;
   private final Scene scene;
   private final SceneElementParser sceneElementParser;
@@ -44,17 +43,15 @@ public class SceneManager {
   //private final String gameStatElementsPath = "data/scene_elements/gameStatElements.xml";
 
 
-  public SceneManager(GameController gameController, ReadOnlyDoubleProperty screenWidthObserver,
-      ReadOnlyDoubleProperty screenHeightObserver) {
-
-    this.screenWidthObserver = screenWidthObserver;
-    this.screenHeightObserver = screenHeightObserver;
-
+  public SceneManager(GameController gameController, double screenWidth,
+      double screenHeight) {
+    this.screenWidth = screenWidth;
+    this.screenHeight = screenHeight;
     root = new Pane();
     scene = new Scene(root);
 
     sceneElementParser = new SceneElementParser();
-    sceneElementFactory = new SceneElementFactory(root, 1000, 1000,
+    sceneElementFactory = new SceneElementFactory(root, screenWidth, screenHeight,
         new SceneElementHandler(gameController, this));
   }
 
@@ -99,18 +96,7 @@ public class SceneManager {
     try {
       List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(
           filePath);
-      Pane sceneElements = sceneElementFactory.createSceneElements(sceneElementParameters);
-
-      TransformableNode transformableNode = new TransformableNode(sceneElements);
-      transformableNode.sizeToBounds(screenWidthObserver.get(), screenHeightObserver.get());
-      screenWidthObserver.addListener((observable, oldValue, newValue) -> {
-        transformableNode.sizeToBounds(newValue.doubleValue(), screenHeightObserver.get());
-      });
-      screenHeightObserver.addListener((observable, oldValue, newValue) -> {
-        transformableNode.sizeToBounds(screenWidthObserver.get(), newValue.doubleValue());
-      });
-
-      return transformableNode.getPane();
+      return sceneElementFactory.createSceneElements(sceneElementParameters);
 
     } catch (ParserConfigurationException | SAXException | IOException e) {
       //TODO: Exception Handling
@@ -139,7 +125,8 @@ public class SceneManager {
   private void addGameManagementElementsToGame(GameRecord gameRecord) {
     resetRoot();
     Pane sceneElements = createSceneElements(gameManagementElementsPath);
-    gameStatBoard = new GameStatBoard(gameRecord.players(), gameRecord.turn(), gameRecord.round());
+    gameStatBoard = new GameStatBoard(gameRecord.players(), gameRecord.turn(), gameRecord.round(),
+        screenWidth, screenHeight);
     root.getChildren().addAll(sceneElements, gameStatBoard.getContainer());
 
   }
