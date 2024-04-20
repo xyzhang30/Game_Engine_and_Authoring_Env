@@ -10,5 +10,7 @@ public enum SceneElementEventType {
   LOAD,
   ZOOM_IN,
   RESET_ZOOM,
-  ZOOM_OUT
+  ZOOM_OUT,
+  POWER_HEIGHT,
+  SET_POWER
 }

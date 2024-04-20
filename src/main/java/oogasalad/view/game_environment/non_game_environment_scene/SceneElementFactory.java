@@ -122,10 +122,15 @@ public class SceneElementFactory {
     double xLayoutFactor = Double.parseDouble(parameters.get(xLayoutFactorTag));
     double yLayoutFactor = Double.parseDouble(parameters.get(yLayoutFactorTag));
     String style = parameters.get(styleTag);
+    String event = parameters.get(eventTag);
 
     Rectangle rectangle = new Rectangle(screenWidth * widthFactor,
         screenHeight * heightFactor);
     sceneElementStyler.style(rectangle, style);
+
+    if (event != null) {
+      sceneElementHandler.createElementHandler(rectangle, event);
+    }
 
     rectangle.setLayoutX(screenWidth * xLayoutFactor);
     rectangle.setLayoutY(screenHeight * yLayoutFactor);

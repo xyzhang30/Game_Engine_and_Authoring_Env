@@ -111,6 +111,7 @@ public class SceneManager {
     compositeElement.update(gameRecord.gameObjectRecords());
     gameStatBoard.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
     checkEndRound(gameRecord);
+    System.out.println(scene.getFocusOwner());
   }
 
   public void makeGameScreen(GameController controller, CompositeElement compositeElement,
@@ -119,6 +120,7 @@ public class SceneManager {
     pauseElements = createSceneElements(pausePath);
     addGameManagementElementsToGame(gameRecord);
     addGameElementsToGame();
+    root.requestFocus();
   }
 
   private void addGameManagementElementsToGame(GameRecord gameRecord) {
