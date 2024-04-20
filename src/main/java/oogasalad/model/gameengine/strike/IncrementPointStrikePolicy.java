@@ -39,7 +39,7 @@ public class IncrementPointStrikePolicy implements StrikePolicy {
     return (strikeableID, engine) -> {
       GameObject go = engine.getGameObjectContainer().getGameObject(strikeableID);
       Optional<Scoreable> optionalScoreable = go.getScoreable();
-      optionalScoreable.ifPresent(Scoreable::incrementTemporaryScore);
+      optionalScoreable.ifPresent(scoreable -> scoreable.incrementTemporaryScore(1.0));
     };
   }
 }

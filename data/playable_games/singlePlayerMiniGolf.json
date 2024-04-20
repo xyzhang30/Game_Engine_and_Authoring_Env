@@ -57,6 +57,7 @@
       },
       "staticFriction": 3.03873,
       "kineticFriction": 2.03873,
+      "inclineAngle": 0,
       "color": [124,252,0],
       "image": "",
       "direction": 0
@@ -320,6 +321,7 @@
       "AdvanceRoundCommand": []
     },
     "strike_policy": "IncrementPointStrikePolicy",
-    "rank_comparator": "LowestScoreComparator"
-  }
+    "rank_comparator": "LowestScoreComparator",
+    "static_checker_type": "VelocityStaticChecker",
+    "static_checker_params": []  }
 }

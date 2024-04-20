@@ -4,6 +4,8 @@ import oogasalad.model.api.PlayerRecord;
 
 /**
  * A comparator for sorting PlayerRecords based on the lowest score.
+ *
+ * @author Noah Loewy
  */
 public class LowestScoreComparator extends PlayerRecordComparator {
 

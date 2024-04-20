@@ -85,7 +85,6 @@ public class GameController {
     for (PlayerRecord p : gameRecord.players()) {
       if (p.playerId() == activePlayer) {
         strikeableID = p.activeStrikeable();
-        System.out.println(strikeableID);
         break;
       }
     }
