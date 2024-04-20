@@ -10,13 +10,13 @@ public class IDComparator extends PlayerRecordComparator {
   /**
    * Compares two PlayerRecord objects based on their player IDs.
    *
-   * @param o1 the first PlayerRecord to compare
-   * @param o2 the second PlayerRecord to compare
+   * @param p1 the first PlayerRecord to compare
+   * @param p2 the second PlayerRecord to compare
    * @return zero. This is a no-op, as we will compare based on their IDs, as the tiebreaker
    * specifies.
    */
   @Override
-  protected int compareMe(PlayerRecord o1, PlayerRecord o2) {
+  protected int customComparison(PlayerRecord p1, PlayerRecord p2) {
     return 0;
   }
 }
