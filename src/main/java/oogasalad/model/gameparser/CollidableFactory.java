@@ -17,6 +17,7 @@ public class CollidableFactory {
         co.properties().contains("visible") && !co.properties().contains("strikeable"),
         co.staticFriction(),
         co.kineticFriction(),
+        co.inclineAngle(),
         co.dimension().xDimension(),
         co.dimension().yDimension(),
         co.shape());
