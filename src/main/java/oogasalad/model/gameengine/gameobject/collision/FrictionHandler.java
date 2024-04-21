@@ -22,11 +22,13 @@ public class FrictionHandler extends PhysicsHandler {
   protected Supplier<List<Double>> makeVelocityFunction(GameObjectRecord c1, GameObjectRecord c2,
       double dt) {
     return () -> {
+      System.out.println("____________");
       //need to standardize angle from 0-90 for each case... wrote a method for this
       double inclineAngleRadians = Math.toRadians(normalizeInclineAngle(c2.inclineAngle()));
       double gravityComponent =
           Math.sin(inclineAngleRadians) * g;  // g is the acceleration due to gravity
-
+      System.out.println("id: " + Math.max(c1.id(),c2.id()));
+      System.out.println(gravityComponent);
       double inclineAngle = Math.toRadians(
           c2.inclineAngle()); // Convert angle to radians for calculations
 
@@ -40,7 +42,7 @@ public class FrictionHandler extends PhysicsHandler {
       } else if (inclineAngle >= 270 && inclineAngle < 360) {  // Right to left
         gravityX = -gravityComponent;
       }
-
+      System.out.println("Gravity Y :" + gravityY);
       // Components of gravity parallel and perpendicular to the incline
 //      double gParallelX = g * Math.sin(inclineAngle);
 //      double gParallelY = 0; // No vertical movement if incline is only horizontal
@@ -49,8 +51,11 @@ public class FrictionHandler extends PhysicsHandler {
       double initialVelocityX = c1.velocityX() + gravityX * dt;
       double initialVelocityY = c1.velocityY() + gravityY * dt;
 
+      System.out.println("Initial Velo Y :" +initialVelocityY);
       // Calculate the normal force considering the incline (assuming surface is aligned along x-axis)
       double normalForce = c1.mass() * g * Math.cos(inclineAngle);
+
+      System.out.println("Normal Force :" +initialVelocityY);
 
       // Determine the appropriate friction coefficient
       double mu =
@@ -75,13 +80,14 @@ public class FrictionHandler extends PhysicsHandler {
       double newVelocityX = initialVelocityX - frictionDecelerationX;
       double newVelocityY = initialVelocityY - frictionDecelerationY;
 
+      System.out.println("New Velocity Y :" +newVelocityY);
+      System.out.println(newVelocityY);
       // Prevent friction from reversing the direction of motion
       if (Math.signum(newVelocityX) != Math.signum(initialVelocityX))
         newVelocityX = 0;
+
       if (Math.signum(newVelocityY) != Math.signum(initialVelocityY))
         newVelocityY = 0;
-      System.out.println("dt: " + dt + List.of(newVelocityX, newVelocityY));
-
       return List.of(newVelocityX, newVelocityY);
 
     };

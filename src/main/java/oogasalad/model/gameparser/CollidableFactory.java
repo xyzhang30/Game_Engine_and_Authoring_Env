@@ -20,7 +20,10 @@ public class CollidableFactory {
         co.inclineAngle(),
         co.dimension().xDimension(),
         co.dimension().yDimension(),
-        co.shape());
+        co.shape(),
+        co.inelastic(),
+        co.phaser());
+
     if (co.properties().contains("strikeable")) {
       c.addStrikeable(new DefaultStrikeable(c));
       c.addScoreable(new DefaultScoreable(c));

@@ -226,39 +226,52 @@
     }
   } ],
   "rules" : {
-    "collisions" : [
+    "collisions": [
       {
         "first_id": 6,
         "second_id": 10,
         "command": [
           {
-            "AddDelayedPointsCommand": [10, 3]
+            "AddDelayedPointsCommand": [
+              10,
+              3
+            ]
           }
         ]
       },
       {
-      "first_id": 6,
-      "second_id": 11,
-      "command": [
-        {
-          "AddDelayedPointsCommand": [11, 3]
-        }
-      ]
-      }, {
-      "first_id": 6,
-      "second_id": 12,
-      "command": [
-        {
-          "AddDelayedPointsCommand": [12, 3]
-        }
-      ]
+        "first_id": 6,
+        "second_id": 11,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [
+              11,
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "first_id": 6,
+        "second_id": 12,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [
+              12,
+              3
+            ]
+          }
+        ]
       },
       {
         "first_id": 6,
         "second_id": 13,
         "command": [
           {
-            "AddDelayedPointsCommand": [13, 3]
+            "AddDelayedPointsCommand": [
+              13,
+              3
+            ]
           }
         ]
       },
@@ -267,7 +280,10 @@
         "second_id": 10,
         "command": [
           {
-            "AddDelayedPointsCommand": [10, 2]
+            "AddDelayedPointsCommand": [
+              10,
+              2
+            ]
           }
         ]
       },
@@ -276,15 +292,22 @@
         "second_id": 11,
         "command": [
           {
-            "AddDelayedPointsCommand": [11, 2]
+            "AddDelayedPointsCommand": [
+              11,
+              2
+            ]
           }
         ]
-      }, {
+      },
+      {
         "first_id": 8,
         "second_id": 12,
         "command": [
           {
-            "AddDelayedPointsCommand": [12, 2]
+            "AddDelayedPointsCommand": [
+              12,
+              2
+            ]
           }
         ]
       },
@@ -293,7 +316,10 @@
         "second_id": 13,
         "command": [
           {
-            "AddDelayedPointsCommand": [13, 2]
+            "AddDelayedPointsCommand": [
+              13,
+              2
+            ]
           }
         ]
       },
@@ -302,7 +328,10 @@
         "second_id": 10,
         "command": [
           {
-            "AddDelayedPointsCommand": [10, 1]
+            "AddDelayedPointsCommand": [
+              10,
+              1
+            ]
           }
         ]
       },
@@ -311,15 +340,22 @@
         "second_id": 11,
         "command": [
           {
-            "AddDelayedPointsCommand": [11, 1]
+            "AddDelayedPointsCommand": [
+              11,
+              1
+            ]
           }
         ]
-      }, {
+      },
+      {
         "first_id": 9,
         "second_id": 12,
         "command": [
           {
-            "AddDelayedPointsCommand": [12, 1]
+            "AddDelayedPointsCommand": [
+              12,
+              1
+            ]
           }
         ]
       },
@@ -328,7 +364,10 @@
         "second_id": 13,
         "command": [
           {
-            "AddDelayedPointsCommand": [13, 1]
+            "AddDelayedPointsCommand": [
+              13,
+              1
+            ]
           }
         ]
       },
@@ -337,9 +376,14 @@
         "second_id": 10,
         "command": [
           {
-            "AddDelayedPointsCommand": [10, 0],
-            "SetVisibleCommand": [10, 0]
-
+            "AddDelayedPointsCommand": [
+              10,
+              0
+            ],
+            "SetVisibleCommand": [
+              10,
+              0
+            ]
           }
         ]
       },
@@ -348,8 +392,14 @@
         "second_id": 11,
         "command": [
           {
-            "AddDelayedPointsCommand": [11, 0],
-            "SetVisibleCommand": [11, 0]
+            "AddDelayedPointsCommand": [
+              11,
+              0
+            ],
+            "SetVisibleCommand": [
+              11,
+              0
+            ]
           }
         ]
       },
@@ -374,8 +424,14 @@
         "second_id": 13,
         "command": [
           {
-            "AddDelayedPointsCommand": [13, 0],
-            "SetVisibleCommand": [13, 0]
+            "AddDelayedPointsCommand": [
+              13,
+              0
+            ],
+            "SetVisibleCommand": [
+              13,
+              0
+            ]
           }
         ]
       },
@@ -384,9 +440,14 @@
         "second_id": 10,
         "command": [
           {
-            "AddDelayedPointsCommand": [10, 0],
-            "SetVisibleCommand": [10, 0]
-
+            "AddDelayedPointsCommand": [
+              10,
+              0
+            ],
+            "SetVisibleCommand": [
+              10,
+              0
+            ]
           }
         ]
       },
@@ -395,9 +456,14 @@
         "second_id": 11,
         "command": [
           {
-            "AddDelayedPointsCommand": [11, 0],
-            "SetVisibleCommand": [11, 0]
-
+            "AddDelayedPointsCommand": [
+              11,
+              0
+            ],
+            "SetVisibleCommand": [
+              11,
+              0
+            ]
           }
         ]
       },
@@ -406,9 +472,14 @@
         "second_id": 12,
         "command": [
           {
-            "AddDelayedPointsCommand": [12, 0],
-            "SetVisibleCommand": [12, 0]
-
+            "AddDelayedPointsCommand": [
+              12,
+              0
+            ],
+            "SetVisibleCommand": [
+              12,
+              0
+            ]
           }
         ]
       },
@@ -417,9 +488,14 @@
         "second_id": 13,
         "command": [
           {
-            "AddDelayedPointsCommand": [13, 0],
-            "SetVisibleCommand": [13, 0]
-
+            "AddDelayedPointsCommand": [
+              13,
+              0
+            ],
+            "SetVisibleCommand": [
+              13,
+              0
+            ]
           }
         ]
       },
@@ -428,8 +504,14 @@
         "second_id": 10,
         "command": [
           {
-            "AddDelayedPointsCommand": [10, 0],
-            "SetVisibleCommand": [10, 0]
+            "AddDelayedPointsCommand": [
+              10,
+              0
+            ],
+            "SetVisibleCommand": [
+              10,
+              0
+            ]
           }
         ]
       },
@@ -438,9 +520,14 @@
         "second_id": 11,
         "command": [
           {
-            "AddDelayedPointsCommand": [11, 0],
-            "SetVisibleCommand": [11, 0]
-
+            "AddDelayedPointsCommand": [
+              11,
+              0
+            ],
+            "SetVisibleCommand": [
+              11,
+              0
+            ]
           }
         ]
       },
@@ -449,8 +536,14 @@
         "second_id": 12,
         "command": [
           {
-            "AddDelayedPointsCommand": [12, 0],
-            "SetVisibleCommand": [12, 0]
+            "AddDelayedPointsCommand": [
+              12,
+              0
+            ],
+            "SetVisibleCommand": [
+              12,
+              0
+            ]
           }
         ]
       },
@@ -459,32 +552,39 @@
         "second_id": 13,
         "command": [
           {
-            "AddDelayedPointsCommand": [13, 0],
-            "SetVisibleCommand": [13, 0]
+            "AddDelayedPointsCommand": [
+              13,
+              0
+            ],
+            "SetVisibleCommand": [
+              13,
+              0
+            ]
           }
         ]
       }
     ],
-
-
-    "turn_policy" : "StandardTurnPolicy",
-    "round_policy" : {
-      "NTurnsCompletedCondition" : [ 2 ]
+    "turn_policy": "StandardTurnPolicy",
+    "round_policy": {
+      "NTurnsCompletedCondition": [
+        2
+      ]
     },
-    "win_condition" : {
-      "NRoundsCompletedCondition" : [ 2 ]
+    "win_condition": {
+      "NRoundsCompletedCondition": [
+        2
+      ]
     },
-    "advance_turn" : {
+    "advance_turn": {
       "PlayerCompletedTurnCommand": [],
       "AdvanceTurnCommand": []
     },
-
-    "advance_round" : {
+    "advance_round": {
       "AdvanceRoundCommand": []
     },
-
     "strike_policy": "DoNothingStrikePolicy",
     "rank_comparator": "HighestScoreComparator",
-    "static_checker": {"VelocityStaticChecker": []}
+    "static_checker": { "VelocityStaticChecker": []
+    }
   }
 }

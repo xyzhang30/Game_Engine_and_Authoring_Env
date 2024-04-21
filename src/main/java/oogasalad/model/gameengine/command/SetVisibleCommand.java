@@ -19,7 +19,7 @@ public class SetVisibleCommand implements Command {
   private final List<Double> arguments;
 
   /**
-   * Constructs an instance of the MultiplySpeedCommand with the provided arguments.
+   * Constructs an instance of the SetVisibleCommand with the provided arguments.
    *
    * @param arguments Consists of two arguments: the ID of the GameObject whose visibility is to be
    *                  updated, and a boolean flag representing whether visibility should be set to

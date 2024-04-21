@@ -184,5 +184,8 @@
     },
     "strike_policy": "IncrementPointStrikePolicy",
     "rank_comparator": "LowestScoreComparator"
+  },
+  "static_checker": {
+    "VelocityStaticChecker": []
   }
 }
