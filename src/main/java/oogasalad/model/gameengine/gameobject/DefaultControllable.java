@@ -3,40 +3,38 @@ package oogasalad.model.gameengine.gameobject;
 
 public class DefaultControllable implements Controllable {
 
-  private MoveXControllable xc;
-  private MoveYControllable yc;
+  private int xMovement;
+  private int yMovement;
   private GameObject go;
 
   public DefaultControllable(GameObject go) {
     this.go = go;
+    xMovement = 0;
+    yMovement = 0;
   }
 
   @Override
-  public void allowMoveX() {
-    xc =  new MoveXControllable();
-  }
-  @Override
-  public void allowMoveY() {
-    yc =  new MoveYControllable();
-  }
-  @Override
   public double moveX(boolean positive) {
-    if (xc != null) {
-      return xc.moveX(positive);
+      return xMovement*(positive?1:-1);
     }
-    return 0.0;
-  }
 
   @Override
   public double moveY(boolean positive) {
-    if (yc != null) {
-      return yc.moveY(positive);
-    }
-    return 0.0;
+    return yMovement*(positive?1:-1);
   }
 
   @Override
   public GameObject asGameObject() {
     return go;
   }
+
+  @Override
+  public void setMovement(int xMovement, int yMovement) {
+    this.xMovement = xMovement;
+    this.yMovement = yMovement;
+  }
 }
+
+
+
+

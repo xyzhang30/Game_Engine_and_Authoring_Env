@@ -159,7 +159,7 @@
   "players" : [ {
     "player_id" : 1,
     "my_strikeable" : [10],
-    "my_controllable": [ID, LEFT/RIGHT, UP/DOWN]
+    "my_controllable": [11, 20, 0]
   }],
 
   "variables" : [ {
