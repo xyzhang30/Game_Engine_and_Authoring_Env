@@ -1,7 +1,9 @@
 package oogasalad.view.game_environment.scene_management;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
@@ -92,16 +94,15 @@ public class SceneElementFactory {
 
   private Button createButton(Map<String, String> parameters) {
     String displayText = parameters.get(textTag);
-    double widthFactor = Double.parseDouble(parameters.get(widthFactorTag));
-    double heightFactor = Double.parseDouble(parameters.get(heightFactorTag));
-    double xLayoutFactor = Double.parseDouble(parameters.get(xLayoutFactorTag));
-    double yLayoutFactor = Double.parseDouble(parameters.get(yLayoutFactorTag));
+    double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
+    double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
+    double xLayoutFactor = parseDoubleParameter(parameters, xLayoutFactorTag);
+    double yLayoutFactor = parseDoubleParameter(parameters, yLayoutFactorTag);
     String style = parameters.get(styleTag);
     String event = parameters.get(eventTag);
 
     Button button = new Button(displayText);
-    sceneElementStyler.style(button, style);
-    sceneElementHandler.createElementHandler(button, event);
+    styleAndHandleElement(button, style, event);
 
     button.setPrefSize(screenWidth * widthFactor, screenHeight * heightFactor);
     button.setLayoutX(screenWidth * xLayoutFactor - button.getWidth() / 2);
@@ -112,8 +113,8 @@ public class SceneElementFactory {
 
   private Text createText(Map<String, String> parameters) {
     String displayText = parameters.get(textTag);
-    double xLayoutFactor = Double.parseDouble(parameters.get(xLayoutFactorTag));
-    double yLayoutFactor = Double.parseDouble(parameters.get(yLayoutFactorTag));
+    double xLayoutFactor = parseDoubleParameter(parameters, xLayoutFactorTag);
+    double yLayoutFactor = parseDoubleParameter(parameters, yLayoutFactorTag);
     String style = parameters.get(styleTag);
 
     Text text = new Text(displayText);
@@ -126,10 +127,10 @@ public class SceneElementFactory {
   }
 
   private ListView<String> createListView(Map<String, String> parameters) {
-    double widthFactor = Double.parseDouble(parameters.get(widthFactorTag));
-    double heightFactor = Double.parseDouble(parameters.get(heightFactorTag));
-    double xLayoutFactor = Double.parseDouble(parameters.get(xLayoutFactorTag));
-    double yLayoutFactor = Double.parseDouble(parameters.get(yLayoutFactorTag));
+    double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
+    double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
+    double xLayoutFactor = parseDoubleParameter(parameters, xLayoutFactorTag);
+    double yLayoutFactor = parseDoubleParameter(parameters, yLayoutFactorTag);
     String style = parameters.get(styleTag);
     String event = parameters.get(eventTag);
 
@@ -145,20 +146,16 @@ public class SceneElementFactory {
   }
 
   private Rectangle createRectangle(Map<String, String> parameters) {
-    double widthFactor = Double.parseDouble(parameters.get(widthFactorTag));
-    double heightFactor = Double.parseDouble(parameters.get(heightFactorTag));
-    double xLayoutFactor = Double.parseDouble(parameters.get(xLayoutFactorTag));
-    double yLayoutFactor = Double.parseDouble(parameters.get(yLayoutFactorTag));
+    double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
+    double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
+    double xLayoutFactor = parseDoubleParameter(parameters, xLayoutFactorTag);
+    double yLayoutFactor = parseDoubleParameter(parameters, yLayoutFactorTag);
     String style = parameters.get(styleTag);
     String event = parameters.get(eventTag);
 
     Rectangle rectangle = new Rectangle(screenWidth * widthFactor,
         screenHeight * heightFactor);
-    sceneElementStyler.style(rectangle, style);
-
-    if (event != null) {
-      sceneElementHandler.createElementHandler(rectangle, event);
-    }
+    styleAndHandleElement(rectangle, style, event);
 
     rectangle.setLayoutX(screenWidth * xLayoutFactor);
     rectangle.setLayoutY(screenHeight * yLayoutFactor);
@@ -167,44 +164,58 @@ public class SceneElementFactory {
   }
 
   private Polygon createArrow(Map<String, String> parameters) {
-    double xPos = Integer.parseInt(parameters.get(xLayoutTag));
-    double yPos = Integer.parseInt(parameters.get(yLayoutTag));
-    double stemWidth = Integer.parseInt(parameters.get(stemWidthTag));
-    double stemHeight = Integer.parseInt(parameters.get(stemHeightTag));
-    double arrowWidthOffset = Integer.parseInt(parameters.get(arrowWidthOffsetTag));
-    double arrowHeightOffset = Integer.parseInt(parameters.get(arrowHeightOffsetTag));
+    double xPos = parseDoubleParameter(parameters, xLayoutTag);
+    double yPos = parseDoubleParameter(parameters, yLayoutTag);
+    double stemWidth = parseDoubleParameter(parameters, stemWidthTag);
+    double stemHeight = parseDoubleParameter(parameters, stemHeightTag);
+    double arrowWidthOffset = parseDoubleParameter(parameters, arrowWidthOffsetTag);
+    double arrowHeightOffset = parseDoubleParameter(parameters, arrowHeightOffsetTag);
     String style = parameters.get(styleTag);
     String event = parameters.get(eventTag);
 
-    double x1 = xPos;
-    double y1 = yPos;
-    double x2 = xPos + stemWidth;
-    double y2 = yPos;
-    double x3 = xPos + stemWidth;
-    double y3 = yPos - stemHeight;
-    double x4 = xPos + stemWidth + arrowWidthOffset;
-    double y4 = yPos - stemHeight;
-    double x5 = xPos + stemWidth / 2;
-    double y5 = yPos - stemHeight - arrowHeightOffset;
-    double x6 = xPos - arrowWidthOffset;
-    double y6 = yPos - stemHeight;
-    double x7 = xPos;
-    double y7 = yPos - stemHeight;
+    List<Double> arrowPoints = getArrowPoints(xPos, yPos, stemWidth, stemHeight, arrowWidthOffset,
+        arrowHeightOffset);
 
     Polygon arrow = new Polygon();
-    arrow.getPoints().addAll(
-        x1, y1,  // Tail
-        x2, y2,  // Shaft
-        x3, y3,  // Base of arrowhead
-        x4, y4,  // Tip of arrowhead
-        x5, y5,  // Arrowhead side
-        x6, y6,  // Arrowhead side
-        x7, y7   // Closing the shape back at the tail
-    );
+    arrow.getPoints().addAll(arrowPoints);
     sceneElementStyler.style(arrow, style);
     sceneElementHandler.createElementHandler(arrow, event);
 
     return arrow;
+  }
+
+  private List<Double> getArrowPoints(double xPos, double yPos, double stemWidth, double stemHeight,
+      double arrowWidthOffset,
+      double arrowHeightOffset) {
+    List<Double> arrowPoints = new ArrayList<>();
+
+    arrowPoints.add(xPos);
+    arrowPoints.add(yPos);
+    arrowPoints.add(xPos + stemWidth);
+    arrowPoints.add(yPos);
+    arrowPoints.add(xPos + stemWidth);
+    arrowPoints.add(yPos - stemHeight);
+    arrowPoints.add(xPos + stemWidth + arrowWidthOffset);
+    arrowPoints.add(yPos - stemHeight);
+    arrowPoints.add(xPos + stemWidth / 2);
+    arrowPoints.add(yPos - stemHeight - arrowHeightOffset);
+    arrowPoints.add(xPos - arrowWidthOffset);
+    arrowPoints.add(yPos - stemHeight);
+    arrowPoints.add(xPos);
+    arrowPoints.add(yPos - stemHeight);
+
+    return arrowPoints;
+  }
+
+  private void styleAndHandleElement(Node element, String style, String event) {
+    sceneElementStyler.style(element, style);
+    if (event != null) {
+      sceneElementHandler.createElementHandler(element, event);
+    }
+  }
+
+  private double parseDoubleParameter(Map<String, String> parameters, String key) {
+    return Double.parseDouble(parameters.get(key));
   }
 
 }
