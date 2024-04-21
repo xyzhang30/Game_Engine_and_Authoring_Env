@@ -41,13 +41,13 @@ public class AuthoringScreen {
   public AuthoringScreen() {
     createCanvas();
     createContainerPane();
-    createScreenSelectionDropDown(List.of("Background", "Game Objects", "Interactions",
+    createScreenSelectionDropDown(List.of("Game Objects", "Interactions",
         "Policies"));
     handleScreenSelectionDropDown();
     createFinishButton();
     containerPane.getChildren().add(titleText);
     scene = new Scene(rootPane, Window.SCREEN_WIDTH, Window.SCREEN_HEIGHT);
-    setScene("Background");
+    setScene("Game Objects");
   }
 
   private void resetScene() {
@@ -63,9 +63,9 @@ public class AuthoringScreen {
     setTitle(screenTitle);
     // TODO: BAD DESIGN -> WHERE and HOW to set the Container?
     switch (screenTitle) {
-      case "Background" -> container.setPanels(List.of(new ColorPanel(shapeProxy, containerPane),
-          new ImagePanel(authoringProxy, shapeProxy,
-              containerPane)));
+//      case "Background" -> container.setPanels(List.of(new ColorPanel(shapeProxy, containerPane),
+//          new ImagePanel(authoringProxy, shapeProxy,
+//              containerPane)));
       case "Game Objects" -> container.setPanels(
           List.of(new ColorPanel(shapeProxy, containerPane),
               new ImagePanel(authoringProxy, shapeProxy,
@@ -106,18 +106,19 @@ public class AuthoringScreen {
     int canvasHeight = 900;
     canvasPane.setMaxSize(canvasWidth, canvasHeight);
     canvasPane.setId("canvasPane");
+
     AnchorPane.setTopAnchor(canvasPane, 50.0);
     AnchorPane.setLeftAnchor(canvasPane, 70.0);
 
     Rectangle background = new Rectangle(canvasWidth, canvasHeight);
-    background.setId(String.valueOf(shapeProxy.getShapeCount()));
-    shapeProxy.setShapeCount(shapeProxy.getShapeCount()+1);
+//    background.setId(String.valueOf(shapeProxy.getShapeCount()));
+//    shapeProxy.setShapeCount(shapeProxy.getShapeCount()+1);
     background.setStroke(Color.BLACK);
     background.setFill(Color.WHITE);
     background.setStrokeWidth(10);
     StackPane.setAlignment(background, Pos.TOP_LEFT);
-
-    shapeProxy.setShape(background);
+//
+//    shapeProxy.setShape(background);
     //authoringProxy.addNonControllableShape(background, GameObjectType.SURFACE);
 //    authoringProxy.getAuthoringController().setBackground(background);
     rootPane.getChildren().add(canvasPane);
@@ -141,6 +142,7 @@ public class AuthoringScreen {
 
   private void createScreenSelectionDropDown(List<String> screenOptions) {
     screensDropDown.getItems().addAll(screenOptions);
+    screensDropDown.getSelectionModel().select("Game Object");
     screensDropDown.setPromptText("Select Screen Type");
     AnchorPane.setTopAnchor(screensDropDown, 10.0);
     AnchorPane.setLeftAnchor(screensDropDown, 10.0);
