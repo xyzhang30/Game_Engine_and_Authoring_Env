@@ -18,7 +18,8 @@
     "inclineAngle" : 0.0,
     "image" : "sample.img",
     "direction" : 0.0,
-    "inelastic" : true,
+    "inelastic" : false,
+    "phaser" : false,
     "gameobject_id" : 1
   }, {
     "properties" : [ "visible", "collidable" ],
@@ -38,7 +39,8 @@
     "inclineAngle" : 0.0,
     "image" : "sample.img",
     "direction" : 0.0,
-    "inelastic" : true,
+    "inelastic" : false,
+    "phaser" : false,
     "gameobject_id" : 2
   }, {
     "properties" : [ "visible", "surface" ],
@@ -58,7 +60,8 @@
     "inclineAngle" : 0.0,
     "image" : "sample.img",
     "direction" : 0.0,
-    "inelastic" : true,
+    "inelastic" : false,
+    "phaser" : false,
     "gameobject_id" : 3
   } ],
   "players" : [ {

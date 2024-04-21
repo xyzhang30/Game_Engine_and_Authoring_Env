@@ -200,9 +200,12 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private List<StaticChecker> createStaticChecker() {
-    return StaticCheckerFactory.createStaticChecker(gameData.getRules().staticChecker());
-
+    return StaticCheckerFactory.createStaticChecker(gameData.getRules().staticChecker());//  private StaticChecker createStaticChecker() {
+//    return StaticCheckerFactory.createStaticChecker(gameData.getRules().staticCheckerType(),
+//        gameData.getRules().staticCheckerParams());
+//
   }
+
 
   private PlayerRecordComparator createRankComparator() {
     return PlayerRankComparatorFactory.createRankComparator(gameData.getRules().rankComparator());

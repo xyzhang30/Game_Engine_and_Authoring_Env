@@ -1,0 +1,21 @@
+<scene_elements>
+  <node>
+    <type>RECTANGLE</type>
+    <width_factor>1</width_factor>
+    <height_factor>1</height_factor>
+    <x_layout_factor>0</x_layout_factor>
+    <y_layout_factor>0</y_layout_factor>
+    <styling>pause-sheen</styling>
+  </node>
+
+  <node>
+    <type>BUTTON</type>
+    <text>Resume</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
+    <y_layout_factor>0.4</y_layout_factor>
+    <styling>title-button</styling>
+    <event>RESUME</event>
+  </node>
+</scene_elements>

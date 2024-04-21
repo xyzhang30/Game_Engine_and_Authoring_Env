@@ -208,32 +208,6 @@
       "image": ""
     },
     {
-      "gameobject_id": 17,
-      "properties": [
-        "visible",
-        "collidable"
-      ],
-      "mass": 1,
-      "position": {
-        "x_position": 650,
-        "y_position": 650
-      },
-      "inelastic": true,
-      "shape": "Rectangle",
-      "dimension": {
-        "x_dimension": 50,
-        "y_dimension": 50
-      },
-      "color": [
-        0,
-        0,
-        255
-      ],
-      "staticFriction": 0.0,
-      "kineticFriction": 0.0,
-      "image": ""
-    },
-    {
       "gameobject_id": 8,
       "inelastic": true,
       "properties": [

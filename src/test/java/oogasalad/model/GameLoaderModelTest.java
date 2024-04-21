@@ -49,13 +49,13 @@ public class GameLoaderModelTest {
     this.testGameLoaderModel = new GameLoaderModel(gameTitle);
     testGameLoaderModel.prepareRound(1);
     GameObject c1 = new GameObject(1, Double.POSITIVE_INFINITY, 0, 0, true, 3.03873, 2.03873, 0,500,
-        500, "rectangle", true);
-    GameObject c2 = new GameObject(2, 1, 250, 450, true, 0, 0,0, 2, 2, "circle", true);
-    GameObject c3 = new GameObject(3, 0, 250, 50, true, 0, 0, 0,5, 5, "circle", true);
-    GameObject c4 = new GameObject(4, 200, 0, 0, true, 0, 0, 0,500, 10, "rectangle", true);
-    GameObject c5 = new GameObject(5, 200, 0, 0, true, 0, 0, 0,10, 500, "rectangle", true);
-    GameObject c6 = new GameObject(6, 200, 490, 0, true, 0, 0,0, 10, 500, "rectangle", true);
-    GameObject c7 = new GameObject(7, 200, 0, 490, true, 0, 0, 0,500, 10, "rectangle", true);
+        500, "rectangle", false, false);
+    GameObject c2 = new GameObject(2, 1, 250, 450, true, 0, 0,0, 2, 2, "circle", false, false);
+    GameObject c3 = new GameObject(3, 0, 250, 50, true, 0, 0, 0,5, 5, "circle", false, false);
+    GameObject c4 = new GameObject(4, 200, 0, 0, true, 0, 0, 0,500, 10, "rectangle", false, false);
+    GameObject c5 = new GameObject(5, 200, 0, 0, true, 0, 0, 0,10, 500, "rectangle", false, false);
+    GameObject c6 = new GameObject(6, 200, 490, 0, true, 0, 0,0, 10, 500, "rectangle", false, false);
+    GameObject c7 = new GameObject(7, 200, 0, 490, true, 0, 0, 0,500, 10, "rectangle", false, false);
 
     Map<Integer, GameObject> collidables = Map.of(1, c1, 2, c2, 3, c3, 4, c4, 5, c5, 6, c6, 7, c7);
 

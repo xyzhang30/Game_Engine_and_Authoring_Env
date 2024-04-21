@@ -13,7 +13,7 @@ import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
 public class AuthoringProxy {
   private final Map<String, Map<String, List<Double>>> conditionsCommands = new HashMap<>();
   private final Map<String, String> policies = new HashMap<>();
-  private final Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap = new HashMap<>();
+  private final Map<List<Shape>, Map<String, List<Double>>> interactionMap = new HashMap<>();
   private final Map<Shape, GameObjectAttributesContainer> gameObjectMap = new HashMap<>();
   //TODO: transfer imageMap functionality to gameObjectMap
   private final Map<Shape, String> imageMap = new HashMap<>();
@@ -30,12 +30,13 @@ public class AuthoringProxy {
   }
 
   public void addShapeInteraction(List<Shape> shapes,
-      Map<InteractionType, List<Double>> interaction) {
+      Map<String, List<Double>> interaction) {
     interactionMap.put(shapes, interaction);
   }
 
   public void addNoParamPolicies(String type, String command){
     policies.put(type, command);
+    System.out.println("ALL POLICIES:"+policies);
   }
 
   public void addConditionsCommandsWithParam(String type, String commandName, List<Double> params){
@@ -43,6 +44,21 @@ public class AuthoringProxy {
       conditionsCommands.put(type, new HashMap<>());
     }
     conditionsCommands.get(type).put(commandName,params);
+    System.out.println("ALL CONDITIONS:"+conditionsCommands);
+  }
+
+  public void replaceConditionsCommandsWithParam(String type, String commandName, List<Double> params){
+    conditionsCommands.put(type, new HashMap<>());
+    conditionsCommands.get(type).put(commandName,params);
+    System.out.println("ALL CONDITIONS:"+conditionsCommands);
+  }
+
+  public void removeConditionsCommandsWithParam(String type, String commandName){
+    if (!conditionsCommands.containsKey(type)){
+      return;
+    }
+    conditionsCommands.get(type).remove(commandName);
+    System.out.println("ALL CONDITIONS:"+conditionsCommands);
   }
 
   public Map<Shape, GameObjectAttributesContainer> getGameObjectMap() {
@@ -92,7 +108,7 @@ public class AuthoringProxy {
     this.authoringController = authoringController;
   }
 
-  public Map<List<Shape>, Map<InteractionType, List<Double>>> getInteractionMap() {
+  public Map<List<Shape>, Map<String, List<Double>>> getInteractionMap() {
     return interactionMap;
   }
 

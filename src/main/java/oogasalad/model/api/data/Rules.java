@@ -20,9 +20,4 @@ public record Rules(List<CollisionRule> collisions,
                     @JsonProperty("advance_round") Map<String, List<Double>> advanceRound,
                     @JsonProperty("strike_policy") String strikePolicy,
                     @JsonProperty("rank_comparator") String rankComparator,
-                    @JsonProperty("static_checker") Map<String,List<Integer>> staticChecker){
-
-
-
-
-}
+                    @JsonProperty("static_checker") Map<String,List<Integer>> staticChecker){}

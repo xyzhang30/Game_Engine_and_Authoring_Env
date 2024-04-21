@@ -207,10 +207,7 @@
     "strike_policy": "DoNothingStrikePolicy",
     "rank_comparator": "HighestScoreComparator",
     "static_checker": {
-      "VisibilityStaticChecker": [
-        8,
-        9
-      ]
+      "VisibilityStaticChecker": [8,9]
     }
   }
 }

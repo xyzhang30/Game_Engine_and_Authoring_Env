@@ -461,6 +461,21 @@
             ]
           }
         ]
+      },
+      {
+        "first_id": 6,
+        "second_id": 15,
+        "command": [
+          {
+            "LastStaticStateCommand": []
+          },
+          {
+            "AddDelayedPointsCommand": [
+              14,
+              1
+            ]
+          }
+        ]
       }
     ],
     "turn_policy": "StandardTurnPolicy",
