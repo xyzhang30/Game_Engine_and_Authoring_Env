@@ -1,8 +1,10 @@
 package oogasalad.view.authoring_environment.panels;
 
+import java.util.List;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 public class ColorPanel implements Panel {
 
@@ -31,7 +33,10 @@ public class ColorPanel implements Panel {
   public void handleEvents() {
     colorPicker.setOnAction(event -> {
       if (shapeProxy.getShape() != null) {
-        shapeProxy.getShape().setFill(((ColorPicker) event.getSource()).getValue());
+        Color color = ((ColorPicker) event.getSource()).getValue();
+        shapeProxy.getShape().setFill(color);
+        shapeProxy.getGameObjectAttributesContainer().setColor(List.of((int) color.getRed()*255, (int)color.getGreen()*255, (int)color.getBlue()*255));
+        shapeProxy.getGameObjectAttributesContainer().setImagePath(null);
       }
     });
   }

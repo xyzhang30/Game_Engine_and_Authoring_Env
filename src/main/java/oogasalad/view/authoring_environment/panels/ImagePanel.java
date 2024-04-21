@@ -41,10 +41,10 @@ public class ImagePanel implements Panel {
   @Override
   public void handleEvents() {
     imageButton.setOnAction(event -> {
-      String relativePath = chooseImage((Text) containerPane.lookup("#titleText"));
+      String relativePath = chooseImage();
       if (relativePath != null && shapeProxy.getShape() != null) {
-        authoringProxy.addImage(shapeProxy.getShape(), relativePath);
-        System.out.println(relativePath);
+        shapeProxy.getGameObjectAttributesContainer().setColor(null);
+        shapeProxy.getGameObjectAttributesContainer().setImagePath(relativePath);
         String imgPath = Paths.get(relativePath).toUri().toString();
         shapeProxy.getShape().setFill(new ImagePattern(new Image(imgPath)));
       }
@@ -52,34 +52,17 @@ public class ImagePanel implements Panel {
 
   }
 
-  private String chooseImage(Text shapeType) {
-    String type = shapeType.getText();
+  private String chooseImage() {
     FileChooser fileChooser = new FileChooser();
 
-    File initialDirectory = new File(getImageFolder(type));
+    File initialDirectory = new File("data/");
     fileChooser.setInitialDirectory(initialDirectory);
 
     fileChooser.getExtensionFilters().addAll(
         new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
     );
     File file = fileChooser.showOpenDialog(new Stage());
-    return initialDirectory + FileSystems.getDefault().getSeparator() + file.getName();
-  }
 
-  private String getImageFolder(String type) {
-    switch (type.toUpperCase()) {
-      case "BACKGROUND" -> {
-        return "data/background_images";
-      }
-      case "NON-CONTROLLABLE" -> {
-        return "data/noncontrollable_images";
-      }
-      case "CONTROLLABLE" -> {
-        return "data/controllable_images";
-      }
-      default -> {
-        return "data/";
-      }
-    }
+    return file.getPath();
   }
 }

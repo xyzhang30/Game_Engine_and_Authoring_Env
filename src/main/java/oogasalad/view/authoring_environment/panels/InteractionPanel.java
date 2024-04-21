@@ -36,7 +36,6 @@ public class InteractionPanel implements Panel {
 
   private static final String COMMAND_PACKAGE_PATH = "src/main/java/oogasalad/model/gameengine/command";
   private static final String REFLECTION_COMMAND_PACKAGE_PATH = "oogasalad.model.gameengine.command";
-
   private final ShapeProxy shapeProxy;
   private final AuthoringProxy authoringProxy;
   private final StackPane canvas;
@@ -58,13 +57,15 @@ public class InteractionPanel implements Panel {
     this.rootPane = rootPane;
     this.containerPane = containerPane;
     this.canvas = canvas;
+    // TODO: REMOVE HARD CODING
+    shapeProxy.setNumberOfMultiSelectAllowed(2);
     createElements();
     handleEvents();
   }
 
   @Override
   public void createElements() {
-//    makeObjectIdTextField();
+    makeObjectIdTextField();
 
     Label label = new Label("ON COLLISION: ");
     AnchorPane.setTopAnchor(label,100.0);
@@ -148,6 +149,7 @@ public class InteractionPanel implements Panel {
   public void handleEvents() {
     //set listener for the command dropdown
     checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c -> {
+      infoTextField.textProperty().setValue(shapeProxy.getSelectedShapeIds().toString());
       while (c.next()) {
         if (c.wasAdded()) {
           for (String selectedCommand : c.getAddedSubList()) {
@@ -167,9 +169,10 @@ public class InteractionPanel implements Panel {
 
     //handle the save button for each collision pair
     saveSelectionButton.setOnAction(e -> {
-      authoringProxy.addShapeInteraction(new ArrayList<>(), tempSavedCommands);
-      tempSavedCommands.clear();
+      authoringProxy.addShapeInteraction(shapeProxy.getSelectedShapeIds(), tempSavedCommands);
+      tempSavedCommands = new HashMap<>();
       checkComboBox.getCheckModel().clearChecks();
+      infoTextField.clear();
     });
   }
 }
