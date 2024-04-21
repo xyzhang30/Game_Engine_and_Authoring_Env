@@ -20,6 +20,11 @@ import oogasalad.view.authoring_environment.panels.PolicyPanel;
 import oogasalad.view.authoring_environment.panels.ShapePanel;
 import oogasalad.view.authoring_environment.panels.ShapeProxy;
 
+/**
+ * Represents the authoring screen for the authoring environment in the application, providing the user interface for creating and managing various game elements.
+ *
+ * @author Judy He
+ */
 public class AuthoringScreen {
 
   private final AnchorPane rootPane = new AnchorPane();
@@ -35,7 +40,6 @@ public class AuthoringScreen {
 
   public AuthoringScreen() {
     createCanvas();
-//    createShapesPane();
     createContainerPane();
     createScreenSelectionDropDown(List.of("Background", "Game Objects", "Interactions",
         "Policies"));
@@ -84,17 +88,6 @@ public class AuthoringScreen {
     AnchorPane.setTopAnchor(titleText, 5.0);
     AnchorPane.setLeftAnchor(titleText, 400.0);
   }
-
-//  private void createShapesPane() {
-//    // TODO: REMOVE HARD-CODING
-//    int width = 980;
-//    int height = 980;
-//    rootPane.setMaxSize(width, height);
-//    rootPane.setId("rootPane");
-//    AnchorPane.setTopAnchor(rootPane, 50.0);
-//    AnchorPane.setLeftAnchor(rootPane, 50.0);
-//    rootPane.getChildren().add(rootPane);
-//  }
 
   private void createContainerPane() {
     // TODO: REMOVE HARD-CODING
