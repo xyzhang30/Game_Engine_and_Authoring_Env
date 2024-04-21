@@ -190,6 +190,9 @@ public class SceneElementHandler {
           handleStrike();
           break;
         }
+        case W: {
+          gameController.moveX();
+        }
       }
     });
   }

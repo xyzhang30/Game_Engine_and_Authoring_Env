@@ -380,6 +380,11 @@ public class GameObject {
   public void toStartingState() {
     assignValuesFromRecord(gameObjectHistory.get(0));
   }
+
+  public void moveControllableX() {
+    Optional<Controllable> controllable = getControllable();
+    controllable.ifPresent(value -> myX += value.moveX());
+  }
 }
 
 

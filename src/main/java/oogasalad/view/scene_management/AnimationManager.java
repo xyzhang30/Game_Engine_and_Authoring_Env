@@ -15,6 +15,7 @@ public class AnimationManager {
   private final int FRAMES_PER_SECOND = 120;
   private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   private final Timeline animation;
+  private boolean running;
 
   public AnimationManager() {
     animation = new Timeline();
@@ -30,9 +31,11 @@ public class AnimationManager {
     animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
       if (controller.runGameAndCheckStatic(SECOND_DELAY)) {
         animation.stop();
+        running = false;
       }
     }));
     animation.play();
+    running = true;
   }
 
   /**
@@ -40,6 +43,7 @@ public class AnimationManager {
    */
   public void pauseAnimation() {
     animation.pause();
+    running = false;
   }
 
   /**
@@ -47,5 +51,10 @@ public class AnimationManager {
    */
   public void resumeAnimation() {
     animation.play();
+    running = true;
+  }
+
+  public boolean isRunning() {
+    return running;
   }
 }

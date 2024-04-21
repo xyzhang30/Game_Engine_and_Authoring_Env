@@ -8,6 +8,7 @@ import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.gameengine.command.Command;
+import oogasalad.model.gameengine.gameobject.Controllable;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
@@ -104,6 +105,11 @@ public class GameEngine implements ExternalGameEngine {
   @Override
   public void reset() {
 
+  }
+
+  public void moveControllableX(int id) {
+    gameObjects.getGameObject(id)
+        .moveControllableX();
   }
 
   /**

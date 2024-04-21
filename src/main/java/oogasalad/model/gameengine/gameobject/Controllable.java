@@ -1,9 +1,13 @@
 package oogasalad.model.gameengine.gameobject;
 
 public interface Controllable {
-    void moveX();
-    void moveY();
+  void allowMoveX();
+
+  void allowMoveY();
+
+  double moveX();
+  double moveY();
    // RotateControllable getRotateControllable();
-    GameObject asGameObject();
+
 
 }

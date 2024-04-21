@@ -11,28 +11,27 @@ public class DefaultControllable implements Controllable {
     this.go = go;
   }
 
-  public void addXControllable() {
-    xc =  new MoveXControllable(go);
-  }
-  public void addYControllable() {
-    yc =  new MoveYControllable(go);
+  @Override
+  public void allowMoveX() {
+    xc =  new MoveXControllable();
   }
   @Override
-  public void moveX() {
+  public void allowMoveY() {
+    yc =  new MoveYControllable();
+  }
+  @Override
+  public double moveX() {
     if (xc != null) {
-      xc.setXSpeed();
+      return xc.moveX();
     }
+    return 0.0;
   }
 
   @Override
-  public void moveY() {
+  public double moveY() {
     if (yc != null) {
-      yc.setYSpeed();
+      return yc.moveY();
     }
-  }
-
-  @Override
-  public GameObject asGameObject() {
-    return go;
+    return 0.0;
   }
 }
