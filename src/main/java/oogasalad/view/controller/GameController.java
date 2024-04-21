@@ -188,9 +188,14 @@ public class GameController {
     return gameEngine;
   }
 
-  public void moveX() {
+  public void moveX(boolean positive) {
     if(animationManager.isRunning()) {
-      gameEngine.moveControllableX(11);
+      gameEngine.moveControllableX(positive);
+    }
+  }
+  public void moveY(boolean positive) {
+    if(animationManager.isRunning()) {
+      gameEngine.moveControllableY(positive);
     }
   }
 }

@@ -33,6 +33,7 @@ public class CollidableFactory {
     if(co.properties().contains("controllable")) {
       c.addControllable(new DefaultControllable(c));
       c.getControllable().ifPresent(Controllable::allowMoveX);
+      c.getControllable().ifPresent(Controllable::allowMoveY);
     }
     return c;
   }

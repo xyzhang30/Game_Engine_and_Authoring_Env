@@ -3,6 +3,7 @@ package oogasalad.model.gameengine.player;
 import java.util.List;
 import java.util.Stack;
 import oogasalad.model.api.PlayerRecord;
+import oogasalad.model.gameengine.gameobject.Controllable;
 import oogasalad.model.gameengine.gameobject.Strikeable;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import org.apache.logging.log4j.LogManager;
@@ -27,6 +28,7 @@ public class Player {
   private List<Strikeable> myStrikeables;
   private List<Scoreable> myScoreables;
   private Strikeable activeStrikeable;
+  private Controllable myControllable;
   private boolean roundCompleted;
   private int turnsCompleted;
   private double score;
@@ -78,6 +80,15 @@ public class Player {
           myStrikeables.get((myStrikeables.indexOf(activeStrikeable) + 1) % myStrikeables.size());
     }
   }
+
+  public void setControllable(Controllable controllable) {
+    myControllable = controllable;
+  }
+
+  public Controllable getControllable() {
+    return myControllable;
+  }
+
 
   /**
    * Checks if the current round for the player is completed.

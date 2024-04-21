@@ -381,10 +381,13 @@ public class GameObject {
     assignValuesFromRecord(gameObjectHistory.get(0));
   }
 
-  public void moveControllableX() {
+  public void moveControllableX(boolean positive) {
     Optional<Controllable> controllable = getControllable();
-    controllable.ifPresent(value -> myX += value.moveX());
-
+    controllable.ifPresent(value -> myX += value.moveX(positive));
+  }
+  public void moveControllableY(boolean positive) {
+    Optional<Controllable> controllable = getControllable();
+    controllable.ifPresent(value -> myY += value.moveY(positive));
   }
 }
 

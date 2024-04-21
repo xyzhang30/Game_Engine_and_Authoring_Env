@@ -17,6 +17,7 @@ import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
+import oogasalad.model.gameengine.gameobject.Controllable;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import oogasalad.model.gameengine.gameobject.PhysicsHandler;
@@ -111,6 +112,19 @@ public class GameLoaderModel extends GameLoader {
         optionalStrikeable.ifPresent(playerScoreableObjects::add);
       }
       playerContainer.getPlayer(playerId).addScoreables(playerScoreableObjects);
+      System.out.println(parserPlayer.myControllable());
+      System.out.println(parserPlayer.myControllable());
+      System.out.println(parserPlayer.myControllable());
+      System.out.println(parserPlayer.myControllable());
+      System.out.println(parserPlayer.myControllable());
+      System.out.println(parserPlayer.myControllable());
+      if(!parserPlayer.myControllable().isEmpty()) {
+        Optional<Controllable> optionalControllable = gameObjectContainer.getGameObject(
+            parserPlayer.myControllable().get(0)).getControllable();
+        optionalControllable.ifPresent(controllable -> {
+          playerContainer.getPlayer(playerId).setControllable(controllable);
+        });
+      }
     }
   }
 

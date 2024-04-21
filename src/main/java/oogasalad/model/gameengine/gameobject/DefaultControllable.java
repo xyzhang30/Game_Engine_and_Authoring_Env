@@ -20,18 +20,23 @@ public class DefaultControllable implements Controllable {
     yc =  new MoveYControllable();
   }
   @Override
-  public double moveX() {
+  public double moveX(boolean positive) {
     if (xc != null) {
-      return xc.moveX();
+      return xc.moveX(positive);
     }
     return 0.0;
   }
 
   @Override
-  public double moveY() {
+  public double moveY(boolean positive) {
     if (yc != null) {
-      return yc.moveY();
+      return yc.moveY(positive);
     }
     return 0.0;
+  }
+
+  @Override
+  public GameObject asGameObject() {
+    return go;
   }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 public class MoveYControllable {
   private GameObject go;
 
-  public double moveY() {
-    return 20;
+  public double moveY(boolean positive) {
+    return 20*(positive?1:-1);
   }
 }

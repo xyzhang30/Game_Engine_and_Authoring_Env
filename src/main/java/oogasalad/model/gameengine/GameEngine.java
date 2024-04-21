@@ -107,12 +107,20 @@ public class GameEngine implements ExternalGameEngine {
 
   }
 
-  public void moveControllableX(int id) {
-    gameObjects.getGameObject(id)
-        .moveControllableX();
+  public void moveControllableX(boolean positive) {
+    int id =
+        playerContainer.getPlayer(playerContainer.getActive()).getControllable().asGameObject().getId();
+    gameObjects.getGameObject(id).moveControllableX(positive);
   }
 
-  /**
+
+  public void moveControllableY(boolean positive) {
+    int id =
+        playerContainer.getPlayer(playerContainer.getActive()).getControllable().asGameObject().getId();
+    gameObjects.getGameObject(id).moveControllableY(positive);
+  }
+
+/**
    * Advances the game to the next round by incrementing the round number, applying delayed scores
    * to players, and starting a new round.
    */

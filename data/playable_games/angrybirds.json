@@ -290,7 +290,8 @@
       "player_id": 1,
       "my_strikeable": [
         5
-      ]
+      ],
+      "my_controllable": []
     }
   ],
   "variables": [

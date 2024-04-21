@@ -190,8 +190,21 @@ public class SceneElementHandler {
           handleStrike();
           break;
         }
-        case W: {
-          gameController.moveX();
+        case M: {
+          gameController.moveX(true);
+          break;
+        }
+        case N: {
+          gameController.moveX(false);
+          break;
+        }
+        case B: {
+          gameController.moveY(true);
+          break;
+        }
+        case V: {
+          gameController.moveY(false);
+          break;
         }
       }
     });

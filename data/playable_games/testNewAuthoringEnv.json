@@ -41,7 +41,8 @@
   } ],
   "players" : [ {
     "player_id" : 1,
-    "my_strikeable" : [ ]
+    "my_strikeable" : [ ],
+    "my_controllable": []
   } ],
   "variables" : [ {
     "global" : {

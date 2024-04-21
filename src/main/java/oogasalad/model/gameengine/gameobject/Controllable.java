@@ -5,9 +5,9 @@ public interface Controllable {
 
   void allowMoveY();
 
-  double moveX();
-  double moveY();
-   // RotateControllable getRotateControllable();
+  double moveX(boolean positive);
+  double moveY(boolean positive);
 
+  GameObject asGameObject();
 
 }

@@ -60,7 +60,7 @@ public class NewAuthoringController {
   public void writePlayers(Map<Integer, List<Integer>> playersMap) {
     List<ParserPlayer> players = new ArrayList<>();
     playersMap.forEach((playerId, myGameObjects) -> {
-      ParserPlayer player = new ParserPlayer(playerId, myGameObjects);
+      ParserPlayer player = new ParserPlayer(playerId, myGameObjects, List.of());
       players.add(player);
     });
 
