@@ -162,7 +162,6 @@ public class SceneElementHandler {
 
   private void handleStrike() {
     double angle = (-90 + angleArrow.getRotate()) * (Math.PI / 180);
-    System.out.println("angle " + angle);
     double fractionalVelocity = powerMeter.getHeight() / maxPower;
     gameController.hitPointScoringObject(fractionalVelocity, angle);
   }
