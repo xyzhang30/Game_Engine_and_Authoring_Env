@@ -17,7 +17,6 @@ import oogasalad.view.visual_elements.CompositeElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 /**
  * GameController class handles communications between model and view.  This class holds manager
  * class instances to delegate handling the information received from the model.
@@ -29,38 +28,79 @@ public class GameController {
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
+  private final int maxVelocity;
   private int strikeableID;
   private int activePlayer;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
   private boolean ableToStrike;
 
-
+  /**
+   * Initializes the GameController with the specified screen width and height.
+   *
+   * <p>
+   * The constructor creates an instance of `SceneManager` with the provided dimensions and the
+   * current GameController as the owner, and then initializes the title scene. Additionally, an
+   * `AnimationManager` instance is created to handle game animations, and the controller is set to
+   * be able to strike by default. The max velocity is initialized.
+   * </p>
+   *
+   * @param width  The width of the screen for the game.
+   * @param height The height of the screen for the game.
+   */
   public GameController(double width, double height) {
     sceneManager = new SceneManager(this, width, height);
     sceneManager.createNonGameScene(SceneType.TITLE);
     animationManager = new AnimationManager();
     ableToStrike = true;
+    maxVelocity = 1000;
   }
 
+  /**
+   * Retrieves the current active scene of the game.
+   *
+   * @return The current `Scene` object being displayed in the game.
+   */
   public Scene getScene() {
     return sceneManager.getScene();
   }
 
+  /**
+   * Pauses the game by switching to a pause scene and pausing all animations.
+   *
+   * <p>
+   * This method triggers the transition to a pause scene, allowing the player to take a break or
+   * adjust settings. It also pauses all ongoing animations to halt the game's progression during
+   * the pause.
+   * </p>
+   */
   public void pauseGame() {
     sceneManager.createNonGameScene(SceneType.PAUSE);
     animationManager.pauseAnimation();
   }
 
+  /**
+   * Resumes the game by removing pause sheen elements and resuming all animations.
+   *
+   * <p>
+   * This method removes the pause sheen and transitions back to the previous scene, allowing the
+   * game to continue as it was before the pause. It also resumes any animations that were paused.
+   * </p>
+   */
   public void resumeGame() {
     sceneManager.removePauseSheen();
     animationManager.resumeAnimation();
   }
 
-  public void openTransitionScreen() {
-    //sceneManager.makeTransitionScreen();
-  }
-
+  /**
+   * Opens the authoring environment for creating game content.
+   *
+   * <p>
+   * This method creates a new instance of the `NewAuthoringController` and uses it to update the
+   * authoring screen. This allows the user to access the authoring environment, where they can
+   * create game content as needed.
+   * </p>
+   */
   public void openAuthorEnvironment() {
     NewAuthoringController newAuthoringController = new NewAuthoringController();
     newAuthoringController.updateAuthoringScreen();
@@ -72,7 +112,7 @@ public class GameController {
    * Starts the selected game by loading necessary back end components, creating the scene, and
    * starting the animation
    *
-   * @param selectedGame the game selected to play
+   * @param selectedGame the game title selected to play
    */
   public void startGamePlay(String selectedGame) {
     gameLoaderView = new GameLoaderView(selectedGame);
@@ -84,22 +124,34 @@ public class GameController {
     sceneManager.update(gameRecord);
   }
 
-  private void getCurrentStrikeable(GameRecord gameRecord) {
-    activePlayer = gameRecord.turn();
-    for (PlayerRecord p : gameRecord.players()) {
-      if (p.playerId() == activePlayer) {
-        strikeableID = p.activeStrikeable();
-        break;
-      }
+  /**
+   * Sends velocity and angle to back end to simulate hitting point scoring object
+   *
+   * @param fractionalVelocity velocity as fraction of maxVelocity
+   */
+  public void hitPointScoringObject(double fractionalVelocity, double angle) {
+    if (ableToStrike) {
+      gameEngine.applyInitialVelocity(maxVelocity * fractionalVelocity, angle,
+          strikeableID);
+      ableToStrike = false;
+      animationManager.runAnimation(this);
     }
   }
 
-
   /**
-   * Method to update visual game elements
+   * Updates the game state based on the provided time step and checks if the game is in a static
+   * state.
    *
-   * @param timeStep timestep for animation
-   * @return boolean indicating if round is over
+   * <p>
+   * This method advances the game state by the given time step and evaluates whether all elements
+   * in the game are stationary. It then updates the scene manager with the current game record and
+   * gets the current strikeable element. If the game is in a static state (all elements are
+   * stationary), the ability to strike is set to true.
+   * </p>
+   *
+   * @param timeStep The time step for updating the animation and game state.
+   * @return {@code true} if the game is in a static state (all elements are stationary), otherwise
+   * {@code false}.
    */
   public boolean runGameAndCheckStatic(double timeStep) {
     GameRecord gameRecord = gameEngine.update(timeStep);
@@ -112,17 +164,13 @@ public class GameController {
     return staticState;
   }
 
-  /**
-   * /** Sends velocity and angle to back end to simulate hitting point scoring object
-   *
-   * @param fractionalVelocity velocity as fraction of maxVelocity
-   */
-  public void hitPointScoringObject(double fractionalVelocity, double angle) {
-    if (ableToStrike) {
-      gameEngine.applyInitialVelocity(700 * fractionalVelocity, angle,
-          strikeableID);
-      ableToStrike = false;
-      animationManager.runAnimation(this);
+  private void getCurrentStrikeable(GameRecord gameRecord) {
+    activePlayer = gameRecord.turn();
+    for (PlayerRecord p : gameRecord.players()) {
+      if (p.playerId() == activePlayer) {
+        strikeableID = p.activeStrikeable();
+        break;
+      }
     }
   }
 
@@ -131,7 +179,6 @@ public class GameController {
       List<ViewGameObjectRecord> recordList = gameLoaderView.getViewCollidableInfo();
       return new CompositeElement(recordList);
     } catch (InvalidShapeException | InvalidImageException e) {
-      System.out.println(e.getMessage());
       LOGGER.error(e.getMessage());
       return null;
     }
