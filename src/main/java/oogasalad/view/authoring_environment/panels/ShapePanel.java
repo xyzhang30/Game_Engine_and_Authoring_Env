@@ -190,52 +190,8 @@ public class ShapePanel implements Panel {
     setPlayerAssignmentVisibility(false);
   }
 
-  // Refactor to the ShapeProxy -> separate into perform different handle events for shape in container (templates) vs shape in canvas
-//  private void handleShapeEvents(Shape shape) {
-//    shape.setOnMouseClicked(event -> setShapeOnClick(shape));
-//    shape.setOnMousePressed(event -> {
-//      try {
-//        setShapeOnDrag(shape, event);
-//      } catch (NoSuchMethodException e) {
-//        throw new RuntimeException(e);
-//      } catch (InvocationTargetException e) {
-//        throw new RuntimeException(e);
-//      } catch (InstantiationException e) {
-//        throw new RuntimeException(e);
-//      } catch (IllegalAccessException e) {
-//        throw new RuntimeException(e);
-//      }
-//    });
-//    shape.setOnMouseDragged(event -> setShapeOnCompleteDrag(shape, event));
-//    shape.setOnMouseReleased(event -> setShapeOnRelease(shape));
-//    // JavaFX drag and drop -> drop target
-//  }
 
-  //  private void addElements() {
-//    for (Shape shape : shapePositionMap.keySet()) {
-//      shape.setOnMousePressed(null);
-//      shape.setOnMouseClicked(null);
-//      shape.setOnMouseDragged(null);
-//      AnchorPane.setTopAnchor(shape, shapePositionMap.get(shape).get(0));
-//      AnchorPane.setLeftAnchor(shape, shapePositionMap.get(shape).get(1));
-//      rootPane.getChildren().add(shape);
-//    }
-//  }
-//  private void setShapeOnClick(Shape shape) {
-//    shapeProxy.setShape(shape);
-//    shape.setStroke(Color.YELLOW);
-//    if (shape.getStrokeWidth() != 0) {
-//      shape.setStrokeWidth(5);
-//    } else {
-//      shape.setStrokeWidth(0);
-//    }
-//    updateSlider(shape.getScaleX(), shape.getScaleY(), shape.getRotate());
-////    for (Shape currShape : authoringProxy.getControllables()) {
-////      if (!currShape.equals(shape)) {
-////        currShape.setStrokeWidth(0);
-////      }
-////    }
-//  }
+
 
   private void setShapeOnDrag(Shape shape, MouseEvent event)
       throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
@@ -250,7 +206,7 @@ public class ShapePanel implements Panel {
     shape.setStroke(Color.GREEN);
     //shape.setId(String.valueOf(authoringProxy.getControllables().size() + 1));
 
-    // JavaFX drag and drop -> drop target - example, labe Reflection
+    // JavaFX drag and drop -> drop target - example, label Reflection
     Shape duplicateShape = shape.getClass().getDeclaredConstructor()
         .newInstance(); // TODO: Handle exception
 
@@ -262,16 +218,6 @@ public class ShapePanel implements Panel {
     translatePos = new Coordinate(shape.getTranslateX(), shape.getTranslateY());
   }
 
-//  private void setShapeOnCompleteDrag(Shape shape, MouseEvent event) {
-//    System.out.println("DRAGGED");
-//    System.out.println(shape);
-//    Coordinate offset = new Coordinate(event.getSceneX() - startPos.x(),
-//        event.getSceneY() - startPos.y());
-//    Coordinate newTranslatePos = new Coordinate(translatePos.x() + offset.x(),
-//        translatePos.y() + offset.y());
-//    shape.setTranslateX(newTranslatePos.x());
-//    shape.setTranslateY(newTranslatePos.y());
-//  }
 
   private boolean isInAuthoringBox(Shape shape) {
     Bounds shapeBounds = shape.getBoundsInParent();
@@ -281,21 +227,6 @@ public class ShapePanel implements Panel {
     return authoringBoxBounds.contains(shapeBounds);
   }
 
-//  private void setShapeOnRelease(Shape shape) {
-//    System.out.println("RELEASED");
-//    System.out.println(shape);
-//    System.out.println(shape.getTranslateX());
-//    System.out.println(shape.getTranslateY());
-//    if (isInAuthoringBox(shape)) {
-////      shape.setStrokeWidth(0);
-//      //authoringProxy.addControllableShape(shape);
-//      Coordinate coordinate = new Coordinate(AnchorPane.getLeftAnchor(shape),
-//          AnchorPane.getTopAnchor(shape));
-//      authoringProxy.addShapePosition(shape, coordinate);
-//    } else {
-//      shape.setVisible(false);
-//    }
-//  }
 
   private void createSizeAndAngleSliders() {
     VBox sliderContainerBox = new VBox();
