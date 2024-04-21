@@ -209,4 +209,12 @@ public class GameScreen {
     gamePanel.setCamera(0,0,screenWidth*0.9,screenHeight*0.9);
   }
 
+  public Rectangle getPowerIndicator(){
+    return powerIndicator;
+  }
+
+  public Arrow getAngleArrow(){
+    return angleArrow;
+  }
+
 }

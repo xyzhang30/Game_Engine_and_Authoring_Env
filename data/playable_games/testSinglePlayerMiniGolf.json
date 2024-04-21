@@ -165,16 +165,15 @@
     "win_condition": {
       "NRoundsCompletedCondition": [2.0]
     },
-    "advance_turn": [
-      {
-        "AdvanceTurnCommand": []
-      }
-    ],
-    "advance_round": [
-      {
-        "AdvanceRoundCommand": []
-      }
-    ],
-    "strike_policy": "DoNothingStrikePolicy"
-  }
+    "advance_turn": {
+      "AdvanceTurnCommand": []
+    },
+    "advance_round":{
+      "AdvanceRoundCommand": []
+    },
+
+    "strike_policy": "DoNothingStrikePolicy",
+    "rank_comparator": "LowestScoreComparator",
+    "static_checker_type": "VelocityStaticChecker",
+    "static_checker_params": []  }
 }

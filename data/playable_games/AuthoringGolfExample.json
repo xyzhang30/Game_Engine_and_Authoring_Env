@@ -205,6 +205,7 @@
     }, {
       "AdjustActivePointsCommand" : [ 1.0 ]
     } ],
-    "strike_policy": "DoNothingStrikePolicy"
+    "strike_policy": "DoNothingStrikePolicy",
+    "static_checker": {"VelocityStaticChecker": []}
   }
 }

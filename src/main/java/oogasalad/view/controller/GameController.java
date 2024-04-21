@@ -43,6 +43,8 @@ public class GameController {
     animationManager = new AnimationManager();
   }
 
+
+
   public Scene getScene() {
     return sceneManager.getScene();
   }
@@ -85,7 +87,6 @@ public class GameController {
     for (PlayerRecord p : gameRecord.players()) {
       if (p.playerId() == activePlayer) {
         strikeableID = p.activeStrikeable();
-        System.out.println(strikeableID);
         break;
       }
     }
@@ -132,4 +133,7 @@ public class GameController {
       return null;
     }
   }
+
+  public Object getGameEngine() {
+    return gameEngine;  }
 }

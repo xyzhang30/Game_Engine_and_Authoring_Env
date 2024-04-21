@@ -14,8 +14,9 @@
       "y_dimension" : 980.0
     },
     "color" : [ 0, 0, 0 ],
-    "staticFriction" : 7.0,
-    "kineticFriction" : 5.0,
+    "staticFriction" : 0,
+    "kineticFriction" : 0,
+    "inclineAngle": 45,
     "image" : "data/background_images/wood.jpg"
   }, {
     "gameobject_id" : 15,
@@ -118,7 +119,8 @@
     "color" : [ 0, 0, 0 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
-    "image" : "data/noncontrollable_images/tenpts.jpg"
+    "image" : "data/nonstrikeable_images/tenpts.jpg"
+
   }, {
     "gameobject_id" : 7,
     "properties" : [  "visible", "collidable" ],
@@ -135,7 +137,7 @@
     "color" : [ 0, 0, 0 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
-    "image" : "data/noncontrollable_images/questionMark.jpg"
+    "image" : "data/nonstrikeable_images/questionMark.jpg"
   }, {
     "gameobject_id" : 8,
     "properties" : [  "visible", "collidable" ],
@@ -152,7 +154,7 @@
     "color" : [ 0, 0, 0 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
-    "image" : "data/noncontrollable_images/speedUp.jpg"
+    "image" : "data/nonstrikeable_images/speedUp.jpg"
   }, {
     "gameobject_id" : 9,
     "properties" : [  "visible", "collidable" ],
@@ -169,7 +171,7 @@
     "color" : [ 0, 0, 0 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
-    "image" : "data/noncontrollable_images/onept.jpg"
+    "image" : "data/nonstrikeable_images/onept.jpg"
   }, {
     "gameobject_id" : 10,
     "properties" : [  "visible", "collidable" ],
@@ -203,7 +205,7 @@
     "color" : [ 0, 0, 0 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
-    "image" : "data/noncontrollable_images/speedUp.jpg"
+    "image" : "data/nonstrikeable_images/speedUp.jpg"
   }, {
     "gameobject_id" : 12,
     "properties" : [  "visible", "collidable" ],
@@ -279,8 +281,8 @@
     "properties" : [ "collidable",  "strikeable", "visible" ],
     "mass" : 10.0,
     "position" : {
-      "x_position" : 967.298095703125,
-      "y_position" : 993.4151000976562
+      "x_position" : 767.298095703125,
+      "y_position" : 200.4151000976562
     },
     "shape" : "Circle",
     "dimension" : {
@@ -290,7 +292,7 @@
     "color" : [ 0, 0, 0 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
-    "image" : "data/controllable_images/golf ball.jpg"
+    "image" : "data/strikeable_images/golf ball.jpg"
   } ],
   "players" : [ {
     "player_id" : 1,
@@ -313,7 +315,7 @@
         "second_id": 6,
         "command": [
           {
-            "AdjustActivePointsCommand": [10]
+            "IncrementPointsCommand": [1,10]
           }
         ]
       },
@@ -322,7 +324,7 @@
         "second_id": 9,
         "command": [
           {
-            "AdjustActivePointsCommand": [1]
+            "IncrementPointsCommand": [1,1]
           }
         ]
       },
@@ -349,7 +351,7 @@
         "second_id": 16,
         "command": [
           {
-            "AdjustActivePointsCommand": [-50]
+            "IncrementPointsCommand": [1,-50]
           },
           {
             "PlayerCompletedRoundCommand": []
@@ -364,14 +366,15 @@
     "win_condition" : {
       "NRoundsCompletedCondition" : [ 3.0 ]
     },
-    "advance_turn" : [ {
+    "advance_turn" :  {
     }
-    ],
-    "advance_round" : [ {
+    ,
+    "advance_round" : {
       "AdvanceRoundCommand" : [ ]
-    }, {
-      "AdjustActivePointsCommand" : [ 1.0 ]
-    } ]
+    },
+    "strike_policy": "DoNothingStrikePolicy",
+    "rank_comparator": "HighestScoreComparator",
+    "static_checker": {"VelocityStaticChecker": []}
   }
 }
 
