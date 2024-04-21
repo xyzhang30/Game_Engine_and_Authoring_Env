@@ -83,9 +83,9 @@ public class NewAuthoringController {
       Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
       Map<Shape, GameObjectAttributesContainer> gameObjectMap, Map<Integer, List<Integer>> playersMap) {
     System.out.println(gameName);
-    System.out.println(interactionMap);
-    System.out.println(gameObjectMap);
-    System.out.println(playersMap);
+    System.out.println(interactionMap.toString());
+    System.out.println(gameObjectMap.toString());
+    System.out.println(playersMap.toString());
 
 //    boolean saveGameSuccess = submitGame(gameName, interactionMap, controllables,
 //        nonControllableTypeMap, imageMap, posMap);

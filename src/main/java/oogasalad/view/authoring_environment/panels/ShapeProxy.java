@@ -16,9 +16,8 @@ public class ShapeProxy {
     return shape;
   }
   public void setShape(Shape shape) {
-    gameObjectAttributesContainer = new GameObjectAttributesContainer();
-    if (shape != null) gameObjectAttributesContainer.setId(Integer.parseInt(shape.getId()));
     this.shape = shape;
+    resetGameObjectAttributesContainer();
   }
   public int getShapeCount() {
     return shapeCount;
@@ -30,6 +29,11 @@ public class ShapeProxy {
 
   public GameObjectAttributesContainer getGameObjectAttributesContainer() {
     return gameObjectAttributesContainer;
+  }
+
+  public void resetGameObjectAttributesContainer() {
+    gameObjectAttributesContainer = new GameObjectAttributesContainer();
+    if (shape != null) gameObjectAttributesContainer.setId(Integer.parseInt(shape.getId()));
   }
 
   public List<Shape> createTemplateShapes() {
