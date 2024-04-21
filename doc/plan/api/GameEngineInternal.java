@@ -23,7 +23,7 @@ interface GameEngineInternal {
      * Applies initial velocity to a collidable object.
      *
      * @param magnitude The magnitude of the velocity.
-     * @param direction The direction of the velocity.
+     * @param direction The direction of t"8he velocity.
      * @param id        The ID of the collidable.
      */
     void applyInitialVelocity(double magnitude, double direction, int id);
