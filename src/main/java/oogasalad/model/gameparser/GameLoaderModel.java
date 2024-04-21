@@ -17,6 +17,7 @@ import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
+import oogasalad.model.gameengine.gameobject.Controllable;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import oogasalad.model.gameengine.gameobject.PhysicsHandler;
@@ -111,6 +112,20 @@ public class GameLoaderModel extends GameLoader {
         optionalStrikeable.ifPresent(playerScoreableObjects::add);
       }
       playerContainer.getPlayer(playerId).addScoreables(playerScoreableObjects);
+      System.out.println(parserPlayer.myControllable());
+      System.out.println(parserPlayer.myControllable());
+      System.out.println(parserPlayer.myControllable());
+      System.out.println(parserPlayer.myControllable());
+      System.out.println(parserPlayer.myControllable());
+      System.out.println(parserPlayer.myControllable());
+      if(!parserPlayer.myControllable().isEmpty()) {
+        Optional<Controllable> optionalControllable = gameObjectContainer.getGameObject(
+            parserPlayer.myControllable().get(0)).getControllable();
+        optionalControllable.ifPresent(controllable -> {
+          playerContainer.getPlayer(playerId).setControllable(controllable,
+              parserPlayer.myControllable().get(1), parserPlayer.myControllable().get(2));
+        });
+      }
     }
   }
 
@@ -193,18 +208,19 @@ public class GameLoaderModel extends GameLoader {
     TurnPolicy turnPolicy = createTurnPolicy();
     StrikePolicy strikePolicy = createStrikePolicy();
     PlayerRecordComparator comp = createRankComparator();
-    StaticChecker checker = createStaticChecker();
-    System.out.println(checker);
+    List<StaticChecker> checkers = createStaticChecker();
     rulesRecord = new RulesRecord(commandMap,
         winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy,
-        staticHandler, strikePolicy, comp, checker);
+        staticHandler, strikePolicy, comp, checkers);
   }
 
-  private StaticChecker createStaticChecker() {
-    return StaticCheckerFactory.createStaticChecker(gameData.getRules().staticCheckerType(),
-        gameData.getRules().staticCheckerParams());
-
+  private List<StaticChecker> createStaticChecker() {
+    return StaticCheckerFactory.createStaticChecker(gameData.getRules().staticChecker());//  private StaticChecker createStaticChecker() {
+//    return StaticCheckerFactory.createStaticChecker(gameData.getRules().staticCheckerType(),
+//        gameData.getRules().staticCheckerParams());
+//
   }
+
 
   private PlayerRecordComparator createRankComparator() {
     return PlayerRankComparatorFactory.createRankComparator(gameData.getRules().rankComparator());

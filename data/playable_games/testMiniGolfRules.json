@@ -73,11 +73,13 @@
   "players": [
     {
       "player_id": 1,
-      "my_strikeable": [1]
+      "my_strikeable": [1],
+      "my_controllable": []
     },
     {
       "player_id": 2,
-      "my_strikeable": [2]
+      "my_strikeable": [2],
+      "my_controllable": []
     }
   ],
   "variables": [
@@ -99,8 +101,13 @@
         "second_id": 3,
         "command": [
           {
-            "SetVisibleCommand": [1.0, 0.0],
-            "PlayerCompletedRoundCommand": [1.0]
+            "SetVisibleCommand": [
+              1.0,
+              0.0
+            ],
+            "PlayerCompletedRoundCommand": [
+              1.0
+            ]
           }
         ]
       },
@@ -109,8 +116,13 @@
         "second_id": 3,
         "command": [
           {
-            "SetVisibleCommand": [2.0, 0.0],
-            "PlayerCompletedRoundCommand": [2.0]
+            "SetVisibleCommand": [
+              2.0,
+              0.0
+            ],
+            "PlayerCompletedRoundCommand": [
+              2.0
+            ]
           }
         ]
       }
@@ -120,17 +132,20 @@
       "AllPlayersCompletedRoundCondition": []
     },
     "win_condition": {
-      "NRoundsCompletedCondition": [2.0]
+      "NRoundsCompletedCondition": [
+        2.0
+      ]
     },
     "advance_turn": {
       "AdvanceTurnCommand": []
     },
-    "advance_round":{
+    "advance_round": {
       "AdvanceRoundCommand": []
     },
-
-    "strike_policy" : "IncrementPointStrikePolicy",
+    "strike_policy": "IncrementPointStrikePolicy",
     "rank_comparator": "IDComparator",
-    "static_checker_type": "VelocityStaticChecker",
-    "static_checker_params": []  }
+    "static_checker": {
+      "VelocityStaticChecker": []
+    }
+  }
 }

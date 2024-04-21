@@ -59,13 +59,20 @@ public class GameObjectContainer {
    * @return True if all visible GameObjects are static, otherwise false.
    */
 
-  public boolean checkStatic(StaticChecker checker) {
-    for (GameObject go : myGameObjects.values()) {
-      if (!checker.isStatic(go.toGameObjectRecord())){
-        return false;
+  public boolean checkStatic(List<StaticChecker> checkers) {
+    for(StaticChecker checker : checkers) {
+      boolean flag = true;
+      for (GameObject go : myGameObjects.values()) {
+        if (!checker.isStatic(go.toGameObjectRecord())){
+          System.out.println(go.getId());
+          flag = false;
+        }
+      }
+      if(flag) {
+        return true;
       }
     }
-    return true;
+    return false;
   }
 
   /**

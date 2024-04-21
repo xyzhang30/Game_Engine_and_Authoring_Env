@@ -1,7 +1,6 @@
 {
   "gameName" : "generatedTestAuthoringMiniGolf",
   "game_objects" : [ {
-    "gameobject_id" : 1,
     "properties" : [ "visible", "surface" ],
     "mass" : 100.0,
     "position" : {
@@ -18,9 +17,11 @@
     "kineticFriction" : 2.03873,
     "inclineAngle" : 0.0,
     "image" : "sample.img",
-    "direction" : 0.0
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "gameobject_id" : 1
   }, {
-    "gameobject_id" : 2,
     "properties" : [ "visible", "collidable" ],
     "mass" : 1.0,
     "position" : {
@@ -37,9 +38,11 @@
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
     "image" : "sample.img",
-    "direction" : 0.0
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "gameobject_id" : 2
   }, {
-    "gameobject_id" : 3,
     "properties" : [ "visible", "surface" ],
     "mass" : 0.0,
     "position" : {
@@ -56,11 +59,15 @@
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
     "image" : "sample.img",
-    "direction" : 0.0
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "gameobject_id" : 3
   } ],
   "players" : [ {
     "player_id" : 1,
-    "my_strikeable" : [ 2 ]
+    "my_strikeable" : [ 2 ],
+    "my_controllable": []
   } ],
   "variables" : [ {
     "global" : {
@@ -98,7 +105,6 @@
     },
     "strike_policy" : "DoNothingStrikePolicy",
     "rank_comparator" : "HighestScoreComparator",
-    "static_checker_type" : "VelocityStaticChecker",
-    "static_checker_params" : [ ]
+    "static_checker" : { }
   }
 }

@@ -34,6 +34,7 @@ public class GameData {
   }
 
   public @JsonProperty("game_objects") List<GameObjectProperties> getGameObjects() {
+    System.out.println(gameObjectProperties);
     return gameObjectProperties;
   }
 

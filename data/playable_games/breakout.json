@@ -137,11 +137,31 @@
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
       "image" : ""
-    } ],
+    },
+    {
+      "gameobject_id" : 11,
+      "properties" : [ "collidable",  "controllable", "visible" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 557.0,
+        "y_position" : 1000.0
+      },
+      "shape" : "Rectangle",
+      "dimension" : {
+        "x_dimension" : 300,
+        "y_dimension" : 20.0
+      },
+      "color" : [ 0, 250, 0 ],
+      "staticFriction" : 0.0,
+      "kineticFriction" : 0.0,
+      "image" : ""
+    }],
   "players" : [ {
     "player_id" : 1,
-    "my_strikeable" : [10]
+    "my_strikeable" : [10],
+    "my_controllable": [11, 20, 0]
   }],
+
   "variables" : [ {
     "global" : {
       "max_turns" : 1,
@@ -153,14 +173,15 @@
     }
   } ],
   "rules" : {
-    "collisions" : [
+    "collisions": [
       {
         "first_id": 8,
         "second_id": 10,
         "command": [
           {
             "IncrementPointsCommand": [
-              10,1
+              10,
+              1
             ],
             "SetVisibleCommand": [
               8,
@@ -175,7 +196,8 @@
         "command": [
           {
             "IncrementPointsCommand": [
-              10,1
+              10,
+              1
             ],
             "SetVisibleCommand": [
               9,
@@ -184,22 +206,28 @@
           }
         ]
       }
-      ],
-
-    "turn_policy" : "StandardTurnPolicy",
-    "round_policy" : {
-      "GameObjectsNotVisibleCondition" : [8,9]
+    ],
+    "turn_policy": "StandardTurnPolicy",
+    "round_policy": {
+      "GameObjectsNotVisibleCondition": [
+        8,
+        9
+      ]
     },
-    "win_condition" : {
-      "NRoundsCompletedCondition" : [ 1 ]
+    "win_condition": {
+      "NRoundsCompletedCondition": [
+        1
+      ]
     },
-    "advance_turn" : {
+    "advance_turn": {
     },
-    "advance_round" : {
+    "advance_round": {
       "AdvanceRoundCommand": []
     },
     "strike_policy": "DoNothingStrikePolicy",
     "rank_comparator": "HighestScoreComparator",
-    "static_checker_type": "VisibilityStaticChecker",
-    "static_checker_params": [8,9]  }
+    "static_checker": {
+      "VisibilityStaticChecker": [8,9]
+    }
+  }
 }

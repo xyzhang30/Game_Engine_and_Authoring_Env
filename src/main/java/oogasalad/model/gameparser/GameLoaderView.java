@@ -58,6 +58,7 @@ public class GameLoaderView extends GameLoader {
   }
 
   private GameObjectShape matchShape(String shape) throws InvalidShapeException {
+    System.out.println(shape);
     return switch (shape) {
       case "Circle", "circle" -> GameObjectShape.ELLIPSE;
       case "Rectangle", "rectangle" -> GameObjectShape.RECTANGLE;

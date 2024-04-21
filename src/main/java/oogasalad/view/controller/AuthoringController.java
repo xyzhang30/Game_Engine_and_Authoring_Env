@@ -145,7 +145,7 @@ public class AuthoringController {
 
   private void writePlayer() {
     //HARD CODED FOR DEMO!
-    ParserPlayer player = new ParserPlayer(1, List.of(1));
+    ParserPlayer player = new ParserPlayer(1, List.of(1),null);
 
     builderDirector.constructPlayers(List.of(player));
   }
@@ -193,7 +193,7 @@ public class AuthoringController {
 
     Rules rules = new Rules(collisionRules, turnPolicy, roundPolicy, winCondition,
         advanceTurn,
-        advanceRound, strikePolicy, "HighestScoreComparator", "VelocityStaticChecker", List.of());
+        advanceRound, strikePolicy, "HighestScoreComparator", Map.of());
 
     builderDirector.constructRules(List.of(rules));
   }
@@ -236,7 +236,7 @@ public class AuthoringController {
         new Position(posMap.get(background).get(0), posMap.get(background).get(1)),
         shapeName, new Dimension(background.getLayoutBounds().getWidth(),
         background.getLayoutBounds().getHeight()), colorRgb, staticFriction, kineticFriction, inclineAngle,
-        imgPath, background.getRotate());
+        imgPath, background.getRotate(), false, false);
     gameObjectProperties.add(gameObjectProperty);
     collidableIdMap.put(background, gameObjectId);
     gameObjectId++;
@@ -254,7 +254,7 @@ public class AuthoringController {
         properties, Double.POSITIVE_INFINITY,
         new Position(50, 50),
         shapeName, new Dimension(20,
-        990), colorRgb, staticFriction, kineticFriction, inclineAngle, imgPath, 0);
+        990), colorRgb, staticFriction, kineticFriction, inclineAngle, imgPath, 0, false,false);
     gameObjectProperties.add(gameObjectProperty);
     collidableIdMap.put(wall1, gameObjectId);
     gameObjectId++;
@@ -264,7 +264,7 @@ public class AuthoringController {
         properties, Double.POSITIVE_INFINITY,
         new Position(1020, 50),
         shapeName, new Dimension(20,
-        990), colorRgb, staticFriction, kineticFriction, inclineAngle, imgPath, 0);
+        990), colorRgb, staticFriction, kineticFriction, inclineAngle, imgPath, 0, false,false);
     gameObjectProperties.add(gameObjectProperty);
     collidableIdMap.put(wall2, gameObjectId);
     gameObjectId++;
@@ -274,7 +274,7 @@ public class AuthoringController {
         properties, Double.POSITIVE_INFINITY,
         new Position(50, 50),
         shapeName, new Dimension(985,
-        20), colorRgb, staticFriction, kineticFriction, inclineAngle, imgPath, 0);
+        20), colorRgb, staticFriction, kineticFriction, inclineAngle, imgPath, 0, false,false);
     gameObjectProperties.add(gameObjectProperty);
     collidableIdMap.put(wall3, gameObjectId);
     gameObjectId++;
@@ -284,7 +284,7 @@ public class AuthoringController {
         properties, Double.POSITIVE_INFINITY,
         new Position(50, 1015),
         shapeName, new Dimension(985,
-        20), colorRgb, staticFriction, kineticFriction, inclineAngle, imgPath, 0);
+        20), colorRgb, staticFriction, kineticFriction, inclineAngle, imgPath, 0, false,false);
     gameObjectProperties.add(gameObjectProperty);
     collidableIdMap.put(wall4, gameObjectId);
     gameObjectId++;
@@ -320,14 +320,14 @@ public class AuthoringController {
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(((Ellipse) shape).getRadiusX() * shape.getScaleX(),
                 ((Ellipse) shape).getRadiusY() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, inclineAngle, imgPath, shape.getRotate());
+            colorRgb, 0.0, 0.0, inclineAngle, imgPath, shape.getRotate(), false, false);
       } else {
         gameObjectProperty = new GameObjectProperties(gameObjectId,
             properties, mass,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(shape.getLayoutBounds().getWidth() * shape.getScaleX(),
                 shape.getLayoutBounds().getHeight() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, inclineAngle, imgPath, shape.getRotate());
+            colorRgb, 0.0, 0.0, inclineAngle, imgPath, shape.getRotate(), false, false);
       }
 
       gameObjectProperties.add(gameObjectProperty);
@@ -353,14 +353,14 @@ public class AuthoringController {
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(((Ellipse) shape).getRadiusX() * shape.getScaleX(),
                 ((Ellipse) shape).getRadiusY() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, inclineAngle, imgPath, shape.getRotate());
+            colorRgb, 0.0, 0.0, inclineAngle, imgPath, shape.getRotate(), false, false);
       } else {
         gameObjectProperty = new GameObjectProperties(gameObjectId,
             properties, 10,
             new Position(posMap.get(shape).get(0), posMap.get(shape).get(1)), shapeName,
             new Dimension(shape.getLayoutBounds().getWidth() * shape.getScaleX(),
                 shape.getLayoutBounds().getHeight() * shape.getScaleY()),
-            colorRgb, 0.0, 0.0, inclineAngle, imgPath, shape.getRotate());
+            colorRgb, 0.0, 0.0, inclineAngle, imgPath, shape.getRotate(), false, false);
       }
 
       gameObjectProperties.add(gameObjectProperty);

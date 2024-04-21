@@ -46,8 +46,13 @@ public class GameObject {
   private double myNextVelocityX;
   private double myNextVelocityY;
   private boolean myVisible;
+  private boolean inelastic;
+
+  private boolean phaser;
+
   private Strikeable strikeable;
   private Scoreable scoreable;
+  private Controllable controllable;
 
   /**
    * Initiates the GameObject
@@ -67,7 +72,7 @@ public class GameObject {
 
   public GameObject(int id, double mass, double x, double y,
       boolean visible, double staticMu, double kineticMu, double inclineAngle, double width, double height,
-      String shape) {
+      String shape, boolean inelastic, boolean phaser) {
     myId = id;
     myMass = mass;
     myX = x;
@@ -84,6 +89,8 @@ public class GameObject {
     myKineticMu = kineticMu;
     myInclineAngle = inclineAngle;
     gameObjectHistory = new Stack<>();
+    this.inelastic = inelastic;
+    this.phaser = phaser;
   }
 
   /**
@@ -102,6 +109,15 @@ public class GameObject {
    */
   public void addScoreable(Scoreable scoreable) {
     this.scoreable = scoreable;
+  }
+
+  /**
+   * Associates a Controllable behavior with the GameObject.
+   *
+   * @param controllable The Controllable behavior to be associated with the GameObject.
+   */
+  public void addControllable(Controllable controllable) {
+    this.controllable = controllable;
   }
 
   /**
@@ -125,6 +141,16 @@ public class GameObject {
   }
 
   /**
+   * Retrieves the Scoreable behavior associated with the GameObject, if any.
+   *
+   * @return An Optional containing the Scoreable behavior associated with the GameObject, or an
+   * empty Optional if no Scoreable behavior is associated.
+   */
+  public Optional<Controllable> getControllable() {
+    return Optional.ofNullable(controllable);
+  }
+
+  /**
    * Serializes the GameObject into an immutable GameObjectRecord
    *
    * @return GameObjectRecord, an immutable representation of the GameObject
@@ -133,7 +159,7 @@ public class GameObject {
   public GameObjectRecord toGameObjectRecord() {
     return new GameObjectRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible,
         myStaticMu, myKineticMu
-        , myInclineAngle, myWidth, myHeight);
+        , myInclineAngle, myWidth, myHeight, inelastic, phaser);
   }
 
   /**
@@ -279,6 +305,9 @@ public class GameObject {
     return myShape;
   }
 
+  protected boolean getinelastic() { return inelastic;}
+
+
   /**
    * Calculates and sets the next speeds of the GameObject based on the information provided by the
    * given Supplier function.
@@ -286,6 +315,7 @@ public class GameObject {
    * @param speedCalculator A Supplier function that provides information for calculating the next
    *                        speeds.
    */
+
 
   protected void calculateNextSpeeds(Supplier<List<Double>> speedCalculator) {
     List<Double> newSpeeds = speedCalculator.get();
@@ -311,6 +341,10 @@ public class GameObject {
 
   protected void toLastStaticStateGameObjects() {
     GameObjectRecord record = gameObjectHistory.peek();
+    assignValuesFromRecord(record);
+  }
+
+  private void assignValuesFromRecord(GameObjectRecord record) {
     myX = record.x();
     myY = record.y();
     myVelocityY = record.velocityY();
@@ -343,6 +377,18 @@ public class GameObject {
     myVelocityY = speedY;
   }
 
+  public void toStartingState() {
+    assignValuesFromRecord(gameObjectHistory.get(0));
+  }
+
+  public void moveControllableX(boolean positive) {
+    Optional<Controllable> controllable = getControllable();
+    controllable.ifPresent(value -> myX += value.moveX(positive));
+  }
+  public void moveControllableY(boolean positive) {
+    Optional<Controllable> controllable = getControllable();
+    controllable.ifPresent(value -> myY += value.moveY(positive));
+  }
 }
 
 

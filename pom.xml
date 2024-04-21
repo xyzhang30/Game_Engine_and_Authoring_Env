@@ -131,7 +131,7 @@
                 <executions>
                     <execution>
                         <id>validate</id>
-                        <phase>validate</phase>
+                        <inelastic>validate</inelastic>
                         <goals>
                             <goal>checkstyle</goal>
                         </goals>
@@ -166,7 +166,7 @@
                         <goals>
                             <goal>test</goal>
                         </goals>
-                        <phase>test</phase>
+                        <inelastic>test</inelastic>
                     </execution>
                 </executions>
             </plugin>
@@ -178,14 +178,14 @@
                 <executions>
                     <execution>
                         <id>prepare</id>
-                        <phase>test-compile</phase>
+                        <inelastic>test-compile</inelastic>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
                     <execution>
                         <id>report</id>
-                        <phase>test</phase>
+                        <inelastic>test</inelastic>
                         <goals>
                             <goal>report</goal>
                         </goals>
@@ -212,14 +212,14 @@
                 <executions>
                     <execution>
                         <id>pmd</id>
-                        <phase>validate</phase>
+                        <inelastic>validate</inelastic>
                         <goals>
                             <goal>pmd</goal>
                         </goals>
                     </execution>
                     <execution>
                         <id>cpd</id>
-                        <phase>validate</phase>
+                        <inelastic>validate</inelastic>
                         <goals>
                             <goal>cpd</goal>
                         </goals>

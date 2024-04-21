@@ -1,66 +1,118 @@
 package oogasalad.view.authoring_environment.panels;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.shape.Shape;
+import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
 import oogasalad.view.api.exception.MissingInteractionException;
 import oogasalad.view.api.exception.MissingNonControllableTypeException;
 import oogasalad.view.authoring_environment.Coordinate;
 import oogasalad.view.authoring_environment.NewAuthoringController;
 import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
 
+/**
+ * AuthoringProxy acts as an intermediary between the authoring environment and the authoring
+ * controller, keeping track of data such as interactions, game objects, policies, and commands
+ * necessary for creating JSON file for configuring a new game.
+ *
+ * @author Judy He
+ */
 public class AuthoringProxy {
+
   private final Map<String, Map<String, List<Double>>> conditionsCommands = new HashMap<>();
   private final Map<String, String> policies = new HashMap<>();
-  private final Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap = new HashMap<>();
+  private final Map<List<Integer>, Map<String, List<Double>>> interactionMap = new HashMap<>();
   private final Map<Shape, GameObjectAttributesContainer> gameObjectMap = new HashMap<>();
-  //TODO: transfer imageMap functionality to gameObjectMap
-  private final Map<Shape, String> imageMap = new HashMap<>();
-  //TODO: transfer shapePosition functionality to gameObjectMap
-  private final Map<Shape, Coordinate> shapePositionMap = new HashMap<>();
-  // TODO: make sure that this is actually following the Proxy pattern
+  private final Map<Integer, List<Integer>> playersMap = new HashMap<>();
   private String gameName;
   private String currentScreenTitle;
   private NewAuthoringController authoringController;
-  private int numPlayers;
+  private int numPlayers = 1;
 
-  public AuthoringProxy() {
-    initializeNumPlayers();
-  }
-
-  public void addShapeInteraction(List<Shape> shapes,
-      Map<InteractionType, List<Double>> interaction) {
+  public void addShapeInteraction(List<Integer> shapes,
+      Map<String, List<Double>> interaction) {
     interactionMap.put(shapes, interaction);
   }
 
-  public void addNoParamPolicies(String type, String command){
-    policies.put(type, command);
+  public Map<Integer, List<Integer>> getPlayers() {
+    return playersMap;
   }
 
-  public void addConditionsCommandsWithParam(String type, String commandName, List<Double> params){
-    if (!conditionsCommands.containsKey(type)){
+  public void addNoParamPolicies(String type, String command) {
+    policies.put(type, command);
+    System.out.println("ALL POLICIES:" + policies);
+  }
+
+  public void addConditionsCommandsWithParam(String type, String commandName, List<Double> params) {
+    if (!conditionsCommands.containsKey(type)) {
       conditionsCommands.put(type, new HashMap<>());
     }
-    conditionsCommands.get(type).put(commandName,params);
+    conditionsCommands.get(type).put(commandName, params);
+    System.out.println("ALL CONDITIONS:" + conditionsCommands);
+  }
+
+  public void replaceConditionsCommandsWithParam(String type, String commandName,
+      List<Double> params) {
+    conditionsCommands.put(type, new HashMap<>());
+    conditionsCommands.get(type).put(commandName, params);
+    System.out.println("ALL CONDITIONS:" + conditionsCommands);
+  }
+
+  public void removeConditionsCommandsWithParam(String type, String commandName) {
+    if (!conditionsCommands.containsKey(type)) {
+      return;
+    }
+    conditionsCommands.get(type).remove(commandName);
+    System.out.println("ALL CONDITIONS:" + conditionsCommands);
   }
 
   public Map<Shape, GameObjectAttributesContainer> getGameObjectMap() {
     return gameObjectMap;
   }
 
-  public void addImage(Shape shape, String relativePath) {
-    imageMap.put(shape, relativePath);
-  }
-
-  public void addShapePosition(Shape shape, Coordinate position) {
-    shapePositionMap.put(shape, position);
+  public void setGameObject(Shape shape,
+      GameObjectAttributesContainer gameObjectAttributesContainer) {
+    this.gameObjectMap.put(shape, gameObjectAttributesContainer);
   }
 
   public void completeAuthoring()
       throws MissingInteractionException, MissingNonControllableTypeException {
-    authoringController.endAuthoring(gameName, interactionMap, gameObjectMap,
-        imageMap, shapePositionMap);
+//    authoringController.endAuthoring(gameName, gameObjectMap, interactionMap, conditionsCommands,
+//        policies, playersMap);
+    try {
+      authoringController.writeRules(conditionsCommands, policies);
+      authoringController.writePlayers(playersMap);
+      authoringController.writeVariables();
+      authoringController.writeGameObjects(gameObjectMap);
+      boolean saveGameSuccess = authoringController.submitGame();
+      if (saveGameSuccess) {
+        showSuceessMessage("Game successfully saved!");
+      } else {
+        showSaveGameError("Save game failed :(");
+      }
+    } catch (InCompleteRulesAuthoringException e){
+      showSaveGameError(e.getMessage());
+    }
+  }
+
+  private void showSaveGameError(String errorMessage) {
+    Alert alert = new Alert(AlertType.ERROR);
+    alert.setTitle("Save Game Error");
+    alert.setHeaderText(null);
+    alert.setContentText(errorMessage);
+    alert.showAndWait();
+  }
+
+  private void showSuceessMessage(String message){
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("Save Game Success");
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
   }
 
   public void updateScreen() {
@@ -92,16 +144,8 @@ public class AuthoringProxy {
     this.authoringController = authoringController;
   }
 
-  public Map<List<Shape>, Map<InteractionType, List<Double>>> getInteractionMap() {
+  public Map<List<Integer>, Map<String, List<Double>>> getInteractionMap() {
     return interactionMap;
-  }
-
-  public Map<Shape, String> getImageMap() {
-    return imageMap;
-  }
-
-  public Map<Shape, Coordinate> getShapePositionMap() {
-    return shapePositionMap;
   }
 
   public int getNumPlayers() {
@@ -116,7 +160,4 @@ public class AuthoringProxy {
     numPlayers--;
   }
 
-  public void initializeNumPlayers() {
-    numPlayers = 1;
-  }
 }

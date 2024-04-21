@@ -1,6 +1,7 @@
 package oogasalad.model.gameengine.rank;
 
 import java.util.Comparator;
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.api.PlayerRecord;
 
 /**
@@ -8,6 +9,8 @@ import oogasalad.model.api.PlayerRecord;
  *
  * @author Noah Loewy
  */
+
+@IsCommand(isCommand = false)
 public abstract class PlayerRecordComparator implements Comparator<PlayerRecord> {
 
   /**
