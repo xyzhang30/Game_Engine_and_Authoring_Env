@@ -2,6 +2,7 @@ package oogasalad.view.authoring_environment.panels;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.nio.Buffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,6 +17,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -43,6 +45,10 @@ public class InteractionPanel implements Panel {
 
   private final Set<Shape> clickedShapes = new HashSet<>();
   private TextField gameNameTextField;
+  private TextField infoTextField;
+  private CheckComboBox<String> checkComboBox;
+  private Map<String, List<Double>> tempSavedCommands = new HashMap<>();
+  private Button saveSelectionButton;
 
 
   public InteractionPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
@@ -58,32 +64,42 @@ public class InteractionPanel implements Panel {
 
   @Override
   public void createElements() {
+//    makeObjectIdTextField();
+
     Label label = new Label("ON COLLISION: ");
-    AnchorPane.setTopAnchor(label,50.0);
+    AnchorPane.setTopAnchor(label,100.0);
     AnchorPane.setLeftAnchor(label,350.0);
     List<String> availableCommands = getAvailableCommands();
 
-    CheckComboBox<String> checkComboBox = new CheckComboBox<>(
+    checkComboBox = new CheckComboBox<>(
         FXCollections.observableArrayList(availableCommands)
     );
     checkComboBox.setMaxWidth(300);
     containerPane.getChildren().addAll(label,checkComboBox);
     AnchorPane.setLeftAnchor(checkComboBox, 500.0);
-    AnchorPane.setTopAnchor(checkComboBox,50.0);
+    AnchorPane.setTopAnchor(checkComboBox,100.0);
     checkComboBox.setId("collision");
 
-    checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c -> {
-      while (c.next()) {
-        if (c.wasAdded()) {
-          for (String selectedCommand : c.getAddedSubList()) {
-            enterParam(selectedCommand);
-          }
-        }
-      }
-    });
+    saveSelectionButton = new Button("Save");
+    AnchorPane.setRightAnchor(saveSelectionButton, 0.0);
+    AnchorPane.setTopAnchor(saveSelectionButton, 150.0);
+    containerPane.getChildren().add(saveSelectionButton);
   }
 
-  private void enterParam(String newValue) {
+  private void makeObjectIdTextField() {
+    Label idsLabel = new Label("GAME OBJECTS: ");
+    AnchorPane.setLeftAnchor(idsLabel, 350.0);
+    AnchorPane.setTopAnchor(idsLabel, 50.0);
+
+    infoTextField = new TextField();
+    infoTextField.setEditable(false); //ids are populated automatically after user clicks on object, user can't edit it
+    infoTextField.setFocusTraversable(false);
+    AnchorPane.setLeftAnchor(infoTextField, 500.0);
+    AnchorPane.setTopAnchor(infoTextField, 50.0);
+    containerPane.getChildren().addAll(idsLabel, infoTextField);
+  }
+
+  private List<Double> enterParam(String newValue) {
     System.out.println("selected:" +REFLECTION_COMMAND_PACKAGE_PATH + "." + newValue);
     String classPath = REFLECTION_COMMAND_PACKAGE_PATH + "." + newValue;
     try {
@@ -92,10 +108,13 @@ public class InteractionPanel implements Panel {
       Constructor<?> constructor = clazz.getConstructor(List.class);
       if (constructor.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredConstructor(List.class).getAnnotation(ExpectedParamNumber.class).value() != 0){
         int numParam = constructor.getAnnotation(ExpectedParamNumber.class).value();
-        PolicyPanel.enterConstantParamsPopup(numParam, newValue);
+        return PolicyPanel.enterConstantParamsPopup(numParam, newValue);
+      } else {
+        return new ArrayList<>();
       }
     } catch (NoSuchMethodException | ClassNotFoundException e) {
       e.printStackTrace();
+      return null;
     }
   }
 
@@ -127,8 +146,30 @@ public class InteractionPanel implements Panel {
 
   @Override
   public void handleEvents() {
+    //set listener for the command dropdown
+    checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c -> {
+      while (c.next()) {
+        if (c.wasAdded()) {
+          for (String selectedCommand : c.getAddedSubList()) {
+            List<Double> params = enterParam(selectedCommand);
+            if (params != null){
+              tempSavedCommands.put(selectedCommand,params);
+            }
+          }
+        } if (c.wasRemoved()) {
+          for (String removedCommand : c.getRemoved()) {
+            tempSavedCommands.remove(removedCommand);
+          }
+        }
+        System.out.println("CURRENT SELECTION: "+tempSavedCommands);
+      }
+    });
 
+    //handle the save button for each collision pair
+    saveSelectionButton.setOnAction(e -> {
+      authoringProxy.addShapeInteraction(new ArrayList<>(), tempSavedCommands);
+      tempSavedCommands.clear();
+      checkComboBox.getCheckModel().clearChecks();
+    });
   }
-
-
 }
