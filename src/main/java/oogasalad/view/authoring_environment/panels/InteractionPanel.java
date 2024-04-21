@@ -92,7 +92,7 @@ public class InteractionPanel implements Panel {
       Constructor<?> constructor = clazz.getConstructor(List.class);
       if (constructor.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredConstructor(List.class).getAnnotation(ExpectedParamNumber.class).value() != 0){
         int numParam = constructor.getAnnotation(ExpectedParamNumber.class).value();
-        PolicyPanel.enterParamsPopup(numParam, newValue);
+        PolicyPanel.enterConstantParamsPopup(numParam, newValue);
       }
     } catch (NoSuchMethodException | ClassNotFoundException e) {
       e.printStackTrace();
