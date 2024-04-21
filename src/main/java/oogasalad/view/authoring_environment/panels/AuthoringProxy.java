@@ -25,11 +25,7 @@ public class AuthoringProxy {
   private String gameName;
   private String currentScreenTitle;
   private NewAuthoringController authoringController;
-  private int numPlayers;
-
-  public AuthoringProxy() {
-    initializeNumPlayers();
-  }
+  private int numPlayers = 1;
 
   public void addShapeInteraction(List<Shape> shapes,
       Map<InteractionType, List<Double>> interaction) {
@@ -140,7 +136,4 @@ public class AuthoringProxy {
     numPlayers--;
   }
 
-  public void initializeNumPlayers() {
-    numPlayers = 1;
-  }
 }

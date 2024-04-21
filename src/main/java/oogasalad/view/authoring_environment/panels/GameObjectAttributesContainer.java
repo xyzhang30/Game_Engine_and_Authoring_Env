@@ -7,6 +7,7 @@ import oogasalad.view.authoring_environment.Coordinate;
 public class GameObjectAttributesContainer {
   private int id;
   private String imagePath;
+  private List<Integer> color;
   private final List<String> properties = new ArrayList<>();
   private double elasticity;
   private double mass;
@@ -15,6 +16,7 @@ public class GameObjectAttributesContainer {
   private double kFriction;
   private double width;
   private double height;
+
 
   public int getId() {
     return id;
@@ -29,6 +31,13 @@ public class GameObjectAttributesContainer {
 
   public void setImagePath(String imagePath) {
     this.imagePath = imagePath;
+  }
+  public List<Integer> getColor() {
+    return color;
+  }
+
+  public void setColor(List<Integer> color) {
+    this.color = color;
   }
 
   public List<String> getProperties() {

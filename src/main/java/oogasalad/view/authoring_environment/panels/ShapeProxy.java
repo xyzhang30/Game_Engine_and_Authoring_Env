@@ -1,11 +1,13 @@
 package oogasalad.view.authoring_environment.panels;
 
 import java.util.List;
+import javafx.geometry.Bounds;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import oogasalad.view.authoring_environment.Coordinate;
 
 public class ShapeProxy {
   private Shape shape;
@@ -16,9 +18,8 @@ public class ShapeProxy {
     return shape;
   }
   public void setShape(Shape shape) {
-    gameObjectAttributesContainer = new GameObjectAttributesContainer();
-    if (shape != null) gameObjectAttributesContainer.setId(Integer.parseInt(shape.getId()));
     this.shape = shape;
+    resetGameObjectAttributesContainer();
   }
   public int getShapeCount() {
     return shapeCount;
@@ -30,6 +31,11 @@ public class ShapeProxy {
 
   public GameObjectAttributesContainer getGameObjectAttributesContainer() {
     return gameObjectAttributesContainer;
+  }
+
+  public void resetGameObjectAttributesContainer() {
+    gameObjectAttributesContainer = new GameObjectAttributesContainer();
+    if (shape != null) gameObjectAttributesContainer.setId(Integer.parseInt(shape.getId()));
   }
 
   public List<Shape> createTemplateShapes() {
@@ -61,5 +67,14 @@ public class ShapeProxy {
     return newShape;
   }
 
+  public void setFinalShapeDisplay() {
+    if (shape != null) {
+      gameObjectAttributesContainer.setWidth(shape.getLayoutBounds().getWidth());
+      gameObjectAttributesContainer.setHeight(shape.getLayoutBounds().getHeight());
+      Bounds boundsInScene = shape.localToScene(shape.getBoundsInLocal());
+      gameObjectAttributesContainer.setPosition(new Coordinate(boundsInScene.getCenterX(),
+          boundsInScene.getCenterY()));
+    }
+  }
 
 }
