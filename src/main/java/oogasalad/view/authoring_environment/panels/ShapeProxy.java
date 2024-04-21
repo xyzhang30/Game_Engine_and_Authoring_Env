@@ -2,7 +2,6 @@ package oogasalad.view.authoring_environment.panels;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.Stack;
 import javafx.geometry.Bounds;
 import javafx.scene.layout.AnchorPane;
@@ -12,8 +11,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import oogasalad.view.authoring_environment.Coordinate;
 
+/**
+ * The ShapeProxy class acts as a proxy for managing and manipulating shapes within the authoring
+ * environment. It maintains a stack of shapes, allowing for selection, duplication, and other shape
+ * manipulations.
+ *
+ * @author Judy He
+ */
 public class ShapeProxy {
-//  private Shape shape;
   private final Stack<Shape> shapeStack = new Stack<>(); // Top of stack = most recently selected shape
   private GameObjectAttributesContainer gameObjectAttributesContainer = new GameObjectAttributesContainer();
   private int shapeCount;
