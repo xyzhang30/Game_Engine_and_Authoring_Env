@@ -43,8 +43,8 @@ public class ImagePanel implements Panel {
     imageButton.setOnAction(event -> {
       String relativePath = chooseImage();
       if (relativePath != null && shapeProxy.getShape() != null) {
-        authoringProxy.addImage(shapeProxy.getShape(), relativePath);
-        System.out.println(relativePath);
+        shapeProxy.getGameObjectAttributesContainer().setColor(null);
+        shapeProxy.getGameObjectAttributesContainer().setImagePath(relativePath);
         String imgPath = Paths.get(relativePath).toUri().toString();
         shapeProxy.getShape().setFill(new ImagePattern(new Image(imgPath)));
       }

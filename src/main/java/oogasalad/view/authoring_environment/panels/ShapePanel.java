@@ -519,7 +519,9 @@ public class ShapePanel implements Panel {
       if (gameObjectType == null || shapeProxy.getShape() == null) return;
 
       clearFields();
-      shapeProxy.resetGameObjectAttributesContainer();
+      if (oldVal != null) {
+        shapeProxy.getGameObjectAttributesContainer().getProperties().remove(oldVal.toString().toLowerCase());
+      }
       shapeProxy.getGameObjectAttributesContainer().getProperties().add(gameObjectType.toString().toLowerCase());
       updateSelectionOptions(gameObjectType);
 
@@ -572,6 +574,7 @@ public class ShapePanel implements Panel {
     collidableTypeDropDown.valueProperty().addListener((obs, oldVal, collidableType) -> {
       if (collidableType == null) return;
 
+      shapeProxy.getGameObjectAttributesContainer().getProperties().remove(oldVal);
       shapeProxy.getGameObjectAttributesContainer().getProperties().add(collidableType.toLowerCase());
 
       if (collidableType.equals("NON-CONTROLLABLE")) {
