@@ -189,7 +189,8 @@
       "properties": [
         "visible",
         "collidable",
-        "strikeable"
+        "strikeable",
+        "scoreable"
       ],
       "mass": 0.04,
       "position": {
