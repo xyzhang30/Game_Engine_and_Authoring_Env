@@ -161,6 +161,7 @@ public class ShapePanel implements Panel {
   }
 
   private void setShapeOnClick(Shape shape) {
+    shapeProxy.setFinalShapeDisplay();
     authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
     shapeProxy.setShape(shape);
     gameObjectTypeDropdown.valueProperty().setValue(null);

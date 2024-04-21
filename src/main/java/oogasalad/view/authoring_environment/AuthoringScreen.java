@@ -137,6 +137,7 @@ public class AuthoringScreen {
     finishButton.setId("finishButton");
     finishButton.setPrefSize(100, 50);
     finishButton.setOnMouseClicked(event -> {
+      shapeProxy.setFinalShapeDisplay();
       authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
       authoringProxy.completeAuthoring();
     });
