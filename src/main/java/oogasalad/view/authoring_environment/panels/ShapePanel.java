@@ -122,53 +122,24 @@ public class ShapePanel implements Panel {
     duplicateShape.setStroke(originalShape.getStroke());
     duplicateShape.setStrokeWidth(originalShape.getStrokeWidth());
     duplicateShape.setId(String.valueOf(shapeProxy.getShapeCount())); // Update ID to next available
-    shapeProxy.setShapeCount(shapeProxy.getShapeCount() + 1);  // Increment shape count
+    shapeProxy.setShapeCount(shapeProxy.getShapeCount()+1);  // Increment shape count
 
-    // Add event handlers if not already handled
     handleShapeEvents(duplicateShape);
 
-    // Add duplicate to the pane
     containerPane.getChildren().add(duplicateShape);
 
-    // Optionally, manage the original shape's location or properties
-    moveShapeToCanvas(originalShape, event); // Ensure this is intended for the original
+    moveShapeToCanvas(originalShape, event);
   }
 
+
   private void moveShapeToCanvas(Shape shape, MouseEvent event) {
-    System.out.println("Moving shape " + shape.getId() + " to canvas.");
     if (shape.getParent() != null) {
       ((Pane) shape.getParent()).getChildren().remove(shape);
     }
     rootPane.getChildren().add(shape);
-    templateShapes.remove(shape); // Update template list
+    templateShapes.remove(shape);
     startPos = new Coordinate(event.getSceneX(), event.getSceneY());
     translatePos = new Coordinate(shape.getTranslateX(), shape.getTranslateY());
-    System.out.println("Shape moved: " + shape.getId());
-
-    // After moving shape to canvas, replicate the template shape of the same type
-    try {
-      replicateTemplateShape(shape.getClass());
-      System.out.println("Replicated new template shape of type: " + shape.getClass().getSimpleName());
-    } catch (ReflectiveOperationException e) {
-      System.out.println("Error replicating template shape: " + e.getMessage());
-      e.printStackTrace();
-    }
-  }
-
-  // Adding new method to replicate only the needed shape type
-  private void replicateTemplateShape(Class<? extends Shape> shapeClass) throws ReflectiveOperationException {
-    Shape newShape = shapeClass.getDeclaredConstructor().newInstance();
-    newShape.setFill(Color.BLACK); // Default fill, customize as needed
-    newShape.setStroke(Color.BLACK); // Default stroke, customize as needed
-    newShape.setStrokeWidth(1); // Default stroke width, customize as needed
-
-    // Setup new shape with necessary handlers and properties
-    handleShapeEvents(newShape);
-    newShape.setId("TemplateShape" + templateShapes.size()); // Example of setting a dynamic ID
-
-    // Adding to containerPane to be selectable again
-    containerPane.getChildren().add(newShape);
-    templateShapes.add(newShape); // Maintaining the list of template shapes
   }
 
   private void setShapeOnCompleteDrag(Shape shape, MouseEvent event) {
