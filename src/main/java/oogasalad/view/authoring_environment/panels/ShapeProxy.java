@@ -1,6 +1,8 @@
 package oogasalad.view.authoring_environment.panels;
 
 import java.util.List;
+import java.util.Set;
+import java.util.Stack;
 import javafx.geometry.Bounds;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -10,15 +12,20 @@ import javafx.scene.shape.Shape;
 import oogasalad.view.authoring_environment.Coordinate;
 
 public class ShapeProxy {
-  private Shape shape;
+//  private Shape shape;
+  private final Stack<Shape> shapeStack = new Stack<>(); // Top of stack = most recently selected shape
   private GameObjectAttributesContainer gameObjectAttributesContainer = new GameObjectAttributesContainer();
   private int shapeCount;
 
   public Shape getShape() {
-    return shape;
+    if (shapeStack.isEmpty()) return null;
+    return shapeStack.peek();
   }
   public void setShape(Shape shape) {
-    this.shape = shape;
+    if (!shapeStack.isEmpty() && shapeStack.contains(shape)) {
+      removeFromShapeStack(shape);
+    }
+    addToShapeStack(shape);
     resetGameObjectAttributesContainer();
   }
   public int getShapeCount() {
@@ -35,7 +42,8 @@ public class ShapeProxy {
 
   public void resetGameObjectAttributesContainer() {
     gameObjectAttributesContainer = new GameObjectAttributesContainer();
-    if (shape != null) gameObjectAttributesContainer.setId(Integer.parseInt(shape.getId()));
+    if (shapeStack.peek() != null) gameObjectAttributesContainer.setId(Integer.parseInt(
+        shapeStack.peek().getId()));
   }
 
   public List<Shape> createTemplateShapes() {
@@ -43,12 +51,14 @@ public class ShapeProxy {
     rectangle.setId(String.valueOf(shapeCount++));
     AnchorPane.setRightAnchor(rectangle, 150.0);
     AnchorPane.setTopAnchor(rectangle, 300.0);
+    rectangle.setStrokeWidth(5);
 
     Ellipse ellipse = new Ellipse(30, 30);
     ellipse.setId(String.valueOf(shapeCount++));
     ellipse.setFill(Color.BLACK);
     AnchorPane.setRightAnchor(ellipse, 50.0);
     AnchorPane.setTopAnchor(ellipse, 300.0);
+    ellipse.setStrokeWidth(5);
 
     return List.of(rectangle, ellipse);
   }
@@ -68,12 +78,30 @@ public class ShapeProxy {
   }
 
   public void setFinalShapeDisplay() {
-    if (shape != null) {
-      gameObjectAttributesContainer.setWidth(shape.getLayoutBounds().getWidth());
-      gameObjectAttributesContainer.setHeight(shape.getLayoutBounds().getHeight());
-      Bounds boundsInScene = shape.localToScene(shape.getBoundsInLocal());
+    if (!shapeStack.isEmpty()) {
+      gameObjectAttributesContainer.setWidth(shapeStack.peek().getLayoutBounds().getWidth());
+      gameObjectAttributesContainer.setHeight(shapeStack.peek().getLayoutBounds().getHeight());
+      Bounds boundsInScene = shapeStack.peek().localToScene(shapeStack.peek().getBoundsInLocal());
       gameObjectAttributesContainer.setPosition(new Coordinate(boundsInScene.getCenterX(),
           boundsInScene.getCenterY()));
+    }
+  }
+
+  public Stack<Shape> getShapeStack() {
+    return shapeStack;
+  }
+  public void removeFromShapeStack(Shape shape) {
+    if (!shapeStack.isEmpty()) {
+      shapeStack.remove(shape);
+    }
+  }
+  public void addToShapeStack(Shape shape) {
+    shapeStack.push(shape);
+  }
+
+  public void updateShapeSelectionDisplay(int numberOfMultiSelectAllowed)  {
+    for (int i = 0; i < shapeStack.size() - numberOfMultiSelectAllowed; i++) {
+      shapeStack.get(i).setStroke(Color.TRANSPARENT);
     }
   }
 

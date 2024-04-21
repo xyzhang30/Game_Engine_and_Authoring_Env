@@ -161,18 +161,17 @@ public class ShapePanel implements Panel {
   }
 
   private void setShapeOnClick(Shape shape) {
-    shapeProxy.setFinalShapeDisplay();
-    authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
+    if (shapeProxy.getShape() != null) {
+      shapeProxy.setFinalShapeDisplay();
+      authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
+    }
+
     shapeProxy.setShape(shape);
     gameObjectTypeDropdown.valueProperty().setValue(null);
     clearFields();
     shape.setStroke(Color.YELLOW);
-    shape.setStrokeWidth(5);
-//    for (Shape s: authoringProxy.getGameObjectMap().keySet()) {
-//      if (s != shape) {
-//        shape.setStrokeWidth(0);
-//      }
-//    }
+    shapeProxy.updateShapeSelectionDisplay(1);
+
     updateSlider(shape.getScaleX(), shape.getScaleY(), shape.getRotate());
   }
 
