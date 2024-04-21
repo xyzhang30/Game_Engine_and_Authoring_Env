@@ -1,7 +1,6 @@
 package oogasalad.view.game_environment.scene_management;
 
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
@@ -10,6 +9,21 @@ import oogasalad.view.controller.GameController;
 import oogasalad.view.enums.SceneElementEventType;
 import oogasalad.view.enums.SceneType;
 
+/**
+ * Handles scene element events and interactions within a game environment.
+ * <p>
+ * The `SceneElementHandler` class is responsible for managing the behavior of various elements
+ * within a game scene. It interacts with the game controller and scene manager to facilitate
+ * different types of events such as scene changes, gameplay changes, and striking actions. The
+ * class uses the event type specified in the event parameter to determine the appropriate handler
+ * method to call for the provided scene element.
+ * <p>
+ * The class allows for the creation of different event handlers for pause, resume, save, load, and
+ * game start events. It also includes methods to handle power and angle adjustments for striking
+ * events, as well as key event handlers to modify the power and angle based on user input.
+ *
+ * @author Jordan Haytaian
+ */
 public class SceneElementHandler {
 
   private final GameController gameController;
@@ -20,12 +34,36 @@ public class SceneElementHandler {
   private Rectangle powerMeter;
   private Polygon angleArrow;
 
+  /**
+   * Constructs a new instance of the SceneElementHandler class.
+   * <p>
+   * This constructor initializes a SceneElementHandler object with the specified game controller
+   * and scene manager. The game controller is responsible for managing the game state, while the
+   * scene manager is responsible for managing different scenes within the game environment.
+   * Additionally, the constructor sets the angle increment value to a default of 5 degrees.
+   *
+   * @param gameController An instance of the `GameController` class, responsible for managing the
+   *                       game state.
+   * @param sceneManager   An instance of the `SceneManager` class, responsible for managing
+   *                       different scenes within the game environment.
+   */
   public SceneElementHandler(GameController gameController, SceneManager sceneManager) {
     this.gameController = gameController;
     this.sceneManager = sceneManager;
     angleIncrement = 5;
   }
 
+  /**
+   * Handles events for the specified node based on the given event type.
+   * <p>
+   * This method checks the event type of the given node and delegates the handling of the event to
+   * the appropriate method. It checks for different types of events such as scene change events,
+   * gameplay change events, and striking events, and calls the corresponding handler method for
+   * each event type.
+   *
+   * @param node  The scene element node to handle events for.
+   * @param event A string representing the type of event to handle.
+   */
   public void createElementHandler(Node node, String event) {
     checkForSceneChangeEvent(node, event);
     checkForGamePlayChangeEvent(node, event);
