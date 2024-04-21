@@ -161,12 +161,14 @@ public class SceneElementHandler {
   }
 
   private void handleStrike() {
-    double angle = angleArrow.getRotate();
+    double angle = -90 + angleArrow.getRotate();
+    System.out.println("angle " + angle);
     double fractionalVelocity = powerMeter.getHeight() / maxPower;
     gameController.hitPointScoringObject(fractionalVelocity, angle);
   }
 
   private void setAngleArrow(Node node) {
     angleArrow = (Polygon) node;
+    System.out.println(angleArrow.getRotate());
   }
 }
