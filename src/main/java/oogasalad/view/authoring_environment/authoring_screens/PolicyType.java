@@ -9,5 +9,7 @@ public enum PolicyType {
   @ChoiceType(singleChoice = true) @AvailableCommands(commandPackage = "condition") ROUND_POLICY,
   @ChoiceType(singleChoice = true) @AvailableCommands(commandPackage = "turn") TURN_POLICY,
   @ChoiceType(singleChoice = true) @AvailableCommands(commandPackage = "strike") STRIKE_POLICY,
-  @ChoiceType(singleChoice = true) @AvailableCommands(commandPackage = "condition") WIN_CONDITION
+  @ChoiceType(singleChoice = true) @AvailableCommands(commandPackage = "condition") WIN_CONDITION,
+  @ChoiceType(singleChoice = true) @AvailableCommands(commandPackage = "rank") RANK_COMPARATOR,
+  @ChoiceType(singleChoice = true) @AvailableCommands(commandPackage = "checkstatic") STATIC_CHECKER
 }

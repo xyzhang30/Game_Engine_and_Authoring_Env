@@ -1,5 +1,6 @@
 package oogasalad.model.gameengine.rank;
 
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.api.PlayerRecord;
 
 /**
@@ -7,6 +8,7 @@ import oogasalad.model.api.PlayerRecord;
  *
  * @author Noah Loewy
  */
+@IsCommand(isCommand = true)
 public class LowestScoreComparator extends PlayerRecordComparator {
 
   /**
