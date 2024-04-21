@@ -185,5 +185,17 @@ public class GameController {
   }
 
   public Object getGameEngine() {
-    return gameEngine;  }
+    return gameEngine;
+  }
+
+  public void moveX(boolean positive) {
+    if(animationManager.isRunning()) {
+      gameEngine.moveControllableX(positive);
+    }
+  }
+  public void moveY(boolean positive) {
+    if(animationManager.isRunning()) {
+      gameEngine.moveControllableY(positive);
+    }
+  }
 }

@@ -385,19 +385,22 @@
       "player_id": 1,
       "my_strikeable": [
         8
-      ]
+      ],
+      "my_controllable": []
     },
     {
       "player_id": 2,
       "my_strikeable": [
         14
-      ]
+      ],
+      "my_controllable": []
     },
     {
       "player_id": 3,
       "my_strikeable": [
         15
-      ]
+      ],
+      "my_controllable": []
     }
   ],
   "variables": [

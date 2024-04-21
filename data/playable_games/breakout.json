@@ -137,10 +137,29 @@
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
       "image" : ""
-    } ],
+    },
+    {
+      "gameobject_id" : 11,
+      "properties" : [ "collidable",  "controllable", "visible" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 557.0,
+        "y_position" : 1000.0
+      },
+      "shape" : "Rectangle",
+      "dimension" : {
+        "x_dimension" : 300,
+        "y_dimension" : 20.0
+      },
+      "color" : [ 0, 250, 0 ],
+      "staticFriction" : 0.0,
+      "kineticFriction" : 0.0,
+      "image" : ""
+    }],
   "players" : [ {
     "player_id" : 1,
-    "my_strikeable" : [10]
+    "my_strikeable" : [10],
+    "my_controllable": [11]
   }],
   "variables" : [ {
     "global" : {

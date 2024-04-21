@@ -210,11 +210,13 @@
     } ],
   "players" : [ {
     "player_id" : 1,
-    "my_strikeable" : [ 10, 11 ]
+    "my_strikeable" : [ 10, 11 ],
+    "my_controllable": []
   },
     {
       "player_id" : 2,
-      "my_strikeable" : [ 12, 13 ]
+      "my_strikeable" : [ 12, 13 ],
+      "my_controllable": []
     }],
   "variables" : [ {
     "global" : {

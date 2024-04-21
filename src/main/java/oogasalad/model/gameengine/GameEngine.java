@@ -8,6 +8,7 @@ import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.gameengine.command.Command;
+import oogasalad.model.gameengine.gameobject.Controllable;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
@@ -106,7 +107,20 @@ public class GameEngine implements ExternalGameEngine {
 
   }
 
-  /**
+  public void moveControllableX(boolean positive) {
+    int id =
+        playerContainer.getPlayer(playerContainer.getActive()).getControllable().asGameObject().getId();
+    gameObjects.getGameObject(id).moveControllableX(positive);
+  }
+
+
+  public void moveControllableY(boolean positive) {
+    int id =
+        playerContainer.getPlayer(playerContainer.getActive()).getControllable().asGameObject().getId();
+    gameObjects.getGameObject(id).moveControllableY(positive);
+  }
+
+/**
    * Advances the game to the next round by incrementing the round number, applying delayed scores
    * to players, and starting a new round.
    */

@@ -347,7 +347,8 @@
       "player_id": 1,
       "my_strikeable": [
         8
-      ]
+      ],
+      "my_controllable": []
     }
   ],
   "variables": [

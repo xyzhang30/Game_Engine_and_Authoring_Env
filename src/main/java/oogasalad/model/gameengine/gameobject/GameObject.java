@@ -52,6 +52,7 @@ public class GameObject {
 
   private Strikeable strikeable;
   private Scoreable scoreable;
+  private Controllable controllable;
 
   /**
    * Initiates the GameObject
@@ -111,6 +112,15 @@ public class GameObject {
   }
 
   /**
+   * Associates a Controllable behavior with the GameObject.
+   *
+   * @param controllable The Controllable behavior to be associated with the GameObject.
+   */
+  public void addControllable(Controllable controllable) {
+    this.controllable = controllable;
+  }
+
+  /**
    * Retrieves the Strikeable behavior associated with the GameObject, if any.
    *
    * @return An Optional containing the Strikeable behavior associated with the GameObject, or an
@@ -128,6 +138,16 @@ public class GameObject {
    */
   public Optional<Scoreable> getScoreable() {
     return Optional.ofNullable(scoreable);
+  }
+
+  /**
+   * Retrieves the Scoreable behavior associated with the GameObject, if any.
+   *
+   * @return An Optional containing the Scoreable behavior associated with the GameObject, or an
+   * empty Optional if no Scoreable behavior is associated.
+   */
+  public Optional<Controllable> getControllable() {
+    return Optional.ofNullable(controllable);
   }
 
   /**
@@ -359,6 +379,15 @@ public class GameObject {
 
   public void toStartingState() {
     assignValuesFromRecord(gameObjectHistory.get(0));
+  }
+
+  public void moveControllableX(boolean positive) {
+    Optional<Controllable> controllable = getControllable();
+    controllable.ifPresent(value -> myX += value.moveX(positive));
+  }
+  public void moveControllableY(boolean positive) {
+    Optional<Controllable> controllable = getControllable();
+    controllable.ifPresent(value -> myY += value.moveY(positive));
   }
 }
 
