@@ -36,7 +36,7 @@ public record RulesRecord(Map<Pair, List<Command>> collisionHandlers,
                           List<Command> advanceRound,
                           Map<Pair, PhysicsHandler> physicsMap, TurnPolicy turnPolicy,
                           StaticStateHandler staticStateHandler, StrikePolicy strikePolicy,
-                          PlayerRecordComparator rank, StaticChecker checker) {
+                          PlayerRecordComparator rank, List<StaticChecker> checker) {
 
 
 

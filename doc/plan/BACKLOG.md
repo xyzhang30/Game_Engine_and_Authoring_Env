@@ -136,8 +136,8 @@ public class LevelProgressionUI {
 1. **During gameplay, when the golf ball collides with a wall or other solid collidable object.**
 
 - **Actions:**
-    - The collision should cause the golf ball to bounce off the wall or paddle, simulating a
-      bounce.
+    - The collision should cause the golf ball to inelastic off the wall or paddle, simulating a
+      inelastic.
     - The wall or paddle remains unaffected, preserving its immutability within the game
       environment.
 

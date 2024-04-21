@@ -309,13 +309,16 @@
     }
   } ],
   "rules" : {
-    "collisions" : [
+    "collisions": [
       {
         "first_id": 1,
         "second_id": 6,
         "command": [
           {
-            "IncrementPointsCommand": [1,10]
+            "IncrementPointsCommand": [
+              1,
+              10
+            ]
           }
         ]
       },
@@ -324,7 +327,10 @@
         "second_id": 9,
         "command": [
           {
-            "IncrementPointsCommand": [1,1]
+            "IncrementPointsCommand": [
+              1,
+              1
+            ]
           }
         ]
       },
@@ -333,7 +339,10 @@
         "second_id": 8,
         "command": [
           {
-            "MultiplySpeedCommand": [1,3]
+            "MultiplySpeedCommand": [
+              1,
+              3
+            ]
           }
         ]
       },
@@ -342,7 +351,10 @@
         "second_id": 11,
         "command": [
           {
-            "MultiplySpeedCommand": [1, 3]
+            "MultiplySpeedCommand": [
+              1,
+              3
+            ]
           }
         ]
       },
@@ -351,7 +363,10 @@
         "second_id": 16,
         "command": [
           {
-            "IncrementPointsCommand": [1,-50]
+            "IncrementPointsCommand": [
+              1,
+              -50
+            ]
           },
           {
             "PlayerCompletedRoundCommand": []
@@ -359,22 +374,25 @@
         ]
       }
     ],
-    "turn_policy" : "StandardTurnPolicy",
-    "round_policy" : {
-      "AllPlayersCompletedRoundCondition" : [ ]
+    "turn_policy": "StandardTurnPolicy",
+    "round_policy": {
+      "AllPlayersCompletedRoundCondition": []
     },
-    "win_condition" : {
-      "NRoundsCompletedCondition" : [ 3.0 ]
+    "win_condition": {
+      "NRoundsCompletedCondition": [
+        3.0
+      ]
     },
-    "advance_turn" :  {
-    }
-    ,
-    "advance_round" : {
-      "AdvanceRoundCommand" : [ ]
+    "advance_turn": {
+    },
+    "advance_round": {
+      "AdvanceRoundCommand": []
     },
     "strike_policy": "DoNothingStrikePolicy",
     "rank_comparator": "HighestScoreComparator",
-    "static_checker_type": "VelocityStaticChecker",
-    "static_checker_params": []  }
+    "static_checker": {
+      "VelocityStaticChecker": []
+    }
+  }
 }
 

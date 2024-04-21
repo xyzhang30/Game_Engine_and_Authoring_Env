@@ -16,9 +16,9 @@ public class CommandExceptionTest {
   public void testMissingParamAdjustPointsCommand() {
     assertThrows(InvalidParameterNumberException.class, () -> {
       AddDelayedPointsCommand cmd = new AddDelayedPointsCommand(new ArrayList<>());
-      GameEngine gameEngine = new GameEngine("badParamNumberMiniGolf");
+      GameEngine gameEngine = new GameEngine("badParamNumberMiniGolfTest");
       cmd.execute(gameEngine);
-      GameLoaderModel loader = new GameLoaderModel("badParamNumberMiniGolf");
+      GameLoaderModel loader = new GameLoaderModel("badParamNumberMiniGolfTest");
       loader.prepareRound(1);
     });
   }

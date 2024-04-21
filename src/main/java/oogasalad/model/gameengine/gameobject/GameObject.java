@@ -46,6 +46,10 @@ public class GameObject {
   private double myNextVelocityX;
   private double myNextVelocityY;
   private boolean myVisible;
+  private boolean inelastic;
+
+  private boolean phaser;
+
   private Strikeable strikeable;
   private Scoreable scoreable;
 
@@ -67,7 +71,7 @@ public class GameObject {
 
   public GameObject(int id, double mass, double x, double y,
       boolean visible, double staticMu, double kineticMu, double inclineAngle, double width, double height,
-      String shape) {
+      String shape, boolean inelastic, boolean phaser) {
     myId = id;
     myMass = mass;
     myX = x;
@@ -84,6 +88,8 @@ public class GameObject {
     myKineticMu = kineticMu;
     myInclineAngle = inclineAngle;
     gameObjectHistory = new Stack<>();
+    this.inelastic = inelastic;
+    this.phaser = phaser;
   }
 
   /**
@@ -133,7 +139,7 @@ public class GameObject {
   public GameObjectRecord toGameObjectRecord() {
     return new GameObjectRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible,
         myStaticMu, myKineticMu
-        , myInclineAngle, myWidth, myHeight);
+        , myInclineAngle, myWidth, myHeight, inelastic, phaser);
   }
 
   /**
@@ -279,6 +285,9 @@ public class GameObject {
     return myShape;
   }
 
+  protected boolean getinelastic() { return inelastic;}
+
+
   /**
    * Calculates and sets the next speeds of the GameObject based on the information provided by the
    * given Supplier function.
@@ -286,6 +295,7 @@ public class GameObject {
    * @param speedCalculator A Supplier function that provides information for calculating the next
    *                        speeds.
    */
+
 
   protected void calculateNextSpeeds(Supplier<List<Double>> speedCalculator) {
     List<Double> newSpeeds = speedCalculator.get();

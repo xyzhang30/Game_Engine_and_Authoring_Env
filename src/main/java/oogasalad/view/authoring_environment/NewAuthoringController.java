@@ -188,7 +188,7 @@ public class NewAuthoringController {
 
     Rules rules = new Rules(collisionRules, turnPolicy, roundPolicy, winCondition,
         advanceTurn, advanceRound, "DoNothingStrikePolicy", "HighestScoreComparator",
-        "VelocityStaticChecker", List.of());
+        Map.of());
 
     builderDirector.constructRules(List.of(rules));
   }

@@ -484,6 +484,7 @@
     },
     "strike_policy": "DoNothingStrikePolicy",
     "rank_comparator": "IDComparator",
-    "static_checker_type": "VelocityStaticChecker",
-    "static_checker_params": []  }
+    "static_checker": {
+      "VelocityStaticChecker": []
+    }
 }
