@@ -82,7 +82,6 @@ public class SceneManager {
         root.getChildren().add(createSceneElements(transitionElementsPath));
       }
       case PAUSE -> {
-        //TODO: Make pause sheen the size of the gameboard
         if (!root.getChildren().contains(pauseElements)) {
           root.getChildren().add(pauseElements);
         }
