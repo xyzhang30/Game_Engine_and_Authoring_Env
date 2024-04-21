@@ -81,8 +81,10 @@ public class Player {
     }
   }
 
-  public void setControllable(Controllable controllable) {
+  public void setControllable(Controllable controllable, int xMovement, int yMovement) {
     myControllable = controllable;
+    myControllable.setMovement(xMovement, yMovement);
+
   }
 
   public Controllable getControllable() {

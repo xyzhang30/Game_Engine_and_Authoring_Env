@@ -122,7 +122,8 @@ public class GameLoaderModel extends GameLoader {
         Optional<Controllable> optionalControllable = gameObjectContainer.getGameObject(
             parserPlayer.myControllable().get(0)).getControllable();
         optionalControllable.ifPresent(controllable -> {
-          playerContainer.getPlayer(playerId).setControllable(controllable);
+          playerContainer.getPlayer(playerId).setControllable(controllable,
+              parserPlayer.myControllable().get(1), parserPlayer.myControllable().get(2));
         });
       }
     }
