@@ -110,17 +110,27 @@ public class ShapePanel implements Panel {
       e.printStackTrace();
     }
   }
-  private void duplicateAndDragShape(Shape shape, MouseEvent event) throws ReflectiveOperationException {
-    System.out.println("Initiating Drag: " + shape);
+  private void duplicateAndDragShape(Shape originalShape, MouseEvent event) throws ReflectiveOperationException {
+    System.out.println("Initiating Drag: " + originalShape);
 
-    Shape duplicateShape = shape.getClass().getDeclaredConstructor().newInstance();
-    duplicateShape.setId(String.valueOf(shapeProxy.getShapeCount()));
-    shapeProxy.setShapeCount(shapeProxy.getShapeCount()+1);
+    // Duplicate shape with properties
+    Shape duplicateShape = originalShape.getClass().getDeclaredConstructor().newInstance();
+    duplicateShape.setFill(originalShape.getFill());
+    duplicateShape.setStroke(originalShape.getStroke());
+    duplicateShape.setStrokeWidth(originalShape.getStrokeWidth());
+    duplicateShape.setId(String.valueOf(shapeCount)); // Update ID to next available
+    shapeCount++;  // Increment shape count
+
+    // Add event handlers if not already handled
     handleShapeEvents(duplicateShape);
+
+    // Add duplicate to the pane
     containerPane.getChildren().add(duplicateShape);
 
-    moveShapeToCanvas(shape, event);
+    // Optionally, manage the original shape's location or properties
+    moveShapeToCanvas(originalShape, event); // Ensure this is intended for the original
   }
+
 
   private void moveShapeToCanvas(Shape shape, MouseEvent event) {
     if (shape.getParent() != null) {

@@ -51,4 +51,19 @@ public class ShapeProxy {
     return List.of(rectangle, ellipse);
   }
 
+  public Shape duplicateShape(Shape originalShape) {
+    Shape newShape = null;
+    try {
+      newShape = originalShape.getClass().getDeclaredConstructor().newInstance();
+      newShape.setFill(originalShape.getFill());
+      newShape.setStroke(originalShape.getStroke());
+      newShape.setStrokeWidth(originalShape.getStrokeWidth());
+      newShape.setId(String.valueOf(shapeCount++));
+    } catch (ReflectiveOperationException e) {
+      e.printStackTrace();
+    }
+    return newShape;
+  }
+
+
 }
