@@ -80,7 +80,7 @@ public class NewAuthoringController {
 //  }
 
   public void endAuthoring(String gameName,
-      Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
+      Map<List<Shape>, Map<String, List<Double>>> interactionMap,
       Map<Shape, GameObjectAttributesContainer> gameObjectMap, Map<Integer, List<Integer>> playersMap) {
     System.out.println(gameName);
     System.out.println(interactionMap.toString());
