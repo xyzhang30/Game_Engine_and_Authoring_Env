@@ -64,6 +64,7 @@ public class GameObjectContainer {
       boolean flag = true;
       for (GameObject go : myGameObjects.values()) {
         if (!checker.isStatic(go.toGameObjectRecord())){
+          System.out.println(go.getId());
           flag = false;
         }
       }
