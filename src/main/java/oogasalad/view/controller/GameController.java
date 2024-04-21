@@ -43,6 +43,8 @@ public class GameController {
     animationManager = new AnimationManager();
   }
 
+
+
   public Scene getScene() {
     return sceneManager.getScene();
   }
@@ -131,4 +133,7 @@ public class GameController {
       return null;
     }
   }
+
+  public Object getGameEngine() {
+    return gameEngine;  }
 }
