@@ -389,6 +389,13 @@ public class GameObject {
     Optional<Controllable> controllable = getControllable();
     controllable.ifPresent(value -> myY += value.moveY(positive));
   }
+
+  public void toStatic() {
+    myNextVelocityY = 0;
+    myVelocityY = 0;
+    myVelocityX = 0;
+    myNextVelocityX = 0;
+  }
 }
 
 
