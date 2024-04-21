@@ -13,7 +13,7 @@ import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
 public class AuthoringProxy {
   private final Map<String, Map<String, List<Double>>> conditionsCommands = new HashMap<>();
   private final Map<String, String> policies = new HashMap<>();
-  private final Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap = new HashMap<>();
+  private final Map<List<Shape>, Map<String, List<Double>>> interactionMap = new HashMap<>();
   private final Map<Shape, GameObjectAttributesContainer> gameObjectMap = new HashMap<>();
   //TODO: transfer imageMap functionality to gameObjectMap
   private final Map<Shape, String> imageMap = new HashMap<>();
@@ -30,7 +30,7 @@ public class AuthoringProxy {
   }
 
   public void addShapeInteraction(List<Shape> shapes,
-      Map<InteractionType, List<Double>> interaction) {
+      Map<String, List<Double>> interaction) {
     interactionMap.put(shapes, interaction);
   }
 
@@ -108,7 +108,7 @@ public class AuthoringProxy {
     this.authoringController = authoringController;
   }
 
-  public Map<List<Shape>, Map<InteractionType, List<Double>>> getInteractionMap() {
+  public Map<List<Shape>, Map<String, List<Double>>> getInteractionMap() {
     return interactionMap;
   }
 
