@@ -16,7 +16,7 @@ import oogasalad.view.authoring_environment.Coordinate;
  * environment. It maintains a stack of shapes, allowing for selection, duplication, and other shape
  * manipulations.
  *
- * @author Judy He
+ * @author Judy He, Doga Ozmeng
  */
 public class ShapeProxy {
   private final Stack<Shape> shapeStack = new Stack<>(); // Top of stack = most recently selected shape
