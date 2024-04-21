@@ -22,6 +22,8 @@ public class AnimationManager {
 
   /**
    * Starts the animation, runs until runGame returns false indicating that round is over
+   *
+   * @param controller used to request updates from model as animation runs
    */
   public void runAnimation(GameController controller) {
     animation.setCycleCount(Timeline.INDEFINITE);
@@ -33,11 +35,17 @@ public class AnimationManager {
     animation.play();
   }
 
-  public void pauseAnimation(){
+  /**
+   * Pause the animation
+   */
+  public void pauseAnimation() {
     animation.pause();
   }
 
-  public void resumeAnimation(){
+  /**
+   * Resume the animation
+   */
+  public void resumeAnimation() {
     animation.play();
   }
 }
