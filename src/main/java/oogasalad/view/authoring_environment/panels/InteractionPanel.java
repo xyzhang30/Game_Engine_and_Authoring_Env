@@ -172,6 +172,7 @@ public class InteractionPanel implements Panel {
       authoringProxy.addShapeInteraction(shapeProxy.getSelectedShapeIds(), tempSavedCommands);
       tempSavedCommands = new HashMap<>();
       checkComboBox.getCheckModel().clearChecks();
+      infoTextField.clear();
     });
   }
 }

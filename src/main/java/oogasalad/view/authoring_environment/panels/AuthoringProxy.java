@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.shape.Shape;
+import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
 import oogasalad.view.api.exception.MissingInteractionException;
 import oogasalad.view.api.exception.MissingNonControllableTypeException;
 import oogasalad.view.authoring_environment.Coordinate;
@@ -78,8 +81,38 @@ public class AuthoringProxy {
 
   public void completeAuthoring()
       throws MissingInteractionException, MissingNonControllableTypeException {
-    authoringController.endAuthoring(gameName, gameObjectMap, interactionMap, conditionsCommands,
-        policies, playersMap);
+//    authoringController.endAuthoring(gameName, gameObjectMap, interactionMap, conditionsCommands,
+//        policies, playersMap);
+    try {
+      authoringController.writeRules(conditionsCommands, policies);
+      authoringController.writePlayers(playersMap);
+      authoringController.writeVariables();
+      authoringController.writeGameObjects(gameObjectMap);
+      boolean saveGameSuccess = authoringController.submitGame();
+      if (saveGameSuccess) {
+        showSuceessMessage("Game successfully saved!");
+      } else {
+        showSaveGameError("Save game failed :(");
+      }
+    } catch (InCompleteRulesAuthoringException e){
+      showSaveGameError(e.getMessage());
+    }
+  }
+
+  private void showSaveGameError(String errorMessage) {
+    Alert alert = new Alert(AlertType.ERROR);
+    alert.setTitle("Save Game Error");
+    alert.setHeaderText(null);
+    alert.setContentText(errorMessage);
+    alert.showAndWait();
+  }
+
+  private void showSuceessMessage(String message){
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("Save Game Success");
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
   }
 
   public void updateScreen() {
