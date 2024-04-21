@@ -21,20 +21,18 @@ import oogasalad.view.controller.BuilderDirector;
 /**
  * Class to handle transitions between authoring environment scenes and communications with backend
  *
- * @author Jordan Haytaian, Doga Ozmen, Alisha Zhang
+ * @author Judy He, Jordan Haytaian, Doga Ozmen, Alisha Zhang
  */
 public class NewAuthoringController {
 
   private final Stage stage;
   private final AuthoringScreen authoringScreen = new AuthoringScreen();
-  //  private Rectangle background;
   private final BuilderDirector builderDirector = new BuilderDirector();
 
   public NewAuthoringController() {
     stage = new Stage();
     authoringScreen.getAuthoringProxy().setAuthoringController(this);
   }
-
   public void updateAuthoringScreen() {
     stage.setScene(authoringScreen.getScene());
     stage.show();
@@ -80,14 +78,15 @@ public class NewAuthoringController {
 //  }
 
   public void endAuthoring(String gameName,
-      Map<List<Shape>, Map<String, List<Double>>> interactionMap,
-      Map<Shape, GameObjectAttributesContainer> gameObjectMap, Map<Shape, String> imageMap,
-      Map<Shape, Coordinate> posMap) {
+                            Map<Shape, GameObjectAttributesContainer> gameObjectMap,
+                            Map<List<Integer>, Map<String, List<Double>>> interactionMap,
+                            Map<String, Map<String, List<Double>>> conditionsCommands,
+                            Map<String, String> policies,
+                            Map<Integer, List<Integer>> playersMap) {
     System.out.println(gameName);
-    System.out.println(interactionMap);
-    System.out.println(gameObjectMap);
-    System.out.println(imageMap);
-    System.out.println(posMap);
+    System.out.println(interactionMap.toString());
+    System.out.println(gameObjectMap.toString());
+    System.out.println(playersMap.toString());
 
 //    boolean saveGameSuccess = submitGame(gameName, interactionMap, controllables,
 //        nonControllableTypeMap, imageMap, posMap);

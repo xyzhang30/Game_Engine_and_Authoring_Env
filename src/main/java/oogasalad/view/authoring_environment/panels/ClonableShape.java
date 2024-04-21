@@ -1,5 +1,7 @@
 package oogasalad.view.authoring_environment.panels;
 
+import javafx.scene.shape.Rectangle;
+
 import javafx.scene.shape.Shape;
 
 public class ClonableShape extends Shape implements Cloneable {
