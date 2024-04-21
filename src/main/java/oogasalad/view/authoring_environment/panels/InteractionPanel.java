@@ -64,7 +64,7 @@ public class InteractionPanel implements Panel {
 
   @Override
   public void createElements() {
-//    makeObjectIdTextField();
+    makeObjectIdTextField();
 
     Label label = new Label("ON COLLISION: ");
     AnchorPane.setTopAnchor(label,100.0);
