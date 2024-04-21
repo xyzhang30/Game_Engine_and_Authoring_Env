@@ -185,10 +185,12 @@ public class GameController {
   }
 
   public Object getGameEngine() {
-    return gameEngine;  }
+    return gameEngine;
+  }
 
   public void moveX() {
-    if(animationManager.isRunning())
-    gameEngine.moveControllableX(11);
+    if(animationManager.isRunning()) {
+      gameEngine.moveControllableX(11);
+    }
   }
 }

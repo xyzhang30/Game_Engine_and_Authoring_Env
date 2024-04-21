@@ -384,6 +384,7 @@ public class GameObject {
   public void moveControllableX() {
     Optional<Controllable> controllable = getControllable();
     controllable.ifPresent(value -> myX += value.moveX());
+
   }
 }
 
