@@ -159,8 +159,9 @@
   "players" : [ {
     "player_id" : 1,
     "my_strikeable" : [10],
-    "my_controllable": [11]
+    "my_controllable": [ID, LEFT/RIGHT, UP/DOWN]
   }],
+
   "variables" : [ {
     "global" : {
       "max_turns" : 1,
