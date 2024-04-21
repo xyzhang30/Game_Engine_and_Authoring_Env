@@ -1,5 +1,10 @@
 package oogasalad.view.enums;
 
+/**
+ * Represents an event type; used to specify which type of handler should be added to nodes
+ *
+ * @author Jordan Haytaian
+ */
 public enum SceneElementEventType {
   START_MENU,
   START_AUTHORING,
