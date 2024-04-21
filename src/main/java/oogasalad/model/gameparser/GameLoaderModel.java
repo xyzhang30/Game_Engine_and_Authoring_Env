@@ -93,6 +93,7 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private void addPlayerStrikeables() {
+    System.out.println(gameData.getPlayers().size());
     for (ParserPlayer parserPlayer : gameData.getPlayers()) {
       int playerId = parserPlayer.playerId();
       List<Integer> playerStrikeableIds = parserPlayer.myStrikeable();
@@ -101,8 +102,8 @@ public class GameLoaderModel extends GameLoader {
         Optional<Strikeable> optionalStrikeable = gameObjectContainer.getGameObject(i)
             .getStrikeable();
         optionalStrikeable.ifPresent(playerStrikeableObjects::add);
-
       }
+      System.out.println(playerStrikeableObjects);
       playerContainer.getPlayer(playerId).addStrikeables(playerStrikeableObjects);
 
       List<Scoreable> playerScoreableObjects = new ArrayList<>();
@@ -112,12 +113,6 @@ public class GameLoaderModel extends GameLoader {
         optionalStrikeable.ifPresent(playerScoreableObjects::add);
       }
       playerContainer.getPlayer(playerId).addScoreables(playerScoreableObjects);
-      System.out.println(parserPlayer.myControllable());
-      System.out.println(parserPlayer.myControllable());
-      System.out.println(parserPlayer.myControllable());
-      System.out.println(parserPlayer.myControllable());
-      System.out.println(parserPlayer.myControllable());
-      System.out.println(parserPlayer.myControllable());
       if(!parserPlayer.myControllable().isEmpty()) {
         Optional<Controllable> optionalControllable = gameObjectContainer.getGameObject(
             parserPlayer.myControllable().get(0)).getControllable();

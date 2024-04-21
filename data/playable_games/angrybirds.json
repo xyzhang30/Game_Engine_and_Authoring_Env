@@ -208,8 +208,7 @@
       "image": ""
     },
     {
-      "gameobject_id": 8,
-      "inelastic": true,
+      "gameobject_id": 11,
       "properties": [
         "visible",
         "collidable"
@@ -217,8 +216,9 @@
       "mass": 1,
       "position": {
         "x_position": 650,
-        "y_position": 699
+        "y_position": 700
       },
+      "inelastic": true,
       "shape": "Rectangle",
       "dimension": {
         "x_dimension": 50,
@@ -390,12 +390,12 @@
         ]
       },
       {
-        "first_id": 8,
+        "first_id": 11,
         "second_id": 5,
         "command": [
           {
             "SetVisibleCommand": [
-              8,
+              11,
               0
             ]
           }
@@ -410,6 +410,11 @@
               5,
               0
             ]
+          },
+          {
+            "MoveToStartingStateCommand": [
+              5
+            ]
           }
         ]
       }
@@ -420,7 +425,7 @@
         5,
         6,
         7,
-        8
+        11
       ]
     },
     "win_condition": {
@@ -438,7 +443,7 @@
     "rank_comparator": "LowestScoreComparator",
     "static_checker": {
       "VelocityStaticChecker": [
-        5,6,7,8
+        5,6,7,11
       ]
     }
   }
