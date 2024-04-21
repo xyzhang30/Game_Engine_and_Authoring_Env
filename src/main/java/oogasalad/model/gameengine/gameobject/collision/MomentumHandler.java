@@ -19,11 +19,13 @@ public class MomentumHandler extends PhysicsHandler {
       double dt) {
     return () -> {
       if (c2.inelastic() != c1.inelastic() && c1.phaser()==c2.phaser()) {
-        return List.of(0.0,0.0);};
-        if (c2.mass() == Double.POSITIVE_INFINITY) {
+        return List.of(0.0,0.0);
+      }
+      if (c2.mass() == Double.POSITIVE_INFINITY) {
           if (c1.y() + c1.width() / 2 <= c2.y() + c1.width() / 2
               || c1.y() - c1.width() / 2
               >= c2.y() + c2.height() - c1.width() / 2) {
+
             return List.of(c1.velocityX(), -c1.velocityY());
           } else {
             return List.of(-c1.velocityX(), c1.velocityY());
