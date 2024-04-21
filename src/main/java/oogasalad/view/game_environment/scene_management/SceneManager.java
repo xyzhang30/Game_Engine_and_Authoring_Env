@@ -32,6 +32,7 @@ public class SceneManager {
   private GameStatBoard gameStatBoard;
   private Pane pauseElements;
   private GameBoard gameBoard;
+  private int currentRound;
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
   private final String gameManagementElementsPath = "data/scene_elements/gameManagementElements.xml";
@@ -61,6 +62,7 @@ public class SceneManager {
         root.getChildren().add(createSceneElements(menuSceneElementsPath));
       }
       case TRANSITION -> {
+        root.getChildren().clear();
       }
       case PAUSE -> {
         //TODO: Make pause sheen the size of the gameboard
@@ -98,12 +100,11 @@ public class SceneManager {
   public void update(GameRecord gameRecord) {
     compositeElement.update(gameRecord.gameObjectRecords());
     gameStatBoard.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
-    checkEndRound(gameRecord);
     root.requestFocus();
+    checkEndRound(gameRecord);
   }
 
-  public void makeGameScreen(GameController controller, CompositeElement compositeElement,
-      GameRecord gameRecord) {
+  public void makeGameScreen(CompositeElement compositeElement, GameRecord gameRecord) {
     this.compositeElement = compositeElement;
     pauseElements = createSceneElements(pausePath);
     addGameManagementElementsToGame(gameRecord);
@@ -113,6 +114,7 @@ public class SceneManager {
 
   private void addGameManagementElementsToGame(GameRecord gameRecord) {
     resetRoot();
+    currentRound = gameRecord.round();
     Pane sceneElements = createSceneElements(gameManagementElementsPath);
     gameStatBoard = new GameStatBoard(gameRecord.players(), gameRecord.turn(), gameRecord.round(),
         screenWidth, screenHeight);
@@ -130,13 +132,13 @@ public class SceneManager {
   }
 
 
-  //TODO: Refactor end round
   public void checkEndRound(GameRecord gameRecord) {
-//    if (gameRecord.round() != currentRound) {
-//      currentRound = gameRecord.round();
-//    }
-//    if (gameRecord.gameOver()) {
-//      //transition
-//    }
+    if (gameRecord.round() != currentRound) {
+      currentRound = gameRecord.round();
+      createNonGameScene(SceneType.TRANSITION);
+    }
+    if (gameRecord.gameOver()) {
+      //TODO:
+    }
   }
 }
