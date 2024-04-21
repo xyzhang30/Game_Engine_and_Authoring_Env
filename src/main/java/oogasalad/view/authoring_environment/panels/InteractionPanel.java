@@ -149,6 +149,7 @@ public class InteractionPanel implements Panel {
   public void handleEvents() {
     //set listener for the command dropdown
     checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c -> {
+      infoTextField.textProperty().setValue(shapeProxy.getSelectedShapeIds().toString());
       while (c.next()) {
         if (c.wasAdded()) {
           for (String selectedCommand : c.getAddedSubList()) {
