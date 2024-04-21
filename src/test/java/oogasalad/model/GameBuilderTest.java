@@ -46,7 +46,7 @@ public class GameBuilderTest {
 
     this.testBuilderDirector.constructCollidableObjects(List.of(co1, co2, co3));
 
-    ParserPlayer p1 = new ParserPlayer(1, List.of(2));
+    ParserPlayer p1 = new ParserPlayer(1, List.of(2), List.of());
 
     this.testBuilderDirector.constructPlayers(List.of(p1));
 
