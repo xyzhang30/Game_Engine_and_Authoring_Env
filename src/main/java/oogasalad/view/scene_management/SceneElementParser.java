@@ -1,4 +1,4 @@
-package oogasalad.view.game_environment.game_environment_scene;
+package oogasalad.view.scene_management;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,15 +20,34 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+/**
+ * Parses XML files for parameters necessary to create scene elements and JSON files for game titles
+ * to display accurate game options
+ *
+ * @author Jordan Haytaian
+ */
 public class SceneElementParser {
 
   private final String nodeTag = "node";
   private final String playableGameDir = "data/playable_games";
   private final String testFileIdentifier = "test";
 
+  /**
+   * Constructor
+   */
   public SceneElementParser() {
   }
 
+  /**
+   * Parses XML file for scene element parameters
+   *
+   * @param filePath xml file path
+   * @return for each element, a map from parameter name to value
+   * @throws ParserConfigurationException If a DocumentBuilder cannot be created which satisfies the
+   *                                      configuration requested.
+   * @throws SAXException                 If any XML parsing errors occur.
+   * @throws IOException                  If an I/O error occurs while reading the file.
+   */
   public List<Map<String, String>> getElementParametersFromFile(String filePath)
       throws ParserConfigurationException, SAXException, IOException {
     List<Map<String, String>> elementParameters = new ArrayList<>();
@@ -49,6 +68,17 @@ public class SceneElementParser {
     return elementParameters;
   }
 
+  /**
+   * Retrieves a list of game titles from the specified directory.
+   * <p>
+   * This method scans the directory specified by `playableGameDir` and collects all files that are
+   * not directories. It then filters out files that contain the specified `testFileIdentifier` in
+   * their names (case insensitive) and adds the file names, excluding their extensions, to a list
+   * of game titles. The method returns an observable list containing these game titles.
+   *
+   * @return An observable list of strings, where each string is the title of a game file in the
+   * directory, excluding the file extension.
+   */
   public ObservableList<String> getGameTitles() {
     Set<String> games = Stream.of(new File(playableGameDir).listFiles())
         .filter(file -> !file.isDirectory())
