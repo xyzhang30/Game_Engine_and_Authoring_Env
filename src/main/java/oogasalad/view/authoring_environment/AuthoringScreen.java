@@ -155,7 +155,7 @@ public class AuthoringScreen {
       if (selectedScreen != null) {
         authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
         resetScene();
-        shapeProxy.setShape(null);
+//        shapeProxy.setShape(null);
         setScene(selectedScreen);
         authoringProxy.setCurrentScreenTitle(selectedScreen);
         authoringProxy.updateScreen();

@@ -66,6 +66,8 @@ public class ShapePanel implements Panel {
     this.rootPane = rootPane;
     this.containerPane = containerPane;
     this.canvas = canvas;
+    // TODO: REMOVE HARD CODING
+    shapeProxy.setNumberOfMultiSelectAllowed(1);
     createElements();
     handleEvents();
   }
@@ -170,7 +172,7 @@ public class ShapePanel implements Panel {
     gameObjectTypeDropdown.valueProperty().setValue(null);
     clearFields();
     shape.setStroke(Color.YELLOW);
-    shapeProxy.updateShapeSelectionDisplay(1);
+    shapeProxy.updateShapeSelectionDisplay();
 
     updateSlider(shape.getScaleX(), shape.getScaleY(), shape.getRotate());
   }

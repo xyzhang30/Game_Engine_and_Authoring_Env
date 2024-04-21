@@ -1,5 +1,6 @@
 package oogasalad.view.authoring_environment.panels;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
@@ -16,13 +17,14 @@ public class ShapeProxy {
   private final Stack<Shape> shapeStack = new Stack<>(); // Top of stack = most recently selected shape
   private GameObjectAttributesContainer gameObjectAttributesContainer = new GameObjectAttributesContainer();
   private int shapeCount;
+  private int numberOfMultiSelectAllowed = 1;
 
   public Shape getShape() {
     if (shapeStack.isEmpty()) return null;
     return shapeStack.peek();
   }
   public void setShape(Shape shape) {
-    if (!shapeStack.isEmpty() && shapeStack.contains(shape)) {
+    if (shape != null && !shapeStack.isEmpty() && shapeStack.contains(shape)) {
       removeFromShapeStack(shape);
     }
     addToShapeStack(shape);
@@ -99,10 +101,26 @@ public class ShapeProxy {
     shapeStack.push(shape);
   }
 
-  public void updateShapeSelectionDisplay(int numberOfMultiSelectAllowed)  {
+  public void updateShapeSelectionDisplay()  {
     for (int i = 0; i < shapeStack.size() - numberOfMultiSelectAllowed; i++) {
       shapeStack.get(i).setStroke(Color.TRANSPARENT);
     }
+  }
+
+  public int getNumberOfMultiSelectAllowed() {
+    return numberOfMultiSelectAllowed;
+  }
+
+  public void setNumberOfMultiSelectAllowed(int numberOfMultiSelectAllowed) {
+    this.numberOfMultiSelectAllowed = numberOfMultiSelectAllowed;
+  }
+
+  public List<Integer> getSelectedShapeIds() {
+    List<Integer> selectedShapesIds = new ArrayList<>();
+    for (int i = shapeStack.size() - 1 ; i >= shapeStack.size() - numberOfMultiSelectAllowed; i--) {
+      selectedShapesIds.add(Integer.valueOf(shapeStack.get(i).getId()));
+    }
+    return selectedShapesIds;
   }
 
 }
