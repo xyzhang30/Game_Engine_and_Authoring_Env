@@ -140,7 +140,7 @@
       "image" : ""
     }, {
       "gameobject_id" : 10,
-      "properties" : [ "collidable",  "strikeable", "scoreable" ,"visible" ],
+      "properties" : [ "collidable",  "strikeable", "scoreable","visible" ],
       "mass" : 10.0,
       "position" : {
         "x_position" : 400.0,
@@ -157,7 +157,7 @@
       "image" : ""
     }, {
       "gameobject_id" : 11,
-      "properties" : [ "collidable",  "strikeable",  "scoreable", "visible" ],
+      "properties" : [ "collidable",  "strikeable","scoreable", "visible" ],
       "mass" : 10.0,
       "position" : {
         "x_position" : 500.0,
@@ -174,7 +174,7 @@
       "image" : ""
     }, {
       "gameobject_id" : 12,
-      "properties" : [ "collidable",  "strikeable", "scoreable", "visible" ],
+      "properties" : [ "collidable",  "strikeable", "scoreable","visible" ],
       "mass" : 10.0,
       "position" : {
         "x_position" : 600,
@@ -192,7 +192,7 @@
     },
     {
       "gameobject_id" : 13,
-      "properties" : [ "collidable",  "strikeable", "scoreable", "visible" ],
+      "properties" : [ "collidable",  "strikeable", "scoreable","visible" ],
       "mass" : 10.0,
       "position" : {
         "x_position" : 700.0,
