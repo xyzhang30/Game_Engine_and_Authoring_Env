@@ -36,6 +36,7 @@ public class SceneManager {
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
   private final String gameManagementElementsPath = "data/scene_elements/gameManagementElements.xml";
+  private final String transitionElementsPath = "data/scene_elements/transitionElements.xml";
   private final String pausePath = "data/scene_elements/pauseElements.xml";
 
 
@@ -62,7 +63,8 @@ public class SceneManager {
         root.getChildren().add(createSceneElements(menuSceneElementsPath));
       }
       case TRANSITION -> {
-        root.getChildren().clear();
+        resetRoot();
+        root.getChildren().add(createSceneElements(transitionElementsPath));
       }
       case PAUSE -> {
         //TODO: Make pause sheen the size of the gameboard
