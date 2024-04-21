@@ -91,6 +91,10 @@ public class SceneManager {
     return scene;
   }
 
+  public Pane getRoot() {
+    return root;
+  }
+
   public void update(GameRecord gameRecord) {
     compositeElement.update(gameRecord.gameObjectRecords());
     gameStatBoard.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());

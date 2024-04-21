@@ -3,6 +3,7 @@ package oogasalad.view.game_environment.scene_management;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import oogasalad.view.controller.GameController;
@@ -39,6 +40,12 @@ public class SceneElementHandler {
       case RESUME -> {
         createResumeHandler(node);
       }
+      case SAVE -> {
+        createSaveHandler(node);
+      }
+      case LOAD -> {
+        createLoadHandler(node);
+      }
     }
   }
 
@@ -72,6 +79,18 @@ public class SceneElementHandler {
     }
   }
 
+  private void createSaveHandler(Node node) {
+    node.setOnMouseClicked((e -> {
+      sceneManager.getRoot().requestFocus();
+    }));
+  }
+
+  private void createLoadHandler(Node node) {
+    node.setOnMouseClicked((e -> {
+      sceneManager.getRoot().requestFocus();
+    }));
+  }
+
   private void createStartMenuHandler(Node node) {
     node.setOnMouseClicked(e -> sceneManager.createNonGameScene(SceneType.MENU));
   }
@@ -90,7 +109,10 @@ public class SceneElementHandler {
   }
 
   private void createPauseHandler(Node node) {
-    node.setOnMouseClicked((e -> gameController.pauseGame()));
+    node.setOnMouseClicked((e -> {
+      gameController.pauseGame();
+      sceneManager.getRoot().requestFocus();
+    }));
   }
 
   private void createResumeHandler(Node node) {
@@ -107,8 +129,8 @@ public class SceneElementHandler {
 
   private void createPowerHandler(Node node) {
     powerMeter = (Rectangle) node;
-    Scene scene = sceneManager.getScene();
-    scene.getRoot().setOnKeyPressed(e -> {
+    Pane root = sceneManager.getRoot();
+    root.setOnKeyPressed(e -> {
       switch (e.getCode()) {
         case UP: {
           increasePower();
