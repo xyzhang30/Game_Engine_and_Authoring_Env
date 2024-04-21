@@ -33,10 +33,10 @@ public class SceneElementFactory {
   private final String styleTag = "styling";
   private final String eventTag = "event";
 
-  public SceneElementFactory(Pane root, double screenWidth, double screenHeight,
-      SceneElementHandler sceneElementHandler) {
+  public SceneElementFactory(double screenWidth, double screenHeight,
+      SceneElementStyler sceneElementStyler, SceneElementHandler sceneElementHandler) {
     sceneElementParser = new SceneElementParser();
-    sceneElementStyler = new SceneElementStyler(root);
+    this.sceneElementStyler = sceneElementStyler;
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
     this.sceneElementHandler = sceneElementHandler;
