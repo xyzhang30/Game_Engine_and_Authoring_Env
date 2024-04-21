@@ -1,0 +1,78 @@
+{
+  "gameName" : "testNewAuthoringEnv",
+  "game_objects" : [ {
+    "gameobject_id" : 1,
+    "properties" : [ "collidable", "strikeable", "visible" ],
+    "mass" : 7.0,
+    "position" : {
+      "x_position" : 852.0999755859375,
+      "y_position" : 458.1000061035156
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 65.0,
+      "y_dimension" : 65.0
+    },
+    "color" : null,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : null,
+    "direction" : 0.0
+  }, {
+    "gameobject_id" : 0,
+    "properties" : [ "visible" ],
+    "mass" : 0.0,
+    "position" : {
+      "x_position" : 783.2999877929688,
+      "y_position" : 352.29998779296875
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 105.0,
+      "y_dimension" : 55.0
+    },
+    "color" : null,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : null,
+    "direction" : 0.0
+  } ],
+  "players" : [ {
+    "player_id" : 1,
+    "my_strikeable" : [ ]
+  } ],
+  "variables" : [ {
+    "global" : {
+      "max_turns" : 0,
+      "max_rounds" : 0
+    },
+    "player" : {
+      "strokes" : 0,
+      "finished" : 0
+    }
+  } ],
+  "rules" : {
+    "collisions" : [ ],
+    "turn_policy" : "SnakeTurnPolicy",
+    "round_policy" : {
+      "GameObjectsNotVisibleCondition" : [ 1.0 ]
+    },
+    "win_condition" : {
+      "AllPlayersCompletedRoundCondition" : [ ]
+    },
+    "advance_turn" : {
+      "AdvanceRoundCommand" : [ ],
+      "IncrementPointsCommand" : [ 3.0, 4.0 ]
+    },
+    "advance_round" : {
+      "LastStaticStateCommand" : [ ]
+    },
+    "strike_policy" : "DoNothingStrikePolicy",
+    "rank_comparator" : "IDComparator",
+    "static_checker" : {
+      "VelocityStaticChecker" : [ 1, 2 ]
+    }
+  }
+}
