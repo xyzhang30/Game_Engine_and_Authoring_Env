@@ -9,8 +9,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import oogasalad.model.api.PlayerRecord;
 
+/**
+ * Class to display and update game stats (players' scores, current round, current turn)
+ *
+ * @author Jordan Haytaian
+ */
 public class GameStatBoard {
-
+  private final SceneElementStyler sceneElementStyler;
   private final double screenWidth;
   private final double screenHeight;
   private final String playerText = "Player ";
@@ -25,17 +30,36 @@ public class GameStatBoard {
   private Text roundDisplay;
   private VBox statContainer;
 
+  /**
+   * Constructor creates score, turn, and round display on call
+   * @param players list current player records which contain score info
+   * @param turn id of player whose turn it is
+   * @param round current round
+   * @param screenWidth screen width to be used for ratio scaling elements
+   * @param screenHeight screen height to be used for ratio scaling elements
+   */
   public GameStatBoard(List<PlayerRecord> players, int turn, int round, double screenWidth,
-      double screenHeight) {
+      double screenHeight, SceneElementStyler sceneElementStyler) {
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
+    this.sceneElementStyler = sceneElementStyler;
     createGameStatBoardDisplay(players, turn, round);
   }
 
+  /**
+   * Box to hold score, turn, and round display
+   * @return VBox holding score, turn, and round display
+   */
   public VBox getContainer() {
     return statContainer;
   }
 
+  /**
+   * Updates the score, turn, and round display
+   * @param players list current player records which contain score info
+   * @param turn id of player whose turn it is
+   * @param round current round
+   */
   public void update(List<PlayerRecord> players, int turn, int round) {
     updateScore(players);
     updateTurn(turn);
@@ -56,7 +80,7 @@ public class GameStatBoard {
 
   private void createTurnDisplay(int turn) {
     turnDisplay = new Text(turnText + playerText + turn);
-    turnDisplay.getStyleClass().add(textStyleTag);
+    sceneElementStyler.style(turnDisplay, textStyleTag);
   }
 
   private void updateTurn(int turn) {
@@ -81,7 +105,7 @@ public class GameStatBoard {
     ObservableList<String> scores = createScoreListItems(players);
     scoreListDisplay = new ListView<>(scores);
     scoreListDisplay.setSelectionModel(null);
-    scoreListDisplay.getStyleClass().add(scoreListStyleTag);
+    sceneElementStyler.style(scoreListDisplay, scoreListStyleTag);
   }
 
   private ObservableList<String> createScoreListItems(List<PlayerRecord> players) {
