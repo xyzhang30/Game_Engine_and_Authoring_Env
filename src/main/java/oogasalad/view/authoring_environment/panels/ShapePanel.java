@@ -118,8 +118,8 @@ public class ShapePanel implements Panel {
     duplicateShape.setFill(originalShape.getFill());
     duplicateShape.setStroke(originalShape.getStroke());
     duplicateShape.setStrokeWidth(originalShape.getStrokeWidth());
-    duplicateShape.setId(String.valueOf(shapeCount)); // Update ID to next available
-    shapeCount++;  // Increment shape count
+    duplicateShape.setId(String.valueOf(shapeProxy.getShapeCount())); // Update ID to next available
+    shapeProxy.setShapeCount(shapeProxy.getShapeCount()+1);  // Increment shape count
 
     // Add event handlers if not already handled
     handleShapeEvents(duplicateShape);
@@ -163,6 +163,7 @@ public class ShapePanel implements Panel {
   private void setShapeOnClick(Shape shape) {
     authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
     shapeProxy.setShape(shape);
+    gameObjectTypeDropdown.valueProperty().setValue(null);
     clearFields();
     shape.setStroke(Color.YELLOW);
     shape.setStrokeWidth(5);
@@ -175,7 +176,6 @@ public class ShapePanel implements Panel {
   }
 
   private void clearFields() {
-    gameObjectTypeDropdown.valueProperty().setValue(null);
     collidableTypeDropDown.valueProperty().setValue(null);
     playerAssignmentListView.getSelectionModel().clearSelection();
     kFrictionTextField.clear();
@@ -517,6 +517,7 @@ public class ShapePanel implements Panel {
     gameObjectTypeDropdown.valueProperty().addListener((obs, oldVal, gameObjectType) -> {
       if (gameObjectType == null || shapeProxy.getShape() == null) return;
 
+      clearFields();
       shapeProxy.resetGameObjectAttributesContainer();
       shapeProxy.getGameObjectAttributesContainer().getProperties().add(gameObjectType.toString().toLowerCase());
       updateSelectionOptions(gameObjectType);
