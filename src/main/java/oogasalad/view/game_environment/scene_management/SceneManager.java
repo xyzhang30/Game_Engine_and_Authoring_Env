@@ -8,7 +8,6 @@ import javafx.scene.layout.Pane;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
 import oogasalad.view.controller.GameController;
-import oogasalad.view.game_environment.GameBoard;
 import oogasalad.view.visual_elements.CompositeElement;
 import oogasalad.view.enums.SceneType;
 import org.xml.sax.SAXException;
