@@ -11,6 +11,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.enums.SceneElementType;
 
+/**
+ * Creates elements from parameters received from sceneElementParser; outsources styling and event
+ * handling to sceneElementStyler and sceneElementHandler respectively
+ *
+ * @author Jordan Haytaian
+ */
 public class SceneElementFactory {
 
   private final SceneElementParser sceneElementParser;
@@ -33,6 +39,14 @@ public class SceneElementFactory {
   private final String styleTag = "styling";
   private final String eventTag = "event";
 
+  /**
+   * Constructor creates sceneElementParser to get parameters from xml files
+   *
+   * @param screenWidth         screen width used for ratio scaling elements
+   * @param screenHeight        screen height used for ratio scaling elements
+   * @param sceneElementStyler  styles elements using css stylesheet
+   * @param sceneElementHandler adds event handling to elements
+   */
   public SceneElementFactory(double screenWidth, double screenHeight,
       SceneElementStyler sceneElementStyler, SceneElementHandler sceneElementHandler) {
     sceneElementParser = new SceneElementParser();
@@ -42,6 +56,12 @@ public class SceneElementFactory {
     this.sceneElementHandler = sceneElementHandler;
   }
 
+  /**
+   * Creates scene elements based on type specified in parameter list; adds elements to a Pane
+   *
+   * @param parameterList maps parameter name to value
+   * @return container for all scene elements
+   */
   public Pane createSceneElements(List<Map<String, String>> parameterList) {
     AnchorPane sceneElements = new AnchorPane();
     sceneElements.setPrefWidth(screenWidth);
