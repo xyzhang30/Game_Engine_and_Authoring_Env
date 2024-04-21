@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -25,6 +26,7 @@ import oogasalad.model.annotations.AvailableCommands;
 import oogasalad.model.annotations.ChoiceType;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
+import oogasalad.model.annotations.VariableParamNumber;
 import oogasalad.view.authoring_environment.authoring_screens.PolicyType;
 import org.controlsfx.control.CheckComboBox;
 import java.lang.reflect.Constructor;
@@ -86,7 +88,7 @@ public class PolicyPanel implements Panel{
   private void createPolicySelectionDropdown(String policyNameLabel, boolean singleChoice, String commandPackage, int heightIdx) {
     Label label = new Label(policyNameLabel);
     AnchorPane.setTopAnchor(label,50.0*heightIdx);
-    AnchorPane.setLeftAnchor(label,350.0);
+    AnchorPane.setLeftAnchor(label,300.0);
     List<String> availableCommands = getAvailableCommands(commandPackage);
     String ruleTypeName = String.join("", policyNameLabel.toLowerCase().split(" "));
     ruleTypeName = ruleTypeName.substring(0, ruleTypeName.length() - 1);
@@ -151,21 +153,21 @@ public class PolicyPanel implements Panel{
       System.out.println("path: "+classPath);
       Class<?> clazz = Class.forName(classPath);
       Constructor<?> constructor;
-      if (!commandPackage.equals("strike") && !commandPackage.equals("turn")){
+      if (!commandPackage.equals("strike") && !commandPackage.equals("turn") && !commandPackage.equals("rank")){
         //commands that takes in arguments (or empty param list)
         constructor = clazz.getConstructor(List.class);
         if (constructor.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredConstructor(List.class).getAnnotation(ExpectedParamNumber.class).value() != 0){
           //prompt user to enter param
           int numParam = constructor.getAnnotation(ExpectedParamNumber.class).value();
           //get and return the params from popup
-          return enterParamsPopup(numParam, newValue);
-//          //saving with user-specified params
-//          saveSelectionWithParam(commandType, newValue, paramList);
+          return enterConstantParamsPopup(numParam, newValue);
+        } else if (constructor.getAnnotation(VariableParamNumber.class) != null && constructor.getAnnotation(
+            //for commands without a constant param number
+            VariableParamNumber.class).isVariable()) {
+          return enterCustomNumParamsPopup(newValue);
         } else {
           //command does not take in params -- return empty param list
           return new ArrayList<>();
-//          //save with empty param list
-//          saveSelectionWithParam(commandType, newValue, new ArrayList<Double>());
         }
       } else {
         //commands that don't take in arguments (turn policy and strike policy) -- call save directly (because no need to distinguish between adding a command and replacing a command based on whether it's a combobox or a checkcombobox)
@@ -193,7 +195,73 @@ public class PolicyPanel implements Panel{
 //    authoringProxy.addConditionsCommandsWithParam(commandType, commandName, params);
 //  }
 
-  public static List<Double> enterParamsPopup(int numParam, String item) {
+
+  private List<Double> enterCustomNumParamsPopup(String newValue) {
+    Stage popupStage = new Stage();
+    popupStage.setTitle("Specify Command Parameters");
+
+    List<Double> params = new ArrayList<>();
+
+    Label label = new Label(newValue + ": (please enter custom number of parameters, click save if no parameters needed)");
+    VBox vbox = new VBox(label);
+
+    List<TextArea> textAreas = new ArrayList<>();
+
+    Button addTextAreaButton = new Button("+");
+
+    addTextAreaButton.setOnAction(event -> {
+      TextArea newTextArea = new TextArea();
+      textAreas.add(newTextArea);
+      vbox.getChildren().add(newTextArea);
+    });
+
+    HBox buttonBox = new HBox(addTextAreaButton);
+    vbox.getChildren().add(buttonBox);
+
+    Button confirmSaveParam = new Button("save");
+    confirmSaveParam.setDisable(false); //allowed to save at any time because no restriction for param numbers
+
+    for (TextArea area : textAreas) {
+      //only allow users to enter digits because the custom param commands can only take in int
+      area.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+        String character = event.getCharacter();
+        if (!character.matches("[0-9]")) {
+          event.consume();
+        }
+      });
+    }
+
+    confirmSaveParam.setOnAction(e -> {
+      for (TextArea area : textAreas) {
+        String text = area.getText();
+        if (!text.isEmpty()) {
+          try {
+            double value = Double.parseDouble(text);
+            params.add(value);
+          } catch (NumberFormatException ex) {
+            // Handle invalid input
+            System.out.println("Invalid input: " + text);
+          }
+        }
+      }
+      popupStage.close();
+    });
+
+    vbox.getChildren().add(confirmSaveParam);
+
+    Scene scene = new Scene(vbox, 500, 300);
+    popupStage.setScene(scene);
+
+    popupStage.setResizable(false);
+    popupStage.showAndWait();
+
+    return params;
+
+  }
+
+
+
+  public static List<Double> enterConstantParamsPopup(int numParam, String item) {
     Stage popupStage = new Stage();
     popupStage.setTitle("Specify Command Parameters");
 
@@ -266,6 +334,8 @@ public class PolicyPanel implements Panel{
         if (name.endsWith(".java")) {
           try {
             String className = name.substring(0, name.length() - 5); // Remove ".java" extension
+            System.out.println("CLASS NAME: "+ className);
+
             Class<?> clazz = Class.forName(
                 REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + className);
             boolean isCommand = clazz.getDeclaredAnnotation(IsCommand.class).isCommand();
