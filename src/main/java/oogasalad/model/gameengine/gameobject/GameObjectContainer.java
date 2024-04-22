@@ -169,4 +169,9 @@ public class GameObjectContainer {
       go.toStatic();
     }
   }
+
+  public void teleport(int o1, int o2) {
+    getGameObject(o1).moveTo(getGameObject(o2));
+
+  }
 }
