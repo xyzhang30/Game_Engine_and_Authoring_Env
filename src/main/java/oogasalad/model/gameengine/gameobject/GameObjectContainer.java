@@ -15,8 +15,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * The GameObjectContainer class manages a collection of GameObjects within the game environment,
  * and provides efficient access to GameObjects to be accessed/manipulated via their unique IDs,
- * while also encapsulating the map from object IDs to GameObject instances, encapsulating the
- * implementation of the GameObjects.
+ * while also encapsulating the map from object IDs to GameObject instances.
  *
  * @author Noah Loewy
  */

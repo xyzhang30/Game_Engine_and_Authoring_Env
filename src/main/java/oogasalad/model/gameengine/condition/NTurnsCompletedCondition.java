@@ -42,8 +42,6 @@ public class NTurnsCompletedCondition implements Condition {
 
   @Override
   public boolean evaluate(GameEngine engine) {
-    return engine.getPlayerContainer()
-        .allPlayersCompletedNTurns((int) Math.round(arguments.get(0)));
+    return engine.getPlayerContainer().getPlayers().stream().allMatch(p -> p.getTurnsCompleted() >= (int) Math.round(arguments.get(0)));
   }
-
 }

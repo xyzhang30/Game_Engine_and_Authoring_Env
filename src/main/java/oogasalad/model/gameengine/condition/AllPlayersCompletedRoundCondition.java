@@ -5,6 +5,7 @@ import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.player.Player;
 
 /**
  * The AllPlayersCompletedRoundCondition evaluates if the current round has been completed by every
@@ -39,6 +40,6 @@ public class AllPlayersCompletedRoundCondition implements Condition {
 
   @Override
   public boolean evaluate(GameEngine engine) {
-    return engine.getPlayerContainer().allPlayersCompletedRound();
+    return engine.getPlayerContainer().getPlayers().stream().allMatch(Player::isRoundCompleted);
   }
 }

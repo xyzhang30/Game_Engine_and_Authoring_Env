@@ -35,7 +35,7 @@ public class StandardTurnPolicy implements TurnPolicy {
 
   @Override
   public int getNextTurn() {
-    int numPlayers = playerContainer.getNumPlayers();
+    int numPlayers = playerContainer.getPlayers().size();
     int turn = ((playerContainer.getActive()) % numPlayers) + 1;
     playerContainer.setActive(turn);
     while (playerContainer.getPlayer(turn).isRoundCompleted()) {

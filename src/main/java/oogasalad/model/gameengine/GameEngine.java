@@ -16,6 +16,7 @@ import oogasalad.model.gameengine.gameobject.CollisionDetector;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
+import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameparser.GameLoaderModel;
 import org.apache.logging.log4j.LogManager;
@@ -129,7 +130,7 @@ public class GameEngine implements ExternalGameEngine {
    */
   public void advanceRound() {
     round++;
-    playerContainer.applyDelayedScores();
+    playerContainer.getPlayers().forEach(Player::applyDelayedScore);
     startRound(loader);
   }
 
@@ -186,7 +187,7 @@ public class GameEngine implements ExternalGameEngine {
     round = newCurrentState.round();
     gameOver = newCurrentState.gameOver();
     gameObjects.getGameObjects().forEach(GameObject::toLastStaticStateGameObjects);
-    playerContainer.toLastStaticStatePlayers();
+    playerContainer.getPlayers().forEach(Player::toLastStaticStatePlayers);
   }
 
   /**
@@ -253,7 +254,7 @@ public class GameEngine implements ExternalGameEngine {
     playerContainer.getPlayer(1).updateActiveStrikeable();
     gameObjects.getGameObject(
         playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID()).setVisible(true);
-    playerContainer.startRound();
+    playerContainer.getPlayers().forEach(Player::startRound);
     addInitialStaticStateToHistory();
   }
 
@@ -267,7 +268,7 @@ public class GameEngine implements ExternalGameEngine {
   //adds the initial state of the game (before the round starts) to the game history
   private void addInitialStaticStateToHistory() {
     gameObjects.getGameObjects().forEach(GameObject::addStaticStateGameObject);
-    playerContainer.addPlayerHistory();
+    playerContainer.getPlayers().forEach(Player::addPlayerHistory);
     staticStateStack = new Stack<>();
     staticStateStack.push(
         new GameRecord(getListOfGameObjectRecords(), playerContainer.getSortedPlayerRecords(
@@ -286,7 +287,7 @@ public class GameEngine implements ExternalGameEngine {
   // calls functions to update the player-specific and GameObject-specific stacks
   private void updateHistory() {
     staticState = true;
-    playerContainer.addPlayerHistory();
+    playerContainer.getPlayers().forEach(Player::addPlayerHistory);
     gameObjects.getGameObjects().forEach(GameObject::addStaticStateGameObject);
     staticStateStack.push(
         new GameRecord(getListOfGameObjectRecords(),

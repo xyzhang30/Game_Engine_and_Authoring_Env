@@ -1,9 +1,14 @@
 package oogasalad.model.gameengine.command;
 
+import static java.util.Collections.sort;
+
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.rank.IDComparator;
 
 public class ConditionalAdvanceTurnCommand implements Command {
@@ -16,7 +21,10 @@ public class ConditionalAdvanceTurnCommand implements Command {
   @Override
   public void execute(GameEngine engine) {
     int active = engine.getPlayerContainer().getActive();
-    List<PlayerRecord> lasts = engine.getPlayerContainer().getLastStatics();
+    List<PlayerRecord> lasts = engine.getPlayerContainer().getPlayers().stream()
+        .map(Player::getLastPlayerRecord)
+        .sorted(Comparator.comparing(PlayerRecord::playerId))
+        .toList();
     List<PlayerRecord> currents =
         engine.getPlayerContainer().getSortedPlayerRecords(new IDComparator());
     if(!engine.getGameObjectContainer().getGameObject(engine.getPlayerContainer().getPlayer(active).getStrikeableID()).getVisible()){

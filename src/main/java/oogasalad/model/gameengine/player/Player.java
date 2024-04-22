@@ -153,7 +153,7 @@ public class Player {
    * @return The number of turns completed in the current round.
    */
 
-  protected int getTurnsCompleted() {
+  public int getTurnsCompleted() {
     return turnsCompleted;
   }
 
@@ -162,7 +162,7 @@ public class Player {
    * Applies delayed scores to the player's total score at the end of a turn.
    */
 
-  protected void applyDelayedScore() {
+  public void applyDelayedScore() {
     for (Scoreable o : myScoreables) {
       score += o.getTemporaryScore();
     }
@@ -188,7 +188,7 @@ public class Player {
     }
   }
 
-  protected PlayerRecord getLastPlayerRecord() {
+  public PlayerRecord getLastPlayerRecord() {
     return playerHistory.peek();
   }
 
@@ -196,7 +196,7 @@ public class Player {
    * Adds the current state of the gameObject (as a record) to the history of the player
    */
 
-  protected void addPlayerHistory() {
+  public void addPlayerHistory() {
     playerHistory.push(getPlayerRecord());
   }
 
@@ -204,7 +204,7 @@ public class Player {
    * Restores the previous state of the gameObject (as a record) to the history of the gameObject
    */
 
-  protected void toLastStaticStatePlayers() {
+  public void toLastStaticStatePlayers() {
     score = playerHistory.peek().score();
   }
 
