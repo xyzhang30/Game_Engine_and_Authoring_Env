@@ -379,6 +379,7 @@ public class GameObject {
 
   public void toStartingState() {
     assignValuesFromRecord(gameObjectHistory.get(0));
+
   }
 
   public void moveControllableX(boolean positive) {
@@ -395,6 +396,11 @@ public class GameObject {
     myVelocityY = 0;
     myVelocityX = 0;
     myNextVelocityX = 0;
+  }
+
+  protected void moveTo(GameObject gameObject) {
+    myX = gameObject.getX();
+    myY = gameObject.getY();
   }
 }
 

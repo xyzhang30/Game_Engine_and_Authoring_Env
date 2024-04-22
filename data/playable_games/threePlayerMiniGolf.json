@@ -181,7 +181,8 @@
       "properties": [
         "visible",
         "collidable",
-        "strikeable"
+        "strikeable",
+        "scoreable"
       ],
       "mass": 0.04,
       "position": {
@@ -332,7 +333,8 @@
       "properties": [
         "visible",
         "collidable",
-        "strikeable"
+        "strikeable",
+        "scoreable"
       ],
       "mass": 0.04,
       "position": {
@@ -358,7 +360,8 @@
       "properties": [
         "visible",
         "collidable",
-        "strikeable"
+        "strikeable",
+        "scoreable"
       ],
       "mass": 0.04,
       "position": {
@@ -418,11 +421,14 @@
   "rules": {
     "collisions": [
       {
-        "first_id": 8,
-        "second_id": 9,
+        "first_id": 9,
+        "second_id": 8,
         "command": [
           {
             "PlayerCompletedRoundCommand": []
+          },
+          {
+            "SetVisibleCommand": [8,0]
           }
         ]
       },
@@ -432,6 +438,21 @@
         "command": [
           {
             "PlayerCompletedRoundCommand": []
+          },
+          {
+            "SetVisibleCommand": [14,0]
+          }
+        ]
+      },
+      {
+        "first_id": 9,
+        "second_id": 15,
+        "command": [
+          {
+            "PlayerCompletedRoundCommand": []
+          },
+          {
+            "SetVisibleCommand": [15,0]
           }
         ]
       },
@@ -474,7 +495,7 @@
           },
           {
             "AddDelayedPointsCommand": [
-              14,
+              15,
               1
             ]
           }
@@ -503,3 +524,4 @@
     }
   }
 }
+

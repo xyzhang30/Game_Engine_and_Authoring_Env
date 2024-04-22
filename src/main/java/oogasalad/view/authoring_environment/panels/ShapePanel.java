@@ -253,7 +253,9 @@ public class ShapePanel implements Panel {
 
   private void updateSlider(double xScale, double yScale, double angle) {
     xSlider.setValue(xScale);
+    xSlider.setMax(10);
     ySlider.setValue(yScale);
+    ySlider.setMax(10);
     angleSlider.setValue(angle);
   }
 
