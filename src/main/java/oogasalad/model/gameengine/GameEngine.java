@@ -73,11 +73,15 @@ public class GameEngine implements ExternalGameEngine {
       switchToCorrectStaticState();
       updateHistory();
       staticState = true;
+      System.out.println(
+          playerContainer.getSortedPlayerRecords(rules.rank())
+          );
     } else {
       staticState = false;
     }
     gameObjects.getGameObject(
         playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID()).setVisible(true);
+
     return new GameRecord(gameObjects.toGameObjectRecords(),
         playerContainer.getSortedPlayerRecords(rules.rank()),
         round, turn, gameOver, staticState);

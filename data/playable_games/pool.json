@@ -357,7 +357,7 @@
         "second_id": 13,
         "command": [
           {
-            "SetVisibleCommand": [8,0]
+            "EightBallCommand": [8,0]
           }
         ]
       },
@@ -412,7 +412,7 @@
     ],
     "turn_policy": "StandardTurnPolicy",
     "round_policy": {
-      "NoneVisibleCondition": [8]
+      "GameObjectsNotVisibleCondition": [8]
     },
     "win_condition": {
       "NRoundsCompletedCondition": [

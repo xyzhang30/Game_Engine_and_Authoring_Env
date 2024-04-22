@@ -216,4 +216,8 @@ public class Player {
   }
 
 
+  public void applyGameResult(boolean wonGame) {
+    clearDelayedPoints();
+    score = wonGame? 1:0;
+  }
 }
