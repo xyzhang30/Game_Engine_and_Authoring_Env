@@ -16,7 +16,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -36,7 +35,6 @@ public class ShapePanel implements Panel {
   protected final StackPane canvas;
   protected final AnchorPane rootPane;
   protected final AnchorPane containerPane;
-  private final List<Shape> templateShapes = new ArrayList<>();
   private Coordinate startPos;
   private Coordinate translatePos;
   private Slider xSlider;
@@ -75,8 +73,8 @@ public class ShapePanel implements Panel {
   @Override
   public void createElements() {
     createSizeAndAngleSliders(); // strategy
-    templateShapes.addAll(shapeProxy.createTemplateShapes()); // strategy
-    containerPane.getChildren().addAll(templateShapes);
+    shapeProxy.createGameObjectTemplates(); // strategy
+    containerPane.getChildren().addAll(shapeProxy.getTemplates());
     createGameObjectTypeSelection();
     createSurfaceOptions();
     createCollidableOptions();
@@ -89,17 +87,30 @@ public class ShapePanel implements Panel {
 
   @Override
   public void handleEvents() {
-    for (Shape shape : templateShapes) {
-      handleShapeEvents(shape);
+    for (Shape shape : shapeProxy.getTemplates()) {
+      handleGameObjectTemplateEvents(shape);
     }
     handleGameObjectTypeSelection();
     handlePlayerAssignment();
     handleAddAndRemovePlayers();
   }
 
-  private void handleShapeEvents(Shape shape) {
+  private void handleGameObjectTemplateEvents(Shape shape) {
+    shape.setOnMouseClicked(event -> {
+      try {
+        Shape clonedShape = shapeProxy.setTemplateOnClick((Shape) event.getSource());
+        handleGameObjectEvents(clonedShape);
+        rootPane.getChildren().add(clonedShape);
+      } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
+               IllegalAccessException e) {
+        throw new RuntimeException(e);
+      }
+    });
+  }
+
+  private void handleGameObjectEvents(Shape shape) {
     shape.setOnMouseClicked(event -> setShapeOnClick((Shape) event.getSource()));
-    shape.setOnMousePressed(event -> handleMousePressed(event));
+    shape.setOnMousePressed(this::handleMousePressed);
     shape.setOnMouseDragged(event -> setShapeOnCompleteDrag((Shape) event.getSource(), event));
     shape.setOnMouseReleased(event -> setShapeOnRelease((Shape) event.getSource()));
   }
@@ -124,20 +135,18 @@ public class ShapePanel implements Panel {
     duplicateShape.setId(String.valueOf(shapeProxy.getShapeCount())); // Update ID to next available
     shapeProxy.setShapeCount(shapeProxy.getShapeCount()+1);  // Increment shape count
 
-    handleShapeEvents(duplicateShape);
+    handleGameObjectEvents(duplicateShape);
 
     containerPane.getChildren().add(duplicateShape);
 
     moveShapeToCanvas(originalShape, event);
   }
 
-
   private void moveShapeToCanvas(Shape shape, MouseEvent event) {
     if (shape.getParent() != null) {
       ((Pane) shape.getParent()).getChildren().remove(shape);
     }
     rootPane.getChildren().add(shape);
-    templateShapes.remove(shape);
     startPos = new Coordinate(event.getSceneX(), event.getSceneY());
     translatePos = new Coordinate(shape.getTranslateX(), shape.getTranslateY());
   }
@@ -159,7 +168,6 @@ public class ShapePanel implements Panel {
       shape.setVisible(false);
     }
   }
-
   private void setShapeOnClick(Shape shape) {
     if (shapeProxy.getShape() != null) {
       shapeProxy.setFinalShapeDisplay();
@@ -174,7 +182,6 @@ public class ShapePanel implements Panel {
 
     updateSlider(shape.getScaleX(), shape.getScaleY(), shape.getRotate());
   }
-
   private void clearFields() {
     collidableTypeDropDown.valueProperty().setValue(null);
     playerAssignmentListView.getSelectionModel().clearSelection();
@@ -190,31 +197,6 @@ public class ShapePanel implements Panel {
 
 
 
-
-  private void setShapeOnDrag(Shape shape, MouseEvent event)
-      throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-    // TODO: make a copy for keeping a template -> BETTER DESGIN?
-    System.out.println("DRAGGING");
-    // shape.getClass(
-
-    System.out.println(shape);
-    rootPane.getChildren().add(shape);
-    templateShapes.remove(shape);
-    shapeProxy.setShape(shape);
-    shape.setStroke(Color.GREEN);
-    //shape.setId(String.valueOf(authoringProxy.getControllables().size() + 1));
-
-    // JavaFX drag and drop -> drop target - example, label Reflection
-    Shape duplicateShape = shape.getClass().getDeclaredConstructor()
-        .newInstance(); // TODO: Handle exception
-
-    templateShapes.add(duplicateShape);
-    handleShapeEvents(duplicateShape);
-    containerPane.getChildren().add(duplicateShape);
-
-    startPos = new Coordinate(event.getSceneX(), event.getSceneY());
-    translatePos = new Coordinate(shape.getTranslateX(), shape.getTranslateY());
-  }
 
 
   private boolean isInAuthoringBox(Shape shape) {

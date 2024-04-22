@@ -1,10 +1,13 @@
 package oogasalad.view.authoring_environment.panels;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import javafx.geometry.Bounds;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
@@ -22,6 +25,8 @@ public class ShapeProxy {
   private final Stack<Shape> shapeStack = new Stack<>(); // Top of stack = most recently selected shape
   private GameObjectAttributesContainer gameObjectAttributesContainer = new GameObjectAttributesContainer();
   private int shapeCount;
+
+  private final List<Shape> templates = new ArrayList<>();
   private int numberOfMultiSelectAllowed = 1;
 
   public Shape getShape() {
@@ -48,21 +53,63 @@ public class ShapeProxy {
   }
 
 
-  public List<Shape> createTemplateShapes() {
+  public void createGameObjectTemplates() {
     Rectangle rectangle = new Rectangle(100, 50, Color.BLACK);
-    rectangle.setId(String.valueOf(shapeCount++));
     AnchorPane.setRightAnchor(rectangle, 150.0);
     AnchorPane.setTopAnchor(rectangle, 300.0);
     rectangle.setStrokeWidth(5);
 
     Ellipse ellipse = new Ellipse(30, 30);
-    ellipse.setId(String.valueOf(shapeCount++));
     ellipse.setFill(Color.BLACK);
     AnchorPane.setRightAnchor(ellipse, 50.0);
     AnchorPane.setTopAnchor(ellipse, 300.0);
     ellipse.setStrokeWidth(5);
 
-    return List.of(rectangle, ellipse);
+    templates.clear();
+    templates.addAll(List.of(rectangle, ellipse));
+
+  }
+
+  public Shape setTemplateOnClick(Shape template)
+      throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+
+    // Set stroke color of the template to pink
+    template.setStroke(Color.PINK);
+
+    // Reset the stroke color of other templates to transparent
+    templates.stream()
+        .filter(t -> t != template)
+        .forEach(t -> t.setStroke(Color.TRANSPARENT));
+
+    // Clone the template shape based on its type
+    Shape clonedShape = cloneShape(template);
+
+    // Set properties for the cloned shape
+    clonedShape.setFill(template.getFill());
+    clonedShape.setStrokeWidth(template.getStrokeWidth());
+    clonedShape.setStroke(Color.LIGHTGREEN);
+    clonedShape.setId(String.valueOf(shapeCount++)); // Update ID
+
+    // Anchor the cloned shape in the desired position
+    AnchorPane.setRightAnchor(clonedShape, 100.0);
+    AnchorPane.setBottomAnchor(clonedShape, 200.0);
+
+    // Set the shape
+    setShape(clonedShape);
+
+    return clonedShape;
+  }
+
+  private Shape cloneShape(Shape template) {
+    // Determine shape type and clone accordingly
+    String shapeType = template.getClass().getSimpleName();
+    return switch (shapeType) {
+      case "Rectangle" -> new Rectangle(template.getLayoutBounds().getWidth(),
+          template.getLayoutBounds().getHeight(), template.getFill());
+      case "Ellipse" -> new Ellipse(template.getLayoutBounds().getWidth() / 2,
+          template.getLayoutBounds().getHeight() / 2);
+      default -> throw new IllegalStateException("Unexpected value: " + shapeType);
+    };
   }
 
 
@@ -133,5 +180,9 @@ public class ShapeProxy {
       Bounds bounds = currentShape.localToScene(currentShape.getBoundsInLocal());
       gameObjectAttributesContainer.setPosition(new Coordinate(bounds.getMinX(), bounds.getMinY()));
     }
+  }
+
+  public List<Shape> getTemplates() {
+    return templates;
   }
 }
