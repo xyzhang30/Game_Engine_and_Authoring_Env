@@ -136,7 +136,7 @@
       "mass": 0.04,
       "position": {
         "x_position": 500,
-        "y_position": 800
+        "y_position": 600
       },
       "shape": "Circle",
       "dimension": {
@@ -295,8 +295,8 @@
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 20,
-        "y_dimension": 950
+        "x_dimension": 950,
+        "y_dimension": 100
       },
       "staticFriction": 0,
       "kineticFriction": 0,
@@ -314,7 +314,7 @@
       "my_strikeable": [
         7
       ],
-      "my_scoreables": [8,9,10],
+      "my_scoreable": [8,9,10],
       "my_controllable": []
     },
     {
@@ -322,7 +322,7 @@
       "my_strikeable": [
         7
       ],
-      "my_scoreables": [8,11,12],
+      "my_scoreable": [8,11,12],
       "my_controllable": []
     }
   ],
@@ -357,7 +357,7 @@
         "second_id": 13,
         "command": [
           {
-            "EightBallCommand": [8]
+            "SetVisibleCommand": [8,0]
           }
         ]
       },
@@ -365,6 +365,9 @@
         "first_id": 9,
         "second_id": 13,
         "command": [
+          {
+            "IncrementPointsCommand": [9,1]
+          },
           {
             "SetVisibleCommand": [9,0]
           }
@@ -375,6 +378,9 @@
         "second_id": 13,
         "command": [
           {
+            "AddDelayedPointsCommand": [10,1]
+          },
+          {
             "SetVisibleCommand": [10,0]
           }
         ]
@@ -383,6 +389,9 @@
         "first_id": 11,
         "second_id": 13,
         "command": [
+          {
+            "AddDelayedPointsCommand": [11,1]
+          },
           {
             "SetVisibleCommand": [11,0]
           }
@@ -393,6 +402,9 @@
         "second_id": 13,
         "command": [
           {
+            "AddDelayedPointsCommand": [12,1]
+          },
+          {
             "SetVisibleCommand": [12,0]
           }
         ]
@@ -400,11 +412,11 @@
     ],
     "turn_policy": "StandardTurnPolicy",
     "round_policy": {
-      "AbsoluteValueScoreCondition": [100]
+      "NoneVisibleCondition": [8]
     },
     "win_condition": {
-      "AbsoluteValueScoreCondition": [
-        100
+      "NRoundsCompletedCondition": [
+        1000
       ]
     },
     "advance_turn": {

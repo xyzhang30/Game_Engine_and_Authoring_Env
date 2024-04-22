@@ -395,6 +395,10 @@
       "my_strikeable": [
         5
       ],
+      "my_scoreable": [
+        5
+      ],
+
       "my_controllable": []
     }
   ],

@@ -10,26 +10,22 @@ import oogasalad.model.gameengine.GameEngine;
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
-public class AbsoluteValueScoreCondition implements Condition {
+public class NoneVisibleCondition implements Condition {
 
   private final List<Double> arguments;
 
   @ExpectedParamNumber(1)
-  public AbsoluteValueScoreCondition(List<Double> arguments) {
+  public NoneVisibleCondition(List<Double> arguments) {
     this.arguments = arguments;
   }
 
 
   @Override
   public boolean evaluate(GameEngine engine) {
-    double scoreThresh = arguments.get(0);
-    List<PlayerRecord> lst = engine.getPlayerContainer().getPlayerRecords();
-    for (PlayerRecord player : lst) {
-      if (player.score() == Math.abs(scoreThresh)) {
-        return true;
-      }
+    if(engine.getGameObjectContainer().getGameObject((int) Math.round(arguments.get(0))).getVisible()) {
+      return false;
     }
-    return false;
+    return true;
   }
 
 }

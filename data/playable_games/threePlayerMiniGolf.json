@@ -389,6 +389,9 @@
       "my_strikeable": [
         8
       ],
+      "my_scoreable": [
+        8
+      ],
       "my_controllable": []
     },
     {
@@ -396,11 +399,17 @@
       "my_strikeable": [
         14
       ],
+      "my_scoreable": [
+        14
+      ],
       "my_controllable": []
     },
     {
       "player_id": 3,
       "my_strikeable": [
+        15
+      ],
+      "my_scoreable": [
         15
       ],
       "my_controllable": []
