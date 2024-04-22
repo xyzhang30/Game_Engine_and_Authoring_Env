@@ -1,5 +1,7 @@
 package oogasalad.model.gameengine;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.Stack;
@@ -8,6 +10,7 @@ import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.gameengine.command.Command;
+import oogasalad.model.gameengine.gameobject.CollisionDetector;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
@@ -41,6 +44,7 @@ public class GameEngine implements ExternalGameEngine {
   private boolean gameOver;
   private boolean staticState;
   private Stack<GameRecord> staticStateStack;
+  private CollisionDetector collisionDetector;
 
   /**
    * Initializes a new GameEngine instance for the specified game title.
@@ -52,6 +56,7 @@ public class GameEngine implements ExternalGameEngine {
     loader = new GameLoaderModel(gameTitle);
     playerContainer = loader.getPlayerContainer();
     round = 1;
+    collisionDetector = new CollisionDetector();
     startRound(loader);
   }
 
@@ -131,7 +136,7 @@ public class GameEngine implements ExternalGameEngine {
    */
   public void advanceTurn() {
     turn = rules.turnPolicy().getNextTurn();
-    gameObjects.toStaticState();
+    gameObjects.getGameObjects().forEach(GameObject::stop);
   }
 
   /**
@@ -204,7 +209,7 @@ public class GameEngine implements ExternalGameEngine {
   //obtains all the pairs of Game Objects colliding, and executes the respective physics
   // operations and commands caused by the collision
   private void handleCollisions(double dt) {
-    Set<Pair> collisionPairs = gameObjects.getCollisionPairs();
+    Set<Pair> collisionPairs = getCollisionPairs();
     for (Pair collision : collisionPairs) {
       if (rules.physicsMap().containsKey(collision)) {
         rules.physicsMap().get(collision).handleCollision(gameObjects, dt);
@@ -219,9 +224,32 @@ public class GameEngine implements ExternalGameEngine {
     }
   }
 
+
+  /**
+   * //TODO JavaDoc
+   *
+   * @author Konur Nordberg
+   */
+  public Set<Pair> getCollisionPairs() {
+    Set<Pair> collisionPairs = new HashSet<>();
+    List<GameObjectRecord> records = gameObjects.toGameObjectRecords();
+    for (int i = 0; i < records.size(); i++) {
+      GameObjectRecord record1 = records.get(i);
+      GameObject gameObject1 = gameObjects.getGameObject(record1.id());
+      for (int j = i + 1; j < records.size(); j++) {
+        GameObjectRecord record2 = records.get(j);
+        GameObject gameObject2 = gameObjects.getGameObject(record2.id());
+        if (gameObject2.getVisible() && gameObject1.getVisible() && collisionDetector.isColliding(
+            gameObject1, gameObject2)) {
+          collisionPairs.add(new Pair(record1.id(), record2.id()));
+        }
+      }
+    }
+    return collisionPairs;
+  }
+
   //starts the current round, by requesting the necessary information for that round from the
   // loader.
-
   private void startRound(GameLoaderModel loader) {
     System.out.println(loader);
     gameOver = false;

@@ -25,7 +25,6 @@ public class GameObjectContainer {
 
   private static final Logger LOGGER = LogManager.getLogger(GameObjectContainer.class);
   private final Map<Integer, GameObject> myGameObjects;
-  private final CollisionDetector collisionDetector;
 
   /**
    * Constructs a GameObjectContainer with the specified collection of GameObjects.
@@ -36,7 +35,6 @@ public class GameObjectContainer {
   public GameObjectContainer(Map<Integer, GameObject> gameObjects) {
     myGameObjects = gameObjects;
     getGameObjects().forEach(GameObject::addStaticStateGameObject);
-    collisionDetector = new CollisionDetector();
   }
 
   /**
@@ -76,14 +74,6 @@ public class GameObjectContainer {
     }
     return false;
   }
-
-  /**
-   * Simultaneously updates the positions of all GameObjects in the container based on their
-   * velocities and the specified time step.
-   *
-   * @param dt The time step for the update.
-   */
-
 
   /**
    * Converts all GameObjects in the container to a list of immutable GameObjectRecords.
@@ -128,38 +118,5 @@ public class GameObjectContainer {
     }
   }
 
-  /**
-   * //TODO JavaDoc
-   *
-   * @author Konur Nordberg
-   */
-  public Set<Pair> getCollisionPairs() {
-    Set<Pair> collisionPairs = new HashSet<>();
-    List<GameObjectRecord> records = toGameObjectRecords();
-    for (int i = 0; i < records.size(); i++) {
-      GameObjectRecord record1 = records.get(i);
-      GameObject gameObject1 = myGameObjects.get(record1.id());
-      for (int j = i + 1; j < records.size(); j++) {
-        GameObjectRecord record2 = records.get(j);
-        GameObject gameObject2 = myGameObjects.get(record2.id());
-        if (gameObject2.getVisible() && gameObject1.getVisible() && collisionDetector.isColliding(
-            gameObject1, gameObject2)) {
-          collisionPairs.add(new Pair(record1.id(), record2.id()));
-        }
-      }
-    }
-    return collisionPairs;
-  }
 
-
-  public void toStaticState() {
-    for(GameObject go : myGameObjects.values()) {
-      go.stop();
-    }
-  }
-
-  public void teleport(int o1, int o2) {
-    getGameObject(o1).moveTo(getGameObject(o2));
-
-  }
 }

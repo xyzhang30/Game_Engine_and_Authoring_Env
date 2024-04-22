@@ -35,7 +35,6 @@ public class TeleportCommand implements Command {
    */
   @Override
   public void execute(GameEngine engine) {
-    engine.getGameObjectContainer().teleport((int) Math.round(arguments.get(0)),
-        (int) Math.round(arguments.get(1)));
+    engine.getGameObjectContainer().getGameObject((int) Math.round(arguments.get(0))).teleportTo(engine.getGameObjectContainer().getGameObject((int) Math.round(arguments.get(1))));
   }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.gameobject.GameObject;
 
 public class EightBallCommand implements Command {
 
@@ -17,7 +18,7 @@ public class EightBallCommand implements Command {
   public void execute(GameEngine engine) {
     engine.getGameObjectContainer().getGameObject((int) Math.round(arguments.get(0))).setVisible(false);
     int active = engine.getPlayerContainer().getActive();
-    engine.getGameObjectContainer().toStaticState();
+    engine.getGameObjectContainer().getGameObjects().forEach(GameObject::stop);
     boolean didActiveWin =
         engine.getPlayerContainer().getPlayer(active).areAllScoreablesInvisible();
     for (PlayerRecord pr : engine.getPlayerContainer().getPlayerRecords()) {

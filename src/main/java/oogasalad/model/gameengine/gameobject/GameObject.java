@@ -367,7 +367,7 @@ public class GameObject {
     myNextVelocityX = 0;
   }
 
-  protected void moveTo(GameObject gameObject) {
+  public void teleportTo(GameObject gameObject) {
     myX = gameObject.getX();
     myY = gameObject.getY();
   }
