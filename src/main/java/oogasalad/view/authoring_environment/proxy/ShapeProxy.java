@@ -1,18 +1,17 @@
-package oogasalad.view.authoring_environment.panels;
+package oogasalad.view.authoring_environment.proxy;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import javafx.geometry.Bounds;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import oogasalad.view.authoring_environment.Coordinate;
+import oogasalad.view.authoring_environment.data.Coordinate;
+import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
 
 /**
  * The ShapeProxy class acts as a proxy for managing and manipulating shapes within the authoring
@@ -155,20 +154,6 @@ public class ShapeProxy {
       selectedShapesIds.add(Integer.valueOf(shapeStack.get(i).getId()));
     }
     return selectedShapesIds;
-  }
-
-  public Shape duplicateShape(Shape originalShape) {
-    try {
-      Shape newShape = originalShape.getClass().getDeclaredConstructor().newInstance();
-      newShape.setFill(originalShape.getFill());
-      newShape.setStroke(originalShape.getStroke());
-      newShape.setStrokeWidth(originalShape.getStrokeWidth());
-      newShape.setId(String.valueOf(shapeCount++));
-      return newShape;
-    } catch (ReflectiveOperationException e) {
-      e.printStackTrace();
-      return null;
-    }
   }
 
   public void resetGameObjectAttributesContainer() {

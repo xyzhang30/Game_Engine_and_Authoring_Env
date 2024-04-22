@@ -17,7 +17,7 @@ import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
 import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
-import oogasalad.view.authoring_environment.panels.GameObjectAttributesContainer;
+import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
 import oogasalad.view.controller.BuilderDirector;
 
 /**

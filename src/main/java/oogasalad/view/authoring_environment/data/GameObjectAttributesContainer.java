@@ -1,8 +1,7 @@
-package oogasalad.view.authoring_environment.panels;
+package oogasalad.view.authoring_environment.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import oogasalad.view.authoring_environment.Coordinate;
 
 public class GameObjectAttributesContainer {
   private int id;

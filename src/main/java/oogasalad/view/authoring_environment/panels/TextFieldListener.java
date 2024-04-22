@@ -2,6 +2,7 @@ package oogasalad.view.authoring_environment.panels;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 
 public class TextFieldListener implements ChangeListener<String> {
   private final String gameObjectField;

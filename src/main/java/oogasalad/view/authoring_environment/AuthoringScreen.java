@@ -12,14 +12,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oogasalad.view.Window;
-import oogasalad.view.authoring_environment.panels.AuthoringProxy;
+import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.panels.ColorPanel;
 import oogasalad.view.authoring_environment.panels.ImagePanel;
 import oogasalad.view.authoring_environment.panels.InteractionPanel;
 import oogasalad.view.authoring_environment.panels.Panel;
 import oogasalad.view.authoring_environment.panels.PolicyPanel;
 import oogasalad.view.authoring_environment.panels.ShapePanel;
-import oogasalad.view.authoring_environment.panels.ShapeProxy;
+import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 
 /**
  * Represents the authoring screen for the authoring environment in the application, providing the user interface for creating and managing various game elements.

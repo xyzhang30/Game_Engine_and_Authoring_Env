@@ -25,8 +25,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
-import oogasalad.view.authoring_environment.Coordinate;
+import oogasalad.view.authoring_environment.data.Coordinate;
 import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
+import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
+import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 
 public class ShapePanel implements Panel {
 

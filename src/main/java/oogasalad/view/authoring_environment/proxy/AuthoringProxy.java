@@ -1,6 +1,5 @@
-package oogasalad.view.authoring_environment.panels;
+package oogasalad.view.authoring_environment.proxy;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +9,8 @@ import javafx.scene.shape.Shape;
 import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
 import oogasalad.view.api.exception.MissingInteractionException;
 import oogasalad.view.api.exception.MissingNonControllableTypeException;
-import oogasalad.view.authoring_environment.Coordinate;
+import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
 import oogasalad.view.authoring_environment.NewAuthoringController;
-import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
 
 /**
  * AuthoringProxy acts as an intermediary between the authoring environment and the authoring
