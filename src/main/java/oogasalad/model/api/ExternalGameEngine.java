@@ -33,4 +33,8 @@ public interface ExternalGameEngine {
    * Resets the game to its initial state.
    */
   void reset();
+
+  void moveActiveControllableX(boolean positive);
+
+  void moveActiveControllableY(boolean positive);
 }

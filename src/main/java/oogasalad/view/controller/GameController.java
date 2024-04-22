@@ -190,12 +190,12 @@ public class GameController {
 
   public void moveX(boolean positive) {
     if(animationManager.isRunning()) {
-      gameEngine.moveControllableX(positive);
+      gameEngine.moveActiveControllableX(positive);
     }
   }
   public void moveY(boolean positive) {
     if(animationManager.isRunning()) {
-      gameEngine.moveControllableY(positive);
+      gameEngine.moveActiveControllableY(positive);
     }
   }
 }

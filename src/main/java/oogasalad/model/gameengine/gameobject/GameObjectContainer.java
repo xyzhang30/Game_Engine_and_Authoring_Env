@@ -35,16 +35,19 @@ public class GameObjectContainer {
 
   public GameObjectContainer(Map<Integer, GameObject> gameObjects) {
     myGameObjects = gameObjects;
-    addStaticStateGameObjects();
+    getGameObjects().forEach(GameObject::addStaticStateGameObject);
     collisionDetector = new CollisionDetector();
   }
 
   /**
    * Retrieves the GameObject associated with the specified ID.
    *
-   * @param objectId The unique ID of the GameObject to retrieve.
    * @return The GameObject corresponding to the given ID
    */
+
+  public List<GameObject> getGameObjects() {
+    return myGameObjects.values().stream().toList();
+  }
 
   public GameObject getGameObject(int objectId) {
     if (!myGameObjects.containsKey(objectId)) {
@@ -81,12 +84,6 @@ public class GameObjectContainer {
    * @param dt The time step for the update.
    */
 
-  public void update(double dt) {
-    for (GameObject go : myGameObjects.values()) {
-      go.move(dt);
-      go.update();
-    }
-  }
 
   /**
    * Converts all GameObjects in the container to a list of immutable GameObjectRecords.
@@ -120,15 +117,6 @@ public class GameObjectContainer {
     return null;
   }
 
-  /**
-   * Adds the current state of all GameObjects in the container to their respective history stack.
-   */
-
-  public void addStaticStateGameObjects() {
-    for (GameObject go : myGameObjects.values()) {
-      go.addStaticStateGameObject();
-    }
-  }
 
   /**
    * Restores each GameObject to its previous static state
@@ -166,7 +154,7 @@ public class GameObjectContainer {
 
   public void toStaticState() {
     for(GameObject go : myGameObjects.values()) {
-      go.toStatic();
+      go.stop();
     }
   }
 

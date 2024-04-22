@@ -8,7 +8,6 @@ import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.gameengine.command.Command;
-import oogasalad.model.gameengine.gameobject.Controllable;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
@@ -67,21 +66,19 @@ public class GameEngine implements ExternalGameEngine {
 
   @Override
   public GameRecord update(double dt) {
-    gameObjects.update(dt);
+    gameObjects.getGameObjects().forEach(go -> {
+      go.move(dt);
+      go.update();
+    });
     handleCollisions(dt);
     if (gameObjects.checkStatic(rules.checker())) {
       switchToCorrectStaticState();
       updateHistory();
       staticState = true;
-      System.out.println(
-          playerContainer.getSortedPlayerRecords(rules.rank())
-          );
     } else {
       staticState = false;
     }
-    gameObjects.getGameObject(
-        playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID()).setVisible(true);
-
+    gameObjects.getGameObject(playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID()).setVisible(true);
     return new GameRecord(gameObjects.toGameObjectRecords(),
         playerContainer.getSortedPlayerRecords(rules.rank()),
         round, turn, gameOver, staticState);
@@ -110,17 +107,13 @@ public class GameEngine implements ExternalGameEngine {
 
   }
 
-  public void moveControllableX(boolean positive) {
-    int id =
-        playerContainer.getPlayer(playerContainer.getActive()).getControllable().asGameObject().getId();
-    gameObjects.getGameObject(id).moveControllableX(positive);
+  @Override
+  public void moveActiveControllableX(boolean positive) {
+    playerContainer.getPlayer(playerContainer.getActive()).getControllable().moveX(positive);
   }
-
-
-  public void moveControllableY(boolean positive) {
-    int id =
-        playerContainer.getPlayer(playerContainer.getActive()).getControllable().asGameObject().getId();
-    gameObjects.getGameObject(id).moveControllableY(positive);
+  @Override
+  public void moveActiveControllableY(boolean positive) {
+    playerContainer.getPlayer(playerContainer.getActive()).getControllable().moveY(positive);
   }
 
 /**
@@ -252,7 +245,7 @@ public class GameEngine implements ExternalGameEngine {
 
   //adds the initial state of the game (before the round starts) to the game history
   private void addInitialStaticStateToHistory() {
-    gameObjects.addStaticStateGameObjects();
+    gameObjects.getGameObjects().forEach(GameObject::addStaticStateGameObject);
     playerContainer.addPlayerHistory();
     staticStateStack = new Stack<>();
     staticStateStack.push(
@@ -273,7 +266,7 @@ public class GameEngine implements ExternalGameEngine {
   private void updateHistory() {
     staticState = true;
     playerContainer.addPlayerHistory();
-    gameObjects.addStaticStateGameObjects();
+    gameObjects.getGameObjects().forEach(GameObject::addStaticStateGameObject);
     staticStateStack.push(
         new GameRecord(gameObjects.toGameObjectRecords(),
             playerContainer.getSortedPlayerRecords(rules.rank()),
