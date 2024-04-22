@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
-import javafx.collections.ListChangeListener;
 import javafx.geometry.Bounds;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -32,7 +30,6 @@ import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import oogasalad.view.enums.CollidableType;
-import org.controlsfx.control.CheckComboBox;
 
 public class ShapePanel implements Panel {
 
@@ -47,11 +44,11 @@ public class ShapePanel implements Panel {
   private Slider ySlider;
   private Slider angleSlider;
   private ComboBox<GameObjectType> gameObjectTypeDropdown;
-  private CheckComboBox<CollidableType> collidableTypeDropDown;
+  private ComboBox<CollidableType> collidableTypeDropDown;
   private TextField kFrictionTextField;
   private TextField sFrictionTextField;
   private TextField massTextField;
-  private CheckBox elasticityCheckBox;
+  private TextField elasticityTextField;
   private ListView<String> playerAssignmentListView;
   private CheckBox scoreableCheckBox;
   private Button addPlayerButton;
@@ -173,13 +170,12 @@ public class ShapePanel implements Panel {
     updateSlider(shape.getScaleX(), shape.getScaleY(), shape.getRotate());
   }
   private void clearFields() {
-//    collidableTypeDropDown.valueProperty().setValue(null);
-    collidableTypeDropDown.getCheckModel().clearChecks();
+    collidableTypeDropDown.valueProperty().setValue(null);
     playerAssignmentListView.getSelectionModel().clearSelection();
     kFrictionTextField.clear();
     sFrictionTextField.clear();
     massTextField.clear();
-    elasticityCheckBox.setSelected(false);
+    elasticityTextField.clear();
     scoreableCheckBox.setSelected(false);
     setCollidableOptionVisibility(false);
     setSurfaceOptionVisibility(false);
@@ -337,10 +333,10 @@ public class ShapePanel implements Panel {
   }
 
   private void createCollidableTypeOptions() {
-    collidableTypeDropDown = new CheckComboBox<>();
+    collidableTypeDropDown = new ComboBox<>();
     collidableTypeDropDown.getItems()
         .addAll(CollidableType.STRIKABLE, CollidableType.CONTROLLABLE, CollidableType.NONCONTROLLABLE);
-//    collidableTypeDropDown.setPromptText("Select Collidable Type");
+    collidableTypeDropDown.setPromptText("Select Collidable Type");
     AnchorPane.setRightAnchor(collidableTypeDropDown, 300.0);
     AnchorPane.setTopAnchor(collidableTypeDropDown, 200.0);
     collidableTypeDropDown.setPrefSize(200, 50);
@@ -359,29 +355,19 @@ public class ShapePanel implements Panel {
     AnchorPane.setRightAnchor(mass, 410.0);
     AnchorPane.setTopAnchor(mass, 270.0);
 
-
-    elasticityCheckBox = new CheckBox();
-    elasticityCheckBox.setId("elasticity");
-
-    elasticityCheckBox.setOnAction(event -> {
-      if (elasticityCheckBox.isSelected()) {
-        System.out.println("Toggle is on");
-      } else {
-        System.out.println("Toggle is off");
-      }
-    });
-
-    elasticityCheckBox.textProperty().addListener(new TextFieldListener(elasticityCheckBox.getId(), shapeProxy));
-    elasticityCheckBox.setPrefSize(40, 20);
-    AnchorPane.setRightAnchor(elasticityCheckBox, 450.0);
-    AnchorPane.setTopAnchor(elasticityCheckBox, 310.0);
+    elasticityTextField = new TextField();
+    elasticityTextField.setId("elasticity");
+    elasticityTextField.textProperty().addListener(new TextFieldListener(elasticityTextField.getId(), shapeProxy));
+    elasticityTextField.setPrefSize(40, 20);
+    AnchorPane.setRightAnchor(elasticityTextField, 450.0);
+    AnchorPane.setTopAnchor(elasticityTextField, 310.0);
 
     elasticity = new Label("Elasticity");
     AnchorPane.setRightAnchor(elasticity, 390.0);
     AnchorPane.setTopAnchor(elasticity, 310.0);
 
     containerPane.getChildren()
-        .addAll(massTextField, mass, elasticityCheckBox, elasticity);
+        .addAll(massTextField, mass, elasticityTextField, elasticity);
   }
 
   private void createScoreableOption() {
@@ -488,8 +474,7 @@ public class ShapePanel implements Panel {
     }));
   }
   private void handleCollidableTypeDropdownOnChange() {
-//    collidableTypeDropDown.valueProperty().addListener((obs, oldVal, collidableType) -> {
-    collidableTypeDropDown.getCheckModel().getCheckedItems().addListener((ListChangeListener<CollidableType>) collidableType -> {
+    collidableTypeDropDown.valueProperty().addListener((obs, oldVal, collidableType) -> {
       if (collidableType == null) return;
 
       shapeProxy.getGameObjectAttributesContainer().getProperties().remove(oldVal.toString());
@@ -505,7 +490,6 @@ public class ShapePanel implements Panel {
       }
     });
   }
-
   private void handleScorableCheckBoxOnChange() {
     scoreableCheckBox.selectedProperty().addListener((observable, oldValue, newState) -> {
       if (newState) {
@@ -562,7 +546,7 @@ public class ShapePanel implements Panel {
     collidableTypeDropDown.setVisible(visibility);
     massTextField.setVisible(visibility);
     mass.setVisible(visibility);
-    elasticityCheckBox.setVisible(visibility);
+    elasticityTextField.setVisible(visibility);
     elasticity.setVisible(visibility);
     scoreableCheckBox.setVisible(visibility);
     scoreable.setVisible(visibility);
