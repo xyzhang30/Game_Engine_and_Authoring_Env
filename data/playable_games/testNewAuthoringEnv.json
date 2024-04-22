@@ -1,48 +1,119 @@
 {
   "gameName" : "testNewAuthoringEnv",
   "game_objects" : [ {
-    "gameobject_id" : 1,
-    "properties" : [ "collidable", "strikeable", "visible" ],
-    "mass" : 7.0,
+    "properties" : [ "SURFACE", "COLLIDABLE", "SURFACE", "COLLIDABLE", "visible", "visible", "visible", "visible", "visible" ],
+    "mass" : 10.0,
     "position" : {
-      "x_position" : 852.0999755859375,
-      "y_position" : 458.1000061035156
-    },
-    "shape" : "Circle",
-    "dimension" : {
-      "x_dimension" : 65.0,
-      "y_dimension" : 65.0
-    },
-    "color" : null,
-    "staticFriction" : 0.0,
-    "kineticFriction" : 0.0,
-    "inclineAngle" : 0.0,
-    "image" : null,
-    "direction" : 0.0
-  }, {
-    "gameobject_id" : 0,
-    "properties" : [ "visible" ],
-    "mass" : 0.0,
-    "position" : {
-      "x_position" : 783.2999877929688,
-      "y_position" : 352.29998779296875
+      "x_position" : 713.0,
+      "y_position" : 549.0
     },
     "shape" : "Rectangle",
     "dimension" : {
-      "x_dimension" : 105.0,
-      "y_dimension" : 55.0
+      "x_dimension" : 66.0,
+      "y_dimension" : 66.0
     },
     "color" : null,
-    "staticFriction" : 0.0,
+    "staticFriction" : 5.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
-    "image" : null,
-    "direction" : 0.0
+    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/strikeable_images/basketball.jpg",
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "gameobject_id" : 3
+  }, {
+    "properties" : [ "SURFACE", "COLLIDABLE", "SURFACE", "COLLIDABLE", "visible", "visible", "visible", "visible", "visible" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 713.0,
+      "y_position" : 549.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 66.0,
+      "y_dimension" : 66.0
+    },
+    "color" : null,
+    "staticFriction" : 5.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/strikeable_images/basketball.jpg",
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "gameobject_id" : 3
+  }, {
+    "properties" : [ "SURFACE", "COLLIDABLE", "SURFACE", "COLLIDABLE", "visible", "visible", "visible", "visible", "visible" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 713.0,
+      "y_position" : 549.0
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 66.0,
+      "y_dimension" : 66.0
+    },
+    "color" : null,
+    "staticFriction" : 5.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/strikeable_images/basketball.jpg",
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "gameobject_id" : 3
+  }, {
+    "properties" : [ "SURFACE", "COLLIDABLE", "SURFACE", "COLLIDABLE", "visible", "visible", "visible", "visible", "visible" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 713.0,
+      "y_position" : 549.0
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 66.0,
+      "y_dimension" : 66.0
+    },
+    "color" : null,
+    "staticFriction" : 5.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/strikeable_images/basketball.jpg",
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "gameobject_id" : 3
+  }, {
+    "properties" : [ "SURFACE", "COLLIDABLE", "SURFACE", "COLLIDABLE", "visible", "visible", "visible", "visible", "visible" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 713.0,
+      "y_position" : 549.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 66.0,
+      "y_dimension" : 66.0
+    },
+    "color" : null,
+    "staticFriction" : 5.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/strikeable_images/basketball.jpg",
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "gameobject_id" : 3
   } ],
   "players" : [ {
     "player_id" : 1,
+    "my_strikeable" : [ 1 ],
+    "my_controllable" : [ ]
+  }, {
+    "player_id" : 2,
     "my_strikeable" : [ ],
-    "my_controllable": []
+    "my_controllable" : [ 3 ]
   } ],
   "variables" : [ {
     "global" : {
@@ -56,24 +127,23 @@
   } ],
   "rules" : {
     "collisions" : [ ],
-    "turn_policy" : "SnakeTurnPolicy",
+    "turn_policy" : "StandardTurnPolicy",
     "round_policy" : {
-      "GameObjectsNotVisibleCondition" : [ 1.0 ]
+      "AllPlayersCompletedRoundCondition" : [ ]
     },
     "win_condition" : {
       "AllPlayersCompletedRoundCondition" : [ ]
     },
     "advance_turn" : {
-      "AdvanceRoundCommand" : [ ],
-      "IncrementPointsCommand" : [ 3.0, 4.0 ]
+      "LastStaticStateCommand" : [ ]
     },
     "advance_round" : {
-      "LastStaticStateCommand" : [ ]
+      "MultiplySpeedCommand" : [ 2.0, 3.0 ]
     },
     "strike_policy" : "DoNothingStrikePolicy",
     "rank_comparator" : "IDComparator",
     "static_checker" : {
-      "VelocityStaticChecker" : [ 1, 2 ]
+      "VisibilityStaticChecker" : [ ]
     }
   }
 }

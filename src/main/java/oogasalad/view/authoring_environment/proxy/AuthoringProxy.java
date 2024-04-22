@@ -1,6 +1,5 @@
-package oogasalad.view.authoring_environment.panels;
+package oogasalad.view.authoring_environment.proxy;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +9,9 @@ import javafx.scene.shape.Shape;
 import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
 import oogasalad.view.api.exception.MissingInteractionException;
 import oogasalad.view.api.exception.MissingNonControllableTypeException;
-import oogasalad.view.authoring_environment.Coordinate;
+import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
 import oogasalad.view.authoring_environment.NewAuthoringController;
-import oogasalad.view.authoring_environment.authoring_screens.InteractionType;
+import oogasalad.view.enums.CollidableType;
 
 /**
  * AuthoringProxy acts as an intermediary between the authoring environment and the authoring
@@ -27,7 +26,7 @@ public class AuthoringProxy {
   private final Map<String, String> policies = new HashMap<>();
   private final Map<List<Integer>, Map<String, List<Double>>> interactionMap = new HashMap<>();
   private final Map<Shape, GameObjectAttributesContainer> gameObjectMap = new HashMap<>();
-  private final Map<Integer, List<Integer>> playersMap = new HashMap<>();
+  private final Map<Integer, Map<CollidableType, List<Integer>>> playersMap = new HashMap<>();
   private String gameName;
   private String currentScreenTitle;
   private NewAuthoringController authoringController;
@@ -38,7 +37,7 @@ public class AuthoringProxy {
     interactionMap.put(shapes, interaction);
   }
 
-  public Map<Integer, List<Integer>> getPlayers() {
+  public Map<Integer, Map<CollidableType,List<Integer>>> getPlayers() {
     return playersMap;
   }
 
