@@ -19,7 +19,7 @@ public class ConditionalAdvanceTurnCommand implements Command {
     List<PlayerRecord> lasts = engine.getPlayerContainer().getLastStatics();
     List<PlayerRecord> currents =
         engine.getPlayerContainer().getSortedPlayerRecords(new IDComparator());
-    if(!engine.getPlayerContainer().getPlayer(active).getControllable().asGameObject().getVisible()){
+    if(!engine.getGameObjectContainer().getGameObject(engine.getPlayerContainer().getPlayer(active).getStrikeableID()).getVisible()){
       engine.advanceTurn();
       return;
     }
