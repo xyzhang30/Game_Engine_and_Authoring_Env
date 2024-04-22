@@ -10,6 +10,7 @@ import oogasalad.Pair;
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
+import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.gameobject.CollisionDetector;
@@ -88,7 +89,7 @@ public class GameEngine implements ExternalGameEngine {
     }
     gameObjects.getGameObject(playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID()).setVisible(true);
     return new GameRecord(getListOfGameObjectRecords(),
-        playerContainer.getSortedPlayerRecords(rules.rank()),
+         getPlayerRecords(),
         round, turn, gameOver, staticState);
   }
 
@@ -271,8 +272,9 @@ public class GameEngine implements ExternalGameEngine {
     playerContainer.getPlayers().forEach(Player::addPlayerHistory);
     staticStateStack = new Stack<>();
     staticStateStack.push(
-        new GameRecord(getListOfGameObjectRecords(), playerContainer.getSortedPlayerRecords(
-            rules.rank()),
+        new GameRecord(getListOfGameObjectRecords(), getPlayerRecords().stream()
+            .sorted(rules.rank())
+            .collect(Collectors.toList()),
             round, turn, gameOver, staticState));
   }
 
@@ -291,7 +293,9 @@ public class GameEngine implements ExternalGameEngine {
     gameObjects.getGameObjects().forEach(GameObject::addStaticStateGameObject);
     staticStateStack.push(
         new GameRecord(getListOfGameObjectRecords(),
-            playerContainer.getSortedPlayerRecords(rules.rank()),
+            getPlayerRecords().stream()
+                .sorted(rules.rank())
+                .collect(Collectors.toList()),
             round, turn, gameOver, staticState));
   }
 
@@ -307,6 +311,13 @@ public class GameEngine implements ExternalGameEngine {
 
    private List<GameObjectRecord> getListOfGameObjectRecords() {
      return gameObjects.getGameObjects().stream().map(GameObject::toGameObjectRecord)
+         .collect(Collectors.toList());
+   }
+
+   private List<PlayerRecord> getPlayerRecords() {
+     return playerContainer.getPlayers().stream()
+         .map(Player::getPlayerRecord)
+         .sorted(rules.rank())
          .collect(Collectors.toList());
    }
 

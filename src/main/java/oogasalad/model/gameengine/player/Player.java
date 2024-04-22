@@ -174,7 +174,7 @@ public class Player {
    * @return The PlayerRecord containing player information.
    */
 
-  protected PlayerRecord getPlayerRecord() {
+  public PlayerRecord getPlayerRecord() {
     try {
       double tempScore = score;
       for (Scoreable o : myScoreables) {
@@ -215,9 +215,12 @@ public class Player {
     }
   }
 
-
   public void applyGameResult(boolean wonGame) {
     clearDelayedPoints();
     score = wonGame? 1:0;
+  }
+
+  public int getId() {
+    return playerId;
   }
 }

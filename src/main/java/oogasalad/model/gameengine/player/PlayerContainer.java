@@ -1,12 +1,9 @@
 package oogasalad.model.gameengine.player;
 
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.rank.IDComparator;
 import oogasalad.model.gameengine.rank.PlayerRecordComparator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,7 +17,6 @@ import org.apache.logging.log4j.Logger;
  *
  * @author Noah Loewy
  */
-
 
 public class PlayerContainer {
 
@@ -75,17 +71,6 @@ public class PlayerContainer {
     active = newActive;
   }
 
-  /**
-   * Retrieves a list of PlayerRecord objects representing the current state of each player.
-   *
-   * @param comp, a comparator defining the ordering of PlayerRecords
-   * @return A list of PlayerRecord objects.
-   */
-  public List<PlayerRecord> getSortedPlayerRecords(PlayerRecordComparator comp) {
-    List<PlayerRecord> ret = getPlayerRecords();
-    ret.sort(comp);
-    return ret;
-  }
 
   /**
    * Retrieves a list of PlayerRecord objects representing the current state of each player.
@@ -97,7 +82,4 @@ public class PlayerContainer {
         .map(Player::getPlayerRecord)
         .collect(Collectors.toList());
   }
-
-
-  //fetches list of player records in no particular order
 }

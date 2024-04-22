@@ -26,7 +26,9 @@ public class ConditionalAdvanceTurnCommand implements Command {
         .sorted(Comparator.comparing(PlayerRecord::playerId))
         .toList();
     List<PlayerRecord> currents =
-        engine.getPlayerContainer().getSortedPlayerRecords(new IDComparator());
+        engine.getPlayerContainer().getPlayerRecords().stream()
+            .sorted(new IDComparator())
+            .toList();
     if(!engine.getGameObjectContainer().getGameObject(engine.getPlayerContainer().getPlayer(active).getStrikeableID()).getVisible()){
       engine.advanceTurn();
       return;
