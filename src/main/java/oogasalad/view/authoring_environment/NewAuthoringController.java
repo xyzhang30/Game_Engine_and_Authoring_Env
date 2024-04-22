@@ -61,7 +61,10 @@ public class NewAuthoringController {
   public void writePlayers(Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
     List<ParserPlayer> players = new ArrayList<>();
     playersMap.forEach((playerId, myGameObjects) -> {
-      ParserPlayer player = new ParserPlayer(playerId, playersMap.get(playerId).get(CollidableType.STRIKABLE), playersMap.get(playerId).get(CollidableType.CONTROLLABLE));
+      ParserPlayer player = new ParserPlayer(playerId,
+          playersMap.get(playerId).get(CollidableType.STRIKABLE),
+          null,
+          playersMap.get(playerId).get(CollidableType.CONTROLLABLE));
       players.add(player);
     });
 

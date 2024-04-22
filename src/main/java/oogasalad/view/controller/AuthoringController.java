@@ -145,7 +145,7 @@ public class AuthoringController {
 
   private void writePlayer() {
     //HARD CODED FOR DEMO!
-    ParserPlayer player = new ParserPlayer(1, List.of(1),null);
+    ParserPlayer player = new ParserPlayer(1, List.of(1),null, null);
 
     builderDirector.constructPlayers(List.of(player));
   }

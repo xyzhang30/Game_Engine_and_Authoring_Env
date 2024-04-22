@@ -1,0 +1,435 @@
+{
+  "gameName": "pool",
+  "game_objects": [
+    {
+      "gameobject_id": 1,
+      "properties": [
+        "visible",
+        "collidable"
+      ],
+      "mass": "Infinity",
+      "position": {
+        "x_position": 0,
+        "y_position": 0
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 50,
+        "y_dimension": 1000
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [
+        0,
+        0,
+        0
+      ],
+      "image": ""
+    },
+    {
+      "gameobject_id": 2,
+      "properties": [
+        "visible",
+        "collidable"
+      ],
+      "mass": "Infinity",
+      "position": {
+        "x_position": 0,
+        "y_position": 0
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 1000,
+        "y_dimension": 50
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [
+        0,
+        0,
+        0
+      ],
+      "image": ""
+    },
+    {
+      "gameobject_id": 3,
+      "properties": [
+        "visible",
+        "collidable"
+      ],
+      "mass": "Infinity",
+      "position": {
+        "x_position": 0,
+        "y_position": 1000
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 1000,
+        "y_dimension": 50
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [
+        0,
+        0,
+        0
+      ],
+      "image": ""
+    },
+    {
+      "gameobject_id": 4,
+      "properties": [
+        "visible",
+        "collidable"
+      ],
+      "mass": "Infinity",
+      "position": {
+        "x_position": 1000,
+        "y_position": 0
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 50,
+        "y_dimension": 1000
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [
+        0,
+        0,
+        0
+      ],
+      "image": ""
+    },
+    {
+      "gameobject_id": 5,
+      "properties": [
+        "visible",
+        "surface"
+      ],
+      "mass": "Infinity",
+      "position": {
+        "x_position": 50,
+        "y_position": 50
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 950,
+        "y_dimension": 950
+      },
+      "staticFriction": 3,
+      "kineticFriction": 2,
+      "color": [
+        124,
+        252,
+        0
+      ],
+      "image": ""
+    },
+    {
+      "gameobject_id": 7,
+      "properties": [
+        "visible",
+        "collidable",
+        "strikeable"
+      ],
+      "mass": 0.04,
+      "position": {
+        "x_position": 500,
+        "y_position": 600
+      },
+      "shape": "Circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [
+        255,
+        255,
+        255
+      ],
+      "image": ""
+    },
+    {
+      "gameobject_id": 8,
+      "properties": [
+        "visible",
+        "collidable",
+        "scoreable"
+      ],
+      "mass": 0.04,
+      "position": {
+        "x_position": 500,
+        "y_position": 500
+      },
+      "shape": "Circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [
+        0,
+        0,
+        0
+      ],
+      "image": ""
+    },
+    {
+      "gameobject_id": 9,
+      "properties": [
+        "visible",
+        "collidable",
+        "scoreable"
+      ],
+      "mass": 0.04,
+      "position": {
+        "x_position": 600,
+        "y_position": 500
+      },
+      "shape": "Circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [
+        255,
+        0,
+        0
+      ],
+      "image": ""
+    },
+    {
+      "gameobject_id": 10,
+      "properties": [
+        "visible",
+        "collidable",
+        "scoreable"
+      ],
+      "mass": 0.04,
+      "position": {
+        "x_position": 700,
+        "y_position": 500
+      },
+      "shape": "Circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [
+        255,
+        0,
+        0
+      ],
+      "image": ""
+    },
+    {
+      "gameobject_id": 11,
+      "properties": [
+        "visible",
+        "collidable",
+        "scoreable"
+      ],
+      "mass": 0.04,
+      "position": {
+        "x_position": 400,
+        "y_position": 500
+      },
+      "shape": "Circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [
+        0,
+        255,
+        0
+      ],
+      "image": ""
+    },
+    {
+      "gameobject_id": 12,
+      "properties": [
+        "visible",
+        "collidable",
+        "scoreable"
+      ],
+      "mass": 0.04,
+      "position": {
+        "x_position": 300,
+        "y_position": 500
+      },
+      "shape": "Circle",
+      "dimension": {
+        "x_dimension": 10,
+        "y_dimension": 10
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [
+        0,
+        255,
+        0
+      ],
+      "image": ""
+    },
+    {
+      "gameobject_id": 13,
+      "properties": [
+        "visible",
+        "surface"
+      ],
+      "mass": 0.04,
+      "position": {
+        "x_position": 50,
+        "y_position": 200
+      },
+      "shape": "rectangle",
+      "dimension": {
+        "x_dimension": 950,
+        "y_dimension": 100
+      },
+      "staticFriction": 0,
+      "kineticFriction": 0,
+      "color": [
+        0,
+        0,
+        255
+      ],
+      "image": ""
+    }
+  ],
+  "players": [
+    {
+      "player_id": 1,
+      "my_strikeable": [
+        7
+      ],
+      "my_scoreable": [8,9,10],
+      "my_controllable": []
+    },
+    {
+      "player_id": 2,
+      "my_strikeable": [
+        7
+      ],
+      "my_scoreable": [8,11,12],
+      "my_controllable": []
+    }
+  ],
+  "variables": [
+    {
+      "global": {
+        "max_turns": 1,
+        "max_rounds": 1
+      },
+      "player": {
+        "strokes": 0,
+        "finished": 0
+      }
+    }
+  ],
+  "rules": {
+    "collisions": [
+      {
+        "first_id": 7,
+        "second_id": 13,
+        "command": [
+          {
+            "SetVisibleCommand": [7,0]
+          },
+          {
+            "MoveToStartingStateCommand": [7]
+          }
+        ]
+      },
+      {
+        "first_id": 8,
+        "second_id": 13,
+        "command": [
+          {
+            "EightBallCommand": [8,0]
+          }
+        ]
+      },
+      {
+        "first_id": 9,
+        "second_id": 13,
+        "command": [
+          {
+            "IncrementPointsCommand": [9,1]
+          },
+          {
+            "SetVisibleCommand": [9,0]
+          }
+        ]
+      },
+      {
+        "first_id": 10,
+        "second_id": 13,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [10,1]
+          },
+          {
+            "SetVisibleCommand": [10,0]
+          }
+        ]
+      },
+      {
+        "first_id": 11,
+        "second_id": 13,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [11,1]
+          },
+          {
+            "SetVisibleCommand": [11,0]
+          }
+        ]
+      },
+      {
+        "first_id": 12,
+        "second_id": 13,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [12,1]
+          },
+          {
+            "SetVisibleCommand": [12,0]
+          }
+        ]
+      }
+    ],
+    "turn_policy": "StandardTurnPolicy",
+    "round_policy": {
+      "GameObjectsNotVisibleCondition": [8]
+    },
+    "win_condition": {
+      "NRoundsCompletedCondition": [
+        1000
+      ]
+    },
+    "advance_turn": {
+      "ConditionalAdvanceTurnCommand": []
+    },
+    "advance_round": {
+      "AdvanceRoundCommand": []
+    },
+    "strike_policy": "DoNothingStrikePolicy",
+    "rank_comparator": "HighestScoreComparator",
+    "static_checker": {
+      "VelocityStaticChecker": [7,8,9,10,11,12,13]
+    }
+  }
+}
+

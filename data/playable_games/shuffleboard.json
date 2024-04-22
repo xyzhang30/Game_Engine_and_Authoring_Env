@@ -325,11 +325,13 @@
   "players" : [ {
     "player_id" : 1,
     "my_strikeable" : [ 12, 13],
+    "my_scoreable" : [ 12, 13],
     "my_controllable": []
   },
     {
       "player_id" : 2,
       "my_strikeable" : [ 14, 15],
+      "my_scoreable" : [ 14, 15],
       "my_controllable": []
     }],
   "variables" : [ {

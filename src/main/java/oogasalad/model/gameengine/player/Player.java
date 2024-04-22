@@ -84,7 +84,15 @@ public class Player {
   public void setControllable(Controllable controllable, int xMovement, int yMovement) {
     myControllable = controllable;
     myControllable.setMovement(xMovement, yMovement);
+  }
 
+  public boolean areAllScoreablesInvisible() {
+    for(Scoreable s : myScoreables) {
+      if(s.asGameObject().getVisible()) {
+        return false;
+      }
+    }
+    return true;
   }
 
   public Controllable getControllable() {
@@ -180,6 +188,10 @@ public class Player {
     }
   }
 
+  protected PlayerRecord getLastPlayerRecord() {
+    return playerHistory.peek();
+  }
+
   /**
    * Adds the current state of the gameObject (as a record) to the history of the player
    */
@@ -204,4 +216,8 @@ public class Player {
   }
 
 
+  public void applyGameResult(boolean wonGame) {
+    clearDelayedPoints();
+    score = wonGame? 1:0;
+  }
 }
