@@ -3,8 +3,8 @@ package oogasalad.view.authoring_environment.panels;
 import java.util.List;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 
 public class ColorPanel implements Panel {
 

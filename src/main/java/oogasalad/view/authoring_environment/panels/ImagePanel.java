@@ -1,16 +1,15 @@
 package oogasalad.view.authoring_environment.panels;
 
 import java.io.File;
-import java.nio.file.FileSystems;
 import java.nio.file.Paths;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
+import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 
 public class ImagePanel implements Panel {
 

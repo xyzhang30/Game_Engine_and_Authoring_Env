@@ -17,8 +17,9 @@ import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
 import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
-import oogasalad.view.authoring_environment.panels.GameObjectAttributesContainer;
+import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
 import oogasalad.view.controller.BuilderDirector;
+import oogasalad.view.enums.CollidableType;
 
 /**
  * Class to handle transitions between authoring environment scenes and communications with backend
@@ -57,10 +58,10 @@ public class NewAuthoringController {
     builderDirector.constructVaraibles(List.of(variables));
   }
 
-  public void writePlayers(Map<Integer, List<Integer>> playersMap) {
+  public void writePlayers(Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
     List<ParserPlayer> players = new ArrayList<>();
     playersMap.forEach((playerId, myGameObjects) -> {
-      ParserPlayer player = new ParserPlayer(playerId, myGameObjects, List.of());
+      ParserPlayer player = new ParserPlayer(playerId, playersMap.get(playerId).get(CollidableType.STRIKABLE), playersMap.get(playerId).get(CollidableType.CONTROLLABLE));
       players.add(player);
     });
 
@@ -96,7 +97,6 @@ public class NewAuthoringController {
     Rules rules = new Rules(collisions, turnPolicy, roundPolicy, winCondition, advanceTurn, advanceRound, strikePolicy, rankComparator, staticChecker);
     builderDirector.constructRules(List.of(rules));
   }
-
 
   public void writeGameObjects(Map<Shape, GameObjectAttributesContainer> gameObjectMap){
     List<GameObjectProperties> gameObjects = new ArrayList<>();
