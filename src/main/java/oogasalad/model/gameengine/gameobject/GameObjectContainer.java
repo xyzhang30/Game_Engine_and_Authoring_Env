@@ -64,7 +64,6 @@ public class GameObjectContainer {
       boolean flag = true;
       for (GameObject go : myGameObjects.values()) {
         if (!checker.isStatic(go.toGameObjectRecord())){
-          System.out.println(go.getId());
           flag = false;
         }
       }
@@ -165,4 +164,14 @@ public class GameObjectContainer {
   }
 
 
+  public void toStaticState() {
+    for(GameObject go : myGameObjects.values()) {
+      go.toStatic();
+    }
+  }
+
+  public void teleport(int o1, int o2) {
+    getGameObject(o1).moveTo(getGameObject(o2));
+
+  }
 }

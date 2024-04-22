@@ -1,35 +1,19 @@
 {
   "gameName" : "newShuffle",
-  "game_objects" : [ {
-    "gameobject_id" : 0,
-    "properties" : [  "visible", "surface" ],
-    "mass" : "Infinity",
-    "position" : {
-      "x_position" : 50.0,
-      "y_position" : 50.0
-    },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 990.0,
-      "y_dimension" : 990.0
-    },
-    "color" : [ 0, 0, 0 ],
-    "staticFriction" : 7.0,
-    "kineticFriction" : 5.0,
-    "image" : "data/background_images/wood.jpg"
-  }, {
+  "game_objects" : [
+    {
     "gameobject_id" : 1,
     "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
-      "x_position" : 50.0,
+      "x_position" : 30.0,
       "y_position" : 50.0
     },
-    "shape" : "Rectangle",
     "dimension" : {
       "x_dimension" : 20.0,
-      "y_dimension" : 990.0
+      "y_dimension" : 970.0
     },
+      "shape": "rectangle",
     "color" : [ 0, 0, 0 ],
     "staticFriction" : 7.0,
     "kineticFriction" : 5.0,
@@ -39,13 +23,13 @@
     "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
-      "x_position" : 1020.0,
-      "y_position" : 50.0
+      "x_position" : 1040.0,
+      "y_position" : 30.0
     },
     "shape" : "Rectangle",
     "dimension" : {
       "x_dimension" : 20.0,
-      "y_dimension" : 990.0
+      "y_dimension" : 1010.0
     },
     "color" : [ 0, 0, 0 ],
     "staticFriction" : 7.0,
@@ -56,12 +40,12 @@
     "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
-      "x_position" : 50.0,
-      "y_position" : 50.0
+      "x_position" : 30.0,
+      "y_position" : 30.0
     },
     "shape" : "Rectangle",
     "dimension" : {
-      "x_dimension" : 985.0,
+      "x_dimension" : 1010.0,
       "y_dimension" : 20.0
     },
     "color" : [ 0, 0, 0 ],
@@ -73,12 +57,12 @@
     "properties" : [  "visible", "collidable" ],
     "mass" : "Infinity",
     "position" : {
-      "x_position" : 50.0,
-      "y_position" : 1015.0
+      "x_position" : 30.0,
+      "y_position" : 1020.0
     },
     "shape" : "Rectangle",
     "dimension" : {
-      "x_dimension" : 985.0,
+      "x_dimension" : 990.0,
       "y_dimension" : 20.0
     },
     "color" : [ 0, 0, 0 ],
@@ -87,59 +71,133 @@
     "image" : ""
   },
     {
-    "gameobject_id" : 6,
+      "gameobject_id" : 5,
+      "properties" : [  "visible", "surface" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 50.0,
+        "y_position" : 700.0
+      },
+      "shape" : "Rectangle",
+      "dimension" : {
+        "x_dimension" : 990.0,
+        "y_dimension" : 320.0
+      },
+      "color" : [ 0, 0, 0 ],
+      "staticFriction" : 7.0,
+      "kineticFriction" : 5.0,
+      "image" : "data/background_images/wood.jpg"
+    },
+    {
+      "gameobject_id" : 60,
+      "properties" : [  "visible", "surface" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 50.0,
+        "y_position" : 700.0
+      },
+      "shape" : "Rectangle",
+      "dimension" : {
+        "x_dimension" : 990.0,
+        "y_dimension" : 10.0
+      },
+      "color" : [ 255, 255, 255 ],
+      "staticFriction" : 7.0,
+      "kineticFriction" : 5.0,
+      "image" : ""
+    },
+    {
+      "gameobject_id" : 77,
+      "properties" : [  "visible", "surface" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 50.0,
+        "y_position" : 400.0
+      },
+      "shape" : "Rectangle",
+      "dimension" : {
+        "x_dimension" : 990.0,
+        "y_dimension" : 10.0
+      },
+      "color" : [ 255, 255, 255 ],
+      "staticFriction" : 7.0,
+      "kineticFriction" : 5.0,
+      "image" : ""
+    },
+    {
+      "gameobject_id" : 80,
+      "properties" : [  "visible", "surface" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 50.0,
+        "y_position" : 200.0
+      },
+      "shape" : "Rectangle",
+      "dimension" : {
+        "x_dimension" : 990.0,
+        "y_dimension" : 10.0
+      },
+      "color" : [ 255, 255, 255 ],
+      "staticFriction" : 7.0,
+      "kineticFriction" : 5.0,
+      "image" : ""
+    },
+
+    {
+      "gameobject_id" : 9,
+      "properties" : [  "visible", "surface" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 50.0,
+        "y_position" : 50.0
+      },
+      "shape" : "Rectangle",
+      "dimension" : {
+        "x_dimension" : 990.0,
+        "y_dimension" : 150.0
+      },
+      "color" : [ 255, 255, 255 ],
+      "staticFriction" : 7.0,
+      "kineticFriction" : 5.0,
+      "image" : "data/background_images/wood.jpg"
+    },
+     {
+    "gameobject_id" : 10,
     "properties" : [  "visible", "surface" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50,
-      "y_position" : 64.72327423095703
+      "y_position" : 200
     },
     "shape" : "Rectangle",
     "dimension" : {
       "x_dimension" : 990,
-      "y_dimension" : 108.55345911949688
-    },
-    "color" : [ 0, 255, 0 ],
-    "staticFriction" : 0.0,
-    "kineticFriction" : 0.0,
-    "image" : ""
-  },  {
-    "gameobject_id" : 8,
-    "properties" : [  "visible", "surface" ],
-    "mass" : "Infinity",
-    "position" : {
-      "x_position" : 50,
-      "y_position" : 173.89308166503906
-    },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 990,
-      "y_dimension" : 284.21383647798746
+      "y_dimension" : 200
     },
     "color" : [ 255, 255, 0 ],
-    "staticFriction" : 0.0,
-    "kineticFriction" : 0.0,
-    "image" : ""
+    "staticFriction" : 7.0,
+    "kineticFriction" : 5.0,
+    "image" : "data/background_images/wood.jpg"
   }, {
-    "gameobject_id" : 9,
+    "gameobject_id" : 11,
     "properties" : [  "visible", "surface" ],
     "mass" : "Infinity",
     "position" : {
       "x_position" : 50,
-      "y_position" : 464.13836669921875
+      "y_position" : 400
     },
     "shape" : "Rectangle",
     "dimension" : {
       "x_dimension" : 990,
-      "y_dimension" : 265.7232704402516
+      "y_dimension" : 300
     },
     "color" : [ 255, 0, 0 ],
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
-    "image" : ""
+    "image" : "data/background_images/wood.jpg"
   }, {
-    "gameobject_id" : 10,
-    "properties" : [ "collidable",  "strikeable", "visible" ],
+    "gameobject_id" : 12,
+    "properties" : [ "collidable",  "strikeable", "scoreable", "visible" ],
     "mass" : 10.0,
     "position" : {
       "x_position" : 557.0,
@@ -155,8 +213,8 @@
     "kineticFriction" : 0.0,
     "image" : ""
   }, {
-    "gameobject_id" : 11,
-    "properties" : [ "collidable",  "strikeable", "visible" ],
+    "gameobject_id" : 13,
+    "properties" : [ "collidable",  "strikeable", "scoreable", "visible" ],
     "mass" : 10.0,
     "position" : {
       "x_position" : 555.0,
@@ -172,8 +230,8 @@
     "kineticFriction" : 0.0,
     "image" : ""
   }, {
-    "gameobject_id" : 12,
-    "properties" : [ "collidable",  "strikeable", "visible" ],
+    "gameobject_id" : 14,
+    "properties" : [ "collidable",  "strikeable", "scoreable", "visible" ],
     "mass" : 10.0,
     "position" : {
       "x_position" : 552.0,
@@ -190,8 +248,8 @@
     "image" : ""
   },
     {
-      "gameobject_id" : 13,
-      "properties" : [ "collidable",  "strikeable", "visible" ],
+      "gameobject_id" : 15,
+      "properties" : [ "collidable",  "strikeable", "scoreable", "visible" ],
       "mass" : 10.0,
       "position" : {
         "x_position" : 552.0,
@@ -206,15 +264,72 @@
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
       "image" : ""
-    } ],
+    } ,
+
+    {
+      "gameobject_id" : 16,
+      "properties" : [ "surface", "visible" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 552.0,
+        "y_position" : 550.0
+      },
+      "shape" : "Circle",
+      "dimension" : {
+        "x_dimension" : 50.0,
+        "y_dimension" : 50.0
+      },
+      "color" : [ 0, 100, 0 ],
+      "staticFriction" : 0.0,
+      "kineticFriction" : 0.0,
+      "image" : "data/nonstrikeable_images/numberOne.jpg"
+    },
+    {
+      "gameobject_id" : 17,
+      "properties" : [ "surface", "visible" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 552.0,
+        "y_position" : 300.0
+      },
+      "shape" : "Circle",
+      "dimension" : {
+        "x_dimension" : 50.0,
+        "y_dimension" : 50.0
+      },
+      "color" : [ 0, 100, 0 ],
+      "staticFriction" : 0.0,
+      "kineticFriction" : 0.0,
+      "image" : "data/nonstrikeable_images/numberTwo.jpg"
+    },
+    {
+      "gameobject_id" : 18,
+      "properties" : [ "surface", "visible" ],
+      "mass" : "Infinity",
+      "position" : {
+        "x_position" : 552.0,
+        "y_position" : 125.0
+      },
+      "shape" : "Circle",
+      "dimension" : {
+        "x_dimension" : 50.0,
+        "y_dimension" : 50.0
+      },
+      "color" : [ 0, 100, 0 ],
+      "staticFriction" : 0.0,
+      "kineticFriction" : 0.0,
+      "image" : "data/nonstrikeable_images/numberThree.jpg"
+
+    }
+  ],
   "players" : [ {
     "player_id" : 1,
-    "my_strikeable" : [ 10, 11 ],
+    "my_strikeable" : [ 12, 13],
     "my_controllable": []
   },
     {
       "player_id" : 2,
-      "my_strikeable" : [ 12, 13 ],
+      "my_strikeable" : [ 14, 15],
       "my_controllable": []
     }],
   "variables" : [ {
@@ -230,31 +345,7 @@
   "rules" : {
     "collisions": [
       {
-        "first_id": 6,
-        "second_id": 10,
-        "command": [
-          {
-            "AddDelayedPointsCommand": [
-              10,
-              3
-            ]
-          }
-        ]
-      },
-      {
-        "first_id": 6,
-        "second_id": 11,
-        "command": [
-          {
-            "AddDelayedPointsCommand": [
-              11,
-              3
-            ]
-          }
-        ]
-      },
-      {
-        "first_id": 6,
+        "first_id": 9,
         "second_id": 12,
         "command": [
           {
@@ -266,7 +357,7 @@
         ]
       },
       {
-        "first_id": 6,
+        "first_id": 9,
         "second_id": 13,
         "command": [
           {
@@ -278,31 +369,31 @@
         ]
       },
       {
-        "first_id": 8,
-        "second_id": 10,
+        "first_id": 9,
+        "second_id": 14,
         "command": [
           {
             "AddDelayedPointsCommand": [
-              10,
-              2
+              14,
+              3
             ]
           }
         ]
       },
       {
-        "first_id": 8,
-        "second_id": 11,
+        "first_id": 9,
+        "second_id": 15,
         "command": [
           {
             "AddDelayedPointsCommand": [
-              11,
-              2
+              15,
+              3
             ]
           }
         ]
       },
       {
-        "first_id": 8,
+        "first_id": 10,
         "second_id": 12,
         "command": [
           {
@@ -314,7 +405,7 @@
         ]
       },
       {
-        "first_id": 8,
+        "first_id": 10,
         "second_id": 13,
         "command": [
           {
@@ -326,31 +417,31 @@
         ]
       },
       {
-        "first_id": 9,
-        "second_id": 10,
+        "first_id": 10,
+        "second_id": 14,
         "command": [
           {
             "AddDelayedPointsCommand": [
-              10,
-              1
+              14,
+              2
             ]
           }
         ]
       },
       {
-        "first_id": 9,
-        "second_id": 11,
+        "first_id": 10,
+        "second_id": 15,
         "command": [
           {
             "AddDelayedPointsCommand": [
-              11,
-              1
+              15,
+              2
             ]
           }
         ]
       },
       {
-        "first_id": 9,
+        "first_id": 11,
         "second_id": 12,
         "command": [
           {
@@ -362,7 +453,7 @@
         ]
       },
       {
-        "first_id": 9,
+        "first_id": 11,
         "second_id": 13,
         "command": [
           {
@@ -374,33 +465,25 @@
         ]
       },
       {
-        "first_id": 2,
-        "second_id": 10,
+        "first_id": 11,
+        "second_id": 14,
         "command": [
           {
             "AddDelayedPointsCommand": [
-              10,
-              0
-            ],
-            "SetVisibleCommand": [
-              10,
-              0
+              14,
+              1
             ]
           }
         ]
       },
       {
-        "first_id": 2,
-        "second_id": 11,
+        "first_id": 11,
+        "second_id": 15,
         "command": [
           {
             "AddDelayedPointsCommand": [
-              11,
-              0
-            ],
-            "SetVisibleCommand": [
-              11,
-              0
+              15,
+              1
             ]
           }
         ]
@@ -438,32 +521,32 @@
         ]
       },
       {
-        "first_id": 1,
-        "second_id": 10,
+        "first_id": 2,
+        "second_id": 14,
         "command": [
           {
             "AddDelayedPointsCommand": [
-              10,
+              14,
               0
             ],
             "SetVisibleCommand": [
-              10,
+              14,
               0
             ]
           }
         ]
       },
       {
-        "first_id": 1,
-        "second_id": 11,
+        "first_id": 2,
+        "second_id": 15,
         "command": [
           {
             "AddDelayedPointsCommand": [
-              11,
+              15,
               0
             ],
             "SetVisibleCommand": [
-              11,
+              15,
               0
             ]
           }
@@ -502,32 +585,32 @@
         ]
       },
       {
-        "first_id": 3,
-        "second_id": 10,
+        "first_id": 1,
+        "second_id": 14,
         "command": [
           {
             "AddDelayedPointsCommand": [
-              10,
+              14,
               0
             ],
             "SetVisibleCommand": [
-              10,
+              14,
               0
             ]
           }
         ]
       },
       {
-        "first_id": 3,
-        "second_id": 11,
+        "first_id": 1,
+        "second_id": 15,
         "command": [
           {
             "AddDelayedPointsCommand": [
-              11,
+              15,
               0
             ],
             "SetVisibleCommand": [
-              11,
+              15,
               0
             ]
           }
@@ -560,6 +643,38 @@
             ],
             "SetVisibleCommand": [
               13,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "first_id": 3,
+        "second_id": 14,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [
+              14,
+              0
+            ],
+            "SetVisibleCommand": [
+              14,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "first_id": 3,
+        "second_id": 15,
+        "command": [
+          {
+            "AddDelayedPointsCommand": [
+              15,
+              0
+            ],
+            "SetVisibleCommand": [
+              15,
               0
             ]
           }

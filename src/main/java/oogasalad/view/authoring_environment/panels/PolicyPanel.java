@@ -29,6 +29,8 @@ import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.annotations.VariableParamNumber;
 import oogasalad.view.authoring_environment.authoring_screens.PolicyType;
 import java.lang.reflect.Constructor;
+import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
+import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import org.controlsfx.control.CheckComboBox;
 
 public class PolicyPanel implements Panel{

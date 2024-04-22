@@ -1,5 +1,5 @@
 {
-  "gameName": "raftwars",
+  "gameName": "angrybirds",
   "game_objects": [
     {
       "gameobject_id": 0,
@@ -25,7 +25,7 @@
       "staticFriction": 0,
       "kineticFriction": 0,
       "inclineAngle": 90,
-      "image": "data/background_images/wood.jpg"
+      "image": "data/background_images/angryBirdsBackdrop.jpg"
     },
     {
       "gameobject_id": 1,
@@ -137,13 +137,13 @@
       ],
       "mass": 10,
       "position": {
-        "x_position": 200,
-        "y_position": 800
+        "x_position": 240,
+        "y_position": 595
       },
       "shape": "Rectangle",
       "dimension": {
-        "x_dimension": 5,
-        "y_dimension": 5
+        "x_dimension": 50,
+        "y_dimension": 50
       },
       "color": [
         0,
@@ -152,7 +152,7 @@
       ],
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": "",
+      "image": "data/nonstrikeable_images/bird.jpg",
       "phaser": true
     },
     {
@@ -164,7 +164,7 @@
       "mass": 1,
       "position": {
         "x_position": 650.0,
-        "y_position": 750.0
+        "y_position": 700.0
       },
       "inelastic": true,
       "shape": "Rectangle",
@@ -179,10 +179,36 @@
       ],
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": ""
+      "image": "data/nonstrikeable_images/cardboard.jpg"
     },
     {
       "gameobject_id": 7,
+      "properties": [
+        "visible",
+        "collidable"
+      ],
+      "mass": 1,
+      "position": {
+        "x_position": 650,
+        "y_position": 750
+      },
+      "inelastic": true,
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 50,
+        "y_dimension": 50
+      },
+      "color": [
+        0,
+        0,
+        255
+      ],
+      "staticFriction": 0.0,
+      "kineticFriction": 0.0,
+      "image": "data/nonstrikeable_images/cardboard.jpg"
+    },
+    {
+      "gameobject_id": 8,
       "properties": [
         "visible",
         "collidable"
@@ -200,25 +226,102 @@
       },
       "color": [
         0,
-        0,
-        255
+        255,
+        0
       ],
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": ""
+      "image": "data/nonstrikeable_images/cardboard.jpg"
     },
     {
-      "gameobject_id": 8,
-      "inelastic": true,
+      "gameobject_id": 9,
       "properties": [
         "visible",
         "collidable"
       ],
       "mass": 1,
       "position": {
-        "x_position": 650,
-        "y_position": 699
+        "x_position": 660,
+        "y_position": 670
       },
+      "inelastic": true,
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 30,
+        "y_dimension": 30
+      },
+      "color": [
+        0,
+        255,
+        0
+      ],
+      "staticFriction": 0.0,
+      "kineticFriction": 0.0,
+      "image": "data/nonstrikeable_images/pig.jpg"
+    },
+    {
+      "gameobject_id": 10,
+      "properties": [
+        "visible",
+        "collidable"
+      ],
+      "mass": "Infinity",
+      "position": {
+        "x_position": 725,
+        "y_position": 775
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 75,
+        "y_dimension": 75
+      },
+      "color": [
+        0,
+        255,
+        0
+      ],
+      "staticFriction": 0.0,
+      "kineticFriction": 0.0,
+      "image": "data/nonstrikeable_images/hardAngryBox.jpg"
+    },
+    {
+      "gameobject_id": 11,
+      "properties": [
+        "visible",
+        "collidable"
+      ],
+      "mass": 1,
+      "position": {
+        "x_position": 745,
+        "y_position": 745
+      },
+      "inelastic": true,
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 30,
+        "y_dimension": 30
+      },
+      "color": [
+        0,
+        255,
+        0
+      ],
+      "staticFriction": 0.0,
+      "kineticFriction": 0.0,
+      "image": "data/nonstrikeable_images/pig.jpg"
+    },
+    {
+      "gameobject_id": 12,
+      "properties": [
+        "visible",
+        "collidable"
+      ],
+      "mass": 1,
+      "position": {
+        "x_position": 850,
+        "y_position": 800
+      },
+      "inelastic": true,
       "shape": "Rectangle",
       "dimension": {
         "x_dimension": 50,
@@ -231,10 +334,11 @@
       ],
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": ""
+      "image": "data/nonstrikeable_images/pig.jpg"
     },
+
     {
-      "gameobject_id": 10,
+      "gameobject_id": 13,
       "properties": [
         "visible",
         "collidable"
@@ -259,7 +363,7 @@
       "image": ""
     },
     {
-      "gameobject_id": 9,
+      "gameobject_id": 14,
       "properties": [
         "visible",
         "collidable"
@@ -267,12 +371,12 @@
       "mass": "Infinity",
       "position": {
         "x_position": 180,
-        "y_position": 805
+        "y_position": 645
       },
       "shape": "Rectangle",
       "dimension": {
         "x_dimension": 40,
-        "y_dimension": 200
+        "y_dimension": 400
       },
       "color": [
         0,
@@ -281,7 +385,7 @@
       ],
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": "",
+      "image": "data/nonstrikeable_images/slingshot.jpg",
       "inelastic": true
     }
   ],
@@ -402,7 +506,43 @@
         ]
       },
       {
-        "first_id": 10,
+        "first_id": 9,
+        "second_id": 5,
+        "command": [
+          {
+            "SetVisibleCommand": [
+              9,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "first_id": 11,
+        "second_id": 5,
+        "command": [
+          {
+            "SetVisibleCommand": [
+              11,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "first_id": 12,
+        "second_id": 5,
+        "command": [
+          {
+            "SetVisibleCommand": [
+              12,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "first_id": 13,
         "second_id": 5,
         "command": [
           {
@@ -410,17 +550,19 @@
               5,
               0
             ]
-          }
+          },
+          {
+            "MoveToStartingStateCommand": [
+              5
+            ]
+            }
         ]
       }
     ],
     "turn_policy": "StandardTurnPolicy",
     "round_policy": {
       "GameObjectsNotVisibleCondition": [
-        5,
-        6,
-        7,
-        8
+        9,11,12
       ]
     },
     "win_condition": {
@@ -438,7 +580,7 @@
     "rank_comparator": "LowestScoreComparator",
     "static_checker": {
       "VelocityStaticChecker": [
-        5,6,7,8
+        5,6,7,8,9,10,11,12
       ]
     }
   }

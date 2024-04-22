@@ -49,6 +49,8 @@ public class AddDelayedPointsCommand implements Command {
   public void execute(GameEngine engine) {
     GameObject c = engine.getGameObjectContainer()
         .getGameObject((int) Math.round(arguments.get(0)));
+    System.out.println(arguments.get(0));
+    System.out.println(engine.getPlayerContainer().getPlayer(engine.getPlayerContainer().getActive()).getStrikeableID());
     Optional<Scoreable> optionalScoreable = c.getScoreable();
     optionalScoreable.ifPresent(scoreable -> scoreable.setTemporaryScore(arguments.get(1)));
   }

@@ -70,7 +70,6 @@ public class GameEngine implements ExternalGameEngine {
     gameObjects.update(dt);
     handleCollisions(dt);
     if (gameObjects.checkStatic(rules.checker())) {
-      System.out.println(1);
       switchToCorrectStaticState();
       updateHistory();
       staticState = true;
@@ -135,6 +134,7 @@ public class GameEngine implements ExternalGameEngine {
    */
   public void advanceTurn() {
     turn = rules.turnPolicy().getNextTurn();
+    gameObjects.toStaticState();
   }
 
   /**

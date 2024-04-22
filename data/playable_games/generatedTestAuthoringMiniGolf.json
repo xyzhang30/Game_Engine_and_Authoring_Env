@@ -67,7 +67,7 @@
   "players" : [ {
     "player_id" : 1,
     "my_strikeable" : [ 2 ],
-    "my_controllable": []
+    "my_controllable" : [ ]
   } ],
   "variables" : [ {
     "global" : {

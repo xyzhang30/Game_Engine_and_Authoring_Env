@@ -12,13 +12,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oogasalad.view.Window;
-import oogasalad.view.authoring_environment.panels.AuthoringProxy;
+import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.panels.ColorPanel;
 import oogasalad.view.authoring_environment.panels.ImagePanel;
 import oogasalad.view.authoring_environment.panels.InteractionPanel;
+import oogasalad.view.authoring_environment.panels.Panel;
 import oogasalad.view.authoring_environment.panels.PolicyPanel;
 import oogasalad.view.authoring_environment.panels.ShapePanel;
-import oogasalad.view.authoring_environment.panels.ShapeProxy;
+import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 
 /**
  * Represents the authoring screen for the authoring environment in the application, providing the user interface for creating and managing various game elements.
@@ -61,23 +62,33 @@ public class AuthoringScreen {
 
   private void setScene(String screenTitle) {
     setTitle(screenTitle);
-    // TODO: BAD DESIGN -> WHERE and HOW to set the Container?
     switch (screenTitle) {
-//      case "Background" -> container.setPanels(List.of(new ColorPanel(shapeProxy, containerPane),
-//          new ImagePanel(authoringProxy, shapeProxy,
-//              containerPane)));
-      case "Game Objects" -> container.setPanels(
-          List.of(new ColorPanel(shapeProxy, containerPane),
-              new ImagePanel(authoringProxy, shapeProxy,
-                  containerPane),
-              new ShapePanel(authoringProxy, shapeProxy, rootPane,
-                  containerPane, canvasPane)));
-      case "Interactions" ->
-          container.setPanels(List.of(new InteractionPanel(authoringProxy, shapeProxy, rootPane,
-              containerPane, canvasPane)));
-      case "Policies" -> container.setPanels(List.of(new PolicyPanel(authoringProxy, shapeProxy, rootPane, containerPane, canvasPane)));
+      case "Game Objects":
+        container.setPanels(createGameObjectsPanel());
+        break;
+      case "Interactions":
+        container.setPanels(createInteractionsPanel());
+        break;
+      case "Policies":
+        container.setPanels(createPoliciesPanel());
+        break;
     }
+  }
 
+  private List<Panel> createGameObjectsPanel() {
+    return List.of(
+        new ColorPanel(shapeProxy, containerPane),
+        new ImagePanel(authoringProxy, shapeProxy, containerPane),
+        new ShapePanel(authoringProxy, shapeProxy, rootPane, containerPane, canvasPane)
+    );
+  }
+
+  private List<Panel> createInteractionsPanel() {
+    return List.of(new InteractionPanel(authoringProxy, shapeProxy, rootPane, containerPane, canvasPane));
+  }
+
+  private List<Panel> createPoliciesPanel() {
+    return List.of(new PolicyPanel(authoringProxy, shapeProxy, rootPane, containerPane, canvasPane));
   }
 
   private void setTitle(String title) {
