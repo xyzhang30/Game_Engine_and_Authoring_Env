@@ -44,8 +44,8 @@ public abstract class PhysicsHandler {
    * @param dt                  The time step for the collision handling process.
    */
   public void handleCollision(GameObjectContainer gameObjectContainer, double dt) {
-    GameObjectRecord gor1 = gameObjectContainer.getGameObjectRecord(id1);
-    GameObjectRecord gor2 = gameObjectContainer.getGameObjectRecord(id2);
+    GameObjectRecord gor1 = gameObjectContainer.getGameObject(id1).toGameObjectRecord();
+    GameObjectRecord gor2 = gameObjectContainer.getGameObject(id2).toGameObjectRecord();
     GameObject go1 = gameObjectContainer.getGameObject(id1);
     GameObject go2 = gameObjectContainer.getGameObject(id2);
     go1.calculateNextSpeeds(makeVelocityFunction(gor1, gor2, dt));

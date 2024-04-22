@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.Stack;
+import java.util.stream.Collectors;
 import oogasalad.Pair;
 import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
+import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.gameobject.CollisionDetector;
 import oogasalad.model.gameengine.gameobject.GameObject;
@@ -76,7 +78,7 @@ public class GameEngine implements ExternalGameEngine {
       go.update();
     });
     handleCollisions(dt);
-    if (gameObjects.checkStatic(rules.checker())) {
+    if (checkStatic(rules.checker())) {
       switchToCorrectStaticState();
       updateHistory();
       staticState = true;
@@ -84,7 +86,7 @@ public class GameEngine implements ExternalGameEngine {
       staticState = false;
     }
     gameObjects.getGameObject(playerContainer.getPlayer(playerContainer.getActive()).getStrikeableID()).setVisible(true);
-    return new GameRecord(gameObjects.toGameObjectRecords(),
+    return new GameRecord(getListOfGameObjectRecords(),
         playerContainer.getSortedPlayerRecords(rules.rank()),
         round, turn, gameOver, staticState);
   }
@@ -174,7 +176,7 @@ public class GameEngine implements ExternalGameEngine {
 
   public void toLastStaticState() {
     staticState = true;
-    for (GameObjectRecord cr : gameObjects.toGameObjectRecords()) {
+    for (GameObjectRecord cr : getListOfGameObjectRecords()) {
       GameObject c = gameObjects.getGameObject(cr.id());
       Optional<Scoreable> optionalScoreable = c.getScoreable();
       optionalScoreable.ifPresent(scoreable -> scoreable.setTemporaryScore(0));
@@ -183,17 +185,8 @@ public class GameEngine implements ExternalGameEngine {
     turn = newCurrentState.turn();
     round = newCurrentState.round();
     gameOver = newCurrentState.gameOver();
-    gameObjects.toLastStaticStateGameObjects();
+    gameObjects.getGameObjects().forEach(GameObject::toLastStaticStateGameObjects);
     playerContainer.toLastStaticStatePlayers();
-  }
-
-  /**
-   * Checks if the game is over.
-   *
-   * @return True if the game is over, otherwise false.
-   */
-  public boolean isOver() {
-    return gameOver;
   }
 
   /**
@@ -230,9 +223,9 @@ public class GameEngine implements ExternalGameEngine {
    *
    * @author Konur Nordberg
    */
-  public Set<Pair> getCollisionPairs() {
+  private Set<Pair> getCollisionPairs() {
     Set<Pair> collisionPairs = new HashSet<>();
-    List<GameObjectRecord> records = gameObjects.toGameObjectRecords();
+    List<GameObjectRecord> records = getListOfGameObjectRecords();
     for (int i = 0; i < records.size(); i++) {
       GameObjectRecord record1 = records.get(i);
       GameObject gameObject1 = gameObjects.getGameObject(record1.id());
@@ -277,7 +270,7 @@ public class GameEngine implements ExternalGameEngine {
     playerContainer.addPlayerHistory();
     staticStateStack = new Stack<>();
     staticStateStack.push(
-        new GameRecord(gameObjects.toGameObjectRecords(), playerContainer.getSortedPlayerRecords(
+        new GameRecord(getListOfGameObjectRecords(), playerContainer.getSortedPlayerRecords(
             rules.rank()),
             round, turn, gameOver, staticState));
   }
@@ -296,9 +289,24 @@ public class GameEngine implements ExternalGameEngine {
     playerContainer.addPlayerHistory();
     gameObjects.getGameObjects().forEach(GameObject::addStaticStateGameObject);
     staticStateStack.push(
-        new GameRecord(gameObjects.toGameObjectRecords(),
+        new GameRecord(getListOfGameObjectRecords(),
             playerContainer.getSortedPlayerRecords(rules.rank()),
             round, turn, gameOver, staticState));
   }
+
+   // Checks if all visible GameObjects in the container are meeting at least one of the static
+   // conditions (defined for that game)
+   private boolean checkStatic(List<StaticChecker> staticCheckers) {
+     return staticCheckers.stream().anyMatch(checker ->
+         gameObjects.getGameObjects().stream().allMatch(gameObject ->
+             checker.isStatic(gameObject.toGameObjectRecord())
+         )
+     );
+   }
+
+   private List<GameObjectRecord> getListOfGameObjectRecords() {
+     return gameObjects.getGameObjects().stream().map(GameObject::toGameObjectRecord)
+         .collect(Collectors.toList());
+   }
 
 }

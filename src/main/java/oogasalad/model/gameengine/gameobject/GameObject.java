@@ -283,8 +283,6 @@ public class GameObject {
     return myShape;
   }
 
-  protected boolean getinelastic() { return inelastic;}
-
 
   /**
    * Calculates and sets the next speeds of the GameObject based on the information provided by the
@@ -317,7 +315,7 @@ public class GameObject {
    * Restores the previous state of the gameObject (as a record) to the history of the gameObject
    */
 
-  protected void toLastStaticStateGameObjects() {
+  public void toLastStaticStateGameObjects() {
     GameObjectRecord record = gameObjectHistory.peek();
     assignValuesFromRecord(record);
   }

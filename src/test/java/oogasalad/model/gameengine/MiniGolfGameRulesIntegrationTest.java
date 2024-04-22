@@ -61,7 +61,6 @@ public class MiniGolfGameRulesIntegrationTest {
     gameEngine.update(1);
     // updates ideally
     assertEquals(3.0, gameEngine.restoreLastStaticGameRecord().round(), DELTA);
-    assertTrue(gameEngine.isOver());
   }
 
 }
