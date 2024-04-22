@@ -17,6 +17,7 @@ public class EightBallCommand implements Command {
   public void execute(GameEngine engine) {
     engine.getGameObjectContainer().getGameObject((int) Math.round(arguments.get(0))).setVisible(false);
     int active = engine.getPlayerContainer().getActive();
+    engine.getGameObjectContainer().toStaticState();
     boolean didActiveWin =
         engine.getPlayerContainer().getPlayer(active).areAllScoreablesInvisible();
     for (PlayerRecord pr : engine.getPlayerContainer().getPlayerRecords()) {
