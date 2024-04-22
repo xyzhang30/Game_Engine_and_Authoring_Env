@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import oogasalad.model.api.PlayerRecord;
+import oogasalad.model.gameengine.rank.IDComparator;
 import oogasalad.model.gameengine.rank.PlayerRecordComparator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -173,6 +174,15 @@ public class PlayerContainer {
     for (Player p : myPlayers.values()) {
       p.toLastStaticStatePlayers();
     }
+  }
+
+  public List<PlayerRecord> getLastStatics() {
+    List<PlayerRecord> lst = new ArrayList<>();
+    for (Player p : myPlayers.values()) {
+      lst.add(p.getLastPlayerRecord());
+    }
+    lst.sort(new IDComparator());
+    return lst;
   }
 
   //fetches list of player records in no particular order

@@ -180,6 +180,10 @@ public class Player {
     }
   }
 
+  protected PlayerRecord getLastPlayerRecord() {
+    return playerHistory.peek();
+  }
+
   /**
    * Adds the current state of the gameObject (as a record) to the history of the player
    */
