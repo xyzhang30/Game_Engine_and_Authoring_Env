@@ -2,9 +2,9 @@ package oogasalad.view.authoring_environment.panels;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 import javafx.geometry.Bounds;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -29,6 +29,7 @@ import oogasalad.view.authoring_environment.data.Coordinate;
 import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
+import oogasalad.view.enums.CollidableType;
 
 public class ShapePanel implements Panel {
 
@@ -43,7 +44,7 @@ public class ShapePanel implements Panel {
   private Slider ySlider;
   private Slider angleSlider;
   private ComboBox<GameObjectType> gameObjectTypeDropdown;
-  private ComboBox<String> collidableTypeDropDown;
+  private ComboBox<CollidableType> collidableTypeDropDown;
   private TextField kFrictionTextField;
   private TextField sFrictionTextField;
   private TextField massTextField;
@@ -120,31 +121,13 @@ public class ShapePanel implements Panel {
   private void handleMousePressed(MouseEvent event) {
     Shape shape = (Shape) event.getSource();
     try {
-      duplicateAndDragShape(shape, event);
+      setShapeBeginDrag(shape, event);
     } catch (ReflectiveOperationException e) {
       e.printStackTrace();
     }
   }
 
-  private void duplicateAndDragShape(Shape originalShape, MouseEvent event) throws ReflectiveOperationException {
-    System.out.println("Initiating Drag: " + originalShape);
-
-    // Duplicate shape with properties
-    Shape duplicateShape = originalShape.getClass().getDeclaredConstructor().newInstance();
-    duplicateShape.setFill(originalShape.getFill());
-    duplicateShape.setStroke(originalShape.getStroke());
-    duplicateShape.setStrokeWidth(originalShape.getStrokeWidth());
-    duplicateShape.setId(String.valueOf(shapeProxy.getShapeCount())); // Update ID to next available
-    shapeProxy.setShapeCount(shapeProxy.getShapeCount()+1);  // Increment shape count
-
-    handleGameObjectEvents(duplicateShape);
-
-    containerPane.getChildren().add(duplicateShape);
-
-    moveShapeToCanvas(originalShape, event);
-  }
-
-  private void moveShapeToCanvas(Shape shape, MouseEvent event) {
+  private void setShapeBeginDrag(Shape shape, MouseEvent event) throws ReflectiveOperationException {
     if (shape.getParent() != null) {
       ((Pane) shape.getParent()).getChildren().remove(shape);
     }
@@ -168,6 +151,8 @@ public class ShapePanel implements Panel {
       shapeProxy.getGameObjectAttributesContainer().setPosition(new Coordinate(leftAnchor, topAnchor));
     } else {
       shape.setVisible(false);
+      rootPane.getChildren().remove(shape);
+      shapeProxy.removeFromShapeStack(shape);
     }
   }
   private void setShapeOnClick(Shape shape) {
@@ -197,18 +182,11 @@ public class ShapePanel implements Panel {
     setPlayerAssignmentVisibility(false);
   }
 
-
-
-
-
   private boolean isInAuthoringBox(Shape shape) {
     Bounds shapeBounds = shape.getBoundsInParent();
     Bounds authoringBoxBounds = canvas.getBoundsInParent();
-    System.out.println(shapeBounds);
-    System.out.println(authoringBoxBounds);
     return authoringBoxBounds.contains(shapeBounds);
   }
-
 
   private void createSizeAndAngleSliders() {
     VBox sliderContainerBox = new VBox();
@@ -257,12 +235,12 @@ public class ShapePanel implements Panel {
   private Slider createSizeSlider(String labelText, VBox sliderContainerBox) {
     Slider slider = new Slider();
     slider.setPrefWidth(200);
-    slider.setMin(0.2);
-    slider.setMax(2);
-    slider.setValue(1);
+    slider.setMin(0);
+    slider.setMax(20);
+    slider.setValue(0);
     slider.setShowTickLabels(true);
     slider.setShowTickMarks(true);
-    slider.setMajorTickUnit(0.1);
+    slider.setMajorTickUnit(1);
     slider.setOrientation(Orientation.HORIZONTAL);
 
     Label label = new Label(labelText);
@@ -281,14 +259,17 @@ public class ShapePanel implements Panel {
 
   private void changeAngle(double angle) {
     shapeProxy.getShape().setRotate(angle);
+    // shapeProxy.getGameObjectAttributesContainer().setAngle(angle);
   }
 
   private void changeXSize(double xScale) {
     shapeProxy.getShape().setScaleX(xScale);
+    shapeProxy.getGameObjectAttributesContainer().setWidth(shapeProxy.getShape().getLayoutBounds().getWidth()*xScale);
   }
 
   private void changeYSize(double yScale) {
     shapeProxy.getShape().setScaleY(yScale);
+    shapeProxy.getGameObjectAttributesContainer().setHeight(shapeProxy.getShape().getLayoutBounds().getHeight()*yScale);
   }
   private void createGameObjectTypeSelection() {
     gameObjectTypeDropdown = new ComboBox<>();
@@ -352,7 +333,7 @@ public class ShapePanel implements Panel {
   private void createCollidableTypeOptions() {
     collidableTypeDropDown = new ComboBox<>();
     collidableTypeDropDown.getItems()
-        .addAll("STRIKEABLE", "CONTROLLABLE", "NON-CONTROLLABLE");
+        .addAll(CollidableType.STRIKABLE, CollidableType.CONTROLLABLE, CollidableType.NONCONTROLLABLE);
     collidableTypeDropDown.setPromptText("Select Collidable Type");
     AnchorPane.setRightAnchor(collidableTypeDropDown, 300.0);
     AnchorPane.setTopAnchor(collidableTypeDropDown, 200.0);
@@ -401,9 +382,14 @@ public class ShapePanel implements Panel {
         .addAll(scoreableCheckBox, scoreable);
   }
 
+  private void addNewPlayerToProxy() {
+    authoringProxy.getPlayers().putIfAbsent(authoringProxy.getNumPlayers(), new HashMap<>());
+    authoringProxy.getPlayers().get(authoringProxy.getNumPlayers()).putIfAbsent(CollidableType.STRIKABLE, new ArrayList<>());
+    authoringProxy.getPlayers().get(authoringProxy.getNumPlayers()).putIfAbsent(CollidableType.CONTROLLABLE, new ArrayList<>());
+  }
   private void createMakePlayers() {
     // default 1 player
-    authoringProxy.getPlayers().putIfAbsent(authoringProxy.getNumPlayers(), new ArrayList<>());
+    addNewPlayerToProxy();
 
     Label numPlayersLabel = new Label("Number of Players");
     AnchorPane.setTopAnchor(numPlayersLabel, 525.0);
@@ -434,13 +420,13 @@ public class ShapePanel implements Panel {
 
       clearFields();
       if (oldVal != null) {
-        shapeProxy.getGameObjectAttributesContainer().getProperties().remove(oldVal.toString().toLowerCase());
+        shapeProxy.getGameObjectAttributesContainer().getProperties().remove(oldVal.toString());
       }
-      shapeProxy.getGameObjectAttributesContainer().getProperties().add(gameObjectType.toString().toLowerCase());
+      shapeProxy.getGameObjectAttributesContainer().getProperties().add(gameObjectType.toString());
       updateSelectionOptions(gameObjectType);
 
       if (gameObjectType.equals(GameObjectType.SURFACE)) {
-        removeFromAuthoringPlayers();
+        removeObjectFromAuthoringPayersAnyList();
         setPlayerAssignmentVisibility(false);
       }
 
@@ -450,7 +436,8 @@ public class ShapePanel implements Panel {
   private void handleAddAndRemovePlayers() {
     addPlayerButton.setOnMouseClicked(e -> {
       authoringProxy.increaseNumPlayers();
-      authoringProxy.getPlayers().putIfAbsent(authoringProxy.getNumPlayers(), new ArrayList<>());
+      addNewPlayerToProxy();
+
       playerAssignmentListView.getItems().add("Player " + authoringProxy.getNumPlayers());
       numPlayers.setText(String.valueOf(authoringProxy.getNumPlayers()));
     });
@@ -465,14 +452,14 @@ public class ShapePanel implements Panel {
     });
   }
 
-  private void updateProxyMapWithTextFieldInput(TextField textField,
-      Consumer<String> inputConsumer) {
-    if (textField.isVisible()) {
-      String inputText = textField.getText();
-      textField.clear();
-      inputConsumer.accept(inputText);
-    }
-  }
+//  private void updateProxyMapWithTextFieldInput(TextField textField,
+//      Consumer<String> inputConsumer) {
+//    if (textField.isVisible()) {
+//      String inputText = textField.getText();
+//      textField.clear();
+//      inputConsumer.accept(inputText);
+//    }
+//  }
 
   private void handlePlayerAssignment() {
     handlePlayerListViewOnChange();
@@ -481,22 +468,23 @@ public class ShapePanel implements Panel {
   }
   private void handlePlayerListViewOnChange() {
     playerAssignmentListView.getSelectionModel().selectedIndexProperty().addListener(((observable, oldValue, newPlayerId) -> {
-      if (scoreableCheckBox.isSelected()) addToAuthoringPlayers((Integer) newPlayerId);
+      if (scoreableCheckBox.isSelected()) addToAuthoringPlayers((Integer) newPlayerId, collidableTypeDropDown.getValue());
     }));
   }
   private void handleCollidableTypeDropdownOnChange() {
     collidableTypeDropDown.valueProperty().addListener((obs, oldVal, collidableType) -> {
       if (collidableType == null) return;
 
-      shapeProxy.getGameObjectAttributesContainer().getProperties().remove(oldVal);
-      shapeProxy.getGameObjectAttributesContainer().getProperties().add(collidableType.toLowerCase());
+      shapeProxy.getGameObjectAttributesContainer().getProperties().remove(oldVal.toString());
+      shapeProxy.getGameObjectAttributesContainer().getProperties().add(collidableType.toString());
 
-      if (collidableType.equals("NON-CONTROLLABLE")) {
-        removeFromAuthoringPlayers();
+      if (collidableType.equals(CollidableType.NONCONTROLLABLE)) {
+        removeObjectFromAuthoringPayersAnyList();
         setPlayerAssignmentVisibility(false);
       } else {
         setPlayerAssignmentVisibility(true);
-        addToAuthoringPlayers(playerAssignmentListView.getSelectionModel().getSelectedIndex());
+        addToAuthoringPlayers(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
+           collidableTypeDropDown.getValue());
       }
     });
   }
@@ -504,27 +492,33 @@ public class ShapePanel implements Panel {
     scoreableCheckBox.selectedProperty().addListener((observable, oldValue, newState) -> {
       if (newState) {
         setPlayerAssignmentVisibility(true);
-        addToAuthoringPlayers(playerAssignmentListView.getSelectionModel().getSelectedIndex());
+        addToAuthoringPlayers(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
+            collidableTypeDropDown.getValue());
       } else {
-        removeFromAuthoringPlayers();
+        removeFromAuthoringPlayers(collidableTypeDropDown.getValue());
       }
     });
   }
-  private void addToAuthoringPlayers(int selectedPlayerId) {
-    Map<Integer, List<Integer>> playersMap = authoringProxy.getPlayers();
+  private void addToAuthoringPlayers(int selectedPlayerId, CollidableType collidableType) {
+    Map<Integer, Map<CollidableType, List<Integer>>> playersMap = authoringProxy.getPlayers();
     if (selectedPlayerId >= 0) {
-      if (!playersMap.get(selectedPlayerId+1).contains(Integer.parseInt(shapeProxy.getShape().getId()))) {
-        playersMap.get(selectedPlayerId+1).add(Integer.parseInt(shapeProxy.getShape().getId()));
+      if (!playersMap.get(selectedPlayerId+1).get(collidableType).contains(Integer.parseInt(shapeProxy.getShape().getId()))) {
+        playersMap.get(selectedPlayerId+1).get(collidableType).add(Integer.parseInt(shapeProxy.getShape().getId()));
       }
     }
   }
 
+  private void removeObjectFromAuthoringPayersAnyList() {
+    removeFromAuthoringPlayers(CollidableType.STRIKABLE);
+    removeFromAuthoringPlayers(CollidableType.CONTROLLABLE);
+  }
+
   // remove selected shape from the player holding it
-  private void removeFromAuthoringPlayers() {
-    Map<Integer, List<Integer>> playersMap = authoringProxy.getPlayers();
+  private void removeFromAuthoringPlayers(CollidableType collidableType) {
+    Map<Integer, Map<CollidableType, List<Integer>>> playersMap = authoringProxy.getPlayers();
     for (Integer player: playersMap.keySet()) {
-      if (playersMap.get(player).contains(Integer.parseInt(shapeProxy.getShape().getId()))) {
-        playersMap.get(player).remove((Integer) Integer.parseInt(shapeProxy.getShape().getId()));
+      if (playersMap.get(player).get(collidableType).contains(Integer.parseInt(shapeProxy.getShape().getId()))) {
+        playersMap.get(player).get(collidableType).remove((Integer) Integer.parseInt(shapeProxy.getShape().getId()));
       }
     }
   }

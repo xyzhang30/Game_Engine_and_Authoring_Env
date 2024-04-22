@@ -56,13 +56,13 @@ public class ShapeProxy {
     Rectangle rectangle = new Rectangle(100, 50, Color.BLACK);
     AnchorPane.setRightAnchor(rectangle, 150.0);
     AnchorPane.setTopAnchor(rectangle, 300.0);
-    rectangle.setStrokeWidth(5);
+    rectangle.setStrokeWidth(3);
 
     Ellipse ellipse = new Ellipse(30, 30);
     ellipse.setFill(Color.BLACK);
     AnchorPane.setRightAnchor(ellipse, 50.0);
     AnchorPane.setTopAnchor(ellipse, 300.0);
-    ellipse.setStrokeWidth(5);
+    ellipse.setStrokeWidth(3);
 
     templates.clear();
     templates.addAll(List.of(rectangle, ellipse));
@@ -160,8 +160,8 @@ public class ShapeProxy {
     if (!shapeStack.isEmpty()) {
       Shape currentShape = shapeStack.peek();
       gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));
-      gameObjectAttributesContainer.setWidth(currentShape.getLayoutBounds().getWidth());
-      gameObjectAttributesContainer.setHeight(currentShape.getLayoutBounds().getHeight());
+      gameObjectAttributesContainer.setWidth(currentShape.getLayoutBounds().getWidth()*currentShape.getScaleX());
+      gameObjectAttributesContainer.setHeight(currentShape.getLayoutBounds().getHeight()*currentShape.getScaleY());
       Bounds bounds = currentShape.localToScene(currentShape.getBoundsInLocal());
       gameObjectAttributesContainer.setPosition(new Coordinate(bounds.getMinX(), bounds.getMinY()));
     }
