@@ -421,8 +421,8 @@
   "rules": {
     "collisions": [
       {
-        "first_id": 8,
-        "second_id": 9,
+        "first_id": 9,
+        "second_id": 8,
         "command": [
           {
             "PlayerCompletedRoundCommand": []
@@ -445,7 +445,7 @@
         ]
       },
       {
-        "first_id": 8,
+        "first_id": 9,
         "second_id": 15,
         "command": [
           {
@@ -495,7 +495,7 @@
           },
           {
             "AddDelayedPointsCommand": [
-              14,
+              15,
               1
             ]
           }

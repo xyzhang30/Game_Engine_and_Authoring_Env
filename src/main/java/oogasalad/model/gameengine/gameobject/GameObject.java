@@ -397,6 +397,11 @@ public class GameObject {
     myVelocityX = 0;
     myNextVelocityX = 0;
   }
+
+  protected void moveTo(GameObject gameObject) {
+    myX = gameObject.getX();
+    myY = gameObject.getY();
+  }
 }
 
 
