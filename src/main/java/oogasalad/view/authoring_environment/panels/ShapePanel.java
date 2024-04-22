@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.collections.ListChangeListener;
 import javafx.geometry.Bounds;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -30,6 +31,7 @@ import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import oogasalad.view.enums.CollidableType;
+import org.controlsfx.control.CheckComboBox;
 
 public class ShapePanel implements Panel {
 
@@ -44,11 +46,11 @@ public class ShapePanel implements Panel {
   private Slider ySlider;
   private Slider angleSlider;
   private ComboBox<GameObjectType> gameObjectTypeDropdown;
-  private ComboBox<CollidableType> collidableTypeDropDown;
+  private CheckComboBox<CollidableType> collidableTypeDropDown;
   private TextField kFrictionTextField;
   private TextField sFrictionTextField;
   private TextField massTextField;
-  private TextField elasticityTextField;
+  private CheckBox elasticityCheckBox;
   private ListView<String> playerAssignmentListView;
   private CheckBox scoreableCheckBox;
   private Button addPlayerButton;
@@ -170,13 +172,13 @@ public class ShapePanel implements Panel {
     updateSlider(shape.getScaleX(), shape.getScaleY(), shape.getRotate());
   }
   private void clearFields() {
-    collidableTypeDropDown.valueProperty().setValue(null);
+    collidableTypeDropDown.getCheckModel().clearChecks();
     playerAssignmentListView.getSelectionModel().clearSelection();
     kFrictionTextField.clear();
     sFrictionTextField.clear();
     massTextField.clear();
-    elasticityTextField.clear();
-    scoreableCheckBox.setSelected(false);
+    elasticityCheckBox.setSelected(false);
+//    scoreableCheckBox.setSelected(false);
     setCollidableOptionVisibility(false);
     setSurfaceOptionVisibility(false);
     setPlayerAssignmentVisibility(false);
@@ -314,7 +316,7 @@ public class ShapePanel implements Panel {
   private void createCollidableOptions() {
     createCollidableTypeOptions();
     createCollidableParameterOptions();
-    createScoreableOption();
+//    createScoreableOption();
   }
 
   private void createPlayerAssignment() {
@@ -333,10 +335,10 @@ public class ShapePanel implements Panel {
   }
 
   private void createCollidableTypeOptions() {
-    collidableTypeDropDown = new ComboBox<>();
+    collidableTypeDropDown = new CheckComboBox<>();
     collidableTypeDropDown.getItems()
-        .addAll(CollidableType.STRIKABLE, CollidableType.CONTROLLABLE, CollidableType.NONCONTROLLABLE);
-    collidableTypeDropDown.setPromptText("Select Collidable Type");
+        .addAll(CollidableType.STRIKABLE, CollidableType.SCOREABLE, CollidableType.CONTROLLABLE, CollidableType.NONCONTROLLABLE);
+//    collidableTypeDropDown.setPromptText("Select Collidable Type");
     AnchorPane.setRightAnchor(collidableTypeDropDown, 300.0);
     AnchorPane.setTopAnchor(collidableTypeDropDown, 200.0);
     collidableTypeDropDown.setPrefSize(200, 50);
@@ -355,34 +357,35 @@ public class ShapePanel implements Panel {
     AnchorPane.setRightAnchor(mass, 410.0);
     AnchorPane.setTopAnchor(mass, 270.0);
 
-    elasticityTextField = new TextField();
-    elasticityTextField.setId("elasticity");
-    elasticityTextField.textProperty().addListener(new TextFieldListener(elasticityTextField.getId(), shapeProxy));
-    elasticityTextField.setPrefSize(40, 20);
-    AnchorPane.setRightAnchor(elasticityTextField, 450.0);
-    AnchorPane.setTopAnchor(elasticityTextField, 310.0);
+    elasticityCheckBox = new CheckBox();
+    elasticityCheckBox.setId("elasticity");
+    //THIS LISTENER DOESN'T DO ANYTHING NOW -- WHAT DOES IT NEED TO DO TO PASS THE VALUE BACK TO AUTHROING PROXY???
+    elasticityCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {});
+    elasticityCheckBox.setPrefSize(40, 20);
+    AnchorPane.setRightAnchor(elasticityCheckBox, 450.0);
+    AnchorPane.setTopAnchor(elasticityCheckBox, 310.0);
 
     elasticity = new Label("Elasticity");
     AnchorPane.setRightAnchor(elasticity, 390.0);
     AnchorPane.setTopAnchor(elasticity, 310.0);
 
     containerPane.getChildren()
-        .addAll(massTextField, mass, elasticityTextField, elasticity);
+        .addAll(massTextField, mass, elasticityCheckBox, elasticity);
   }
 
-  private void createScoreableOption() {
-    scoreableCheckBox = new CheckBox();
-    scoreableCheckBox.setPrefSize(20, 20);
-    AnchorPane.setRightAnchor(scoreableCheckBox, 470.0);
-    AnchorPane.setTopAnchor(scoreableCheckBox, 350.0);
-
-    scoreable = new Label("Scoreable");
-    AnchorPane.setRightAnchor(scoreable, 400.0);
-    AnchorPane.setTopAnchor(scoreable, 350.0);
-
-    containerPane.getChildren()
-        .addAll(scoreableCheckBox, scoreable);
-  }
+//  private void createScoreableOption() {
+//    scoreableCheckBox = new CheckBox();
+//    scoreableCheckBox.setPrefSize(20, 20);
+//    AnchorPane.setRightAnchor(scoreableCheckBox, 470.0);
+//    AnchorPane.setTopAnchor(scoreableCheckBox, 350.0);
+//
+//    scoreable = new Label("Scoreable");
+//    AnchorPane.setRightAnchor(scoreable, 400.0);
+//    AnchorPane.setTopAnchor(scoreable, 350.0);
+//
+//    containerPane.getChildren()
+//        .addAll(scoreableCheckBox, scoreable);
+//  }
 
   private void addNewPlayerToProxy() {
     authoringProxy.getPlayers().putIfAbsent(authoringProxy.getNumPlayers(), new HashMap<>());
@@ -465,42 +468,64 @@ public class ShapePanel implements Panel {
 
   private void handlePlayerAssignment() {
     handlePlayerListViewOnChange();
-    handleScorableCheckBoxOnChange();
+//    handleScorableCheckBoxOnChange();
     handleCollidableTypeDropdownOnChange();
   }
   private void handlePlayerListViewOnChange() {
     playerAssignmentListView.getSelectionModel().selectedIndexProperty().addListener(((observable, oldValue, newPlayerId) -> {
-      if (scoreableCheckBox.isSelected()) addToAuthoringPlayers((Integer) newPlayerId, collidableTypeDropDown.getValue());
+//      if (scoreableCheckBox.isSelected()) addToAuthoringPlayers((Integer) newPlayerId, collidableTypeDropDown.getCheckModel().getCheckedItems());
     }));
   }
   private void handleCollidableTypeDropdownOnChange() {
-    collidableTypeDropDown.valueProperty().addListener((obs, oldVal, collidableType) -> {
-      if (collidableType == null) return;
-
-      shapeProxy.getGameObjectAttributesContainer().getProperties().remove(oldVal.toString());
-      shapeProxy.getGameObjectAttributesContainer().getProperties().add(collidableType.toString());
-
-      if (collidableType.equals(CollidableType.NONCONTROLLABLE)) {
-        removeObjectFromAuthoringPayersAnyList();
-        setPlayerAssignmentVisibility(false);
-      } else {
-        setPlayerAssignmentVisibility(true);
-        addToAuthoringPlayers(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
-           collidableTypeDropDown.getValue());
+//    collidableTypeDropDown.valueProperty().addListener((obs, oldVal, collidableType) -> {
+    collidableTypeDropDown.getCheckModel().getCheckedItems().addListener((ListChangeListener<CollidableType>) collidableType -> {
+      while (collidableType.next()) {
+        if (collidableType.wasAdded()) {
+          for (CollidableType selected : collidableType.getAddedSubList()) {
+            shapeProxy.getGameObjectAttributesContainer().getProperties().add(selected.toString());
+            if (selected.equals(CollidableType.NONCONTROLLABLE)) {
+              removeObjectFromAuthoringPayersAnyList();
+              setPlayerAssignmentVisibility(false);
+            } else {
+              setPlayerAssignmentVisibility(true);
+              addToAuthoringPlayers(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
+                  selected);
+            }
+          }
+        } if (collidableType.wasRemoved()) {
+          for (CollidableType removed : collidableType.getRemoved()) {
+            shapeProxy.getGameObjectAttributesContainer().getProperties().remove(removed.toString());
+          }
+        }
       }
+
+//
+//      if (collidableType == null) return;
+//
+//      shapeProxy.getGameObjectAttributesContainer().getProperties().remove(oldVal.toString());
+//      shapeProxy.getGameObjectAttributesContainer().getProperties().add(collidableType.toString());
+//
+//      if (collidableType.equals(CollidableType.NONCONTROLLABLE)) {
+//        removeObjectFromAuthoringPayersAnyList();
+//        setPlayerAssignmentVisibility(false);
+//      } else {
+//        setPlayerAssignmentVisibility(true);
+//        addToAuthoringPlayers(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
+//           collidableTypeDropDown.getValue());
+//      }
     });
   }
-  private void handleScorableCheckBoxOnChange() {
-    scoreableCheckBox.selectedProperty().addListener((observable, oldValue, newState) -> {
-      if (newState) {
-        setPlayerAssignmentVisibility(true);
-        addToAuthoringPlayers(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
-            collidableTypeDropDown.getValue());
-      } else {
-        removeFromAuthoringPlayers(collidableTypeDropDown.getValue());
-      }
-    });
-  }
+//  private void handleScorableCheckBoxOnChange() {
+//    scoreableCheckBox.selectedProperty().addListener((observable, oldValue, newState) -> {
+//      if (newState) {
+//        setPlayerAssignmentVisibility(true);
+//        addToAuthoringPlayers(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
+//            collidableTypeDropDown.getValue());
+//      } else {
+//        removeFromAuthoringPlayers(collidableTypeDropDown.getValue());
+//      }
+//    });
+//  }
   private void addToAuthoringPlayers(int selectedPlayerId, CollidableType collidableType) {
     Map<Integer, Map<CollidableType, List<Integer>>> playersMap = authoringProxy.getPlayers();
     if (selectedPlayerId >= 0) {
@@ -546,10 +571,10 @@ public class ShapePanel implements Panel {
     collidableTypeDropDown.setVisible(visibility);
     massTextField.setVisible(visibility);
     mass.setVisible(visibility);
-    elasticityTextField.setVisible(visibility);
+    elasticityCheckBox.setVisible(visibility);
     elasticity.setVisible(visibility);
-    scoreableCheckBox.setVisible(visibility);
-    scoreable.setVisible(visibility);
+//    scoreableCheckBox.setVisible(visibility);
+//    scoreable.setVisible(visibility);
   }
 
   private void setPlayerAssignmentVisibility(boolean visibility) {
