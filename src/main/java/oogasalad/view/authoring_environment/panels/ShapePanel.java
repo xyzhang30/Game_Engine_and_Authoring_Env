@@ -473,7 +473,7 @@ public class ShapePanel implements Panel {
   }
   private void handlePlayerListViewOnChange() {
     playerAssignmentListView.getSelectionModel().selectedIndexProperty().addListener(((observable, oldValue, newPlayerId) -> {
-//      if (scoreableCheckBox.isSelected()) addToAuthoringPlayers((Integer) newPlayerId, collidableTypeDropDown.getValue());
+//      if (scoreableCheckBox.isSelected()) addToAuthoringPlayers((Integer) newPlayerId, collidableTypeDropDown.getCheckModel().getCheckedItems());
     }));
   }
   private void handleCollidableTypeDropdownOnChange() {
