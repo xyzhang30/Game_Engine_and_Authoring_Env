@@ -13,11 +13,10 @@ import oogasalad.model.gameengine.GameEngine;
 public class GameObjectsNotVisibleCondition implements Condition {
 
   private final List<Double> arguments;
-  @ExpectedParamNumber(1)
+
   public GameObjectsNotVisibleCondition(List<Double> arguments) {
     this.arguments = arguments;
   }
-
 
   @Override
   public boolean evaluate(GameEngine engine) {

@@ -74,11 +74,13 @@
     {
       "player_id": 1,
       "my_strikeable": [1],
+      "my_scoreable": [1],
       "my_controllable": []
     },
     {
       "player_id": 2,
       "my_strikeable": [2],
+      "my_scoreable": [2],
       "my_controllable": []
     }
   ],

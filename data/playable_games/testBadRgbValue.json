@@ -132,6 +132,7 @@
     {
       "player_id": 1,
       "my_strikeable": [2],
+      "my_scoreable": [2],
       "my_controllable": []
     }
   ],

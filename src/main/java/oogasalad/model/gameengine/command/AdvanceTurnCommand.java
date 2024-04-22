@@ -16,7 +16,6 @@ import oogasalad.model.gameengine.GameEngine;
 @CommandHelpInfo(description = "")
 public class AdvanceTurnCommand implements Command {
 
-  private final List<Double> arguments;
 
   /**
    * Constructs an instance of AdvanceTurnCommand with a list of arguments. This constructor does
@@ -27,7 +26,7 @@ public class AdvanceTurnCommand implements Command {
 
   @ExpectedParamNumber(0)
   public AdvanceTurnCommand(List<Double> arguments) {
-    this.arguments = arguments;
+
   }
 
   /**

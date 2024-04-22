@@ -10,7 +10,7 @@ public class BallMovementAndCollision {
   class BallGameObject implements GameViewInternal.GameObject {
     // Position, dimensions, and sprite attributes omitted for brevity
 
-    public void update() {
+    public void  {
       // Update ball position based on physics calculations
     }
 

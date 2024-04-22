@@ -2,7 +2,7 @@
   "gameName": "sampleAirHockey",
   "game_objects": [
     {
-      "gameobject_id": "01",
+      ": "01",
       "properties": ["visible", "primary", "collidable"],
       "player_ids": [],
       "position": {

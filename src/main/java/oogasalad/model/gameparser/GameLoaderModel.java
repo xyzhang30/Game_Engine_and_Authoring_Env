@@ -106,8 +106,9 @@ public class GameLoaderModel extends GameLoader {
       System.out.println(playerStrikeableObjects);
       playerContainer.getPlayer(playerId).addStrikeables(playerStrikeableObjects);
 
+      List<Integer> playerScoreableIds = parserPlayer.myScoreable();
       List<Scoreable> playerScoreableObjects = new ArrayList<>();
-      for (int i : playerStrikeableIds) {
+      for (int i : playerScoreableIds) {
         Optional<Scoreable> optionalStrikeable = gameObjectContainer.getGameObject(i)
             .getScoreable();
         optionalStrikeable.ifPresent(playerScoreableObjects::add);
