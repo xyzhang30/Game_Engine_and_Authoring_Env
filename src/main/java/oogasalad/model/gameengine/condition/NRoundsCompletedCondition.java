@@ -33,7 +33,6 @@ public class NRoundsCompletedCondition implements Condition {
   public NRoundsCompletedCondition(List<Integer> arguments,
       Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
-    System.out.println("WIN CONDITION CREATED: " + arguments);
   }
 
   /**
@@ -46,9 +45,6 @@ public class NRoundsCompletedCondition implements Condition {
 
   @Override
   public boolean evaluate(GameEngine engine) {
-    System.out.println(
-        "EVALUATING WIN CONDITION:" + (engine.restoreLastStaticGameRecord().round() > arguments.get(
-            0)));
     return engine.restoreLastStaticGameRecord().round() > arguments.get(0);
   }
 }

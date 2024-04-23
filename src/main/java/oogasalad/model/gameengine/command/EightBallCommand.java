@@ -24,9 +24,6 @@ public class EightBallCommand implements Command {
     gameObject.setVisible(false);
     engine.getGameObjectContainer().getGameObjects().forEach(GameObject::stop);
     boolean didActiveWin = engine.getPlayerContainer().getActive().areAllScoreablesInvisible();
-    for (Player p : engine.getPlayerContainer().getPlayers()) {
-      p.applyGameResult(
-          (engine.getPlayerContainer().getActive().getId() == p.getId()) == didActiveWin);
-    }
+    engine.getPlayerContainer().getPlayers().forEach(p->p.applyGameResult(engine.getPlayerContainer().getActive().getId() == (p.getId()) == didActiveWin));
   }
 }

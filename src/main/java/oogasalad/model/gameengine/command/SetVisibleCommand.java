@@ -47,9 +47,7 @@ public class SetVisibleCommand implements Command {
 
   @Override
   public void execute(GameEngine engine) {
-    int obj = arguments.get(0);
-    int isVisible = arguments.get(1);
-    gameObject.setVisible(isVisible == 1);
+    gameObject.setVisible(arguments.get(1) == 1);
   }
 }
 

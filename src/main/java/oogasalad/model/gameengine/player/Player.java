@@ -159,9 +159,7 @@ public class Player {
    */
 
   public void applyDelayedScore() {
-    for (Scoreable o : myScoreables) {
-      score += o.getTemporaryScore();
-    }
+    myScoreables.forEach(scoreable -> score+=scoreable.getTemporaryScore());
   }
 
   /**
@@ -173,11 +171,8 @@ public class Player {
   public PlayerRecord getPlayerRecord() {
     try {
       double tempScore = score;
-      for (Scoreable o : myScoreables) {
-        tempScore += o.getTemporaryScore();
-      }
-      return new PlayerRecord(playerId, tempScore,
-          activeStrikeable.asGameObject().getId());
+      tempScore += myScoreables.stream().mapToDouble(Scoreable::getTemporaryScore).sum();
+      return new PlayerRecord(playerId, tempScore, activeStrikeable.asGameObject().getId());
     } catch (NullPointerException e) {
       LOGGER.warn("Player " + playerId + " not found");
       return null;
@@ -206,9 +201,8 @@ public class Player {
 
   //sets temporary score for player to 0
   private void clearDelayedPoints() {
-    for (Scoreable o : myScoreables) {
-      o.setTemporaryScore(0);
-    }
+    myScoreables.forEach(scoreable -> scoreable.setTemporaryScore(0));
+
   }
 
   public void applyGameResult(boolean wonGame) {
