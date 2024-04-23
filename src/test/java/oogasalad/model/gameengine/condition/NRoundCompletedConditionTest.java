@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
 
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.condition.NRoundsCompletedCondition;
@@ -19,7 +20,7 @@ public class NRoundCompletedConditionTest {
   public void testEvaluateRoundsNotCompleted() {
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.restoreLastStaticGameRecord()).thenReturn(new GameRecord(null, null, 2, 1, false, true));
-    NRoundsCompletedCondition condition = new NRoundsCompletedCondition(Arrays.asList(3.0));
+    NRoundsCompletedCondition condition = new NRoundsCompletedCondition(List.of(3), Map.of());
     assertFalse(condition.evaluate(gameEngine));
   }
 
@@ -27,7 +28,7 @@ public class NRoundCompletedConditionTest {
   public void testEvaluateRoundsCompletedExact() {
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.restoreLastStaticGameRecord()).thenReturn(new GameRecord(null, null, 3, 1, false, true));
-    NRoundsCompletedCondition condition = new NRoundsCompletedCondition(Arrays.asList(3.0));
+    NRoundsCompletedCondition condition = new NRoundsCompletedCondition(List.of(3), Map.of());
     assertFalse(condition.evaluate(gameEngine));
   }
 
@@ -36,7 +37,7 @@ public class NRoundCompletedConditionTest {
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.restoreLastStaticGameRecord()).thenReturn(new GameRecord(null, null, 300, 1,
         false, true));
-    NRoundsCompletedCondition condition = new NRoundsCompletedCondition(Arrays.asList(3.0));
+    NRoundsCompletedCondition condition = new NRoundsCompletedCondition(List.of(3), Map.of());
     assertTrue(condition.evaluate(gameEngine));
   }
 

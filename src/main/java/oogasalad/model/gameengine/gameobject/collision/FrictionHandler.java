@@ -3,6 +3,7 @@ package oogasalad.model.gameengine.gameobject.collision;
 import java.util.List;
 import java.util.function.Supplier;
 import oogasalad.model.api.GameObjectRecord;
+import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.PhysicsHandler;
 
 /**
@@ -14,14 +15,15 @@ public class FrictionHandler extends PhysicsHandler {
   private static final double C = 40;
   private static final double g = 9.81;
 
-  public FrictionHandler(int id1, int id2) {
-    super(id1, id2);
+  public FrictionHandler(GameObject obj1, GameObject obj2) {
+    super(obj1, obj2);
   }
 
   @Override
   protected Supplier<List<Double>> makeVelocityFunction(GameObjectRecord c1, GameObjectRecord c2,
       double dt) {
     return () -> {
+
       //need to standardize angle from 0-90 for each case... wrote a method for this
       double inclineAngleRadians = Math.toRadians(normalizeInclineAngle(c2.inclineAngle()));
       double gravityComponent =
@@ -51,10 +53,9 @@ public class FrictionHandler extends PhysicsHandler {
       // Calculate the normal force considering the incline (assuming surface is aligned along x-axis)
       double normalForce = c1.mass() * g * Math.cos(inclineAngle);
 
-
       // Determine the appropriate friction coefficient
       double mu =
-          (Math.abs(initialVelocityX) < 1 && Math.abs(initialVelocityY)<1 ) ? c2.staticMu() :
+          (Math.abs(initialVelocityX) < 1 && Math.abs(initialVelocityY) < 1) ? c2.staticMu() :
               c2.kineticMu();
 
       // Calculate the magnitude of frictional force
@@ -77,17 +78,19 @@ public class FrictionHandler extends PhysicsHandler {
       double newVelocityY = initialVelocityY - frictionDecelerationY;
 
       // Prevent friction from reversing the direction of motion
-      if (Math.signum(newVelocityX) != Math.signum(initialVelocityX))
+      if (Math.signum(newVelocityX) != Math.signum(initialVelocityX)) {
         newVelocityX = 0;
+      }
 
-      if (Math.signum(newVelocityY) != Math.signum(initialVelocityY))
+      if (Math.signum(newVelocityY) != Math.signum(initialVelocityY)) {
         newVelocityY = 0;
+      }
       return List.of(newVelocityX, newVelocityY);
 
     };
   }
 
-  private double normalizeInclineAngle ( double angle){
+  private double normalizeInclineAngle(double angle) {
     // Normalize the angle to 0-360
     angle = angle % 360;
 

@@ -20,23 +20,22 @@ import org.xml.sax.SAXException;
  * @author Doga Ozmen, Jordan Haytaian
  */
 public class SceneManager {
-
-  private final double screenWidth;
-  private final double screenHeight;
   private final Pane root;
   private final Scene scene;
   private final SceneElementParser sceneElementParser;
   private final SceneElementFactory sceneElementFactory;
   private final SceneElementStyler sceneElementStyler;
   private CompositeElement compositeElement;
-  private GameStatBoard gameStatBoard;
+  private GameStatusManager gameStatusManager;
   private Pane pauseElements;
+  private Pane transitionElements;
   private GameBoard gameBoard;
   private int currentRound;
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
   private final String gameManagementElementsPath = "data/scene_elements/gameManagementElements.xml";
   private final String transitionElementsPath = "data/scene_elements/transitionElements.xml";
+  private final String gameOverSceneElementsPath = "data/scene_elements/gameOverElements.xml";
   private final String pausePath = "data/scene_elements/pauseElements.xml";
 
 
@@ -50,15 +49,14 @@ public class SceneManager {
    */
   public SceneManager(GameController gameController, double screenWidth,
       double screenHeight) {
-    this.screenWidth = screenWidth;
-    this.screenHeight = screenHeight;
     root = new Pane();
     scene = new Scene(root);
 
     sceneElementParser = new SceneElementParser();
     sceneElementStyler = new SceneElementStyler(root);
+    gameStatusManager = new GameStatusManager();
     sceneElementFactory = new SceneElementFactory(screenWidth, screenHeight, sceneElementStyler,
-        new SceneElementHandler(gameController, this));
+        new SceneElementHandler(gameController, this, gameStatusManager));
   }
 
   /**
@@ -78,13 +76,16 @@ public class SceneManager {
         root.getChildren().add(createSceneElements(menuSceneElementsPath));
       }
       case TRANSITION -> {
-        resetRoot();
-        root.getChildren().add(createSceneElements(transitionElementsPath));
+        root.getChildren().add(transitionElements);
       }
       case PAUSE -> {
         if (!root.getChildren().contains(pauseElements)) {
           root.getChildren().add(pauseElements);
         }
+      }
+      case GAME_OVER -> {
+        resetRoot();
+        root.getChildren().add(createSceneElements(gameOverSceneElementsPath));
       }
     }
   }
@@ -94,6 +95,14 @@ public class SceneManager {
    */
   public void removePauseSheen() {
     root.getChildren().remove(pauseElements);
+  }
+
+  /**
+   * Called when next round is started, removes transition screen elements
+   */
+  public void removeTransitionSheen() {
+    root.getChildren().remove(transitionElements);
+    root.requestFocus();
   }
 
   /**
@@ -121,7 +130,7 @@ public class SceneManager {
    */
   public void update(GameRecord gameRecord) {
     compositeElement.update(gameRecord.gameObjectRecords());
-    gameStatBoard.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
+    gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
     root.requestFocus();
     checkEndRound(gameRecord);
   }
@@ -135,6 +144,7 @@ public class SceneManager {
   public void makeGameScreen(CompositeElement compositeElement, GameRecord gameRecord) {
     this.compositeElement = compositeElement;
     pauseElements = createSceneElements(pausePath);
+    transitionElements = createSceneElements(transitionElementsPath);
     addGameManagementElementsToGame(gameRecord);
     addGameElementsToGame();
     root.requestFocus();
@@ -157,9 +167,7 @@ public class SceneManager {
     resetRoot();
     currentRound = gameRecord.round();
     Pane sceneElements = createSceneElements(gameManagementElementsPath);
-    gameStatBoard = new GameStatBoard(gameRecord.players(), gameRecord.turn(), gameRecord.round(),
-        screenWidth, screenHeight, sceneElementStyler);
-    root.getChildren().addAll(sceneElements, gameStatBoard.getContainer());
+    root.getChildren().addAll(sceneElements);
 
   }
 
@@ -173,12 +181,13 @@ public class SceneManager {
   }
 
   private void checkEndRound(GameRecord gameRecord) {
-    if (gameRecord.round() != currentRound) {
+    if (gameRecord.gameOver()) {
+      createNonGameScene(SceneType.GAME_OVER);
+      gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
+    } else if (gameRecord.round() != currentRound) {
       currentRound = gameRecord.round();
       createNonGameScene(SceneType.TRANSITION);
-    }
-    if (gameRecord.gameOver()) {
-      //TODO: Display win condition
+
     }
   }
 }

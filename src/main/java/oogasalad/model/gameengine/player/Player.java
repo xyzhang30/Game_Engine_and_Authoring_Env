@@ -87,12 +87,8 @@ public class Player {
   }
 
   public boolean areAllScoreablesInvisible() {
-    for(Scoreable s : myScoreables) {
-      if(s.asGameObject().getVisible()) {
-        return false;
-      }
-    }
-    return true;
+    return myScoreables.stream().
+        noneMatch(scoreable -> scoreable.asGameObject().getVisible());
   }
 
   public Controllable getControllable() {
@@ -124,8 +120,8 @@ public class Player {
    * @return The ID of the active strikeable object.
    */
 
-  public int getStrikeableID() {
-    return activeStrikeable.asGameObject().getId();
+  public Strikeable getStrikeable() {
+    return activeStrikeable;
   }
 
   /**
@@ -153,7 +149,7 @@ public class Player {
    * @return The number of turns completed in the current round.
    */
 
-  protected int getTurnsCompleted() {
+  public int getTurnsCompleted() {
     return turnsCompleted;
   }
 
@@ -162,7 +158,7 @@ public class Player {
    * Applies delayed scores to the player's total score at the end of a turn.
    */
 
-  protected void applyDelayedScore() {
+  public void applyDelayedScore() {
     for (Scoreable o : myScoreables) {
       score += o.getTemporaryScore();
     }
@@ -174,7 +170,7 @@ public class Player {
    * @return The PlayerRecord containing player information.
    */
 
-  protected PlayerRecord getPlayerRecord() {
+  public PlayerRecord getPlayerRecord() {
     try {
       double tempScore = score;
       for (Scoreable o : myScoreables) {
@@ -188,7 +184,7 @@ public class Player {
     }
   }
 
-  protected PlayerRecord getLastPlayerRecord() {
+  public PlayerRecord getLastPlayerRecord() {
     return playerHistory.peek();
   }
 
@@ -196,7 +192,7 @@ public class Player {
    * Adds the current state of the gameObject (as a record) to the history of the player
    */
 
-  protected void addPlayerHistory() {
+  public void addPlayerHistory() {
     playerHistory.push(getPlayerRecord());
   }
 
@@ -204,7 +200,7 @@ public class Player {
    * Restores the previous state of the gameObject (as a record) to the history of the gameObject
    */
 
-  protected void toLastStaticStatePlayers() {
+  public void toLastStaticStatePlayers() {
     score = playerHistory.peek().score();
   }
 
@@ -215,9 +211,12 @@ public class Player {
     }
   }
 
-
   public void applyGameResult(boolean wonGame) {
     clearDelayedPoints();
-    score = wonGame? 1:0;
+    score = wonGame ? 1 : 0;
+  }
+
+  public int getId() {
+    return playerId;
   }
 }

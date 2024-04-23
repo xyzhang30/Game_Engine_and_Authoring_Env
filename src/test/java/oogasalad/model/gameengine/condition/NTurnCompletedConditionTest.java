@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.player.Player;
@@ -47,7 +48,7 @@ public class NTurnCompletedConditionTest {
 
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
-    NTurnsCompletedCondition condition = new NTurnsCompletedCondition(Arrays.asList(3.0));
+    NTurnsCompletedCondition condition = new NTurnsCompletedCondition(List.of(3), Map.of());
     assertFalse(condition.evaluate(gameEngine));
   }
 
@@ -69,7 +70,7 @@ public class NTurnCompletedConditionTest {
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
 
-    NTurnsCompletedCondition condition = new NTurnsCompletedCondition(Arrays.asList(3.0));
+    NTurnsCompletedCondition condition = new NTurnsCompletedCondition(List.of(3), Map.of());
 
     assertTrue(condition.evaluate(gameEngine));
   }

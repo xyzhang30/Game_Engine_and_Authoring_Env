@@ -5,7 +5,7 @@ public class DefaultControllable implements Controllable {
 
   private int xMovement;
   private int yMovement;
-  private GameObject go;
+  private final GameObject go;
 
   public DefaultControllable(GameObject go) {
     this.go = go;
@@ -15,12 +15,12 @@ public class DefaultControllable implements Controllable {
 
   @Override
   public double moveX(boolean positive) {
-      return xMovement*(positive?1:-1);
-    }
+    return xMovement * (positive ? 1 : -1);
+  }
 
   @Override
   public double moveY(boolean positive) {
-    return yMovement*(positive?1:-1);
+    return yMovement * (positive ? 1 : -1);
   }
 
   @Override

@@ -9,6 +9,7 @@ import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class ShuffleBoardIntegrationTest {
@@ -17,7 +18,6 @@ public class ShuffleBoardIntegrationTest {
   private static final double DELTA = .0001;
   private static final String TITLE = "shuffleTest";
   private GameEngine gameEngine;
-  private GameObjectContainer container;
 
   private boolean isStatic(GameRecord r) {
     for (GameObjectRecord cr : r.gameObjectRecords()) {
@@ -31,36 +31,39 @@ public class ShuffleBoardIntegrationTest {
   @BeforeEach
   public void setUp() {
     gameEngine = new GameEngine(TITLE);
-
-    container = gameEngine.getGameObjectContainer();
-
   }
 
 
   // Test method with parameterized IDs
+
+
+
   @ParameterizedTest
-  @ValueSource(ints = {10, 11, 12, 13})
-  public void testDelayedScoring(int shuffleValue) {
-    // Assuming velocity and angle are constant
-    double velocity = 120;
-    double angle = -Math.PI / 2;
-    gameEngine.applyInitialVelocity(velocity, angle, 12);
-    shuffleRun(12);
+  @CsvSource({
+      "120, -1.5708",
+      "150, -0.7854",
+      "200, -1.0472"
+  })
+  public void testDelayedScoring(double velocity, double angle) {
+    gameEngine.applyInitialVelocity(velocity, angle);
+    shuffleRun(10); // Assuming this method exists
+    // Add assertions here
   }
+
+
 
   @Test
   public void testFullRound() {
     // Assuming velocity and angle are constant
     double angle = -Math.PI / 2;
-    gameEngine.applyInitialVelocity(.01, angle, 10);
+    gameEngine.applyInitialVelocity(.01, angle);
     shuffleRun(10);
-    gameEngine.applyInitialVelocity(.01, angle, 12);
+    gameEngine.applyInitialVelocity(.01, angle);
     shuffleRun(12);
-    gameEngine.applyInitialVelocity(.01, angle, 11);
+    gameEngine.applyInitialVelocity(.01, angle);
     shuffleRun(11);
-    gameEngine.applyInitialVelocity(.01, angle, 13);
+    gameEngine.applyInitialVelocity(.01, angle);
     shuffleRun(13);
-    System.out.println(container.toGameObjectRecords());
     assertEquals(1, gameEngine.restoreLastStaticGameRecord().players().get(0).score());
     assertEquals(5, gameEngine.restoreLastStaticGameRecord().players().get(1).score());
     assertEquals(2, gameEngine.restoreLastStaticGameRecord().round());

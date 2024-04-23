@@ -16,8 +16,8 @@
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 20,
-        "y_dimension": 20
+        "x_dimension": 1,
+        "y_dimension": 1
       },
       "color": [
         100,
@@ -230,13 +230,13 @@
       ],
       "mass": 0.02,
       "position": {
-        "x_position": -40,
+        "x_position": -3.75,
         "y_position": -0
       },
       "shape": "rectangle",
       "dimension": {
-        "x_dimension": 10,
-        "y_dimension": 10
+        "x_dimension": 1,
+        "y_dimension": 1
       },
       "color": [
         0,

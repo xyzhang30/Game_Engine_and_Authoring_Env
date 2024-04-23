@@ -1,11 +1,14 @@
 package oogasalad.model.gameengine.condition;
 
 import java.util.List;
+import java.util.Map;
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.gameobject.GameObject;
+import oogasalad.model.gameengine.player.Player;
 
 /**
  * The AllPlayersCompletedRoundCondition evaluates if any player's score has exceeded a certain
@@ -18,7 +21,7 @@ import oogasalad.model.gameengine.GameEngine;
 @CommandHelpInfo(description = "")
 public class ScoreThresholdCondition implements Condition {
 
-  private final List<Double> arguments;
+  private final List<Integer> arguments;
 
   /**
    * Constructs an instance of AllPlayersCompletedRoundCondition with a list of arguments.
@@ -28,7 +31,7 @@ public class ScoreThresholdCondition implements Condition {
    */
 
   @ExpectedParamNumber(1)
-  public ScoreThresholdCondition(List<Double> arguments) {
+  public ScoreThresholdCondition(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
   }
 
@@ -44,9 +47,9 @@ public class ScoreThresholdCondition implements Condition {
   @Override
   public boolean evaluate(GameEngine engine) {
     double scoreThresh = arguments.get(0);
-    List<PlayerRecord> lst = engine.getPlayerContainer().getPlayerRecords();
-    for (PlayerRecord player : lst) {
-      if (player.score() > scoreThresh) {
+    List<Player> lst = engine.getPlayerContainer().getPlayers();
+    for (Player player : lst) {
+      if (player.getPlayerRecord().score() > scoreThresh) {
         return true;
       }
     }
