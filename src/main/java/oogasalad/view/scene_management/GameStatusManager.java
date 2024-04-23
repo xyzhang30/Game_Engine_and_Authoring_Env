@@ -40,7 +40,6 @@ public class GameStatusManager {
 
   public void setScoreList(ListView<String> scoreListDisplay) {
     this.scoreListDisplay = scoreListDisplay;
-    scoreListDisplay.setSelectionModel(null);
   }
 
   /**
