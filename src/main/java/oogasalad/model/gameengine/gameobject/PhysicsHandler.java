@@ -21,19 +21,19 @@ import oogasalad.model.api.GameObjectRecord;
  */
 public abstract class PhysicsHandler {
 
-  private final int id1;
-  private final int id2;
+  private final GameObject go1;
+  private final GameObject go2;
 
   /**
    * Constructs a PhysicsHandler with the specified IDs of the GameObjects involved in collisions.
    *
-   * @param id1 The ID of the first GameObject.
-   * @param id2 The ID of the second GameObject.
+   * @param go1 The first GameObject.
+   * @param go2 The second GameObject.
    */
 
-  public PhysicsHandler(int id1, int id2) {
-    this.id1 = id1;
-    this.id2 = id2;
+  public PhysicsHandler(GameObject go1, GameObject go2) {
+    this.go1 = go1;
+    this.go2 = go2;
   }
 
   /**
@@ -44,12 +44,8 @@ public abstract class PhysicsHandler {
    * @param dt                  The time step for the collision handling process.
    */
   public void handleCollision(GameObjectContainer gameObjectContainer, double dt) {
-    GameObjectRecord gor1 = gameObjectContainer.getGameObject(id1).toGameObjectRecord();
-    GameObjectRecord gor2 = gameObjectContainer.getGameObject(id2).toGameObjectRecord();
-    GameObject go1 = gameObjectContainer.getGameObject(id1);
-    GameObject go2 = gameObjectContainer.getGameObject(id2);
-    go1.calculateNextSpeeds(makeVelocityFunction(gor1, gor2, dt));
-    go2.calculateNextSpeeds(makeVelocityFunction(gor2, gor1, dt));
+    go1.calculateNextSpeeds(makeVelocityFunction(go1.toGameObjectRecord(), go2.toGameObjectRecord(), dt));
+    go2.calculateNextSpeeds(makeVelocityFunction(go1.toGameObjectRecord(), go2.toGameObjectRecord(), dt));
     go1.updatePostCollisionVelocity();
     go2.updatePostCollisionVelocity();
   }

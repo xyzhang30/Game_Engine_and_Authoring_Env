@@ -3,6 +3,7 @@ package oogasalad.model.gameengine.gameobject.collision;
 import java.util.List;
 import java.util.function.Supplier;
 import oogasalad.model.api.GameObjectRecord;
+import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.PhysicsHandler;
 
 /**
@@ -14,8 +15,8 @@ public class FrictionHandler extends PhysicsHandler {
   private static final double C = 40;
   private static final double g = 9.81;
 
-  public FrictionHandler(int id1, int id2) {
-    super(id1, id2);
+  public FrictionHandler(GameObject obj1, GameObject obj2) {
+    super(obj1, obj2);
   }
 
   @Override

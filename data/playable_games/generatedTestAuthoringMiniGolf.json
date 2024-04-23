@@ -98,8 +98,8 @@
       "NRoundsCompletedCommand" : [ 2.0 ]
     },
     "advance_turn" : {
-      "AdjustPointsCommand" : [ 1.0, 1.0 ],
-      "AdvanceTurnCommand" : [ ]
+      "AdvanceTurnCommand" : [ ],
+      "AdjustPointsCommand" : [ 1.0, 1.0 ]
     },
     "advance_round" : {
       "AdvanceRoundCommand" : [ ]

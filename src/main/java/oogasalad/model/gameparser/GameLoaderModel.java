@@ -50,9 +50,10 @@ public class GameLoaderModel extends GameLoader {
   private PlayerContainer playerContainer;
   private GameObjectContainer gameObjectContainer;
   private RulesRecord rulesRecord;
-//  private Map<Integer, Player> collidablePlayerMap;
+//  private Map<Integer, Player> collidablePlayerMap;\
+  private Map<Integer, GameObject> gameObjects;
   private List<Entry<BiPredicate<Integer, GameObjectProperties>,
-      BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList;
+      BiFunction<Integer, GameObjectProperties, PhysicsHandler>>> conditionsList;
 
   /**
    * Constructs a GameLoaderModel object with the specified ID.
@@ -145,24 +146,30 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private void createGameObjectContainer() {
-    Map<Integer, GameObject> gameObjects = new HashMap<>();
+    gameObjects = new HashMap<>();
     gameData.getGameObjects().forEach(co -> {
       if (co.properties().contains("collidable")) {
         this.collidables.add(co.collidableId());
       }
       gameObjects.put(co.collidableId(), createCollidable(co));
-      gameObjects.keySet().forEach(id -> addPairToPhysicsMap(co, id, conditionsList));
-    });
 
+    });
+    gameData.getGameObjects().forEach(co -> {
+      gameObjects.keySet().forEach(id -> addPairToPhysicsMap(co,
+          id,
+          conditionsList));
+    });
     this.gameObjectContainer = new GameObjectContainer(gameObjects);
   }
 
-  private void addPairToPhysicsMap(GameObjectProperties co, Integer id,
-      List<Entry<BiPredicate<Integer, GameObjectProperties>, BiFunction<Integer, Integer, PhysicsHandler>>> conditionsList) {
-    for (Entry<BiPredicate<Integer, GameObjectProperties>, BiFunction<Integer, Integer, PhysicsHandler>> entry : conditionsList) {
+  private void addPairToPhysicsMap(GameObjectProperties co, int id,
+      List<Entry<BiPredicate<Integer, GameObjectProperties>, BiFunction<Integer, GameObjectProperties, PhysicsHandler>>> conditionsList) {
+    for (Entry<BiPredicate<Integer, GameObjectProperties>,
+        BiFunction<Integer, GameObjectProperties, PhysicsHandler>> entry : conditionsList) {
       if (entry.getKey().test(id, co) && id != co.collidableId()) {
-        physicsMap.put(new Pair(id, co.collidableId()), entry.getValue().apply(id,
-            co.collidableId()));
+        physicsMap.put(new Pair(gameObjects.get(id), gameObjects.get(co.collidableId())),
+            entry.getValue().apply(id, co));
+        System.out.println(id + " " + co.collidableId() + " " + entry.getValue().apply(id, co).getClass().getSimpleName());
         break;
       }
     }
@@ -171,11 +178,23 @@ public class GameLoaderModel extends GameLoader {
   private void createCollisionTypeMap() {
     conditionsList = new ArrayList<>();
     conditionsList.add(
-        Map.entry((key, co) -> collidables.contains(key) && co.properties().contains("collidable"),
-            MomentumHandler::new));
+        Map.entry(
+            (key, co) -> {
+              return collidables.contains(key) && co.properties().contains("collidable");
+            },
+            (key, co) -> new MomentumHandler(gameObjects.get(key),
+                gameObjects.get(co.collidableId()))
+        )
+    );
     conditionsList.add(
-        Map.entry((key, co) -> collidables.contains(key) || co.properties().contains("collidable"),
-            FrictionHandler::new));
+        Map.entry(
+            (key, co) -> {
+              return collidables.contains(key) || co.properties().contains("collidable");
+            },
+            (key, co) -> new FrictionHandler(gameObjects.get(key),
+                gameObjects.get(co.collidableId()))
+        )
+    );
   }
 
   private GameObject createCollidable(GameObjectProperties co) {
@@ -183,7 +202,6 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private void createPlayerContainer() {
-//    collidablePlayerMap = new HashMap<>();
     Map<Integer, Player> playerMap = new HashMap<>();
     gameData.getPlayers().forEach(p -> {
       playerMap.put(p.playerId(), new Player(p.playerId()));
@@ -212,9 +230,6 @@ public class GameLoaderModel extends GameLoader {
 
   private List<StaticChecker> createStaticChecker() {
     return StaticCheckerFactory.createStaticChecker(gameData.getRules().staticChecker());//  private StaticChecker createStaticChecker() {
-//    return StaticCheckerFactory.createStaticChecker(gameData.getRules().staticCheckerType(),
-//        gameData.getRules().staticCheckerParams());
-//
   }
 
 
@@ -258,7 +273,8 @@ public class GameLoaderModel extends GameLoader {
           commands.add(CommandFactory.createCommand(s, commandsToParams.get(s)));
         });
       });
-      commandMap.put(new Pair(rule.firstId(), rule.secondId()), commands);
+      commandMap.put(new Pair(gameObjects.get(rule.firstId()), gameObjects.get(rule.secondId())),
+          commands);
     });
     return commandMap;
   }

@@ -236,7 +236,7 @@ public class GameEngine implements ExternalGameEngine {
         GameObject gameObject2 = gameObjects.getGameObject(record2.id());
         if (gameObject2.getVisible() && gameObject1.getVisible() && collisionDetector.isColliding(
             gameObject1, gameObject2)) {
-          collisionPairs.add(new Pair(record1.id(), record2.id()));
+          collisionPairs.add(new Pair(gameObject1, gameObject2));
         }
       }
     }

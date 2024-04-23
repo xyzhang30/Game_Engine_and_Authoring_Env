@@ -3,6 +3,7 @@ package oogasalad.model.gameengine.gameobject.collision;
 import java.util.List;
 import java.util.function.Supplier;
 import oogasalad.model.api.GameObjectRecord;
+import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.PhysicsHandler;
 
 /**
@@ -11,8 +12,8 @@ import oogasalad.model.gameengine.gameobject.PhysicsHandler;
 
 public class MomentumHandler extends PhysicsHandler {
 
-  public MomentumHandler(int id1, int id2) {
-    super(id1, id2);
+  public MomentumHandler(GameObject obj1, GameObject obj2) {
+    super(obj1, obj2);
   }
 
   protected Supplier<List<Double>> makeVelocityFunction(GameObjectRecord c1, GameObjectRecord c2,

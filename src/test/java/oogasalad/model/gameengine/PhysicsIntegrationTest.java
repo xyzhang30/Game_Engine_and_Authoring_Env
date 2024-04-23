@@ -115,8 +115,12 @@ public class PhysicsIntegrationTest {
     gameEngine.applyInitialVelocity(15, 0, 10);
     gameEngine.getGameObjectContainer().getGameObject(1).setVisible(true);
     gameEngine.getGameObjectContainer().getGameObject(10).setVisible(true);
+
     gameEngine.update(.25);
     assertEquals(-10, container.getGameObject(1).toGameObjectRecord().velocityX(), DELTA);
+    System.out.println(container.getGameObject(1).toGameObjectRecord());
+    System.out.println(container.getGameObject(10).toGameObjectRecord());
+
     assertEquals(10, container.getGameObject(10).toGameObjectRecord().velocityX(), DELTA);
     gameEngine.update(.25);
     assertEquals(-5, container.getGameObject(1).toGameObjectRecord().velocityX(), DELTA);
