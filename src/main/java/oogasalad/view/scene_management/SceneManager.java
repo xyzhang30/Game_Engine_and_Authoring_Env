@@ -188,6 +188,7 @@ public class SceneManager {
   private void checkEndRound(GameRecord gameRecord) {
     if (gameRecord.gameOver()) {
       createNonGameScene(SceneType.GAME_OVER);
+      gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
     } else if (gameRecord.round() != currentRound) {
       currentRound = gameRecord.round();
       createNonGameScene(SceneType.TRANSITION);
