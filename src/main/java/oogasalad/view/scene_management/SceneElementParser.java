@@ -21,14 +21,7 @@ import org.xml.sax.SAXException;
  * @author Jordan Haytaian
  */
 public class SceneElementParser {
-
   private final String nodeTag = "node";
-
-  /**
-   * Constructor
-   */
-  public SceneElementParser() {
-  }
 
   /**
    * Parses XML file for scene element parameters
