@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.GameEngine;
@@ -69,7 +70,9 @@ public class ComparatorTest {
   @Test
   public void testLowestScoreComp() {
     PlayerRecordComparator comp = new LowestScoreComparator();
-    List<PlayerRecord> records = container.getSortedPlayerRecords(comp);
+    List<PlayerRecord> records = container.getPlayerRecords().stream()
+        .sorted(comp)
+        .toList();
 
     assertEquals(1, records.get(0).playerId());
     assertEquals(3, records.get(1).playerId());
@@ -80,7 +83,9 @@ public class ComparatorTest {
   @Test
   public void testHighestScoreComp() {
     PlayerRecordComparator comp = new HighestScoreComparator();
-    List<PlayerRecord> records = container.getSortedPlayerRecords(comp);
+    List<PlayerRecord> records = container.getPlayerRecords().stream()
+        .sorted(comp)
+        .toList();
     assertEquals(2, records.get(0).playerId());
     assertEquals(3, records.get(1).playerId());
     assertEquals(1, records.get(2).playerId());
@@ -89,7 +94,9 @@ public class ComparatorTest {
   @Test
   public void testIdComp() {
     PlayerRecordComparator comp = new IDComparator();
-    List<PlayerRecord> records = container.getSortedPlayerRecords(comp);
+    List<PlayerRecord> records = container.getPlayerRecords().stream()
+        .sorted(comp)
+        .toList();
 
     assertEquals(1, records.get(0).playerId());
     assertEquals(2, records.get(1).playerId());

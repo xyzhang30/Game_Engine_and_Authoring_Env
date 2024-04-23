@@ -2,21 +2,23 @@ package oogasalad;
 
 import static java.util.Objects.hash;
 
+import oogasalad.model.gameengine.gameobject.GameObject;
+
 public class Pair {
 
-  private final int first;
-  private final int second;
+  private final GameObject first;
+  private final GameObject second;
 
-  public Pair(int first, int second) {
+  public Pair(GameObject first, GameObject second) {
     this.first = first;
     this.second = second;
   }
 
-  public int getFirst() {
+  public GameObject getFirst() {
     return first;
   }
 
-  public int getSecond() {
+  public GameObject getSecond() {
     return second;
   }
 
@@ -36,10 +38,10 @@ public class Pair {
 
   @Override
   public int hashCode() {
-    return hash(Math.min(first, second), Math.max(first, second));
+    return hash(Math.min(first.getId(), second.getId()), Math.max(first.getId(), second.getId()));
   }
 
   public String toString() {
-    return "(" + first + "," + second + ")";
+    return "(" + first.getId() + "," + second.getId() + ")";
   }
 }

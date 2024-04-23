@@ -14,9 +14,8 @@ import oogasalad.model.api.PlayerRecord;
 public abstract class PlayerRecordComparator implements Comparator<PlayerRecord> {
 
   /**
-   * Compares two PlayerRecord objects based on custom criteria defined in subclasses.
-   * If the custom comparison result is not zero, it returns that result.
-   * Otherwise, it compares the player IDs.
+   * Compares two PlayerRecord objects based on custom criteria defined in subclasses. If the custom
+   * comparison result is not zero, it returns that result. Otherwise, it compares the player IDs.
    *
    * @param p1 the first PlayerRecord to compare
    * @param p2 the second PlayerRecord to compare
@@ -25,7 +24,7 @@ public abstract class PlayerRecordComparator implements Comparator<PlayerRecord>
    */
   public int compare(PlayerRecord p1, PlayerRecord p2) {
     int result = customComparison(p1, p2);
-    return result!=0 ? result : Integer.compare(p1.playerId(), p2.playerId()); //tiebreaker
+    return result != 0 ? result : Integer.compare(p1.playerId(), p2.playerId()); //tiebreaker
   }
 
   /**

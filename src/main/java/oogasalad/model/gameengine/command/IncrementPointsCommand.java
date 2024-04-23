@@ -1,6 +1,7 @@
 package oogasalad.model.gameengine.command;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
@@ -20,7 +21,9 @@ import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 @CommandHelpInfo(description = "")
 public class IncrementPointsCommand implements Command {
 
-  private final List<Double> arguments;
+  private final List<Integer> arguments;
+  private final GameObject gameObject;
+
 
   /**
    * Constructs an instance of the AddDelayedPointsCommand with the list of arguments determined
@@ -32,8 +35,10 @@ public class IncrementPointsCommand implements Command {
 
   @ExpectedParamNumber(value = 2, paramDescription = {"(double) game object ID to add",
       "(double) number of points to add"})
-  public IncrementPointsCommand(List<Double> arguments) {
+  public IncrementPointsCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
+    gameObject = gameObjectMap.get(arguments.get(0));
+
   }
 
   /**
@@ -45,7 +50,7 @@ public class IncrementPointsCommand implements Command {
   @Override
   public void execute(GameEngine engine) {
     Optional<Scoreable> optionalScoreable =
-        engine.getGameObjectContainer().getGameObject((int) Math.round(arguments.get(0))).getScoreable();
+        gameObject.getScoreable();
     optionalScoreable.ifPresent(scoreable -> scoreable.incrementTemporaryScore(arguments.get(1)));
   }
 

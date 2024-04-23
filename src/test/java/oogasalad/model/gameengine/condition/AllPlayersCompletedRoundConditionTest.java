@@ -22,7 +22,8 @@ public class AllPlayersCompletedRoundConditionTest {
     PlayerContainer playerContainer = new PlayerContainer(Map.of(1,player1,2,player2));
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
-    AllPlayersCompletedRoundCondition condition = new AllPlayersCompletedRoundCondition(List.of());
+    AllPlayersCompletedRoundCondition condition = new AllPlayersCompletedRoundCondition(List.of()
+        , Map.of());
     player1.completeRound();
     player2.completeRound();
     assertTrue(condition.evaluate(gameEngine));
@@ -35,7 +36,8 @@ public class AllPlayersCompletedRoundConditionTest {
     PlayerContainer playerContainer = new PlayerContainer(Map.of(1,player1,2,player2));
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
-    AllPlayersCompletedRoundCondition condition = new AllPlayersCompletedRoundCondition(List.of());
+    AllPlayersCompletedRoundCondition condition = new AllPlayersCompletedRoundCondition(List.of()
+        , Map.of());
     assertFalse(condition.evaluate(gameEngine));
 
   }

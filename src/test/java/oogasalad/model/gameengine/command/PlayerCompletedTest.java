@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Collections;
 
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.command.PlayerCompletedRoundCommand;
@@ -18,11 +19,11 @@ public class PlayerCompletedTest {
   public void testPlayerCompletedRound() {
     PlayerContainer playerContainer = mock(PlayerContainer.class);
     Player activePlayer = mock(Player.class);
-    when(playerContainer.getActive()).thenReturn(1);
-    when(playerContainer.getPlayer(1)).thenReturn(activePlayer);
+    when(playerContainer.getActive()).thenReturn(activePlayer);
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
-    PlayerCompletedRoundCommand command = new PlayerCompletedRoundCommand(Collections.emptyList());
+    PlayerCompletedRoundCommand command = new PlayerCompletedRoundCommand(Collections.emptyList()
+        , Map.of());
     when(activePlayer.isRoundCompleted()).thenReturn(true);
     command.execute(gameEngine);
     verify(activePlayer).completeRound();
@@ -32,11 +33,11 @@ public class PlayerCompletedTest {
   public void testPlayerCompletedTurn() {
     PlayerContainer playerContainer = mock(PlayerContainer.class);
     Player activePlayer = mock(Player.class);
-    when(playerContainer.getActive()).thenReturn(1);
-    when(playerContainer.getPlayer(1)).thenReturn(activePlayer);
+    when(playerContainer.getActive()).thenReturn(activePlayer);
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
-    PlayerCompletedTurnCommand command = new PlayerCompletedTurnCommand(Collections.emptyList());
+    PlayerCompletedTurnCommand command = new PlayerCompletedTurnCommand(Collections.emptyList(),
+        Map.of());
     command.execute(gameEngine);
     verify(activePlayer).completeTurn();
   }

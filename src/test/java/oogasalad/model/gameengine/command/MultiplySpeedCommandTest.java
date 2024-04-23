@@ -7,6 +7,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
+import java.util.List;
+import java.util.Map;
 import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import org.junit.jupiter.api.Test;
 import oogasalad.model.gameengine.GameEngine;
@@ -23,7 +25,7 @@ public class MultiplySpeedCommandTest {
     gameObject.applyInitialVelocity(2,0);
     when(gameEngine.getGameObjectContainer()).thenReturn(goc);
     when(gameEngine.getGameObjectContainer().getGameObject(1)).thenReturn(gameObject);
-    MultiplySpeedCommand command = new MultiplySpeedCommand(Arrays.asList(1.0, 2.0));
+    MultiplySpeedCommand command = new MultiplySpeedCommand(List.of(1,2), Map.of(1, gameObject));
     command.execute(gameEngine);
     verify(gameObject).multiplySpeed(2.0);
   }

@@ -135,8 +135,7 @@ public class GameController {
    */
   public void hitPointScoringObject(double fractionalVelocity, double angle) {
     if (ableToStrike) {
-      gameEngine.applyInitialVelocity(maxVelocity * fractionalVelocity, angle,
-          strikeableID);
+      gameEngine.applyInitialVelocity(maxVelocity * fractionalVelocity, angle);
       ableToStrike = false;
       animationManager.runAnimation(this);
     }
@@ -197,14 +196,14 @@ public class GameController {
   }
 
   public void moveX(boolean positive) {
-    if (animationManager.isRunning()) {
-      gameEngine.moveControllableX(positive);
+    if(animationManager.isRunning()) {
+      gameEngine.moveActiveControllableX(positive);
     }
   }
 
   public void moveY(boolean positive) {
-    if (animationManager.isRunning()) {
-      gameEngine.moveControllableY(positive);
+    if(animationManager.isRunning()) {
+      gameEngine.moveActiveControllableY(positive);
     }
   }
 }

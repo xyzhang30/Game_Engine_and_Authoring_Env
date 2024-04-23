@@ -1,10 +1,12 @@
 package oogasalad.model.gameengine.command;
 
 import java.util.List;
+import java.util.Map;
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
  * The PlayerCompletedTurnCommand class represents a command to reset the properties of the game to
@@ -24,7 +26,7 @@ public class LastStaticStateCommand implements Command {
    */
 
   @ExpectedParamNumber(0)
-  public LastStaticStateCommand(List<Double> arguments) {
+  public LastStaticStateCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
 
   }
 

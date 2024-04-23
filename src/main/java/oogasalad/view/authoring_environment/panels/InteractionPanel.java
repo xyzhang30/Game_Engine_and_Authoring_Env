@@ -39,7 +39,7 @@ public class InteractionPanel implements Panel {
   private TextField gameNameTextField;
   private TextField infoTextField;
   private CheckComboBox<String> checkComboBox;
-  private Map<String, List<Double>> tempSavedCommands = new HashMap<>();
+  private Map<String, List<Integer>> tempSavedCommands = new HashMap<>();
   private Button saveSelectionButton;
 
 
@@ -93,7 +93,7 @@ public class InteractionPanel implements Panel {
     containerPane.getChildren().addAll(idsLabel, infoTextField);
   }
 
-  private List<Double> enterParam(String newValue) {
+  private List<Integer> enterParam(String newValue) {
     System.out.println("selected:" +REFLECTION_COMMAND_PACKAGE_PATH + "." + newValue);
     String classPath = REFLECTION_COMMAND_PACKAGE_PATH + "." + newValue;
     try {
@@ -146,7 +146,7 @@ public class InteractionPanel implements Panel {
       while (c.next()) {
         if (c.wasAdded()) {
           for (String selectedCommand : c.getAddedSubList()) {
-            List<Double> params = enterParam(selectedCommand);
+            List<Integer> params = enterParam(selectedCommand);
             if (params != null){
               tempSavedCommands.put(selectedCommand,params);
             }

@@ -5,10 +5,12 @@ import static oogasalad.model.gameparser.GameLoaderModel.BASE_PATH;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidParameterNumberException;
 import oogasalad.model.gameengine.condition.Condition;
+import oogasalad.model.gameengine.gameobject.GameObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,11 +19,12 @@ public class ConditionFactory {
   private static final String CONDITION_PATH = "condition.";
   private static final Logger LOGGER = LogManager.getLogger(ConditionFactory.class);
 
-  public static Condition createCondition(String conditionName, List<Double> params)
+  public static Condition createCondition(String conditionName, List<Integer> params, Map<Integer
+      , GameObject> gameObjectMap)
       throws InvalidCommandException {
     try {
       Class<?> clazz = Class.forName(BASE_PATH + CONDITION_PATH + conditionName);
-      Constructor<?> constructor = clazz.getConstructor(List.class);
+      Constructor<?> constructor = clazz.getConstructor(List.class, Map.class);
       ExpectedParamNumber annotation = constructor.getAnnotation(ExpectedParamNumber.class);
 
       System.out.println("is annotation null?: " + annotation);
@@ -35,7 +38,8 @@ public class ConditionFactory {
               " parameters for condition " + conditionName + " but found " + params.size());
         }
       }
-      return (Condition) clazz.getDeclaredConstructor(List.class).newInstance(params);
+      return (Condition) clazz.getDeclaredConstructor(List.class, Map.class).newInstance(params,
+          gameObjectMap);
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              NoSuchMethodException | IllegalAccessException e) {
       LOGGER.error("condition " + conditionName + " is invalid");

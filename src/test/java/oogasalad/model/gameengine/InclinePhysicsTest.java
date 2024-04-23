@@ -40,11 +40,11 @@ public class InclinePhysicsTest {
     //angle in JSON set to 80 degrees
     double initialVelocity = 8.75;  // Start from a small tap
     double angleOfShot = Math.toRadians(90);  // Shot angle is horizontal but will not affect since initial velocity is zero
-    gameEngine.applyInitialVelocity(initialVelocity, angleOfShot, 1);
-    System.out.println("Ball record before: " + container.getGameObjectRecord(1));
+    gameEngine.applyInitialVelocity(initialVelocity, angleOfShot);
+    System.out.println("Ball record before: " + container.getGameObject(1).toGameObjectRecord());
     // Simulate a short time step to observe acceleration due to incline
     gameEngine.update(0.01);
-    GameObjectRecord ballRecord = container.getGameObjectRecord(1);
+    GameObjectRecord ballRecord = container.getGameObject(1).toGameObjectRecord();;
     System.out.println("Ball record after: " + ballRecord);
     // We expect the velocity to increase due to the incline
     assertTrue(ballRecord.velocityY() > initialVelocity, "Velocity should increase due to gravity along the incline");
@@ -55,11 +55,11 @@ public class InclinePhysicsTest {
     //angle in JSON set to 60 degrees
     double initialVelocity = 10.0;  // Start from a small tap
     double angleOfShot = Math.toRadians(-90);  // Shot angle is horizontal but will not affect since initial velocity is zero
-    gameEngine.applyInitialVelocity(initialVelocity, angleOfShot, 2);
+    gameEngine.applyInitialVelocity(initialVelocity, angleOfShot);
     //System.out.println("Ball record before: " + container.getCollidableRecord(1));
     // Simulate a short time step to observe acceleration due to incline
     gameEngine.update(0.0167);
-    GameObjectRecord ballRecord = container.getGameObjectRecord(2);
+    GameObjectRecord ballRecord = container.getGameObject(2).toGameObjectRecord();
     //System.out.println("Ball record after: " + ballRecord);
     // We expect the velocity to increase due to the incline
     assertTrue(ballRecord.velocityY() < initialVelocity, "Velocity should decrease due to gravity along the incline");
@@ -70,11 +70,11 @@ public class InclinePhysicsTest {
     //angle in JSON set to 60 degrees
     double initialVelocity = 10.0;  // Start from a small tap
     double angleOfShot = Math.toRadians(0);  // Shot angle is horizontal but will not affect since initial velocity is zero
-    gameEngine.applyInitialVelocity(initialVelocity, angleOfShot, 3);
+    gameEngine.applyInitialVelocity(initialVelocity, angleOfShot);
     //System.out.println("Ball record before: " + container.getCollidableRecord(1));
     // Simulate a short time step to observe acceleration due to incline
     gameEngine.update(0.0167);
-    GameObjectRecord ballRecord = container.getGameObjectRecord(3);
+    GameObjectRecord ballRecord = container.getGameObject(3).toGameObjectRecord();
     //System.out.println("Ball record after: " + ballRecord);
     // We expect the velocity to increase due to the incline
     assertTrue(ballRecord.velocityX() > initialVelocity, "Velocity should increase due to gravity along the incline");
@@ -85,11 +85,11 @@ public class InclinePhysicsTest {
     //angle in JSON set to 60 degrees
     double initialVelocity = 10.0;  // Start from a small tap
     double angleOfShot = Math.toRadians(-180);  // Shot angle is horizontal but will not affect since initial velocity is zero
-    gameEngine.applyInitialVelocity(initialVelocity, angleOfShot, 4);
+    gameEngine.applyInitialVelocity(initialVelocity, angleOfShot);
     //System.out.println("Ball record before: " + container.getCollidableRecord(1));
     // Simulate a short time step to observe acceleration due to incline
     gameEngine.update(0.0167);
-    GameObjectRecord ballRecord = container.getGameObjectRecord(4);
+    GameObjectRecord ballRecord = container.getGameObject(4).toGameObjectRecord();
     //System.out.println("Ball record after: " + ballRecord);
     // We expect the velocity to increase due to the incline
     assertTrue(ballRecord.velocityY() < initialVelocity, "Velocity should decrease due to gravity along the incline");

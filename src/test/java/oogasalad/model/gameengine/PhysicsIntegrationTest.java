@@ -48,9 +48,9 @@ public class PhysicsIntegrationTest {
   public void testOnApplyVelocity() {
     // Ensure the game starts without errors
 
-    gameEngine.applyInitialVelocity(10, 0, 1);
+    gameEngine.applyInitialVelocity(10, 0);
     // Assert that the initial round and turn are as expected
-    assertEquals(10, container.getGameObjectRecord(1).velocityX());
+    assertEquals(10, container.getGameObject(1).toGameObjectRecord().velocityX());
     assertEquals(1.0, gameEngine.getPlayerContainer().getPlayerRecords().get(0).score(), DELTA);
 
   }
@@ -58,33 +58,33 @@ public class PhysicsIntegrationTest {
   @Test
   public void testSingularUpdate() {
     // Ensure the game starts without errors
-    gameEngine.applyInitialVelocity(10, 0, 1);
+    gameEngine.applyInitialVelocity(10, 0);
     // Assert that the initial round and turn are as expected
-    assertEquals(10, container.getGameObjectRecord(1).velocityX());
+    assertEquals(10, container.getGameObject(1).toGameObjectRecord().velocityX());
     gameEngine.update(1.0 / 4.0);
-    assertEquals(2.5, container.getGameObjectRecord(1).x(), DELTA);
-    assertEquals(5, container.getGameObjectRecord(1).velocityX(), DELTA);
+    assertEquals(2.5, container.getGameObject(1).toGameObjectRecord().x(), DELTA);
+    assertEquals(5, container.getGameObject(1).toGameObjectRecord().velocityX(), DELTA);
   }
 
 
   @Test
   public void testMultipleUpdate() {
     // Ensure the game starts without errors
-    gameEngine.applyInitialVelocity(15, 0, 1);
-    assertEquals(15, container.getGameObjectRecord(1).velocityX(), DELTA);
+    gameEngine.applyInitialVelocity(15, 0);
+    assertEquals(15, container.getGameObject(1).toGameObjectRecord().velocityX(), DELTA);
     gameEngine.update(1.0 / 4);
-    assertEquals(15 / 4.0, container.getGameObjectRecord(1).x(), DELTA);
-    assertEquals(10, container.getGameObjectRecord(1).velocityX(), DELTA);
+    assertEquals(15 / 4.0, container.getGameObject(1).toGameObjectRecord().x(), DELTA);
+    assertEquals(10, container.getGameObject(1).toGameObjectRecord().velocityX(), DELTA);
     gameEngine.update(1.0 / 4);
-    assertEquals(25 / 4.0, container.getGameObjectRecord(1).x(), DELTA);
-    assertEquals(5, container.getGameObjectRecord(1).velocityX(), DELTA);
+    assertEquals(25 / 4.0, container.getGameObject(1).toGameObjectRecord().x(), DELTA);
+    assertEquals(5, container.getGameObject(1).toGameObjectRecord().velocityX(), DELTA);
   }
 
 
   @Test
   public void testStop() {
     // Ensure the game starts without errors
-    gameEngine.applyInitialVelocity(15, Math.PI / 2, 1);
+    gameEngine.applyInitialVelocity(15, Math.PI / 2);
     GameRecord r = gameEngine.update(1.0 / 4);
     System.out.println(r.gameObjectRecords().get(0));
     while (!isStatic(r)) {
@@ -92,35 +92,31 @@ public class PhysicsIntegrationTest {
       System.out.println(r.gameObjectRecords().get(0));
 
     }
-    assertEquals(7.5, gameEngine.getGameObjectContainer().getGameObjectRecord(1).y(), DELTA);
-    assertEquals(0, gameEngine.getGameObjectContainer().getGameObjectRecord(1).velocityY(), DELTA);
+    assertEquals(7.5, gameEngine.getGameObjectContainer().getGameObject(1).toGameObjectRecord().y(), DELTA);
+    assertEquals(0, gameEngine.getGameObjectContainer().getGameObject(1).toGameObjectRecord().velocityY(), DELTA);
   }
 
   @Test
   public void testMoveAtAngle() {
-    gameEngine.applyInitialVelocity(20, Math.PI / 4, 1);
+    gameEngine.applyInitialVelocity(20, Math.PI /4);
     gameEngine.update(.5);
-    System.out.println(container.getGameObjectRecord(1));
-    assertEquals(10 / Math.sqrt(2), container.getGameObjectRecord(1).x(), DELTA);
-    assertEquals(10 / Math.sqrt(2), container.getGameObjectRecord(1).y(), DELTA);
-    assertEquals(10 / Math.sqrt(2), container.getGameObjectRecord(1).velocityX(), DELTA);
-    assertEquals(10 / Math.sqrt(2), container.getGameObjectRecord(1).velocityX(), DELTA);
+    System.out.println(container.getGameObject(1).toGameObjectRecord());
+    assertEquals(10 / Math.sqrt(2), container.getGameObject(1).toGameObjectRecord().x(), DELTA);
+    assertEquals(10 / Math.sqrt(2), container.getGameObject(1).toGameObjectRecord().y(), DELTA);
+    assertEquals(10 / Math.sqrt(2), container.getGameObject(1).toGameObjectRecord().velocityX(), DELTA);
+    assertEquals(10 / Math.sqrt(2), container.getGameObject(1).toGameObjectRecord().velocityX(), DELTA);
   }
 
   @Test
   public void testTwoMovingObjectsCollide() {
     gameEngine.getGameObjectContainer().getGameObject(1).setVisible(true);
     gameEngine.getGameObjectContainer().getGameObject(10).setVisible(true);
-    gameEngine.applyInitialVelocity(15, -Math.PI, 1);
-    gameEngine.applyInitialVelocity(15, 0, 10);
+    gameEngine.applyInitialVelocity(15, -Math.PI);
     gameEngine.getGameObjectContainer().getGameObject(1).setVisible(true);
     gameEngine.getGameObjectContainer().getGameObject(10).setVisible(true);
     gameEngine.update(.25);
-    assertEquals(-10, container.getGameObjectRecord(1).velocityX(), DELTA);
-    assertEquals(10, container.getGameObjectRecord(10).velocityX(), DELTA);
-    gameEngine.update(.25);
-    assertEquals(-5, container.getGameObjectRecord(1).velocityX(), DELTA);
-    assertEquals(5, container.getGameObjectRecord(10).velocityX(), DELTA);
+    assertEquals(-3.33333, container.getGameObject(1).toGameObjectRecord().velocityX(), DELTA);
+    assertEquals(-13.3333, container.getGameObject(10).toGameObjectRecord().velocityX(), DELTA);
   }
 
 
@@ -128,11 +124,11 @@ public class PhysicsIntegrationTest {
   public void testAdjustPointsCommand() {
     gameEngine.getGameObjectContainer().getGameObject(1).setVisible(true);
     gameEngine.getGameObjectContainer().getGameObject(10).setVisible(true);
-    gameEngine.applyInitialVelocity(20, -Math.PI, 1);
+    gameEngine.applyInitialVelocity(20, -Math.PI);
     GameRecord r = gameEngine.update(1);
     System.out.println(r.players());
-    gameEngine.applyInitialVelocity(20, 0, 10);
-    gameEngine.applyInitialVelocity(20, -Math.PI, 1);
+    gameEngine.applyInitialVelocity(20, 0);
+    gameEngine.applyInitialVelocity(20, -Math.PI);
     GameRecord r2 = gameEngine.update(10);
     assertEquals(2.0, r2.players().get(1).score(), DELTA);
   }
@@ -141,23 +137,23 @@ public class PhysicsIntegrationTest {
   @Test
   public void testUndoCommand() {
     // Ensure the game starts without errors
-    gameEngine.applyInitialVelocity(100, 0, 1);
+    gameEngine.applyInitialVelocity(100, 0);
     gameEngine.update(1);
 
-    assertEquals(0.0, container.getGameObjectRecord(1).velocityX(), DELTA);
-    assertEquals(0.0, container.getGameObjectRecord(1).velocityY(), DELTA);
-    assertEquals(0.0, container.getGameObjectRecord(1).x(), DELTA);
-    assertEquals(0.0, container.getGameObjectRecord(1).y(), DELTA);
+    assertEquals(0.0, container.getGameObject(1).toGameObjectRecord().velocityX(), DELTA);
+    assertEquals(0.0, container.getGameObject(1).toGameObjectRecord().velocityY(), DELTA);
+    assertEquals(0.0, container.getGameObject(1).toGameObjectRecord().x(), DELTA);
+    assertEquals(0.0, container.getGameObject(1).toGameObjectRecord().y(), DELTA);
   }
 
 
   @Test
   public void testAdvanceTurnAndAdjustPoints() {
-    gameEngine.applyInitialVelocity(1, 0, 1);
+    gameEngine.applyInitialVelocity(1, 0);
     assertEquals(1.0, gameEngine.restoreLastStaticGameRecord().turn(), DELTA);
     gameEngine.update(1);
     assertEquals(2.0, gameEngine.restoreLastStaticGameRecord().turn(), DELTA);
-    gameEngine.applyInitialVelocity(1, 0, 6);
+    gameEngine.applyInitialVelocity(1, 0);
     gameEngine.update(1);
     assertEquals(1.0, gameEngine.restoreLastStaticGameRecord().turn(), DELTA);
     GameRecord r = gameEngine.update(1);

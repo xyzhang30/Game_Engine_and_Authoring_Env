@@ -97,7 +97,7 @@ public class AuthoringController {
   }
 
   public void endAuthoring(String gameName,
-      Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
+      Map<List<Shape>, Map<InteractionType, List<Integer>>> interactionMap,
       List<Shape> strikeables, Map<Shape, NonStrikeableType> nonStrikeableTypeMap,
       Map<Shape, String> imageMap, Map<Shape, List<Double>> posMap) {
     boolean saveGameSuccess = submitGame(gameName, interactionMap, strikeables,
@@ -119,7 +119,7 @@ public class AuthoringController {
   }
 
   private boolean submitGame(String gameName,
-      Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
+      Map<List<Shape>, Map<InteractionType, List<Integer>>> interactionMap,
       List<Shape> strikeables, Map<Shape, NonStrikeableType> nonStrikeableTypeMap,
       Map<Shape, String> imageMap, Map<Shape, List<Double>> posMap) {
     try {
@@ -150,12 +150,12 @@ public class AuthoringController {
     builderDirector.constructPlayers(List.of(player));
   }
 
-  private void writeRules(Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap,
+  private void writeRules(Map<List<Shape>, Map<InteractionType, List<Integer>>> interactionMap,
       Map<Shape, Integer> collidableIdMap) {
     //COLLISION RULE
     List<CollisionRule> collisionRules = new ArrayList<>();
     for (List<Shape> pair : interactionMap.keySet()) {
-      Map<String, List<Double>> collisionCommand = new HashMap<>();
+      Map<String, List<Integer>> collisionCommand = new HashMap<>();
       for (InteractionType type : interactionMap.get(pair).keySet()) {
         if (type != InteractionType.CHANGE_SPEED) {
           collisionCommand.put(matchCommandName(type), interactionMap.get(pair).get(type));
@@ -169,25 +169,25 @@ public class AuthoringController {
 
     String turnPolicy = "StandardTurnPolicy";
 
-    Map<String, List<Double>> roundPolicy = new HashMap<>();
+    Map<String, List<Integer>> roundPolicy = new HashMap<>();
     roundPolicy.put("AllPlayersCompletedRoundCondition", new ArrayList<>());
 
-    Map<String, List<Double>> winCondition = new HashMap<>();
-    winCondition.put("NRoundsCompletedCondition", List.of((double) 1));
+    Map<String, List<Integer>> winCondition = new HashMap<>();
+    winCondition.put("NRoundsCompletedCondition", List.of( 1));
 
 //    List<Map<String, List<Double>>> advanceTurn = new ArrayList<>();
-    Map<String, List<Double>> advanceTurn = new HashMap<>();
+    Map<String, List<Integer>> advanceTurn = new HashMap<>();
     Map<String, List<Double>> turnCommandOne = new HashMap<>();
     advanceTurn.put("AdvanceTurnCommand", new ArrayList<>());
 //    advanceTurn.add(turnCommandOne);
-    Map<String, List<Double>> turnCommandTwo = new HashMap<>();
+    Map<String, List<Integer>> turnCommandTwo = new HashMap<>();
 
 //    List<Map<String, List<Double>>> advanceRound = new ArrayList<>();
-    Map<String, List<Double>> advanceRound = new HashMap<>();
-    Map<String, List<Double>> roundCommandOne = new HashMap<>();
+    Map<String, List<Integer>> advanceRound = new HashMap<>();
+    Map<String, List<Integer>> roundCommandOne = new HashMap<>();
     advanceRound.put("AdvanceRoundCommand", new ArrayList<>());
 //    advanceRound.add(roundCommandOne);
-    Map<String, List<Double>> roundCommandTwo = new HashMap<>();
+    Map<String, List<Integer>> roundCommandTwo = new HashMap<>();
 
     String strikePolicy = "DoNothingStrikePolicy";
 

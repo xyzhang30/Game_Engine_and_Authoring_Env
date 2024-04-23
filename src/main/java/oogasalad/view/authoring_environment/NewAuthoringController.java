@@ -71,14 +71,15 @@ public class NewAuthoringController {
     builderDirector.constructPlayers(players);
   }
 
-  public void writeRules(Map<String, Map<String, List<Double>>> commandsConditions, Map<String, String> policies) throws InCompleteRulesAuthoringException{
+  public void writeRules(Map<String, Map<String, List<Integer>>> commandsConditions, Map<String,
+      String> policies) throws InCompleteRulesAuthoringException{
     List<CollisionRule> collisions = new ArrayList<>();
     //TODO: implement collisions
     String turnPolicy = policies.get("turnpolicy");
-    Map<String, List<Double>> roundPolicy = commandsConditions.get("roundpolicy");
-    Map<String, List<Double>> winCondition = commandsConditions.get("wincondition");
-    Map<String, List<Double>> advanceTurn = commandsConditions.get("advanceturn");
-    Map<String, List<Double>> advanceRound = commandsConditions.get("advanceround");
+    Map<String, List<Integer>> roundPolicy = commandsConditions.get("roundpolicy");
+    Map<String, List<Integer>> winCondition = commandsConditions.get("wincondition");
+    Map<String, List<Integer>> advanceTurn = commandsConditions.get("advanceturn");
+    Map<String, List<Integer>> advanceRound = commandsConditions.get("advanceround");
     String strikePolicy = policies.get("strikepolicy");
     String rankComparator = policies.get("rankcomparator");
     Map<String, List<Integer>> staticChecker = new HashMap<>();

@@ -8,7 +8,9 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
 
+import java.util.Map;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.player.Player;
 import org.junit.jupiter.api.Test;
 import oogasalad.model.gameengine.condition.ScoreThresholdCondition;
 import oogasalad.model.api.PlayerRecord;
@@ -19,30 +21,29 @@ public class ScoreThresholdConditionTest {
   @Test
   public void testEvaluate_AllScoresBelowThreshold() {
     PlayerContainer playerContainer = mock(PlayerContainer.class);
-    List<PlayerRecord> playerRecords = Arrays.asList(
-        new PlayerRecord(1, 10.0, 1),
-        new PlayerRecord(2, 20.0, 2),
-        new PlayerRecord(3, 30.0, 3)
-    );
-    when(playerContainer.getPlayerRecords()).thenReturn(playerRecords);
+    PlayerRecord playerRecords =
+        new PlayerRecord(1, 39, 3);
+    Player p = mock(Player.class);
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
-    ScoreThresholdCondition condition = new ScoreThresholdCondition(Arrays.asList(40.0));
+    when(gameEngine.getPlayerContainer().getPlayers()).thenReturn(List.of(p));
+    when(p.getPlayerRecord()).thenReturn(playerRecords);
+    ScoreThresholdCondition condition = new ScoreThresholdCondition(List.of(40), Map.of());
     assertFalse(condition.evaluate(gameEngine));
+
   }
 
   @Test
   public void testEvaluate_ScoreExceedsThreshold() {
     PlayerContainer playerContainer = mock(PlayerContainer.class);
-    List<PlayerRecord> playerRecords = Arrays.asList(
-        new PlayerRecord(1, 10.0, 1),
-        new PlayerRecord(2, 20.0, 2),
-        new PlayerRecord(3, 50.0, 3)
-    );
-    when(playerContainer.getPlayerRecords()).thenReturn(playerRecords);
+    PlayerRecord playerRecords =
+        new PlayerRecord(1, 50.0, 3);
+    Player p = mock(Player.class);
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
-    ScoreThresholdCondition condition = new ScoreThresholdCondition(Arrays.asList(40.0));
+    when(gameEngine.getPlayerContainer().getPlayers()).thenReturn(List.of(p));
+    when(p.getPlayerRecord()).thenReturn(playerRecords);
+    ScoreThresholdCondition condition = new ScoreThresholdCondition(List.of(40), Map.of());
     assertTrue(condition.evaluate(gameEngine));
   }
 }
