@@ -5,6 +5,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.enums.SceneElementEventType;
 import oogasalad.view.enums.SceneType;
@@ -28,6 +29,7 @@ public class SceneElementHandler {
 
   private final GameController gameController;
   private final SceneManager sceneManager;
+  private final GameStatusManager gameStatusManager;
   private final int angleIncrement;
   private double maxPower;
   private double minPower;
@@ -42,14 +44,18 @@ public class SceneElementHandler {
    * scene manager is responsible for managing different scenes within the game environment.
    * Additionally, the constructor sets the angle increment value to a default of 5 degrees.
    *
-   * @param gameController An instance of the `GameController` class, responsible for managing the
-   *                       game state.
-   * @param sceneManager   An instance of the `SceneManager` class, responsible for managing
-   *                       different scenes within the game environment.
+   * @param gameController    An instance of the `GameController` class, responsible for managing
+   *                          the game state.
+   * @param sceneManager      An instance of the `SceneManager` class, responsible for managing
+   *                          different scenes within the game environment.
+   * @param gameStatusManager An instance of the 'GameStatusManager' class, responsible for managing
+   *                          the game elements related to displaying the game status
    */
-  public SceneElementHandler(GameController gameController, SceneManager sceneManager) {
+  public SceneElementHandler(GameController gameController, SceneManager sceneManager,
+      GameStatusManager gameStatusManager) {
     this.gameController = gameController;
     this.sceneManager = sceneManager;
+    this.gameStatusManager = gameStatusManager;
     angleIncrement = 5;
   }
 
@@ -68,6 +74,7 @@ public class SceneElementHandler {
     checkForSceneChangeEvent(node, event);
     checkForGamePlayChangeEvent(node, event);
     checkForStrikingEvent(node, event);
+    checkForGameManagementEvent(node, event);
   }
 
   private void checkForGamePlayChangeEvent(Node node, String event) {
@@ -89,6 +96,9 @@ public class SceneElementHandler {
 
   private void checkForSceneChangeEvent(Node node, String event) {
     switch (SceneElementEventType.valueOf(event)) {
+      case START_TITLE -> {
+        createStartTitleHandler(node);
+      }
       case START_MENU -> {
         createStartMenuHandler(node);
       }
@@ -97,6 +107,9 @@ public class SceneElementHandler {
       }
       case START_GAME -> {
         createStartGameHandler(node);
+      }
+      case NEXT_ROUND -> {
+        createNextRoundHandler(node);
       }
     }
 
@@ -113,6 +126,20 @@ public class SceneElementHandler {
       }
       case SET_ANGLE -> {
         setAngleArrow(node);
+      }
+    }
+  }
+
+  private void checkForGameManagementEvent(Node node, String event) {
+    switch (SceneElementEventType.valueOf(event)) {
+      case SET_ROUND -> {
+        setRound(node);
+      }
+      case SET_TURN -> {
+        setTurn(node);
+      }
+      case SET_SCORE -> {
+        setScores(node);
       }
     }
   }
@@ -138,8 +165,10 @@ public class SceneElementHandler {
   }
 
   private void createStartGameHandler(Node node) {
+    ListView<String> gameList = (ListView<String>) node;
+    gameList.setItems(gameController.getGameTitles());
     node.setOnMouseClicked(e -> {
-      String game = ((ListView<String>) node).getSelectionModel().getSelectedItem();
+      String game = gameList.getSelectionModel().getSelectedItem();
       if (game != null) {
         gameController.startGamePlay(game);
       }
@@ -245,5 +274,26 @@ public class SceneElementHandler {
   private void setAngleArrow(Node node) {
     angleArrow = (Polygon) node;
     System.out.println(angleArrow.getRotate());
+  }
+
+  private void createNextRoundHandler(Node node) {
+    node.setOnMouseClicked(e -> sceneManager.removeTransitionSheen());
+  }
+
+  private void createStartTitleHandler(Node node) {
+    node.setOnMouseClicked(e -> sceneManager.createNonGameScene(SceneType.TITLE));
+  }
+
+  private void setRound(Node node) {
+    gameStatusManager.setRoundText(((Text) node));
+  }
+
+  private void setTurn(Node node) {
+    gameStatusManager.setTurnText(((Text) node));
+  }
+
+  private void setScores(Node node) {
+    gameStatusManager.setScoreList((ListView<String>) node);
+    node.setOnMouseClicked(e -> sceneManager.getRoot().requestFocus());
   }
 }

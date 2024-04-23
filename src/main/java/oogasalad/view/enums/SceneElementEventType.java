@@ -6,6 +6,7 @@ package oogasalad.view.enums;
  * @author Jordan Haytaian
  */
 public enum SceneElementEventType {
+  START_TITLE,
   START_MENU,
   START_AUTHORING,
   START_GAME,
@@ -16,5 +17,8 @@ public enum SceneElementEventType {
   POWER_HEIGHT,
   SET_POWER,
   SET_ANGLE,
-  NEXT_ROUND
+  NEXT_ROUND,
+  SET_ROUND,
+  SET_TURN,
+  SET_SCORE
 }

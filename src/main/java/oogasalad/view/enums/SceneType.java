@@ -10,4 +10,5 @@ public enum SceneType {
   MENU,
   TRANSITION,
   PAUSE,
+  GAME_OVER,
 }

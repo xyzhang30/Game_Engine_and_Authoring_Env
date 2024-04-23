@@ -16,4 +16,15 @@
     <y_layout_factor>0.2</y_layout_factor>
     <styling>title-text</styling>
   </node>
+
+  <node>
+    <type>BUTTON</type>
+    <text>Back</text>
+    <width_factor>0.05</width_factor>
+    <height_factor>0.05</height_factor>
+    <x_layout_factor>0.03</x_layout_factor>
+    <y_layout_factor>0.9</y_layout_factor>
+    <styling>game-button</styling>
+    <event>START_TITLE</event>
+  </node>
 </scene_elements>
