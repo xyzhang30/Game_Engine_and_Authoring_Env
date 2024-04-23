@@ -30,7 +30,7 @@ import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandler;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListFactory;
 import oogasalad.model.gameengine.strike.StrikePolicy;
-import oogasalad.model.gameengine.player.TurnPolicy;
+import oogasalad.model.gameengine.turn.TurnPolicy;
 import oogasalad.model.gameengine.rank.PlayerRecordComparator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

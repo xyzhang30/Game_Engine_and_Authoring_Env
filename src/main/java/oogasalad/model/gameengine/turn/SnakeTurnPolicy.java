@@ -1,7 +1,8 @@
-package oogasalad.model.gameengine.player;
+package oogasalad.model.gameengine.turn;
 
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.IsCommand;
+import oogasalad.model.gameengine.player.PlayerContainer;
 
 /**
  * The SnakeTurnPolicy class implements the TurnPolicy interface by defining a turn policy where

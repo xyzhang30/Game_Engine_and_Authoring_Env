@@ -10,7 +10,7 @@ import oogasalad.model.gameengine.gameobject.PhysicsHandler;
 import oogasalad.model.gameengine.rank.PlayerRecordComparator;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandler;
 import oogasalad.model.gameengine.strike.StrikePolicy;
-import oogasalad.model.gameengine.player.TurnPolicy;
+import oogasalad.model.gameengine.turn.TurnPolicy;
 
 /**
  * Represents a collection of game rules and configurations. Includes collision handlers, win

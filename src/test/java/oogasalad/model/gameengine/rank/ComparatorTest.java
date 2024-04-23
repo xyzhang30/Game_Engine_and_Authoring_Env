@@ -70,7 +70,9 @@ public class ComparatorTest {
   @Test
   public void testLowestScoreComp() {
     PlayerRecordComparator comp = new LowestScoreComparator();
-    List<PlayerRecord> records = container.getPlayerRecords().stream()
+
+    List<PlayerRecord> records = container.getPlayers().stream()
+        .map(Player::getPlayerRecord)
         .sorted(comp)
         .toList();
 
@@ -83,7 +85,8 @@ public class ComparatorTest {
   @Test
   public void testHighestScoreComp() {
     PlayerRecordComparator comp = new HighestScoreComparator();
-    List<PlayerRecord> records = container.getPlayerRecords().stream()
+    List<PlayerRecord> records = container.getPlayers().stream()
+        .map(Player::getPlayerRecord)
         .sorted(comp)
         .toList();
     assertEquals(2, records.get(0).playerId());
@@ -94,7 +97,8 @@ public class ComparatorTest {
   @Test
   public void testIdComp() {
     PlayerRecordComparator comp = new IDComparator();
-    List<PlayerRecord> records = container.getPlayerRecords().stream()
+    List<PlayerRecord> records = container.getPlayers().stream()
+        .map(Player::getPlayerRecord)
         .sorted(comp)
         .toList();
 

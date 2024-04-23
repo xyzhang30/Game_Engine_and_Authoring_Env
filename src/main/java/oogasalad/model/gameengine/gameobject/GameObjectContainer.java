@@ -16,7 +16,6 @@ import org.apache.logging.log4j.Logger;
 
 public class GameObjectContainer {
 
-  private static final Logger LOGGER = LogManager.getLogger(GameObjectContainer.class);
   private final Map<Integer, GameObject> myGameObjects;
 
   /**
@@ -31,7 +30,7 @@ public class GameObjectContainer {
   }
 
   /**
-   * Retrieves the GameObject associated with the specified ID.
+   * Retrieves the GameObjects.
    *
    * @return The GameObject corresponding to the given ID
    */
@@ -40,11 +39,5 @@ public class GameObjectContainer {
     return myGameObjects.values().stream().toList();
   }
 
-  public GameObject getGameObject(int objectId) {
-    if (!myGameObjects.containsKey(objectId)) {
-      LOGGER.warn("Game Object " + objectId + " not found");
-    }
-    return myGameObjects.get(objectId);
-  }
 
 }

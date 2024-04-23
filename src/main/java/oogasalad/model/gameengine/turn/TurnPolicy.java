@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine.player;
+package oogasalad.model.gameengine.turn;
 
 import oogasalad.model.annotations.IsCommand;
 
