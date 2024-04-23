@@ -1,0 +1,31 @@
+<scene_elements>
+  <node>
+    <type>BUTTON</type>
+    <text>Play</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
+    <y_layout_factor>0.4</y_layout_factor>
+    <styling>title-button</styling>
+    <event>START_MENU</event>
+  </node>
+
+  <node>
+    <type>BUTTON</type>
+    <text>Create</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
+    <y_layout_factor>0.6</y_layout_factor>
+    <styling>title-button</styling>
+    <event>START_AUTHORING</event>
+  </node>
+
+  <node>
+    <type>TEXT</type>
+    <text>Game Over</text>
+    <x_layout_factor>0.38</x_layout_factor>
+    <y_layout_factor>0.2</y_layout_factor>
+    <styling>title-text</styling>
+  </node>
+</scene_elements>
