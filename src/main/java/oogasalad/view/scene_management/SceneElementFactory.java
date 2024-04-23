@@ -139,7 +139,7 @@ public class SceneElementFactory {
     String style = parameters.get(styleTag);
     String event = parameters.get(eventTag);
 
-    ListView<String> listView = new ListView<>(sceneElementParser.getGameTitles());
+    ListView<String> listView = new ListView<>();
     sceneElementStyler.style(listView, style);
     sceneElementHandler.createElementHandler(listView, event);
 

@@ -1,6 +1,7 @@
 package oogasalad.view.controller;
 
 import java.util.List;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
@@ -11,6 +12,7 @@ import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.authoring_environment.NewAuthoringController;
 import oogasalad.view.scene_management.AnimationManager;
+import oogasalad.view.scene_management.GameTitleParser;
 import oogasalad.view.scene_management.SceneManager;
 import oogasalad.view.enums.SceneType;
 import oogasalad.view.visual_elements.CompositeElement;
@@ -28,6 +30,7 @@ public class GameController {
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
+  private final GameTitleParser gameTitleParser;
   private final int maxVelocity;
   private int strikeableID;
   private int activePlayer;
@@ -52,6 +55,7 @@ public class GameController {
     sceneManager = new SceneManager(this, width, height);
     sceneManager.createNonGameScene(SceneType.TITLE);
     animationManager = new AnimationManager();
+    gameTitleParser = new GameTitleParser();
     ableToStrike = true;
     maxVelocity = 1000;
   }
@@ -164,6 +168,10 @@ public class GameController {
     return staticState;
   }
 
+  public ObservableList<String> getGameTitles() {
+    return gameTitleParser.getGameTitles();
+  }
+
   private void getCurrentStrikeable(GameRecord gameRecord) {
     activePlayer = gameRecord.turn();
     for (PlayerRecord p : gameRecord.players()) {
@@ -189,12 +197,13 @@ public class GameController {
   }
 
   public void moveX(boolean positive) {
-    if(animationManager.isRunning()) {
+    if (animationManager.isRunning()) {
       gameEngine.moveControllableX(positive);
     }
   }
+
   public void moveY(boolean positive) {
-    if(animationManager.isRunning()) {
+    if (animationManager.isRunning()) {
       gameEngine.moveControllableY(positive);
     }
   }

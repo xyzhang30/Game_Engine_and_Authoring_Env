@@ -6,7 +6,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import oogasalad.model.api.GameRecord;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.enums.SceneElementEventType;
 import oogasalad.view.enums.SceneType;
@@ -166,8 +165,10 @@ public class SceneElementHandler {
   }
 
   private void createStartGameHandler(Node node) {
+    ListView<String> gameList = (ListView<String>) node;
+    gameList.setItems(gameController.getGameTitles());
     node.setOnMouseClicked(e -> {
-      String game = ((ListView<String>) node).getSelectionModel().getSelectedItem();
+      String game = gameList.getSelectionModel().getSelectedItem();
       if (game != null) {
         gameController.startGamePlay(game);
       }
