@@ -13,11 +13,26 @@ import oogasalad.model.gameengine.rank.IDComparator;
 
 public class ConditionalAdvanceTurnCommand implements Command {
 
+  /**
+   * Empty constructor for sake of consistency
+   */
+
   @ExpectedParamNumber(0)
   public ConditionalAdvanceTurnCommand(List<Integer> arguments,
       Map<Integer, GameObject> gameObjectMap) {
-
+      //do nothing
   }
+
+  /**
+   * Executes the command to conditionally advance the turn in the provided game engine.
+   * The turn is advanced if certain conditions are met. This command refers specifically to
+   * billiards, and advances the turn as long as the player did not get one of their balls in,
+   * there was no scratch, and no opponent balls went in. These conditions can eventually be
+   * abstracted out, time permitted.
+   *
+   * @param engine    The game engine in which the command is executed.
+   */
+
 
   @Override
   public void execute(GameEngine engine) {

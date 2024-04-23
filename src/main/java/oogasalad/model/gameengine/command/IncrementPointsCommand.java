@@ -42,7 +42,7 @@ public class IncrementPointsCommand implements Command {
   }
 
   /**
-   * Executes the command to increment a Scoreable's temporary score by 1
+   * Executes the command to increment a Scoreable's temporary score by a specified amount
    *
    * @param engine The game engine instance.
    */
