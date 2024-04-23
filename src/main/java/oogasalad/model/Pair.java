@@ -1,4 +1,4 @@
-package oogasalad;
+package oogasalad.model;
 
 import static java.util.Objects.hash;
 
@@ -40,9 +40,4 @@ public class Pair {
   public int hashCode() {
     return hash(Math.min(first.getId(), second.getId()), Math.max(first.getId(), second.getId()));
   }
-
-  public String toString() {
-    return "(" + first.getId() + "," + second.getId() + ")";
-  }
 }
-//
