@@ -128,7 +128,6 @@ public class SceneManager {
    * @param gameRecord represents updated state of game
    */
   public void update(GameRecord gameRecord) {
-    System.out.println(gameRecord.round());
     compositeElement.update(gameRecord.gameObjectRecords());
     gameStatBoard.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
     root.requestFocus();

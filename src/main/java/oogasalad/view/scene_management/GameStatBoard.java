@@ -15,6 +15,7 @@ import oogasalad.model.api.PlayerRecord;
  * @author Jordan Haytaian
  */
 public class GameStatBoard {
+
   private final SceneElementStyler sceneElementStyler;
   private final double screenWidth;
   private final double screenHeight;
@@ -32,10 +33,11 @@ public class GameStatBoard {
 
   /**
    * Constructor creates score, turn, and round display on call
-   * @param players list current player records which contain score info
-   * @param turn id of player whose turn it is
-   * @param round current round
-   * @param screenWidth screen width to be used for ratio scaling elements
+   *
+   * @param players      list current player records which contain score info
+   * @param turn         id of player whose turn it is
+   * @param round        current round
+   * @param screenWidth  screen width to be used for ratio scaling elements
    * @param screenHeight screen height to be used for ratio scaling elements
    */
   public GameStatBoard(List<PlayerRecord> players, int turn, int round, double screenWidth,
@@ -48,6 +50,7 @@ public class GameStatBoard {
 
   /**
    * Box to hold score, turn, and round display
+   *
    * @return VBox holding score, turn, and round display
    */
   public VBox getContainer() {
@@ -56,9 +59,10 @@ public class GameStatBoard {
 
   /**
    * Updates the score, turn, and round display
+   *
    * @param players list current player records which contain score info
-   * @param turn id of player whose turn it is
-   * @param round current round
+   * @param turn    id of player whose turn it is
+   * @param round   current round
    */
   public void update(List<PlayerRecord> players, int turn, int round) {
     updateScore(players);
@@ -93,7 +97,7 @@ public class GameStatBoard {
   }
 
   private void updateRound(int round) {
-    roundDisplay = new Text(roundText + round);
+    roundDisplay.setText(roundText + round);
   }
 
   private void updateScore(List<PlayerRecord> players) {
