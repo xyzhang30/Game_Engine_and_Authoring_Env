@@ -8,6 +8,7 @@ import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
+import oogasalad.model.gameengine.player.Player;
 
 /**
  * The AllPlayersCompletedRoundCondition evaluates if any player's score has exceeded a certain
@@ -46,9 +47,9 @@ public class ScoreThresholdCondition implements Condition {
   @Override
   public boolean evaluate(GameEngine engine) {
     double scoreThresh = arguments.get(0);
-    List<PlayerRecord> lst = engine.getPlayerContainer().getPlayerRecords();
-    for (PlayerRecord player : lst) {
-      if (player.score() > scoreThresh) {
+    List<Player> lst = engine.getPlayerContainer().getPlayers();
+    for (Player player : lst) {
+      if (player.getPlayerRecord().score() > scoreThresh) {
         return true;
       }
     }

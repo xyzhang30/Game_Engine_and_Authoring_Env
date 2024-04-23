@@ -31,6 +31,7 @@ public class PlayerContainer {
   public PlayerContainer(Map<Integer, Player> players) {
     myPlayers = players;
     getPlayers().forEach(Player::addPlayerHistory);
+    active = players.get(1);
   }
 
   /**
@@ -41,7 +42,7 @@ public class PlayerContainer {
    * @return The Player object corresponding to the player ID.
    */
 
-  public Player getPlayer(int playerId) {
+  protected Player getPlayer(int playerId) {
     if (!myPlayers.containsKey(playerId)) {
       LOGGER.warn("Player " + playerId + " Not Found ");
     }

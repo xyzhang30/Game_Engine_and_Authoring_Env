@@ -249,9 +249,8 @@ public class GameEngine implements ExternalGameEngine {
     gameOver = false;
     turn = 1; //first player ideally should have id 1
     staticState = true;
-    playerContainer.setActive(playerContainer.getPlayer(turn));
     loadRoundSpecificInformation(loader);
-    playerContainer.getPlayer(1).updateActiveStrikeable();
+    playerContainer.getActive().updateActiveStrikeable();
     playerContainer.getActive().getStrikeable().asGameObject().setVisible(true);
     playerContainer.getPlayers().forEach(Player::startRound);
     addInitialStaticStateToHistory();

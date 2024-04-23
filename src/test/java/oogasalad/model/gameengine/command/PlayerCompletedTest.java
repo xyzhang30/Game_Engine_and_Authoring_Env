@@ -20,7 +20,6 @@ public class PlayerCompletedTest {
     PlayerContainer playerContainer = mock(PlayerContainer.class);
     Player activePlayer = mock(Player.class);
     when(playerContainer.getActive()).thenReturn(activePlayer);
-    when(playerContainer.getPlayer(1)).thenReturn(activePlayer);
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
     PlayerCompletedRoundCommand command = new PlayerCompletedRoundCommand(Collections.emptyList()
@@ -35,7 +34,6 @@ public class PlayerCompletedTest {
     PlayerContainer playerContainer = mock(PlayerContainer.class);
     Player activePlayer = mock(Player.class);
     when(playerContainer.getActive()).thenReturn(activePlayer);
-    when(playerContainer.getPlayer(1)).thenReturn(activePlayer);
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
     PlayerCompletedTurnCommand command = new PlayerCompletedTurnCommand(Collections.emptyList(),
