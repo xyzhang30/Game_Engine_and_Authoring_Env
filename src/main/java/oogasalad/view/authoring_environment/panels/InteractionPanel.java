@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Button;
@@ -74,6 +75,8 @@ public class InteractionPanel implements Panel {
     AnchorPane.setTopAnchor(checkComboBox,100.0);
     checkComboBox.setId("collision");
 
+    checkComboBox.disableProperty().bind(Bindings.size(shapeProxy.getShapeStackProperty()).lessThan(2));
+
     saveSelectionButton = new Button("Save");
     AnchorPane.setRightAnchor(saveSelectionButton, 0.0);
     AnchorPane.setTopAnchor(saveSelectionButton, 150.0);
@@ -90,6 +93,18 @@ public class InteractionPanel implements Panel {
     infoTextField.setFocusTraversable(false);
     AnchorPane.setLeftAnchor(infoTextField, 500.0);
     AnchorPane.setTopAnchor(infoTextField, 50.0);
+
+    infoTextField.textProperty().bind(Bindings.createStringBinding(() -> {
+      StringBuilder sb = new StringBuilder();
+      for (Shape shape : shapeProxy.getShapeStack()) {
+        sb.append(shape.getId()).append(", ");
+      }
+      if (sb.length() > 2) {
+        sb.setLength(sb.length() - 2);
+      }
+      return sb.toString();
+    }, shapeProxy.getShapeStackProperty()));
+
     containerPane.getChildren().addAll(idsLabel, infoTextField);
   }
 
@@ -168,5 +183,6 @@ public class InteractionPanel implements Panel {
       checkComboBox.getCheckModel().clearChecks();
       infoTextField.clear();
     });
+
   }
 }
