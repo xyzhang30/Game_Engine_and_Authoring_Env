@@ -9,7 +9,7 @@ import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
- * The MultiplySpeedCommand class represents a command to multiply the speed of a GameObject.
+ * The DivideSpeedCommand class represents a command to divide the speed of a GameObject.
  *
  * @author Noah Loewy
  */
@@ -26,15 +26,16 @@ public class DivideSpeedCommand implements Command {
    * @param arguments Consists of two arguments: the ID of the GameObject whose speed is to be
    *                  multiplied and the factor by which the speed should be divided by.
    */
-  @ExpectedParamNumber(2)
+  @ExpectedParamNumber(value = 2, paramDescription = {"game object to have its speed change",
+      "factor to divide speed by"})
   public DivideSpeedCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));
   }
 
   /**
-   * Executes the command to multiply the speed of a GameObject. It retrieves the GameObject
-   * corresponding to the provided ID from the game engine and multiplies its speed by the specified
+   * Executes the command to divide the speed of a GameObject. It retrieves the GameObject
+   * corresponding to the provided ID from the game engine and divides its speed by the specified
    * factor.
    *
    * @param engine The game engine instance.

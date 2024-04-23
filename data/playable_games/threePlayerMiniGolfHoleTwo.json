@@ -592,7 +592,7 @@
             "LastStaticStateCommand": []
           },
           {
-            "AddDelayedPointsCommand": [
+            "SetDelayedPointsCommand": [
               18,
               1
             ]
@@ -607,7 +607,7 @@
             "LastStaticStateCommand": []
           },
           {
-            "AddDelayedPointsCommand": [
+            "SetDelayedPointsCommand": [
               19,
               1
             ]
@@ -621,7 +621,7 @@
             "LastStaticStateCommand": []
           },
           {
-            "AddDelayedPointsCommand": [
+            "SetDelayedPointsCommand": [
               20,
               1
             ]
@@ -636,7 +636,7 @@
             "LastStaticStateCommand": []
           },
           {
-            "AddDelayedPointsCommand": [
+            "SetDelayedPointsCommand": [
               18,
               1
             ]
@@ -651,7 +651,7 @@
             "LastStaticStateCommand": []
           },
           {
-            "AddDelayedPointsCommand": [
+            "SetDelayedPointsCommand": [
               19,
               1
             ]
@@ -666,7 +666,7 @@
             "LastStaticStateCommand": []
           },
           {
-            "AddDelayedPointsCommand": [
+            "SetDelayedPointsCommand": [
               20,
               1
             ]

@@ -31,7 +31,7 @@ public class ScoreThresholdCondition implements Condition {
    *                   condition to evaluate to true
    */
 
-  @ExpectedParamNumber(1)
+  @ExpectedParamNumber(value = 1, paramDescription = "threshold of points scored for game to end")
   public ScoreThresholdCondition(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
   }

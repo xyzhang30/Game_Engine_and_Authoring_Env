@@ -24,7 +24,8 @@ public class TeleportCommand implements Command {
    *                  game object (a surface) where the first object teleports to.
    */
 
-  @ExpectedParamNumber(2)
+  @ExpectedParamNumber(value = 2, paramDescription = "game object teleporting, "
+      + "location of game object to teleport to")
   public TeleportCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     gameObjectFrom = gameObjectMap.get(arguments.get(0));
     gameObjectTo = gameObjectMap.get(arguments.get(1));

@@ -26,15 +26,15 @@ public class IncrementPointsCommand implements Command {
 
 
   /**
-   * Constructs an instance of the AddDelayedPointsCommand with the list of arguments determined
+   * Constructs an instance of the SetDelayedPointsCommand with the list of arguments determined
    * from the data file.
    *
-   * @param arguments Consists of one arguments: the ID of the GameObject to which the delayed
+   * @param arguments Consists of one argument: the ID of the GameObject to which the delayed
    *                  points should be incremented
    */
 
-  @ExpectedParamNumber(value = 2, paramDescription = {"(double) game object ID to add",
-      "(double) number of points to add"})
+  @ExpectedParamNumber(value = 2, paramDescription = {"game object ID to add",
+      "number of points to add"})
   public IncrementPointsCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));
@@ -42,7 +42,7 @@ public class IncrementPointsCommand implements Command {
   }
 
   /**
-   * Executes the command to increment a Scoreable's temporary score by 1
+   * Executes the command to increment a Scoreable's temporary score by a specified amount
    *
    * @param engine The game engine instance.
    */

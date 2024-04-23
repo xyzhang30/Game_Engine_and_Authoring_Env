@@ -27,7 +27,8 @@ public class MultiplySpeedCommand implements Command {
    * @param arguments Consists of two arguments: the ID of the GameObject whose speed is to be
    *                  multiplied and the factor by which the speed should be multiplied.
    */
-  @ExpectedParamNumber(2)
+  @ExpectedParamNumber(value = 2, paramDescription = {"game object to have its speed change",
+      "factor to multiply speed by"})
   public MultiplySpeedCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));
@@ -43,8 +44,6 @@ public class MultiplySpeedCommand implements Command {
 
   @Override
   public void execute(GameEngine engine) {
-    if (gameObject != null) {
-      gameObject.multiplySpeed(arguments.get(1));
-    }
+    gameObject.multiplySpeed(arguments.get(1));
   }
 }

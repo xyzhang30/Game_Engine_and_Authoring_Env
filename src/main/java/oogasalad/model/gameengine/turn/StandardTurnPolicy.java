@@ -12,6 +12,8 @@ import oogasalad.model.gameengine.player.PlayerContainer;
  * policy where players take turns in a sequential order. This turn policy ensures that each player
  * takes a turn in order, skipping players who have completed their rounds until an active player is
  * found. Essentially, a circular list is used.
+ *
+ * @author Noah Loewy
  */
 
 @IsCommand(isCommand = true)
@@ -48,6 +50,7 @@ public class StandardTurnPolicy implements TurnPolicy {
     return turn;
   }
 
+  //gets the actual next turn
   private int getTurn(int numPlayers, Collection<Player> players) {
     int turn = ((playerContainer.getActive().getId()) % numPlayers) + 1;
     players.stream()
