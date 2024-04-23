@@ -98,6 +98,9 @@ public class SceneElementHandler {
       case START_GAME -> {
         createStartGameHandler(node);
       }
+      case NEXT_ROUND -> {
+        createNextRoundHandler(node);
+      }
     }
 
   }
@@ -245,5 +248,9 @@ public class SceneElementHandler {
   private void setAngleArrow(Node node) {
     angleArrow = (Polygon) node;
     System.out.println(angleArrow.getRotate());
+  }
+
+  private void createNextRoundHandler(Node node) {
+    node.setOnMouseClicked(e -> sceneManager.removeTransitionSheen());
   }
 }

@@ -31,6 +31,7 @@ public class SceneManager {
   private CompositeElement compositeElement;
   private GameStatBoard gameStatBoard;
   private Pane pauseElements;
+  private Pane transitionElements;
   private GameBoard gameBoard;
   private int currentRound;
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
@@ -78,8 +79,7 @@ public class SceneManager {
         root.getChildren().add(createSceneElements(menuSceneElementsPath));
       }
       case TRANSITION -> {
-        resetRoot();
-        root.getChildren().add(createSceneElements(transitionElementsPath));
+        root.getChildren().add(transitionElements);
       }
       case PAUSE -> {
         if (!root.getChildren().contains(pauseElements)) {
@@ -94,6 +94,14 @@ public class SceneManager {
    */
   public void removePauseSheen() {
     root.getChildren().remove(pauseElements);
+  }
+
+  /**
+   * Called when next round is started, removes transition screen elements
+   */
+  public void removeTransitionSheen() {
+    root.getChildren().remove(transitionElements);
+    root.requestFocus();
   }
 
   /**
@@ -120,6 +128,7 @@ public class SceneManager {
    * @param gameRecord represents updated state of game
    */
   public void update(GameRecord gameRecord) {
+    System.out.println(gameRecord.round());
     compositeElement.update(gameRecord.gameObjectRecords());
     gameStatBoard.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
     root.requestFocus();
@@ -135,6 +144,7 @@ public class SceneManager {
   public void makeGameScreen(CompositeElement compositeElement, GameRecord gameRecord) {
     this.compositeElement = compositeElement;
     pauseElements = createSceneElements(pausePath);
+    transitionElements = createSceneElements(transitionElementsPath);
     addGameManagementElementsToGame(gameRecord);
     addGameElementsToGame();
     root.requestFocus();
