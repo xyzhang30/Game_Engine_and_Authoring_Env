@@ -115,8 +115,8 @@ public class InteractionPanel implements Panel {
     try {
       System.out.println("path: "+classPath);
       Class<?> clazz = Class.forName(classPath);
-      Constructor<?> constructor = clazz.getConstructor(List.class);
-      if (constructor.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredConstructor(List.class).getAnnotation(ExpectedParamNumber.class).value() != 0){
+      Constructor<?> constructor = clazz.getConstructor(List.class, Map.class);
+      if (constructor.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredConstructor(List.class, Map.class).getAnnotation(ExpectedParamNumber.class).value() != 0){
         int numParam = constructor.getAnnotation(ExpectedParamNumber.class).value();
         return PolicyPanel.enterConstantParamsPopup(numParam, newValue);
       } else {

@@ -61,6 +61,8 @@ public class ShapePanel implements Panel {
   private Label mass;
   private Label elasticity;
   private Label scoreable;
+  private CheckBox xSpeedCheckBox, ySpeedCheckBox;
+  private Label xSpeedCheckBoxLabel, ySpeedCheckBoxLabel;
 
   public ShapePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
       AnchorPane containerPane, StackPane canvas) {
@@ -595,6 +597,35 @@ public class ShapePanel implements Panel {
 
   private void setPlayerAssignmentVisibility(boolean visibility) {
     playerAssignmentListView.setVisible(visibility);
+  }
+
+  private void createXYSpeedControlCheckBoxes() {
+    xSpeedCheckBox = new CheckBox();
+    ySpeedCheckBox = new CheckBox();
+    xSpeedCheckBoxLabel = new Label("X Speed");
+    ySpeedCheckBoxLabel = new Label("Y Speed");
+
+    AnchorPane.setRightAnchor(xSpeedCheckBox, 300.0);
+    AnchorPane.setTopAnchor(xSpeedCheckBox, 570.0);
+    AnchorPane.setRightAnchor(ySpeedCheckBox, 300.0);
+    AnchorPane.setTopAnchor(ySpeedCheckBox, 600.0);
+
+    AnchorPane.setRightAnchor(xSpeedCheckBoxLabel, 200.0);
+    AnchorPane.setTopAnchor(xSpeedCheckBoxLabel, 570.0);
+    AnchorPane.setRightAnchor(ySpeedCheckBoxLabel, 200.0);
+    AnchorPane.setTopAnchor(ySpeedCheckBoxLabel, 600.0);
+
+    containerPane.getChildren().addAll(xSpeedCheckBox, xSpeedCheckBoxLabel, ySpeedCheckBox, ySpeedCheckBoxLabel);
+
+    setSpeedOptionVisibility(false);
+
+  }
+
+  private void setSpeedOptionVisibility(boolean visibility) {
+    xSpeedCheckBox.setVisible(visibility);
+    ySpeedCheckBox.setVisible(visibility);
+    xSpeedCheckBoxLabel.setVisible(visibility);
+    ySpeedCheckBoxLabel.setVisible(visibility);
   }
 
 }
