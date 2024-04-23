@@ -9,7 +9,9 @@ import javafx.scene.text.Text;
 import oogasalad.model.api.PlayerRecord;
 
 /**
- * Class to display and update game stats (players' scores, current round, current turn)
+ * Manages the display and updates of game status, including players' scores, current round, and
+ * current turn. This class is responsible for handling the visual representation of the game status
+ * in the user interface.
  *
  * @author Jordan Haytaian
  */
@@ -23,20 +25,31 @@ public class GameStatusManager {
   private Text turnDisplay;
   private Text roundDisplay;
 
-
-  public GameStatusManager() {
-  }
-
+  /**
+   * Sets the Text element for displaying the current round
+   *
+   * @param roundDisplay Text element for displaying the current round.
+   */
   public void setRoundText(Text roundDisplay) {
     this.roundDisplay = roundDisplay;
     roundText = roundDisplay.getText();
   }
 
+  /**
+   * Sets the Text element for displaying the current turn.
+   *
+   * @param turnDisplay Text element for displaying the current turn.
+   */
   public void setTurnText(Text turnDisplay) {
     this.turnDisplay = turnDisplay;
     turnText = turnDisplay.getText();
   }
 
+  /**
+   * Sets the ListView for displaying players' scores.
+   *
+   * @param scoreListDisplay ListView for displaying players' scores.
+   */
   public void setScoreList(ListView<String> scoreListDisplay) {
     this.scoreListDisplay = scoreListDisplay;
   }

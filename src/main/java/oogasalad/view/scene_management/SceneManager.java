@@ -20,9 +20,6 @@ import org.xml.sax.SAXException;
  * @author Doga Ozmen, Jordan Haytaian
  */
 public class SceneManager {
-
-  private final double screenWidth;
-  private final double screenHeight;
   private final Pane root;
   private final Scene scene;
   private final SceneElementParser sceneElementParser;
@@ -52,8 +49,6 @@ public class SceneManager {
    */
   public SceneManager(GameController gameController, double screenWidth,
       double screenHeight) {
-    this.screenWidth = screenWidth;
-    this.screenHeight = screenHeight;
     root = new Pane();
     scene = new Scene(root);
 
