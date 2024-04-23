@@ -182,10 +182,11 @@ public class GameEngine implements ExternalGameEngine {
 
   public void toLastStaticState() {
     staticState = true;
-    for (GameObject gr : getGameObjectContainer().getGameObjects()) {
-      Optional<Scoreable> optionalScoreable = gr.getScoreable();
-      optionalScoreable.ifPresent(scoreable -> scoreable.setTemporaryScore(0));
-    }
+    getGameObjectContainer().getGameObjects().stream()
+        .map(GameObject::getScoreable)
+        .filter(Optional::isPresent)
+        .map(Optional::get)
+        .forEach(scoreable -> scoreable.setTemporaryScore(0));
     GameRecord newCurrentState = staticStateStack.peek();
     turn = newCurrentState.turn();
     round = newCurrentState.round();
@@ -208,18 +209,13 @@ public class GameEngine implements ExternalGameEngine {
   // operations and commands caused by the collision
   private void handleCollisions(double dt) {
     Set<Pair> collisionPairs = getCollisionPairs();
-    for (Pair collision : collisionPairs) {
-      if (rules.physicsMap().containsKey(collision)) {
-        rules.physicsMap().get(collision).handleCollision(dt);
-      }
-      if (rules.collisionHandlers().containsKey(collision)) {
-        for (Command cmd : rules.collisionHandlers().get(collision)) {
-          LOGGER.info(cmd.getClass().getSimpleName() + " " + "(collision " + "info" + " - ) "
-              + collision.getFirst() + " " + collision.getSecond());
-          cmd.execute(this);
-        }
-      }
-    }
+    collisionPairs.stream()
+        .filter(collision -> rules.physicsMap().containsKey(collision))
+        .forEach(collision -> rules.physicsMap().get(collision).handleCollision(dt));
+    collisionPairs.stream()
+        .filter(collision -> rules.collisionHandlers().containsKey(collision))
+        .flatMap(collision -> rules.collisionHandlers().get(collision).stream())
+        .forEach(cmd -> cmd.execute(this));
   }
 
 
@@ -229,17 +225,11 @@ public class GameEngine implements ExternalGameEngine {
    * @author Konur Nordberg
    */
   private Set<Pair> getCollisionPairs() {
-    Set<Pair> collisionPairs = new HashSet<>();
-    for (GameObject go1 : gameObjects.getGameObjects()) {
-      for (GameObject go2 : gameObjects.getGameObjects()) {
-        if (!go1.equals(go2) && go2.getVisible() && go1.getVisible()
-            && collisionDetector.isColliding(
-            go1, go2)) {
-          collisionPairs.add(new Pair(go1, go2));
-        }
-      }
-    }
-    return collisionPairs;
+    return gameObjects.getGameObjects().stream()
+        .flatMap(go1 -> gameObjects.getGameObjects().stream()
+            .filter(go2 -> !go1.equals(go2) && go2.getVisible() && go1.getVisible() && collisionDetector.isColliding(go1, go2))
+            .map(go2 -> new Pair(go1, go2)))
+        .collect(Collectors.toSet());
   }
 
   //starts the current round, by requesting the necessary information for that round from the

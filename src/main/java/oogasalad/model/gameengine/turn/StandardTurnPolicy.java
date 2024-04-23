@@ -50,11 +50,10 @@ public class StandardTurnPolicy implements TurnPolicy {
 
   private int getTurn(int numPlayers, Collection<Player> players) {
     int turn = ((playerContainer.getActive().getId()) % numPlayers) + 1;
-    for(Player p : players) {
-      if(p.getId()==turn) {
-        playerContainer.setActive(p);
-      }
-    }
+    players.stream()
+        .filter(p -> p.getId() == turn)
+        .findFirst()
+        .ifPresent(playerContainer::setActive);
     return turn;
   }
 }
