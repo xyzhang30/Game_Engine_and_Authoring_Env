@@ -14,10 +14,10 @@ import oogasalad.model.annotations.ChoiceType;
 
 public record Rules(List<CollisionRule> collisions,
                     @JsonProperty("turn_policy") String turnPolicy,
-                    @JsonProperty("round_policy") Map<String, List<Double>> roundPolicy,
-                    @JsonProperty("win_condition") Map<String, List<Double>> winCondition,
-                    @JsonProperty("advance_turn") Map<String, List<Double>> advanceTurn,
-                    @JsonProperty("advance_round") Map<String, List<Double>> advanceRound,
+                    @JsonProperty("round_policy") Map<String, List<Integer>> roundPolicy,
+                    @JsonProperty("win_condition") Map<String, List<Integer>> winCondition,
+                    @JsonProperty("advance_turn") Map<String, List<Integer>> advanceTurn,
+                    @JsonProperty("advance_round") Map<String, List<Integer>> advanceRound,
                     @JsonProperty("strike_policy") String strikePolicy,
                     @JsonProperty("rank_comparator") String rankComparator,
                     @JsonProperty("static_checker") Map<String,List<Integer>> staticChecker){}

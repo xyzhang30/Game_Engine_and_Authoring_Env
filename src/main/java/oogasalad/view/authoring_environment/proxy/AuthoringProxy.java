@@ -22,9 +22,9 @@ import oogasalad.view.enums.CollidableType;
  */
 public class AuthoringProxy {
 
-  private final Map<String, Map<String, List<Double>>> conditionsCommands = new HashMap<>();
+  private final Map<String, Map<String, List<Integer>>> conditionsCommands = new HashMap<>();
   private final Map<String, String> policies = new HashMap<>();
-  private final Map<List<Integer>, Map<String, List<Double>>> interactionMap = new HashMap<>();
+  private final Map<List<Integer>, Map<String, List<Integer>>> interactionMap = new HashMap<>();
   private final Map<Shape, GameObjectAttributesContainer> gameObjectMap = new HashMap<>();
   private final Map<Integer, Map<CollidableType, List<Integer>>> playersMap = new HashMap<>();
   private String gameName;
@@ -33,7 +33,7 @@ public class AuthoringProxy {
   private int numPlayers = 1;
 
   public void addShapeInteraction(List<Integer> shapes,
-      Map<String, List<Double>> interaction) {
+      Map<String, List<Integer>> interaction) {
     interactionMap.put(shapes, interaction);
   }
 
@@ -46,7 +46,7 @@ public class AuthoringProxy {
     System.out.println("ALL POLICIES:" + policies);
   }
 
-  public void addConditionsCommandsWithParam(String type, String commandName, List<Double> params) {
+  public void addConditionsCommandsWithParam(String type, String commandName, List<Integer> params) {
     if (!conditionsCommands.containsKey(type)) {
       conditionsCommands.put(type, new HashMap<>());
     }
@@ -55,7 +55,7 @@ public class AuthoringProxy {
   }
 
   public void replaceConditionsCommandsWithParam(String type, String commandName,
-      List<Double> params) {
+      List<Integer> params) {
     conditionsCommands.put(type, new HashMap<>());
     conditionsCommands.get(type).put(commandName, params);
     System.out.println("ALL CONDITIONS:" + conditionsCommands);
@@ -143,7 +143,7 @@ public class AuthoringProxy {
     this.authoringController = authoringController;
   }
 
-  public Map<List<Integer>, Map<String, List<Double>>> getInteractionMap() {
+  public Map<List<Integer>, Map<String, List<Integer>>> getInteractionMap() {
     return interactionMap;
   }
 

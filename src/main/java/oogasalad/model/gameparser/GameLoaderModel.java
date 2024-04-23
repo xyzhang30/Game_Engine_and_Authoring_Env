@@ -214,9 +214,9 @@ public class GameLoaderModel extends GameLoader {
   private void createRulesRecord() {
     Map<Pair, List<Command>> commandMap = createCommandMap();
     System.out.println("advanceTurnCmds");
-    List<Command> advanceTurnCmds = createAdvanceCommands(gameData.getRules().advanceTurn());
+    List<Command> advanceTurnCmds = createCommands(gameData.getRules().advanceTurn());
     System.out.println("Advance Rounds:");
-    List<Command> advanceRoundCmds = createAdvanceCommands(gameData.getRules().advanceRound());
+    List<Command> advanceRoundCmds = createCommands(gameData.getRules().advanceRound());
     Condition winCondition = createCondition(gameData.getRules().winCondition());
     Condition roundPolicy = createCondition(gameData.getRules().roundPolicy());
     TurnPolicy turnPolicy = createTurnPolicy();
@@ -246,19 +246,20 @@ public class GameLoaderModel extends GameLoader {
         playerContainer);
   }
 
-  private Condition createCondition(Map<String, List<Double>> conditionToParams) {
+  private Condition createCondition(Map<String, List<Integer>> conditionToParams) {
     if (conditionToParams.keySet().iterator().hasNext()) {
       String conditionName = conditionToParams.keySet().iterator().next();
-      return ConditionFactory.createCondition(conditionName, conditionToParams.get(conditionName));
+      return ConditionFactory.createCondition(conditionName, conditionToParams.get(conditionName)
+          , gameObjects);
     } else {
       throw new InvalidCommandException("");
     }
   }
 
-  private List<Command> createAdvanceCommands(Map<String, List<Double>> commands) {
+  private List<Command> createCommands(Map<String, List<Integer>> commands) {
     List<Command> ret = new ArrayList<>();
     commands.keySet().forEach(command -> {
-      ret.add(CommandFactory.createCommand(command, commands.get(command)));
+      ret.add(CommandFactory.createCommand(command, commands.get(command), gameObjects));
       System.out.println("command:"+command + " "+ commands.get(command));
     });
     return ret;
@@ -270,7 +271,7 @@ public class GameLoaderModel extends GameLoader {
       List<Command> commands = new ArrayList<>();
       rule.command().forEach(commandsToParams -> {
         commandsToParams.keySet().forEach(s -> {
-          commands.add(CommandFactory.createCommand(s, commandsToParams.get(s)));
+          commands.add(CommandFactory.createCommand(s, commandsToParams.get(s), gameObjects));
         });
       });
       commandMap.put(new Pair(gameObjects.get(rule.firstId()), gameObjects.get(rule.secondId())),

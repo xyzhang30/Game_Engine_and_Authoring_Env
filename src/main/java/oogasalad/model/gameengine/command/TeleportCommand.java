@@ -1,8 +1,10 @@
 package oogasalad.model.gameengine.command;
 
 import java.util.List;
+import java.util.Map;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
  * Teleport Commands allow objects to teleport.
@@ -12,7 +14,10 @@ import oogasalad.model.gameengine.GameEngine;
 
 public class TeleportCommand implements Command {
 
-  private final List<Double> arguments;
+  private final List<Integer> arguments;
+  private final GameObject gameObjectFrom;
+  private final GameObject gameObjectTo;
+
 
   /**
    * Constructs an instance of the TeleportCommand with the provided arguments.
@@ -22,8 +27,10 @@ public class TeleportCommand implements Command {
    */
 
   @ExpectedParamNumber(2)
-  public TeleportCommand(List<Double> arguments) {
+  public TeleportCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
+    gameObjectFrom = gameObjectMap.get(arguments.get(0));
+    gameObjectTo = gameObjectMap.get(arguments.get(1));
   }
 
   /**
@@ -35,6 +42,6 @@ public class TeleportCommand implements Command {
    */
   @Override
   public void execute(GameEngine engine) {
-    engine.getGameObjectContainer().getGameObject((int) Math.round(arguments.get(0))).teleportTo(engine.getGameObjectContainer().getGameObject((int) Math.round(arguments.get(1))));
+    gameObjectFrom.teleportTo(gameObjectTo);
   }
 }

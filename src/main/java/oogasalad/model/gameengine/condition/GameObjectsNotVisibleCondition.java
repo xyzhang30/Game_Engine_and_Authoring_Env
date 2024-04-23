@@ -1,32 +1,32 @@
 package oogasalad.model.gameengine.condition;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
-
+import oogasalad.model.gameengine.gameobject.GameObject;
 
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
 public class GameObjectsNotVisibleCondition implements Condition {
 
-  private final List<Double> arguments;
+  private final List<Integer> arguments;
+  private List<GameObject> gameObjects;
 
-  public GameObjectsNotVisibleCondition(List<Double> arguments) {
+  public GameObjectsNotVisibleCondition(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
+    gameObjects = arguments.stream().map(gameObjectMap::get).collect(Collectors.toList());
+
   }
 
   @Override
   public boolean evaluate(GameEngine engine) {
-    for(double arg : arguments) {
-      int intArg = (int) Math.round(arg);
-      if(engine.getGameObjectContainer().getGameObject(intArg).getVisible()) {
-        return false;
-      }
-    }
-    return true;
+    return gameObjects.stream()
+        .noneMatch(GameObject::getVisible);
   }
 
 }

@@ -1,11 +1,13 @@
 package oogasalad.model.gameengine.condition;
 
 import java.util.List;
+import java.util.Map;
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
  * The AllPlayersCompletedRoundCondition evaluates if any player's score has exceeded a certain
@@ -18,7 +20,7 @@ import oogasalad.model.gameengine.GameEngine;
 @CommandHelpInfo(description = "")
 public class ScoreThresholdCondition implements Condition {
 
-  private final List<Double> arguments;
+  private final List<Integer> arguments;
 
   /**
    * Constructs an instance of AllPlayersCompletedRoundCondition with a list of arguments.
@@ -28,7 +30,7 @@ public class ScoreThresholdCondition implements Condition {
    */
 
   @ExpectedParamNumber(1)
-  public ScoreThresholdCondition(List<Double> arguments) {
+  public ScoreThresholdCondition(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
   }
 

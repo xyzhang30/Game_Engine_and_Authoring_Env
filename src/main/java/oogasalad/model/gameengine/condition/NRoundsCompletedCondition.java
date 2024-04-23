@@ -1,10 +1,12 @@
 package oogasalad.model.gameengine.condition;
 
 import java.util.List;
+import java.util.Map;
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
  * The NRoundsCompletedCondition class represents a condition that evaluates whether a specified
@@ -18,7 +20,7 @@ import oogasalad.model.gameengine.GameEngine;
 @CommandHelpInfo(description = "")
 public class NRoundsCompletedCondition implements Condition {
 
-  private final List<Double> arguments;
+  private final List<Integer> arguments;
 
   /**
    * Constructs an instance of the NRoundsCompletedCondition with the provided arguments.
@@ -28,7 +30,7 @@ public class NRoundsCompletedCondition implements Condition {
    */
 
   @ExpectedParamNumber(1)
-  public NRoundsCompletedCondition(List<Double> arguments) {
+  public NRoundsCompletedCondition(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     System.out.println("WIN CONDITION CREATED: "+ arguments);
   }

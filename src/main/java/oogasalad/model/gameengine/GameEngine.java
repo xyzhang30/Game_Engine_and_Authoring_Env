@@ -207,7 +207,7 @@ public class GameEngine implements ExternalGameEngine {
     Set<Pair> collisionPairs = getCollisionPairs();
     for (Pair collision : collisionPairs) {
       if (rules.physicsMap().containsKey(collision)) {
-        rules.physicsMap().get(collision).handleCollision(gameObjects, dt);
+        rules.physicsMap().get(collision).handleCollision(dt);
       }
       if (rules.collisionHandlers().containsKey(collision)) {
         for (Command cmd : rules.collisionHandlers().get(collision)) {

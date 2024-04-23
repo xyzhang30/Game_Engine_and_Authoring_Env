@@ -1,6 +1,7 @@
 package oogasalad.model.gameengine.command;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
@@ -20,7 +21,8 @@ import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 @CommandHelpInfo(description = "")
 public class AddDelayedPointsCommand implements Command {
 
-  private final List<Double> arguments;
+  private final List<Integer> arguments;
+  private final GameObject gameObject;
 
   /**
    * Constructs an instance of the AddDelayedPointsCommand with the list of arguments determined
@@ -32,8 +34,12 @@ public class AddDelayedPointsCommand implements Command {
    */
 
   @ExpectedParamNumber(value = 2, paramDescription = {"(double) game object ID", "(double) points to add"})
-  public AddDelayedPointsCommand(List<Double> arguments) {
+  public AddDelayedPointsCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
+    System.out.println("XXXXX" + arguments.get(0));
+    System.out.println(gameObjectMap);
+    gameObject = gameObjectMap.get(arguments.get(0));
+
   }
 
   /**
@@ -47,11 +53,8 @@ public class AddDelayedPointsCommand implements Command {
 
   @Override
   public void execute(GameEngine engine) {
-    GameObject c = engine.getGameObjectContainer()
-        .getGameObject((int) Math.round(arguments.get(0)));
-    System.out.println(arguments.get(0));
     System.out.println(engine.getPlayerContainer().getPlayer(engine.getPlayerContainer().getActive()).getStrikeableID());
-    Optional<Scoreable> optionalScoreable = c.getScoreable();
+    Optional<Scoreable> optionalScoreable = gameObject.getScoreable();
     optionalScoreable.ifPresent(scoreable -> scoreable.setTemporaryScore(arguments.get(1)));
   }
 

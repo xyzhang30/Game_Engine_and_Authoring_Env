@@ -15,20 +15,18 @@ import oogasalad.model.gameengine.gameobject.GameObject;
  */
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
-public class MultiplySpeedCommand implements Command {
+public class DivideSpeedCommand implements Command {
 
   private final List<Integer> arguments;
   private final GameObject gameObject;
-
-
   /**
-   * Constructs an instance of the MultiplySpeedCommand with the provided arguments.
+   * Constructs an instance of the DivideSpeedCommand with the provided arguments.
    *
    * @param arguments Consists of two arguments: the ID of the GameObject whose speed is to be
-   *                  multiplied and the factor by which the speed should be multiplied.
+   *                  multiplied and the factor by which the speed should be divided by.
    */
   @ExpectedParamNumber(2)
-  public MultiplySpeedCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
+  public DivideSpeedCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));
   }
@@ -44,7 +42,7 @@ public class MultiplySpeedCommand implements Command {
   @Override
   public void execute(GameEngine engine) {
     if (gameObject != null) {
-      gameObject.multiplySpeed(arguments.get(1));
+      gameObject.multiplySpeed(1.0 /arguments.get(1));
     }
   }
 }

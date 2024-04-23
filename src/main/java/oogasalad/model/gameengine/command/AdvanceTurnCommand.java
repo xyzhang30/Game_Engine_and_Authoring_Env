@@ -1,10 +1,12 @@
 package oogasalad.model.gameengine.command;
 
 import java.util.List;
+import java.util.Map;
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
  * The AdvanceYutnCommand handles the internal transition from one turn to another in the ooga salad
@@ -25,7 +27,7 @@ public class AdvanceTurnCommand implements Command {
    */
 
   @ExpectedParamNumber(0)
-  public AdvanceTurnCommand(List<Double> arguments) {
+  public AdvanceTurnCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
 
   }
 

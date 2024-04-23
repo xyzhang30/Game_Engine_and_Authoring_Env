@@ -4,17 +4,19 @@ import static java.util.Collections.sort;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.rank.IDComparator;
 
 public class ConditionalAdvanceTurnCommand implements Command {
 
   @ExpectedParamNumber(0)
-  public ConditionalAdvanceTurnCommand(List<Double> arguments) {
+  public ConditionalAdvanceTurnCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
 
   }
 

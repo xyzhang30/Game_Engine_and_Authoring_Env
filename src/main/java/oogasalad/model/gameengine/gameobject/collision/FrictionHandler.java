@@ -23,6 +23,7 @@ public class FrictionHandler extends PhysicsHandler {
   protected Supplier<List<Double>> makeVelocityFunction(GameObjectRecord c1, GameObjectRecord c2,
       double dt) {
     return () -> {
+
       //need to standardize angle from 0-90 for each case... wrote a method for this
       double inclineAngleRadians = Math.toRadians(normalizeInclineAngle(c2.inclineAngle()));
       double gravityComponent =
@@ -65,6 +66,7 @@ public class FrictionHandler extends PhysicsHandler {
       double velocityMagnitude = Math.sqrt(
           initialVelocityX * initialVelocityX + initialVelocityY * initialVelocityY);
       double frictionDeceleration = frictionForce / c1.mass();
+
 
       // Calculate the components of frictional deceleration
       double unitVelocityX = (velocityMagnitude != 0) ? initialVelocityX / velocityMagnitude : 0;
