@@ -29,7 +29,7 @@ public class NRoundsCompletedCondition implements Condition {
    *                  completed for the condition to evaluate to true.
    */
 
-  @ExpectedParamNumber(1)
+  @ExpectedParamNumber(value = 1, paramDescription = {"number of rounds to be completed"})
   public NRoundsCompletedCondition(List<Integer> arguments,
       Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
