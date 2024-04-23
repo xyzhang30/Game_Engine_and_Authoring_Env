@@ -6,6 +6,7 @@ package oogasalad.view.enums;
  * @author Jordan Haytaian
  */
 public enum SceneElementEventType {
+  START_TITLE,
   START_MENU,
   START_AUTHORING,
   START_GAME,

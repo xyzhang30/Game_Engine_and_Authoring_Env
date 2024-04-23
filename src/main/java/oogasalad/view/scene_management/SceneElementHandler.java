@@ -89,6 +89,9 @@ public class SceneElementHandler {
 
   private void checkForSceneChangeEvent(Node node, String event) {
     switch (SceneElementEventType.valueOf(event)) {
+      case START_TITLE -> {
+        createStartTitleHandler(node);
+      }
       case START_MENU -> {
         createStartMenuHandler(node);
       }
@@ -252,5 +255,9 @@ public class SceneElementHandler {
 
   private void createNextRoundHandler(Node node) {
     node.setOnMouseClicked(e -> sceneManager.removeTransitionSheen());
+  }
+
+  private void createStartTitleHandler(Node node) {
+    node.setOnMouseClicked(e -> sceneManager.createNonGameScene(SceneType.TITLE));
   }
 }
