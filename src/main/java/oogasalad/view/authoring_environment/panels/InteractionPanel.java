@@ -42,6 +42,7 @@ public class InteractionPanel implements Panel {
   private CheckComboBox<String> checkComboBox;
   private Map<String, List<Integer>> tempSavedCommands = new HashMap<>();
   private Button saveSelectionButton;
+  private int numMultiSelect = 2;
 
 
   public InteractionPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
@@ -52,7 +53,7 @@ public class InteractionPanel implements Panel {
     this.containerPane = containerPane;
     this.canvas = canvas;
     // TODO: REMOVE HARD CODING
-    shapeProxy.setNumberOfMultiSelectAllowed(2);
+    shapeProxy.setNumberOfMultiSelectAllowed(numMultiSelect);
     createElements();
     handleEvents();
   }
@@ -75,7 +76,7 @@ public class InteractionPanel implements Panel {
     AnchorPane.setTopAnchor(checkComboBox,100.0);
     checkComboBox.setId("collision");
 
-    checkComboBox.disableProperty().bind(Bindings.size(shapeProxy.getShapeStackProperty()).lessThan(2));
+//    checkComboBox.disableProperty().bind(Bindings.size(shapeProxy.getShapeStackProperty()).lessThan(2));
 
     saveSelectionButton = new Button("Save");
     AnchorPane.setRightAnchor(saveSelectionButton, 0.0);
@@ -94,16 +95,16 @@ public class InteractionPanel implements Panel {
     AnchorPane.setLeftAnchor(infoTextField, 500.0);
     AnchorPane.setTopAnchor(infoTextField, 50.0);
 
-    infoTextField.textProperty().bind(Bindings.createStringBinding(() -> {
-      StringBuilder sb = new StringBuilder();
-      for (Shape shape : shapeProxy.getShapeStack()) {
-        sb.append(shape.getId()).append(", ");
-      }
-      if (sb.length() > 2) {
-        sb.setLength(sb.length() - 2);
-      }
-      return sb.toString();
-    }, shapeProxy.getShapeStackProperty()));
+//    infoTextField.textProperty().bind(Bindings.createStringBinding(() -> {
+//      StringBuilder sb = new StringBuilder();
+//      for (int shapeId : shapeProxy.getSelectedShapeIds()) {
+//        sb.append(shapeId).append(" ");
+//      }
+//      if (sb.length() > 2) {
+//        sb.setLength(sb.length() - 2);
+//      }
+//      return sb.toString();
+//    }, shapeProxy.getShapeStackProperty()));
 
     containerPane.getChildren().addAll(idsLabel, infoTextField);
   }

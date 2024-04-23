@@ -125,10 +125,6 @@ public class ShapeProxy {
     }
   }
 
-  public Stack<Shape> getShapeStack() {
-    return shapeStack;
-  }
-
   // TODO: RENAME (encapsulate stack implementation)
   public void removeFromShapeStack(Shape shape) {
     if (!shapeStack.isEmpty()) {
