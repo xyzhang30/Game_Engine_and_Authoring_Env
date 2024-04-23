@@ -24,7 +24,6 @@ public class MultiplySpeedCommandTest {
     GameEngine gameEngine = mock(GameEngine.class);
     gameObject.applyInitialVelocity(2,0);
     when(gameEngine.getGameObjectContainer()).thenReturn(goc);
-    when(gameEngine.getGameObjectContainer().getGameObject(1)).thenReturn(gameObject);
     MultiplySpeedCommand command = new MultiplySpeedCommand(List.of(1,2), Map.of(1, gameObject));
     command.execute(gameEngine);
     verify(gameObject).multiplySpeed(2.0);
