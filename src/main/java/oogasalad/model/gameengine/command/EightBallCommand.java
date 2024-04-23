@@ -26,7 +26,7 @@ public class EightBallCommand implements Command {
    * @param gameObjectMap    The map of game objects.
    */
 
-  @ExpectedParamNumber(value = 1, paramDescription = {"(double) game object ID of 8 ball"})
+  @ExpectedParamNumber(value = 1, paramDescription = {"game object ID of 8 ball"})
   public EightBallCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));

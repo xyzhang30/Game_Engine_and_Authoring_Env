@@ -33,8 +33,8 @@ public class SetDelayedPointsCommand implements Command {
    *                  score
    */
 
-  @ExpectedParamNumber(value = 2, paramDescription = {"(double) game object ID",
-      "(double) new temporary score"})
+  @ExpectedParamNumber(value = 2, paramDescription = {"game object ID",
+      "new temporary score"})
   public SetDelayedPointsCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));

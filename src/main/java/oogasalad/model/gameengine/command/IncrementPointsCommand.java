@@ -33,8 +33,8 @@ public class IncrementPointsCommand implements Command {
    *                  points should be incremented
    */
 
-  @ExpectedParamNumber(value = 2, paramDescription = {"(double) game object ID to add",
-      "(double) number of points to add"})
+  @ExpectedParamNumber(value = 2, paramDescription = {"game object ID to add",
+      "number of points to add"})
   public IncrementPointsCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));

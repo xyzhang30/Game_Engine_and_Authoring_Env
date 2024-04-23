@@ -38,6 +38,7 @@ public class PlayerCompletedRoundCommand implements Command {
    *
    * @param engine The game engine instance.
    */
+
   @Override
   public void execute(GameEngine engine) {
     engine.getPlayerContainer().getActive().completeRound();
