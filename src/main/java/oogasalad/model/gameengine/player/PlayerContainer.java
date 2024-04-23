@@ -13,8 +13,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * The PlayerContainer class manages a collection of Players within the game environment, and
  * provides efficient access to Players to be accessed/manipulated via their unique IDs, while also
- * encapsulating the map from player IDs to Players instances, encapsulating the implementation of
- * the Players.
+ * encapsulating the Collection of players
  *
  * @author Noah Loewy
  */
