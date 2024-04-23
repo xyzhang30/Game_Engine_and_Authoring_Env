@@ -60,8 +60,10 @@ public class ImagePanel implements Panel {
     fileChooser.getExtensionFilters().addAll(
         new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
     );
-    File file = fileChooser.showOpenDialog(new Stage());
-
+    File file = null;
+    while (file == null) {
+      file = fileChooser.showOpenDialog(new Stage());
+    }
     return file.getPath();
   }
 }
