@@ -9,7 +9,6 @@ import java.util.List;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.gameengine.gameobject.GameObject;
-import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,13 +17,11 @@ public class InclinePhysicsTest {
 
   private static final double DELTA = .0001;
   private GameEngine gameEngine;
-  private GameObjectContainer container;
   private List<GameObject> gameObjects;
 
   @BeforeEach
   public void setUp() {
     gameEngine = new GameEngine("testIncline");
-    container = gameEngine.getGameObjectContainer();
   }
 
   private GameObjectRecord getRecord(int id) {
