@@ -15,6 +15,7 @@ import oogasalad.model.api.PlayerRecord;
  * @author Jordan Haytaian
  */
 public class GameStatusManager {
+
   private final String playerText = "Player ";
   private final String playerScoreSeparator = ": ";
   private String turnText;
@@ -35,6 +36,11 @@ public class GameStatusManager {
   public void setTurnText(Text turnDisplay) {
     this.turnDisplay = turnDisplay;
     turnText = turnDisplay.getText();
+  }
+
+  public void setScoreList(ListView<String> scoreListDisplay) {
+    this.scoreListDisplay = scoreListDisplay;
+    scoreListDisplay.setSelectionModel(null);
   }
 
   /**
@@ -59,13 +65,8 @@ public class GameStatusManager {
   }
 
   private void updateScore(List<PlayerRecord> players) {
-    //scoreListDisplay.getItems().clear();
-    //scoreListDisplay.setItems(createScoreListItems(players));
-  }
-
-  private void setScoreListDisplay(List<PlayerRecord> players) {
-    ObservableList<String> scores = createScoreListItems(players);
-    scoreListDisplay.setSelectionModel(null);
+    scoreListDisplay.getItems().clear();
+    scoreListDisplay.setItems(createScoreListItems(players));
   }
 
   private ObservableList<String> createScoreListItems(List<PlayerRecord> players) {

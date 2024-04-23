@@ -139,6 +139,9 @@ public class SceneElementHandler {
       case SET_TURN -> {
         setTurn(node);
       }
+      case SET_SCORE -> {
+        setScores(node);
+      }
     }
   }
 
@@ -286,5 +289,10 @@ public class SceneElementHandler {
 
   private void setTurn(Node node) {
     gameStatusManager.setTurnText(((Text) node));
+  }
+
+  private void setScores(Node node) {
+    gameStatusManager.setScoreList((ListView<String>) node);
+    node.setOnMouseClicked(e -> sceneManager.getRoot().requestFocus());
   }
 }
