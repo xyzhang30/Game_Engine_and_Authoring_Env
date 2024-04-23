@@ -33,7 +33,8 @@ public class AddDelayedPointsCommand implements Command {
    *                  score
    */
 
-  @ExpectedParamNumber(value = 2, paramDescription = {"(double) game object ID", "(double) points to add"})
+  @ExpectedParamNumber(value = 2, paramDescription = {"(double) game object ID",
+      "(double) points to add"})
   public AddDelayedPointsCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));

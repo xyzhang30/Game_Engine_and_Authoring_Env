@@ -29,14 +29,14 @@ public class GameEngineTest {
 
   @Test
   public void testApplyInitialVelocityX() {
-    gameEngine.applyInitialVelocity(10, 0, 8);
+    gameEngine.applyInitialVelocity(10, 0);
     assertEquals(10,
         gameEngine.getGameObjectContainer().getGameObject(8).toGameObjectRecord().velocityX());
   }
 
   @Test
   public void testApplyInitialVelocityY() {
-    gameEngine.applyInitialVelocity(10, Math.PI/2, 8);
+    gameEngine.applyInitialVelocity(10, Math.PI/2);
     assertEquals(10,
         gameEngine.getGameObjectContainer().getGameObject(8).toGameObjectRecord().velocityY(),
         .0001);
@@ -44,7 +44,7 @@ public class GameEngineTest {
 
   @Test
   public void testApplyInitialVelocityXY() {
-    gameEngine.applyInitialVelocity(10*Math.sqrt(2), Math.PI/4, 8);
+    gameEngine.applyInitialVelocity(10*Math.sqrt(2), Math.PI/4);
     assertEquals(10,
         gameEngine.getGameObjectContainer().getGameObject(8).toGameObjectRecord().velocityY());
     assertEquals(10,

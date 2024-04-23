@@ -18,7 +18,8 @@ public class MoveToStartingStateCommand implements Command {
 
 
   @ExpectedParamNumber(1)
-  public MoveToStartingStateCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
+  public MoveToStartingStateCommand(List<Integer> arguments,
+      Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));
 

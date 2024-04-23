@@ -28,6 +28,7 @@ import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
  */
 
 public class GameObject {
+
   private final double myMass;
   private final int myId;
   private final double myWidth;
@@ -46,9 +47,9 @@ public class GameObject {
   private double myNextVelocityX;
   private double myNextVelocityY;
   private boolean myVisible;
-  private boolean inelastic;
+  private final boolean inelastic;
 
-  private boolean phaser;
+  private final boolean phaser;
 
   private Strikeable strikeable;
   private Scoreable scoreable;
@@ -57,21 +58,22 @@ public class GameObject {
   /**
    * Initiates the GameObject
    *
-   * @param id,        the unique id
-   * @param mass,      the mass (in grams)
-   * @param x,         the x position (in meters)
-   * @param y,         the y position (in meters)
-   * @param visible,   the visibility state
-   * @param staticMu,  the static coefficient of friction
-   * @param kineticMu, the kinetic coefficient of friction
+   * @param id,           the unique id
+   * @param mass,         the mass (in grams)
+   * @param x,            the x position (in meters)
+   * @param y,            the y position (in meters)
+   * @param visible,      the visibility state
+   * @param staticMu,     the static coefficient of friction
+   * @param kineticMu,    the kinetic coefficient of friction
    * @param inclineAngle, the angle of incline if it is a surface (degrees)
-   * @param width,     the width of the game object (in meters)
-   * @param height,    the height of the game object (in meters)
-   * @param shape,     the shape of the game object (string representation)
+   * @param width,        the width of the game object (in meters)
+   * @param height,       the height of the game object (in meters)
+   * @param shape,        the shape of the game object (string representation)
    */
 
   public GameObject(int id, double mass, double x, double y,
-      boolean visible, double staticMu, double kineticMu, double inclineAngle, double width, double height,
+      boolean visible, double staticMu, double kineticMu, double inclineAngle, double width,
+      double height,
       String shape, boolean inelastic, boolean phaser) {
     myId = id;
     myMass = mass;

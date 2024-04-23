@@ -27,7 +27,8 @@ public class PlayerCompletedRoundCommand implements Command {
    */
 
   @ExpectedParamNumber(0)
-  public PlayerCompletedRoundCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
+  public PlayerCompletedRoundCommand(List<Integer> arguments,
+      Map<Integer, GameObject> gameObjectMap) {
 
   }
 
@@ -39,7 +40,7 @@ public class PlayerCompletedRoundCommand implements Command {
    */
   @Override
   public void execute(GameEngine engine) {
-    engine.getPlayerContainer().getPlayer(engine.getPlayerContainer().getActive()).completeRound();
+    engine.getPlayerContainer().getActive().completeRound();
 
   }
 }

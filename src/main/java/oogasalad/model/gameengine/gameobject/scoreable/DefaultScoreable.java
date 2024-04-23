@@ -56,7 +56,7 @@ public class DefaultScoreable implements Scoreable {
 
   @Override
   public void incrementTemporaryScore(double amt) {
-    tempScore+=amt;
+    tempScore += amt;
   }
 
   /**

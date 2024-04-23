@@ -19,6 +19,7 @@ public class DivideSpeedCommand implements Command {
 
   private final List<Integer> arguments;
   private final GameObject gameObject;
+
   /**
    * Constructs an instance of the DivideSpeedCommand with the provided arguments.
    *
@@ -42,7 +43,7 @@ public class DivideSpeedCommand implements Command {
   @Override
   public void execute(GameEngine engine) {
     if (gameObject != null) {
-      gameObject.multiplySpeed(1.0 /arguments.get(1));
+      gameObject.multiplySpeed(1.0 / arguments.get(1));
     }
   }
 }

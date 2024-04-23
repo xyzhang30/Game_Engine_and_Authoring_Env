@@ -72,7 +72,7 @@ public class PlayerTest {
   public void testGetStrikeableID() {
 
     when(strikeable1.asGameObject().getId()).thenReturn(101);
-    assertEquals(101, player.getStrikeableID());
+    assertEquals(101, player.getStrikeable().asGameObject().getId());
   }
 
   @Test

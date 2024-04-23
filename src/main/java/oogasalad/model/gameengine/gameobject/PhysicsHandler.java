@@ -40,11 +40,13 @@ public abstract class PhysicsHandler {
    * Handles collision between GameObjects by calculating their next speeds through the use of a
    * concrete velocity function, and then synchronously updating their post-collision velocities.
    *
-   * @param dt                  The time step for the collision handling process.
+   * @param dt The time step for the collision handling process.
    */
   public void handleCollision(double dt) {
-    go1.calculateNextSpeeds(makeVelocityFunction(go1.toGameObjectRecord(), go2.toGameObjectRecord(), dt));
-    go2.calculateNextSpeeds(makeVelocityFunction(go2.toGameObjectRecord(), go1.toGameObjectRecord(), dt));
+    go1.calculateNextSpeeds(
+        makeVelocityFunction(go1.toGameObjectRecord(), go2.toGameObjectRecord(), dt));
+    go2.calculateNextSpeeds(
+        makeVelocityFunction(go2.toGameObjectRecord(), go1.toGameObjectRecord(), dt));
     go1.updatePostCollisionVelocity();
     go2.updatePostCollisionVelocity();
   }

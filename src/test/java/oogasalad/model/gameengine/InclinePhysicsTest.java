@@ -40,7 +40,7 @@ public class InclinePhysicsTest {
     //angle in JSON set to 80 degrees
     double initialVelocity = 8.75;  // Start from a small tap
     double angleOfShot = Math.toRadians(90);  // Shot angle is horizontal but will not affect since initial velocity is zero
-    gameEngine.applyInitialVelocity(initialVelocity, angleOfShot, 1);
+    gameEngine.applyInitialVelocity(initialVelocity, angleOfShot);
     System.out.println("Ball record before: " + container.getGameObject(1).toGameObjectRecord());
     // Simulate a short time step to observe acceleration due to incline
     gameEngine.update(0.01);
@@ -55,7 +55,7 @@ public class InclinePhysicsTest {
     //angle in JSON set to 60 degrees
     double initialVelocity = 10.0;  // Start from a small tap
     double angleOfShot = Math.toRadians(-90);  // Shot angle is horizontal but will not affect since initial velocity is zero
-    gameEngine.applyInitialVelocity(initialVelocity, angleOfShot, 2);
+    gameEngine.applyInitialVelocity(initialVelocity, angleOfShot);
     //System.out.println("Ball record before: " + container.getCollidableRecord(1));
     // Simulate a short time step to observe acceleration due to incline
     gameEngine.update(0.0167);
@@ -70,7 +70,7 @@ public class InclinePhysicsTest {
     //angle in JSON set to 60 degrees
     double initialVelocity = 10.0;  // Start from a small tap
     double angleOfShot = Math.toRadians(0);  // Shot angle is horizontal but will not affect since initial velocity is zero
-    gameEngine.applyInitialVelocity(initialVelocity, angleOfShot, 3);
+    gameEngine.applyInitialVelocity(initialVelocity, angleOfShot);
     //System.out.println("Ball record before: " + container.getCollidableRecord(1));
     // Simulate a short time step to observe acceleration due to incline
     gameEngine.update(0.0167);
@@ -85,7 +85,7 @@ public class InclinePhysicsTest {
     //angle in JSON set to 60 degrees
     double initialVelocity = 10.0;  // Start from a small tap
     double angleOfShot = Math.toRadians(-180);  // Shot angle is horizontal but will not affect since initial velocity is zero
-    gameEngine.applyInitialVelocity(initialVelocity, angleOfShot, 4);
+    gameEngine.applyInitialVelocity(initialVelocity, angleOfShot);
     //System.out.println("Ball record before: " + container.getCollidableRecord(1));
     // Simulate a short time step to observe acceleration due to incline
     gameEngine.update(0.0167);

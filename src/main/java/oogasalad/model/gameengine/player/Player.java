@@ -87,8 +87,8 @@ public class Player {
   }
 
   public boolean areAllScoreablesInvisible() {
-    for(Scoreable s : myScoreables) {
-      if(s.asGameObject().getVisible()) {
+    for (Scoreable s : myScoreables) {
+      if (s.asGameObject().getVisible()) {
         return false;
       }
     }
@@ -217,7 +217,7 @@ public class Player {
 
   public void applyGameResult(boolean wonGame) {
     clearDelayedPoints();
-    score = wonGame? 1:0;
+    score = wonGame ? 1 : 0;
   }
 
   public int getId() {

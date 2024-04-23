@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.rank.PlayerRecordComparator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +21,7 @@ public class PlayerContainer {
 
   private static final Logger LOGGER = LogManager.getLogger(PlayerContainer.class);
   private final Map<Integer, Player> myPlayers;
-  private int active;
+  private Player active;
 
   /**
    * Initializes player container object
@@ -52,12 +51,13 @@ public class PlayerContainer {
   public List<Player> getPlayers() {
     return myPlayers.values().stream().toList();
   }
+
   /**
    * Retrieves the ID of the currently active player.
    *
    * @return The ID of the active player.
    */
-  public int getActive() {
+  public Player getActive() {
     return active;
   }
 
@@ -67,7 +67,7 @@ public class PlayerContainer {
    * @param newActive The ID of the player to set as active.
    */
 
-  public void setActive(int newActive) {
+  public void setActive(Player newActive) {
     active = newActive;
   }
 

@@ -50,7 +50,8 @@ public class GameLoaderModel extends GameLoader {
   private PlayerContainer playerContainer;
   private GameObjectContainer gameObjectContainer;
   private RulesRecord rulesRecord;
-//  private Map<Integer, Player> collidablePlayerMap;\
+  private Map<Integer, Player> playerMap;
+  //  private Map<Integer, Player> collidablePlayerMap;\
   private Map<Integer, GameObject> gameObjects;
   private List<Entry<BiPredicate<Integer, GameObjectProperties>,
       BiFunction<Integer, GameObjectProperties, PhysicsHandler>>> conditionsList;
@@ -105,7 +106,7 @@ public class GameLoaderModel extends GameLoader {
         optionalStrikeable.ifPresent(playerStrikeableObjects::add);
       }
       System.out.println(playerStrikeableObjects);
-      playerContainer.getPlayer(playerId).addStrikeables(playerStrikeableObjects);
+      playerMap.get(playerId).addStrikeables(playerStrikeableObjects);
 
       List<Integer> playerScoreableIds = parserPlayer.myScoreable();
       List<Scoreable> playerScoreableObjects = new ArrayList<>();
@@ -114,12 +115,12 @@ public class GameLoaderModel extends GameLoader {
             .getScoreable();
         optionalStrikeable.ifPresent(playerScoreableObjects::add);
       }
-      playerContainer.getPlayer(playerId).addScoreables(playerScoreableObjects);
+      playerMap.get(playerId).addScoreables(playerScoreableObjects);
       if(!parserPlayer.myControllable().isEmpty()) {
         Optional<Controllable> optionalControllable = gameObjects.get(
             parserPlayer.myControllable().get(0)).getControllable();
         optionalControllable.ifPresent(controllable -> {
-          playerContainer.getPlayer(playerId).setControllable(controllable,
+          playerMap.get(playerId).setControllable(controllable,
               parserPlayer.myControllable().get(1), parserPlayer.myControllable().get(2));
         });
       }
@@ -202,7 +203,7 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private void createPlayerContainer() {
-    Map<Integer, Player> playerMap = new HashMap<>();
+    playerMap = new HashMap<>();
     gameData.getPlayers().forEach(p -> {
       playerMap.put(p.playerId(), new Player(p.playerId()));
       Player player = new Player(p.playerId());

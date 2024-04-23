@@ -3,7 +3,6 @@ package oogasalad.model.gameengine.command;
 import java.util.List;
 import java.util.Map;
 import oogasalad.model.annotations.ExpectedParamNumber;
-import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.player.Player;
@@ -23,12 +22,11 @@ public class EightBallCommand implements Command {
   @Override
   public void execute(GameEngine engine) {
     gameObject.setVisible(false);
-    int active = engine.getPlayerContainer().getActive();
     engine.getGameObjectContainer().getGameObjects().forEach(GameObject::stop);
-    boolean didActiveWin =
-        engine.getPlayerContainer().getPlayer(active).areAllScoreablesInvisible();
+    boolean didActiveWin = engine.getPlayerContainer().getActive().areAllScoreablesInvisible();
     for (Player p : engine.getPlayerContainer().getPlayers()) {
-          p.applyGameResult((active == p.getId()) == didActiveWin);
+      p.applyGameResult(
+          (engine.getPlayerContainer().getActive().getId() == p.getId()) == didActiveWin);
     }
   }
 }

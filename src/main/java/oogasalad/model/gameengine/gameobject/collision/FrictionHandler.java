@@ -53,10 +53,9 @@ public class FrictionHandler extends PhysicsHandler {
       // Calculate the normal force considering the incline (assuming surface is aligned along x-axis)
       double normalForce = c1.mass() * g * Math.cos(inclineAngle);
 
-
       // Determine the appropriate friction coefficient
       double mu =
-          (Math.abs(initialVelocityX) < 1 && Math.abs(initialVelocityY)<1 ) ? c2.staticMu() :
+          (Math.abs(initialVelocityX) < 1 && Math.abs(initialVelocityY) < 1) ? c2.staticMu() :
               c2.kineticMu();
 
       // Calculate the magnitude of frictional force
@@ -66,7 +65,6 @@ public class FrictionHandler extends PhysicsHandler {
       double velocityMagnitude = Math.sqrt(
           initialVelocityX * initialVelocityX + initialVelocityY * initialVelocityY);
       double frictionDeceleration = frictionForce / c1.mass();
-
 
       // Calculate the components of frictional deceleration
       double unitVelocityX = (velocityMagnitude != 0) ? initialVelocityX / velocityMagnitude : 0;
@@ -80,17 +78,19 @@ public class FrictionHandler extends PhysicsHandler {
       double newVelocityY = initialVelocityY - frictionDecelerationY;
 
       // Prevent friction from reversing the direction of motion
-      if (Math.signum(newVelocityX) != Math.signum(initialVelocityX))
+      if (Math.signum(newVelocityX) != Math.signum(initialVelocityX)) {
         newVelocityX = 0;
+      }
 
-      if (Math.signum(newVelocityY) != Math.signum(initialVelocityY))
+      if (Math.signum(newVelocityY) != Math.signum(initialVelocityY)) {
         newVelocityY = 0;
+      }
       return List.of(newVelocityX, newVelocityY);
 
     };
   }
 
-  private double normalizeInclineAngle ( double angle){
+  private double normalizeInclineAngle(double angle) {
     // Normalize the angle to 0-360
     angle = angle % 360;
 

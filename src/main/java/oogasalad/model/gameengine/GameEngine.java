@@ -48,7 +48,7 @@ public class GameEngine implements ExternalGameEngine {
   private boolean gameOver;
   private boolean staticState;
   private Stack<GameRecord> staticStateStack;
-  private CollisionDetector collisionDetector;
+  private final CollisionDetector collisionDetector;
 
   /**
    * Initializes a new GameEngine instance for the specified game title.
@@ -87,9 +87,9 @@ public class GameEngine implements ExternalGameEngine {
     } else {
       staticState = false;
     }
-    playerContainer.getPlayer(playerContainer.getActive()).getStrikeable().asGameObject().setVisible(true);
+    playerContainer.getActive().getStrikeable().asGameObject().setVisible(true);
     return new GameRecord(getListOfGameObjectRecords(),
-         getPlayerRecords(),
+        getPlayerRecords(),
         round, turn, gameOver, staticState);
   }
 
@@ -101,10 +101,14 @@ public class GameEngine implements ExternalGameEngine {
    */
   @Override
   public void applyInitialVelocity(double magnitude, double direction) {
-    LOGGER.info(" player " + turn + " apply initial velocity to GameObject " + playerContainer.getPlayer(playerContainer.getActive()).getStrikeable().asGameObject() + " with "
-        + "magnitude " + magnitude + "and direction " + direction * 180 / Math.PI);
-    playerContainer.getPlayer(playerContainer.getActive()).getStrikeable().asGameObject().applyInitialVelocity(magnitude, direction);
-    rules.strikePolicy().getStrikePolicy().accept(playerContainer.getPlayer(playerContainer.getActive()).getStrikeable().asGameObject().getId(), this);
+    LOGGER.info(
+        " player " + turn + " apply initial velocity to GameObject " + playerContainer.getActive()
+            .getStrikeable().asGameObject() + " with "
+            + "magnitude " + magnitude + "and direction " + direction * 180 / Math.PI);
+    playerContainer.getActive().getStrikeable().asGameObject().applyInitialVelocity(magnitude,
+        direction);
+    rules.strikePolicy().getStrikePolicy()
+        .accept(playerContainer.getActive().getStrikeable().asGameObject().getId(), this);
   }
 
   /**
@@ -117,14 +121,15 @@ public class GameEngine implements ExternalGameEngine {
 
   @Override
   public void moveActiveControllableX(boolean positive) {
-    playerContainer.getPlayer(playerContainer.getActive()).getControllable().moveX(positive);
-  }
-  @Override
-  public void moveActiveControllableY(boolean positive) {
-    playerContainer.getPlayer(playerContainer.getActive()).getControllable().moveY(positive);
+    playerContainer.getActive().getControllable().moveX(positive);
   }
 
-/**
+  @Override
+  public void moveActiveControllableY(boolean positive) {
+    playerContainer.getActive().getControllable().moveY(positive);
+  }
+
+  /**
    * Advances the game to the next round by incrementing the round number, applying delayed scores
    * to players, and starting a new round.
    */
@@ -227,7 +232,8 @@ public class GameEngine implements ExternalGameEngine {
     Set<Pair> collisionPairs = new HashSet<>();
     for (GameObject go1 : gameObjects.getGameObjects()) {
       for (GameObject go2 : gameObjects.getGameObjects()) {
-        if (!go1.equals(go2) && go2.getVisible() && go1.getVisible() && collisionDetector.isColliding(
+        if (!go1.equals(go2) && go2.getVisible() && go1.getVisible()
+            && collisionDetector.isColliding(
             go1, go2)) {
           collisionPairs.add(new Pair(go1, go2));
         }
@@ -243,10 +249,10 @@ public class GameEngine implements ExternalGameEngine {
     gameOver = false;
     turn = 1; //first player ideally should have id 1
     staticState = true;
-    playerContainer.setActive(turn);
+    playerContainer.setActive(playerContainer.getPlayer(turn));
     loadRoundSpecificInformation(loader);
     playerContainer.getPlayer(1).updateActiveStrikeable();
-    playerContainer.getPlayer(playerContainer.getActive()).getStrikeable().asGameObject().setVisible(true);
+    playerContainer.getActive().getStrikeable().asGameObject().setVisible(true);
     playerContainer.getPlayers().forEach(Player::startRound);
     addInitialStaticStateToHistory();
   }
@@ -291,26 +297,26 @@ public class GameEngine implements ExternalGameEngine {
             round, turn, gameOver, staticState));
   }
 
-   // Checks if all visible GameObjects in the container are meeting at least one of the static
-   // conditions (defined for that game)
-   private boolean checkStatic(List<StaticChecker> staticCheckers) {
-     return staticCheckers.stream().anyMatch(checker ->
-         gameObjects.getGameObjects().stream().allMatch(gameObject ->
-             checker.isStatic(gameObject.toGameObjectRecord())
-         )
-     );
-   }
+  // Checks if all visible GameObjects in the container are meeting at least one of the static
+  // conditions (defined for that game)
+  private boolean checkStatic(List<StaticChecker> staticCheckers) {
+    return staticCheckers.stream().anyMatch(checker ->
+        gameObjects.getGameObjects().stream().allMatch(gameObject ->
+            checker.isStatic(gameObject.toGameObjectRecord())
+        )
+    );
+  }
 
-   private List<GameObjectRecord> getListOfGameObjectRecords() {
-     return gameObjects.getGameObjects().stream().map(GameObject::toGameObjectRecord)
-         .collect(Collectors.toList());
-   }
+  private List<GameObjectRecord> getListOfGameObjectRecords() {
+    return gameObjects.getGameObjects().stream().map(GameObject::toGameObjectRecord)
+        .collect(Collectors.toList());
+  }
 
-   private List<PlayerRecord> getPlayerRecords() {
-     return playerContainer.getPlayers().stream()
-         .map(Player::getPlayerRecord)
-         .sorted(rules.rank())
-         .collect(Collectors.toList());
-   }
+  private List<PlayerRecord> getPlayerRecords() {
+    return playerContainer.getPlayers().stream()
+        .map(Player::getPlayerRecord)
+        .sorted(rules.rank())
+        .collect(Collectors.toList());
+  }
 
 }

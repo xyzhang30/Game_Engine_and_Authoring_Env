@@ -22,8 +22,8 @@ public class TeleportCommand implements Command {
   /**
    * Constructs an instance of the TeleportCommand with the provided arguments.
    *
-   * @param arguments Consists of two arguments: the ID of the GameObject whose teleporting and
-   *                  the game object (a surface) where the first object teleports to.
+   * @param arguments Consists of two arguments: the ID of the GameObject whose teleporting and the
+   *                  game object (a surface) where the first object teleports to.
    */
 
   @ExpectedParamNumber(2)
@@ -34,9 +34,9 @@ public class TeleportCommand implements Command {
   }
 
   /**
-   * Executes the command to teleport a GameObject. It teleports the game object
-   * corresponding to the provided ID (argument 1) from the game engine and moves it to the
-   * location of the game object of the second provided ID (argument 2)
+   * Executes the command to teleport a GameObject. It teleports the game object corresponding to
+   * the provided ID (argument 1) from the game engine and moves it to the location of the game
+   * object of the second provided ID (argument 2)
    *
    * @param engine The game engine instance.
    */

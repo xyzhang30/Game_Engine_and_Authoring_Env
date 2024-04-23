@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
 
+import java.util.Map;
 import oogasalad.model.gameengine.GameEngine;
 import org.junit.jupiter.api.Test;
 import oogasalad.model.gameengine.condition.ScoreThresholdCondition;
@@ -27,7 +28,7 @@ public class ScoreThresholdConditionTest {
     when(playerContainer.getPlayerRecords()).thenReturn(playerRecords);
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
-    ScoreThresholdCondition condition = new ScoreThresholdCondition(Arrays.asList(40.0));
+    ScoreThresholdCondition condition = new ScoreThresholdCondition(List.of(40), Map.of());
     assertFalse(condition.evaluate(gameEngine));
   }
 
@@ -42,7 +43,7 @@ public class ScoreThresholdConditionTest {
     when(playerContainer.getPlayerRecords()).thenReturn(playerRecords);
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
-    ScoreThresholdCondition condition = new ScoreThresholdCondition(Arrays.asList(40.0));
+    ScoreThresholdCondition condition = new ScoreThresholdCondition(List.of(40), Map.of());
     assertTrue(condition.evaluate(gameEngine));
   }
 }

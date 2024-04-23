@@ -27,7 +27,8 @@ public class PlayerCompletedTurnCommand implements Command {
    */
 
   @ExpectedParamNumber(0)
-  public PlayerCompletedTurnCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
+  public PlayerCompletedTurnCommand(List<Integer> arguments,
+      Map<Integer, GameObject> gameObjectMap) {
 
   }
 
@@ -40,7 +41,6 @@ public class PlayerCompletedTurnCommand implements Command {
 
   @Override
   public void execute(GameEngine engine) {
-    engine.getPlayerContainer().getPlayer(engine.getPlayerContainer().getActive())
-        .completeTurn();
+    engine.getPlayerContainer().getActive().completeTurn();
   }
 }
