@@ -3,7 +3,10 @@ package oogasalad.model.gameengine;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +20,7 @@ public class GameEngineTest {
   private GameEngine gameEngine;
   private GameLoaderModel loader;
 
-  private List<GameObject> gameObjects;
+  private Collection<GameObject> gameObjects;
   @BeforeEach
   public void setUp() {
     loader = mock(GameLoaderModel.class);

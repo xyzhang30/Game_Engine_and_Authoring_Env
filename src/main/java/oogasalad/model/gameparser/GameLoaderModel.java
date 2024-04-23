@@ -160,7 +160,7 @@ public class GameLoaderModel extends GameLoader {
           id,
           conditionsList));
     });
-    this.gameObjectContainer = new GameObjectContainer(gameObjects);
+    this.gameObjectContainer = new GameObjectContainer(gameObjects.values());
   }
 
   private void addPairToPhysicsMap(GameObjectProperties co, int id,

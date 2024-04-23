@@ -2,7 +2,10 @@ package oogasalad.model.gameengine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.gameengine.gameobject.GameObject;
@@ -16,8 +19,7 @@ public class PhysicsIntegrationTest {
   private static final double DELTA = .0001;
   private GameEngine gameEngine;
   private GameObjectContainer container;
-
-  private List<GameObject> gameObjects;
+  private Collection<GameObject> gameObjects;
   @BeforeEach
   public void setUp() {
     gameEngine = new GameEngine("testPhysics");
