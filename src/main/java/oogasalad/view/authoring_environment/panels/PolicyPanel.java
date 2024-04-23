@@ -157,8 +157,8 @@ public class PolicyPanel implements Panel{
       Constructor<?> constructor;
       if (!commandPackage.equals("strike") && !commandPackage.equals("turn") && !commandPackage.equals("rank")){
         //commands that takes in arguments (or empty param list)
-        constructor = clazz.getConstructor(List.class);
-        if (constructor.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredConstructor(List.class).getAnnotation(ExpectedParamNumber.class).value() != 0){
+        constructor = clazz.getConstructor(List.class, Map.class);
+        if (constructor.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredConstructor(List.class, Map.class).getAnnotation(ExpectedParamNumber.class).value() != 0){
           //prompt user to enter param
           int numParam = constructor.getAnnotation(ExpectedParamNumber.class).value();
           //get and return the params from popup
