@@ -18,7 +18,6 @@ public class TextFieldListener implements ChangeListener<String> {
   public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
     if (!newValue.isEmpty() && isNumeric(newValue)) {
       switch (gameObjectField) {
-        case "elasticity" ->  shapeProxy.getGameObjectAttributesContainer().setElasticity(Double.parseDouble(newValue));
         case "mass" -> shapeProxy.getGameObjectAttributesContainer().setMass(Double.parseDouble(newValue));
         case "sFriction" -> shapeProxy.getGameObjectAttributesContainer().setsFriction(Double.parseDouble(newValue));
         case "kFriction" -> shapeProxy.getGameObjectAttributesContainer().setkFriction(Double.parseDouble(newValue));

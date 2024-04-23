@@ -163,7 +163,7 @@ public class ShapePanel implements Panel {
       authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
     }
 
-    shapeProxy.setShape(shape);
+    shapeProxy.selectShape(shape);
     gameObjectTypeDropdown.valueProperty().setValue(null);
     clearFields();
     shape.setStroke(Color.YELLOW);
@@ -360,7 +360,9 @@ public class ShapePanel implements Panel {
     elasticityCheckBox = new CheckBox();
     elasticityCheckBox.setId("elasticity");
     //THIS LISTENER DOESN'T DO ANYTHING NOW -- WHAT DOES IT NEED TO DO TO PASS THE VALUE BACK TO AUTHROING PROXY???
-    elasticityCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {});
+    elasticityCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+      shapeProxy.getGameObjectAttributesContainer().setElasticity(newValue);
+    });
     elasticityCheckBox.setPrefSize(40, 20);
     AnchorPane.setRightAnchor(elasticityCheckBox, 450.0);
     AnchorPane.setTopAnchor(elasticityCheckBox, 310.0);
@@ -391,6 +393,7 @@ public class ShapePanel implements Panel {
     authoringProxy.getPlayers().putIfAbsent(authoringProxy.getNumPlayers(), new HashMap<>());
     authoringProxy.getPlayers().get(authoringProxy.getNumPlayers()).putIfAbsent(CollidableType.STRIKABLE, new ArrayList<>());
     authoringProxy.getPlayers().get(authoringProxy.getNumPlayers()).putIfAbsent(CollidableType.CONTROLLABLE, new ArrayList<>());
+    authoringProxy.getPlayers().get(authoringProxy.getNumPlayers()).putIfAbsent(CollidableType.SCOREABLE, new ArrayList<>());
   }
   private void createMakePlayers() {
     // default 1 player
@@ -425,9 +428,9 @@ public class ShapePanel implements Panel {
 
       clearFields();
       if (oldVal != null) {
-        shapeProxy.getGameObjectAttributesContainer().getProperties().remove(oldVal.toString());
+        shapeProxy.getGameObjectAttributesContainer().getProperties().remove(String.valueOf(oldVal));
       }
-      shapeProxy.getGameObjectAttributesContainer().getProperties().add(gameObjectType.toString());
+      shapeProxy.getGameObjectAttributesContainer().getProperties().add(String.valueOf(gameObjectType));
       updateSelectionOptions(gameObjectType);
 
       if (gameObjectType.equals(GameObjectType.SURFACE)) {

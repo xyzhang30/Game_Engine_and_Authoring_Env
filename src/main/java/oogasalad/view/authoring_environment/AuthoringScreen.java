@@ -122,16 +122,12 @@ public class AuthoringScreen {
     AnchorPane.setLeftAnchor(canvasPane, 70.0);
 
     Rectangle background = new Rectangle(canvasWidth, canvasHeight);
-//    background.setId(String.valueOf(shapeProxy.getShapeCount()));
-//    shapeProxy.setShapeCount(shapeProxy.getShapeCount()+1);
+
     background.setStroke(Color.BLACK);
     background.setFill(Color.WHITE);
     background.setStrokeWidth(10);
     StackPane.setAlignment(background, Pos.TOP_LEFT);
-//
-//    shapeProxy.setShape(background);
-    //authoringProxy.addNonControllableShape(background, GameObjectType.SURFACE);
-//    authoringProxy.getAuthoringController().setBackground(background);
+
     rootPane.getChildren().add(canvasPane);
 
     canvasPane.getChildren().add(background);
@@ -167,7 +163,6 @@ public class AuthoringScreen {
       if (selectedScreen != null) {
         authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
         resetScene();
-//        shapeProxy.setShape(null);
         setScene(selectedScreen);
         authoringProxy.setCurrentScreenTitle(selectedScreen);
         authoringProxy.updateScreen();

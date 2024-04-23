@@ -8,7 +8,7 @@ public class GameObjectAttributesContainer {
   private String imagePath;
   private List<Integer> color;
   private final List<String> properties = new ArrayList<>();
-  private double elasticity;
+  private boolean elasticity;
   private double mass;
   private Coordinate position;
   private double sFriction;
@@ -43,11 +43,11 @@ public class GameObjectAttributesContainer {
     return properties;
   }
 
-  public double getElasticity() {
+  public boolean getElasticity() {
     return elasticity;
   }
 
-  public void setElasticity(double elasticity) {
+  public void setElasticity(boolean elasticity) {
     this.elasticity = elasticity;
   }
 

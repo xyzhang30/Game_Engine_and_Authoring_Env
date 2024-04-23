@@ -24,7 +24,6 @@ public class ShapeProxy {
   private final Stack<Shape> shapeStack = new Stack<>(); // Top of stack = most recently selected shape
   private GameObjectAttributesContainer gameObjectAttributesContainer = new GameObjectAttributesContainer();
   private int shapeCount;
-
   private final List<Shape> templates = new ArrayList<>();
   private int numberOfMultiSelectAllowed = 1;
 
@@ -32,11 +31,11 @@ public class ShapeProxy {
     if (shapeStack.isEmpty()) return null;
     return shapeStack.peek();
   }
-  public void setShape(Shape shape) {
+  public void selectShape(Shape shape) {
     if (shape != null && !shapeStack.isEmpty() && shapeStack.contains(shape)) {
       removeFromShapeStack(shape);
     }
-    addToShapeStack(shape);
+    shapeStack.push(shape);
     resetGameObjectAttributesContainer();
   }
   public int getShapeCount() {
@@ -50,7 +49,6 @@ public class ShapeProxy {
   public GameObjectAttributesContainer getGameObjectAttributesContainer() {
     return gameObjectAttributesContainer;
   }
-
 
   public void createGameObjectTemplates() {
     Rectangle rectangle = new Rectangle(100, 50, Color.BLACK);
@@ -94,7 +92,7 @@ public class ShapeProxy {
     AnchorPane.setBottomAnchor(clonedShape, 200.0);
 
     // Set the shape
-    setShape(clonedShape);
+    selectShape(clonedShape);
 
     return clonedShape;
   }
@@ -125,13 +123,12 @@ public class ShapeProxy {
   public Stack<Shape> getShapeStack() {
     return shapeStack;
   }
+
+  // TODO: RENAME (encapsulate stack implementation)
   public void removeFromShapeStack(Shape shape) {
     if (!shapeStack.isEmpty()) {
       shapeStack.remove(shape);
     }
-  }
-  public void addToShapeStack(Shape shape) {
-    shapeStack.push(shape);
   }
 
   public void updateShapeSelectionDisplay()  {
