@@ -1,8 +1,7 @@
 package oogasalad.model.gameparser;
 
 import oogasalad.model.api.data.GameObjectProperties;
-import oogasalad.model.gameengine.gameobject.Controllable;
-import oogasalad.model.gameengine.gameobject.DefaultControllable;
+import oogasalad.model.gameengine.gameobject.controllable.DefaultControllable;
 import oogasalad.model.gameengine.gameobject.DefaultStrikeable;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.scoreable.DefaultScoreable;

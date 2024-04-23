@@ -17,7 +17,7 @@ import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
-import oogasalad.model.gameengine.gameobject.Controllable;
+import oogasalad.model.gameengine.gameobject.controllable.Controllable;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import oogasalad.model.gameengine.gameobject.PhysicsHandler;

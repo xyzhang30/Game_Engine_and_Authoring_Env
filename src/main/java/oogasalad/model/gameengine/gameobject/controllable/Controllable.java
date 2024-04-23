@@ -1,4 +1,6 @@
-package oogasalad.model.gameengine.gameobject;
+package oogasalad.model.gameengine.gameobject.controllable;
+
+import oogasalad.model.gameengine.gameobject.GameObject;
 
 public interface Controllable {
 

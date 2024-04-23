@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Stack;
 import java.util.function.Supplier;
 import oogasalad.model.api.GameObjectRecord;
+import oogasalad.model.gameengine.gameobject.controllable.Controllable;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 
 /**
