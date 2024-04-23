@@ -1,10 +1,12 @@
 package oogasalad.model.gameengine.condition;
 
 import java.util.List;
+import java.util.Map;
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
  * The NTurnsCompletedCondition class represents a condition that evaluates whether a specified
@@ -17,7 +19,7 @@ import oogasalad.model.gameengine.GameEngine;
 @CommandHelpInfo(description = "")
 public class NTurnsCompletedCondition implements Condition {
 
-  private final List<Double> arguments;
+  private final List<Integer> arguments;
 
   /**
    * Constructs an instance of the NTurnsCompletedCondition with the provided arguments.
@@ -27,7 +29,7 @@ public class NTurnsCompletedCondition implements Condition {
    */
 
   @ExpectedParamNumber(1)
-  public NTurnsCompletedCondition(List<Double> arguments) {
+  public NTurnsCompletedCondition(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
   }
 
@@ -42,8 +44,7 @@ public class NTurnsCompletedCondition implements Condition {
 
   @Override
   public boolean evaluate(GameEngine engine) {
-    return engine.getPlayerContainer()
-        .allPlayersCompletedNTurns((int) Math.round(arguments.get(0)));
+    return engine.getPlayerContainer().getPlayers().stream()
+        .allMatch(p -> p.getTurnsCompleted() >= arguments.get(0));
   }
-
 }

@@ -148,7 +148,7 @@ public class PolicyPanel implements Panel{
     }
   }
 
-  private List<Double> enterParam(String commandType, String commandPackage, String newValue) {
+  private List<Integer> enterParam(String commandType, String commandPackage, String newValue) {
     System.out.println("selected:" + REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue);
     String classPath = REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue;
     try {
@@ -198,11 +198,11 @@ public class PolicyPanel implements Panel{
 //  }
 
 
-  private List<Double> enterCustomNumParamsPopup(String newValue) {
+  private List<Integer> enterCustomNumParamsPopup(String newValue) {
     Stage popupStage = new Stage();
     popupStage.setTitle("Specify Command Parameters");
 
-    List<Double> params = new ArrayList<>();
+    List<Integer> params = new ArrayList<>();
 
     Label label = new Label(newValue + ": (please enter custom number of parameters, click save if no parameters needed)");
     VBox vbox = new VBox(label);
@@ -238,7 +238,7 @@ public class PolicyPanel implements Panel{
         String text = area.getText();
         if (!text.isEmpty()) {
           try {
-            double value = Double.parseDouble(text);
+            Integer value = Integer.parseInt(text);
             params.add(value);
           } catch (NumberFormatException ex) {
             // Handle invalid input
@@ -263,11 +263,11 @@ public class PolicyPanel implements Panel{
 
 
 
-  public static List<Double> enterConstantParamsPopup(int numParam, String item) {
+  public static List<Integer> enterConstantParamsPopup(int numParam, String item) {
     Stage popupStage = new Stage();
     popupStage.setTitle("Specify Command Parameters");
 
-    List<Double> params = new ArrayList<>();
+    List<Integer> params = new ArrayList<>();
 
     Label label = new Label(item+": (expected " + numParam + ")");
     VBox vbox = new VBox(label);
@@ -304,7 +304,7 @@ public class PolicyPanel implements Panel{
         String text = area.getText();
         if (!text.isEmpty()) {
           try {
-            double value = Double.parseDouble(text);
+            Integer value = Integer.parseInt(text);
             params.add(value);
           } catch (NumberFormatException ex) {
             // Handle invalid input
@@ -361,7 +361,8 @@ public class PolicyPanel implements Panel{
     for (ComboBox<String> comboBox : singleChoiceComboxBoxes.keySet()){
       comboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue != null) {
-          List<Double> params = enterParam(comboBox.getId(), commandPackageMap.get(singleChoiceComboxBoxes.get(comboBox)), newValue); //commandPackage, newValue
+          List<Integer> params = enterParam(comboBox.getId(),
+              commandPackageMap.get(singleChoiceComboxBoxes.get(comboBox)), newValue); //commandPackage, newValue
           if (params != null){
             System.out.println("---REPLACING TO PROXY | WITH PARAM ---");
             System.out.println("commandType: "+comboBox.getId());
@@ -379,7 +380,8 @@ public class PolicyPanel implements Panel{
         while (c.next()) {
           if (c.wasAdded()) {
             for (String selectedCommand : c.getAddedSubList()) {
-              List<Double> params = enterParam(checkComboBox.getId(),commandPackageMap.get(multiChoiceCheckBoxes.get(checkComboBox)), selectedCommand);
+              List<Integer> params = enterParam(checkComboBox.getId(),
+                  commandPackageMap.get(multiChoiceCheckBoxes.get(checkComboBox)), selectedCommand);
               if (params != null){
                 authoringProxy.addConditionsCommandsWithParam(checkComboBox.getId(), selectedCommand, params);
               }

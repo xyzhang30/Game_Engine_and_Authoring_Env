@@ -26,7 +26,7 @@ import oogasalad.view.controller.AuthoringController;
 
 public class InteractionSelectionScreen extends AuthoringScreen {
 
-  private final Map<List<Shape>, Map<InteractionType, List<Double>>> interactionMap = new HashMap<>();
+  private final Map<List<Shape>, Map<InteractionType, List<Integer>>> interactionMap = new HashMap<>();
   private final Map<Shape, List<Double>> posMap = new HashMap<>();
   private TextField pointPrompt;
   private CheckBox advanceTurnCheckBox;
@@ -172,16 +172,16 @@ public class InteractionSelectionScreen extends AuthoringScreen {
 
       for (List<Shape> list : interactionMap.keySet()) {
         if (list.containsAll(clickedShapes)) {
-          Map<InteractionType, List<Double>> currentInteractions = interactionMap.get(list);
+          Map<InteractionType, List<Integer>> currentInteractions = interactionMap.get(list);
           currentInteractions.remove(InteractionType.RESET);
           currentInteractions.remove(InteractionType.CHANGE_SPEED);
-          currentInteractions.put(InteractionType.ADVANCE, List.of((double) -1));
+          currentInteractions.put(InteractionType.ADVANCE, List.of( -1));
           return;
         }
       }
       List<Shape> shapeList = new ArrayList<>(clickedShapes);
-      Map<InteractionType, List<Double>> currentInteractions = new HashMap<>();
-      currentInteractions.put(InteractionType.ADVANCE, List.of((double) -1));
+      Map<InteractionType, List<Integer>> currentInteractions = new HashMap<>();
+      currentInteractions.put(InteractionType.ADVANCE, List.of( -1));
       interactionMap.put(shapeList, currentInteractions);
     });
   }
@@ -193,16 +193,16 @@ public class InteractionSelectionScreen extends AuthoringScreen {
 
       for (List<Shape> list : interactionMap.keySet()) {
         if (list.containsAll(clickedShapes)) {
-          Map<InteractionType, List<Double>> currentInteractions = interactionMap.get(list);
+          Map<InteractionType, List<Integer>> currentInteractions = interactionMap.get(list);
           currentInteractions.remove(InteractionType.ADVANCE);
           currentInteractions.remove(InteractionType.CHANGE_SPEED);
-          currentInteractions.put(InteractionType.RESET, List.of((double) -1));
+          currentInteractions.put(InteractionType.RESET, List.of( -1));
           return;
         }
       }
       List<Shape> shapeList = new ArrayList<>(clickedShapes);
-      Map<InteractionType, List<Double>> currentInteractions = new HashMap<>();
-      currentInteractions.put(InteractionType.RESET, List.of((double) -1));
+      Map<InteractionType, List<Integer>> currentInteractions = new HashMap<>();
+      currentInteractions.put(InteractionType.RESET, List.of( -1));
       interactionMap.put(shapeList, currentInteractions);
     });
   }
@@ -214,15 +214,15 @@ public class InteractionSelectionScreen extends AuthoringScreen {
 
       for (List<Shape> list : interactionMap.keySet()) {
         if (list.containsAll(clickedShapes)) {
-          Map<InteractionType, List<Double>> currentInteractions = interactionMap.get(list);
+          Map<InteractionType, List<Integer>> currentInteractions = interactionMap.get(list);
           currentInteractions.remove(InteractionType.RESET);
           currentInteractions.remove(InteractionType.ADVANCE);
-          currentInteractions.put(InteractionType.CHANGE_SPEED, List.of((double) -1));
+          currentInteractions.put(InteractionType.CHANGE_SPEED, List.of(-1));
           return;
         }
         List<Shape> shapeList = new ArrayList<>(clickedShapes);
-        Map<InteractionType, List<Double>> currentInteractions = new HashMap<>();
-        currentInteractions.put(InteractionType.CHANGE_SPEED, List.of((double) -1));
+        Map<InteractionType, List<Integer>> currentInteractions = new HashMap<>();
+        currentInteractions.put(InteractionType.CHANGE_SPEED, List.of( -1));
         interactionMap.put(shapeList, currentInteractions);
       }
     });
@@ -254,15 +254,15 @@ public class InteractionSelectionScreen extends AuthoringScreen {
           Integer points = Integer.parseInt(pointsText);
           for (List<Shape> list : interactionMap.keySet()) {
             if (list.containsAll(clickedShapes)) {
-              Map<InteractionType, List<Double>> currentInteractions = interactionMap.get(list);
-              currentInteractions.put(InteractionType.SCORE, List.of((double) 1, (double) points));
+              Map<InteractionType, List<Integer>> currentInteractions = interactionMap.get(list);
+              currentInteractions.put(InteractionType.SCORE, List.of( 1, points));
               return;
             }
           }
 
           List<Shape> shapeList = new ArrayList<>(clickedShapes);
-          Map<InteractionType, List<Double>> currentInteractions = new HashMap<>();
-          currentInteractions.put(InteractionType.SCORE, List.of((double) 1, (double) points));
+          Map<InteractionType, List<Integer>> currentInteractions = new HashMap<>();
+          currentInteractions.put(InteractionType.SCORE, List.of( 1,  points));
           interactionMap.put(shapeList, currentInteractions);
 
         } catch (NumberFormatException e) {
@@ -280,10 +280,10 @@ public class InteractionSelectionScreen extends AuthoringScreen {
     pointPrompt.setText("");
     for (List<Shape> list : interactionMap.keySet()) {
       if (list.containsAll(clickedShapes)) {
-        Map<InteractionType, List<Double>> currentInteractions = interactionMap.get(list);
+        Map<InteractionType, List<Integer>> currentInteractions = interactionMap.get(list);
         if (currentInteractions.containsKey(InteractionType.SCORE)) {
 //          Integer points = currentInteractions.get(InteractionType.SCORE).get(1);
-          Double points = currentInteractions.get(InteractionType.SCORE).get(1);
+          Integer points = currentInteractions.get(InteractionType.SCORE).get(1);
           pointPrompt.setText(points.toString());
         }
       }
@@ -293,7 +293,7 @@ public class InteractionSelectionScreen extends AuthoringScreen {
   private void updateCheckBoxes() {
     for (List<Shape> list : interactionMap.keySet()) {
       if (list.containsAll(clickedShapes)) {
-        Map<InteractionType, List<Double>> currentInteractions = interactionMap.get(list);
+        Map<InteractionType, List<Integer>> currentInteractions = interactionMap.get(list);
         if (currentInteractions.containsKey(InteractionType.ADVANCE)) {
           advanceTurnCheckBox.setSelected(true);
         } else if (currentInteractions.containsKey(InteractionType.RESET)) {

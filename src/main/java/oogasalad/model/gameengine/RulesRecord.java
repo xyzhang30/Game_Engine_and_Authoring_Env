@@ -2,15 +2,15 @@ package oogasalad.model.gameengine;
 
 import java.util.List;
 import java.util.Map;
-import oogasalad.Pair;
+import oogasalad.model.Pair;
 import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
 import oogasalad.model.gameengine.gameobject.PhysicsHandler;
+import oogasalad.model.gameengine.rank.PlayerRecordComparator;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandler;
 import oogasalad.model.gameengine.strike.StrikePolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
-import oogasalad.model.gameengine.rank.PlayerRecordComparator;
 
 /**
  * Represents a collection of game rules and configurations. Includes collision handlers, win
@@ -28,6 +28,9 @@ import oogasalad.model.gameengine.rank.PlayerRecordComparator;
  * @param staticStateHandler Handler for managing updating the game state after a turn.
  * @param strikePolicy       Policy for updating objects after they are struck by an external force
  *                           (e.g. hitting a golf ball).
+ * @param rank               Comparator used for ordering players, based on who is winning
+ * @param checker            Methods of checking whether the given state is static
+ *
  * @author Noah Loewy
  */
 
@@ -37,7 +40,6 @@ public record RulesRecord(Map<Pair, List<Command>> collisionHandlers,
                           Map<Pair, PhysicsHandler> physicsMap, TurnPolicy turnPolicy,
                           StaticStateHandler staticStateHandler, StrikePolicy strikePolicy,
                           PlayerRecordComparator rank, List<StaticChecker> checker) {
-
 
 
 }

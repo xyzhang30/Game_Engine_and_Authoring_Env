@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verify;
 
 import java.util.Collections;
 
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import oogasalad.model.gameengine.GameEngine;
 
@@ -13,7 +14,7 @@ public class AdvanceCommandsTest {
   @Test
   public void testAdvanceTurn() {
     GameEngine gameEngine = mock(GameEngine.class);
-    AdvanceTurnCommand command = new AdvanceTurnCommand(Collections.emptyList());
+    AdvanceTurnCommand command = new AdvanceTurnCommand(Collections.emptyList(), Map.of());
     command.execute(gameEngine);
     verify(gameEngine).advanceTurn();
   }
@@ -21,7 +22,7 @@ public class AdvanceCommandsTest {
   @Test
   public void testAdvanceRounf() {
     GameEngine gameEngine = mock(GameEngine.class);
-    AdvanceRoundCommand command = new AdvanceRoundCommand(Collections.emptyList());
+    AdvanceRoundCommand command = new AdvanceRoundCommand(Collections.emptyList(), Map.of());
     command.execute(gameEngine);
     verify(gameEngine).advanceRound();
   }

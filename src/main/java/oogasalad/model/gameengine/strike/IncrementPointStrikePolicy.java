@@ -3,10 +3,8 @@ package oogasalad.model.gameengine.strike;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import oogasalad.model.annotations.CommandHelpInfo;
-import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
-import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 
 /**
@@ -31,14 +29,14 @@ public class IncrementPointStrikePolicy implements StrikePolicy {
    * has a scoreable), and otherwise will do nothing.
    */
 
-  public IncrementPointStrikePolicy(){
+  public IncrementPointStrikePolicy() {
   }
 
   @Override
   public BiConsumer<Integer, GameEngine> getStrikePolicy() {
     return (strikeableID, engine) -> {
-      GameObject go = engine.getGameObjectContainer().getGameObject(strikeableID);
-      Optional<Scoreable> optionalScoreable = go.getScoreable();
+      Optional<Scoreable> optionalScoreable = engine.getPlayerContainer().getActive()
+          .getStrikeable().asGameObject().getScoreable();
       optionalScoreable.ifPresent(scoreable -> scoreable.incrementTemporaryScore(1.0));
     };
   }

@@ -85,7 +85,7 @@
       "first_id" : 2,
       "second_id" : 3,
       "command" : [ {
-        "AdjustPointsCommand" : [ 1.0, 1.0 ]
+        "AdjustPointsCommand" : [ 1, 1 ]
       }, {
         "AdvanceTurnCommand" : [ ]
       } ]
@@ -95,10 +95,10 @@
       "AdvanceRoundCheck" : [ ]
     },
     "win_condition" : {
-      "NRoundsCompletedCommand" : [ 2.0 ]
+      "NRoundsCompletedCommand" : [ 2 ]
     },
     "advance_turn" : {
-      "AdjustPointsCommand" : [ 1.0, 1.0 ],
+      "AdjustPointsCommand" : [ 1, 1 ],
       "AdvanceTurnCommand" : [ ]
     },
     "advance_round" : {

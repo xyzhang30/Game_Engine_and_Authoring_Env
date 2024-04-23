@@ -1,10 +1,12 @@
 package oogasalad.model.gameengine.command;
 
 import java.util.List;
+import java.util.Map;
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
  * The PlayerCompletedTurnCommand class represents a command to mark the completion of a turn by the
@@ -25,7 +27,8 @@ public class PlayerCompletedTurnCommand implements Command {
    */
 
   @ExpectedParamNumber(0)
-  public PlayerCompletedTurnCommand(List<Double> arguments) {
+  public PlayerCompletedTurnCommand(List<Integer> arguments,
+      Map<Integer, GameObject> gameObjectMap) {
 
   }
 
@@ -38,7 +41,6 @@ public class PlayerCompletedTurnCommand implements Command {
 
   @Override
   public void execute(GameEngine engine) {
-    engine.getPlayerContainer().getPlayer(engine.getPlayerContainer().getActive())
-        .completeTurn();
+    engine.getPlayerContainer().getActive().completeTurn();
   }
 }

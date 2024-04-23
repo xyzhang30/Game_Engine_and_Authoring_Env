@@ -1,10 +1,12 @@
 package oogasalad.model.gameengine.command;
 
 import java.util.List;
+import java.util.Map;
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
  * The SetVisibleCommand class represents a command to set the visibility of a GameObject.
@@ -16,7 +18,9 @@ import oogasalad.model.gameengine.GameEngine;
 @CommandHelpInfo(description = "")
 public class SetVisibleCommand implements Command {
 
-  private final List<Double> arguments;
+  private final List<Integer> arguments;
+  private final GameObject gameObject;
+
 
   /**
    * Constructs an instance of the SetVisibleCommand with the provided arguments.
@@ -27,8 +31,10 @@ public class SetVisibleCommand implements Command {
    */
 
   @ExpectedParamNumber(2)
-  public SetVisibleCommand(List<Double> arguments) {
+  public SetVisibleCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
+    gameObject = gameObjectMap.get(arguments.get(0));
+
   }
 
   /**
@@ -41,9 +47,9 @@ public class SetVisibleCommand implements Command {
 
   @Override
   public void execute(GameEngine engine) {
-    int obj = (int) Math.round(arguments.get(0));
-    int isVisible = (int) Math.round(arguments.get(1));
-    engine.getGameObjectContainer().getGameObject(obj).setVisible(isVisible == 1.0);
+    int obj = arguments.get(0);
+    int isVisible = arguments.get(1);
+    gameObject.setVisible(isVisible == 1);
   }
 }
 

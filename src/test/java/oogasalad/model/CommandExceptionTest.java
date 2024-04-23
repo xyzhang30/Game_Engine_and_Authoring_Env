@@ -1,6 +1,8 @@
 package oogasalad.model;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.Map;
 import oogasalad.model.api.exception.InvalidParameterNumberException;
 
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ public class CommandExceptionTest {
   @Test
   public void testMissingParamAdjustPointsCommand() {
     assertThrows(InvalidParameterNumberException.class, () -> {
-      AddDelayedPointsCommand cmd = new AddDelayedPointsCommand(new ArrayList<>());
+      AddDelayedPointsCommand cmd = new AddDelayedPointsCommand(new ArrayList<>(), Map.of());
       GameEngine gameEngine = new GameEngine("badParamNumberMiniGolfTest");
       cmd.execute(gameEngine);
       GameLoaderModel loader = new GameLoaderModel("badParamNumberMiniGolfTest");

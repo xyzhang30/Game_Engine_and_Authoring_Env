@@ -1,10 +1,13 @@
 package oogasalad.model.gameengine.condition;
 
 import java.util.List;
+import java.util.Map;
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.gameobject.GameObject;
+import oogasalad.model.gameengine.player.Player;
 
 /**
  * The AllPlayersCompletedRoundCondition evaluates if the current round has been completed by every
@@ -26,7 +29,8 @@ public class AllPlayersCompletedRoundCondition implements Condition {
    */
 
   @ExpectedParamNumber(0)
-  public AllPlayersCompletedRoundCondition(List<Double> arguments) {
+  public AllPlayersCompletedRoundCondition(List<Integer> arguments,
+      Map<Integer, GameObject> gameObjectMap) {
 
   }
 
@@ -39,6 +43,6 @@ public class AllPlayersCompletedRoundCondition implements Condition {
 
   @Override
   public boolean evaluate(GameEngine engine) {
-    return engine.getPlayerContainer().allPlayersCompletedRound();
+    return engine.getPlayerContainer().getPlayers().stream().allMatch(Player::isRoundCompleted);
   }
 }

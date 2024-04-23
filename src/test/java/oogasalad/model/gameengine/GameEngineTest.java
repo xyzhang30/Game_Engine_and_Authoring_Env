@@ -3,6 +3,9 @@ package oogasalad.model.gameengine;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+import java.util.List;
+import oogasalad.model.api.GameObjectRecord;
+import oogasalad.model.gameengine.gameobject.GameObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,12 +17,22 @@ public class GameEngineTest {
   private GameEngine gameEngine;
   private GameLoaderModel loader;
 
+  private List<GameObject> gameObjects;
   @BeforeEach
   public void setUp() {
     loader = mock(GameLoaderModel.class);
     gameEngine = new GameEngine("threePlayerMiniGolf");
+    gameObjects = gameEngine.getGameObjectContainer().getGameObjects();
   }
 
+  private GameObjectRecord getRecord(int id) {
+    for(GameObject o : gameObjects) {
+      if(o.getId()==id) {
+        return o.toGameObjectRecord();
+      }
+    }
+    return null;
+  }
   @Test
   public void testAdvanceRound() {
     int initialRound = gameEngine.restoreLastStaticGameRecord().round();
@@ -29,26 +42,26 @@ public class GameEngineTest {
 
   @Test
   public void testApplyInitialVelocityX() {
-    gameEngine.applyInitialVelocity(10, 0, 8);
+    gameEngine.applyInitialVelocity(10, 0);
     assertEquals(10,
-        gameEngine.getGameObjectContainer().getGameObject(8).toGameObjectRecord().velocityX());
+        getRecord(8).velocityX());
   }
 
   @Test
   public void testApplyInitialVelocityY() {
-    gameEngine.applyInitialVelocity(10, Math.PI/2, 8);
+    gameEngine.applyInitialVelocity(10, Math.PI/2);
     assertEquals(10,
-        gameEngine.getGameObjectContainer().getGameObject(8).toGameObjectRecord().velocityY(),
+        getRecord(8).velocityY(),
         .0001);
   }
 
   @Test
   public void testApplyInitialVelocityXY() {
-    gameEngine.applyInitialVelocity(10*Math.sqrt(2), Math.PI/4, 8);
+    gameEngine.applyInitialVelocity(10*Math.sqrt(2), Math.PI/4);
     assertEquals(10,
-        gameEngine.getGameObjectContainer().getGameObject(8).toGameObjectRecord().velocityY());
+        getRecord(8).velocityY());
     assertEquals(10,
-        gameEngine.getGameObjectContainer().getGameObject(8).toGameObjectRecord().velocityX(),
+        getRecord(8).velocityX(),
         .0001);
   }
 

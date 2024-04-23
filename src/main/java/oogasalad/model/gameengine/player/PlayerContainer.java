@@ -1,12 +1,9 @@
 package oogasalad.model.gameengine.player;
 
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.rank.IDComparator;
-import oogasalad.model.gameengine.rank.PlayerRecordComparator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,12 +17,10 @@ import org.apache.logging.log4j.Logger;
  * @author Noah Loewy
  */
 
-
 public class PlayerContainer {
 
-  private static final Logger LOGGER = LogManager.getLogger(PlayerContainer.class);
   private final Map<Integer, Player> myPlayers;
-  private int active;
+  private Player active;
 
   /**
    * Initializes player container object
@@ -34,40 +29,25 @@ public class PlayerContainer {
    */
   public PlayerContainer(Map<Integer, Player> players) {
     myPlayers = players;
-    addPlayerHistory();
+    getPlayers().forEach(Player::addPlayerHistory);
+    active = players.get(1);
   }
 
   /**
-   * Retrieves the number of players stored in the container.
+   * Retrieves all the players in the game
    *
-   * @return The number of players.
+   * @return a list of all player objects
    */
-
-  public int getNumPlayers() {
-    return myPlayers.size();
+  public List<Player> getPlayers() {
+    return myPlayers.values().stream().toList();
   }
 
   /**
-   * Retrieves the Player object associated with the specified player ID. This encapsulates the use
-   * of the map from ids to actual Player objects
+   * Retrieves the currently active player.
    *
-   * @param playerId The unique identifier of the player.
-   * @return The Player object corresponding to the player ID.
+   * @return The active player.
    */
-
-  public Player getPlayer(int playerId) {
-    if (!myPlayers.containsKey(playerId)) {
-      LOGGER.warn("Player " + playerId + " Not Found ");
-    }
-    return myPlayers.get(playerId);
-  }
-
-  /**
-   * Retrieves the ID of the currently active player.
-   *
-   * @return The ID of the active player.
-   */
-  public int getActive() {
+  public Player getActive() {
     return active;
   }
 
@@ -78,119 +58,7 @@ public class PlayerContainer {
    */
 
   public void setActive(int newActive) {
-    active = newActive;
+    active = myPlayers.get(newActive);
   }
 
-  /**
-   * Retrieves a list of PlayerRecord objects representing the current state of each player.
-   *
-   * @param comp, a comparator defining the ordering of PlayerRecords
-   * @return A list of PlayerRecord objects.
-   */
-  public List<PlayerRecord> getSortedPlayerRecords(PlayerRecordComparator comp) {
-    List<PlayerRecord> ret = fetchRecords();
-    ret.sort(comp);
-    return ret;
-  }
-
-  /**
-   * Retrieves a list of PlayerRecord objects representing the current state of each player.
-   *
-   * @return A list of PlayerRecord objects.
-   */
-  public List<PlayerRecord> getPlayerRecords() {
-    return fetchRecords();
-  }
-
-  /**
-   * Checks if all players have completed the current round.
-   *
-   * @return True if all players have completed the round, otherwise false.
-   */
-
-  public boolean allPlayersCompletedRound() {
-    for (Player p : myPlayers.values()) {
-//
-      if (!p.isRoundCompleted()) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  /**
-   * Starts a new round for all players in the container.
-   */
-
-  public void startRound() {
-    for (Player p : myPlayers.values()) {
-      p.startRound();
-    }
-  }
-
-  /**
-   * Applies any delayed scores to all players in the container.
-   */
-
-  public void applyDelayedScores() {
-    for (Player p : myPlayers.values()) {
-      p.applyDelayedScore();
-    }
-
-  }
-
-  /**
-   * Checks if all players have completed a specified number of turns in the current round
-   *
-   * @param turnsRequired The number of turns required for each player.
-   * @return True if all players have completed the required number of turns, otherwise false.
-   */
-
-  public boolean allPlayersCompletedNTurns(int turnsRequired) {
-    for (Player p : myPlayers.values()) {
-      if (!(p.getTurnsCompleted() >= turnsRequired)) {
-        return false;
-      }
-    }
-    return true;
-
-  }
-
-  /**
-   * Adds the current state of each player to their respective player history.
-   */
-
-  public void addPlayerHistory() {
-    for (Player p : myPlayers.values()) {
-      p.addPlayerHistory();
-    }
-  }
-
-  /**
-   * Restores the previous static state of all players from the player history.
-   */
-
-  public void toLastStaticStatePlayers() {
-    for (Player p : myPlayers.values()) {
-      p.toLastStaticStatePlayers();
-    }
-  }
-
-  public List<PlayerRecord> getLastStatics() {
-    List<PlayerRecord> lst = new ArrayList<>();
-    for (Player p : myPlayers.values()) {
-      lst.add(p.getLastPlayerRecord());
-    }
-    lst.sort(new IDComparator());
-    return lst;
-  }
-
-  //fetches list of player records in no particular order
-  private List<PlayerRecord> fetchRecords() {
-    List<PlayerRecord> ret = new ArrayList<>();
-    for (Player p : myPlayers.values()) {
-      ret.add(p.getPlayerRecord());
-    }
-    return ret;
-  }
 }
