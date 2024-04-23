@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameObjectAttributesContainer {
-  private int id;
   private String imagePath;
   private List<Integer> color;
   private final List<String> properties = new ArrayList<>();
@@ -16,14 +15,6 @@ public class GameObjectAttributesContainer {
   private double width;
   private double height;
 
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
   public String getImagePath() {
     return imagePath;
   }

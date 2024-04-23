@@ -161,6 +161,7 @@ public class AuthoringScreen {
   private void handleScreenSelectionDropDown() {
     screensDropDown.valueProperty().addListener((obs, oldVal, selectedScreen) -> {
       if (selectedScreen != null) {
+        shapeProxy.setFinalShapeDisplay();
         authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
         resetScene();
         setScene(selectedScreen);
