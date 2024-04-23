@@ -37,8 +37,7 @@ public class IncrementPointStrikePolicy implements StrikePolicy {
   @Override
   public BiConsumer<Integer, GameEngine> getStrikePolicy() {
     return (strikeableID, engine) -> {
-      GameObject go = engine.getGameObjectContainer().getGameObject(strikeableID);
-      Optional<Scoreable> optionalScoreable = go.getScoreable();
+      Optional<Scoreable> optionalScoreable = engine.getPlayerContainer().getPlayer(engine.getPlayerContainer().getActive()).getStrikeable().asGameObject().getScoreable();
       optionalScoreable.ifPresent(scoreable -> scoreable.incrementTemporaryScore(1.0));
     };
   }

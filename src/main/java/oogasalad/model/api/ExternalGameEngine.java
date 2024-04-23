@@ -25,9 +25,9 @@ public interface ExternalGameEngine {
    *
    * @param magnitude The magnitude of the force to apply.
    * @param direction The direction of the force to apply.
-   * @param id        The ID of the GameObject to apply the force to.
    */
-  void applyInitialVelocity(double magnitude, double direction, int id);
+
+  void applyInitialVelocity(double magnitude, double direction);
 
   /**
    * Resets the game to its initial state.

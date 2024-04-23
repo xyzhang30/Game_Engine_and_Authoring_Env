@@ -124,8 +124,8 @@ public class Player {
    * @return The ID of the active strikeable object.
    */
 
-  public int getStrikeableID() {
-    return activeStrikeable.asGameObject().getId();
+  public Strikeable getStrikeable() {
+    return activeStrikeable;
   }
 
   /**

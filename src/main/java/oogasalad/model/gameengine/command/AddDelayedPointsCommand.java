@@ -36,8 +36,6 @@ public class AddDelayedPointsCommand implements Command {
   @ExpectedParamNumber(value = 2, paramDescription = {"(double) game object ID", "(double) points to add"})
   public AddDelayedPointsCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
-    System.out.println("XXXXX" + arguments.get(0));
-    System.out.println(gameObjectMap);
     gameObject = gameObjectMap.get(arguments.get(0));
 
   }
@@ -53,7 +51,6 @@ public class AddDelayedPointsCommand implements Command {
 
   @Override
   public void execute(GameEngine engine) {
-    System.out.println(engine.getPlayerContainer().getPlayer(engine.getPlayerContainer().getActive()).getStrikeableID());
     Optional<Scoreable> optionalScoreable = gameObject.getScoreable();
     optionalScoreable.ifPresent(scoreable -> scoreable.setTemporaryScore(arguments.get(1)));
   }

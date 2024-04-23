@@ -131,8 +131,7 @@ public class GameController {
    */
   public void hitPointScoringObject(double fractionalVelocity, double angle) {
     if (ableToStrike) {
-      gameEngine.applyInitialVelocity(maxVelocity * fractionalVelocity, angle,
-          strikeableID);
+      gameEngine.applyInitialVelocity(maxVelocity * fractionalVelocity, angle);
       ableToStrike = false;
       animationManager.runAnimation(this);
     }
