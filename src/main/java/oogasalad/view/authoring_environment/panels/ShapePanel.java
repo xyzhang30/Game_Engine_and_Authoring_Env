@@ -53,7 +53,6 @@ public class ShapePanel implements Panel {
   private TextField massTextField;
   private CheckBox elasticityCheckBox;
   private ListView<String> playerAssignmentListView;
-  private CheckBox scoreableCheckBox;
   private Button addPlayerButton;
   private Button removePlayerButton;
   private Text numPlayers;
@@ -160,7 +159,9 @@ public class ShapePanel implements Panel {
     }
   }
   private void setShapeOnClick(Shape shape) {
-    if (shapeProxy.getShape() != null) {
+    if (shapeProxy.getShape() == null) return;
+
+    if (authoringProxy.getCurrentScreenTitle().equals("Game Objects")) {
       shapeProxy.setFinalShapeDisplay();
       try {
         GameObjectAttributesContainer copy = (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer().clone();
@@ -168,16 +169,14 @@ public class ShapePanel implements Panel {
       } catch (CloneNotSupportedException e) {
         throw new RuntimeException(e);
       }
-//      authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
     }
-
     shapeProxy.selectShape(shape);
-    gameObjectTypeDropdown.valueProperty().setValue(null);
-    clearFields();
     shape.setStroke(Color.YELLOW);
     shapeProxy.updateShapeSelectionDisplay();
-
+    gameObjectTypeDropdown.valueProperty().setValue(null);
+    clearFields();
     updateSlider(shape.getScaleX(), shape.getScaleY(), shape.getRotate());
+
   }
   private void clearFields() {
     collidableTypeDropDown.getCheckModel().clearChecks();

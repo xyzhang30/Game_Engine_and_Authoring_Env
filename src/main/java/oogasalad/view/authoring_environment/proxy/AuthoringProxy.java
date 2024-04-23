@@ -83,7 +83,7 @@ public class AuthoringProxy {
 //    authoringController.endAuthoring(gameName, gameObjectMap, interactionMap, conditionsCommands,
 //        policies, playersMap);
     try {
-      // authoringController.writeRules(conditionsCommands, policies);
+      authoringController.writeRules(conditionsCommands, policies);
       authoringController.writePlayers(playersMap);
       authoringController.writeVariables();
       authoringController.writeGameObjects(gameObjectMap);

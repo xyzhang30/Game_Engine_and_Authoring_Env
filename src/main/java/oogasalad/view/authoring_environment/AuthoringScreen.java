@@ -50,6 +50,7 @@ public class AuthoringScreen {
     containerPane.getChildren().add(titleText);
     scene = new Scene(rootPane, Window.SCREEN_WIDTH, Window.SCREEN_HEIGHT);
     setScene("Game Objects");
+    authoringProxy.setCurrentScreenTitle("Game Objects");
   }
 
   private void resetScene() {

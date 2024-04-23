@@ -96,8 +96,9 @@ public class ShapeProxy {
     AnchorPane.setRightAnchor(clonedShape, 100.0);
     AnchorPane.setBottomAnchor(clonedShape, 200.0);
 
-//    // Set the shape
-//    selectShape(clonedShape);
+    if (this.shapeStack.isEmpty()) {
+      selectShape(clonedShape);
+    }
 
     return clonedShape;
   }
@@ -159,6 +160,7 @@ public class ShapeProxy {
     gameObjectAttributesContainer = new GameObjectAttributesContainer();
     if (!shapeStack.isEmpty()) {
       Shape currentShape = shapeStack.peek();
+      gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));
       gameObjectAttributesContainer.setWidth(currentShape.getLayoutBounds().getWidth()*currentShape.getScaleX());
       gameObjectAttributesContainer.setHeight(currentShape.getLayoutBounds().getHeight()*currentShape.getScaleY());
       Bounds bounds = currentShape.localToScene(currentShape.getBoundsInLocal());

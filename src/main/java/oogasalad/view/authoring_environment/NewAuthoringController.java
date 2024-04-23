@@ -114,10 +114,10 @@ public class NewAuthoringController {
 
       Position objPosition = new Position(properties.getPosition().x(), properties.getPosition().y());
 
-      GameObjectProperties gameObject = new GameObjectProperties(Integer.parseInt(gameObjectShape.getId()),
+      GameObjectProperties gameObject = new GameObjectProperties(properties.getId(),
           objectProperties, properties.getMass(), objPosition, shapeName, objDimension,
           properties.getColor(), properties.getsFriction(), properties.getkFriction(), 0,
-          properties.getImagePath(), 0, false, false);
+          properties.getImagePath(), 0, properties.isElasticity(), false);
 
       gameObjects.add(gameObject);
     });

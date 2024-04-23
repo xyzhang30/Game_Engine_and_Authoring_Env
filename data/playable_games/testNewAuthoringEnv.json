@@ -1,0 +1,88 @@
+{
+  "gameName" : "testNewAuthoringEnv",
+  "game_objects" : [ {
+    "properties" : [ "COLLIDABLE", "SCOREABLE", "STRIKABLE", "visible" ],
+    "mass" : 20.0,
+    "position" : {
+      "x_position" : 622.0,
+      "y_position" : 168.0
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 294.3018867924528,
+      "y_dimension" : 144.8679245283019
+    },
+    "color" : null,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/strikeable_images/soccer ball.jpg",
+    "direction" : 0.0,
+    "inelastic" : true,
+    "phaser" : false,
+    "gameobject_id" : 1
+  }, {
+    "properties" : [ "SURFACE", "visible" ],
+    "mass" : 0.0,
+    "position" : {
+      "x_position" : 638.0,
+      "y_position" : 516.0000152587891
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 526.0,
+      "y_dimension" : 203.92452830188682
+    },
+    "color" : null,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 10.0,
+    "inclineAngle" : 0.0,
+    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/nonstrikeable_images/golfgreen.jpg",
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "gameobject_id" : 0
+  } ],
+  "players" : [ {
+    "player_id" : 0,
+    "my_strikeable" : [ 1 ],
+    "my_scoreable" : null,
+    "my_controllable" : [ ]
+  }, {
+    "player_id" : 1,
+    "my_strikeable" : [ ],
+    "my_scoreable" : null,
+    "my_controllable" : [ 2 ]
+  } ],
+  "variables" : [ {
+    "global" : {
+      "max_turns" : 0,
+      "max_rounds" : 0
+    },
+    "player" : {
+      "strokes" : 0,
+      "finished" : 0
+    }
+  } ],
+  "rules" : {
+    "collisions" : [ ],
+    "turn_policy" : "StandardTurnPolicy",
+    "round_policy" : {
+      "ScoreThresholdCondition" : [ 5 ]
+    },
+    "win_condition" : {
+      "GameObjectsNotVisibleCondition" : [ 5 ]
+    },
+    "advance_turn" : {
+      "AdvanceTurnCommand" : [ ]
+    },
+    "advance_round" : {
+      "AdvanceRoundCommand" : [ ]
+    },
+    "strike_policy" : "IncrementPointStrikePolicy",
+    "rank_comparator" : "HighestScoreComparator",
+    "static_checker" : {
+      "VisibilityStaticChecker" : [ ]
+    }
+  }
+}

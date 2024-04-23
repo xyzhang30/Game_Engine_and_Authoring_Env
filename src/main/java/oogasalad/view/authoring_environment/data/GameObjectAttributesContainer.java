@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameObjectAttributesContainer implements Cloneable{
+  private int id;
   private String imagePath;
   private List<Integer> color;
   private List<String> properties = new ArrayList<>();
@@ -87,6 +88,17 @@ public class GameObjectAttributesContainer implements Cloneable{
 
   public void setHeight(double height) {
     this.height = height;
+  }
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public boolean isElasticity() {
+    return elasticity;
   }
 
   @Override
