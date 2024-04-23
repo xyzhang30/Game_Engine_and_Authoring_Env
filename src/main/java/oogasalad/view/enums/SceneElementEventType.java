@@ -17,5 +17,5 @@ public enum SceneElementEventType {
   POWER_HEIGHT,
   SET_POWER,
   SET_ANGLE,
-  NEXT_ROUND
+  NEXT_ROUND,
 }

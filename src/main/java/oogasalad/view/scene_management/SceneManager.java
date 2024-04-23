@@ -29,7 +29,7 @@ public class SceneManager {
   private final SceneElementFactory sceneElementFactory;
   private final SceneElementStyler sceneElementStyler;
   private CompositeElement compositeElement;
-  private GameStatBoard gameStatBoard;
+  private GameStatusManager gameStatusManager;
   private Pane pauseElements;
   private Pane transitionElements;
   private GameBoard gameBoard;
@@ -60,7 +60,7 @@ public class SceneManager {
     sceneElementParser = new SceneElementParser();
     sceneElementStyler = new SceneElementStyler(root);
     sceneElementFactory = new SceneElementFactory(screenWidth, screenHeight, sceneElementStyler,
-        new SceneElementHandler(gameController, this));
+        new SceneElementHandler(gameController, this, gameStatusManager));
   }
 
   /**
@@ -134,7 +134,7 @@ public class SceneManager {
    */
   public void update(GameRecord gameRecord) {
     compositeElement.update(gameRecord.gameObjectRecords());
-    gameStatBoard.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
+    gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
     root.requestFocus();
     checkEndRound(gameRecord);
   }
@@ -171,9 +171,9 @@ public class SceneManager {
     resetRoot();
     currentRound = gameRecord.round();
     Pane sceneElements = createSceneElements(gameManagementElementsPath);
-    gameStatBoard = new GameStatBoard(gameRecord.players(), gameRecord.turn(), gameRecord.round(),
+    gameStatusManager = new GameStatusManager(gameRecord.players(), gameRecord.turn(), gameRecord.round(),
         screenWidth, screenHeight, sceneElementStyler);
-    root.getChildren().addAll(sceneElements, gameStatBoard.getContainer());
+    root.getChildren().addAll(sceneElements, gameStatusManager.getContainer());
 
   }
 
@@ -192,6 +192,7 @@ public class SceneManager {
     } else if (gameRecord.round() != currentRound) {
       currentRound = gameRecord.round();
       createNonGameScene(SceneType.TRANSITION);
+
     }
   }
 }

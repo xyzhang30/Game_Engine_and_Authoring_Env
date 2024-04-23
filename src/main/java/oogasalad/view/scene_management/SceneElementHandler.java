@@ -5,6 +5,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import oogasalad.model.api.GameRecord;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.enums.SceneElementEventType;
 import oogasalad.view.enums.SceneType;
@@ -28,6 +29,7 @@ public class SceneElementHandler {
 
   private final GameController gameController;
   private final SceneManager sceneManager;
+  private final GameStatusManager gameStatusManager;
   private final int angleIncrement;
   private double maxPower;
   private double minPower;
@@ -42,14 +44,18 @@ public class SceneElementHandler {
    * scene manager is responsible for managing different scenes within the game environment.
    * Additionally, the constructor sets the angle increment value to a default of 5 degrees.
    *
-   * @param gameController An instance of the `GameController` class, responsible for managing the
-   *                       game state.
-   * @param sceneManager   An instance of the `SceneManager` class, responsible for managing
-   *                       different scenes within the game environment.
+   * @param gameController    An instance of the `GameController` class, responsible for managing
+   *                          the game state.
+   * @param sceneManager      An instance of the `SceneManager` class, responsible for managing
+   *                          different scenes within the game environment.
+   * @param gameStatusManager An instance of the 'GameStatusManager' class, responsible for managing
+   *                          the game elements related to displaying the game status
    */
-  public SceneElementHandler(GameController gameController, SceneManager sceneManager) {
+  public SceneElementHandler(GameController gameController, SceneManager sceneManager,
+      GameStatusManager gameStatusManager) {
     this.gameController = gameController;
     this.sceneManager = sceneManager;
+    this.gameStatusManager = gameStatusManager;
     angleIncrement = 5;
   }
 
@@ -68,6 +74,7 @@ public class SceneElementHandler {
     checkForSceneChangeEvent(node, event);
     checkForGamePlayChangeEvent(node, event);
     checkForStrikingEvent(node, event);
+    checkForGameManagementEvent(node, event);
   }
 
   private void checkForGamePlayChangeEvent(Node node, String event) {
@@ -120,6 +127,11 @@ public class SceneElementHandler {
       case SET_ANGLE -> {
         setAngleArrow(node);
       }
+    }
+  }
+
+  private void checkForGameManagementEvent(Node node, String event) {
+    switch (SceneElementEventType.valueOf(event)) {
     }
   }
 

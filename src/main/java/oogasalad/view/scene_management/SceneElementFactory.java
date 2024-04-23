@@ -112,12 +112,16 @@ public class SceneElementFactory {
   }
 
   private Text createText(Map<String, String> parameters) {
+
     String displayText = parameters.get(textTag);
     double xLayoutFactor = parseDoubleParameter(parameters, xLayoutFactorTag);
     double yLayoutFactor = parseDoubleParameter(parameters, yLayoutFactorTag);
     String style = parameters.get(styleTag);
 
-    Text text = new Text(displayText);
+    Text text = new Text();
+    if (displayText != null) {
+      text.setText(displayText);
+    }
     sceneElementStyler.style(text, style);
 
     text.setLayoutX(screenWidth * xLayoutFactor - text.getLayoutBounds().getWidth() / 2);

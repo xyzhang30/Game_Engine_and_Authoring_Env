@@ -14,11 +14,12 @@ import oogasalad.model.api.PlayerRecord;
  *
  * @author Jordan Haytaian
  */
-public class GameStatBoard {
+public class GameStatusManager {
 
   private final SceneElementStyler sceneElementStyler;
   private final double screenWidth;
   private final double screenHeight;
+  private final String winnerText = "Winner: ";
   private final String playerText = "Player ";
   private final String playerScoreSeparator = ": ";
   private final String turnText = "Turn: ";
@@ -29,6 +30,7 @@ public class GameStatBoard {
   private ListView<String> scoreListDisplay;
   private Text turnDisplay;
   private Text roundDisplay;
+  private Text winnerDisplay;
   private VBox statContainer;
 
   /**
@@ -40,7 +42,7 @@ public class GameStatBoard {
    * @param screenWidth  screen width to be used for ratio scaling elements
    * @param screenHeight screen height to be used for ratio scaling elements
    */
-  public GameStatBoard(List<PlayerRecord> players, int turn, int round, double screenWidth,
+  public GameStatusManager(List<PlayerRecord> players, int turn, int round, double screenWidth,
       double screenHeight, SceneElementStyler sceneElementStyler) {
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
@@ -68,6 +70,10 @@ public class GameStatBoard {
     updateScore(players);
     updateTurn(turn);
     updateRound(round);
+  }
+
+  public void setWinnerDisplayText(Text winnerDisplay){
+    this.winnerDisplay = winnerDisplay;
   }
 
   private void createGameStatBoardDisplay(List<PlayerRecord> players, int turn, int round) {
