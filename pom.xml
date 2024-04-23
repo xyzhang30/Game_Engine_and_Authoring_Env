@@ -90,6 +90,12 @@
             <artifactId>controlsfx</artifactId>
             <version>11.1.0</version> <!-- or the latest version -->
         </dependency>
+        <!-- Add PostgreSQL JDBC driver dependency -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.19</version>
+        </dependency>
     </dependencies>
 
     <build>

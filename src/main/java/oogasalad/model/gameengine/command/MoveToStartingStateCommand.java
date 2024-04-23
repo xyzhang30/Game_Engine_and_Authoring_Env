@@ -11,13 +11,13 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
+@ExpectedParamNumber(1)
 public class MoveToStartingStateCommand implements Command {
 
   private final List<Integer> arguments;
   private final GameObject gameObject;
 
 
-  @ExpectedParamNumber(1)
   public MoveToStartingStateCommand(List<Integer> arguments,
       Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;

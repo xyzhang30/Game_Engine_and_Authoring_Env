@@ -13,12 +13,12 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
+@VariableParamNumber(isVariable = true)
 public class GameObjectsNotVisibleCondition implements Condition {
 
   private final List<Integer> arguments;
   private final List<GameObject> gameObjects;
 
-  @VariableParamNumber(isVariable = true)
   public GameObjectsNotVisibleCondition(List<Integer> arguments,
       Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;

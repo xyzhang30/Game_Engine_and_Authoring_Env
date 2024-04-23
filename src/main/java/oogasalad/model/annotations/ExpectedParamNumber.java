@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  */
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.CONSTRUCTOR)
+@Target(ElementType.TYPE)
 public @interface ExpectedParamNumber {
 
   /**

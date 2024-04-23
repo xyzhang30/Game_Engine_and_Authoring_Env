@@ -11,12 +11,12 @@ import oogasalad.model.gameengine.player.Player;
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
+@ExpectedParamNumber(value = 1, paramDescription = {"(int) game object ID of 8 ball"})
 public class EightBallCommand implements Command {
 
   private final List<Integer> arguments;
   private final GameObject gameObject;
 
-  @ExpectedParamNumber(value = 1, paramDescription = {"(double) game object ID of 8 ball"})
   public EightBallCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));

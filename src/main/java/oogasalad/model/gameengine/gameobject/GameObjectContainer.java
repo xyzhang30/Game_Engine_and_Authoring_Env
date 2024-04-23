@@ -1,7 +1,10 @@
 package oogasalad.model.gameengine.gameobject;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,7 +19,7 @@ import org.apache.logging.log4j.Logger;
 
 public class GameObjectContainer {
 
-  private final Map<Integer, GameObject> myGameObjects;
+  private final Collection<GameObject> myGameObjects;
 
   /**
    * Constructs a GameObjectContainer with the specified collection of GameObjects.
@@ -24,9 +27,9 @@ public class GameObjectContainer {
    * @param gameObjects A map containing GameObject instances indexed by their unique IDs.
    */
 
-  public GameObjectContainer(Map<Integer, GameObject> gameObjects) {
+  public GameObjectContainer(Collection<GameObject> gameObjects) {
     myGameObjects = gameObjects;
-    getGameObjects().forEach(GameObject::addStaticStateGameObject);
+    myGameObjects.forEach(GameObject::addStaticStateGameObject);
   }
 
   /**
@@ -35,8 +38,8 @@ public class GameObjectContainer {
    * @return The GameObject corresponding to the given ID
    */
 
-  public List<GameObject> getGameObjects() {
-    return myGameObjects.values().stream().toList();
+  public Collection<GameObject> getGameObjects() {
+    return myGameObjects;
   }
 
 

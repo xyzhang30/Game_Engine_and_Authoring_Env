@@ -154,18 +154,18 @@ public class PolicyPanel implements Panel{
     try {
       System.out.println("path: "+classPath);
       Class<?> clazz = Class.forName(classPath);
-      Constructor<?> constructor;
+//      Constructor<?> constructor;
       if (!commandPackage.equals("strike") && !commandPackage.equals("turn") && !commandPackage.equals("rank")){
         //commands that takes in arguments (or empty param list)
-        constructor = clazz.getConstructor(List.class, Map.class);
-        if (constructor.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredConstructor(List.class, Map.class).getAnnotation(ExpectedParamNumber.class).value() != 0){
+//        constructor = clazz.getConstructor(List.class, Map.class);
+        if (clazz.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredAnnotation(ExpectedParamNumber.class).value() != 0){
           //prompt user to enter param
-          int numParam = constructor.getAnnotation(ExpectedParamNumber.class).value();
+          int numParam = clazz.getDeclaredAnnotation(ExpectedParamNumber.class).value();
           //get and return the params from popup
           return enterConstantParamsPopup(numParam, newValue);
-        } else if (constructor.getAnnotation(VariableParamNumber.class) != null && constructor.getAnnotation(
-            //for commands without a constant param number
+        } else if (clazz.getDeclaredAnnotation(VariableParamNumber.class) != null && clazz.getDeclaredAnnotation(
             VariableParamNumber.class).isVariable()) {
+          //for commands without a constant param number
           return enterCustomNumParamsPopup(newValue);
         } else {
           //command does not take in params -- return empty param list
@@ -176,7 +176,7 @@ public class PolicyPanel implements Panel{
         saveSelectionNoParam(commandType, newValue);
         return null;
       }
-    } catch (NoSuchMethodException | ClassNotFoundException e) {
+    } catch (ClassNotFoundException e) {
       e.printStackTrace();
       return null;
     }

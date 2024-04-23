@@ -17,6 +17,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
+@ExpectedParamNumber(0)
 public class PlayerCompletedRoundCommand implements Command {
 
   /**
@@ -26,7 +27,6 @@ public class PlayerCompletedRoundCommand implements Command {
    * @param arguments An empty list.
    */
 
-  @ExpectedParamNumber(0)
   public PlayerCompletedRoundCommand(List<Integer> arguments,
       Map<Integer, GameObject> gameObjectMap) {
 

@@ -6,11 +6,11 @@ import oogasalad.model.annotations.VariableParamNumber;
 import oogasalad.model.api.GameObjectRecord;
 
 @IsCommand(isCommand = true)
+@VariableParamNumber(isVariable = true)
 public class VelocityStaticChecker implements StaticChecker {
 
   private final List<Integer> arguments;
 
-  @VariableParamNumber(isVariable = true)
   public VelocityStaticChecker(List<Integer> arguments) {
     this.arguments = arguments;
   }

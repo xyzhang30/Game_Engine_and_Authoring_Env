@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * @author Alisha Zhang
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.CONSTRUCTOR)
+@Target(ElementType.TYPE)
 public @interface VariableParamNumber {
 
   boolean isVariable();
