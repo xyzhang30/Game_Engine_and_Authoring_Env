@@ -5,6 +5,12 @@ import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.annotations.VariableParamNumber;
 import oogasalad.model.api.GameObjectRecord;
 
+/**
+ * Represents a visibility-based static checker for game objects.
+ *
+ * @author Noah Loewy
+ */
+
 @IsCommand(isCommand = true)
 public class VisibilityStaticChecker implements StaticChecker {
 

@@ -26,7 +26,7 @@ public class IncrementPointsCommand implements Command {
 
 
   /**
-   * Constructs an instance of the AddDelayedPointsCommand with the list of arguments determined
+   * Constructs an instance of the SetDelayedPointsCommand with the list of arguments determined
    * from the data file.
    *
    * @param arguments Consists of one arguments: the ID of the GameObject to which the delayed

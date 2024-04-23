@@ -12,7 +12,7 @@ import oogasalad.Pair;
 import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.gameengine.checkstatic.VelocityStaticChecker;
 import oogasalad.model.gameengine.RulesRecord;
-import oogasalad.model.gameengine.command.AddDelayedPointsCommand;
+import oogasalad.model.gameengine.command.SetDelayedPointsCommand;
 import oogasalad.model.gameengine.command.AdvanceRoundCommand;
 import oogasalad.model.gameengine.command.AdvanceTurnCommand;
 import oogasalad.model.gameengine.command.Command;
@@ -108,7 +108,7 @@ public class GameLoaderModelTest {
 
   @Test
   public void testParseRules() {
-    Command c1 = new AddDelayedPointsCommand(List.of(1.0, 1.0));
+    Command c1 = new SetDelayedPointsCommand(List.of(1.0, 1.0));
     Command c2 = new AdvanceTurnCommand(List.of());
     Map<Pair, List<Command>> collisionHandlers = Map.of(new Pair(2, 3), List.of(c1, c2));
     Condition winCondition = new NRoundsCompletedCondition(List.of(2.0));
@@ -116,7 +116,7 @@ public class GameLoaderModelTest {
     Condition roundPolicy = new AllPlayersCompletedRoundCondition(List.of());
 
     Command advanceC1 = new AdvanceTurnCommand(List.of());
-    Command advanceC2 = new AddDelayedPointsCommand(List.of(1.0, 1.0));
+    Command advanceC2 = new SetDelayedPointsCommand(List.of(1.0, 1.0));
     List<Command> advanceTurn = List.of(advanceC1, advanceC2);
 
     Command advanceC3 = new AdvanceRoundCommand(List.of());
