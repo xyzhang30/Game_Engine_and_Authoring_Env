@@ -28,6 +28,7 @@ import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import oogasalad.view.authoring_environment.data.Coordinate;
 import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
+import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import oogasalad.view.enums.CollidableType;
@@ -60,7 +61,6 @@ public class ShapePanel implements Panel {
   private Label sFriction;
   private Label mass;
   private Label elasticity;
-  private Label scoreable;
   private CheckBox xSpeedCheckBox, ySpeedCheckBox;
   private Label xSpeedCheckBoxLabel, ySpeedCheckBoxLabel;
 
@@ -162,7 +162,13 @@ public class ShapePanel implements Panel {
   private void setShapeOnClick(Shape shape) {
     if (shapeProxy.getShape() != null) {
       shapeProxy.setFinalShapeDisplay();
-      authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
+      try {
+        GameObjectAttributesContainer copy = (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer().clone();
+        authoringProxy.setGameObject(shapeProxy.getShape(), copy);
+      } catch (CloneNotSupportedException e) {
+        throw new RuntimeException(e);
+      }
+//      authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
     }
 
     shapeProxy.selectShape(shape);
@@ -492,7 +498,9 @@ public class ShapePanel implements Panel {
       while (collidableType.next()) {
         if (collidableType.wasAdded()) {
           for (CollidableType selected : collidableType.getAddedSubList()) {
-            shapeProxy.getGameObjectAttributesContainer().getProperties().add(selected.toString());
+            if (!shapeProxy.getGameObjectAttributesContainer().getProperties().contains(selected.toString())) {
+              shapeProxy.getGameObjectAttributesContainer().getProperties().add(selected.toString());
+            }
             if (selected.equals(CollidableType.NONCONTROLLABLE)) {
               removeObjectFromAuthoringPlayersAnyList();
               setPlayerAssignmentVisibility(false);
@@ -505,7 +513,9 @@ public class ShapePanel implements Panel {
         }
         else {
           for (CollidableType removed : collidableType.getRemoved()) {
-            shapeProxy.getGameObjectAttributesContainer().getProperties().remove(removed.toString());
+            if (shapeProxy.getGameObjectAttributesContainer().getProperties().contains(removed.toString())) {
+              shapeProxy.getGameObjectAttributesContainer().getProperties().remove(removed.toString());
+            }
           }
         }
       }

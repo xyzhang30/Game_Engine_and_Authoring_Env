@@ -12,6 +12,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oogasalad.view.Window;
+import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.panels.ColorPanel;
 import oogasalad.view.authoring_environment.panels.ImagePanel;
@@ -140,7 +141,14 @@ public class AuthoringScreen {
     finishButton.setPrefSize(100, 50);
     finishButton.setOnMouseClicked(event -> {
       shapeProxy.setFinalShapeDisplay();
-      authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
+      try {
+        GameObjectAttributesContainer copy = (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer().clone();
+        authoringProxy.setGameObject(shapeProxy.getShape(), copy);
+        shapeProxy.getGameObjectAttributesContainer().getProperties().clear();
+      } catch (CloneNotSupportedException e) {
+        throw new RuntimeException(e);
+      }
+//      authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
       authoringProxy.completeAuthoring();
     });
     AnchorPane.setBottomAnchor(finishButton, 50.0);
@@ -162,7 +170,14 @@ public class AuthoringScreen {
     screensDropDown.valueProperty().addListener((obs, oldVal, selectedScreen) -> {
       if (selectedScreen != null) {
         shapeProxy.setFinalShapeDisplay();
-        authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
+        try {
+          GameObjectAttributesContainer copy = (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer().clone();
+          authoringProxy.setGameObject(shapeProxy.getShape(), copy);
+          shapeProxy.getGameObjectAttributesContainer().getProperties().clear();
+        } catch (CloneNotSupportedException e) {
+          throw new RuntimeException(e);
+        }
+//        authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
         resetScene();
         setScene(selectedScreen);
         authoringProxy.setCurrentScreenTitle(selectedScreen);

@@ -96,8 +96,8 @@ public class ShapeProxy {
     AnchorPane.setRightAnchor(clonedShape, 100.0);
     AnchorPane.setBottomAnchor(clonedShape, 200.0);
 
-    // Set the shape
-    selectShape(clonedShape);
+//    // Set the shape
+//    selectShape(clonedShape);
 
     return clonedShape;
   }
@@ -117,8 +117,8 @@ public class ShapeProxy {
 
   public void setFinalShapeDisplay() {
     if (!shapeStack.isEmpty()) {
-      gameObjectAttributesContainer.setWidth(shapeStack.peek().getLayoutBounds().getWidth());
-      gameObjectAttributesContainer.setHeight(shapeStack.peek().getLayoutBounds().getHeight());
+      gameObjectAttributesContainer.setWidth(shapeStack.peek().getLayoutBounds().getWidth()*shapeStack.peek().getScaleX());
+      gameObjectAttributesContainer.setHeight(shapeStack.peek().getLayoutBounds().getHeight()*shapeStack.peek().getScaleY());
       Bounds boundsInScene = shapeStack.peek().localToScene(shapeStack.peek().getBoundsInLocal());
       gameObjectAttributesContainer.setPosition(new Coordinate(boundsInScene.getCenterX(),
           boundsInScene.getCenterY()));
@@ -158,6 +158,7 @@ public class ShapeProxy {
   public void resetGameObjectAttributesContainer() {
     if (!shapeStack.isEmpty()) {
       Shape currentShape = shapeStack.peek();
+      gameObjectAttributesContainer.getProperties().clear();
       gameObjectAttributesContainer.setWidth(currentShape.getLayoutBounds().getWidth()*currentShape.getScaleX());
       gameObjectAttributesContainer.setHeight(currentShape.getLayoutBounds().getHeight()*currentShape.getScaleY());
       Bounds bounds = currentShape.localToScene(currentShape.getBoundsInLocal());
