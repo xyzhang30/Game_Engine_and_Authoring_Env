@@ -156,7 +156,6 @@ public class ShapeProxy {
   public void resetGameObjectAttributesContainer() {
     if (!shapeStack.isEmpty()) {
       Shape currentShape = shapeStack.peek();
-      gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));
       gameObjectAttributesContainer.setWidth(currentShape.getLayoutBounds().getWidth()*currentShape.getScaleX());
       gameObjectAttributesContainer.setHeight(currentShape.getLayoutBounds().getHeight()*currentShape.getScaleY());
       Bounds bounds = currentShape.localToScene(currentShape.getBoundsInLocal());
