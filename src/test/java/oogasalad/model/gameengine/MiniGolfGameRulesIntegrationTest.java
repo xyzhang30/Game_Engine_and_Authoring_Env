@@ -1,7 +1,7 @@
 package oogasalad.model.gameengine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-gimport oogasalad.model.api.GameRecord;
+import oogasalad.model.api.GameRecord;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
