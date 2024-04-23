@@ -119,14 +119,25 @@ public class GameEngine implements ExternalGameEngine {
 
   }
 
+  /**
+   * Updates the X Position of the active controllable by an amount preset in game rules
+   * @param positive, true if x position is increasing, false if decreasing
+   */
+
   @Override
   public void moveActiveControllableX(boolean positive) {
-    playerContainer.getActive().getControllable().moveX(positive);
+    playerContainer.getActive().getControllable().asGameObject().moveControllableX(positive);
+
   }
+
+  /**
+   * Updates the Y Position of the active controllable by an amount preset in game rules
+   * @param positive, true if y position is increasing, false if decreasing
+   */
 
   @Override
   public void moveActiveControllableY(boolean positive) {
-    playerContainer.getActive().getControllable().moveY(positive);
+    playerContainer.getActive().getControllable().asGameObject().moveControllableY(positive);
   }
 
   /**
@@ -296,11 +307,13 @@ public class GameEngine implements ExternalGameEngine {
     );
   }
 
+  //gets list of all game objects as immutable records
   private List<GameObjectRecord> getListOfGameObjectRecords() {
     return gameObjects.getGameObjects().stream().map(GameObject::toGameObjectRecord)
         .collect(Collectors.toList());
   }
 
+  //gets list of all player objects as immutable records
   private List<PlayerRecord> getPlayerRecords() {
     return playerContainer.getPlayers().stream()
         .map(Player::getPlayerRecord)
