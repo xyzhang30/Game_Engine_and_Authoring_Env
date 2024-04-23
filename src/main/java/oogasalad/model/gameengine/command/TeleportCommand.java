@@ -2,7 +2,9 @@ package oogasalad.model.gameengine.command;
 
 import java.util.List;
 import java.util.Map;
+import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
 
@@ -12,6 +14,8 @@ import oogasalad.model.gameengine.gameobject.GameObject;
  * @author Noah Loewy
  */
 
+@IsCommand(isCommand = true)
+@CommandHelpInfo(description = "")
 public class TeleportCommand implements Command {
 
   private final List<Integer> arguments;

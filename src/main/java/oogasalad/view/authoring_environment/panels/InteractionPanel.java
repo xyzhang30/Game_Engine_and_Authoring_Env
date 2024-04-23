@@ -121,6 +121,7 @@ public class InteractionPanel implements Panel {
       for (File file : Objects.requireNonNull(packageDir.listFiles())){
         String name = file.getName();
         if (name.endsWith(".java")) {
+          System.out.println("classname:"+name);
           try {
             String className = name.substring(0, name.length() - 5); // Remove ".java" extension
             Class<?> clazz = Class.forName(REFLECTION_COMMAND_PACKAGE_PATH + "." + className);
