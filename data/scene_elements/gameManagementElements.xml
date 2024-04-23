@@ -33,6 +33,17 @@
   </node>
 
   <node>
+    <type>BUTTON</type>
+    <text>Back</text>
+    <width_factor>0.05</width_factor>
+    <height_factor>0.05</height_factor>
+    <x_layout_factor>0.92</x_layout_factor>
+    <y_layout_factor>0.7</y_layout_factor>
+    <styling>game-button</styling>
+    <event>START_MENU</event>
+  </node>
+
+  <node>
     <type>RECTANGLE</type>
     <width_factor>0.07</width_factor>
     <height_factor>0.7</height_factor>
