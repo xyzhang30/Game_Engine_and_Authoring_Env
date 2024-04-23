@@ -19,7 +19,6 @@ import org.apache.logging.log4j.Logger;
 
 public class PlayerContainer {
 
-  private static final Logger LOGGER = LogManager.getLogger(PlayerContainer.class);
   private final Map<Integer, Player> myPlayers;
   private Player active;
 
@@ -35,28 +34,18 @@ public class PlayerContainer {
   }
 
   /**
-   * Retrieves the Player object associated with the specified player ID. This encapsulates the use
-   * of the map from ids to actual Player objects
+   * Retrieves all the players in the game
    *
-   * @param playerId The unique identifier of the player.
-   * @return The Player object corresponding to the player ID.
+   * @return a list of all player objects
    */
-
-  protected Player getPlayer(int playerId) {
-    if (!myPlayers.containsKey(playerId)) {
-      LOGGER.warn("Player " + playerId + " Not Found ");
-    }
-    return myPlayers.get(playerId);
-  }
-
   public List<Player> getPlayers() {
     return myPlayers.values().stream().toList();
   }
 
   /**
-   * Retrieves the ID of the currently active player.
+   * Retrieves the currently active player.
    *
-   * @return The ID of the active player.
+   * @return The active player.
    */
   public Player getActive() {
     return active;
@@ -68,19 +57,8 @@ public class PlayerContainer {
    * @param newActive The ID of the player to set as active.
    */
 
-  public void setActive(Player newActive) {
-    active = newActive;
+  public void setActive(int newActive) {
+    active = myPlayers.get(newActive);
   }
 
-
-  /**
-   * Retrieves a list of PlayerRecord objects representing the current state of each player.
-   *
-   * @return A list of PlayerRecord objects.
-   */
-  public List<PlayerRecord> getPlayerRecords() {
-    return myPlayers.values().stream()
-        .map(Player::getPlayerRecord)
-        .collect(Collectors.toList());
-  }
 }

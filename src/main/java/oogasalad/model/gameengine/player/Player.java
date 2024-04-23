@@ -87,12 +87,8 @@ public class Player {
   }
 
   public boolean areAllScoreablesInvisible() {
-    for (Scoreable s : myScoreables) {
-      if (s.asGameObject().getVisible()) {
-        return false;
-      }
-    }
-    return true;
+    return myScoreables.stream().
+        noneMatch(scoreable -> scoreable.asGameObject().getVisible());
   }
 
   public Controllable getControllable() {
