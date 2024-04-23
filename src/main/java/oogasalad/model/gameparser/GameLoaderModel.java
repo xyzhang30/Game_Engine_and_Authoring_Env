@@ -17,7 +17,7 @@ import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
-import oogasalad.model.gameengine.gameobject.Controllable;
+import oogasalad.model.gameengine.gameobject.controllable.Controllable;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import oogasalad.model.gameengine.gameobject.PhysicsHandler;
@@ -209,7 +209,7 @@ public class GameLoaderModel extends GameLoader {
       Player player = new Player(p.playerId());
       playerMap.put(p.playerId(), player);
     });
-    this.playerContainer = new PlayerContainer(playerMap);
+    this.playerContainer = new PlayerContainer(playerMap.values());
   }
 
   private void createRulesRecord() {

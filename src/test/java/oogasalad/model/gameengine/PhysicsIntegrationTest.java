@@ -68,7 +68,8 @@ public class PhysicsIntegrationTest {
     // Assert that the initial round and turn are as expected
     assertEquals(10, getRecord(1).velocityX());
     assertEquals(1.0,
-        gameEngine.getPlayerContainer().getPlayers().get(0).getPlayerRecord().score(), DELTA);
+        gameEngine.getPlayerContainer().getPlayers().iterator().next().getPlayerRecord().score(),
+        DELTA);
 
   }
 

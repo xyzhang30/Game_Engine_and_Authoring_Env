@@ -1,5 +1,8 @@
-package oogasalad.model.gameengine.gameobject;
+package oogasalad.model.gameengine.gameobject.controllable;
 
+
+import oogasalad.model.gameengine.gameobject.GameObject;
+import oogasalad.model.gameengine.gameobject.controllable.Controllable;
 
 public class DefaultControllable implements Controllable {
 

@@ -3,7 +3,7 @@ package oogasalad.model.gameengine.player;
 import java.util.List;
 import java.util.Stack;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.gameobject.Controllable;
+import oogasalad.model.gameengine.gameobject.controllable.Controllable;
 import oogasalad.model.gameengine.gameobject.Strikeable;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import org.apache.logging.log4j.LogManager;

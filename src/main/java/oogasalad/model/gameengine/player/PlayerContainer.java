@@ -1,5 +1,7 @@
 package oogasalad.model.gameengine.player;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 
 public class PlayerContainer {
 
-  private final Map<Integer, Player> myPlayers;
+  private final Collection <Player> myPlayers;
   private Player active;
 
   /**
@@ -27,10 +29,10 @@ public class PlayerContainer {
    *
    * @param players, a map from the unique identifier of a player to the actual Player object
    */
-  public PlayerContainer(Map<Integer, Player> players) {
+  public PlayerContainer(Collection<Player> players) {
     myPlayers = players;
-    getPlayers().forEach(Player::addPlayerHistory);
-    active = players.get(1);
+    myPlayers.forEach(Player::addPlayerHistory);
+    active = players.iterator().next();
   }
 
   /**
@@ -38,8 +40,8 @@ public class PlayerContainer {
    *
    * @return a list of all player objects
    */
-  public List<Player> getPlayers() {
-    return myPlayers.values().stream().toList();
+  public Collection<Player> getPlayers() {
+    return myPlayers;
   }
 
   /**
@@ -57,8 +59,8 @@ public class PlayerContainer {
    * @param newActive The ID of the player to set as active.
    */
 
-  public void setActive(int newActive) {
-    active = myPlayers.get(newActive);
+  public void setActive(Player newActive) {
+    active = newActive;
   }
 
 }

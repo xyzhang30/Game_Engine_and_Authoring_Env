@@ -1,7 +1,10 @@
 package oogasalad.model.gameengine.turn;
 
+import java.util.Collection;
+import java.util.List;
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.IsCommand;
+import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
 
 /**
@@ -36,13 +39,22 @@ public class StandardTurnPolicy implements TurnPolicy {
   @Override
   public int getNextTurn() {
     int numPlayers = playerContainer.getPlayers().size();
-    int turn = ((playerContainer.getActive().getId()) % numPlayers) + 1;
-    playerContainer.setActive(turn);
+    Collection<Player> players = playerContainer.getPlayers();
+    int turn = getTurn(numPlayers, players);
     while (playerContainer.getActive().isRoundCompleted()) {
-      turn = ((playerContainer.getActive().getId()) % numPlayers) + 1;
-      playerContainer.setActive(turn);
+      turn = getTurn(numPlayers, players);
     }
     playerContainer.getActive().updateActiveStrikeable();
+    return turn;
+  }
+
+  private int getTurn(int numPlayers, Collection<Player> players) {
+    int turn = ((playerContainer.getActive().getId()) % numPlayers) + 1;
+    for(Player p : players) {
+      if(p.getId()==turn) {
+        playerContainer.setActive(p);
+      }
+    }
     return turn;
   }
 }
