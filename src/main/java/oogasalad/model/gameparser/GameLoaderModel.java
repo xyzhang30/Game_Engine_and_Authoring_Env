@@ -209,7 +209,7 @@ public class GameLoaderModel extends GameLoader {
       Player player = new Player(p.playerId());
       playerMap.put(p.playerId(), player);
     });
-    this.playerContainer = new PlayerContainer(playerMap);
+    this.playerContainer = new PlayerContainer(playerMap.values());
   }
 
   private void createRulesRecord() {

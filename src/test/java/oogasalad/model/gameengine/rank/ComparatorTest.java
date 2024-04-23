@@ -62,7 +62,7 @@ public class ComparatorTest {
     p3.addStrikeables(List.of(ss3));
 
 
-    container = new PlayerContainer(Map.of(1,p1,2,p2,3,p3));
+    container = new PlayerContainer(List.of(p1,p2,p3));
     when(gameEngine.getPlayerContainer()).thenReturn(container);
     container = gameEngine.getPlayerContainer();
   }

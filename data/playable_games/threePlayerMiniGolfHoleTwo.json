@@ -469,9 +469,9 @@
       "staticFriction": 0,
       "kineticFriction": 0,
       "color": [
-        0,
-        0,
-        0
+        255,
+        255,
+        255
       ],
       "image": ""
     },    {
@@ -495,9 +495,9 @@
       "staticFriction": 0,
       "kineticFriction": 0,
       "color": [
-        0,
-        0,
-        0
+        255,
+        255,
+        255
       ],
       "image": ""
     }

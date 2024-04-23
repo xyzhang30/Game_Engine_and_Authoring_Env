@@ -44,7 +44,7 @@ public class NTurnCompletedConditionTest {
     Map<Integer, Player> playersMap = new HashMap<>();
     playersMap.put(1, player1);
     playersMap.put(2, player2);
-    PlayerContainer playerContainer = new PlayerContainer(playersMap);
+    PlayerContainer playerContainer = new PlayerContainer(List.of(player1, player2));
 
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
@@ -65,7 +65,7 @@ public class NTurnCompletedConditionTest {
     Map<Integer, Player> playersMap = new HashMap<>();
     playersMap.put(1, player1);
     playersMap.put(2, player2);
-    PlayerContainer playerContainer = new PlayerContainer(playersMap);
+    PlayerContainer playerContainer = new PlayerContainer(List.of(player1, player2));
 
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
