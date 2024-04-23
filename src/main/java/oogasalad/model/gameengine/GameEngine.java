@@ -1,6 +1,6 @@
 package oogasalad.model.gameengine;
 
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -12,11 +12,8 @@ import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.checkstatic.StaticChecker;
-import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.gameobject.CollisionDetector;
 import oogasalad.model.gameengine.gameobject.GameObject;
-import oogasalad.model.gameengine.gameobject.GameObjectContainer;
-import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameparser.GameLoaderModel;
@@ -42,7 +39,7 @@ public class GameEngine implements ExternalGameEngine {
   private final GameLoaderModel loader;
   private final PlayerContainer playerContainer;
   private RulesRecord rules;
-  private GameObjectContainer gameObjects;
+  private Collection<GameObject> gameObjects;
   private int round;
   private int turn;
   private boolean gameOver;
@@ -75,7 +72,7 @@ public class GameEngine implements ExternalGameEngine {
 
   @Override
   public GameRecord update(double dt) {
-    gameObjects.getGameObjects().forEach(go -> {
+    gameObjects.forEach(go -> {
       go.move(dt);
       go.update();
     });
@@ -155,7 +152,7 @@ public class GameEngine implements ExternalGameEngine {
    */
   public void advanceTurn() {
     turn = rules.turnPolicy().getNextTurn();
-    gameObjects.getGameObjects().forEach(GameObject::stop);
+    gameObjects.forEach(GameObject::stop);
   }
 
   /**
@@ -166,16 +163,6 @@ public class GameEngine implements ExternalGameEngine {
 
   public PlayerContainer getPlayerContainer() {
     return playerContainer;
-  }
-
-  /**
-   * Retrieves the container that holds information about game objects in the game.
-   *
-   * @return The GameObjectContainer object.
-   */
-
-  public GameObjectContainer getGameObjectContainer() {
-    return gameObjects;
   }
 
   /**
@@ -193,7 +180,7 @@ public class GameEngine implements ExternalGameEngine {
 
   public void toLastStaticState() {
     staticState = true;
-    getGameObjectContainer().getGameObjects().stream()
+    gameObjects.stream()
         .map(GameObject::getScoreable)
         .filter(Optional::isPresent)
         .map(Optional::get)
@@ -202,7 +189,7 @@ public class GameEngine implements ExternalGameEngine {
     turn = newCurrentState.turn();
     round = newCurrentState.round();
     gameOver = newCurrentState.gameOver();
-    gameObjects.getGameObjects().forEach(GameObject::toLastStaticStateGameObjects);
+    gameObjects.forEach(GameObject::toLastStaticStateGameObjects);
     playerContainer.getPlayers().forEach(Player::toLastStaticStatePlayers);
   }
 
@@ -236,8 +223,8 @@ public class GameEngine implements ExternalGameEngine {
    * @author Konur Nordberg
    */
   private Set<Pair> getCollisionPairs() {
-    return gameObjects.getGameObjects().stream()
-        .flatMap(go1 -> gameObjects.getGameObjects().stream()
+    return gameObjects.stream()
+        .flatMap(go1 -> gameObjects.stream()
             .filter(go2 -> !go1.equals(go2) && go2.getVisible() && go1.getVisible() && collisionDetector.isColliding(go1, go2))
             .map(go2 -> new Pair(go1, go2)))
         .collect(Collectors.toSet());
@@ -246,7 +233,6 @@ public class GameEngine implements ExternalGameEngine {
   //starts the current round, by requesting the necessary information for that round from the
   // loader.
   private void startRound(GameLoaderModel loader) {
-    System.out.println(loader);
     gameOver = false;
     turn = 1; //first player ideally should have id 1
     staticState = true;
@@ -260,13 +246,14 @@ public class GameEngine implements ExternalGameEngine {
   //gets game objects, and rules for the game objects, for a specific round from game loader
   private void loadRoundSpecificInformation(GameLoaderModel loader) {
     loader.prepareRound(round);
-    gameObjects = loader.getGameObjectContainer();
+    gameObjects = loader.getGameObjects();
+    gameObjects.forEach(GameObject::addStaticStateGameObject);
     rules = loader.getRulesRecord();
   }
 
   //adds the initial state of the game (before the round starts) to the game history
   private void addInitialStaticStateToHistory() {
-    gameObjects.getGameObjects().forEach(GameObject::addStaticStateGameObject);
+    gameObjects.forEach(GameObject::addStaticStateGameObject);
     playerContainer.getPlayers().forEach(Player::addPlayerHistory);
     staticStateStack = new Stack<>();
     staticStateStack.push(
@@ -288,7 +275,7 @@ public class GameEngine implements ExternalGameEngine {
   private void updateHistory() {
     staticState = true;
     playerContainer.getPlayers().forEach(Player::addPlayerHistory);
-    gameObjects.getGameObjects().forEach(GameObject::addStaticStateGameObject);
+    gameObjects.forEach(GameObject::addStaticStateGameObject);
     staticStateStack.push(
         new GameRecord(getListOfGameObjectRecords(),
             getPlayerRecords().stream()
@@ -301,7 +288,7 @@ public class GameEngine implements ExternalGameEngine {
   // conditions (defined for that game)
   private boolean checkStatic(List<StaticChecker> staticCheckers) {
     return staticCheckers.stream().anyMatch(checker ->
-        gameObjects.getGameObjects().stream().allMatch(gameObject ->
+        gameObjects.stream().allMatch(gameObject ->
             checker.isStatic(gameObject.toGameObjectRecord())
         )
     );
@@ -309,7 +296,7 @@ public class GameEngine implements ExternalGameEngine {
 
   //gets list of all game objects as immutable records
   private List<GameObjectRecord> getListOfGameObjectRecords() {
-    return gameObjects.getGameObjects().stream().map(GameObject::toGameObjectRecord)
+    return gameObjects.stream().map(GameObject::toGameObjectRecord)
         .collect(Collectors.toList());
   }
 
@@ -319,6 +306,10 @@ public class GameEngine implements ExternalGameEngine {
         .map(Player::getPlayerRecord)
         .sorted(rules.rank())
         .collect(Collectors.toList());
+  }
+
+  public Collection<GameObject> getGameObjects() {
+    return gameObjects;
   }
 
 }
