@@ -140,13 +140,14 @@ public class AuthoringScreen {
     finishButton.setId("finishButton");
     finishButton.setPrefSize(100, 50);
     finishButton.setOnMouseClicked(event -> {
-      shapeProxy.setFinalShapeDisplay();
-      try {
-        GameObjectAttributesContainer copy = (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer().clone();
-        authoringProxy.setGameObject(shapeProxy.getShape(), copy);
-        shapeProxy.getGameObjectAttributesContainer().getProperties().clear();
-      } catch (CloneNotSupportedException e) {
-        throw new RuntimeException(e);
+      if (screensDropDown.getSelectionModel().getSelectedItem().equals("Game Objects")) {
+        shapeProxy.setFinalShapeDisplay();
+        try {
+          GameObjectAttributesContainer copy = (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer().clone();
+          authoringProxy.setGameObject(shapeProxy.getShape(), copy);
+        } catch (CloneNotSupportedException e) {
+          throw new RuntimeException(e);
+        }
       }
 //      authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
       authoringProxy.completeAuthoring();
@@ -169,13 +170,15 @@ public class AuthoringScreen {
   private void handleScreenSelectionDropDown() {
     screensDropDown.valueProperty().addListener((obs, oldVal, selectedScreen) -> {
       if (selectedScreen != null) {
-        shapeProxy.setFinalShapeDisplay();
-        try {
-          GameObjectAttributesContainer copy = (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer().clone();
-          authoringProxy.setGameObject(shapeProxy.getShape(), copy);
-          shapeProxy.getGameObjectAttributesContainer().getProperties().clear();
-        } catch (CloneNotSupportedException e) {
-          throw new RuntimeException(e);
+        if (oldVal.equals("Game Objects")) {
+          shapeProxy.setFinalShapeDisplay();
+          try {
+            GameObjectAttributesContainer copy = (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer().clone();
+            authoringProxy.setGameObject(shapeProxy.getShape(), copy);
+            shapeProxy.resetGameObjectAttributesContainer();
+          } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+          }
         }
 //        authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
         resetScene();
