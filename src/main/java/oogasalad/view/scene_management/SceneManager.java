@@ -134,7 +134,7 @@ public class SceneManager {
    */
   public void update(GameRecord gameRecord) {
     compositeElement.update(gameRecord.gameObjectRecords());
-    gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
+    //gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
     root.requestFocus();
     checkEndRound(gameRecord);
   }
@@ -171,9 +171,9 @@ public class SceneManager {
     resetRoot();
     currentRound = gameRecord.round();
     Pane sceneElements = createSceneElements(gameManagementElementsPath);
-    gameStatusManager = new GameStatusManager(gameRecord.players(), gameRecord.turn(), gameRecord.round(),
-        screenWidth, screenHeight, sceneElementStyler);
-    root.getChildren().addAll(sceneElements, gameStatusManager.getContainer());
+    //gameStatusManager = new GameStatusManager(gameRecord.players(), gameRecord.turn(), gameRecord.round(),
+        //screenWidth, screenHeight, sceneElementStyler);
+    root.getChildren().addAll(sceneElements);
 
   }
 

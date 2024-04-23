@@ -132,6 +132,7 @@ public class SceneElementHandler {
 
   private void checkForGameManagementEvent(Node node, String event) {
     switch (SceneElementEventType.valueOf(event)) {
+
     }
   }
 
