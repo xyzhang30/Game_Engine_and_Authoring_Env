@@ -86,6 +86,9 @@ public class SceneManager {
           root.getChildren().add(pauseElements);
         }
       }
+      case GAME_OVER -> {
+
+      }
     }
   }
 
@@ -182,12 +185,11 @@ public class SceneManager {
   }
 
   private void checkEndRound(GameRecord gameRecord) {
-    if (gameRecord.round() != currentRound) {
+    if (gameRecord.gameOver()) {
+      createNonGameScene(SceneType.GAME_OVER);
+    } else if (gameRecord.round() != currentRound) {
       currentRound = gameRecord.round();
       createNonGameScene(SceneType.TRANSITION);
-    }
-    if (gameRecord.gameOver()) {
-      //TODO: Display win condition
     }
   }
 }
