@@ -15,48 +15,26 @@ import oogasalad.model.api.PlayerRecord;
  * @author Jordan Haytaian
  */
 public class GameStatusManager {
-
-  private final SceneElementStyler sceneElementStyler;
-  private final double screenWidth;
-  private final double screenHeight;
-  private final String winnerText = "Winner: ";
   private final String playerText = "Player ";
   private final String playerScoreSeparator = ": ";
-  private final String turnText = "Turn: ";
-  private final String roundText = "Round: ";
-  private final String scoreListStyleTag = "score-list";
-  private final String textStyleTag = "game-text";
-  private final String containerStyleTag = "stat-container";
+  private String turnText;
+  private String roundText;
   private ListView<String> scoreListDisplay;
   private Text turnDisplay;
   private Text roundDisplay;
-  private Text winnerDisplay;
-  private VBox statContainer;
 
-  /**
-   * Constructor creates score, turn, and round display on call
-   *
-   * @param players      list current player records which contain score info
-   * @param turn         id of player whose turn it is
-   * @param round        current round
-   * @param screenWidth  screen width to be used for ratio scaling elements
-   * @param screenHeight screen height to be used for ratio scaling elements
-   */
-  public GameStatusManager(List<PlayerRecord> players, int turn, int round, double screenWidth,
-      double screenHeight, SceneElementStyler sceneElementStyler) {
-    this.screenWidth = screenWidth;
-    this.screenHeight = screenHeight;
-    this.sceneElementStyler = sceneElementStyler;
-    createGameStatBoardDisplay(players, turn, round);
+
+  public GameStatusManager() {
   }
 
-  /**
-   * Box to hold score, turn, and round display
-   *
-   * @return VBox holding score, turn, and round display
-   */
-  public VBox getContainer() {
-    return statContainer;
+  public void setRoundText(Text roundDisplay) {
+    this.roundDisplay = roundDisplay;
+    roundText = roundDisplay.getText();
+  }
+
+  public void setTurnText(Text turnDisplay) {
+    this.turnDisplay = turnDisplay;
+    turnText = turnDisplay.getText();
   }
 
   /**
@@ -72,34 +50,8 @@ public class GameStatusManager {
     updateRound(round);
   }
 
-  public void setWinnerDisplayText(Text winnerDisplay){
-    this.winnerDisplay = winnerDisplay;
-  }
-
-  private void createGameStatBoardDisplay(List<PlayerRecord> players, int turn, int round) {
-    statContainer = new VBox();
-    createScoreListDisplay(players);
-    createTurnDisplay(turn);
-    createRoundDisplay(round);
-
-    statContainer.getChildren().addAll(roundDisplay, turnDisplay, scoreListDisplay);
-    statContainer.setLayoutX(0.88 * screenWidth);
-    statContainer.setLayoutY(0.075 * screenHeight);
-    statContainer.getStyleClass().add(containerStyleTag);
-  }
-
-  private void createTurnDisplay(int turn) {
-    turnDisplay = new Text(turnText + playerText + turn);
-    sceneElementStyler.style(turnDisplay, textStyleTag);
-  }
-
   private void updateTurn(int turn) {
     turnDisplay.setText(turnText + playerText + turn);
-  }
-
-  private void createRoundDisplay(int round) {
-    roundDisplay = new Text(roundText + round);
-    roundDisplay.getStyleClass().add(textStyleTag);
   }
 
   private void updateRound(int round) {
@@ -107,15 +59,13 @@ public class GameStatusManager {
   }
 
   private void updateScore(List<PlayerRecord> players) {
-    scoreListDisplay.getItems().clear();
-    scoreListDisplay.setItems(createScoreListItems(players));
+    //scoreListDisplay.getItems().clear();
+    //scoreListDisplay.setItems(createScoreListItems(players));
   }
 
-  private void createScoreListDisplay(List<PlayerRecord> players) {
+  private void setScoreListDisplay(List<PlayerRecord> players) {
     ObservableList<String> scores = createScoreListItems(players);
-    scoreListDisplay = new ListView<>(scores);
     scoreListDisplay.setSelectionModel(null);
-    sceneElementStyler.style(scoreListDisplay, scoreListStyleTag);
   }
 
   private ObservableList<String> createScoreListItems(List<PlayerRecord> players) {

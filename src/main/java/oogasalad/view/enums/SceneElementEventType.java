@@ -18,4 +18,6 @@ public enum SceneElementEventType {
   SET_POWER,
   SET_ANGLE,
   NEXT_ROUND,
+  SET_ROUND,
+  SET_TURN,
 }

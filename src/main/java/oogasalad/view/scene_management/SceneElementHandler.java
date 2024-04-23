@@ -5,6 +5,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import oogasalad.model.api.GameRecord;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.enums.SceneElementEventType;
@@ -132,7 +133,12 @@ public class SceneElementHandler {
 
   private void checkForGameManagementEvent(Node node, String event) {
     switch (SceneElementEventType.valueOf(event)) {
-
+      case SET_ROUND -> {
+        setRound(node);
+      }
+      case SET_TURN -> {
+        setTurn(node);
+      }
     }
   }
 
@@ -272,5 +278,13 @@ public class SceneElementHandler {
 
   private void createStartTitleHandler(Node node) {
     node.setOnMouseClicked(e -> sceneManager.createNonGameScene(SceneType.TITLE));
+  }
+
+  private void setRound(Node node) {
+    gameStatusManager.setRoundText(((Text) node));
+  }
+
+  private void setTurn(Node node) {
+    gameStatusManager.setTurnText(((Text) node));
   }
 }
