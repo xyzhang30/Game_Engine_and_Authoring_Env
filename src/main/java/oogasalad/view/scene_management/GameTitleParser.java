@@ -9,7 +9,19 @@ import java.util.stream.Stream;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * Parses and retrieves a list of game titles from a specified directory.
+ *
+ * <p>This class is responsible for scanning a directory of playable games and extracting
+ * the titles of game files, excluding directories and files that contain a specified identifier
+ * (e.g., "test") in their names. The class returns an observable list of game titles, where each
+ * title is derived from the file name, excluding its extension. This allows the application to
+ * dynamically load and display available game titles for users to select from.
+ *
+ * @author Jordan Haytaian, Judy He
+ **/
 public class GameTitleParser {
+
   private final String playableGameDir = "data/playable_games";
   private final String testFileIdentifier = "test";
 
