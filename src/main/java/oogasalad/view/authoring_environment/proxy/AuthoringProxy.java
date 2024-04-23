@@ -158,5 +158,8 @@ public class AuthoringProxy {
   public void decreaseNumPlayers() {
     numPlayers--;
   }
+  public int getCurrentPlayerId() {
+    return numPlayers-1;
+  }
 
 }
