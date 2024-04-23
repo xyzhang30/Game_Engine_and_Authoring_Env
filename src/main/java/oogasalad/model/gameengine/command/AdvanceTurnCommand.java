@@ -16,6 +16,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
  */
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
+@ExpectedParamNumber(0)
 public class AdvanceTurnCommand implements Command {
 
 
@@ -26,7 +27,6 @@ public class AdvanceTurnCommand implements Command {
    * @param arguments, an empty list
    */
 
-  @ExpectedParamNumber(0)
   public AdvanceTurnCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
 
   }

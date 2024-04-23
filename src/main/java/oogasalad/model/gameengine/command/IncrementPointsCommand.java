@@ -19,6 +19,8 @@ import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
+@ExpectedParamNumber(value = 2, paramDescription = {"(int) game object ID to add",
+    "(int) number of points to add"})
 public class IncrementPointsCommand implements Command {
 
   private final List<Integer> arguments;
@@ -33,8 +35,7 @@ public class IncrementPointsCommand implements Command {
    *                  points should be incremented
    */
 
-  @ExpectedParamNumber(value = 2, paramDescription = {"(double) game object ID to add",
-      "(double) number of points to add"})
+
   public IncrementPointsCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));

@@ -16,6 +16,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
+@ExpectedParamNumber(2)
 public class TeleportCommand implements Command {
 
   private final List<Integer> arguments;
@@ -30,7 +31,6 @@ public class TeleportCommand implements Command {
    *                  game object (a surface) where the first object teleports to.
    */
 
-  @ExpectedParamNumber(2)
   public TeleportCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObjectFrom = gameObjectMap.get(arguments.get(0));

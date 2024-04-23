@@ -14,9 +14,9 @@ import oogasalad.model.gameengine.rank.IDComparator;
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
+@ExpectedParamNumber(0)
 public class ConditionalAdvanceTurnCommand implements Command {
 
-  @ExpectedParamNumber(0)
   public ConditionalAdvanceTurnCommand(List<Integer> arguments,
       Map<Integer, GameObject> gameObjectMap) {
 
