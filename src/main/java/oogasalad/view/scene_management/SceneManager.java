@@ -20,6 +20,7 @@ import org.xml.sax.SAXException;
  * @author Doga Ozmen, Jordan Haytaian
  */
 public class SceneManager {
+
   private final Pane root;
   private final Scene scene;
   private final SceneElementParser sceneElementParser;
@@ -60,33 +61,37 @@ public class SceneManager {
   }
 
   /**
-   * Creates a non-game scene by resetting the root and creating new elements from an XML file
-   * specified by the type of scene
+   * Getter for the scene
    *
-   * @param sceneType the type of scene to create
+   * @return scene displaying game visuals
    */
-  public void createNonGameScene(SceneType sceneType) {
-    switch (sceneType) {
-      case TITLE -> {
-        resetRoot();
-        root.getChildren().add(createSceneElements(titleSceneElementsPath));
-      }
-      case MENU -> {
-        resetRoot();
-        root.getChildren().add(createSceneElements(menuSceneElementsPath));
-      }
-      case TRANSITION -> {
-        root.getChildren().add(transitionElements);
-      }
-      case PAUSE -> {
-        if (!root.getChildren().contains(pauseElements)) {
-          root.getChildren().add(pauseElements);
-        }
-      }
-      case GAME_OVER -> {
-        resetRoot();
-        root.getChildren().add(createSceneElements(gameOverSceneElementsPath));
-      }
+  public Scene getScene() {
+    return scene;
+  }
+
+  /**
+   * Creates a title scene by resetting the root and creating new elements from title scene xml
+   * file
+   */
+  public void createTitleScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(titleSceneElementsPath));
+  }
+
+  /**
+   * Creates a menu scene by resetting the root and creating new elements from menu scene xml file
+   */
+  public void createMenuScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(menuSceneElementsPath));
+  }
+
+  /**
+   * Creates a pause display by adding elements created from pause xml file
+   */
+  void createPauseDisplay() {
+    if (!root.getChildren().contains(pauseElements)) {
+      root.getChildren().add(pauseElements);
     }
   }
 
@@ -100,18 +105,9 @@ public class SceneManager {
   /**
    * Called when next round is started, removes transition screen elements
    */
-  public void removeTransitionSheen() {
+  void removeTransitionSheen() {
     root.getChildren().remove(transitionElements);
     root.requestFocus();
-  }
-
-  /**
-   * Getter for the scene
-   *
-   * @return scene displaying game visuals
-   */
-  public Scene getScene() {
-    return scene;
   }
 
   /**
@@ -119,7 +115,7 @@ public class SceneManager {
    *
    * @return root node of scene
    */
-  public Pane getRoot() {
+  Pane getRoot() {
     return root;
   }
 
@@ -148,6 +144,16 @@ public class SceneManager {
     addGameManagementElementsToGame(gameRecord);
     addGameElementsToGame();
     root.requestFocus();
+  }
+
+
+  private void createTransitionDisplay() {
+    root.getChildren().add(transitionElements);
+  }
+
+  private void createGameOverScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(gameOverSceneElementsPath));
   }
 
 
@@ -182,11 +188,11 @@ public class SceneManager {
 
   private void checkEndRound(GameRecord gameRecord) {
     if (gameRecord.gameOver()) {
-      createNonGameScene(SceneType.GAME_OVER);
+      createGameOverScene();
       gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
     } else if (gameRecord.round() != currentRound) {
       currentRound = gameRecord.round();
-      createNonGameScene(SceneType.TRANSITION);
+      createTransitionDisplay();
 
     }
   }

@@ -177,13 +177,17 @@ public class SceneElementHandler {
 
   private void createPauseHandler(Node node) {
     node.setOnMouseClicked((e -> {
+      sceneManager.createPauseDisplay();
       gameController.pauseGame();
       sceneManager.getRoot().requestFocus();
     }));
   }
 
   private void createResumeHandler(Node node) {
-    node.setOnMouseClicked(e -> gameController.resumeGame());
+    node.setOnMouseClicked(e -> {
+      sceneManager.removePauseSheen();
+      gameController.resumeGame();
+    });
   }
 
   private void getMaxPower(Node node) {

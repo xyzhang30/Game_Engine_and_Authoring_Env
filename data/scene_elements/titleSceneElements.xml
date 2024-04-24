@@ -28,4 +28,12 @@
     <y_layout_factor>0.3</y_layout_factor>
     <styling>title-text</styling>
   </node>
+
+  <node>
+    <type>COMBOBOX</type>
+    <text>Theme</text>
+    <x_layout_factor>0.38</x_layout_factor>
+    <y_layout_factor>0.3</y_layout_factor>
+    <styling>title-text</styling>
+  </node>
 </scene_elements>
