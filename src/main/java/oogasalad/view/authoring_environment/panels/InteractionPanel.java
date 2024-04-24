@@ -1,16 +1,14 @@
 package oogasalad.view.authoring_environment.panels;
 
 import java.io.File;
-import java.lang.reflect.Constructor;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
+import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -19,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Shape;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
@@ -30,19 +27,21 @@ public class InteractionPanel implements Panel {
 
   private static final String COMMAND_PACKAGE_PATH = "src/main/java/oogasalad/model/gameengine/command";
   private static final String REFLECTION_COMMAND_PACKAGE_PATH = "oogasalad.model.gameengine.command";
+  private static final String RESOURCE_FOLDER_PATH = "view.";
+  private static final String UI_FILE_PREFIX = "UIElements";
+  private final String language = "English"; // PASS IN LANGUAGE
   private final ShapeProxy shapeProxy;
   private final AuthoringProxy authoringProxy;
   private final StackPane canvas;
   private final AnchorPane rootPane;
   private final AnchorPane containerPane;
-
-  private final Set<Shape> clickedShapes = new HashSet<>();
-  private TextField gameNameTextField;
   private TextField infoTextField;
   private CheckComboBox<String> checkComboBox;
   private Map<String, List<Integer>> tempSavedCommands = new HashMap<>();
   private Button saveSelectionButton;
   private int numMultiSelect = 2;
+  private final ResourceBundle resourceBundle;
+
 
 
   public InteractionPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
@@ -52,6 +51,8 @@ public class InteractionPanel implements Panel {
     this.rootPane = rootPane;
     this.containerPane = containerPane;
     this.canvas = canvas;
+    this.resourceBundle = ResourceBundle.getBundle(
+        RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
     // TODO: REMOVE HARD CODING
     shapeProxy.setNumberOfMultiSelectAllowed(numMultiSelect);
     createElements();
@@ -60,8 +61,11 @@ public class InteractionPanel implements Panel {
 
   @Override
   public void createElements() {
-    makeObjectIdTextField();
+    createObjectIdTextField();
+    createCommandsDropdown();
+  }
 
+  private void createCommandsDropdown() {
     Label label = new Label("ON COLLISION: ");
     AnchorPane.setTopAnchor(label,100.0);
     AnchorPane.setLeftAnchor(label,350.0);
@@ -84,7 +88,7 @@ public class InteractionPanel implements Panel {
     containerPane.getChildren().add(saveSelectionButton);
   }
 
-  private void makeObjectIdTextField() {
+  private void createObjectIdTextField() {
     Label idsLabel = new Label("GAME OBJECTS: ");
     AnchorPane.setLeftAnchor(idsLabel, 350.0);
     AnchorPane.setTopAnchor(idsLabel, 50.0);
@@ -150,12 +154,14 @@ public class InteractionPanel implements Panel {
     return commands;
   }
 
-
   @Override
   public void handleEvents() {
-    //set listener for the command dropdown
+    handleCommandDropdown();
+    handleSaveButton();
+  }
+
+  private void handleCommandDropdown() {
     checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c -> {
-//      infoTextField.textProperty().setValue(shapeProxy.getSelectedShapeIds().toString());
       while (c.next()) {
         if (c.wasAdded()) {
           for (String selectedCommand : c.getAddedSubList()) {
@@ -172,14 +178,14 @@ public class InteractionPanel implements Panel {
         System.out.println("CURRENT SELECTION: "+tempSavedCommands);
       }
     });
-
-    //handle the save button for each collision pair
+  }
+  private void handleSaveButton() {
     saveSelectionButton.setOnAction(e -> {
       authoringProxy.addShapeInteraction(shapeProxy.getSelectedShapeIds(), tempSavedCommands);
       tempSavedCommands = new HashMap<>();
       checkComboBox.getCheckModel().clearChecks();
       infoTextField.clear();
     });
-
   }
+
 }
