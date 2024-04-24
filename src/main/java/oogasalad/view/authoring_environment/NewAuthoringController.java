@@ -63,7 +63,7 @@ public class NewAuthoringController {
     playersMap.forEach((playerId, myGameObjects) -> {
       ParserPlayer player = new ParserPlayer(playerId,
           playersMap.get(playerId).get(CollidableType.STRIKABLE),
-          null,
+          playersMap.get(playerId).get(CollidableType.SCOREABLE),
           playersMap.get(playerId).get(CollidableType.CONTROLLABLE));
       players.add(player);
     });

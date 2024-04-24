@@ -185,7 +185,6 @@ public class ShapePanel implements Panel {
     sFrictionTextField.clear();
     massTextField.clear();
     elasticityCheckBox.setSelected(false);
-//    scoreableCheckBox.setSelected(false);
     setCollidableOptionVisibility(false);
     setSurfaceOptionVisibility(false);
     setPlayerAssignmentVisibility(false);
@@ -323,11 +322,10 @@ public class ShapePanel implements Panel {
   private void createCollidableOptions() {
     createCollidableTypeOptions();
     createCollidableParameterOptions();
-//    createScoreableOption();
   }
 
   private void createPlayerAssignment() {
-    playerAssignmentListView = new ListView<String>();
+    playerAssignmentListView = new ListView<>();
 
     for (int currPlayerNum = 1; currPlayerNum <= authoringProxy.getNumPlayers(); currPlayerNum++) {
       playerAssignmentListView.getItems().add("Player " + currPlayerNum);
@@ -346,11 +344,12 @@ public class ShapePanel implements Panel {
     collidableTypeDropDown = new CheckComboBox<>();
     collidableTypeDropDown.getItems()
         .addAll(CollidableType.STRIKABLE, CollidableType.SCOREABLE, CollidableType.CONTROLLABLE, CollidableType.NONCONTROLLABLE);
-//    collidableTypeDropDown.setPromptText("Select Collidable Type");
     AnchorPane.setRightAnchor(collidableTypeDropDown, 300.0);
     AnchorPane.setTopAnchor(collidableTypeDropDown, 200.0);
     collidableTypeDropDown.setPrefSize(200, 50);
-    containerPane.getChildren().add(collidableTypeDropDown);
+    if (!containerPane.getChildren().contains(collidableTypeDropDown)) {
+      containerPane.getChildren().add(collidableTypeDropDown);
+    }
   }
 
   private void createCollidableParameterOptions() {
@@ -382,20 +381,6 @@ public class ShapePanel implements Panel {
     containerPane.getChildren()
         .addAll(massTextField, mass, elasticityCheckBox, elasticity);
   }
-
-//  private void createScoreableOption() {
-//    scoreableCheckBox = new CheckBox();
-//    scoreableCheckBox.setPrefSize(20, 20);
-//    AnchorPane.setRightAnchor(scoreableCheckBox, 470.0);
-//    AnchorPane.setTopAnchor(scoreableCheckBox, 350.0);
-//
-//    scoreable = new Label("Scoreable");
-//    AnchorPane.setRightAnchor(scoreable, 400.0);
-//    AnchorPane.setTopAnchor(scoreable, 350.0);
-//
-//    containerPane.getChildren()
-//        .addAll(scoreableCheckBox, scoreable);
-//  }
 
   private void addNewPlayerToProxy() {
     authoringProxy.getPlayers().putIfAbsent(authoringProxy.getCurrentPlayerId(), new HashMap<>());
@@ -467,16 +452,6 @@ public class ShapePanel implements Panel {
       }
     });
   }
-
-//  private void updateProxyMapWithTextFieldInput(TextField textField,
-//      Consumer<String> inputConsumer) {
-//    if (textField.isVisible()) {
-//      String inputText = textField.getText();
-//      textField.clear();
-//      inputConsumer.accept(inputText);
-//    }
-//  }
-
   private void handlePlayerAssignment() {
     handlePlayerListViewOnChange();
 //    handleScorableCheckBoxOnChange();
@@ -486,8 +461,8 @@ public class ShapePanel implements Panel {
     playerAssignmentListView.getSelectionModel().selectedIndexProperty().addListener(((observable, oldPlayerId, newPlayerId) -> {
       List<CollidableType> collidableTypes = collidableTypeDropDown.getCheckModel().getCheckedItems();
       for (CollidableType type: collidableTypes) {
-        if ((Integer) oldPlayerId >= 0) removeFromAuthoringPlayer((Integer) oldPlayerId, type);
-        addToAuthoringPlayers((Integer) newPlayerId, type);
+        if ((Integer) oldPlayerId >= 0) removeCollidableTypeFromAuthoringPlayer((Integer) oldPlayerId, type);
+        addCollidableToAuthoringPlayer((Integer) newPlayerId, type);
       }
     }));
   }
@@ -505,7 +480,7 @@ public class ShapePanel implements Panel {
               setPlayerAssignmentVisibility(false);
             } else {
               setPlayerAssignmentVisibility(true);
-              addToAuthoringPlayers(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
+              addCollidableToAuthoringPlayer(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
                   selected);
             }
           }
@@ -515,38 +490,17 @@ public class ShapePanel implements Panel {
             if (shapeProxy.getGameObjectAttributesContainer().getProperties().contains(removed.toString())) {
               shapeProxy.getGameObjectAttributesContainer().getProperties().remove(removed.toString());
             }
+            if (!removed.equals(CollidableType.NONCONTROLLABLE)) {
+              removeCollidableTypeFromAuthoringPlayer(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
+                  removed);
+            }
           }
         }
       }
-
-//
-//      if (collidableType == null) return;
-//
-//      shapeProxy.getGameObjectAttributesContainer().getProperties().remove(oldVal.toString());
-//      shapeProxy.getGameObjectAttributesContainer().getProperties().add(collidableType.toString());
-//
-//      if (collidableType.equals(CollidableType.NONCONTROLLABLE)) {
-//        removeObjectFromAuthoringPlayersAnyList();
-//        setPlayerAssignmentVisibility(false);
-//      } else {
-//        setPlayerAssignmentVisibility(true);
-//        addToAuthoringPlayers(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
-//           collidableTypeDropDown.getValue());
-//      }
     });
   }
-//  private void handleScorableCheckBoxOnChange() {
-//    scoreableCheckBox.selectedProperty().addListener((observable, oldValue, newState) -> {
-//      if (newState) {
-//        setPlayerAssignmentVisibility(true);
-//        addToAuthoringPlayers(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
-//            collidableTypeDropDown.getValue());
-//      } else {
-//        removeFromAuthoringPlayers(collidableTypeDropDown.getValue());
-//      }
-//    });
-//  }
-  private void addToAuthoringPlayers(int selectedPlayerId, CollidableType collidableType) {
+
+  private void addCollidableToAuthoringPlayer(int selectedPlayerId, CollidableType collidableType) {
     Map<Integer, Map<CollidableType, List<Integer>>> playersMap = authoringProxy.getPlayers();
     if (selectedPlayerId >= 0) {
       if (!playersMap.get(selectedPlayerId).get(collidableType).contains(Integer.parseInt(shapeProxy.getShape().getId()))) {
@@ -556,20 +510,20 @@ public class ShapePanel implements Panel {
   }
 
   private void removeObjectFromAuthoringPlayersAnyList() {
-    removeFromAuthoringPlayers(CollidableType.STRIKABLE);
-    removeFromAuthoringPlayers(CollidableType.CONTROLLABLE);
-    removeFromAuthoringPlayers(CollidableType.SCOREABLE);
+    removeFromAllAuthoringPlayers(CollidableType.STRIKABLE);
+    removeFromAllAuthoringPlayers(CollidableType.CONTROLLABLE);
+    removeFromAllAuthoringPlayers(CollidableType.SCOREABLE);
   }
 
   // remove selected shape from the player holding it
-  private void removeFromAuthoringPlayers(CollidableType collidableType) {
+  private void removeFromAllAuthoringPlayers(CollidableType collidableType) {
     Map<Integer, Map<CollidableType, List<Integer>>> playersMap = authoringProxy.getPlayers();
     for (Integer player: playersMap.keySet()) {
-      removeFromAuthoringPlayer(player, collidableType);
+      removeCollidableTypeFromAuthoringPlayer(player, collidableType);
     }
   }
 
-  private void removeFromAuthoringPlayer(int playerId, CollidableType collidableType) {
+  private void removeCollidableTypeFromAuthoringPlayer(int playerId, CollidableType collidableType) {
     Map<Integer, Map<CollidableType, List<Integer>>> playersMap = authoringProxy.getPlayers();
     if (playersMap.get(playerId).get(collidableType).contains(Integer.parseInt(shapeProxy.getShape().getId()))) {
       playersMap.get(playerId).get(collidableType).remove((Integer) Integer.parseInt(shapeProxy.getShape().getId()));

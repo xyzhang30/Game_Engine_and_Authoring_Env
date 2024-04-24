@@ -1,37 +1,16 @@
 {
   "gameName" : "testNewAuthoringEnv",
   "game_objects" : [ {
-    "properties" : [ "COLLIDABLE", "STRIKABLE", "SCOREABLE", "visible" ],
-    "mass" : 50.0,
-    "position" : {
-      "x_position" : 734.0,
-      "y_position" : 333.0
-    },
-    "shape" : "Circle",
-    "dimension" : {
-      "x_dimension" : 356.566037735849,
-      "y_dimension" : 202.98113207547172
-    },
-    "color" : null,
-    "staticFriction" : 0.0,
-    "kineticFriction" : 0.0,
-    "inclineAngle" : 0.0,
-    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/strikeable_images/soccer ball.jpg",
-    "direction" : 0.0,
-    "inelastic" : true,
-    "phaser" : false,
-    "gameobject_id" : 1
-  }, {
     "properties" : [ "COLLIDABLE", "CONTROLLABLE", "visible" ],
-    "mass" : 10.0,
+    "mass" : 5.0,
     "position" : {
-      "x_position" : 388.0,
-      "y_position" : 201.0
+      "x_position" : 638.0,
+      "y_position" : 685.0
     },
     "shape" : "Circle",
     "dimension" : {
-      "x_dimension" : 186.37735849056605,
-      "y_dimension" : 132.41509433962267
+      "x_dimension" : 66.0,
+      "y_dimension" : 161.47169811320757
     },
     "color" : null,
     "staticFriction" : 0.0,
@@ -41,39 +20,60 @@
     "direction" : 0.0,
     "inelastic" : true,
     "phaser" : false,
-    "gameobject_id" : 2
+    "gameobject_id" : 1
+  }, {
+    "properties" : [ "COLLIDABLE", "STRIKABLE", "visible" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 558.0,
+      "y_position" : 497.0
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 66.0,
+      "y_dimension" : 66.0
+    },
+    "color" : null,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/strikeable_images/soccer ball.jpg",
+    "direction" : 0.0,
+    "inelastic" : true,
+    "phaser" : false,
+    "gameobject_id" : 0
   }, {
     "properties" : [ "SURFACE", "visible" ],
     "mass" : 0.0,
     "position" : {
-      "x_position" : 621.0,
-      "y_position" : 572.0
+      "x_position" : 499.99999237060547,
+      "y_position" : 222.0
     },
     "shape" : "Rectangle",
     "dimension" : {
-      "x_dimension" : 646.0,
-      "y_dimension" : 260.27672955974845
+      "x_dimension" : 712.6666666666666,
+      "y_dimension" : 56.0
     },
     "color" : null,
     "staticFriction" : 0.0,
-    "kineticFriction" : 10.0,
+    "kineticFriction" : 5.0,
     "inclineAngle" : 0.0,
-    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/nonstrikeable_images/golfgreen.jpg",
+    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/nonstrikeable_images/sandpit.jpg",
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
-    "gameobject_id" : 0
+    "gameobject_id" : 2
   } ],
   "players" : [ {
     "player_id" : 0,
-    "my_strikeable" : [ 1 ],
-    "my_scoreable" : null,
+    "my_strikeable" : [ 0 ],
+    "my_scoreable" : [ ],
     "my_controllable" : [ ]
   }, {
     "player_id" : 1,
     "my_strikeable" : [ ],
-    "my_scoreable" : null,
-    "my_controllable" : [ 2 ]
+    "my_scoreable" : [ ],
+    "my_controllable" : [ 1 ]
   } ],
   "variables" : [ {
     "global" : {
@@ -89,10 +89,10 @@
     "collisions" : [ ],
     "turn_policy" : "StandardTurnPolicy",
     "round_policy" : {
-      "ScoreThresholdCondition" : [ 5 ]
+      "AllPlayersCompletedRoundCondition" : [ ]
     },
     "win_condition" : {
-      "ScoreThresholdCondition" : [ 10 ]
+      "ScoreThresholdCondition" : [ 6 ]
     },
     "advance_turn" : {
       "AdvanceTurnCommand" : [ ]
@@ -101,7 +101,7 @@
       "AdvanceRoundCommand" : [ ]
     },
     "strike_policy" : "IncrementPointStrikePolicy",
-    "rank_comparator" : "LowestScoreComparator",
+    "rank_comparator" : "HighestScoreComparator",
     "static_checker" : {
       "VisibilityStaticChecker" : [ ]
     }
