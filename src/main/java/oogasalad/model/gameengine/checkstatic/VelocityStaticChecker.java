@@ -30,7 +30,7 @@ public class VelocityStaticChecker implements StaticChecker {
 
   @Override
   public boolean isStatic(GameObjectRecord record) {
-    if (arguments.isEmpty() || arguments.contains(record.id())) {
+    if (!arguments.isEmpty() && arguments.contains(record.id())) {
       return !record.visible() || (Math.abs(record.velocityX()) < 1
           && Math.abs(record.velocityY()) < 1);
     }
