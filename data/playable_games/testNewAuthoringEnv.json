@@ -1,37 +1,37 @@
 {
   "gameName" : "testNewAuthoringEnv",
   "game_objects" : [ {
-    "properties" : [ "SURFACE", "visible" ],
-    "mass" : 0.0,
+    "properties" : [ "COLLIDABLE", "CONTROLLABLE", "visible" ],
+    "mass" : 5.0,
     "position" : {
-      "x_position" : 445.99999237060547,
-      "y_position" : 442.00001525878906
-    },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 572.6666666666666,
-      "y_dimension" : 320.15094339622635
-    },
-    "color" : null,
-    "staticFriction" : 0.0,
-    "kineticFriction" : 10.0,
-    "inclineAngle" : 0.0,
-    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/nonstrikeable_images/cardboard.jpg",
-    "direction" : 0.0,
-    "inelastic" : false,
-    "phaser" : false,
-    "gameobject_id" : 0
-  }, {
-    "properties" : [ "COLLIDABLE", "STRIKABLE", "SCOREABLE", "visible" ],
-    "mass" : 50.0,
-    "position" : {
-      "x_position" : 735.0,
-      "y_position" : 754.0
+      "x_position" : 301.0,
+      "y_position" : 723.0
     },
     "shape" : "Circle",
     "dimension" : {
-      "x_dimension" : 331.66037735849056,
-      "y_dimension" : 211.28301886792457
+      "x_dimension" : 124.11320754716982,
+      "y_dimension" : 182.22641509433961
+    },
+    "color" : null,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/strikeable_images/basketball.jpg",
+    "direction" : 0.0,
+    "inelastic" : true,
+    "phaser" : false,
+    "gameobject_id" : 2
+  }, {
+    "properties" : [ "COLLIDABLE", "STRIKABLE", "SCOREABLE", "visible" ],
+    "mass" : 5.0,
+    "position" : {
+      "x_position" : 590.0,
+      "y_position" : 711.0
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 215.43396226415098,
+      "y_dimension" : 256.94339622641513
     },
     "color" : null,
     "staticFriction" : 0.0,
@@ -43,26 +43,26 @@
     "phaser" : false,
     "gameobject_id" : 1
   }, {
-    "properties" : [ "COLLIDABLE", "CONTROLLABLE", "visible" ],
-    "mass" : 10.0,
+    "properties" : [ "SURFACE", "visible" ],
+    "mass" : 0.0,
     "position" : {
-      "x_position" : 277.0,
-      "y_position" : 769.0
+      "x_position" : 491.99999237060547,
+      "y_position" : 393.0
     },
-    "shape" : "Circle",
+    "shape" : "Rectangle",
     "dimension" : {
-      "x_dimension" : 128.26415094339623,
-      "y_dimension" : 95.0566037735849
+      "x_dimension" : 492.6666666666667,
+      "y_dimension" : 225.05660377358492
     },
     "color" : null,
     "staticFriction" : 0.0,
-    "kineticFriction" : 0.0,
+    "kineticFriction" : 10.0,
     "inclineAngle" : 0.0,
-    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/strikeable_images/basketball.jpg",
+    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/nonstrikeable_images/golfgreen.jpg",
     "direction" : 0.0,
-    "inelastic" : true,
+    "inelastic" : false,
     "phaser" : false,
-    "gameobject_id" : 2
+    "gameobject_id" : 0
   } ],
   "players" : [ {
     "player_id" : 0,
@@ -73,7 +73,7 @@
     "player_id" : 1,
     "my_strikeable" : [ ],
     "my_scoreable" : [ ],
-    "my_controllable" : [ 2, 5, 8 ]
+    "my_controllable" : [ 2, 3, 5 ]
   } ],
   "variables" : [ {
     "global" : {
@@ -89,13 +89,13 @@
     "collisions" : [ ],
     "turn_policy" : "StandardTurnPolicy",
     "round_policy" : {
-      "ScoreThresholdCondition" : [ 5 ]
+      "NRoundsCompletedCondition" : [ 5 ]
     },
     "win_condition" : {
-      "NRoundsCompletedCondition" : [ 3 ]
+      "ScoreThresholdCondition" : [ 5 ]
     },
     "advance_turn" : {
-      "AdvanceTurnCommand" : [ ]
+      "ConditionalAdvanceTurnCommand" : [ ]
     },
     "advance_round" : {
       "AdvanceRoundCommand" : [ ]

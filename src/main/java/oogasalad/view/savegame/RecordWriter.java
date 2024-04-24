@@ -3,7 +3,7 @@ package oogasalad.view.savegame;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.shape.Shape;
-import oogasalad.view.authoring_environment.authoring_screens.NonStrikeableType;
+import oogasalad.view.enums.NonStrikeableType;
 
 public interface RecordWriter {
 
