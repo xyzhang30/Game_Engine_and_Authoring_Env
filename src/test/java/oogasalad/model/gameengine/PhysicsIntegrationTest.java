@@ -3,13 +3,9 @@ package oogasalad.model.gameengine;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.gameengine.gameobject.GameObject;
-import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,13 +14,11 @@ public class PhysicsIntegrationTest {
 
   private static final double DELTA = .0001;
   private GameEngine gameEngine;
-  private GameObjectContainer container;
   private Collection<GameObject> gameObjects;
   @BeforeEach
   public void setUp() {
     gameEngine = new GameEngine("testPhysics");
-    container = gameEngine.getGameObjectContainer();
-    gameObjects = container.getGameObjects();
+    gameObjects = gameEngine.getGameObjects();
   }
 
 
@@ -68,7 +62,8 @@ public class PhysicsIntegrationTest {
     // Assert that the initial round and turn are as expected
     assertEquals(10, getRecord(1).velocityX());
     assertEquals(1.0,
-        gameEngine.getPlayerContainer().getPlayers().get(0).getPlayerRecord().score(), DELTA);
+        gameEngine.getPlayerContainer().getPlayers().iterator().next().getPlayerRecord().score(),
+        DELTA);
 
   }
 
@@ -127,7 +122,7 @@ public class PhysicsIntegrationTest {
   @Test
   public void testTwoMovingObjectsCollide() {
     gameEngine.applyInitialVelocity(15, -Math.PI);
-    for(GameObject o:container.getGameObjects()) {
+    for(GameObject o:gameEngine.getGameObjects()) {
       if(o.getId()==10) {
         o.setVisible(true);
       }
@@ -141,7 +136,7 @@ public class PhysicsIntegrationTest {
   @Test
   public void testAdjustPointsCommand() {
 
-    for(GameObject o:container.getGameObjects()) {
+    for(GameObject o:gameEngine.getGameObjects()) {
       if(o.getId()==10) {
         o.setVisible(true);
       }

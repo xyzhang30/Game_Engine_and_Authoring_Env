@@ -10,7 +10,6 @@ import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
-import oogasalad.view.authoring_environment.NewAuthoringController;
 import oogasalad.view.scene_management.AnimationManager;
 import oogasalad.view.scene_management.GameTitleParser;
 import oogasalad.view.scene_management.SceneManager;
@@ -106,7 +105,7 @@ public class GameController {
    * </p>
    */
   public void openAuthorEnvironment() {
-    NewAuthoringController newAuthoringController = new NewAuthoringController();
+    AuthoringController newAuthoringController = new AuthoringController();
     newAuthoringController.updateAuthoringScreen();
 //    AuthoringController authoringController = new AuthoringController();
 //    authoringController.startAuthoring();

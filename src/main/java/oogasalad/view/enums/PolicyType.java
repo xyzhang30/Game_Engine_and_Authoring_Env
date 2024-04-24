@@ -1,4 +1,4 @@
-package oogasalad.view.authoring_environment.authoring_screens;
+package oogasalad.view.enums;
 
 import oogasalad.model.annotations.AvailableCommands;
 import oogasalad.model.annotations.ChoiceType;

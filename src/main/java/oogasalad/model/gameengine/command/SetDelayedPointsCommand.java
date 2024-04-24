@@ -11,7 +11,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 
 /**
- * The AddDelayedPointsCommand class represents a command to add delayed points to a Scoreable's
+ * The SetDelayedPointsCommand class represents a command to add delayed points to a Scoreable's
  * temporary score.
  *
  * @author Noah Loewy
@@ -21,22 +21,22 @@ import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 @CommandHelpInfo(description = "")
 @ExpectedParamNumber(value = 2, paramDescription = {"(double) game object ID",
     "(double) points to add"})
-public class AddDelayedPointsCommand implements Command {
+public class SetDelayedPointsCommand implements Command {
 
   private final List<Integer> arguments;
   private final GameObject gameObject;
 
   /**
-   * Constructs an instance of the AddDelayedPointsCommand with the list of arguments determined
+   * Constructs an instance of the SetDelayedPointsCommand with the list of arguments determined
    * from the data file.
    *
    * @param arguments Consists of two arguments: the ID of the GameObject to which the delayed
-   *                  points should be added, and the amount of points to add to the Scoreable's
+   *                  points should be added, and the new amount of points for the Scoreable's
    *                  score
    */
 
 
-  public AddDelayedPointsCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
+  public SetDelayedPointsCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));
 

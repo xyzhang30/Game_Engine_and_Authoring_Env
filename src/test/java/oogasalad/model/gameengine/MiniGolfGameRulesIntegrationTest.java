@@ -1,11 +1,7 @@
 package oogasalad.model.gameengine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
-import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,12 +11,10 @@ public class MiniGolfGameRulesIntegrationTest {
   private static final double DELTA = .0001;
   private static final String TITLE = "testMiniGolfRules";
   private GameEngine gameEngine;
-  private GameObjectContainer container;
 
   @BeforeEach
   public void setUp() {
     gameEngine = new GameEngine(TITLE);
-    container = gameEngine.getGameObjectContainer();
   }
 
   @Test

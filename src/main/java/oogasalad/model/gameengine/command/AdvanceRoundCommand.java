@@ -28,7 +28,7 @@ public class AdvanceRoundCommand implements Command {
    */
 
   public AdvanceRoundCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
-
+    //do nothing
   }
 
   /**

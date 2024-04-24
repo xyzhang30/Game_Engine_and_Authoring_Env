@@ -35,8 +35,7 @@ public class DefaultStrikeable implements Strikeable {
   /**
    * Applies an initial velocity to the GameObject based on the specified magnitude and direction
    * The function calculates the velocity vector and then utilizes a Supplier functional interface
-   * to encapsulate the calculation logic and provide the speed components to the GameObject's
-   * calculateSpeeds method.
+   * to encapsulate the logic and give the GameObject new speeds
    *
    * @param magnitude The magnitude of the new velocity.
    * @param direction The direction of the new velocity with respect to the positive x-axis (in
@@ -54,9 +53,9 @@ public class DefaultStrikeable implements Strikeable {
   }
 
   /**
-   * Converts the DefaultScoreable object into a GameObject.
+   * Converts the DefaultStrikeable object into a GameObject.
    *
-   * @return The GameObject representation of the DefaultScoreable object.
+   * @return The GameObject representation of the DefaultStrikeable object.
    */
 
   @Override

@@ -28,7 +28,7 @@ public class AdvanceTurnCommand implements Command {
    */
 
   public AdvanceTurnCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
-
+    //do nothing
   }
 
   /**

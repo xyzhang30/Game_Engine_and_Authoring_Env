@@ -118,7 +118,7 @@ public class InteractionPanel implements Panel {
 //      Constructor<?> constructor = clazz.getConstructor(List.class, Map.class);
       if (clazz.getDeclaredAnnotation(ExpectedParamNumber.class) != null && clazz.getAnnotation(ExpectedParamNumber.class).value() != 0){
         int numParam = clazz.getDeclaredAnnotation(ExpectedParamNumber.class).value();
-        return PolicyPanel.enterConstantParamsPopup(numParam, newValue);
+        return Panel.enterConstantParamsPopup(numParam, newValue);
       } else {
         return new ArrayList<>();
       }

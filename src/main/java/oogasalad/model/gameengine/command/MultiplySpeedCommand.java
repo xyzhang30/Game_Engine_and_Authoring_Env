@@ -43,8 +43,6 @@ public class MultiplySpeedCommand implements Command {
 
   @Override
   public void execute(GameEngine engine) {
-    if (gameObject != null) {
-      gameObject.multiplySpeed(arguments.get(1));
-    }
+    gameObject.multiplySpeed(arguments.get(1));
   }
 }

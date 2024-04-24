@@ -21,6 +21,8 @@ public class TextFieldListener implements ChangeListener<String> {
         case "mass" -> shapeProxy.getGameObjectAttributesContainer().setMass(Double.parseDouble(newValue));
         case "sFriction" -> shapeProxy.getGameObjectAttributesContainer().setsFriction(Double.parseDouble(newValue));
         case "kFriction" -> shapeProxy.getGameObjectAttributesContainer().setkFriction(Double.parseDouble(newValue));
+        case "controllableXSpeed" -> shapeProxy.getGameObjectAttributesContainer().setControllableXSpeed(Integer.parseInt(newValue));
+        case "controllableYSpeed" -> shapeProxy.getGameObjectAttributesContainer().setControllableYSpeed(Integer.parseInt(newValue));
       }
     }
   }

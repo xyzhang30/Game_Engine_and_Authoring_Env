@@ -23,14 +23,19 @@ public class EightBallCommand implements Command {
 
   }
 
+  /**
+   * Executes the command to handle actions related to the eight ball game object.
+   * This includes hiding the eight ball, stopping all other game objects, and determining the winner.
+   *
+   * @param engine    The game engine in which the command is executed.
+   */
+
   @Override
   public void execute(GameEngine engine) {
     gameObject.setVisible(false);
-    engine.getGameObjectContainer().getGameObjects().forEach(GameObject::stop);
+    engine.getGameObjects().forEach(GameObject::stop);
     boolean didActiveWin = engine.getPlayerContainer().getActive().areAllScoreablesInvisible();
-    for (Player p : engine.getPlayerContainer().getPlayers()) {
-      p.applyGameResult(
-          (engine.getPlayerContainer().getActive().getId() == p.getId()) == didActiveWin);
-    }
+    engine.getPlayerContainer().getPlayers().forEach(p->p.applyGameResult(
+        engine.getPlayerContainer().getActive().getId() == (p.getId()) == didActiveWin));
   }
 }

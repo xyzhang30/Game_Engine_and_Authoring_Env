@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.shape.Shape;
 import oogasalad.model.api.data.GameObjectProperties;
-import oogasalad.view.authoring_environment.authoring_screens.NonStrikeableType;
+import oogasalad.view.enums.NonStrikeableType;
 
 public class WriteStrikeables {
 
