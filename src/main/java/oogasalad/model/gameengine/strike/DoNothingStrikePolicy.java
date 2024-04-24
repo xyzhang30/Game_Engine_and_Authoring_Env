@@ -19,16 +19,12 @@ import oogasalad.model.gameengine.GameEngine;
 @CommandHelpInfo(description = "")
 public class DoNothingStrikePolicy implements StrikePolicy {
 
-  public DoNothingStrikePolicy() {
-  }
-
   /**
    * @return a BiConsumer that does nothing
    */
   @Override
   public BiConsumer<Integer, GameEngine> getStrikePolicy() {
-    return (strikeableID, engine) -> {
-    }; // Do nothing
+    return (strikeableID, engine) -> {}; // Do nothing
   }
 }
 

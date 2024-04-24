@@ -18,8 +18,6 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 @CommandHelpInfo(description = "")
 @ExpectedParamNumber(2)
 public class TeleportCommand implements Command {
-
-  private final List<Integer> arguments;
   private final GameObject gameObjectFrom;
   private final GameObject gameObjectTo;
 
@@ -32,7 +30,6 @@ public class TeleportCommand implements Command {
    */
 
   public TeleportCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
-    this.arguments = arguments;
     gameObjectFrom = gameObjectMap.get(arguments.get(0));
     gameObjectTo = gameObjectMap.get(arguments.get(1));
   }

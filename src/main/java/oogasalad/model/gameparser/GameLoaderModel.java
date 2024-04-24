@@ -1,6 +1,7 @@
 package oogasalad.model.gameparser;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +18,8 @@ import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import oogasalad.model.gameengine.RulesRecord;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
-import oogasalad.model.gameengine.gameobject.Controllable;
+import oogasalad.model.gameengine.gameobject.controllable.Controllable;
 import oogasalad.model.gameengine.gameobject.GameObject;
-import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import oogasalad.model.gameengine.gameobject.PhysicsHandler;
 import oogasalad.model.gameengine.gameobject.Strikeable;
 import oogasalad.model.gameengine.gameobject.collision.FrictionHandler;
@@ -48,7 +48,6 @@ public class GameLoaderModel extends GameLoader {
   private final List<Integer> collidables;
   private final StaticStateHandler staticHandler;
   private PlayerContainer playerContainer;
-  private GameObjectContainer gameObjectContainer;
   private RulesRecord rulesRecord;
   private Map<Integer, Player> playerMap;
   //  private Map<Integer, Player> collidablePlayerMap;\
@@ -132,8 +131,8 @@ public class GameLoaderModel extends GameLoader {
    *
    * @return The collidable container.
    */
-  public GameObjectContainer getGameObjectContainer() {
-    return gameObjectContainer;
+  public Collection<GameObject> getGameObjects() {
+    return gameObjects.values();
   }
 
   /**
@@ -160,7 +159,6 @@ public class GameLoaderModel extends GameLoader {
           id,
           conditionsList));
     });
-    this.gameObjectContainer = new GameObjectContainer(gameObjects.values());
   }
 
   private void addPairToPhysicsMap(GameObjectProperties co, int id,
@@ -209,7 +207,7 @@ public class GameLoaderModel extends GameLoader {
       Player player = new Player(p.playerId());
       playerMap.put(p.playerId(), player);
     });
-    this.playerContainer = new PlayerContainer(playerMap);
+    this.playerContainer = new PlayerContainer(playerMap.values());
   }
 
   private void createRulesRecord() {

@@ -31,7 +31,7 @@ public class AllPlayersCompletedRoundCondition implements Condition {
 
   public AllPlayersCompletedRoundCondition(List<Integer> arguments,
       Map<Integer, GameObject> gameObjectMap) {
-
+    //do nothing
   }
 
   /**

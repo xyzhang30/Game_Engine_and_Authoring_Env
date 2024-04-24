@@ -21,16 +21,15 @@ import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 @CommandHelpInfo(description = "")
 public class IncrementPointStrikePolicy implements StrikePolicy {
 
-  /**
-   * Returns a strike policy that increments the temporary score of a scoreable strikeable object,
-   * if available.
-   *
-   * @return A BiConsumer representing that will increment the Game Object's temporary score (if it
-   * has a scoreable), and otherwise will do nothing.
-   */
 
-  public IncrementPointStrikePolicy() {
-  }
+  /**
+   * Returns a BiConsumer that defines the strike policy for a game engine.
+   * The BiConsumer takes an integer representing the ID of the strikeable object and the game engine.
+   * It increments the temporary score of the active player's strikeable object by 1.0, if it
+   * exists, or does nothing
+   *
+   * @return A BiConsumer representing the strike policy.
+   */
 
   @Override
   public BiConsumer<Integer, GameEngine> getStrikePolicy() {

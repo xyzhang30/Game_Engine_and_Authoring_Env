@@ -8,6 +8,8 @@ import oogasalad.model.annotations.IsCommand;
  * <p>
  * Each implementation must provide details of how to execute the turn policy, and determine whose
  * turn is next, following the completion of a turn.
+ *
+ * @author Noah Loewy
  */
 
 @FunctionalInterface
