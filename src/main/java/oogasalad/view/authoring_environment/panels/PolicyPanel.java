@@ -50,8 +50,6 @@ public class PolicyPanel implements Panel{
   private Map<ComboBox<String>, ChangeListener<String>> singleChoiceEventListeners = new HashMap<>();
   private static final String GAME_ENGINE_PACKAGE_PATH = "src/main/java/oogasalad/model/gameengine/";
   private static final String REFLECTION_ENGINE_PACKAGE_PATH = "oogasalad.model.gameengine.";
-  private static final String RESOURCE_FOLDER_PATH = "view.";
-  private static final String UI_FILE_PREFIX = "UIElements";
   private final String language = "English"; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
 

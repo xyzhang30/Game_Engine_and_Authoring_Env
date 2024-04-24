@@ -27,8 +27,6 @@ public class InteractionPanel implements Panel {
 
   private static final String COMMAND_PACKAGE_PATH = "src/main/java/oogasalad/model/gameengine/command";
   private static final String REFLECTION_COMMAND_PACKAGE_PATH = "oogasalad.model.gameengine.command";
-  private static final String RESOURCE_FOLDER_PATH = "view.";
-  private static final String UI_FILE_PREFIX = "UIElements";
   private final String language = "English"; // TODO: PASS IN LANGUAGE
   private final ShapeProxy shapeProxy;
   private final AuthoringProxy authoringProxy;

@@ -18,8 +18,6 @@ public class ImagePanel implements Panel {
   private final AuthoringProxy authoringProxy;
   private final AnchorPane containerPane;
   private Button imageButton;
-  private static final String RESOURCE_FOLDER_PATH = "view.";
-  private static final String UI_FILE_PREFIX = "UIElements";
   private final String language = "English"; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
 

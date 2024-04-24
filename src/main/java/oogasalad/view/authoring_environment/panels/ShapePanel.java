@@ -61,9 +61,6 @@ public class ShapePanel implements Panel {
   private Label sFriction;
   private Label mass;
   private Label elasticity;
-
-  private static final String RESOURCE_FOLDER_PATH = "view.";
-  private static final String UI_FILE_PREFIX = "UIElements";
   private final String language = "English"; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
 
