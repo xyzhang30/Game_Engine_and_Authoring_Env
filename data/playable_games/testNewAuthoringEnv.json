@@ -4,65 +4,44 @@
     "properties" : [ "COLLIDABLE", "CONTROLLABLE", "visible" ],
     "mass" : 5.0,
     "position" : {
-      "x_position" : 301.0,
-      "y_position" : 723.0
+      "x_position" : 511.0,
+      "y_position" : 547.0000152587891
     },
     "shape" : "Circle",
     "dimension" : {
-      "x_dimension" : 124.11320754716982,
-      "y_dimension" : 182.22641509433961
+      "x_dimension" : 277.6981132075472,
+      "y_dimension" : 227.8867924528302
     },
     "color" : null,
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
-    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/strikeable_images/basketball.jpg",
+    "image" : null,
     "direction" : 0.0,
     "inelastic" : true,
     "phaser" : false,
-    "gameobject_id" : 2
+    "gameobject_id" : 0
   }, {
     "properties" : [ "COLLIDABLE", "STRIKABLE", "SCOREABLE", "visible" ],
     "mass" : 5.0,
     "position" : {
-      "x_position" : 590.0,
-      "y_position" : 711.0
+      "x_position" : 668.0,
+      "y_position" : 233.0
     },
     "shape" : "Circle",
     "dimension" : {
-      "x_dimension" : 215.43396226415098,
-      "y_dimension" : 256.94339622641513
+      "x_dimension" : 223.7358490566038,
+      "y_dimension" : 277.6981132075472
     },
     "color" : null,
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
-    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/strikeable_images/soccer ball.jpg",
+    "image" : null,
     "direction" : 0.0,
     "inelastic" : true,
     "phaser" : false,
     "gameobject_id" : 1
-  }, {
-    "properties" : [ "SURFACE", "visible" ],
-    "mass" : 0.0,
-    "position" : {
-      "x_position" : 491.99999237060547,
-      "y_position" : 393.0
-    },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 492.6666666666667,
-      "y_dimension" : 225.05660377358492
-    },
-    "color" : null,
-    "staticFriction" : 0.0,
-    "kineticFriction" : 10.0,
-    "inclineAngle" : 0.0,
-    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/nonstrikeable_images/golfgreen.jpg",
-    "direction" : 0.0,
-    "inelastic" : false,
-    "phaser" : false,
-    "gameobject_id" : 0
   } ],
   "players" : [ {
     "player_id" : 0,
@@ -73,7 +52,7 @@
     "player_id" : 1,
     "my_strikeable" : [ ],
     "my_scoreable" : [ ],
-    "my_controllable" : [ 2, 3, 5 ]
+    "my_controllable" : [ 0, 4, 5 ]
   } ],
   "variables" : [ {
     "global" : {
@@ -89,19 +68,19 @@
     "collisions" : [ ],
     "turn_policy" : "StandardTurnPolicy",
     "round_policy" : {
-      "NRoundsCompletedCondition" : [ 5 ]
+      "AllPlayersCompletedRoundCondition" : [ ]
     },
     "win_condition" : {
-      "ScoreThresholdCondition" : [ 5 ]
+      "AllPlayersCompletedRoundCondition" : [ ]
     },
     "advance_turn" : {
       "ConditionalAdvanceTurnCommand" : [ ]
     },
     "advance_round" : {
-      "AdvanceRoundCommand" : [ ]
+      "LastStaticStateCommand" : [ ]
     },
     "strike_policy" : "IncrementPointStrikePolicy",
-    "rank_comparator" : "HighestScoreComparator",
+    "rank_comparator" : "LowestScoreComparator",
     "static_checker" : {
       "VisibilityStaticChecker" : [ ]
     }
