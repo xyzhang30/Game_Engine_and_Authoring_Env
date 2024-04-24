@@ -3,17 +3,17 @@ package oogasalad.view.authoring_environment.data;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameObjectAttributesContainer {
+public class GameObjectAttributesContainer implements Cloneable{
+  private int id;
   private String imagePath;
   private List<Integer> color;
-  private final List<String> properties = new ArrayList<>();
+  private List<String> properties = new ArrayList<>();
   private boolean elasticity;
   private double mass;
   private Coordinate position;
-  private double sFriction;
-  private double kFriction;
-  private double width;
-  private double height;
+  private double sFriction, kFriction;
+  private double width, height;
+  private int controllableXSpeed, controllableYSpeed;
 
   public String getImagePath() {
     return imagePath;
@@ -33,9 +33,8 @@ public class GameObjectAttributesContainer {
   public List<String> getProperties() {
     return properties;
   }
-
-  public boolean getElasticity() {
-    return elasticity;
+  public void setProperties(List<String> properties) {
+    this.properties = properties;
   }
 
   public void setElasticity(boolean elasticity) {
@@ -88,5 +87,38 @@ public class GameObjectAttributesContainer {
 
   public void setHeight(double height) {
     this.height = height;
+  }
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public boolean isElasticity() {
+    return elasticity;
+  }
+
+  public int getControllableXSpeed() {
+    return controllableXSpeed;
+  }
+
+  public void setControllableXSpeed(int controllableXSpeed) {
+    this.controllableXSpeed = controllableXSpeed;
+  }
+
+  public int getControllableYSpeed() {
+    return controllableYSpeed;
+  }
+
+  public void setControllableYSpeed(int controllableYSpeed) {
+    this.controllableYSpeed = controllableYSpeed;
+  }
+  @Override
+  public Object clone() throws CloneNotSupportedException {
+     GameObjectAttributesContainer clone = (GameObjectAttributesContainer) super.clone();
+     clone.properties = new ArrayList<>(this.properties);
+     return clone;
   }
 }

@@ -25,7 +25,7 @@ public class GameEngineTest {
   public void setUp() {
     loader = mock(GameLoaderModel.class);
     gameEngine = new GameEngine("threePlayerMiniGolf");
-    gameObjects = gameEngine.getGameObjectContainer().getGameObjects();
+    gameObjects = gameEngine.getGameObjects();
   }
 
   private GameObjectRecord getRecord(int id) {

@@ -5,13 +5,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
-import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import oogasalad.model.gameengine.gameobject.Strikeable;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import oogasalad.model.gameengine.player.Player;
@@ -62,7 +58,7 @@ public class ComparatorTest {
     p3.addStrikeables(List.of(ss3));
 
 
-    container = new PlayerContainer(Map.of(1,p1,2,p2,3,p3));
+    container = new PlayerContainer(List.of(p1,p2,p3));
     when(gameEngine.getPlayerContainer()).thenReturn(container);
     container = gameEngine.getPlayerContainer();
   }

@@ -24,6 +24,5 @@ public interface StrikePolicy {
    * @return The strike policy as a BiConsumer function, that can be called when the strikeable is
    * struck.
    */
-
   BiConsumer<Integer, GameEngine> getStrikePolicy();
 }

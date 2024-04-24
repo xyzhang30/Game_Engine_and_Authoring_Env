@@ -473,7 +473,7 @@
             "LastStaticStateCommand": []
           },
           {
-            "AddDelayedPointsCommand": [
+            "SetDelayedPointsCommand": [
               8,
               1
             ]
@@ -488,7 +488,7 @@
             "LastStaticStateCommand": []
           },
           {
-            "AddDelayedPointsCommand": [
+            "SetDelayedPointsCommand": [
               14,
               1
             ]
@@ -503,7 +503,7 @@
             "LastStaticStateCommand": []
           },
           {
-            "AddDelayedPointsCommand": [
+            "SetDelayedPointsCommand": [
               15,
               1
             ]

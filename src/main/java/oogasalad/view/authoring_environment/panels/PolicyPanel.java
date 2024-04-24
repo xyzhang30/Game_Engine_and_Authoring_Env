@@ -27,8 +27,7 @@ import oogasalad.model.annotations.ChoiceType;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.annotations.VariableParamNumber;
-import oogasalad.view.authoring_environment.authoring_screens.PolicyType;
-import java.lang.reflect.Constructor;
+import oogasalad.view.enums.PolicyType;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import org.controlsfx.control.CheckComboBox;
@@ -162,7 +161,7 @@ public class PolicyPanel implements Panel{
           //prompt user to enter param
           int numParam = clazz.getDeclaredAnnotation(ExpectedParamNumber.class).value();
           //get and return the params from popup
-          return enterConstantParamsPopup(numParam, newValue);
+          return Panel.enterConstantParamsPopup(numParam, newValue);
         } else if (clazz.getDeclaredAnnotation(VariableParamNumber.class) != null && clazz.getDeclaredAnnotation(
             VariableParamNumber.class).isVariable()) {
           //for commands without a constant param number
@@ -261,70 +260,68 @@ public class PolicyPanel implements Panel{
 
   }
 
-
-
-  public static List<Integer> enterConstantParamsPopup(int numParam, String item) {
-    Stage popupStage = new Stage();
-    popupStage.setTitle("Specify Command Parameters");
-
-    List<Integer> params = new ArrayList<>();
-
-    Label label = new Label(item+": (expected " + numParam + ")");
-    VBox vbox = new VBox(label);
-
-    List<TextArea> textAreas = new ArrayList<>();
-
-    for (int i = 0; i < numParam; i ++){
-      TextArea input = new TextArea();
-      input.setId(String.valueOf(i));
-      textAreas.add(input);
-      vbox.getChildren().add(input);
-    }
-
-    Button confirmSaveParam = new Button("save");
-    confirmSaveParam.setDisable(true); //confirm button shouldn't do anything before user enters all params
-
-    for (TextArea area : textAreas) {
-      //only allow users to enter digits and the decimal point
-      area.addEventFilter(KeyEvent.KEY_TYPED, event -> {
-        String character = event.getCharacter();
-        if (!character.matches("[0-9.]")) {
-          event.consume();
-        }
-      });
-      //only enable the confirm save button when user has entered all required params
-      area.textProperty().addListener((observable, oldValue, newValue) -> {
-        boolean allFilled = textAreas.stream().noneMatch(textArea -> textArea.getText().trim().isEmpty());
-        confirmSaveParam.setDisable(!allFilled);
-      });
-    }
-
-    confirmSaveParam.setOnAction(e -> {
-      for (TextArea area : textAreas) {
-        String text = area.getText();
-        if (!text.isEmpty()) {
-          try {
-            Integer value = Integer.parseInt(text);
-            params.add(value);
-          } catch (NumberFormatException ex) {
-            // Handle invalid input
-            System.out.println("Invalid input: " + text);
-          }
-        }
-      }
-      popupStage.close();
-    });
-
-    vbox.getChildren().add(confirmSaveParam);
-
-    Scene scene = new Scene(vbox, 500, 300);
-    popupStage.setScene(scene);
-
-    popupStage.setResizable(false);
-    popupStage.showAndWait();
-
-    return params;
-  }
+//  public static List<Integer> enterConstantParamsPopup(int numParam, String item) {
+//    Stage popupStage = new Stage();
+//    popupStage.setTitle("Specify Command Parameters");
+//
+//    List<Integer> params = new ArrayList<>();
+//
+//    Label label = new Label(item+": (expected " + numParam + ")");
+//    VBox vbox = new VBox(label);
+//
+//    List<TextArea> textAreas = new ArrayList<>();
+//
+//    for (int i = 0; i < numParam; i ++){
+//      TextArea input = new TextArea();
+//      input.setId(String.valueOf(i));
+//      textAreas.add(input);
+//      vbox.getChildren().add(input);
+//    }
+//
+//    Button confirmSaveParam = new Button("save");
+//    confirmSaveParam.setDisable(true); //confirm button shouldn't do anything before user enters all params
+//
+//    for (TextArea area : textAreas) {
+//      //only allow users to enter digits and the decimal point
+//      area.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+//        String character = event.getCharacter();
+//        if (!character.matches("[0-9.]")) {
+//          event.consume();
+//        }
+//      });
+//      //only enable the confirm save button when user has entered all required params
+//      area.textProperty().addListener((observable, oldValue, newValue) -> {
+//        boolean allFilled = textAreas.stream().noneMatch(textArea -> textArea.getText().trim().isEmpty());
+//        confirmSaveParam.setDisable(!allFilled);
+//      });
+//    }
+//
+//    confirmSaveParam.setOnAction(e -> {
+//      for (TextArea area : textAreas) {
+//        String text = area.getText();
+//        if (!text.isEmpty()) {
+//          try {
+//            Integer value = Integer.parseInt(text);
+//            params.add(value);
+//          } catch (NumberFormatException ex) {
+//            // Handle invalid input
+//            System.out.println("Invalid input: " + text);
+//          }
+//        }
+//      }
+//      popupStage.close();
+//    });
+//
+//    vbox.getChildren().add(confirmSaveParam);
+//
+//    Scene scene = new Scene(vbox, 500, 300);
+//    popupStage.setScene(scene);
+//
+//    popupStage.setResizable(false);
+//    popupStage.showAndWait();
+//
+//    return params;
+//  }
 
   private List<String> getAvailableCommands(String commandPackage) {
     Path path = Paths.get(GAME_ENGINE_PACKAGE_PATH + commandPackage);

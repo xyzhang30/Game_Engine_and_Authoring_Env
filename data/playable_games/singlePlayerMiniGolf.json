@@ -380,7 +380,7 @@
         "command": [
           {
             "LastStaticStateCommand": [],
-            "AddDelayedPointsCommand": [
+            "SetDelayedPointsCommand": [
               8,
               1
             ]

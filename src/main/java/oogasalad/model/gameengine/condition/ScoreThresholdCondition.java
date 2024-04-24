@@ -1,5 +1,6 @@
 package oogasalad.model.gameengine.condition;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import oogasalad.model.annotations.CommandHelpInfo;
@@ -47,13 +48,7 @@ public class ScoreThresholdCondition implements Condition {
   @Override
   public boolean evaluate(GameEngine engine) {
     double scoreThresh = arguments.get(0);
-    List<Player> lst = engine.getPlayerContainer().getPlayers();
-    for (Player player : lst) {
-      if (player.getPlayerRecord().score() > scoreThresh) {
-        return true;
-      }
-    }
-    return false;
+    return engine.getPlayerContainer().getPlayers().stream()
+        .anyMatch(player -> player.getPlayerRecord().score() > scoreThresh);
   }
-
 }

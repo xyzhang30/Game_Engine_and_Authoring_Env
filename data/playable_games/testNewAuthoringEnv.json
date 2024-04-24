@@ -1,0 +1,88 @@
+{
+  "gameName" : "testNewAuthoringEnv",
+  "game_objects" : [ {
+    "properties" : [ "COLLIDABLE", "CONTROLLABLE", "visible" ],
+    "mass" : 5.0,
+    "position" : {
+      "x_position" : 511.0,
+      "y_position" : 547.0000152587891
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 277.6981132075472,
+      "y_dimension" : 227.8867924528302
+    },
+    "color" : null,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : null,
+    "direction" : 0.0,
+    "inelastic" : true,
+    "phaser" : false,
+    "gameobject_id" : 0
+  }, {
+    "properties" : [ "COLLIDABLE", "STRIKABLE", "SCOREABLE", "visible" ],
+    "mass" : 5.0,
+    "position" : {
+      "x_position" : 668.0,
+      "y_position" : 233.0
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 223.7358490566038,
+      "y_dimension" : 277.6981132075472
+    },
+    "color" : null,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : null,
+    "direction" : 0.0,
+    "inelastic" : true,
+    "phaser" : false,
+    "gameobject_id" : 1
+  } ],
+  "players" : [ {
+    "player_id" : 0,
+    "my_strikeable" : [ 1 ],
+    "my_scoreable" : [ 1 ],
+    "my_controllable" : [ ]
+  }, {
+    "player_id" : 1,
+    "my_strikeable" : [ ],
+    "my_scoreable" : [ ],
+    "my_controllable" : [ 0, 4, 5 ]
+  } ],
+  "variables" : [ {
+    "global" : {
+      "max_turns" : 0,
+      "max_rounds" : 0
+    },
+    "player" : {
+      "strokes" : 0,
+      "finished" : 0
+    }
+  } ],
+  "rules" : {
+    "collisions" : [ ],
+    "turn_policy" : "StandardTurnPolicy",
+    "round_policy" : {
+      "AllPlayersCompletedRoundCondition" : [ ]
+    },
+    "win_condition" : {
+      "AllPlayersCompletedRoundCondition" : [ ]
+    },
+    "advance_turn" : {
+      "ConditionalAdvanceTurnCommand" : [ ]
+    },
+    "advance_round" : {
+      "LastStaticStateCommand" : [ ]
+    },
+    "strike_policy" : "IncrementPointStrikePolicy",
+    "rank_comparator" : "LowestScoreComparator",
+    "static_checker" : {
+      "VisibilityStaticChecker" : [ ]
+    }
+  }
+}
