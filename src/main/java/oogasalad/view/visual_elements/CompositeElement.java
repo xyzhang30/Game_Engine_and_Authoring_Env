@@ -3,7 +3,7 @@ package oogasalad.view.visual_elements;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
 
@@ -30,16 +30,13 @@ public class CompositeElement {
   }
 
   /**
-   * Returns the Node corresponding to the object with given ID.
+   * Iterates through all nodes contained in composite element and adds them to specified root
    *
-   * @param id The ID number of the desired object.
-   * @return Node  A javafx Node representing the object.
+   * @param root root node to add composite element o
    */
-  public Node getNode(int id) {
-    return elementMap.get(id).getNode();
-  }
-
-  public List<Integer> idList() {
-    return elementMap.keySet().stream().toList();
+  public void addElementsToRoot(Pane root) {
+    for (VisualElement element : elementMap.values()) {
+      root.getChildren().add(element.getNode());
+    }
   }
 }

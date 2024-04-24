@@ -9,7 +9,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.visual_elements.CompositeElement;
-import oogasalad.view.enums.SceneType;
 import org.xml.sax.SAXException;
 
 /**
@@ -30,7 +29,6 @@ public class SceneManager {
   private GameStatusManager gameStatusManager;
   private Pane pauseElements;
   private Pane transitionElements;
-  private GameBoard gameBoard;
   private int currentRound;
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
@@ -178,8 +176,7 @@ public class SceneManager {
   }
 
   private void addGameElementsToGame() {
-    gameBoard = new GameBoard(compositeElement);
-    root.getChildren().add(gameBoard.getPane());
+    compositeElement.addElementsToRoot(root);
   }
 
   private void resetRoot() {
