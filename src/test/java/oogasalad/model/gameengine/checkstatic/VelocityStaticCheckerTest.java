@@ -50,7 +50,7 @@ public class VelocityStaticCheckerTest {
     GameObjectRecord record = new GameObjectRecord(1, 10.0, 0.0, 0.0, 2.0, 2.0,
         true, 0.5, 0.3, 0.0, 1.0, 1.0, false, false);
 
-    assertTrue(velocityStaticChecker.isStatic(record));
+    assertFalse(velocityStaticChecker.isStatic(record));
   }
 
   @Test

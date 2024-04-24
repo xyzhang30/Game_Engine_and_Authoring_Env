@@ -17,6 +17,10 @@ public class VelocityStaticChecker implements StaticChecker {
 
   private final List<Integer> arguments;
 
+  /**
+   * Only the game objects with ids in arguments will be checked. If arguments is empty, then all
+   * ids will be checked
+   */
   public VelocityStaticChecker(List<Integer> arguments) {
     this.arguments = arguments;
   }
@@ -30,7 +34,7 @@ public class VelocityStaticChecker implements StaticChecker {
 
   @Override
   public boolean isStatic(GameObjectRecord record) {
-    if (!arguments.isEmpty() && arguments.contains(record.id())) {
+    if (arguments.isEmpty() || arguments.contains(record.id())) {
       return !record.visible() || (Math.abs(record.velocityX()) < 1
           && Math.abs(record.velocityY()) < 1);
     }
