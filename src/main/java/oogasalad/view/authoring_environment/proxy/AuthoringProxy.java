@@ -27,7 +27,7 @@ public class AuthoringProxy {
   private final Map<List<Integer>, Map<String, List<Integer>>> interactionMap = new HashMap<>();
   private final Map<Shape, GameObjectAttributesContainer> gameObjectMap = new HashMap<>();
   private final Map<Integer, Map<CollidableType, List<Integer>>> playersMap = new HashMap<>();
-  private String gameName;
+  private String gameName; // POPUP FOR SET GAME NAME
   private String currentScreenTitle;
   private AuthoringController authoringController;
   private int numPlayers = 1;

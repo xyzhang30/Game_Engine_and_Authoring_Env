@@ -80,8 +80,8 @@ public class ShapePanel implements Panel {
 
   @Override
   public void createElements() {
-    createSizeAndAngleSliders(); // strategy
-    shapeProxy.createGameObjectTemplates(); // strategy
+    createSizeAndAngleSliders();
+    shapeProxy.createGameObjectTemplates();
     containerPane.getChildren().addAll(shapeProxy.getTemplates());
     createGameObjectTypeSelection();
     createSurfaceOptions();

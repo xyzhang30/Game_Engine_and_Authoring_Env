@@ -74,6 +74,10 @@ public class PolicyPanel implements Panel{
 
   @Override
   public void createElements() {
+    createPolicySelection();
+  }
+
+  private void createPolicySelection() {
     Field[] fields = PolicyType.class.getDeclaredFields();
     int heightidx = 1;
     for (Field policyType : fields) {
@@ -87,10 +91,9 @@ public class PolicyPanel implements Panel{
         commandPackageMap.put(policyNameConcat, availableCommands.commandPackage());
         createPolicySelectionDropdown(policyLabel, choiceTypeAnnotation.singleChoice(), availableCommands.commandPackage(), heightidx);
       }
-    heightidx ++;
+      heightidx ++;
     }
   }
-
   private void createPolicySelectionDropdown(String policyNameLabel, boolean singleChoice, String commandPackage, int heightIdx) {
     Label label = new Label(policyNameLabel);
     AnchorPane.setTopAnchor(label,50.0*heightIdx);
