@@ -76,7 +76,7 @@ public class InteractionPanel implements Panel {
     AnchorPane.setTopAnchor(checkComboBox,100.0);
     checkComboBox.setId("collision");
 
-//    checkComboBox.disableProperty().bind(Bindings.size(shapeProxy.getShapeStackProperty()).lessThan(2));
+    checkComboBox.disableProperty().bind(Bindings.size(shapeProxy.getShapeStackProperty()).lessThan(2));
 
     saveSelectionButton = new Button("Save");
     AnchorPane.setRightAnchor(saveSelectionButton, 0.0);
@@ -95,16 +95,13 @@ public class InteractionPanel implements Panel {
     AnchorPane.setLeftAnchor(infoTextField, 500.0);
     AnchorPane.setTopAnchor(infoTextField, 50.0);
 
-//    infoTextField.textProperty().bind(Bindings.createStringBinding(() -> {
-//      StringBuilder sb = new StringBuilder();
-//      for (int shapeId : shapeProxy.getSelectedShapeIds()) {
-//        sb.append(shapeId).append(" ");
-//      }
-//      if (sb.length() > 2) {
-//        sb.setLength(sb.length() - 2);
-//      }
-//      return sb.toString();
-//    }, shapeProxy.getShapeStackProperty()));
+    infoTextField.textProperty().bind(Bindings.createStringBinding(() -> {
+      StringBuilder sb = new StringBuilder();
+      for (int shapeId : shapeProxy.getShapeStackProperty()) {
+        sb.append(shapeId).append("  ");
+      }
+      return sb.toString();
+    }, shapeProxy.getShapeStackProperty()));
 
     containerPane.getChildren().addAll(idsLabel, infoTextField);
   }
@@ -115,7 +112,6 @@ public class InteractionPanel implements Panel {
     try {
       System.out.println("path: "+classPath);
       Class<?> clazz = Class.forName(classPath);
-//      Constructor<?> constructor = clazz.getConstructor(List.class, Map.class);
       if (clazz.getDeclaredAnnotation(ExpectedParamNumber.class) != null && clazz.getAnnotation(ExpectedParamNumber.class).value() != 0){
         int numParam = clazz.getDeclaredAnnotation(ExpectedParamNumber.class).value();
         return Panel.enterConstantParamsPopup(numParam, newValue);
@@ -159,7 +155,7 @@ public class InteractionPanel implements Panel {
   public void handleEvents() {
     //set listener for the command dropdown
     checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c -> {
-      infoTextField.textProperty().setValue(shapeProxy.getSelectedShapeIds().toString());
+//      infoTextField.textProperty().setValue(shapeProxy.getSelectedShapeIds().toString());
       while (c.next()) {
         if (c.wasAdded()) {
           for (String selectedCommand : c.getAddedSubList()) {

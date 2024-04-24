@@ -25,7 +25,7 @@ import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
  */
 public class ShapeProxy {
   private final Stack<Shape> shapeStack = new Stack<>(); // Top of stack = most recently selected shape
-  private final ListProperty<Shape> shapeStackProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
+  private final ListProperty<Integer> shapeStackProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
   private GameObjectAttributesContainer gameObjectAttributesContainer = new GameObjectAttributesContainer();
   private int shapeCount;
   private final List<Shape> templates = new ArrayList<>();
@@ -40,7 +40,7 @@ public class ShapeProxy {
       removeFromShapeStack(shape);
     }
     shapeStack.push(shape);
-    shapeStackProperty.setAll(shapeStack);
+    shapeStackProperty.setAll(getSelectedShapeIds());
     resetGameObjectAttributesContainer();
   }
   public int getShapeCount() {
@@ -130,7 +130,7 @@ public class ShapeProxy {
   public void removeFromShapeStack(Shape shape) {
     if (!shapeStack.isEmpty()) {
       shapeStack.remove(shape);
-      shapeStackProperty.setAll(shapeStack);
+      shapeStackProperty.remove((Integer) Integer.parseInt(shape.getId()));
     }
   }
 
@@ -172,7 +172,7 @@ public class ShapeProxy {
     return templates;
   }
 
-  public ListProperty<Shape> getShapeStackProperty() {
+  public ListProperty<Integer> getShapeStackProperty() {
     return shapeStackProperty;
   }
 
