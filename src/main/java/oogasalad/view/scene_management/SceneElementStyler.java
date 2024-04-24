@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
  */
 public class SceneElementStyler {
   private final Pane root;
-  private final String cssPath = "/view/styles.css";
+  private final String cssPath = "/view/fun_style.css";
 
   /**
    * Constructor adds style sheet to root
