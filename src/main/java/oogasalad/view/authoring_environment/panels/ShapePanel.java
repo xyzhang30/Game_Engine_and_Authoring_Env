@@ -132,7 +132,7 @@ public class ShapePanel implements Panel {
     try {
       setShapeBeginDrag(shape, event);
     } catch (ReflectiveOperationException e) {
-      e.printStackTrace();
+      LOGGER.error(e);
     }
   }
 

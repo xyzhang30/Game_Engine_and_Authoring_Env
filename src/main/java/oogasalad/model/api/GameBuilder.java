@@ -4,7 +4,7 @@ import java.util.List;
 import oogasalad.model.api.data.GameData;
 
 /**
- * @author Alisha Zhang
+ * @author Alisha Zhang, Judy He
  */
 
 public interface GameBuilder {

@@ -108,10 +108,8 @@ public class InteractionPanel implements Panel {
   }
 
   private List<Integer> enterParam(String newValue) {
-    System.out.println("selected:" +REFLECTION_COMMAND_PACKAGE_PATH + "." + newValue);
     String classPath = REFLECTION_COMMAND_PACKAGE_PATH + "." + newValue;
     try {
-      System.out.println("path: "+classPath);
       Class<?> clazz = Class.forName(classPath);
       if (clazz.getDeclaredAnnotation(ExpectedParamNumber.class) != null && clazz.getAnnotation(ExpectedParamNumber.class).value() != 0){
         int numParam = clazz.getDeclaredAnnotation(ExpectedParamNumber.class).value();
@@ -120,7 +118,7 @@ public class InteractionPanel implements Panel {
         return new ArrayList<>();
       }
     } catch (ClassNotFoundException e) {
-      e.printStackTrace();
+      LOGGER.error(e);
       return null;
     }
   }
@@ -129,12 +127,10 @@ public class InteractionPanel implements Panel {
     Path path = Paths.get(COMMAND_PACKAGE_PATH);
     File packageDir = path.toFile();
     List<String> commands = new ArrayList<>();
-    System.out.println("packageDir.isDirectory() "+ packageDir.isDirectory());
     if (packageDir.isDirectory()) {
       for (File file : Objects.requireNonNull(packageDir.listFiles())){
         String name = file.getName();
         if (name.endsWith(".java")) {
-          System.out.println("classname:"+name);
           try {
             String className = name.substring(0, name.length() - 5); // Remove ".java" extension
             Class<?> clazz = Class.forName(REFLECTION_COMMAND_PACKAGE_PATH + "." + className);
@@ -143,7 +139,7 @@ public class InteractionPanel implements Panel {
               commands.add(className);
             }
           } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.error(e);
           }
         }
       }
@@ -172,7 +168,6 @@ public class InteractionPanel implements Panel {
             tempSavedCommands.remove(removedCommand);
           }
         }
-        System.out.println("CURRENT SELECTION: "+tempSavedCommands);
       }
     });
   }
