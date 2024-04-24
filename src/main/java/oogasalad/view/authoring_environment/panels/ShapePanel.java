@@ -60,8 +60,8 @@ public class ShapePanel implements Panel {
   private Label sFriction;
   private Label mass;
   private Label elasticity;
-  private CheckBox xSpeedCheckBox, ySpeedCheckBox;
-  private Label xSpeedCheckBoxLabel, ySpeedCheckBoxLabel;
+  private TextField controllableXSpeedTextBox, controllableYSpeedTextBox;
+  private Label controllableXSpeedLabel, controllableYSpeedLabel;
 
   public ShapePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
       AnchorPane containerPane, StackPane canvas) {
@@ -84,8 +84,11 @@ public class ShapePanel implements Panel {
     createGameObjectTypeSelection();
     createSurfaceOptions();
     createCollidableOptions();
+//    createControllableXYSpeedControlCheckBoxes();
     createMakePlayers();
     createPlayerAssignment();
+
+//    setControllableSpeedOptionVisibility(false);
     setCollidableOptionVisibility(false);
     setSurfaceOptionVisibility(false);
     setPlayerAssignmentVisibility(false);
@@ -414,7 +417,6 @@ public class ShapePanel implements Panel {
         .addAll(removePlayerButton, addPlayerButton, numPlayersLabel, numPlayers);
   }
 
-  // properties
   private void handleGameObjectTypeSelection() {
     gameObjectTypeDropdown.valueProperty().addListener((obs, oldVal, gameObjectType) -> {
       if (gameObjectType == null || shapeProxy.getShape() == null) return;
@@ -429,6 +431,7 @@ public class ShapePanel implements Panel {
       if (gameObjectType.equals(GameObjectType.SURFACE)) {
         removeObjectFromAuthoringPlayersAnyList();
         setPlayerAssignmentVisibility(false);
+//        setControllableSpeedOptionVisibility(false);
       }
 
     });
@@ -462,12 +465,11 @@ public class ShapePanel implements Panel {
       List<CollidableType> collidableTypes = collidableTypeDropDown.getCheckModel().getCheckedItems();
       for (CollidableType type: collidableTypes) {
         if ((Integer) oldPlayerId >= 0) removeCollidableTypeFromAuthoringPlayer((Integer) oldPlayerId, type);
-        addCollidableToAuthoringPlayer((Integer) newPlayerId, type);
+        addCollidableToAuthoringPlayer((Integer) newPlayerId, type, type.equals(CollidableType.CONTROLLABLE));
       }
     }));
   }
   private void handleCollidableTypeDropdownOnChange() {
-//    collidableTypeDropDown.valueProperty().addListener((obs, oldVal, collidableType) -> {
     collidableTypeDropDown.getCheckModel().getCheckedItems().addListener((ListChangeListener<CollidableType>) collidableType -> {
       while (collidableType.next()) {
         if (collidableType.wasAdded()) {
@@ -475,13 +477,20 @@ public class ShapePanel implements Panel {
             if (!shapeProxy.getGameObjectAttributesContainer().getProperties().contains(selected.toString())) {
               shapeProxy.getGameObjectAttributesContainer().getProperties().add(selected.toString());
             }
+
             if (selected.equals(CollidableType.NONCONTROLLABLE)) {
               removeObjectFromAuthoringPlayersAnyList();
               setPlayerAssignmentVisibility(false);
-            } else {
+            }
+            else {
               setPlayerAssignmentVisibility(true);
+              if (selected.equals(CollidableType.CONTROLLABLE)) {
+                List<Integer> xySpeeds = Panel.enterConstantParamsPopup(2, "Please enter this Controllable's x and y speeds");
+                shapeProxy.getGameObjectAttributesContainer().setControllableXSpeed(xySpeeds.get(0));
+                shapeProxy.getGameObjectAttributesContainer().setControllableYSpeed(xySpeeds.get(1));
+              }
               addCollidableToAuthoringPlayer(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
-                  selected);
+                  selected, selected.equals(CollidableType.CONTROLLABLE));
             }
           }
         }
@@ -490,6 +499,9 @@ public class ShapePanel implements Panel {
             if (shapeProxy.getGameObjectAttributesContainer().getProperties().contains(removed.toString())) {
               shapeProxy.getGameObjectAttributesContainer().getProperties().remove(removed.toString());
             }
+//            if (removed.equals(CollidableType.CONTROLLABLE)) {
+//              setControllableSpeedOptionVisibility(false);
+//            }
             if (!removed.equals(CollidableType.NONCONTROLLABLE)) {
               removeCollidableTypeFromAuthoringPlayer(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
                   removed);
@@ -500,10 +512,15 @@ public class ShapePanel implements Panel {
     });
   }
 
-  private void addCollidableToAuthoringPlayer(int selectedPlayerId, CollidableType collidableType) {
+  private void addCollidableToAuthoringPlayer(int selectedPlayerId, CollidableType collidableType, boolean isControllable) {
     Map<Integer, Map<CollidableType, List<Integer>>> playersMap = authoringProxy.getPlayers();
     if (selectedPlayerId >= 0) {
-      if (!playersMap.get(selectedPlayerId).get(collidableType).contains(Integer.parseInt(shapeProxy.getShape().getId()))) {
+      if (isControllable) {
+        int xSpeed = shapeProxy.getGameObjectAttributesContainer().getControllableXSpeed();
+        int ySpeed = shapeProxy.getGameObjectAttributesContainer().getControllableYSpeed();
+        playersMap.get(selectedPlayerId).put(collidableType, List.of(Integer.parseInt(shapeProxy.getShape().getId()), xSpeed, ySpeed));
+      }
+      else if (!playersMap.get(selectedPlayerId).get(collidableType).contains(Integer.parseInt(shapeProxy.getShape().getId()))) {
         playersMap.get(selectedPlayerId).get(collidableType).add(Integer.parseInt(shapeProxy.getShape().getId()));
       }
     }
@@ -554,41 +571,42 @@ public class ShapePanel implements Panel {
     mass.setVisible(visibility);
     elasticityCheckBox.setVisible(visibility);
     elasticity.setVisible(visibility);
-//    scoreableCheckBox.setVisible(visibility);
-//    scoreable.setVisible(visibility);
   }
 
   private void setPlayerAssignmentVisibility(boolean visibility) {
     playerAssignmentListView.setVisible(visibility);
   }
 
-  private void createXYSpeedControlCheckBoxes() {
-    xSpeedCheckBox = new CheckBox();
-    ySpeedCheckBox = new CheckBox();
-    xSpeedCheckBoxLabel = new Label("X Speed");
-    ySpeedCheckBoxLabel = new Label("Y Speed");
+//  private void createControllableXYSpeedControlCheckBoxes() {
+//    controllableXSpeedTextBox = new TextField();
+//    controllableXSpeedTextBox.setId("controllableXSpeed");
+//    controllableYSpeedTextBox = new TextField();
+//    controllableYSpeedTextBox.setId("controllableYSpeed");
+//    controllableXSpeedLabel = new Label("Controllable X Speed");
+//    controllableYSpeedLabel = new Label("Controllable Y Speed");
+//
+//    controllableXSpeedTextBox.textProperty().addListener(new TextFieldListener(controllableXSpeedTextBox.getId(), shapeProxy));
+//    controllableYSpeedTextBox.textProperty().addListener(new TextFieldListener(controllableYSpeedTextBox.getId(), shapeProxy));
+//
+//
+//    AnchorPane.setRightAnchor(controllableXSpeedTextBox, 300.0);
+//    AnchorPane.setTopAnchor(controllableXSpeedTextBox, 570.0);
+//    AnchorPane.setRightAnchor(controllableYSpeedTextBox, 300.0);
+//    AnchorPane.setTopAnchor(controllableYSpeedTextBox, 600.0);
+//
+//    AnchorPane.setRightAnchor(controllableXSpeedLabel, 200.0);
+//    AnchorPane.setTopAnchor(controllableXSpeedLabel, 570.0);
+//    AnchorPane.setRightAnchor(controllableYSpeedLabel, 200.0);
+//    AnchorPane.setTopAnchor(controllableYSpeedLabel, 600.0);
+//
+//    containerPane.getChildren().addAll(controllableXSpeedTextBox, controllableYSpeedTextBox, controllableXSpeedLabel, controllableYSpeedLabel);
+//  }
 
-    AnchorPane.setRightAnchor(xSpeedCheckBox, 300.0);
-    AnchorPane.setTopAnchor(xSpeedCheckBox, 570.0);
-    AnchorPane.setRightAnchor(ySpeedCheckBox, 300.0);
-    AnchorPane.setTopAnchor(ySpeedCheckBox, 600.0);
-
-    AnchorPane.setRightAnchor(xSpeedCheckBoxLabel, 200.0);
-    AnchorPane.setTopAnchor(xSpeedCheckBoxLabel, 570.0);
-    AnchorPane.setRightAnchor(ySpeedCheckBoxLabel, 200.0);
-    AnchorPane.setTopAnchor(ySpeedCheckBoxLabel, 600.0);
-
-    containerPane.getChildren().addAll(xSpeedCheckBox, xSpeedCheckBoxLabel, ySpeedCheckBox, ySpeedCheckBoxLabel);
-
-    setSpeedOptionVisibility(false);
-
-  }
-
-  private void setSpeedOptionVisibility(boolean visibility) {
-    xSpeedCheckBox.setVisible(visibility);
-    ySpeedCheckBox.setVisible(visibility);
-    xSpeedCheckBoxLabel.setVisible(visibility);
-    ySpeedCheckBoxLabel.setVisible(visibility);
-  }
+//  private void setControllableSpeedOptionVisibility(boolean visible) {
+//    controllableXSpeedTextBox.setVisible(visible);
+//    controllableYSpeedTextBox.setVisible(visible);
+//    controllableXSpeedLabel.setVisible(visible);
+//    controllableYSpeedLabel.setVisible(visible);
+//  }
 
 }

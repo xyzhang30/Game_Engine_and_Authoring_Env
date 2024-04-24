@@ -11,10 +11,9 @@ public class GameObjectAttributesContainer implements Cloneable{
   private boolean elasticity;
   private double mass;
   private Coordinate position;
-  private double sFriction;
-  private double kFriction;
-  private double width;
-  private double height;
+  private double sFriction, kFriction;
+  private double width, height;
+  private int controllableXSpeed, controllableYSpeed;
 
   public String getImagePath() {
     return imagePath;
@@ -101,6 +100,21 @@ public class GameObjectAttributesContainer implements Cloneable{
     return elasticity;
   }
 
+  public int getControllableXSpeed() {
+    return controllableXSpeed;
+  }
+
+  public void setControllableXSpeed(int controllableXSpeed) {
+    this.controllableXSpeed = controllableXSpeed;
+  }
+
+  public int getControllableYSpeed() {
+    return controllableYSpeed;
+  }
+
+  public void setControllableYSpeed(int controllableYSpeed) {
+    this.controllableYSpeed = controllableYSpeed;
+  }
   @Override
   public Object clone() throws CloneNotSupportedException {
      GameObjectAttributesContainer clone = (GameObjectAttributesContainer) super.clone();
