@@ -6,7 +6,6 @@ import java.util.Map;
 import oogasalad.model.api.exception.InvalidParameterNumberException;
 
 import java.util.ArrayList;
-import oogasalad.model.api.exception.InvalidParameterNumberException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.command.SetDelayedPointsCommand;
 import oogasalad.model.gameparser.GameLoaderModel;

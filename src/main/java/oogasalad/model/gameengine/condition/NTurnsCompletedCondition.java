@@ -17,6 +17,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
+@ExpectedParamNumber(1)
 public class NTurnsCompletedCondition implements Condition {
 
   private final List<Integer> arguments;
@@ -28,7 +29,6 @@ public class NTurnsCompletedCondition implements Condition {
    *                  completed by each player for the condition to evaluate to true.
    */
 
-  @ExpectedParamNumber(value = 1, paramDescription = {"number of turns to be completed"})
   public NTurnsCompletedCondition(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
   }

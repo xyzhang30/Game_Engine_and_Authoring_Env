@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Button;
@@ -41,6 +42,7 @@ public class InteractionPanel implements Panel {
   private CheckComboBox<String> checkComboBox;
   private Map<String, List<Integer>> tempSavedCommands = new HashMap<>();
   private Button saveSelectionButton;
+  private int numMultiSelect = 2;
 
 
   public InteractionPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
@@ -51,7 +53,7 @@ public class InteractionPanel implements Panel {
     this.containerPane = containerPane;
     this.canvas = canvas;
     // TODO: REMOVE HARD CODING
-    shapeProxy.setNumberOfMultiSelectAllowed(2);
+    shapeProxy.setNumberOfMultiSelectAllowed(numMultiSelect);
     createElements();
     handleEvents();
   }
@@ -74,6 +76,8 @@ public class InteractionPanel implements Panel {
     AnchorPane.setTopAnchor(checkComboBox,100.0);
     checkComboBox.setId("collision");
 
+//    checkComboBox.disableProperty().bind(Bindings.size(shapeProxy.getShapeStackProperty()).lessThan(2));
+
     saveSelectionButton = new Button("Save");
     AnchorPane.setRightAnchor(saveSelectionButton, 0.0);
     AnchorPane.setTopAnchor(saveSelectionButton, 150.0);
@@ -90,6 +94,18 @@ public class InteractionPanel implements Panel {
     infoTextField.setFocusTraversable(false);
     AnchorPane.setLeftAnchor(infoTextField, 500.0);
     AnchorPane.setTopAnchor(infoTextField, 50.0);
+
+//    infoTextField.textProperty().bind(Bindings.createStringBinding(() -> {
+//      StringBuilder sb = new StringBuilder();
+//      for (int shapeId : shapeProxy.getSelectedShapeIds()) {
+//        sb.append(shapeId).append(" ");
+//      }
+//      if (sb.length() > 2) {
+//        sb.setLength(sb.length() - 2);
+//      }
+//      return sb.toString();
+//    }, shapeProxy.getShapeStackProperty()));
+
     containerPane.getChildren().addAll(idsLabel, infoTextField);
   }
 
@@ -99,14 +115,14 @@ public class InteractionPanel implements Panel {
     try {
       System.out.println("path: "+classPath);
       Class<?> clazz = Class.forName(classPath);
-      Constructor<?> constructor = clazz.getConstructor(List.class);
-      if (constructor.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredConstructor(List.class).getAnnotation(ExpectedParamNumber.class).value() != 0){
-        int numParam = constructor.getAnnotation(ExpectedParamNumber.class).value();
-        return PolicyPanel.enterConstantParamsPopup(numParam, newValue);
+//      Constructor<?> constructor = clazz.getConstructor(List.class, Map.class);
+      if (clazz.getDeclaredAnnotation(ExpectedParamNumber.class) != null && clazz.getAnnotation(ExpectedParamNumber.class).value() != 0){
+        int numParam = clazz.getDeclaredAnnotation(ExpectedParamNumber.class).value();
+        return Panel.enterConstantParamsPopup(numParam, newValue);
       } else {
         return new ArrayList<>();
       }
-    } catch (NoSuchMethodException | ClassNotFoundException e) {
+    } catch (ClassNotFoundException e) {
       e.printStackTrace();
       return null;
     }
@@ -121,6 +137,7 @@ public class InteractionPanel implements Panel {
       for (File file : Objects.requireNonNull(packageDir.listFiles())){
         String name = file.getName();
         if (name.endsWith(".java")) {
+          System.out.println("classname:"+name);
           try {
             String className = name.substring(0, name.length() - 5); // Remove ".java" extension
             Class<?> clazz = Class.forName(REFLECTION_COMMAND_PACKAGE_PATH + "." + className);
@@ -167,5 +184,6 @@ public class InteractionPanel implements Panel {
       checkComboBox.getCheckModel().clearChecks();
       infoTextField.clear();
     });
+
   }
 }

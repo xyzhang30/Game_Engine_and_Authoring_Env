@@ -18,6 +18,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
+@ExpectedParamNumber(1)
 public class NRoundsCompletedCondition implements Condition {
 
   private final List<Integer> arguments;
@@ -29,7 +30,6 @@ public class NRoundsCompletedCondition implements Condition {
    *                  completed for the condition to evaluate to true.
    */
 
-  @ExpectedParamNumber(value = 1, paramDescription = {"number of rounds to be completed"})
   public NRoundsCompletedCondition(List<Integer> arguments,
       Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;

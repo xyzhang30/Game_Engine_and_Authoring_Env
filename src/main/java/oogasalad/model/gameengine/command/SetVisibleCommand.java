@@ -16,6 +16,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
+@ExpectedParamNumber(2)
 public class SetVisibleCommand implements Command {
 
   private final List<Integer> arguments;
@@ -30,7 +31,6 @@ public class SetVisibleCommand implements Command {
    *                  true or false.
    */
 
-  @ExpectedParamNumber(2)
   public SetVisibleCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));

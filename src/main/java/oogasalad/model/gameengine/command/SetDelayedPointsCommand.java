@@ -19,6 +19,8 @@ import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
+@ExpectedParamNumber(value = 2, paramDescription = {"(double) game object ID",
+    "(double) points to add"})
 public class SetDelayedPointsCommand implements Command {
 
   private final List<Integer> arguments;
@@ -33,8 +35,7 @@ public class SetDelayedPointsCommand implements Command {
    *                  score
    */
 
-  @ExpectedParamNumber(value = 2, paramDescription = {"game object ID",
-      "new temporary score"})
+
   public SetDelayedPointsCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));

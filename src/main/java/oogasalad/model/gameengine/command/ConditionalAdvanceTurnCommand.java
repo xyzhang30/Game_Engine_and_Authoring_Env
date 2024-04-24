@@ -3,21 +3,20 @@ package oogasalad.model.gameengine.command;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
+import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.rank.IDComparator;
 
+@IsCommand(isCommand = true)
+@CommandHelpInfo(description = "")
+@ExpectedParamNumber(0)
 public class ConditionalAdvanceTurnCommand implements Command {
 
-  /**
-   * Empty constructor for sake of consistency
-   */
-
-  @ExpectedParamNumber(0)
   public ConditionalAdvanceTurnCommand(List<Integer> arguments,
       Map<Integer, GameObject> gameObjectMap) {
       //do nothing

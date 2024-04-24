@@ -20,6 +20,7 @@ import oogasalad.model.gameengine.player.Player;
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
+@ExpectedParamNumber(1)
 public class ScoreThresholdCondition implements Condition {
 
   private final List<Integer> arguments;
@@ -31,7 +32,6 @@ public class ScoreThresholdCondition implements Condition {
    *                   condition to evaluate to true
    */
 
-  @ExpectedParamNumber(value = 1, paramDescription = "threshold of points scored for game to end")
   public ScoreThresholdCondition(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
   }

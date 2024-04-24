@@ -16,6 +16,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
  */
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
+@ExpectedParamNumber(0)
 public class LastStaticStateCommand implements Command {
 
   /**
@@ -25,7 +26,6 @@ public class LastStaticStateCommand implements Command {
    * @param arguments An empty list.
    */
 
-  @ExpectedParamNumber(0)
   public LastStaticStateCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
 
   }

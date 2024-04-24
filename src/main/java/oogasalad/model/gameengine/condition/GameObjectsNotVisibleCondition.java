@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import oogasalad.model.annotations.CommandHelpInfo;
+import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
+import oogasalad.model.annotations.VariableParamNumber;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
 
@@ -18,6 +20,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 
  @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
+@VariableParamNumber(isVariable = true)
 public class GameObjectsNotVisibleCondition implements Condition {
 
   private final List<Integer> arguments;

@@ -12,17 +12,11 @@ import oogasalad.model.api.GameObjectRecord;
  */
 
 @IsCommand(isCommand = true)
+@VariableParamNumber(isVariable = true)
 public class VisibilityStaticChecker implements StaticChecker {
 
   private final List<Integer> arguments;
 
-  /**
-   * Constructs a VisibilityStaticChecker with a list of GameObjects as parameters.
-   *
-   * @param arguments The list of game objects that this velocity static checker applies to.
-   */
-
-  @VariableParamNumber(isVariable = true)
   public VisibilityStaticChecker(List<Integer> arguments) {
     this.arguments = arguments;
   }
