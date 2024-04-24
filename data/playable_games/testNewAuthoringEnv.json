@@ -1,16 +1,16 @@
 {
   "gameName" : "testNewAuthoringEnv",
   "game_objects" : [ {
-    "properties" : [ "COLLIDABLE", "SCOREABLE", "STRIKABLE", "visible" ],
-    "mass" : 20.0,
+    "properties" : [ "COLLIDABLE", "STRIKABLE", "SCOREABLE", "visible" ],
+    "mass" : 50.0,
     "position" : {
-      "x_position" : 622.0,
-      "y_position" : 168.0
+      "x_position" : 734.0,
+      "y_position" : 333.0
     },
     "shape" : "Circle",
     "dimension" : {
-      "x_dimension" : 294.3018867924528,
-      "y_dimension" : 144.8679245283019
+      "x_dimension" : 356.566037735849,
+      "y_dimension" : 202.98113207547172
     },
     "color" : null,
     "staticFriction" : 0.0,
@@ -22,16 +22,37 @@
     "phaser" : false,
     "gameobject_id" : 1
   }, {
+    "properties" : [ "COLLIDABLE", "CONTROLLABLE", "visible" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 388.0,
+      "y_position" : 201.0
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 186.37735849056605,
+      "y_dimension" : 132.41509433962267
+    },
+    "color" : null,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : "/Users/JudyWork/Desktop/CS/CS308/oogasalad_team01/data/strikeable_images/basketball.jpg",
+    "direction" : 0.0,
+    "inelastic" : true,
+    "phaser" : false,
+    "gameobject_id" : 2
+  }, {
     "properties" : [ "SURFACE", "visible" ],
     "mass" : 0.0,
     "position" : {
-      "x_position" : 638.0,
-      "y_position" : 516.0000152587891
+      "x_position" : 621.0,
+      "y_position" : 572.0
     },
     "shape" : "Rectangle",
     "dimension" : {
-      "x_dimension" : 526.0,
-      "y_dimension" : 203.92452830188682
+      "x_dimension" : 646.0,
+      "y_dimension" : 260.27672955974845
     },
     "color" : null,
     "staticFriction" : 0.0,
@@ -71,7 +92,7 @@
       "ScoreThresholdCondition" : [ 5 ]
     },
     "win_condition" : {
-      "GameObjectsNotVisibleCondition" : [ 5 ]
+      "ScoreThresholdCondition" : [ 10 ]
     },
     "advance_turn" : {
       "AdvanceTurnCommand" : [ ]
@@ -80,7 +101,7 @@
       "AdvanceRoundCommand" : [ ]
     },
     "strike_policy" : "IncrementPointStrikePolicy",
-    "rank_comparator" : "HighestScoreComparator",
+    "rank_comparator" : "LowestScoreComparator",
     "static_checker" : {
       "VisibilityStaticChecker" : [ ]
     }

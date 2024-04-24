@@ -160,7 +160,7 @@ public class AuthoringScreen {
 
   private void createScreenSelectionDropDown(List<String> screenOptions) {
     screensDropDown.getItems().addAll(screenOptions);
-    screensDropDown.getSelectionModel().select("Game Object");
+    screensDropDown.getSelectionModel().select("Game Objects");
     screensDropDown.setPromptText("Select Screen Type");
     AnchorPane.setTopAnchor(screensDropDown, 10.0);
     AnchorPane.setLeftAnchor(screensDropDown, 10.0);
