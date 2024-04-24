@@ -30,7 +30,7 @@ public class VisibilityStaticChecker implements StaticChecker {
 
   @Override
   public boolean isStatic(GameObjectRecord record) {
-    if (arguments.isEmpty() || arguments.contains(record.id())) {
+    if (!arguments.isEmpty() && arguments.contains(record.id())) {
       return !record.visible();
     }
     return true;
