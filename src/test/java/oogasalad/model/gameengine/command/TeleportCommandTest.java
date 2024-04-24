@@ -12,7 +12,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 public class TeleportCommandTest {
 
   @Test
-  public void testExecute() {
+  public void teleportCommandTest() {
     GameObject gameObjectFrom = mock(GameObject.class);
     GameObject gameObjectTo = mock(GameObject.class);
     GameEngine engine = mock(GameEngine.class);

@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 public class ConditionalAdvanceTurnCommandTest {
 
   @Test
-  public void testExecute() {
+  public void conditionalCommandTest() {
     GameEngine engine = Mockito.mock(GameEngine.class);
     PlayerContainer playerContainer = Mockito.mock(PlayerContainer.class);
     Player player = Mockito.mock(Player.class);
