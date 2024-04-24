@@ -2,6 +2,7 @@ package oogasalad.view.authoring_environment.panels;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -17,18 +18,24 @@ public class ImagePanel implements Panel {
   private final AuthoringProxy authoringProxy;
   private final AnchorPane containerPane;
   private Button imageButton;
+  private static final String RESOURCE_FOLDER_PATH = "view.";
+  private static final String UI_FILE_PREFIX = "UIElements";
+  private final String language = "English"; // PASS IN LANGUAGE
+  private final ResourceBundle resourceBundle;
 
   public ImagePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane containerPane) {
     this.containerPane = containerPane;
     this.authoringProxy = authoringProxy;
     this.shapeProxy = shapeProxy;
+    this.resourceBundle = ResourceBundle.getBundle(
+        RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
     createElements();
     handleEvents();
   }
 
   @Override
   public void createElements() {
-    imageButton = new Button("Image");
+    imageButton = new Button(resourceBundle.getString("imageButton"));
     imageButton.setId("imageButton");
     imageButton.setPrefSize(200, 100);
     AnchorPane.setTopAnchor(imageButton, 160.0);

@@ -29,7 +29,7 @@ public class InteractionPanel implements Panel {
   private static final String REFLECTION_COMMAND_PACKAGE_PATH = "oogasalad.model.gameengine.command";
   private static final String RESOURCE_FOLDER_PATH = "view.";
   private static final String UI_FILE_PREFIX = "UIElements";
-  private final String language = "English"; // PASS IN LANGUAGE
+  private final String language = "English"; // TODO: PASS IN LANGUAGE
   private final ShapeProxy shapeProxy;
   private final AuthoringProxy authoringProxy;
   private final StackPane canvas;
@@ -39,10 +39,8 @@ public class InteractionPanel implements Panel {
   private CheckComboBox<String> checkComboBox;
   private Map<String, List<Integer>> tempSavedCommands = new HashMap<>();
   private Button saveSelectionButton;
-  private int numMultiSelect = 2;
+  private int numMultiSelect = 2; // TODO: REMOVE HARDCODING
   private final ResourceBundle resourceBundle;
-
-
 
   public InteractionPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
       AnchorPane containerPane, StackPane canvas) {
@@ -53,7 +51,6 @@ public class InteractionPanel implements Panel {
     this.canvas = canvas;
     this.resourceBundle = ResourceBundle.getBundle(
         RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
-    // TODO: REMOVE HARD CODING
     shapeProxy.setNumberOfMultiSelectAllowed(numMultiSelect);
     createElements();
     handleEvents();
@@ -66,7 +63,7 @@ public class InteractionPanel implements Panel {
   }
 
   private void createCommandsDropdown() {
-    Label label = new Label("ON COLLISION: ");
+    Label label = new Label(resourceBundle.getString("commandDropdownLabel"));
     AnchorPane.setTopAnchor(label,100.0);
     AnchorPane.setLeftAnchor(label,350.0);
     List<String> availableCommands = getAvailableCommands();
@@ -82,14 +79,14 @@ public class InteractionPanel implements Panel {
 
     checkComboBox.disableProperty().bind(Bindings.size(shapeProxy.getShapeStackProperty()).lessThan(2));
 
-    saveSelectionButton = new Button("Save");
+    saveSelectionButton = new Button(resourceBundle.getString("saveButton"));
     AnchorPane.setRightAnchor(saveSelectionButton, 0.0);
     AnchorPane.setTopAnchor(saveSelectionButton, 150.0);
     containerPane.getChildren().add(saveSelectionButton);
   }
 
   private void createObjectIdTextField() {
-    Label idsLabel = new Label("GAME OBJECTS: ");
+    Label idsLabel = new Label(resourceBundle.getString("selectedGameObjectsLabel"));
     AnchorPane.setLeftAnchor(idsLabel, 350.0);
     AnchorPane.setTopAnchor(idsLabel, 50.0);
 

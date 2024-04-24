@@ -43,9 +43,9 @@ public class AuthoringController {
     stage.show();
   }
 
-  public boolean submitGame(){
+  public boolean submitGame(String gameName){
     try {
-      builderDirector.writeGame("testNewAuthoringEnv");
+      builderDirector.writeGame(gameName);
       return true;
     } catch (RuntimeException e) {
       e.printStackTrace();

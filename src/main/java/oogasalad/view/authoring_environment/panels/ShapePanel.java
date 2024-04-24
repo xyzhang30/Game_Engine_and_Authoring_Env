@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Bounds;
 import javafx.geometry.Orientation;
@@ -60,8 +61,11 @@ public class ShapePanel implements Panel {
   private Label sFriction;
   private Label mass;
   private Label elasticity;
-  private TextField controllableXSpeedTextBox, controllableYSpeedTextBox;
-  private Label controllableXSpeedLabel, controllableYSpeedLabel;
+
+  private static final String RESOURCE_FOLDER_PATH = "view.";
+  private static final String UI_FILE_PREFIX = "UIElements";
+  private final String language = "English"; // PASS IN LANGUAGE
+  private final ResourceBundle resourceBundle;
 
   public ShapePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
       AnchorPane containerPane, StackPane canvas) {
@@ -70,7 +74,8 @@ public class ShapePanel implements Panel {
     this.rootPane = rootPane;
     this.containerPane = containerPane;
     this.canvas = canvas;
-    // TODO: REMOVE HARD CODING
+    this.resourceBundle = ResourceBundle.getBundle(
+        RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
     shapeProxy.setNumberOfMultiSelectAllowed(1);
     createElements();
     handleEvents();
@@ -84,11 +89,9 @@ public class ShapePanel implements Panel {
     createGameObjectTypeSelection();
     createSurfaceOptions();
     createCollidableOptions();
-//    createControllableXYSpeedControlCheckBoxes();
     createMakePlayers();
     createPlayerAssignment();
 
-//    setControllableSpeedOptionVisibility(false);
     setCollidableOptionVisibility(false);
     setSurfaceOptionVisibility(false);
     setPlayerAssignmentVisibility(false);
@@ -207,6 +210,9 @@ public class ShapePanel implements Panel {
     sliderContainerBox.setAlignment(Pos.CENTER_RIGHT);
 
     xSlider = createSizeSlider("X Scale", sliderContainerBox);
+
+    // removing hardcoding - 2 or more times, appears in UI, involved in logic
+
     xSlider.setId("XSizeSlider");
     ySlider = createSizeSlider("Y Scale", sliderContainerBox);
     ySlider.setId("YSizeSlider");
@@ -234,7 +240,7 @@ public class ShapePanel implements Panel {
     slider.setMajorTickUnit(20);
     slider.setOrientation(Orientation.HORIZONTAL);
 
-    Label label = new Label("Angle");
+    Label label = new Label(resourceBundle.getString("Angle"));
 
     HBox sliderContainer = new HBox(label, slider);
     sliderContainer.setSpacing(10);
@@ -303,7 +309,7 @@ public class ShapePanel implements Panel {
     AnchorPane.setRightAnchor(kFrictionTextField, 450.0);
     AnchorPane.setTopAnchor(kFrictionTextField, 120.0);
 
-    kFriction = new Label("Kinetic Friction Coefficient");
+    kFriction = new Label(resourceBundle.getString("kFriction"));
     AnchorPane.setRightAnchor(kFriction, 300.0);
     AnchorPane.setTopAnchor(kFriction, 120.0);
 
@@ -314,7 +320,7 @@ public class ShapePanel implements Panel {
     AnchorPane.setRightAnchor(sFrictionTextField, 450.0);
     AnchorPane.setTopAnchor(sFrictionTextField, 160.0);
 
-    sFriction = new Label("Static Friction Coefficient");
+    sFriction = new Label(resourceBundle.getString("sFriction"));
     AnchorPane.setRightAnchor(sFriction, 300.0);
     AnchorPane.setTopAnchor(sFriction, 160.0);
 
@@ -363,13 +369,12 @@ public class ShapePanel implements Panel {
     AnchorPane.setRightAnchor(massTextField, 450.0);
     AnchorPane.setTopAnchor(massTextField, 270.0);
 
-    mass = new Label("Mass");
+    mass = new Label(resourceBundle.getString("Mass"));
     AnchorPane.setRightAnchor(mass, 410.0);
     AnchorPane.setTopAnchor(mass, 270.0);
 
     elasticityCheckBox = new CheckBox();
     elasticityCheckBox.setId("elasticity");
-    //THIS LISTENER DOESN'T DO ANYTHING NOW -- WHAT DOES IT NEED TO DO TO PASS THE VALUE BACK TO AUTHROING PROXY???
     elasticityCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
       shapeProxy.getGameObjectAttributesContainer().setElasticity(newValue);
     });
@@ -377,7 +382,7 @@ public class ShapePanel implements Panel {
     AnchorPane.setRightAnchor(elasticityCheckBox, 450.0);
     AnchorPane.setTopAnchor(elasticityCheckBox, 310.0);
 
-    elasticity = new Label("Elasticity");
+    elasticity = new Label(resourceBundle.getString("Elasticity"));
     AnchorPane.setRightAnchor(elasticity, 390.0);
     AnchorPane.setTopAnchor(elasticity, 310.0);
 
@@ -395,16 +400,16 @@ public class ShapePanel implements Panel {
     // default 1 player
     addNewPlayerToProxy();
 
-    Label numPlayersLabel = new Label("Number of Players");
+    Label numPlayersLabel = new Label(resourceBundle.getString("Players"));
     AnchorPane.setTopAnchor(numPlayersLabel, 525.0);
     AnchorPane.setRightAnchor(numPlayersLabel, 90.0);
 
-    removePlayerButton = new Button("-");
+    removePlayerButton = new Button(resourceBundle.getString("removeButton"));
     removePlayerButton.setPrefSize(50, 50);
     AnchorPane.setRightAnchor(removePlayerButton, 175.0);
     AnchorPane.setTopAnchor(removePlayerButton, 550.0);
 
-    addPlayerButton = new Button("+");
+    addPlayerButton = new Button(resourceBundle.getString("addButton"));
     addPlayerButton.setPrefSize(50, 50);
     AnchorPane.setRightAnchor(addPlayerButton, 50.0);
     AnchorPane.setTopAnchor(addPlayerButton, 550.0);
@@ -431,7 +436,6 @@ public class ShapePanel implements Panel {
       if (gameObjectType.equals(GameObjectType.SURFACE)) {
         removeObjectFromAuthoringPlayersAnyList();
         setPlayerAssignmentVisibility(false);
-//        setControllableSpeedOptionVisibility(false);
       }
 
     });
@@ -485,7 +489,7 @@ public class ShapePanel implements Panel {
             else {
               setPlayerAssignmentVisibility(true);
               if (selected.equals(CollidableType.CONTROLLABLE)) {
-                List<Integer> xySpeeds = Panel.enterConstantParamsPopup(2, "Please enter this Controllable's x and y speeds");
+                List<Integer> xySpeeds = Panel.enterConstantParamsPopup(2, resourceBundle.getString("controllableXYSpeeds"));
                 shapeProxy.getGameObjectAttributesContainer().setControllableXSpeed(xySpeeds.get(0));
                 shapeProxy.getGameObjectAttributesContainer().setControllableYSpeed(xySpeeds.get(1));
               }
@@ -499,9 +503,6 @@ public class ShapePanel implements Panel {
             if (shapeProxy.getGameObjectAttributesContainer().getProperties().contains(removed.toString())) {
               shapeProxy.getGameObjectAttributesContainer().getProperties().remove(removed.toString());
             }
-//            if (removed.equals(CollidableType.CONTROLLABLE)) {
-//              setControllableSpeedOptionVisibility(false);
-//            }
             if (!removed.equals(CollidableType.NONCONTROLLABLE)) {
               removeCollidableTypeFromAuthoringPlayer(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
                   removed);
@@ -576,37 +577,5 @@ public class ShapePanel implements Panel {
   private void setPlayerAssignmentVisibility(boolean visibility) {
     playerAssignmentListView.setVisible(visibility);
   }
-
-//  private void createControllableXYSpeedControlCheckBoxes() {
-//    controllableXSpeedTextBox = new TextField();
-//    controllableXSpeedTextBox.setId("controllableXSpeed");
-//    controllableYSpeedTextBox = new TextField();
-//    controllableYSpeedTextBox.setId("controllableYSpeed");
-//    controllableXSpeedLabel = new Label("Controllable X Speed");
-//    controllableYSpeedLabel = new Label("Controllable Y Speed");
-//
-//    controllableXSpeedTextBox.textProperty().addListener(new TextFieldListener(controllableXSpeedTextBox.getId(), shapeProxy));
-//    controllableYSpeedTextBox.textProperty().addListener(new TextFieldListener(controllableYSpeedTextBox.getId(), shapeProxy));
-//
-//
-//    AnchorPane.setRightAnchor(controllableXSpeedTextBox, 300.0);
-//    AnchorPane.setTopAnchor(controllableXSpeedTextBox, 570.0);
-//    AnchorPane.setRightAnchor(controllableYSpeedTextBox, 300.0);
-//    AnchorPane.setTopAnchor(controllableYSpeedTextBox, 600.0);
-//
-//    AnchorPane.setRightAnchor(controllableXSpeedLabel, 200.0);
-//    AnchorPane.setTopAnchor(controllableXSpeedLabel, 570.0);
-//    AnchorPane.setRightAnchor(controllableYSpeedLabel, 200.0);
-//    AnchorPane.setTopAnchor(controllableYSpeedLabel, 600.0);
-//
-//    containerPane.getChildren().addAll(controllableXSpeedTextBox, controllableYSpeedTextBox, controllableXSpeedLabel, controllableYSpeedLabel);
-//  }
-
-//  private void setControllableSpeedOptionVisibility(boolean visible) {
-//    controllableXSpeedTextBox.setVisible(visible);
-//    controllableYSpeedTextBox.setVisible(visible);
-//    controllableXSpeedLabel.setVisible(visible);
-//    controllableYSpeedLabel.setVisible(visible);
-//  }
 
 }
