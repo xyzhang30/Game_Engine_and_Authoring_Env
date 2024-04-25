@@ -24,5 +24,6 @@ public class MockDataInserter {
 
     // Assign permissions
     dataCreateObject.assignPermissionToPlayers(gameId, playerIds, "PLAY");
+
   }
 }
