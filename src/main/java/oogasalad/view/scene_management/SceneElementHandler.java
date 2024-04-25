@@ -173,45 +173,59 @@ public class SceneElementHandler {
     root.setOnKeyPressed(e -> {
       switch (e.getCode()) {
         case UP: {
-          if (ableToStrike) {
-            increasePower();
-          } else {
-            gameController.moveY(true);
-          }
+          handleUpKey(ableToStrike);
           break;
         }
         case DOWN: {
-          if (ableToStrike) {
-            decreasePower();
-          } else {
-            gameController.moveY(false);
-          }
+          handleDownKey(ableToStrike);
           break;
         }
         case LEFT: {
-          if (ableToStrike) {
-            decreaseAngle();
-          } else {
-            gameController.moveX(false);
-          }
+          handleLeftKey(ableToStrike);
           break;
         }
         case RIGHT: {
-          if (ableToStrike) {
-            increaseAngle();
-          } else {
-            gameController.moveX(true);
-          }
+          handleRightKey(ableToStrike);
           break;
         }
         case ENTER: {
-          if (ableToStrike) {
-            handleStrike();
-          }
+          handleStrike(ableToStrike);
           break;
         }
       }
     });
+  }
+
+  private void handleUpKey(boolean ableToStrike) {
+    if (ableToStrike) {
+      increasePower();
+    } else {
+      gameController.moveY(true);
+    }
+  }
+
+  private void handleDownKey(boolean ableToStrike) {
+    if (ableToStrike) {
+      decreasePower();
+    } else {
+      gameController.moveY(false);
+    }
+  }
+
+  private void handleLeftKey(boolean ableToStrike) {
+    if (ableToStrike) {
+      decreaseAngle();
+    } else {
+      gameController.moveX(false);
+    }
+  }
+
+  private void handleRightKey(boolean ableToStrike) {
+    if (ableToStrike) {
+      increaseAngle();
+    } else {
+      gameController.moveX(true);
+    }
   }
 
   private void decreaseAngle() {
@@ -240,10 +254,12 @@ public class SceneElementHandler {
     }
   }
 
-  private void handleStrike() {
+  private void handleStrike(boolean ableToStrike) {
     double angle = (-90 + angleArrow.getRotate()) * (Math.PI / 180);
     double fractionalVelocity = powerMeter.getHeight() / maxPower;
-    gameController.hitPointScoringObject(fractionalVelocity, angle);
+    if (ableToStrike) {
+      gameController.hitPointScoringObject(fractionalVelocity, angle);
+    }
   }
 
   private void setAngleArrow(Node node) {
