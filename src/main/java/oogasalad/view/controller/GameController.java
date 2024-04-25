@@ -3,7 +3,6 @@ package oogasalad.view.controller;
 import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
@@ -32,8 +31,6 @@ public class GameController {
   private final AnimationManager animationManager;
   private final GameTitleParser gameTitleParser;
   private final int maxVelocity;
-  private int strikeableID;
-  private int activePlayer;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
   private boolean ableToStrike;
@@ -59,21 +56,23 @@ public class GameController {
     maxVelocity = 1000;
   }
 
-  public void setSceneToTitle() {
+  /**
+   * Sets the scene to the title scene by prompting the scene manager to create it
+   *
+   * @return title scene
+   */
+  public Scene setSceneToTitle() {
     sceneManager.createTitleScene();
+    return sceneManager.getScene();
   }
-
-  public void setSceneToMenu() {
-    sceneManager.createMenuScene();
-  }
-
 
   /**
-   * Retrieves the current active scene of the game.
+   * Sets the scene to the menu scene by prompting the scene manager to create it
    *
-   * @return The current `Scene` object being displayed in the game.
+   * @return menu scene
    */
-  public Scene getScene() {
+  public Scene setSceneToMenu() {
+    sceneManager.createMenuScene();
     return sceneManager.getScene();
   }
 
@@ -127,7 +126,6 @@ public class GameController {
     gameLoaderView = new GameLoaderView(selectedGame);
     gameEngine = new GameEngine(selectedGame);
     GameRecord gameRecord = gameEngine.restoreLastStaticGameRecord();
-    getCurrentStrikeable(gameRecord);
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScreen(compositeElement, gameRecord);
     sceneManager.update(gameRecord);
@@ -167,27 +165,24 @@ public class GameController {
     if (staticState) {
       ableToStrike = true;
     }
-    getCurrentStrikeable(gameRecord);
     sceneManager.update(gameRecord);
     return staticState;
   }
 
+  /**
+   * Prompts the GameTitleParser to parse for the playable game titles
+   *
+   * @return a list of the playable game titles
+   */
   public ObservableList<String> getGameTitles() {
     return gameTitleParser.getGameTitles();
   }
 
+  /**
+   * Creates a new game window for the user to play or author a games
+   */
   public void createNewWindow() {
-    GameWindow gameWindow = new GameWindow();
-  }
-
-  private void getCurrentStrikeable(GameRecord gameRecord) {
-    activePlayer = gameRecord.turn();
-    for (PlayerRecord p : gameRecord.players()) {
-      if (p.playerId() == activePlayer) {
-        strikeableID = p.activeStrikeable();
-        break;
-      }
-    }
+    new GameWindow();
   }
 
   private CompositeElement createCompositeElementFromGameLoader() {
