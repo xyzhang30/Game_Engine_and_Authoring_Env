@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import oogasalad.model.gameengine.player.Player;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class DataAccessObject {
 
@@ -114,6 +115,26 @@ public class DataAccessObject {
       e.printStackTrace();
       return false; // Assume no permission if there's an exception
     }
+  }
+
+  // Method to verify user login credentials
+  public boolean loginUser(String username, String password) {
+    String query = "SELECT password FROM Players WHERE username = ?";
+
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(query)) {
+      pstmt.setString(1, username);
+      try (ResultSet rs = pstmt.executeQuery()) {
+        if (rs.next()) {
+          String storedPassword = rs.getString("password");
+          // Use BCrypt to check if the entered password matches the stored hashed password
+          return BCrypt.checkpw(password, storedPassword);
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false; // Return false if user not found or password does not match
   }
 
 
