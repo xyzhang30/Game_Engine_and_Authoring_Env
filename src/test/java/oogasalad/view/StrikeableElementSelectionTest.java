@@ -12,7 +12,7 @@
 //import javafx.scene.shape.Rectangle;
 //import javafx.scene.shape.Shape;
 //import javafx.stage.Stage;
-//import oogasalad.view.authoring_environment.authoring_screens.NonStrikeableType;
+//import oogasalad.view.enums.NonStrikeableType;
 //import oogasalad.view.authoring_environment.authoring_screens.StrikeableElementSelectionScreen;
 //import oogasalad.view.controller.AuthoringController;
 //import org.junit.jupiter.api.Test;

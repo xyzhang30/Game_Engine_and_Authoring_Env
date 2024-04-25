@@ -10,7 +10,7 @@ import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
 import oogasalad.view.api.exception.MissingInteractionException;
 import oogasalad.view.api.exception.MissingNonControllableTypeException;
 import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
-import oogasalad.view.authoring_environment.NewAuthoringController;
+import oogasalad.view.controller.AuthoringController;
 import oogasalad.view.enums.CollidableType;
 
 /**
@@ -29,7 +29,7 @@ public class AuthoringProxy {
   private final Map<Integer, Map<CollidableType, List<Integer>>> playersMap = new HashMap<>();
   private String gameName;
   private String currentScreenTitle;
-  private NewAuthoringController authoringController;
+  private AuthoringController authoringController;
   private int numPlayers = 1;
 
   public void addShapeInteraction(List<Integer> shapes,
@@ -43,7 +43,6 @@ public class AuthoringProxy {
 
   public void addNoParamPolicies(String type, String command) {
     policies.put(type, command);
-    System.out.println("ALL POLICIES:" + policies);
   }
 
   public void addConditionsCommandsWithParam(String type, String commandName, List<Integer> params) {
@@ -87,7 +86,7 @@ public class AuthoringProxy {
       authoringController.writePlayers(playersMap);
       authoringController.writeVariables();
       authoringController.writeGameObjects(gameObjectMap);
-      boolean saveGameSuccess = authoringController.submitGame();
+      boolean saveGameSuccess = authoringController.submitGame(gameName);
       if (saveGameSuccess) {
         showSuceessMessage("Game successfully saved!");
       } else {
@@ -134,12 +133,12 @@ public class AuthoringProxy {
     this.currentScreenTitle = currentScreenTitle;
   }
 
-  public NewAuthoringController getAuthoringController() {
+  public AuthoringController getAuthoringController() {
     return authoringController;
   }
 
   public void setAuthoringController(
-      NewAuthoringController authoringController) {
+      AuthoringController authoringController) {
     this.authoringController = authoringController;
   }
 
@@ -157,6 +156,9 @@ public class AuthoringProxy {
 
   public void decreaseNumPlayers() {
     numPlayers--;
+  }
+  public int getCurrentPlayerId() {
+    return numPlayers-1;
   }
 
 }

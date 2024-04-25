@@ -3,20 +3,36 @@ package oogasalad.model.gameengine.command;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
+import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
+import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.rank.IDComparator;
 
+@IsCommand(isCommand = true)
+@CommandHelpInfo(description = "")
+@ExpectedParamNumber(0)
 public class ConditionalAdvanceTurnCommand implements Command {
 
-  @ExpectedParamNumber(0)
   public ConditionalAdvanceTurnCommand(List<Integer> arguments,
       Map<Integer, GameObject> gameObjectMap) {
-
+      //do nothing
   }
+
+  /**
+   * Executes the command to conditionally advance the turn in the provided game engine.
+   * The turn is advanced if certain conditions are met. This command refers specifically to
+   * billiards, and advances the turn as long as the player did not get one of their balls in,
+   * there was no scratch, and no opponent balls went in. These conditions can eventually be
+   * abstracted out, time permitted.
+   *
+   * @param engine    The game engine in which the command is executed.
+   */
+
 
   @Override
   public void execute(GameEngine engine) {
@@ -29,23 +45,12 @@ public class ConditionalAdvanceTurnCommand implements Command {
             .map(Player::getPlayerRecord)
             .sorted(new IDComparator())
             .toList();
-    if (!engine.getPlayerContainer().getActive().getStrikeable().asGameObject().getVisible()) {
+    if (!engine.getPlayerContainer().getActive().getStrikeable().asGameObject().getVisible() || IntStream.range(0, currents.size())
+        .anyMatch(i -> (currents.get(i).playerId() == engine.getPlayerContainer().getActive().getId())
+            == (currents.get(i).score() == lasts.get(i).score()))) {
       engine.advanceTurn();
-      return;
     }
-    for (int i = 0; i < currents.size(); i++) {
-      if (currents.get(i).playerId() == engine.getPlayerContainer().getActive().getId()) {
-        if (currents.get(i).score() == lasts.get(i).score()) {
-          engine.advanceTurn();
-          return;
-        }
-      } else { //inactive
-        if (currents.get(i).score() != lasts.get(i).score()) {
-          engine.advanceTurn();
-          return;
-        }
-      }
-    }
+
   }
 }
 

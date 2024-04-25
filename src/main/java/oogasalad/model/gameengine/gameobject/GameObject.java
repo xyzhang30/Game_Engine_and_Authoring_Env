@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Stack;
 import java.util.function.Supplier;
 import oogasalad.model.api.GameObjectRecord;
+import oogasalad.model.gameengine.gameobject.controllable.Controllable;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 
 /**
@@ -185,6 +186,11 @@ public class GameObject {
   }
 
 
+  /**
+   * Returns id instance variable of gameObject
+   *
+   * @return unique identifier of object.
+   */
   public int getId() {
     return myId;
   }
@@ -322,6 +328,8 @@ public class GameObject {
     assignValuesFromRecord(record);
   }
 
+
+//assign values to instance variables from a record, typically an old static state
   private void assignValuesFromRecord(GameObjectRecord record) {
     myX = record.x();
     myY = record.y();
@@ -342,6 +350,25 @@ public class GameObject {
     gameObjectHistory.push(toGameObjectRecord());
   }
 
+  /**
+   * Update y component of position based on prompt from controllable
+   *
+   * @param positive, true if movement in the positive x direction, false otherwise
+   */
+  public void moveControllableX(boolean positive) {
+    Optional<Controllable> controllable = getControllable();
+    controllable.ifPresent(value -> myX += value.moveX(positive));
+  }
+
+  /**
+   * Update y component of position based on prompt from controllable
+   *
+   * @param positive, true if movement in the positive x direction, false otherwise
+   */
+  public void moveControllableY(boolean positive) {
+    Optional<Controllable> controllable = getControllable();
+    controllable.ifPresent(value -> myY += value.moveY(positive));
+  }
 
   //Sets the next velocity of the GameObject.
   private void setNextSpeed(double speedX, double speedY) {
@@ -355,11 +382,16 @@ public class GameObject {
     myVelocityY = speedY;
   }
 
+  /**
+   * Sets state of Game Object to its state at the beginning of the round
+   */
   public void toStartingState() {
     assignValuesFromRecord(gameObjectHistory.get(0));
-
   }
 
+  /**
+   * Sets the velocity of game object to zero
+   */
   public void stop() {
     myNextVelocityY = 0;
     myVelocityY = 0;
@@ -367,6 +399,11 @@ public class GameObject {
     myNextVelocityX = 0;
   }
 
+  /**
+   * Moves the location of a gameObject to place it on top of another game object.
+   *
+   * @param gameObject, the game object representing where *this* should be teleported to
+   */
   public void teleportTo(GameObject gameObject) {
     myX = gameObject.getX();
     myY = gameObject.getY();

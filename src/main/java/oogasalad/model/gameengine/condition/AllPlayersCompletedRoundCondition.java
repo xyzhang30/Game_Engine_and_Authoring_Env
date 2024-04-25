@@ -18,6 +18,7 @@ import oogasalad.model.gameengine.player.Player;
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
+@ExpectedParamNumber(0)
 public class AllPlayersCompletedRoundCondition implements Condition {
 
   /**
@@ -28,10 +29,9 @@ public class AllPlayersCompletedRoundCondition implements Condition {
    * @param arguments, an empty list
    */
 
-  @ExpectedParamNumber(0)
   public AllPlayersCompletedRoundCondition(List<Integer> arguments,
       Map<Integer, GameObject> gameObjectMap) {
-
+    //do nothing
   }
 
   /**

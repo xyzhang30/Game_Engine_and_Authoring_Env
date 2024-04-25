@@ -4,6 +4,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 import javafx.geometry.Bounds;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -22,9 +25,9 @@ import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
  */
 public class ShapeProxy {
   private final Stack<Shape> shapeStack = new Stack<>(); // Top of stack = most recently selected shape
+  private final ListProperty<Integer> shapeStackProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
   private GameObjectAttributesContainer gameObjectAttributesContainer = new GameObjectAttributesContainer();
   private int shapeCount;
-
   private final List<Shape> templates = new ArrayList<>();
   private int numberOfMultiSelectAllowed = 1;
 
@@ -32,11 +35,12 @@ public class ShapeProxy {
     if (shapeStack.isEmpty()) return null;
     return shapeStack.peek();
   }
-  public void setShape(Shape shape) {
+  public void selectShape(Shape shape) {
     if (shape != null && !shapeStack.isEmpty() && shapeStack.contains(shape)) {
       removeFromShapeStack(shape);
     }
-    addToShapeStack(shape);
+    shapeStack.push(shape);
+    shapeStackProperty.setAll(getSelectedShapeIds());
     resetGameObjectAttributesContainer();
   }
   public int getShapeCount() {
@@ -50,7 +54,6 @@ public class ShapeProxy {
   public GameObjectAttributesContainer getGameObjectAttributesContainer() {
     return gameObjectAttributesContainer;
   }
-
 
   public void createGameObjectTemplates() {
     Rectangle rectangle = new Rectangle(100, 50, Color.BLACK);
@@ -93,8 +96,9 @@ public class ShapeProxy {
     AnchorPane.setRightAnchor(clonedShape, 100.0);
     AnchorPane.setBottomAnchor(clonedShape, 200.0);
 
-    // Set the shape
-    setShape(clonedShape);
+    if (this.shapeStack.isEmpty()) {
+      selectShape(clonedShape);
+    }
 
     return clonedShape;
   }
@@ -114,24 +118,20 @@ public class ShapeProxy {
 
   public void setFinalShapeDisplay() {
     if (!shapeStack.isEmpty()) {
-      gameObjectAttributesContainer.setWidth(shapeStack.peek().getLayoutBounds().getWidth());
-      gameObjectAttributesContainer.setHeight(shapeStack.peek().getLayoutBounds().getHeight());
+      gameObjectAttributesContainer.setWidth(shapeStack.peek().getLayoutBounds().getWidth()*shapeStack.peek().getScaleX());
+      gameObjectAttributesContainer.setHeight(shapeStack.peek().getLayoutBounds().getHeight()*shapeStack.peek().getScaleY());
       Bounds boundsInScene = shapeStack.peek().localToScene(shapeStack.peek().getBoundsInLocal());
       gameObjectAttributesContainer.setPosition(new Coordinate(boundsInScene.getCenterX(),
           boundsInScene.getCenterY()));
     }
   }
 
-  public Stack<Shape> getShapeStack() {
-    return shapeStack;
-  }
+  // TODO: RENAME (encapsulate stack implementation)
   public void removeFromShapeStack(Shape shape) {
     if (!shapeStack.isEmpty()) {
       shapeStack.remove(shape);
+      shapeStackProperty.remove((Integer) Integer.parseInt(shape.getId()));
     }
-  }
-  public void addToShapeStack(Shape shape) {
-    shapeStack.push(shape);
   }
 
   public void updateShapeSelectionDisplay()  {
@@ -157,6 +157,7 @@ public class ShapeProxy {
   }
 
   public void resetGameObjectAttributesContainer() {
+    gameObjectAttributesContainer = new GameObjectAttributesContainer();
     if (!shapeStack.isEmpty()) {
       Shape currentShape = shapeStack.peek();
       gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));
@@ -170,4 +171,9 @@ public class ShapeProxy {
   public List<Shape> getTemplates() {
     return templates;
   }
+
+  public ListProperty<Integer> getShapeStackProperty() {
+    return shapeStackProperty;
+  }
+
 }

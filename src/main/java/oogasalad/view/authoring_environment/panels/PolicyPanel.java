@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -27,29 +28,30 @@ import oogasalad.model.annotations.ChoiceType;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.annotations.VariableParamNumber;
-import oogasalad.view.authoring_environment.authoring_screens.PolicyType;
-import java.lang.reflect.Constructor;
+import oogasalad.model.gameengine.GameEngine;
+import oogasalad.view.enums.PolicyType;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.controlsfx.control.CheckComboBox;
 
 public class PolicyPanel implements Panel{
 
+  private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private final AuthoringProxy authoringProxy;
   private final StackPane canvas;
   private final AnchorPane rootPane;
   private final AnchorPane containerPane;
-
   private Map<String, String> commandPackageMap = new HashMap<>();
   private Map<ComboBox<String>, String> singleChoiceComboxBoxes = new HashMap<>();
   private Map<CheckComboBox<String>, String> multiChoiceCheckBoxes = new HashMap<>();
   private Map<CheckComboBox<String>, ListChangeListener<String>> multiChoiceEventListeners = new HashMap<>();
   private Map<ComboBox<String>, ChangeListener<String>> singleChoiceEventListeners = new HashMap<>();
-
   private static final String GAME_ENGINE_PACKAGE_PATH = "src/main/java/oogasalad/model/gameengine/";
   private static final String REFLECTION_ENGINE_PACKAGE_PATH = "oogasalad.model.gameengine.";
-
-
+  private final String language = "English"; // PASS IN LANGUAGE
+  private final ResourceBundle resourceBundle;
 
   public PolicyPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
       AnchorPane containerPane, StackPane canvas) {
@@ -57,6 +59,8 @@ public class PolicyPanel implements Panel{
     this.rootPane = rootPane;
     this.containerPane = containerPane;
     this.canvas = canvas;
+    this.resourceBundle = ResourceBundle.getBundle(
+        RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
     createElements();
     System.out.println("comboboxs");
     for (ComboBox<String> c : singleChoiceComboxBoxes.keySet()){
@@ -100,24 +104,14 @@ public class PolicyPanel implements Panel{
       AnchorPane.setTopAnchor(comboBox,50.0*heightIdx);
 
       comboBox.getItems().addAll(availableCommands);
-      comboBox.setPromptText("Select command...");
+      comboBox.setPromptText(resourceBundle.getString("policyPromptText"));
       comboBox.setId(ruleTypeName);
 
       containerPane.getChildren().addAll(label,comboBox);
       comboBox.setMinWidth(300);
       comboBox.setMaxWidth(300);
 
-//      ChangeListener<String> comboBoxListener = (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-//        if (newValue != null) {
-//          enterParam(commandPackage, newValue);
-//        }
-//      };
-//
-//      comboBox.valueProperty().addListener(comboBoxListener);
-
       singleChoiceComboxBoxes.put(comboBox, comboBox.getId());
-
-//      singleChoiceEventListeners.put(comboBox,comboBoxListener);
 
     } else {
       CheckComboBox<String> checkComboBox = new CheckComboBox<>(
@@ -130,21 +124,7 @@ public class PolicyPanel implements Panel{
       AnchorPane.setTopAnchor(checkComboBox,50.0*heightIdx);
       checkComboBox.setId(ruleTypeName);
 
-//      ListChangeListener<String> checkComboBoxListener = c -> {
-//        while (c.next()) {
-//          if (c.wasAdded()) {
-//            for (String selectedCommand : c.getAddedSubList()) {
-//              enterParam(commandPackage, selectedCommand);
-//            }
-//          }
-//        }
-//      };
-//
-//      checkComboBox.getCheckModel().getCheckedItems().addListener(checkComboBoxListener);
-
       multiChoiceCheckBoxes.put(checkComboBox, checkComboBox.getId());
-
-//      multiChoiceEventListeners.put(checkComboBox,checkComboBoxListener);
     }
   }
 
@@ -154,18 +134,18 @@ public class PolicyPanel implements Panel{
     try {
       System.out.println("path: "+classPath);
       Class<?> clazz = Class.forName(classPath);
-      Constructor<?> constructor;
+//      Constructor<?> constructor;
       if (!commandPackage.equals("strike") && !commandPackage.equals("turn") && !commandPackage.equals("rank")){
         //commands that takes in arguments (or empty param list)
-        constructor = clazz.getConstructor(List.class);
-        if (constructor.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredConstructor(List.class).getAnnotation(ExpectedParamNumber.class).value() != 0){
+//        constructor = clazz.getConstructor(List.class, Map.class);
+        if (clazz.getAnnotation(ExpectedParamNumber.class) != null && clazz.getDeclaredAnnotation(ExpectedParamNumber.class).value() != 0){
           //prompt user to enter param
-          int numParam = constructor.getAnnotation(ExpectedParamNumber.class).value();
+          int numParam = clazz.getDeclaredAnnotation(ExpectedParamNumber.class).value();
           //get and return the params from popup
-          return enterConstantParamsPopup(numParam, newValue);
-        } else if (constructor.getAnnotation(VariableParamNumber.class) != null && constructor.getAnnotation(
-            //for commands without a constant param number
+          return Panel.enterConstantParamsPopup(numParam, newValue);
+        } else if (clazz.getDeclaredAnnotation(VariableParamNumber.class) != null && clazz.getDeclaredAnnotation(
             VariableParamNumber.class).isVariable()) {
+          //for commands without a constant param number
           return enterCustomNumParamsPopup(newValue);
         } else {
           //command does not take in params -- return empty param list
@@ -176,7 +156,7 @@ public class PolicyPanel implements Panel{
         saveSelectionNoParam(commandType, newValue);
         return null;
       }
-    } catch (NoSuchMethodException | ClassNotFoundException e) {
+    } catch (ClassNotFoundException e) {
       e.printStackTrace();
       return null;
     }
@@ -200,16 +180,16 @@ public class PolicyPanel implements Panel{
 
   private List<Integer> enterCustomNumParamsPopup(String newValue) {
     Stage popupStage = new Stage();
-    popupStage.setTitle("Specify Command Parameters");
+    popupStage.setTitle(resourceBundle.getString("policyParamPopupPrompt"));
 
     List<Integer> params = new ArrayList<>();
 
-    Label label = new Label(newValue + ": (please enter custom number of parameters, click save if no parameters needed)");
+    Label label = new Label(String.format(resourceBundle.getString("policyParamPopupLabel"), newValue));
     VBox vbox = new VBox(label);
 
     List<TextArea> textAreas = new ArrayList<>();
 
-    Button addTextAreaButton = new Button("+");
+    Button addTextAreaButton = new Button(resourceBundle.getString("addButton"));
 
     addTextAreaButton.setOnAction(event -> {
       TextArea newTextArea = new TextArea();
@@ -220,7 +200,7 @@ public class PolicyPanel implements Panel{
     HBox buttonBox = new HBox(addTextAreaButton);
     vbox.getChildren().add(buttonBox);
 
-    Button confirmSaveParam = new Button("save");
+    Button confirmSaveParam = new Button(resourceBundle.getString("saveButton"));
     confirmSaveParam.setDisable(false); //allowed to save at any time because no restriction for param numbers
 
     for (TextArea area : textAreas) {
@@ -242,7 +222,7 @@ public class PolicyPanel implements Panel{
             params.add(value);
           } catch (NumberFormatException ex) {
             // Handle invalid input
-            System.out.println("Invalid input: " + text);
+            LOGGER.error("Invalid input: " + text);
           }
         }
       }
@@ -259,71 +239,6 @@ public class PolicyPanel implements Panel{
 
     return params;
 
-  }
-
-
-
-  public static List<Integer> enterConstantParamsPopup(int numParam, String item) {
-    Stage popupStage = new Stage();
-    popupStage.setTitle("Specify Command Parameters");
-
-    List<Integer> params = new ArrayList<>();
-
-    Label label = new Label(item+": (expected " + numParam + ")");
-    VBox vbox = new VBox(label);
-
-    List<TextArea> textAreas = new ArrayList<>();
-
-    for (int i = 0; i < numParam; i ++){
-      TextArea input = new TextArea();
-      input.setId(String.valueOf(i));
-      textAreas.add(input);
-      vbox.getChildren().add(input);
-    }
-
-    Button confirmSaveParam = new Button("save");
-    confirmSaveParam.setDisable(true); //confirm button shouldn't do anything before user enters all params
-
-    for (TextArea area : textAreas) {
-      //only allow users to enter digits and the decimal point
-      area.addEventFilter(KeyEvent.KEY_TYPED, event -> {
-        String character = event.getCharacter();
-        if (!character.matches("[0-9.]")) {
-          event.consume();
-        }
-      });
-      //only enable the confirm save button when user has entered all required params
-      area.textProperty().addListener((observable, oldValue, newValue) -> {
-        boolean allFilled = textAreas.stream().noneMatch(textArea -> textArea.getText().trim().isEmpty());
-        confirmSaveParam.setDisable(!allFilled);
-      });
-    }
-
-    confirmSaveParam.setOnAction(e -> {
-      for (TextArea area : textAreas) {
-        String text = area.getText();
-        if (!text.isEmpty()) {
-          try {
-            Integer value = Integer.parseInt(text);
-            params.add(value);
-          } catch (NumberFormatException ex) {
-            // Handle invalid input
-            System.out.println("Invalid input: " + text);
-          }
-        }
-      }
-      popupStage.close();
-    });
-
-    vbox.getChildren().add(confirmSaveParam);
-
-    Scene scene = new Scene(vbox, 500, 300);
-    popupStage.setScene(scene);
-
-    popupStage.setResizable(false);
-    popupStage.showAndWait();
-
-    return params;
   }
 
   private List<String> getAvailableCommands(String commandPackage) {

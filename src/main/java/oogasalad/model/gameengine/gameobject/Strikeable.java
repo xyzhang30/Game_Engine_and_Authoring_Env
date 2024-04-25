@@ -14,12 +14,7 @@ package oogasalad.model.gameengine.gameobject;
  * <p>The adapter pattern is used to bridge the gap between general GameObjects and GameObjects
  * that are Strikeable. By holding a reference to the Strikeable, GameObjects have the ability to
  * have an initial velocity applied to them and be treated as Strikeable objects. This allows for a
- * flexible and modular design, where GameObjects can seamlessly integrate with components that
- * require Strikeable behavior.
- *
- * <p>The adapter pattern promotes code reusability and adhere to the Single Responsibility
- * Principle, Encapsulation, and Open-Closed principles, as GameObjects can focus on their primary
- * functionality while still being adaptable to Strikeable behavior when needed.
+ * flexible design, where GameObjects can seamlessly add and remove strikeable behaviors.
  *
  * @author Noah Loewy
  */

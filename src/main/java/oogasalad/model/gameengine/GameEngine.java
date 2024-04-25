@@ -1,6 +1,6 @@
 package oogasalad.model.gameengine;
 
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -12,11 +12,8 @@ import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.checkstatic.StaticChecker;
-import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.gameobject.CollisionDetector;
 import oogasalad.model.gameengine.gameobject.GameObject;
-import oogasalad.model.gameengine.gameobject.GameObjectContainer;
-import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameparser.GameLoaderModel;
@@ -42,7 +39,7 @@ public class GameEngine implements ExternalGameEngine {
   private final GameLoaderModel loader;
   private final PlayerContainer playerContainer;
   private RulesRecord rules;
-  private GameObjectContainer gameObjects;
+  private Collection<GameObject> gameObjects;
   private int round;
   private int turn;
   private boolean gameOver;
@@ -75,7 +72,7 @@ public class GameEngine implements ExternalGameEngine {
 
   @Override
   public GameRecord update(double dt) {
-    gameObjects.getGameObjects().forEach(go -> {
+    gameObjects.forEach(go -> {
       go.move(dt);
       go.update();
     });
@@ -119,14 +116,25 @@ public class GameEngine implements ExternalGameEngine {
 
   }
 
+  /**
+   * Updates the X Position of the active controllable by an amount preset in game rules
+   * @param positive, true if x position is increasing, false if decreasing
+   */
+
   @Override
   public void moveActiveControllableX(boolean positive) {
-    playerContainer.getActive().getControllable().moveX(positive);
+    playerContainer.getActive().getControllable().asGameObject().moveControllableX(positive);
+
   }
+
+  /**
+   * Updates the Y Position of the active controllable by an amount preset in game rules
+   * @param positive, true if y position is increasing, false if decreasing
+   */
 
   @Override
   public void moveActiveControllableY(boolean positive) {
-    playerContainer.getActive().getControllable().moveY(positive);
+    playerContainer.getActive().getControllable().asGameObject().moveControllableY(positive);
   }
 
   /**
@@ -144,7 +152,7 @@ public class GameEngine implements ExternalGameEngine {
    */
   public void advanceTurn() {
     turn = rules.turnPolicy().getNextTurn();
-    gameObjects.getGameObjects().forEach(GameObject::stop);
+    gameObjects.forEach(GameObject::stop);
   }
 
   /**
@@ -155,16 +163,6 @@ public class GameEngine implements ExternalGameEngine {
 
   public PlayerContainer getPlayerContainer() {
     return playerContainer;
-  }
-
-  /**
-   * Retrieves the container that holds information about game objects in the game.
-   *
-   * @return The GameObjectContainer object.
-   */
-
-  public GameObjectContainer getGameObjectContainer() {
-    return gameObjects;
   }
 
   /**
@@ -182,15 +180,16 @@ public class GameEngine implements ExternalGameEngine {
 
   public void toLastStaticState() {
     staticState = true;
-    for (GameObject gr : getGameObjectContainer().getGameObjects()) {
-      Optional<Scoreable> optionalScoreable = gr.getScoreable();
-      optionalScoreable.ifPresent(scoreable -> scoreable.setTemporaryScore(0));
-    }
+    gameObjects.stream()
+        .map(GameObject::getScoreable)
+        .filter(Optional::isPresent)
+        .map(Optional::get)
+        .forEach(scoreable -> scoreable.setTemporaryScore(0));
     GameRecord newCurrentState = staticStateStack.peek();
     turn = newCurrentState.turn();
     round = newCurrentState.round();
     gameOver = newCurrentState.gameOver();
-    gameObjects.getGameObjects().forEach(GameObject::toLastStaticStateGameObjects);
+    gameObjects.forEach(GameObject::toLastStaticStateGameObjects);
     playerContainer.getPlayers().forEach(Player::toLastStaticStatePlayers);
   }
 
@@ -208,18 +207,13 @@ public class GameEngine implements ExternalGameEngine {
   // operations and commands caused by the collision
   private void handleCollisions(double dt) {
     Set<Pair> collisionPairs = getCollisionPairs();
-    for (Pair collision : collisionPairs) {
-      if (rules.physicsMap().containsKey(collision)) {
-        rules.physicsMap().get(collision).handleCollision(dt);
-      }
-      if (rules.collisionHandlers().containsKey(collision)) {
-        for (Command cmd : rules.collisionHandlers().get(collision)) {
-          LOGGER.info(cmd.getClass().getSimpleName() + " " + "(collision " + "info" + " - ) "
-              + collision.getFirst() + " " + collision.getSecond());
-          cmd.execute(this);
-        }
-      }
-    }
+    collisionPairs.stream()
+        .filter(collision -> rules.physicsMap().containsKey(collision))
+        .forEach(collision -> rules.physicsMap().get(collision).handleCollision(dt));
+    collisionPairs.stream()
+        .filter(collision -> rules.collisionHandlers().containsKey(collision))
+        .flatMap(collision -> rules.collisionHandlers().get(collision).stream())
+        .forEach(cmd -> cmd.execute(this));
   }
 
 
@@ -229,23 +223,16 @@ public class GameEngine implements ExternalGameEngine {
    * @author Konur Nordberg
    */
   private Set<Pair> getCollisionPairs() {
-    Set<Pair> collisionPairs = new HashSet<>();
-    for (GameObject go1 : gameObjects.getGameObjects()) {
-      for (GameObject go2 : gameObjects.getGameObjects()) {
-        if (!go1.equals(go2) && go2.getVisible() && go1.getVisible()
-            && collisionDetector.isColliding(
-            go1, go2)) {
-          collisionPairs.add(new Pair(go1, go2));
-        }
-      }
-    }
-    return collisionPairs;
+    return gameObjects.stream()
+        .flatMap(go1 -> gameObjects.stream()
+            .filter(go2 -> !go1.equals(go2) && go2.getVisible() && go1.getVisible() && collisionDetector.isColliding(go1, go2))
+            .map(go2 -> new Pair(go1, go2)))
+        .collect(Collectors.toSet());
   }
 
   //starts the current round, by requesting the necessary information for that round from the
   // loader.
   private void startRound(GameLoaderModel loader) {
-    System.out.println(loader);
     gameOver = false;
     turn = 1; //first player ideally should have id 1
     staticState = true;
@@ -259,13 +246,14 @@ public class GameEngine implements ExternalGameEngine {
   //gets game objects, and rules for the game objects, for a specific round from game loader
   private void loadRoundSpecificInformation(GameLoaderModel loader) {
     loader.prepareRound(round);
-    gameObjects = loader.getGameObjectContainer();
+    gameObjects = loader.getGameObjects();
+    gameObjects.forEach(GameObject::addStaticStateGameObject);
     rules = loader.getRulesRecord();
   }
 
   //adds the initial state of the game (before the round starts) to the game history
   private void addInitialStaticStateToHistory() {
-    gameObjects.getGameObjects().forEach(GameObject::addStaticStateGameObject);
+    gameObjects.forEach(GameObject::addStaticStateGameObject);
     playerContainer.getPlayers().forEach(Player::addPlayerHistory);
     staticStateStack = new Stack<>();
     staticStateStack.push(
@@ -287,7 +275,7 @@ public class GameEngine implements ExternalGameEngine {
   private void updateHistory() {
     staticState = true;
     playerContainer.getPlayers().forEach(Player::addPlayerHistory);
-    gameObjects.getGameObjects().forEach(GameObject::addStaticStateGameObject);
+    gameObjects.forEach(GameObject::addStaticStateGameObject);
     staticStateStack.push(
         new GameRecord(getListOfGameObjectRecords(),
             getPlayerRecords().stream()
@@ -300,22 +288,28 @@ public class GameEngine implements ExternalGameEngine {
   // conditions (defined for that game)
   private boolean checkStatic(List<StaticChecker> staticCheckers) {
     return staticCheckers.stream().anyMatch(checker ->
-        gameObjects.getGameObjects().stream().allMatch(gameObject ->
+        gameObjects.stream().allMatch(gameObject ->
             checker.isStatic(gameObject.toGameObjectRecord())
         )
     );
   }
 
+  //gets list of all game objects as immutable records
   private List<GameObjectRecord> getListOfGameObjectRecords() {
-    return gameObjects.getGameObjects().stream().map(GameObject::toGameObjectRecord)
+    return gameObjects.stream().map(GameObject::toGameObjectRecord)
         .collect(Collectors.toList());
   }
 
+  //gets list of all player objects as immutable records
   private List<PlayerRecord> getPlayerRecords() {
     return playerContainer.getPlayers().stream()
         .map(Player::getPlayerRecord)
         .sorted(rules.rank())
         .collect(Collectors.toList());
+  }
+
+  public Collection<GameObject> getGameObjects() {
+    return gameObjects;
   }
 
 }

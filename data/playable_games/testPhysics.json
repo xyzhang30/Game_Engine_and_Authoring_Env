@@ -291,7 +291,7 @@
             "LastStaticStateCommand": []
           },
           {
-            "AddDelayedPointsCommand": [
+            "SetDelayedPointsCommand": [
               1,
               1
             ]

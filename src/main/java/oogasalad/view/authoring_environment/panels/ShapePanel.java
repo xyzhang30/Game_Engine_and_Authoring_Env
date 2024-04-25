@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
+import javafx.collections.ListChangeListener;
 import javafx.geometry.Bounds;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -26,10 +28,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import oogasalad.view.authoring_environment.data.Coordinate;
-import oogasalad.view.authoring_environment.authoring_screens.GameObjectType;
+import oogasalad.view.enums.GameObjectType;
+import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import oogasalad.view.enums.CollidableType;
+import org.controlsfx.control.CheckComboBox;
 
 public class ShapePanel implements Panel {
 
@@ -44,13 +48,12 @@ public class ShapePanel implements Panel {
   private Slider ySlider;
   private Slider angleSlider;
   private ComboBox<GameObjectType> gameObjectTypeDropdown;
-  private ComboBox<CollidableType> collidableTypeDropDown;
+  private CheckComboBox<CollidableType> collidableTypeDropDown;
   private TextField kFrictionTextField;
   private TextField sFrictionTextField;
   private TextField massTextField;
-  private TextField elasticityTextField;
+  private CheckBox elasticityCheckBox;
   private ListView<String> playerAssignmentListView;
-  private CheckBox scoreableCheckBox;
   private Button addPlayerButton;
   private Button removePlayerButton;
   private Text numPlayers;
@@ -58,7 +61,8 @@ public class ShapePanel implements Panel {
   private Label sFriction;
   private Label mass;
   private Label elasticity;
-  private Label scoreable;
+  private final String language = "English"; // PASS IN LANGUAGE
+  private final ResourceBundle resourceBundle;
 
   public ShapePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
       AnchorPane containerPane, StackPane canvas) {
@@ -67,7 +71,8 @@ public class ShapePanel implements Panel {
     this.rootPane = rootPane;
     this.containerPane = containerPane;
     this.canvas = canvas;
-    // TODO: REMOVE HARD CODING
+    this.resourceBundle = ResourceBundle.getBundle(
+        RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
     shapeProxy.setNumberOfMultiSelectAllowed(1);
     createElements();
     handleEvents();
@@ -83,6 +88,7 @@ public class ShapePanel implements Panel {
     createCollidableOptions();
     createMakePlayers();
     createPlayerAssignment();
+
     setCollidableOptionVisibility(false);
     setSurfaceOptionVisibility(false);
     setPlayerAssignmentVisibility(false);
@@ -123,7 +129,7 @@ public class ShapePanel implements Panel {
     try {
       setShapeBeginDrag(shape, event);
     } catch (ReflectiveOperationException e) {
-      e.printStackTrace();
+      LOGGER.error(e);
     }
   }
 
@@ -156,27 +162,32 @@ public class ShapePanel implements Panel {
     }
   }
   private void setShapeOnClick(Shape shape) {
-    if (shapeProxy.getShape() != null) {
-      shapeProxy.setFinalShapeDisplay();
-      authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
-    }
+    if (shapeProxy.getShape() == null) return;
 
-    shapeProxy.setShape(shape);
-    gameObjectTypeDropdown.valueProperty().setValue(null);
-    clearFields();
+    if (authoringProxy.getCurrentScreenTitle().equals("Game Objects")) {
+      shapeProxy.setFinalShapeDisplay();
+      try {
+        GameObjectAttributesContainer copy = (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer().clone();
+        authoringProxy.setGameObject(shapeProxy.getShape(), copy);
+      } catch (CloneNotSupportedException e) {
+        throw new RuntimeException(e);
+      }
+    }
+    shapeProxy.selectShape(shape);
     shape.setStroke(Color.YELLOW);
     shapeProxy.updateShapeSelectionDisplay();
-
+    gameObjectTypeDropdown.valueProperty().setValue(null);
+    clearFields();
     updateSlider(shape.getScaleX(), shape.getScaleY(), shape.getRotate());
+
   }
   private void clearFields() {
-    collidableTypeDropDown.valueProperty().setValue(null);
+    collidableTypeDropDown.getCheckModel().clearChecks();
     playerAssignmentListView.getSelectionModel().clearSelection();
     kFrictionTextField.clear();
     sFrictionTextField.clear();
     massTextField.clear();
-    elasticityTextField.clear();
-    scoreableCheckBox.setSelected(false);
+    elasticityCheckBox.setSelected(false);
     setCollidableOptionVisibility(false);
     setSurfaceOptionVisibility(false);
     setPlayerAssignmentVisibility(false);
@@ -196,6 +207,9 @@ public class ShapePanel implements Panel {
     sliderContainerBox.setAlignment(Pos.CENTER_RIGHT);
 
     xSlider = createSizeSlider("X Scale", sliderContainerBox);
+
+    // removing hardcoding - 2 or more times, appears in UI, involved in logic
+
     xSlider.setId("XSizeSlider");
     ySlider = createSizeSlider("Y Scale", sliderContainerBox);
     ySlider.setId("YSizeSlider");
@@ -223,7 +237,7 @@ public class ShapePanel implements Panel {
     slider.setMajorTickUnit(20);
     slider.setOrientation(Orientation.HORIZONTAL);
 
-    Label label = new Label("Angle");
+    Label label = new Label(resourceBundle.getString("Angle"));
 
     HBox sliderContainer = new HBox(label, slider);
     sliderContainer.setSpacing(10);
@@ -292,7 +306,7 @@ public class ShapePanel implements Panel {
     AnchorPane.setRightAnchor(kFrictionTextField, 450.0);
     AnchorPane.setTopAnchor(kFrictionTextField, 120.0);
 
-    kFriction = new Label("Kinetic Friction Coefficient");
+    kFriction = new Label(resourceBundle.getString("kFriction"));
     AnchorPane.setRightAnchor(kFriction, 300.0);
     AnchorPane.setTopAnchor(kFriction, 120.0);
 
@@ -303,7 +317,7 @@ public class ShapePanel implements Panel {
     AnchorPane.setRightAnchor(sFrictionTextField, 450.0);
     AnchorPane.setTopAnchor(sFrictionTextField, 160.0);
 
-    sFriction = new Label("Static Friction Coefficient");
+    sFriction = new Label(resourceBundle.getString("sFriction"));
     AnchorPane.setRightAnchor(sFriction, 300.0);
     AnchorPane.setTopAnchor(sFriction, 160.0);
 
@@ -314,11 +328,10 @@ public class ShapePanel implements Panel {
   private void createCollidableOptions() {
     createCollidableTypeOptions();
     createCollidableParameterOptions();
-    createScoreableOption();
   }
 
   private void createPlayerAssignment() {
-    playerAssignmentListView = new ListView<String>();
+    playerAssignmentListView = new ListView<>();
 
     for (int currPlayerNum = 1; currPlayerNum <= authoringProxy.getNumPlayers(); currPlayerNum++) {
       playerAssignmentListView.getItems().add("Player " + currPlayerNum);
@@ -330,17 +343,19 @@ public class ShapePanel implements Panel {
     playerAssignmentListView.setPrefSize(200, 150);
 
     containerPane.getChildren().add(playerAssignmentListView);
+    setPlayerAssignmentVisibility(true);
   }
 
   private void createCollidableTypeOptions() {
-    collidableTypeDropDown = new ComboBox<>();
+    collidableTypeDropDown = new CheckComboBox<>();
     collidableTypeDropDown.getItems()
-        .addAll(CollidableType.STRIKABLE, CollidableType.CONTROLLABLE, CollidableType.NONCONTROLLABLE);
-    collidableTypeDropDown.setPromptText("Select Collidable Type");
+        .addAll(CollidableType.STRIKABLE, CollidableType.SCOREABLE, CollidableType.CONTROLLABLE, CollidableType.NONCONTROLLABLE);
     AnchorPane.setRightAnchor(collidableTypeDropDown, 300.0);
     AnchorPane.setTopAnchor(collidableTypeDropDown, 200.0);
     collidableTypeDropDown.setPrefSize(200, 50);
-    containerPane.getChildren().add(collidableTypeDropDown);
+    if (!containerPane.getChildren().contains(collidableTypeDropDown)) {
+      containerPane.getChildren().add(collidableTypeDropDown);
+    }
   }
 
   private void createCollidableParameterOptions() {
@@ -351,58 +366,47 @@ public class ShapePanel implements Panel {
     AnchorPane.setRightAnchor(massTextField, 450.0);
     AnchorPane.setTopAnchor(massTextField, 270.0);
 
-    mass = new Label("Mass");
+    mass = new Label(resourceBundle.getString("Mass"));
     AnchorPane.setRightAnchor(mass, 410.0);
     AnchorPane.setTopAnchor(mass, 270.0);
 
-    elasticityTextField = new TextField();
-    elasticityTextField.setId("elasticity");
-    elasticityTextField.textProperty().addListener(new TextFieldListener(elasticityTextField.getId(), shapeProxy));
-    elasticityTextField.setPrefSize(40, 20);
-    AnchorPane.setRightAnchor(elasticityTextField, 450.0);
-    AnchorPane.setTopAnchor(elasticityTextField, 310.0);
+    elasticityCheckBox = new CheckBox();
+    elasticityCheckBox.setId("elasticity");
+    elasticityCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+      shapeProxy.getGameObjectAttributesContainer().setElasticity(newValue);
+    });
+    elasticityCheckBox.setPrefSize(40, 20);
+    AnchorPane.setRightAnchor(elasticityCheckBox, 450.0);
+    AnchorPane.setTopAnchor(elasticityCheckBox, 310.0);
 
-    elasticity = new Label("Elasticity");
+    elasticity = new Label(resourceBundle.getString("Elasticity"));
     AnchorPane.setRightAnchor(elasticity, 390.0);
     AnchorPane.setTopAnchor(elasticity, 310.0);
 
     containerPane.getChildren()
-        .addAll(massTextField, mass, elasticityTextField, elasticity);
-  }
-
-  private void createScoreableOption() {
-    scoreableCheckBox = new CheckBox();
-    scoreableCheckBox.setPrefSize(20, 20);
-    AnchorPane.setRightAnchor(scoreableCheckBox, 470.0);
-    AnchorPane.setTopAnchor(scoreableCheckBox, 350.0);
-
-    scoreable = new Label("Scoreable");
-    AnchorPane.setRightAnchor(scoreable, 400.0);
-    AnchorPane.setTopAnchor(scoreable, 350.0);
-
-    containerPane.getChildren()
-        .addAll(scoreableCheckBox, scoreable);
+        .addAll(massTextField, mass, elasticityCheckBox, elasticity);
   }
 
   private void addNewPlayerToProxy() {
-    authoringProxy.getPlayers().putIfAbsent(authoringProxy.getNumPlayers(), new HashMap<>());
-    authoringProxy.getPlayers().get(authoringProxy.getNumPlayers()).putIfAbsent(CollidableType.STRIKABLE, new ArrayList<>());
-    authoringProxy.getPlayers().get(authoringProxy.getNumPlayers()).putIfAbsent(CollidableType.CONTROLLABLE, new ArrayList<>());
+    authoringProxy.getPlayers().putIfAbsent(authoringProxy.getCurrentPlayerId(), new HashMap<>());
+    authoringProxy.getPlayers().get(authoringProxy.getCurrentPlayerId()).putIfAbsent(CollidableType.STRIKABLE, new ArrayList<>());
+    authoringProxy.getPlayers().get(authoringProxy.getCurrentPlayerId()).putIfAbsent(CollidableType.CONTROLLABLE, new ArrayList<>());
+    authoringProxy.getPlayers().get(authoringProxy.getCurrentPlayerId()).putIfAbsent(CollidableType.SCOREABLE, new ArrayList<>());
   }
   private void createMakePlayers() {
     // default 1 player
     addNewPlayerToProxy();
 
-    Label numPlayersLabel = new Label("Number of Players");
+    Label numPlayersLabel = new Label(resourceBundle.getString("Players"));
     AnchorPane.setTopAnchor(numPlayersLabel, 525.0);
     AnchorPane.setRightAnchor(numPlayersLabel, 90.0);
 
-    removePlayerButton = new Button("-");
+    removePlayerButton = new Button(resourceBundle.getString("removeButton"));
     removePlayerButton.setPrefSize(50, 50);
     AnchorPane.setRightAnchor(removePlayerButton, 175.0);
     AnchorPane.setTopAnchor(removePlayerButton, 550.0);
 
-    addPlayerButton = new Button("+");
+    addPlayerButton = new Button(resourceBundle.getString("addButton"));
     addPlayerButton.setPrefSize(50, 50);
     AnchorPane.setRightAnchor(addPlayerButton, 50.0);
     AnchorPane.setTopAnchor(addPlayerButton, 550.0);
@@ -415,20 +419,19 @@ public class ShapePanel implements Panel {
         .addAll(removePlayerButton, addPlayerButton, numPlayersLabel, numPlayers);
   }
 
-  // properties
   private void handleGameObjectTypeSelection() {
     gameObjectTypeDropdown.valueProperty().addListener((obs, oldVal, gameObjectType) -> {
       if (gameObjectType == null || shapeProxy.getShape() == null) return;
 
       clearFields();
       if (oldVal != null) {
-        shapeProxy.getGameObjectAttributesContainer().getProperties().remove(oldVal.toString());
+        shapeProxy.getGameObjectAttributesContainer().getProperties().remove(String.valueOf(oldVal));
       }
-      shapeProxy.getGameObjectAttributesContainer().getProperties().add(gameObjectType.toString());
+      shapeProxy.getGameObjectAttributesContainer().getProperties().add(String.valueOf(gameObjectType));
       updateSelectionOptions(gameObjectType);
 
       if (gameObjectType.equals(GameObjectType.SURFACE)) {
-        removeObjectFromAuthoringPayersAnyList();
+        removeObjectFromAuthoringPlayersAnyList();
         setPlayerAssignmentVisibility(false);
       }
 
@@ -446,83 +449,101 @@ public class ShapePanel implements Panel {
 
     removePlayerButton.setOnMouseClicked(e -> {
       if (authoringProxy.getNumPlayers() > 1) {
-        authoringProxy.getPlayers().remove(authoringProxy.getNumPlayers());
+        authoringProxy.getPlayers().remove(authoringProxy.getCurrentPlayerId());
         playerAssignmentListView.getItems().remove("Player " + authoringProxy.getNumPlayers());
         authoringProxy.decreaseNumPlayers();
         numPlayers.setText(String.valueOf(authoringProxy.getNumPlayers()));
       }
     });
   }
-
-//  private void updateProxyMapWithTextFieldInput(TextField textField,
-//      Consumer<String> inputConsumer) {
-//    if (textField.isVisible()) {
-//      String inputText = textField.getText();
-//      textField.clear();
-//      inputConsumer.accept(inputText);
-//    }
-//  }
-
   private void handlePlayerAssignment() {
     handlePlayerListViewOnChange();
-    handleScorableCheckBoxOnChange();
+//    handleScorableCheckBoxOnChange();
     handleCollidableTypeDropdownOnChange();
   }
   private void handlePlayerListViewOnChange() {
-    playerAssignmentListView.getSelectionModel().selectedIndexProperty().addListener(((observable, oldValue, newPlayerId) -> {
-      if (scoreableCheckBox.isSelected()) addToAuthoringPlayers((Integer) newPlayerId, collidableTypeDropDown.getValue());
+    playerAssignmentListView.getSelectionModel().selectedIndexProperty().addListener(((observable, oldPlayerId, newPlayerId) -> {
+      List<CollidableType> collidableTypes = collidableTypeDropDown.getCheckModel().getCheckedItems();
+      for (CollidableType type: collidableTypes) {
+        if ((Integer) oldPlayerId >= 0) removeCollidableTypeFromAuthoringPlayer((Integer) oldPlayerId, type);
+        addCollidableToAuthoringPlayer((Integer) newPlayerId, type, type.equals(CollidableType.CONTROLLABLE));
+      }
     }));
   }
   private void handleCollidableTypeDropdownOnChange() {
-    collidableTypeDropDown.valueProperty().addListener((obs, oldVal, collidableType) -> {
-      if (collidableType == null) return;
+    collidableTypeDropDown.getCheckModel().getCheckedItems().addListener((ListChangeListener<CollidableType>) collidableType -> {
+      while (collidableType.next()) {
+        if (collidableType.wasAdded()) {
+          for (CollidableType selected : collidableType.getAddedSubList()) {
+            if (!shapeProxy.getGameObjectAttributesContainer().getProperties().contains(selected.toString())) {
+              shapeProxy.getGameObjectAttributesContainer().getProperties().add(selected.toString());
+            }
 
-      shapeProxy.getGameObjectAttributesContainer().getProperties().remove(oldVal.toString());
-      shapeProxy.getGameObjectAttributesContainer().getProperties().add(collidableType.toString());
-
-      if (collidableType.equals(CollidableType.NONCONTROLLABLE)) {
-        removeObjectFromAuthoringPayersAnyList();
-        setPlayerAssignmentVisibility(false);
-      } else {
-        setPlayerAssignmentVisibility(true);
-        addToAuthoringPlayers(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
-           collidableTypeDropDown.getValue());
+            if (selected.equals(CollidableType.NONCONTROLLABLE)) {
+              removeObjectFromAuthoringPlayersAnyList();
+              setPlayerAssignmentVisibility(false);
+            }
+            else {
+              setPlayerAssignmentVisibility(true);
+              if (selected.equals(CollidableType.CONTROLLABLE)) {
+                List<Integer> xySpeeds = Panel.enterConstantParamsPopup(2, resourceBundle.getString("controllableXYSpeeds"));
+                shapeProxy.getGameObjectAttributesContainer().setControllableXSpeed(xySpeeds.get(0));
+                shapeProxy.getGameObjectAttributesContainer().setControllableYSpeed(xySpeeds.get(1));
+              }
+              addCollidableToAuthoringPlayer(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
+                  selected, selected.equals(CollidableType.CONTROLLABLE));
+            }
+          }
+        }
+        else {
+          for (CollidableType removed : collidableType.getRemoved()) {
+            if (shapeProxy.getGameObjectAttributesContainer().getProperties().contains(removed.toString())) {
+              shapeProxy.getGameObjectAttributesContainer().getProperties().remove(removed.toString());
+            }
+            if (!removed.equals(CollidableType.NONCONTROLLABLE)) {
+              removeCollidableTypeFromAuthoringPlayer(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
+                  removed);
+            }
+          }
+        }
       }
     });
   }
-  private void handleScorableCheckBoxOnChange() {
-    scoreableCheckBox.selectedProperty().addListener((observable, oldValue, newState) -> {
-      if (newState) {
-        setPlayerAssignmentVisibility(true);
-        addToAuthoringPlayers(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
-            collidableTypeDropDown.getValue());
-      } else {
-        removeFromAuthoringPlayers(collidableTypeDropDown.getValue());
-      }
-    });
-  }
-  private void addToAuthoringPlayers(int selectedPlayerId, CollidableType collidableType) {
+
+  private void addCollidableToAuthoringPlayer(int selectedPlayerId, CollidableType collidableType, boolean isControllable) {
     Map<Integer, Map<CollidableType, List<Integer>>> playersMap = authoringProxy.getPlayers();
     if (selectedPlayerId >= 0) {
-      if (!playersMap.get(selectedPlayerId+1).get(collidableType).contains(Integer.parseInt(shapeProxy.getShape().getId()))) {
-        playersMap.get(selectedPlayerId+1).get(collidableType).add(Integer.parseInt(shapeProxy.getShape().getId()));
+      if (isControllable) {
+        int xSpeed = shapeProxy.getGameObjectAttributesContainer().getControllableXSpeed();
+        int ySpeed = shapeProxy.getGameObjectAttributesContainer().getControllableYSpeed();
+        playersMap.get(selectedPlayerId).put(collidableType, List.of(Integer.parseInt(shapeProxy.getShape().getId()), xSpeed, ySpeed));
+      }
+      else if (!playersMap.get(selectedPlayerId).get(collidableType).contains(Integer.parseInt(shapeProxy.getShape().getId()))) {
+        playersMap.get(selectedPlayerId).get(collidableType).add(Integer.parseInt(shapeProxy.getShape().getId()));
       }
     }
   }
 
-  private void removeObjectFromAuthoringPayersAnyList() {
-    removeFromAuthoringPlayers(CollidableType.STRIKABLE);
-    removeFromAuthoringPlayers(CollidableType.CONTROLLABLE);
+  private void removeObjectFromAuthoringPlayersAnyList() {
+    removeFromAllAuthoringPlayers(CollidableType.STRIKABLE);
+    removeFromAllAuthoringPlayers(CollidableType.CONTROLLABLE);
+    removeFromAllAuthoringPlayers(CollidableType.SCOREABLE);
   }
 
   // remove selected shape from the player holding it
-  private void removeFromAuthoringPlayers(CollidableType collidableType) {
+  private void removeFromAllAuthoringPlayers(CollidableType collidableType) {
     Map<Integer, Map<CollidableType, List<Integer>>> playersMap = authoringProxy.getPlayers();
     for (Integer player: playersMap.keySet()) {
-      if (playersMap.get(player).get(collidableType).contains(Integer.parseInt(shapeProxy.getShape().getId()))) {
-        playersMap.get(player).get(collidableType).remove((Integer) Integer.parseInt(shapeProxy.getShape().getId()));
-      }
+      removeCollidableTypeFromAuthoringPlayer(player, collidableType);
     }
+  }
+
+  private void removeCollidableTypeFromAuthoringPlayer(int playerId, CollidableType collidableType) {
+    Map<Integer, Map<CollidableType, List<Integer>>> playersMap = authoringProxy.getPlayers();
+    if (playersMap.get(playerId).get(collidableType).contains(Integer.parseInt(shapeProxy.getShape().getId()))) {
+      playersMap.get(playerId).get(collidableType).remove((Integer) Integer.parseInt(shapeProxy.getShape().getId()));
+    }
+
   }
 
   private void updateSelectionOptions(GameObjectType gameObjectType) {
@@ -546,10 +567,8 @@ public class ShapePanel implements Panel {
     collidableTypeDropDown.setVisible(visibility);
     massTextField.setVisible(visibility);
     mass.setVisible(visibility);
-    elasticityTextField.setVisible(visibility);
+    elasticityCheckBox.setVisible(visibility);
     elasticity.setVisible(visibility);
-    scoreableCheckBox.setVisible(visibility);
-    scoreable.setVisible(visibility);
   }
 
   private void setPlayerAssignmentVisibility(boolean visibility) {
