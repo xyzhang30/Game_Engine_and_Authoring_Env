@@ -1,14 +1,19 @@
 package oogasalad.view.scene_management;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import oogasalad.view.enums.SceneElementType;
+import oogasalad.view.visual_elements.Arrow;
 
 /**
  * Creates elements from parameters received from sceneElementParser; outsources styling and event
@@ -22,8 +27,10 @@ public class SceneElementFactory {
   private final SceneElementHandler sceneElementHandler;
   private final double screenWidth;
   private final double screenHeight;
+  private Map<SceneElementType, BiConsumer<Node, Map<String, String>>> elementConfigurationMap;
   private final String classTag = "class";
   private final String textTag = "text";
+  private final String typeTag = "type";
   private final String widthFactorTag = "width_factor";
   private final String heightFactorTag = "height_factor";
   private final String xLayoutFactorTag = "x_layout_factor";
@@ -51,6 +58,7 @@ public class SceneElementFactory {
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
     this.sceneElementHandler = sceneElementHandler;
+    createElementConfigurationMap();
   }
 
   /**
@@ -68,12 +76,10 @@ public class SceneElementFactory {
 
       try {
         String className = parameterMap.get(classTag);
-        Class<?> clazz = Class.forName(className);
-        Object obj = clazz.getDeclaredConstructor().newInstance();
+        Class<?> classObj = Class.forName(className);
+        Object obj = classObj.getDeclaredConstructor().newInstance();
         Node node = (Node) obj;
-
-        configureElement(node, parameterMap);
-
+        configureNode(node, parameterMap);
         sceneElementPane.getChildren().add(node);
       } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
                IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -84,123 +90,79 @@ public class SceneElementFactory {
     return sceneElementPane;
   }
 
-  private void configureElement(Node node, Map<String, String> parameters) {
+  private void configureNode(Node node, Map<String, String> parameters) {
+    executeConfigurationMethod(node, parameters);
+    handleLayout(node, parameters);
+    handleEvent(node, parameters);
+    handleStyle(node, parameters);
+  }
+
+  private void configureRectangle(Node node, Map<String, String> parameters) {
+    double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
+    double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
+    Rectangle rectangle = (Rectangle) node;
+    rectangle.setWidth(widthFactor * screenWidth);
+    rectangle.setHeight(heightFactor * screenHeight);
+  }
+
+  private void configureText(Node node, Map<String, String> parameters) {
+    String displayText = parameters.get(textTag);
+    Text text = (Text) node;
+    text.setText(displayText);
+  }
+
+  private void configureArrow(Node node, Map<String, String> parameters) {
+    double xLayoutFactor = parseDoubleParameter(parameters, xLayoutTag);
+    double yLayoutFactor = parseDoubleParameter(parameters, yLayoutTag);
+    double stemWidth = parseDoubleParameter(parameters, stemWidthTag);
+    double stemHeight = parseDoubleParameter(parameters, stemHeightTag);
+    double arrowWidthOffset = parseDoubleParameter(parameters, arrowWidthOffsetTag);
+    double arrowHeightOffset = parseDoubleParameter(parameters, arrowHeightOffsetTag);
+
+    Arrow arrow = (Arrow) node;
+
+    arrow.setArrowDimensions(xLayoutFactor * screenWidth, yLayoutFactor * screenHeight, stemWidth,
+        stemHeight, arrowWidthOffset, arrowHeightOffset);
+  }
+
+  private void configureButton(Node node, Map<String, String> parameters) {
     String displayText = parameters.get(textTag);
     double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
     double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
+
+    Button button = (Button) node;
+    button.setText(displayText);
+    button.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
+  }
+
+  private void configureListView(Node node, Map<String, String> parameters) {
+    double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
+    double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
+
+    ListView<String> listView = (ListView<String>) node;
+    listView.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
+  }
+
+
+  private void handleLayout(Node node, Map<String, String> parameters) {
     double xLayoutFactor = parseDoubleParameter(parameters, xLayoutFactorTag);
     double yLayoutFactor = parseDoubleParameter(parameters, yLayoutFactorTag);
+    node.setLayoutX(xLayoutFactor * screenWidth - node.getLayoutBounds().getWidth() / 2);
+    node.setLayoutY(yLayoutFactor * screenHeight - node.getLayoutBounds().getHeight() / 2);
+  }
+
+  private void handleStyle(Node node, Map<String, String> parameters) {
     String style = parameters.get(styleTag);
-    String event = parameters.get(eventTag);
-
-    handleTextDisplay(node, displayText);
-    handlePrefSize(node, widthFactor, heightFactor);
-    handleLayout(node, xLayoutFactor, yLayoutFactor);
-    handleStyle(node, style);
-    handleEvent(node, event);
-  }
-
-  private void handleTextDisplay(Node node, String displayText) {
-    if (displayText != null) {
-      try {
-        Method setDisplayTextMethod = node.getClass().getMethod("setText", String.class);
-        setDisplayTextMethod.invoke(node, displayText);
-      } catch (NoSuchMethodException | SecurityException | IllegalAccessException |
-               IllegalArgumentException | InvocationTargetException e) {
-        //TODO: Excepetion Handling
-        System.out.println("exception in create text");
-      }
-    }
-  }
-
-  private void handlePrefSize(Node node, double widthFactor, double heightFactor) {
-    if (widthFactor != 0 && heightFactor != 0) {
-      try {
-        Method setPrefSizeMethod = node.getClass()
-            .getMethod("setPrefSize", double.class, double.class);
-        setPrefSizeMethod.invoke(node, widthFactor * screenWidth, heightFactor * screenHeight);
-      } catch (NoSuchMethodException | SecurityException | IllegalAccessException |
-               IllegalArgumentException | InvocationTargetException e) {
-        //TODO: Excepetion Handling
-        System.out.println(widthFactor + " " + heightFactor);
-        System.out.println("exception in size");
-      }
-    }
-  }
-
-  private void handleLayout(Node node, double xLayoutFactor, double yLayoutFactor) {
-    if (xLayoutFactor != 0 && yLayoutFactor != 0) {
-      try {
-        Method setLayoutXMethod = node.getClass()
-            .getMethod("setLayoutX", double.class);
-        Method setLayoutYMethod = node.getClass()
-            .getMethod("setLayoutY", double.class);
-        setLayoutXMethod.invoke(node,
-            xLayoutFactor * screenWidth - node.getLayoutBounds().getWidth() / 2);
-        setLayoutYMethod.invoke(node,
-            yLayoutFactor * screenHeight - node.getLayoutBounds().getHeight() / 2);
-      } catch (NoSuchMethodException | SecurityException | IllegalAccessException |
-               IllegalArgumentException | InvocationTargetException e) {
-        //TODO: Excepetion Handling
-        System.out.println("exception in layout");
-      }
-    }
-  }
-
-  private void handleStyle(Node node, String style) {
     if (style != null) {
       sceneElementStyler.style(node, style);
     }
   }
 
-  private void handleEvent(Node node, String event) {
+  private void handleEvent(Node node, Map<String, String> parameters) {
+    String event = parameters.get(eventTag);
     if (event != null) {
       sceneElementHandler.createElementHandler(node, event);
     }
-  }
-
-  private Polygon createArrow(Map<String, String> parameters) {
-    double xPos = parseDoubleParameter(parameters, xLayoutTag);
-    double yPos = parseDoubleParameter(parameters, yLayoutTag);
-    double stemWidth = parseDoubleParameter(parameters, stemWidthTag);
-    double stemHeight = parseDoubleParameter(parameters, stemHeightTag);
-    double arrowWidthOffset = parseDoubleParameter(parameters, arrowWidthOffsetTag);
-    double arrowHeightOffset = parseDoubleParameter(parameters, arrowHeightOffsetTag);
-    String style = parameters.get(styleTag);
-    String event = parameters.get(eventTag);
-
-    List<Double> arrowPoints = getArrowPoints(xPos, yPos, stemWidth, stemHeight, arrowWidthOffset,
-        arrowHeightOffset);
-
-    Polygon arrow = new Polygon();
-    arrow.getPoints().addAll(arrowPoints);
-    sceneElementStyler.style(arrow, style);
-    sceneElementHandler.createElementHandler(arrow, event);
-
-    return arrow;
-  }
-
-  private List<Double> getArrowPoints(double xPos, double yPos, double stemWidth, double stemHeight,
-      double arrowWidthOffset,
-      double arrowHeightOffset) {
-    List<Double> arrowPoints = new ArrayList<>();
-
-    arrowPoints.add(xPos);
-    arrowPoints.add(yPos);
-    arrowPoints.add(xPos + stemWidth);
-    arrowPoints.add(yPos);
-    arrowPoints.add(xPos + stemWidth);
-    arrowPoints.add(yPos - stemHeight);
-    arrowPoints.add(xPos + stemWidth + arrowWidthOffset);
-    arrowPoints.add(yPos - stemHeight);
-    arrowPoints.add(xPos + stemWidth / 2);
-    arrowPoints.add(yPos - stemHeight - arrowHeightOffset);
-    arrowPoints.add(xPos - arrowWidthOffset);
-    arrowPoints.add(yPos - stemHeight);
-    arrowPoints.add(xPos);
-    arrowPoints.add(yPos - stemHeight);
-
-    return arrowPoints;
   }
 
   private double parseDoubleParameter(Map<String, String> parameters, String key) {
@@ -209,7 +171,26 @@ public class SceneElementFactory {
     } catch (Exception e) {
       return 0;
     }
-
   }
 
+  private void createElementConfigurationMap() {
+    elementConfigurationMap = new HashMap<>();
+    elementConfigurationMap.put(SceneElementType.RECTANGLE, this::configureRectangle);
+    elementConfigurationMap.put(SceneElementType.ARROW, this::configureArrow);
+    elementConfigurationMap.put(SceneElementType.TEXT, this::configureText);
+    elementConfigurationMap.put(SceneElementType.BUTTON, this::configureButton);
+    elementConfigurationMap.put(SceneElementType.LISTVIEW, this::configureListView);
+  }
+
+  private void executeConfigurationMethod(Node node, Map<String, String> parameters) {
+    String type = parameters.get(typeTag);
+    if (type != null) {
+      BiConsumer<Node, Map<String, String>> configurationMethod = elementConfigurationMap.get(
+          SceneElementType.valueOf(type));
+      if (configurationMethod != null) {
+        configurationMethod.accept(node, parameters);
+      }
+    }
+
+  }
 }
