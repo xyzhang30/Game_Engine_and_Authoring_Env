@@ -11,7 +11,8 @@ public class PolicyAuthoingTest {
 
   @Test
   public void Test(){
-    PolicyPanel policyPanel = new PolicyPanel(new AuthoringProxy(), new ShapeProxy(), new AnchorPane(), new AnchorPane(), new StackPane());
+    PolicyPanel policyPanel = new PolicyPanel(new AuthoringProxy(), new ShapeProxy(), new AnchorPane(), new AnchorPane(), new StackPane(),
+        uiElementFactory);
   }
 
 }

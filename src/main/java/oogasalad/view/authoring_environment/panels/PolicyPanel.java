@@ -30,6 +30,7 @@ import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.annotations.VariableParamNumber;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.view.api.authoring.Panel;
+import oogasalad.view.api.authoring.UIElementFactory;
 import oogasalad.view.api.enums.PolicyType;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
@@ -53,13 +54,15 @@ public class PolicyPanel implements Panel {
   private static final String REFLECTION_ENGINE_PACKAGE_PATH = "oogasalad.model.gameengine.";
   private final String language = "English"; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
+  private final UIElementFactory uiElementFactory;
 
   public PolicyPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
-      AnchorPane containerPane, StackPane canvas) {
+      AnchorPane containerPane, StackPane canvas, UIElementFactory uiElementFactory) {
     this.authoringProxy = authoringProxy;
     this.rootPane = rootPane;
     this.containerPane = containerPane;
     this.canvas = canvas;
+    this.uiElementFactory = uiElementFactory;
     this.resourceBundle = ResourceBundle.getBundle(
         RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
     createElements();
@@ -146,7 +149,7 @@ public class PolicyPanel implements Panel {
           //prompt user to enter param
           int numParam = clazz.getDeclaredAnnotation(ExpectedParamNumber.class).value();
           //get and return the params from popup
-          return Panel.enterConstantParamsPopup(numParam, newValue);
+          return uiElementFactory.createConstantParamsPopup(numParam, newValue);
         } else if (clazz.getDeclaredAnnotation(VariableParamNumber.class) != null && clazz.getDeclaredAnnotation(
             VariableParamNumber.class).isVariable()) {
           //for commands without a constant param number

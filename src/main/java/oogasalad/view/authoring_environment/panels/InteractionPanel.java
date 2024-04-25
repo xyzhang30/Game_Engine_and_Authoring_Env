@@ -20,6 +20,7 @@ import javafx.scene.layout.StackPane;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.view.api.authoring.Panel;
+import oogasalad.view.api.authoring.UIElementFactory;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import org.controlsfx.control.CheckComboBox;
@@ -42,12 +43,14 @@ public class InteractionPanel implements Panel {
   private Map<String, List<Integer>> tempSavedCommands = new HashMap<>();
   private Button saveSelectionButton;
   private final ResourceBundle resourceBundle;
+  private final UIElementFactory uiElementFactory;
 
   public InteractionPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
-      AnchorPane containerPane, StackPane canvas) {
+      AnchorPane containerPane, StackPane canvas, UIElementFactory uiElementFactory) {
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
     this.containerPane = containerPane;
+    this.uiElementFactory = uiElementFactory;
     this.resourceBundle = ResourceBundle.getBundle(
         RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
     shapeProxy.setNumberOfMultiSelectAllowed(numMultiSelect);
@@ -112,7 +115,7 @@ public class InteractionPanel implements Panel {
       Class<?> clazz = Class.forName(classPath);
       if (clazz.getDeclaredAnnotation(ExpectedParamNumber.class) != null && clazz.getAnnotation(ExpectedParamNumber.class).value() != 0){
         int numParam = clazz.getDeclaredAnnotation(ExpectedParamNumber.class).value();
-        return Panel.enterConstantParamsPopup(numParam, newValue);
+        return uiElementFactory.createConstantParamsPopup(numParam, newValue);
       } else {
         return new ArrayList<>();
       }

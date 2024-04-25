@@ -22,5 +22,6 @@ public interface UIElementFactory {
   TextField createTextField(String id, int width, int height);
   CheckBox createCheckBox(String id, int width, int height);
   ListView<String> createListView(String id, int width, int height);
+  List<Integer> createConstantParamsPopup(int numParam, String item);
 
 }

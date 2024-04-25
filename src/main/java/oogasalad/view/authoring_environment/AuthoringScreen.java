@@ -13,6 +13,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oogasalad.view.Window;
+import oogasalad.view.api.authoring.UIElementFactory;
+import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.api.authoring.AuthoringFactory;
 import oogasalad.view.authoring_environment.panels.ShapePanel;
@@ -101,11 +103,11 @@ public class AuthoringScreen {
   }
 
   private List<Panel> createInteractionsPanel() {
-    return List.of(new InteractionPanel(authoringProxy, shapeProxy, rootPane, containerPane, canvasPane));
+    return List.of(new InteractionPanel(authoringProxy, shapeProxy, rootPane, containerPane, canvasPane, new DefaultUIElementFactory()));
   }
 
   private List<Panel> createPoliciesPanel() {
-    return List.of(new PolicyPanel(authoringProxy, shapeProxy, rootPane, containerPane, canvasPane));
+    return List.of(new PolicyPanel(authoringProxy, shapeProxy, rootPane, containerPane, canvasPane, new DefaultUIElementFactory()));
   }
 
   private void setTitle(String title) {
