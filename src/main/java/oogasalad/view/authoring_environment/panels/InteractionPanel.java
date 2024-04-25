@@ -25,14 +25,24 @@ import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import org.controlsfx.control.CheckComboBox;
 
+/**
+ * InteractionPanel provides a panel in the authoring environment where users can manage
+ * interactions between game objects. It allows the user to select commands and set parameters for
+ * interactions between different objects in the game.
+ *
+ * @author Judy He, Alisha Zhang
+ */
 public class InteractionPanel implements Panel {
 
-  private static final String COMMAND_PACKAGE_PATH = "src/main/java/oogasalad/model/gameengine/command";
-  private static final String REFLECTION_COMMAND_PACKAGE_PATH = "oogasalad.model.gameengine.command";
+  private static final String COMMAND_PACKAGE_PATH = "src/main/java/oogasalad/model/gameengine"
+      + "/command";
+  private static final String REFLECTION_COMMAND_PACKAGE_PATH = "oogasalad.model.gameengine"
+      + ".command";
   private final String language = "English"; // TODO: PASS IN LANGUAGE
   String RESOURCE_FOLDER_PATH = "view.";
   String DEFAULT_VALUES_FILE = "DefaultAuthoringValues";
-  ResourceBundle defaultValuesResourceBundle = ResourceBundle.getBundle(RESOURCE_FOLDER_PATH + DEFAULT_VALUES_FILE);
+  ResourceBundle defaultValuesResourceBundle = ResourceBundle.getBundle(
+      RESOURCE_FOLDER_PATH + DEFAULT_VALUES_FILE);
   private int numMultiSelect = Integer.parseInt(
       defaultValuesResourceBundle.getString("interactionNumShapesSelectedAllowed"));
   private final ShapeProxy shapeProxy;
@@ -45,8 +55,17 @@ public class InteractionPanel implements Panel {
   private final ResourceBundle resourceBundle;
   private final UIElementFactory uiElementFactory;
 
-  public InteractionPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
-      AnchorPane containerPane, StackPane canvas, UIElementFactory uiElementFactory) {
+  /**
+   * Constructs an InteractionPanel with the specified AuthoringProxy, ShapeProxy, and other UI
+   * elements.
+   *
+   * @param authoringProxy   the proxy object for authoring-related operations
+   * @param shapeProxy       the proxy object representing the shapes to be manipulated
+   * @param containerPane    the AnchorPane where the panel's UI elements are placed
+   * @param uiElementFactory the factory for creating UI elements
+   */
+  public InteractionPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy,
+      AnchorPane containerPane, UIElementFactory uiElementFactory) {
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
     this.containerPane = containerPane;
@@ -58,28 +77,33 @@ public class InteractionPanel implements Panel {
     handleEvents();
   }
 
+  /**
+   * Creates the UI elements for the InteractionPanel.
+   */
   @Override
   public void createElements() {
     createObjectIdTextField();
     createCommandsDropdown();
   }
 
+
   private void createCommandsDropdown() {
     Label label = new Label(resourceBundle.getString("commandLabel"));
-    AnchorPane.setTopAnchor(label,100.0);
-    AnchorPane.setLeftAnchor(label,350.0);
+    AnchorPane.setTopAnchor(label, 100.0);
+    AnchorPane.setLeftAnchor(label, 350.0);
     List<String> availableCommands = getAvailableCommands();
 
     checkComboBox = new CheckComboBox<>(
         FXCollections.observableArrayList(availableCommands)
     );
     checkComboBox.setMaxWidth(300);
-    containerPane.getChildren().addAll(label,checkComboBox);
+    containerPane.getChildren().addAll(label, checkComboBox);
     AnchorPane.setLeftAnchor(checkComboBox, 500.0);
-    AnchorPane.setTopAnchor(checkComboBox,100.0);
+    AnchorPane.setTopAnchor(checkComboBox, 100.0);
     checkComboBox.setId("collision");
 
-    checkComboBox.disableProperty().bind(Bindings.size(shapeProxy.getShapesListProperty()).lessThan(2));
+    checkComboBox.disableProperty()
+        .bind(Bindings.size(shapeProxy.getShapesListProperty()).lessThan(2));
 
     saveSelectionButton = new Button(resourceBundle.getString("saveButton"));
     AnchorPane.setRightAnchor(saveSelectionButton, 0.0);
@@ -93,7 +117,8 @@ public class InteractionPanel implements Panel {
     AnchorPane.setTopAnchor(idsLabel, 50.0);
 
     infoTextField = new TextField();
-    infoTextField.setEditable(false); //ids are populated automatically after user clicks on object, user can't edit it
+    infoTextField.setEditable(
+        false); //ids are populated automatically after user clicks on object, user can't edit it
     infoTextField.setFocusTraversable(false);
     AnchorPane.setLeftAnchor(infoTextField, 500.0);
     AnchorPane.setTopAnchor(infoTextField, 50.0);
@@ -113,7 +138,8 @@ public class InteractionPanel implements Panel {
     String classPath = REFLECTION_COMMAND_PACKAGE_PATH + "." + newValue;
     try {
       Class<?> clazz = Class.forName(classPath);
-      if (clazz.getDeclaredAnnotation(ExpectedParamNumber.class) != null && clazz.getAnnotation(ExpectedParamNumber.class).value() != 0){
+      if (clazz.getDeclaredAnnotation(ExpectedParamNumber.class) != null
+          && clazz.getAnnotation(ExpectedParamNumber.class).value() != 0) {
         int numParam = clazz.getDeclaredAnnotation(ExpectedParamNumber.class).value();
         return uiElementFactory.createConstantParamsPopup(numParam, newValue);
       } else {
@@ -130,7 +156,7 @@ public class InteractionPanel implements Panel {
     File packageDir = path.toFile();
     List<String> commands = new ArrayList<>();
     if (packageDir.isDirectory()) {
-      for (File file : Objects.requireNonNull(packageDir.listFiles())){
+      for (File file : Objects.requireNonNull(packageDir.listFiles())) {
         String name = file.getName();
         if (name.endsWith(".java")) {
           try {
@@ -149,6 +175,9 @@ public class InteractionPanel implements Panel {
     return commands;
   }
 
+  /**
+   * Handles the event listeners for the InteractionPanel.
+   */
   @Override
   public void handleEvents() {
     handleCommandDropdown();
@@ -161,11 +190,12 @@ public class InteractionPanel implements Panel {
         if (c.wasAdded()) {
           for (String selectedCommand : c.getAddedSubList()) {
             List<Integer> params = enterParam(selectedCommand);
-            if (params != null){
-              tempSavedCommands.put(selectedCommand,params);
+            if (params != null) {
+              tempSavedCommands.put(selectedCommand, params);
             }
           }
-        } if (c.wasRemoved()) {
+        }
+        if (c.wasRemoved()) {
           for (String removedCommand : c.getRemoved()) {
             tempSavedCommands.remove(removedCommand);
           }
@@ -173,6 +203,7 @@ public class InteractionPanel implements Panel {
       }
     });
   }
+
   private void handleSaveButton() {
     saveSelectionButton.setOnAction(e -> {
       authoringProxy.addShapeInteraction(shapeProxy.getSelectedShapeIds(), tempSavedCommands);

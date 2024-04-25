@@ -16,7 +16,15 @@ import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import oogasalad.view.api.enums.AuthoringScreenType;
 
+/**
+ * ShapePanel is responsible for handling shape-related events in the authoring environment,
+ * including the creation and management of game objects and their interactions within a visual
+ * interface.
+ *
+ * @author Judy He
+ */
 public class ShapePanel implements Panel {
+
   private final ShapeProxy shapeProxy;
   private final AuthoringProxy authoringProxy;
   private final AuthoringFactory authoringFactory;
@@ -25,7 +33,20 @@ public class ShapePanel implements Panel {
   private final AnchorPane containerPane;
   private Coordinate startPos;
   private Coordinate translatePos;
-  public ShapePanel(AuthoringFactory authoringFactory, ShapeProxy shapeProxy, AuthoringProxy authoringProxy, StackPane canvas,
+
+  /**
+   * Constructs a ShapePanel with the specified authoring factory, shape proxy, and authoring proxy,
+   * as well as the specified layout panes (canvas, root pane, and container pane).
+   *
+   * @param authoringFactory The factory used to create authoring components.
+   * @param shapeProxy       The shape proxy for handling shape-related operations.
+   * @param authoringProxy   The authoring proxy for managing authoring operations.
+   * @param canvas           The canvas pane.
+   * @param rootPane         The root pane.
+   * @param containerPane    The container pane.
+   */
+  public ShapePanel(AuthoringFactory authoringFactory, ShapeProxy shapeProxy,
+      AuthoringProxy authoringProxy, StackPane canvas,
       AnchorPane rootPane, AnchorPane containerPane) {
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
@@ -38,6 +59,10 @@ public class ShapePanel implements Panel {
     handleEvents();
   }
 
+  /**
+   * Creates elements for the shape panel, including configurations and templates for game objects,
+   * surfaces, collidables, and players.
+   */
   @Override
   public void createElements() {
     containerPane.getChildren().addAll(authoringFactory.createGameObjectsConfiguration());
@@ -47,12 +72,17 @@ public class ShapePanel implements Panel {
     shapeProxy.createGameObjectTemplates();
     containerPane.getChildren().addAll(shapeProxy.getTemplates());
   }
+
+  /**
+   * Handles events for the shapes in the authoring panel.
+   */
   @Override
   public void handleEvents() {
     for (Shape shape : shapeProxy.getTemplates()) {
       handleGameObjectTemplateEvents(shape);
     }
   }
+
   private void handleGameObjectTemplateEvents(Shape shape) {
     shape.setOnMouseClicked(event -> {
       try {
@@ -65,12 +95,14 @@ public class ShapePanel implements Panel {
       }
     });
   }
+
   private void handleGameObjectEvents(Shape shape) {
     shape.setOnMouseClicked(event -> setShapeOnClick((Shape) event.getSource()));
     shape.setOnMousePressed(this::handleMousePressed);
     shape.setOnMouseDragged(event -> setShapeOnCompleteDrag((Shape) event.getSource(), event));
     shape.setOnMouseReleased(event -> setShapeOnRelease((Shape) event.getSource()));
   }
+
   private void handleMousePressed(MouseEvent event) {
     Shape shape = (Shape) event.getSource();
     try {
@@ -79,7 +111,9 @@ public class ShapePanel implements Panel {
       LOGGER.error(e);
     }
   }
-  private void setShapeBeginDrag(Shape shape, MouseEvent event) throws ReflectiveOperationException {
+
+  private void setShapeBeginDrag(Shape shape, MouseEvent event)
+      throws ReflectiveOperationException {
     if (shape.getParent() != null) {
       ((Pane) shape.getParent()).getChildren().remove(shape);
     }
@@ -89,31 +123,44 @@ public class ShapePanel implements Panel {
   }
 
   private void setShapeOnCompleteDrag(Shape shape, MouseEvent event) {
-    Coordinate offset = new Coordinate(event.getSceneX() - startPos.x(), event.getSceneY() - startPos.y());
-    Coordinate newTranslatePos = new Coordinate(translatePos.x() + offset.x(), translatePos.y() + offset.y());
+    Coordinate offset = new Coordinate(event.getSceneX() - startPos.x(),
+        event.getSceneY() - startPos.y());
+    Coordinate newTranslatePos = new Coordinate(translatePos.x() + offset.x(),
+        translatePos.y() + offset.y());
     shape.setTranslateX(newTranslatePos.x());
     shape.setTranslateY(newTranslatePos.y());
   }
+
   private void setShapeOnRelease(Shape shape) {
     if (isInAuthoringBox(shape)) {
       Double leftAnchor = AnchorPane.getLeftAnchor(shape);
       Double topAnchor = AnchorPane.getTopAnchor(shape);
-      if (leftAnchor == null) leftAnchor = 0.0;
-      if (topAnchor == null) topAnchor = 0.0;
-      shapeProxy.getGameObjectAttributesContainer().setPosition(new Coordinate(leftAnchor, topAnchor));
+      if (leftAnchor == null) {
+        leftAnchor = 0.0;
+      }
+      if (topAnchor == null) {
+        topAnchor = 0.0;
+      }
+      shapeProxy.getGameObjectAttributesContainer()
+          .setPosition(new Coordinate(leftAnchor, topAnchor));
     } else {
       shape.setVisible(false);
       rootPane.getChildren().remove(shape);
       shapeProxy.deselectShape(shape);
     }
   }
+
   private void setShapeOnClick(Shape shape) {
-    if (shapeProxy.getShape() == null) return;
+    if (shapeProxy.getShape() == null) {
+      return;
+    }
 
     if (authoringProxy.getCurrentScreenTitle().equals(AuthoringScreenType.GAMEOBJECTS.toString())) {
       shapeProxy.setFinalShapeDisplay();
       try {
-        GameObjectAttributesContainer copy = (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer().clone();
+        GameObjectAttributesContainer copy =
+            (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer()
+            .clone();
         authoringProxy.setGameObject(shapeProxy.getShape(), copy);
       } catch (CloneNotSupportedException e) {
         throw new RuntimeException(e);
@@ -124,6 +171,7 @@ public class ShapePanel implements Panel {
     shapeProxy.updateShapeSelectionDisplay();
     authoringFactory.resetAuthoringElements();
   }
+
   private boolean isInAuthoringBox(Shape shape) {
     Bounds shapeBounds = shape.getBoundsInParent();
     Bounds authoringBoxBounds = canvas.getBoundsInParent();

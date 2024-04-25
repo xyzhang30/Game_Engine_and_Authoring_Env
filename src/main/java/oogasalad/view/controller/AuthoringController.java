@@ -26,7 +26,7 @@ import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
 import oogasalad.view.api.authoring.UIElementFactory;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
-import oogasalad.view.api.enums.AuthoringFactoryType;
+import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.CollidableType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
@@ -46,7 +46,7 @@ public class AuthoringController {
   private final ShapeProxy shapeProxy = new ShapeProxy();
   private final AuthoringProxy authoringProxy = new AuthoringProxy();
 
-  public AuthoringController(SupportedLanguage language, UITheme uiTheme, AuthoringFactoryType authoringFactoryType) {
+  public AuthoringController(SupportedLanguage language, UITheme uiTheme, AuthoringImplementationType authoringFactoryType) {
     stage = new Stage();
     UIElementFactory uiElementFactory = new DefaultUIElementFactory();
     AuthoringFactory authoringFactory = new DefaultAuthoringFactory(uiElementFactory, language, shapeProxy, authoringProxy);

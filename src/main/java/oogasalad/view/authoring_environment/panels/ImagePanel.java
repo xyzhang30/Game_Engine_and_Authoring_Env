@@ -13,6 +13,13 @@ import oogasalad.view.api.authoring.Panel;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 
+/**
+ * ImagePanel provides functionality to select an image file and apply it as a fill pattern to a
+ * shape. The panel contains a button that opens a file chooser to allow the user to select an image
+ * file.
+ *
+ * @author Judy He
+ */
 public class ImagePanel implements Panel {
 
   private final ShapeProxy shapeProxy;
@@ -22,7 +29,15 @@ public class ImagePanel implements Panel {
   private final String language = "English"; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
 
-  public ImagePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane containerPane) {
+  /**
+   * Constructs an ImagePanel with the specified AuthoringProxy, ShapeProxy, and container pane.
+   *
+   * @param authoringProxy the proxy object for authoring-related operations
+   * @param shapeProxy     the proxy object representing the shape to be manipulated
+   * @param containerPane  the AnchorPane in which the panel's components will be added
+   */
+  public ImagePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy,
+      AnchorPane containerPane) {
     this.containerPane = containerPane;
     this.authoringProxy = authoringProxy;
     this.shapeProxy = shapeProxy;
@@ -32,6 +47,10 @@ public class ImagePanel implements Panel {
     handleEvents();
   }
 
+  /**
+   * Creates the elements for the ImagePanel. Initializes the image button and adds it to the
+   * container pane.
+   */
   @Override
   public void createElements() {
     imageButton = new Button(resourceBundle.getString("imageButton"));
@@ -43,6 +62,10 @@ public class ImagePanel implements Panel {
 
   }
 
+  /**
+   * Handles the events for the ImagePanel. Sets up an action event handler for the image button to
+   * open a file chooser and apply the selected image to the shape.
+   */
   @Override
   public void handleEvents() {
     imageButton.setOnAction(event -> {

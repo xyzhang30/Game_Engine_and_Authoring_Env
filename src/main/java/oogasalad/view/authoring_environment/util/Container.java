@@ -1,4 +1,4 @@
-package oogasalad.view.authoring_environment;
+package oogasalad.view.authoring_environment.util;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,14 +13,20 @@ public class Container {
 
   private List<Panel> panels;
 
-  public Container(Panel... c) { // Lab Browser/Advanced
-    panels = Arrays.asList(c);
+  /**
+   * Constructs a container with a given list of panels.
+   *
+   * @param p A list of Panel objects to be set in the container.
+   */
+  public Container(Panel... p) { // Lab Browser/Advanced
+    panels = Arrays.asList(p);
   }
 
-  public List<Panel> getPanels() {
-    return panels;
-  }
-
+  /**
+   * Sets the list of panels for the container.
+   *
+   * @param panels A list of Panel objects to be set in the container.
+   */
   public void setPanels(List<Panel> panels) {
     this.panels = panels;
   }

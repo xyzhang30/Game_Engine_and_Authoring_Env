@@ -15,6 +15,13 @@ import oogasalad.model.gamebuilder.VariablesBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * BuilderDirector manages the construction of game elements and data.
+ * It handles the creation of game objects, players, variables, and rules from provided data.
+ * The class also writes game data to JSON files.
+ *
+ * @author Judy He, Alisha Zhang
+ */
 public class BuilderDirector {
 
   private static final Logger LOGGER = LogManager.getLogger(GameBuilder.class);
