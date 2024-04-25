@@ -40,5 +40,6 @@
     <height_factor>0.07</height_factor>
     <x_layout_factor>0.8</x_layout_factor>
     <y_layout_factor>0.85</y_layout_factor>
+    <styling>theme-selection-box</styling>
   </node>
 </scene_elements>

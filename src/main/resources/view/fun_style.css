@@ -26,7 +26,7 @@
 }
 
 .game-text {
-  -fx-fill: #00FFFF;;
+  -fx-fill: #00FFFF;
   -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 30px;
   -fx-font-weight: bold;
@@ -72,6 +72,21 @@
 
 .angle-arrow {
   -fx-fill: #FF69B4;
+}
+
+.theme-selection-box{
+  -fx-background-color: #00FFFF;
+  -fx-font-family: "Impact", "Arial", sans-serif;
+  -fx-font-size: 25px;
+  -fx-text-fill: white;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
+}
+
+.theme-selection-box .list-cell{
+  -fx-background-color: #00FFFF;
+  -fx-font-family: "Impact", "Arial", sans-serif;
+  -fx-font-size: 25px;
+  -fx-text-fill: white;
 }
 
 
