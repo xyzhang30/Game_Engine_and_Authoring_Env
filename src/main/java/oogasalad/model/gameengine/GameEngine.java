@@ -105,7 +105,7 @@ public class GameEngine implements ExternalGameEngine {
     playerContainer.getActive().getStrikeable().asGameObject().applyInitialVelocity(magnitude,
         direction);
     rules.strikePolicy().getStrikePolicy()
-        .accept(playerContainer.getActive().getStrikeable().asGameObject().getId(), this);
+        .accept(this);
   }
 
   /**
@@ -129,7 +129,7 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   /**
-   * Updates the Y Position of the active controllable by an amount preset in game rules
+   * Updates the Y Position of the active controllable by an amount preset in game rules.
    *
    * @param positive, true if y position is increasing, false if decreasing
    */

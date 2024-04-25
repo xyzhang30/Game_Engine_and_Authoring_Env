@@ -17,7 +17,7 @@ import oogasalad.model.gameengine.RulesRecord;
 public class GameOverStaticStateHandler extends StaticStateHandler {
 
   /**
-   * Checks if the GameOver condition specified in RulesRecord is satisfied by the current game
+   * Checks if the GameOver condition specified in RulesRecord is satisfied by the current game.
    * state.
    *
    * @param engine The game engine instance.
