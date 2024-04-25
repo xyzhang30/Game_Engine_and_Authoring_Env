@@ -30,7 +30,6 @@ import oogasalad.model.gameengine.turn.TurnPolicy;
  *                           (e.g. hitting a golf ball).
  * @param rank               Comparator used for ordering players, based on who is winning
  * @param checker            Methods of checking whether the given state is static
- *
  * @author Noah Loewy
  */
 

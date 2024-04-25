@@ -5,8 +5,8 @@ import static java.util.Objects.hash;
 import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
- * Represents a pair of GameObject instances.
- * This class is used to store pairs of GameObjects for various purposes.
+ * Represents a pair of GameObject instances. This class is used to store pairs of GameObjects for
+ * various purposes.
  *
  * @author Noah Loewy
  */
@@ -19,7 +19,7 @@ public class Pair {
   /**
    * Constructs a Pair object with the specified GameObjects.
    *
-   * @param first The first GameObject in the pair.
+   * @param first  The first GameObject in the pair.
    * @param second The second GameObject in the pair.
    */
   public Pair(GameObject first, GameObject second) {
@@ -46,8 +46,8 @@ public class Pair {
   }
 
   /**
-   * Checks if this Pair is equal to another object.
-   * Two Pairs are considered equal if they contain the same GameObjects, regardless of the order.
+   * Checks if this Pair is equal to another object. Two Pairs are considered equal if they contain
+   * the same GameObjects, regardless of the order.
    *
    * @param o The object to compare with this Pair.
    * @return true if the objects are equal, false otherwise.
@@ -66,8 +66,8 @@ public class Pair {
   }
 
   /**
-   * Generates a hash code for this Pair.
-   * The hash code is based on the IDs of the contained GameObjects.
+   * Generates a hash code for this Pair. The hash code is based on the IDs of the contained
+   * GameObjects.
    *
    * @return The hash code value for this Pair.
    */

@@ -17,10 +17,12 @@ import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
 import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
+import oogasalad.model.gameengine.GameEngine;
 import oogasalad.view.authoring_environment.AuthoringScreen;
 import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
-import oogasalad.view.controller.BuilderDirector;
 import oogasalad.view.enums.CollidableType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Class to handle transitions between authoring environment scenes and communications with backend
@@ -28,7 +30,7 @@ import oogasalad.view.enums.CollidableType;
  * @author Judy He, Jordan Haytaian, Doga Ozmen, Alisha Zhang
  */
 public class AuthoringController {
-
+  static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private final Stage stage;
   private final AuthoringScreen authoringScreen = new AuthoringScreen();
   private final BuilderDirector builderDirector = new BuilderDirector();
@@ -43,12 +45,12 @@ public class AuthoringController {
     stage.show();
   }
 
-  public boolean submitGame(){
+  public boolean submitGame(String gameName){
     try {
-      builderDirector.writeGame("testNewAuthoringEnv");
+      builderDirector.writeGame(gameName);
       return true;
     } catch (RuntimeException e) {
-      e.printStackTrace();
+      LOGGER.error(e);
       return false;
     }
   }
@@ -92,10 +94,12 @@ public class AuthoringController {
         });
       });
     } catch (NullPointerException e){
+      LOGGER.error(e);
       throw new InCompleteRulesAuthoringException("Please make a selection for all rule types");
     }
 
     if (turnPolicy == null || roundPolicy == null || winCondition == null || advanceTurn == null || advanceRound == null || strikePolicy == null || rankComparator == null) {
+      LOGGER.error("InCompleteRulesAuthoringException: Please make a selection for all rule types");
       throw new InCompleteRulesAuthoringException("Please make a selection for all rule types");
     }
 

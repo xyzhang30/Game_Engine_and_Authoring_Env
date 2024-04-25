@@ -6,8 +6,8 @@ import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.api.exception.InvalidCommandException;
 
 /**
- * A factory class for creating instances of StaticStateHandler subclasses.
- * This factory uses reflection to dynamically instantiate handler objects based on class names.
+ * A factory class for creating instances of StaticStateHandler subclasses. This factory uses
+ * reflection to dynamically instantiate handler objects based on class names.
  *
  * @author Noah Loewy
  */

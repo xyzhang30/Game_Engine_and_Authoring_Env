@@ -7,7 +7,6 @@ import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
-import oogasalad.model.gameengine.player.Player;
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
@@ -24,10 +23,10 @@ public class EightBallCommand implements Command {
   }
 
   /**
-   * Executes the command to handle actions related to the eight ball game object.
-   * This includes hiding the eight ball, stopping all other game objects, and determining the winner.
+   * Executes the command to handle actions related to the eight ball game object. This includes
+   * hiding the eight ball, stopping all other game objects, and determining the winner.
    *
-   * @param engine    The game engine in which the command is executed.
+   * @param engine The game engine in which the command is executed.
    */
 
   @Override
@@ -35,7 +34,7 @@ public class EightBallCommand implements Command {
     gameObject.setVisible(false);
     engine.getGameObjects().forEach(GameObject::stop);
     boolean didActiveWin = engine.getPlayerContainer().getActive().areAllScoreablesInvisible();
-    engine.getPlayerContainer().getPlayers().forEach(p->p.applyGameResult(
-        engine.getPlayerContainer().getActive().getId() == (p.getId()) == didActiveWin));
+    engine.getPlayerContainer().getPlayers().forEach(p -> p.applyGameResult(
+        (engine.getPlayerContainer().getActive().getId() == p.getId()) == didActiveWin));
   }
 }

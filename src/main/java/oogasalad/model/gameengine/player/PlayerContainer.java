@@ -1,13 +1,6 @@
 package oogasalad.model.gameengine.player;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import oogasalad.model.api.PlayerRecord;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -20,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 public class PlayerContainer {
 
-  private final Collection <Player> myPlayers;
+  private final Collection<Player> myPlayers;
   private Player active;
 
   /**

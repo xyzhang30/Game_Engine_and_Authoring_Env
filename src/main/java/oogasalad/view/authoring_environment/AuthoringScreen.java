@@ -1,6 +1,7 @@
 package oogasalad.view.authoring_environment;
 
 import java.util.List;
+import java.util.ResourceBundle;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,6 +22,7 @@ import oogasalad.view.authoring_environment.panels.Panel;
 import oogasalad.view.authoring_environment.panels.PolicyPanel;
 import oogasalad.view.authoring_environment.panels.ShapePanel;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
+import oogasalad.view.enums.AuthoringScreenType;
 
 /**
  * Represents the authoring screen for the authoring environment in the application, providing the user interface for creating and managing various game elements.
@@ -30,27 +32,32 @@ import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 public class AuthoringScreen {
 
   private final AnchorPane rootPane = new AnchorPane();
-  //  private final StackPane rootPane = new StackPane(); // PASSED TO PANELS
   private final AnchorPane containerPane = new AnchorPane(); // PASSED TO PANELS
   private final StackPane canvasPane = new StackPane();
   private final ShapeProxy shapeProxy = new ShapeProxy();
   private final AuthoringProxy authoringProxy = new AuthoringProxy();
   private final Scene scene;
   private final Container container = new Container();
-  ComboBox<String> screensDropDown = new ComboBox<>();
+  ComboBox<AuthoringScreenType> screensDropDown = new ComboBox<>();
   Text titleText = new Text();
+  private static final String RESOURCE_FOLDER_PATH = "view.";
+  private static final String UI_FILE_PREFIX = "UIElements";
+  private final String language = "English"; // PASS IN LANGUAGE
+  private final ResourceBundle resourceBundle;
 
   public AuthoringScreen() {
+    this.resourceBundle = ResourceBundle.getBundle(
+        RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
     createCanvas();
     createContainerPane();
-    createScreenSelectionDropDown(List.of("Game Objects", "Interactions",
-        "Policies"));
+    createScreenSelectionDropDown(List.of(AuthoringScreenType.GAMEOBJECTS, AuthoringScreenType.INTERACTIONS,
+        AuthoringScreenType.POLICIES));
     handleScreenSelectionDropDown();
     createFinishButton();
     containerPane.getChildren().add(titleText);
     scene = new Scene(rootPane, Window.SCREEN_WIDTH, Window.SCREEN_HEIGHT);
-    setScene("Game Objects");
-    authoringProxy.setCurrentScreenTitle("Game Objects");
+    setScene(AuthoringScreenType.GAMEOBJECTS);
+    authoringProxy.setCurrentScreenTitle(AuthoringScreenType.GAMEOBJECTS.toString());
   }
 
   private void resetScene() {
@@ -62,18 +69,19 @@ public class AuthoringScreen {
     return this.scene;
   }
 
-  private void setScene(String screenTitle) {
-    setTitle(screenTitle);
-    switch (screenTitle) {
-      case "Game Objects":
+  private void setScene(AuthoringScreenType authoringScreenType) {
+    setTitle(authoringScreenType.toString());
+    switch (authoringScreenType) {
+      case GAMEOBJECTS:
         container.setPanels(createGameObjectsPanel());
         break;
-      case "Interactions":
+      case INTERACTIONS:
         container.setPanels(createInteractionsPanel());
         break;
-      case "Policies":
+      case POLICIES:
         container.setPanels(createPoliciesPanel());
         break;
+
     }
   }
 
@@ -96,14 +104,12 @@ public class AuthoringScreen {
   private void setTitle(String title) {
     titleText.setText(title);
     titleText.setId("titleText");
-    // TODO: REMOVE HARD-CODING
     titleText.setFont(Font.font("Arial", 30));
     AnchorPane.setTopAnchor(titleText, 5.0);
     AnchorPane.setLeftAnchor(titleText, 400.0);
   }
 
   private void createContainerPane() {
-    // TODO: REMOVE HARD-CODING
     int width = 500;
     int height = 980;
     containerPane.setMaxSize(width, height);
@@ -114,7 +120,6 @@ public class AuthoringScreen {
   }
 
   private void createCanvas() {
-    // TODO: REMOVE HARD-CODING
     int canvasWidth = 900;
     int canvasHeight = 900;
     canvasPane.setMaxSize(canvasWidth, canvasHeight);
@@ -136,12 +141,11 @@ public class AuthoringScreen {
   }
 
   private void createFinishButton() {
-    // TODO: REMOVE HARD-CODING
-    Button finishButton = new Button("Finish");
+    Button finishButton = new Button(resourceBundle.getString("finishButton"));
     finishButton.setId("finishButton");
     finishButton.setPrefSize(100, 50);
     finishButton.setOnMouseClicked(event -> {
-      if (screensDropDown.getSelectionModel().getSelectedItem().equals("Game Objects")) {
+      if (screensDropDown.getSelectionModel().getSelectedItem().equals(AuthoringScreenType.GAMEOBJECTS)) {
         shapeProxy.setFinalShapeDisplay();
         try {
           GameObjectAttributesContainer copy = (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer().clone();
@@ -150,7 +154,6 @@ public class AuthoringScreen {
           throw new RuntimeException(e);
         }
       }
-//      authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
       authoringProxy.completeAuthoring();
     });
     AnchorPane.setBottomAnchor(finishButton, 50.0);
@@ -158,10 +161,10 @@ public class AuthoringScreen {
     rootPane.getChildren().add(finishButton);
   }
 
-  private void createScreenSelectionDropDown(List<String> screenOptions) {
+  private void createScreenSelectionDropDown(List<AuthoringScreenType> screenOptions) {
     screensDropDown.getItems().addAll(screenOptions);
-    screensDropDown.getSelectionModel().select("Game Objects");
-    screensDropDown.setPromptText("Select Screen Type");
+    screensDropDown.getSelectionModel().select(AuthoringScreenType.GAMEOBJECTS);
+    screensDropDown.setPromptText(resourceBundle.getString("authoringScreenDropdownPrompt"));
     AnchorPane.setTopAnchor(screensDropDown, 10.0);
     AnchorPane.setLeftAnchor(screensDropDown, 10.0);
     screensDropDown.setPrefSize(300, 30);
@@ -171,7 +174,7 @@ public class AuthoringScreen {
   private void handleScreenSelectionDropDown() {
     screensDropDown.valueProperty().addListener((obs, oldVal, selectedScreen) -> {
       if (selectedScreen != null) {
-        if (oldVal.equals("Game Objects")) {
+        if (oldVal.equals(AuthoringScreenType.GAMEOBJECTS)) {
           shapeProxy.setFinalShapeDisplay();
           try {
             GameObjectAttributesContainer copy = (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer().clone();
@@ -181,10 +184,9 @@ public class AuthoringScreen {
             throw new RuntimeException(e);
           }
         }
-//        authoringProxy.setGameObject(shapeProxy.getShape(), shapeProxy.getGameObjectAttributesContainer());
         resetScene();
         setScene(selectedScreen);
-        authoringProxy.setCurrentScreenTitle(selectedScreen);
+        authoringProxy.setCurrentScreenTitle(selectedScreen.toString());
         authoringProxy.updateScreen();
       }
     });

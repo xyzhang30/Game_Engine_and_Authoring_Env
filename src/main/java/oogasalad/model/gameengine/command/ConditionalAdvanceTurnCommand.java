@@ -20,17 +20,17 @@ public class ConditionalAdvanceTurnCommand implements Command {
 
   public ConditionalAdvanceTurnCommand(List<Integer> arguments,
       Map<Integer, GameObject> gameObjectMap) {
-      //do nothing
+    //do nothing
   }
 
   /**
-   * Executes the command to conditionally advance the turn in the provided game engine.
-   * The turn is advanced if certain conditions are met. This command refers specifically to
-   * billiards, and advances the turn as long as the player did not get one of their balls in,
-   * there was no scratch, and no opponent balls went in. These conditions can eventually be
-   * abstracted out, time permitted.
+   * Executes the command to conditionally advance the turn in the provided game engine. The turn is
+   * advanced if certain conditions are met. This command refers specifically to billiards, and
+   * advances the turn as long as the player did not get one of their balls in, there was no
+   * scratch, and no opponent balls went in. These conditions can eventually be abstracted out, time
+   * permitted.
    *
-   * @param engine    The game engine in which the command is executed.
+   * @param engine The game engine in which the command is executed.
    */
 
 
@@ -45,9 +45,11 @@ public class ConditionalAdvanceTurnCommand implements Command {
             .map(Player::getPlayerRecord)
             .sorted(new IDComparator())
             .toList();
-    if (!engine.getPlayerContainer().getActive().getStrikeable().asGameObject().getVisible() || IntStream.range(0, currents.size())
-        .anyMatch(i -> (currents.get(i).playerId() == engine.getPlayerContainer().getActive().getId())
-            == (currents.get(i).score() == lasts.get(i).score()))) {
+    if (!engine.getPlayerContainer().getActive().getStrikeable().asGameObject().getVisible()
+        || IntStream.range(0, currents.size())
+        .anyMatch(
+            i -> (currents.get(i).playerId() == engine.getPlayerContainer().getActive().getId())
+                == (currents.get(i).score() == lasts.get(i).score()))) {
       engine.advanceTurn();
     }
 
