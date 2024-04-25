@@ -262,13 +262,12 @@ public class SceneElementHandler {
     double fractionalVelocity = powerMeter.getHeight() / maxPower;
     if (ableToStrike) {
       gameController.hitPointScoringObject(fractionalVelocity, angle);
-      sceneManager.hideStrikingElements();
+      //sceneManager.hideStrikingElements();
     }
   }
 
   private void setAngleArrow(Node node) {
     angleArrow = (Polygon) node;
-    System.out.println(angleArrow.getRotate());
   }
 
   private void createNextRoundHandler(Node node) {

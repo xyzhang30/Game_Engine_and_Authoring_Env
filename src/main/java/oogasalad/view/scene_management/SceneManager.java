@@ -106,16 +106,6 @@ public class SceneManager {
     checkEndRound(gameRecord);
   }
 
-  public void displayStrikingElements() {
-    if (!root.getChildren().contains(strikingElements)) {
-      root.getChildren().add(strikingElements);
-    }
-  }
-
-  void hideStrikingElements() {
-    root.getChildren().remove(strikingElements);
-  }
-
   /**
    * Called when next round is started, removes transition screen elements
    */
@@ -144,9 +134,10 @@ public class SceneManager {
 
   /**
    * Changes the theme by prompting the element styler to switch style sheets
+   *
    * @param selectedTheme theme selected by user
    */
-  void changeTheme(ThemeType selectedTheme){
+  void changeTheme(ThemeType selectedTheme) {
     sceneElementStyler.changeTheme(selectedTheme);
   }
 
@@ -199,6 +190,7 @@ public class SceneManager {
 
   private void addGameElementsToGame() {
     compositeElement.addElementsToRoot(root);
+    root.getChildren().add(strikingElements);
   }
 
   private void resetRoot() {
