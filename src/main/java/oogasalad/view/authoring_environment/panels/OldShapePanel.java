@@ -27,13 +27,15 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
-import oogasalad.view.authoring_environment.data.Coordinate;
-import oogasalad.view.enums.AuthoringScreenType;
-import oogasalad.view.enums.GameObjectType;
-import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
+import oogasalad.view.api.authoring.Panel;
+import oogasalad.view.authoring_environment.util.Coordinate;
+import oogasalad.view.authoring_environment.util.TextFieldListener;
+import oogasalad.view.api.enums.AuthoringScreenType;
+import oogasalad.view.api.enums.GameObjectType;
+import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
-import oogasalad.view.enums.CollidableType;
+import oogasalad.view.api.enums.CollidableType;
 import org.controlsfx.control.CheckComboBox;
 
 public class OldShapePanel implements Panel {

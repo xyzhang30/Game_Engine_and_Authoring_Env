@@ -1,4 +1,4 @@
-package oogasalad.view.enums;
+package oogasalad.view.api.enums;
 
 import oogasalad.model.annotations.AvailableCommands;
 import oogasalad.model.annotations.ChoiceType;

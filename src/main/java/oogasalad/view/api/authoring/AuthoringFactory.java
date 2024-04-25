@@ -1,7 +1,6 @@
-package oogasalad.view.authoring_environment.panels;
+package oogasalad.view.api.authoring;
 
 import java.util.List;
-import java.util.ResourceBundle;
 import javafx.scene.Node;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

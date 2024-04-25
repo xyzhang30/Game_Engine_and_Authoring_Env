@@ -7,8 +7,8 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.controller.GameController;
-import oogasalad.view.enums.SceneElementEventType;
-import oogasalad.view.enums.SceneType;
+import oogasalad.view.api.enums.SceneElementEventType;
+import oogasalad.view.api.enums.SceneType;
 
 /**
  * Handles scene element events and interactions within a game environment.

@@ -8,11 +8,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
-import oogasalad.view.authoring_environment.data.Coordinate;
-import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
+import oogasalad.view.api.authoring.AuthoringFactory;
+import oogasalad.view.api.authoring.Panel;
+import oogasalad.view.authoring_environment.util.Coordinate;
+import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
-import oogasalad.view.enums.AuthoringScreenType;
+import oogasalad.view.api.enums.AuthoringScreenType;
 
 public class ShapePanel implements Panel {
   private final ShapeProxy shapeProxy;

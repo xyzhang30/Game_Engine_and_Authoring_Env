@@ -10,9 +10,9 @@ import javafx.scene.shape.Shape;
 import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
 import oogasalad.view.api.exception.MissingInteractionException;
 import oogasalad.view.api.exception.MissingNonControllableTypeException;
-import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
+import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.controller.AuthoringController;
-import oogasalad.view.enums.CollidableType;
+import oogasalad.view.api.enums.CollidableType;
 
 /**
  * AuthoringProxy acts as an intermediary between the authoring environment and the authoring

@@ -2,7 +2,7 @@ package oogasalad.view.authoring_environment;
 
 import java.util.Arrays;
 import java.util.List;
-import oogasalad.view.authoring_environment.panels.Panel;
+import oogasalad.view.api.authoring.Panel;
 /**
  * Represents a container that holds a list of panels within the authoring environment.
  * It is used to manage and organize panels as part of the user interface.

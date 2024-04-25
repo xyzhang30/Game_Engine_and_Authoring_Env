@@ -1,4 +1,4 @@
-package oogasalad.view.enums;
+package oogasalad.view.api.enums;
 
 /**
  * Represents types of scenes

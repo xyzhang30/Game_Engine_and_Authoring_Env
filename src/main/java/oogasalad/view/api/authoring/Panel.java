@@ -1,4 +1,4 @@
-package oogasalad.view.authoring_environment.panels;
+package oogasalad.view.api.authoring;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import oogasalad.model.gameengine.GameEngine;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

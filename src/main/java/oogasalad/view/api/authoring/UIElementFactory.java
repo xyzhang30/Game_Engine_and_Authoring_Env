@@ -1,4 +1,4 @@
-package oogasalad.view.authoring_environment.panels;
+package oogasalad.view.api.authoring;
 
 import java.util.List;
 import javafx.scene.Node;

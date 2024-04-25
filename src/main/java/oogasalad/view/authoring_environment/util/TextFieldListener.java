@@ -1,4 +1,4 @@
-package oogasalad.view.authoring_environment.panels;
+package oogasalad.view.authoring_environment.util;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

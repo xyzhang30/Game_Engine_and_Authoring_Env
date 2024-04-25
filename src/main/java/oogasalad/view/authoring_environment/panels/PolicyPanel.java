@@ -29,14 +29,15 @@ import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.annotations.VariableParamNumber;
 import oogasalad.model.gameengine.GameEngine;
-import oogasalad.view.enums.PolicyType;
+import oogasalad.view.api.authoring.Panel;
+import oogasalad.view.api.enums.PolicyType;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.controlsfx.control.CheckComboBox;
 
-public class PolicyPanel implements Panel{
+public class PolicyPanel implements Panel {
 
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private final AuthoringProxy authoringProxy;

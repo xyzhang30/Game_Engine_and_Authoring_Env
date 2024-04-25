@@ -1,4 +1,4 @@
-package oogasalad.view.authoring_environment.panels;
+package oogasalad.view.authoring_environment.factories;
 
 import java.util.List;
 import javafx.geometry.Orientation;
@@ -12,9 +12,10 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import oogasalad.view.api.authoring.UIElementFactory;
 import org.controlsfx.control.CheckComboBox;
 
-public class DefaultUIElementFactory implements UIElementFactory{
+public class DefaultUIElementFactory implements UIElementFactory {
 
   @Override
   public HBox createHContainer(int spacing, int width, int height, Node... n) {

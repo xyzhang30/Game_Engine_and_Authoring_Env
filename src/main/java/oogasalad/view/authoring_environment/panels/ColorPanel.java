@@ -4,6 +4,7 @@ import java.util.List;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import oogasalad.view.api.authoring.Panel;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 
 public class ColorPanel implements Panel {

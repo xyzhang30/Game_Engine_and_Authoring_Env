@@ -13,8 +13,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import oogasalad.view.authoring_environment.data.Coordinate;
-import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
+import oogasalad.view.authoring_environment.util.Coordinate;
+import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 
 /**
  * The ShapeProxy class acts as a proxy for managing and manipulating shapes within the authoring

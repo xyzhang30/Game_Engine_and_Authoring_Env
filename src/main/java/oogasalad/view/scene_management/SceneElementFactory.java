@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import oogasalad.view.enums.SceneElementType;
+import oogasalad.view.api.enums.SceneElementType;
 
 /**
  * Creates elements from parameters received from sceneElementParser; outsources styling and event

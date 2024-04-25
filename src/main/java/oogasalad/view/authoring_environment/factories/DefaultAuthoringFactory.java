@@ -1,4 +1,4 @@
-package oogasalad.view.authoring_environment.panels;
+package oogasalad.view.authoring_environment.factories;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +17,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import oogasalad.view.api.authoring.AuthoringFactory;
+import oogasalad.view.api.authoring.Panel;
+import oogasalad.view.authoring_environment.util.TextFieldListener;
+import oogasalad.view.api.authoring.UIElementFactory;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
-import oogasalad.view.enums.CollidableType;
-import oogasalad.view.enums.GameObjectType;
-import oogasalad.view.enums.SupportedLanguage;
+import oogasalad.view.api.enums.CollidableType;
+import oogasalad.view.api.enums.GameObjectType;
+import oogasalad.view.api.enums.SupportedLanguage;
 import org.controlsfx.control.CheckComboBox;
 
 public class DefaultAuthoringFactory implements AuthoringFactory {

@@ -1,4 +1,4 @@
-package oogasalad.view.authoring_environment.data;
+package oogasalad.view.authoring_environment.util;
 
 import java.util.ArrayList;
 import java.util.List;
