@@ -1,2 +1,435 @@
-package oogasalad.view.authoring_environment.panels;public class DefaultAuthoringFactory {
+package oogasalad.view.authoring_environment.panels;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import javafx.collections.ListChangeListener;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
+import oogasalad.view.authoring_environment.proxy.ShapeProxy;
+import oogasalad.view.enums.CollidableType;
+import oogasalad.view.enums.GameObjectType;
+import oogasalad.view.enums.SupportedLanguage;
+import org.controlsfx.control.CheckComboBox;
+
+public class DefaultAuthoringFactory implements AuthoringFactory {
+  private final UIElementFactory uiElementFactory;
+  ResourceBundle resourceBundle;
+  protected final ShapeProxy shapeProxy;
+  protected final AuthoringProxy authoringProxy;
+  private ComboBox<GameObjectType> gameObjectTypeDropdown = new ComboBox<>();
+  private CheckComboBox<CollidableType> collidableTypeDropDown = new CheckComboBox<>();
+  private final List<TextField> textFields = new ArrayList<>();
+  private VBox surfaceParameters = new VBox();
+  private VBox collidableParameters = new VBox();
+  private Slider xSlider, ySlider, angleSlider;
+  private CheckBox elasticityCheckBox;
+  private ListView<String> playerAssignmentListView = new ListView<>();
+  private Button addPlayerButton, removePlayerButton;
+  private Text numPlayers;
+
+  public DefaultAuthoringFactory(UIElementFactory uiElementFactory, SupportedLanguage language,
+      ShapeProxy shapeProxy, AuthoringProxy authoringProxy) {
+    this.uiElementFactory = uiElementFactory;
+    this.resourceBundle = ResourceBundle.getBundle(
+        RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
+    this.shapeProxy = shapeProxy;
+    this.authoringProxy = authoringProxy;
+  }
+
+  @Override
+  public List<Node> createGameObjectsConfiguration() {
+    return List.of(createGameObjectTypeSelection(), createGameObjectDisplayCostumization());
+  }
+
+  @Override
+  public List<Node> createSurfacesConfiguration() {
+    List<Node> nodes = List.of(createSurfaceParameters());
+    setSurfaceParametersOptionVisibility(false);
+    return nodes;
+  }
+
+  @Override
+  public List<Node> createCollidablesConfiguration() {
+    List<Node> nodes = List.of(createCollidableTypeSelection(), createCollidableParameters());
+    setCollidableParametersOptionVisibility(false);
+    return nodes;
+  }
+
+  @Override
+  public List<Node> createPlayersConfiguration() {
+    List<Node> nodes = List.of(createPlayerSelection(), createPlayerAdditionAndRemoval());
+    setPlayerAssignmentVisibility(false);
+    return nodes;
+  }
+  @Override
+  public void resetAuthoringElements() {
+    gameObjectTypeDropdown.valueProperty().setValue(null);
+    clearFields();
+    updateSlider(shapeProxy.getShape().getScaleX(), shapeProxy.getShape().getScaleY(), shapeProxy.getShape().getRotate());
+  }
+
+  private Node createGameObjectTypeSelection() {
+    this.gameObjectTypeDropdown = uiElementFactory.createComboBox("gameObjectTypeDropdown",
+        List.of(GameObjectType.SURFACE, GameObjectType.COLLIDABLE),
+        resourceBundle.getString("gameObjectSelectionPrompt"), 200, 50);
+    AnchorPane.setRightAnchor(gameObjectTypeDropdown, 300.0);
+    AnchorPane.setTopAnchor(gameObjectTypeDropdown, 50.0);
+    handleGameObjectTypeSelection();
+    return gameObjectTypeDropdown;
+  }
+  private Node createGameObjectDisplayCostumization() {
+    List<HBox> sliders = createSliders();
+    VBox sliderContainerBox = uiElementFactory.createVContainer(5, 200, 10, sliders.toArray(
+        new Node[0]));
+    AnchorPane.setTopAnchor(sliderContainerBox, 400.0);
+    AnchorPane.setRightAnchor(sliderContainerBox, 50.0);
+    sliderContainerBox.setAlignment(Pos.CENTER_RIGHT);
+
+    xSlider.valueProperty().addListener((observable, oldValue, newValue) ->
+        changeXSize(newValue.doubleValue()));
+    ySlider.valueProperty().addListener((observable, oldValue, newValue) ->
+        changeYSize(newValue.doubleValue()));
+    angleSlider.valueProperty().addListener((observable, oldValue, newValue) ->
+        changeAngle(newValue.doubleValue()));
+
+    return sliderContainerBox;
+  }
+
+  private Node createSurfaceParameters() {
+    List<HBox> textFields = createSurfaceTextFields();
+    VBox paramContainerBox = uiElementFactory.createVContainer(5, 40, 40, textFields.toArray(
+        new Node[0]));
+    AnchorPane.setRightAnchor(paramContainerBox, 300.0);
+    AnchorPane.setTopAnchor(paramContainerBox, 160.0);
+    paramContainerBox.setAlignment(Pos.CENTER);
+    this.surfaceParameters = paramContainerBox;
+    return paramContainerBox;
+  }
+
+  private Node createCollidableTypeSelection() {
+    this.collidableTypeDropDown = uiElementFactory.createCheckComboBox("collidableTypeDropDown", List.of(CollidableType.STRIKABLE, CollidableType.SCOREABLE, CollidableType.CONTROLLABLE, CollidableType.NONCONTROLLABLE), 200, 50);
+    AnchorPane.setRightAnchor(collidableTypeDropDown, 300.0);
+    AnchorPane.setTopAnchor(collidableTypeDropDown, 200.0);
+    handleCollidableTypeSelection();
+    return collidableTypeDropDown;
+  }
+
+  private Node createCollidableParameters() {
+    HBox massTextFieldContainer = createTextFieldContainer("massTextField", resourceBundle.getString("mass"));
+    this.elasticityCheckBox = uiElementFactory.createCheckBox("elasticity", 40, 20);
+    // handling
+    elasticityCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> shapeProxy.getGameObjectAttributesContainer().setElasticity(newValue));
+
+    Label elasticityLabel = new Label(resourceBundle.getString("elasticity"));
+    HBox elasticityCheckBoxContainer = uiElementFactory.createHContainer(10,40, 20, elasticityLabel, elasticityCheckBox);
+
+    VBox paramContainerBox = uiElementFactory.createVContainer(5, 40, 40, massTextFieldContainer, elasticityCheckBoxContainer);
+    AnchorPane.setRightAnchor(paramContainerBox, 390.0);
+    AnchorPane.setTopAnchor(paramContainerBox, 310.0);
+    paramContainerBox.setAlignment(Pos.CENTER_RIGHT);
+    this.collidableParameters = paramContainerBox;
+
+    return paramContainerBox;
+  }
+  private Node createPlayerAdditionAndRemoval() {
+    authoringProxy.addNewPlayer();
+
+    Label numPlayersLabel = new Label(resourceBundle.getString("players"));
+    removePlayerButton = uiElementFactory.createButton("removeBTN", resourceBundle.getString("removeButton"), 50, 50);
+    addPlayerButton = uiElementFactory.createButton("addBTN", resourceBundle.getString("addButton"), 50, 50);
+    numPlayers = new Text(String.valueOf(authoringProxy.getNumPlayers()));
+    HBox hBox  = uiElementFactory.createHContainer(10,150,50, removePlayerButton, numPlayers, addPlayerButton);
+
+    VBox elementsVBox = uiElementFactory.createVContainer(5, 150, 60, numPlayersLabel, hBox);
+    AnchorPane.setRightAnchor(elementsVBox, 50.0);
+    AnchorPane.setTopAnchor(elementsVBox, 565.0);
+    elementsVBox.setAlignment(Pos.CENTER);
+
+    handleAddAndRemovePlayers();
+
+    return elementsVBox;
+  }
+  private Node createPlayerSelection() {
+    playerAssignmentListView = uiElementFactory.createListView("playerListView", 200, 150);
+    for (int currPlayerNum = 1; currPlayerNum <= authoringProxy.getNumPlayers(); currPlayerNum++) {
+      playerAssignmentListView.getItems().add("Player " + currPlayerNum);
+    }
+    AnchorPane.setRightAnchor(playerAssignmentListView, 300.0);
+    AnchorPane.setTopAnchor(playerAssignmentListView, 400.0);
+    setPlayerAssignmentVisibility(true);
+    handlePlayerListViewOnChange();
+    return playerAssignmentListView;
+  }
+  private List<HBox> createSliders() {
+    return List.of(createSliderContainer("XSizeSlider", resourceBundle.getString("XScaleLabel")),
+        createSliderContainer("YSizeSlider", resourceBundle.getString("YScaleLabel")),
+        createSliderContainer("AngleSlider", resourceBundle.getString("AngleLabel"))
+    );
+  }
+  private HBox createSliderContainer(String id, String labelText) {
+    Slider slider = uiElementFactory.createSlider(id, 200, 0, 20, 1);
+    if (labelText.equals(resourceBundle.getString("XScaleLabel"))) {
+      this.xSlider = slider;
+    } else if (labelText.equals(resourceBundle.getString("YScaleLabel"))) {
+      this.ySlider = slider;
+    } else {
+      this.angleSlider = slider;
+    }
+    Label label = new Label(labelText);
+    return uiElementFactory.createHContainer(10, 200, 10, label, slider);
+  }
+  private void updateSlider(double xScale, double yScale, double angle) {
+    xSlider.setValue(xScale);
+    ySlider.setValue(yScale);
+    angleSlider.setValue(angle);
+  }
+  private List<HBox> createSurfaceTextFields() {
+    return List.of(createTextFieldContainer("kFriction", resourceBundle.getString("kFriction")),
+        createTextFieldContainer("sFriction", resourceBundle.getString("sFriction"))
+    );
+  }
+  private HBox createTextFieldContainer(String id, String labelText) {
+    TextField textField = uiElementFactory.createTextField(id, 100, 20);
+    textField.textProperty().addListener(new TextFieldListener(textField.getId(), shapeProxy));
+    Label label = new Label(labelText);
+    textFields.add(textField);
+    return uiElementFactory.createHContainer(10, 100, 20, label, textField);
+  }
+
+  // functionalities
+
+  // update players
+  private void handleAddAndRemovePlayers() {
+    addPlayerButton.setOnMouseClicked(e -> handleAddPlayer());
+    removePlayerButton.setOnMouseClicked(e -> handleRemovePlayer());
+  }
+  private void handleAddPlayer() {
+    authoringProxy.increaseNumPlayers();
+    authoringProxy.addNewPlayer();
+    playerAssignmentListView.getItems().add("Player " + authoringProxy.getNumPlayers());
+    updateNumPlayers();
+  }
+  private void handleRemovePlayer() {
+    if (authoringProxy.getNumPlayers() <= 1) return;
+    authoringProxy.removeMostRecentAddedPlayer();
+    playerAssignmentListView.getItems().remove("Player " + authoringProxy.getCurrentPlayerId());
+    authoringProxy.decreaseNumPlayers();
+    updateNumPlayers();
+  }
+  private void updateNumPlayers() {
+    numPlayers.setText(String.valueOf(authoringProxy.getNumPlayers()));
+  }
+  private void handlePlayerListViewOnChange() {
+    playerAssignmentListView.getSelectionModel().selectedIndexProperty().addListener(((observable, oldPlayerId, newPlayerId) -> {
+      List<CollidableType> collidableTypes = collidableTypeDropDown.getCheckModel().getCheckedItems();
+      for (CollidableType type: collidableTypes) {
+        if ((Integer) oldPlayerId >= 0) {
+          authoringProxy.removeCollidableFromPlayer((Integer) oldPlayerId, type, Integer.parseInt(shapeProxy.getShape().getId()));
+        }
+        int xSpeed = shapeProxy.getGameObjectAttributesContainer().getControllableXSpeed();
+        int ySpeed = shapeProxy.getGameObjectAttributesContainer().getControllableYSpeed();
+        authoringProxy.addCollidableToPlayer((Integer) newPlayerId, type, Integer.parseInt(shapeProxy.getShape().getId()), type.equals(CollidableType.CONTROLLABLE), xSpeed, ySpeed);
+      }
+    }));
+  }
+
+  // object display
+  private void changeAngle(double angle) {
+    shapeProxy.getShape().setRotate(angle);
+    // shapeProxy.getGameObjectAttributesContainer().setAngle(angle);
+  }
+
+  private void changeXSize(double xScale) {
+    shapeProxy.getShape().setScaleX(xScale);
+    shapeProxy.getGameObjectAttributesContainer()
+        .setWidth(shapeProxy.getShape().getLayoutBounds().getWidth() * xScale);
+  }
+
+  private void changeYSize(double yScale) {
+    shapeProxy.getShape().setScaleY(yScale);
+    shapeProxy.getGameObjectAttributesContainer()
+        .setHeight(shapeProxy.getShape().getLayoutBounds().getHeight() * yScale);
+  }
+
+  // game object type selection
+  private void handleGameObjectTypeSelection() {
+    gameObjectTypeDropdown.valueProperty().addListener((obs, oldVal, gameObjectType) -> {
+      if (gameObjectType == null || shapeProxy.getShape() == null) {
+        return;
+      }
+      clearFieldsAndRemoveOldProperty(oldVal);
+      addNewPropertyAndUpdateParameterOptions(gameObjectType);
+      updatePlayersIfChangeToSurface(gameObjectType);
+    });
+  }
+
+  private void clearFieldsAndRemoveOldProperty(GameObjectType oldVal) {
+    clearFields();
+    if (oldVal != null) {
+      shapeProxy.getGameObjectAttributesContainer().getProperties().remove(String.valueOf(oldVal));
+    }
+  }
+
+  private void addNewPropertyAndUpdateParameterOptions(GameObjectType gameObjectType) {
+    shapeProxy.getGameObjectAttributesContainer().getProperties().add(String.valueOf(gameObjectType));
+    updateGameObjectParameterSelectionOptions(gameObjectType);
+  }
+
+  private void updatePlayersIfChangeToSurface(GameObjectType gameObjectType) {
+    if (gameObjectType.equals(GameObjectType.SURFACE)) {
+      authoringProxy.removeObjectFromPlayersAllLists(Integer.parseInt(shapeProxy.getShape().getId()));
+      setPlayerAssignmentVisibility(false);
+    }
+  }
+
+  private void updateGameObjectParameterSelectionOptions(GameObjectType gameObjectType) {
+    if (gameObjectType.equals(GameObjectType.COLLIDABLE)) {
+      setSurfaceParametersOptionVisibility(false);
+      setCollidableParametersOptionVisibility(true);
+    } else if (gameObjectType.equals(GameObjectType.SURFACE)) {
+      setSurfaceParametersOptionVisibility(true);
+      setCollidableParametersOptionVisibility(false);
+    }
+  }
+
+  // collidable type selection
+  private void handleCollidableTypeSelection() {
+    collidableTypeDropDown.getCheckModel().getCheckedItems().addListener((ListChangeListener<CollidableType>) change -> {
+      while (change.next()) {
+        handleAddedCollidableTypes(change);
+        handleRemovedCollidableTypes(change);
+      }
+    });
+  }
+  private void handleAddedCollidableTypes(ListChangeListener.Change<? extends CollidableType> change) {
+    if (change.wasAdded()) {
+      for (CollidableType addedType : change.getAddedSubList()) {
+        addCollidableType(addedType);
+      }
+    }
+  }
+
+  private void handleRemovedCollidableTypes(ListChangeListener.Change<? extends CollidableType> change) {
+    if (change.wasRemoved()) {
+      for (CollidableType removedType : change.getRemoved()) {
+        removeCollidableType(removedType);
+      }
+    }
+  }
+
+  private void addCollidableType(CollidableType addedType) {
+    if (!shapeProxy.getGameObjectAttributesContainer().getProperties().contains(addedType.toString())) {
+      shapeProxy.getGameObjectAttributesContainer().getProperties().add(addedType.toString());
+    }
+
+    if (addedType.equals(CollidableType.NONCONTROLLABLE)) {
+      authoringProxy.removeObjectFromPlayersAllLists(Integer.parseInt(shapeProxy.getShape().getId()));
+      setPlayerAssignmentVisibility(false);
+    } else {
+      setPlayerAssignmentVisibility(true);
+      handleControllableType(addedType);
+      int xSpeed = shapeProxy.getGameObjectAttributesContainer().getControllableXSpeed();
+      int ySpeed = shapeProxy.getGameObjectAttributesContainer().getControllableYSpeed();
+      authoringProxy.addCollidableToPlayer(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
+          addedType, Integer.parseInt(shapeProxy.getShape().getId()), addedType.equals(CollidableType.CONTROLLABLE), xSpeed, ySpeed);
+    }
+  }
+
+  private void handleControllableType(CollidableType addedType) {
+    if (addedType.equals(CollidableType.CONTROLLABLE)) {
+      List<Integer> xySpeeds = Panel.enterConstantParamsPopup(2, resourceBundle.getString("controllableXYSpeeds"));
+      shapeProxy.getGameObjectAttributesContainer().setControllableXSpeed(xySpeeds.get(0));
+      shapeProxy.getGameObjectAttributesContainer().setControllableYSpeed(xySpeeds.get(1));
+    }
+  }
+
+  private void removeCollidableType(CollidableType removedType) {
+    if (shapeProxy.getGameObjectAttributesContainer().getProperties().contains(removedType.toString())) {
+      shapeProxy.getGameObjectAttributesContainer().getProperties().remove(removedType.toString());
+    }
+
+    if (!removedType.equals(CollidableType.NONCONTROLLABLE)) {
+      authoringProxy.removeCollidableFromPlayer(playerAssignmentListView.getSelectionModel().getSelectedIndex(),
+          removedType, Integer.parseInt(shapeProxy.getShape().getId()));
+    }
+  }
+
+  // update view of fields
+  private void clearFields() {
+    collidableTypeDropDown.getCheckModel().clearChecks();
+    playerAssignmentListView.getSelectionModel().clearSelection();
+    for (TextField textField: textFields) textField.clear();
+    elasticityCheckBox.setSelected(false);
+    setCollidableParametersOptionVisibility(false);
+    setSurfaceParametersOptionVisibility(false);
+    setPlayerAssignmentVisibility(false);
+  }
+
+  private void setSurfaceParametersOptionVisibility(boolean visibility) {
+    surfaceParameters.setVisible(visibility);
+  }
+
+  private void setCollidableParametersOptionVisibility(boolean visibility) {
+    collidableTypeDropDown.setVisible(visibility);
+    collidableParameters.setVisible(visibility);
+  }
+
+  private void setPlayerAssignmentVisibility(boolean visibility) {
+    playerAssignmentListView.setVisible(visibility);
+  }
+
+  // update authoring proxy
+//  private void addCollidableToPlayer(int selectedPlayerId, CollidableType collidableType, boolean isControllable) {
+//    Map<Integer, Map<CollidableType, List<Integer>>> playersMap = authoringProxy.getPlayers();
+//    if (selectedPlayerId >= 0) {
+//      if (isControllable) {
+//        int xSpeed = shapeProxy.getGameObjectAttributesContainer().getControllableXSpeed();
+//        int ySpeed = shapeProxy.getGameObjectAttributesContainer().getControllableYSpeed();
+//        playersMap.get(selectedPlayerId).put(collidableType, List.of(Integer.parseInt(shapeProxy.getShape().getId()), xSpeed, ySpeed));
+//      }
+//      else if (!playersMap.get(selectedPlayerId).get(collidableType).contains(Integer.parseInt(shapeProxy.getShape().getId()))) {
+//        playersMap.get(selectedPlayerId).get(collidableType).add(Integer.parseInt(shapeProxy.getShape().getId()));
+//      }
+//    }
+//  }
+//  private void removeObjectFromPlayersAllLists() {
+//    removeCollidableFromAllPlayers(CollidableType.STRIKABLE);
+//    removeCollidableFromAllPlayers(CollidableType.CONTROLLABLE);
+//    removeCollidableFromAllPlayers(CollidableType.SCOREABLE);
+//  }
+//  private void removeCollidableFromAllPlayers(CollidableType collidableType) {
+//    Map<Integer, Map<CollidableType, List<Integer>>> playersMap = authoringProxy.getPlayers();
+//    for (Integer player: playersMap.keySet()) {
+//      removeCollidableFromPlayer(player, collidableType);
+//    }
+//  }
+//  private void removeCollidableFromPlayer(int playerId, CollidableType collidableType) {
+//    Map<Integer, Map<CollidableType, List<Integer>>> playersMap = authoringProxy.getPlayers();
+//    if (playersMap.get(playerId).get(collidableType).contains(Integer.parseInt(shapeProxy.getShape().getId()))) {
+//      playersMap.get(playerId).get(collidableType).remove((Integer) Integer.parseInt(shapeProxy.getShape().getId()));
+//    }
+//  }
+//  private void addNewPlayerToProxy() {
+//    authoringProxy.getPlayers().putIfAbsent(authoringProxy.getCurrentPlayerId(), new HashMap<>());
+//    authoringProxy.getPlayers().get(authoringProxy.getCurrentPlayerId()).putIfAbsent(CollidableType.STRIKABLE, new ArrayList<>());
+//    authoringProxy.getPlayers().get(authoringProxy.getCurrentPlayerId()).putIfAbsent(CollidableType.CONTROLLABLE, new ArrayList<>());
+//    authoringProxy.getPlayers().get(authoringProxy.getCurrentPlayerId()).putIfAbsent(CollidableType.SCOREABLE, new ArrayList<>());
+//  }
+//  private void removePlayerFromProxy() {
+//    authoringProxy.getPlayers().remove(authoringProxy.getCurrentPlayerId());
+//  }
+
 }
