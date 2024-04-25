@@ -4,7 +4,6 @@ import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.RulesRecord;
-import oogasalad.model.gameengine.command.Command;
 
 /**
  * The RoundOverStaticStateHandler class represents a handler for the game over static state,

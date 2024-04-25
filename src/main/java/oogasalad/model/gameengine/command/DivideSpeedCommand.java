@@ -32,7 +32,7 @@ public class DivideSpeedCommand implements Command {
   public DivideSpeedCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));
-    if(arguments.get(1)==0) {
+    if (arguments.get(1) == 0) {
       throw new IllegalArgumentException("Cannot Divide by Zero");
     }
   }
