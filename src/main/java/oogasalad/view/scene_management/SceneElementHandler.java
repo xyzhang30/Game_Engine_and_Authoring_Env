@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
@@ -101,6 +102,7 @@ public class SceneElementHandler {
     eventMap.put(SceneElementEventType.START_GAME, this::createStartGameHandler);
     eventMap.put(SceneElementEventType.NEXT_ROUND, this::createNextRoundHandler);
     eventMap.put(SceneElementEventType.NEW_GAME_WINDOW, this::createNewGameHandler);
+    eventMap.put(SceneElementEventType.CHANGE_THEME, this::createThemeChangeHandler);
   }
 
   private void addStrikingEventsToMap() {
@@ -289,8 +291,15 @@ public class SceneElementHandler {
     node.setOnMouseClicked(e -> sceneManager.getRoot().requestFocus());
   }
 
-  private void createChangethemeHandler(Node node){
-    }
+  private void createThemeChangeHandler(Node node) {
+    //add options
+    ComboBox<String> comboBox = (ComboBox<String>) node;
+    comboBox.setOnAction(event -> {
+      String selectedTheme = comboBox.getValue();
+      //sceneManager.changeTheme(selectedTheme);
+    });
+  }
+
   private void createNewGameHandler(Node node) {
     node.setOnMouseClicked(e -> gameController.createNewWindow());
   }
