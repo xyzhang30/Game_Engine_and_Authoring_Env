@@ -46,4 +46,54 @@ public class DataCreateObject {
       return false;
     }
   }
+
+  public boolean updateGame(int gameId, int ownerId, String gameName) {
+    String sql = "UPDATE Games SET owner_id = ?, name = ? WHERE game_id = ?;";
+
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setInt(1, ownerId);
+      pstmt.setString(2, gameName);
+      pstmt.setInt(3, gameId);
+      int affectedRows = pstmt.executeUpdate();
+      return affectedRows > 0;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+
+  public boolean updateGameScore(int scoreId, int score, String gameResult) {
+    String sql = "UPDATE GameScores SET score = ?, game_result = ? WHERE score_id = ?;";
+
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setInt(1, score);
+      pstmt.setString(2, gameResult);
+      pstmt.setInt(3, scoreId);
+      int affectedRows = pstmt.executeUpdate();
+      return affectedRows > 0;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  public boolean updatePermission(int permissionId, String role) {
+    String sql = "UPDATE Permissions SET role = ? WHERE permission_id = ?;";
+
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, role);
+      pstmt.setInt(2, permissionId);
+      int affectedRows = pstmt.executeUpdate();
+      return affectedRows > 0;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+
 }
