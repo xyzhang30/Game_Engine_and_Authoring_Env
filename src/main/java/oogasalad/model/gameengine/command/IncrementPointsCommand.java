@@ -26,7 +26,6 @@ public class IncrementPointsCommand implements Command {
   private final List<Integer> arguments;
   private final GameObject gameObject;
 
-
   /**
    * Constructs an instance of the SetDelayedPointsCommand with the list of arguments determined
    * from the data file.
@@ -35,11 +34,9 @@ public class IncrementPointsCommand implements Command {
    *                  should be incremented
    */
 
-
   public IncrementPointsCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));
-
   }
 
   /**
@@ -50,10 +47,7 @@ public class IncrementPointsCommand implements Command {
 
   @Override
   public void execute(GameEngine engine) {
-    Optional<Scoreable> optionalScoreable =
-        gameObject.getScoreable();
+    Optional<Scoreable> optionalScoreable = gameObject.getScoreable();
     optionalScoreable.ifPresent(scoreable -> scoreable.incrementTemporaryScore(arguments.get(1)));
   }
-
 }
-
