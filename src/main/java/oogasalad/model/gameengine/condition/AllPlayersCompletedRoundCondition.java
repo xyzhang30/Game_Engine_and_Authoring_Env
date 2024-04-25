@@ -26,7 +26,7 @@ public class AllPlayersCompletedRoundCondition implements Condition {
    * constructor does not actually do anything, and exists for the sake of consistency across
    * conditions.
    *
-   * @param arguments, an empty list
+   * @param arguments an empty list
    */
 
   public AllPlayersCompletedRoundCondition(List<Integer> arguments,

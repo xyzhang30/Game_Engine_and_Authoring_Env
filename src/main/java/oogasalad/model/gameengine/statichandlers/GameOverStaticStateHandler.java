@@ -30,7 +30,7 @@ public class GameOverStaticStateHandler extends StaticStateHandler {
   }
 
   /**
-   * Calls the engine's end game function
+   * Calls the engine's end game function.
    *
    * @param engine The game engine instance.
    * @param rules  The rules record containing game rules and conditions.

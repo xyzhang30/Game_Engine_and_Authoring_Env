@@ -25,7 +25,7 @@ public class MoveToStartingStateCommand implements Command {
    * Constructs a MoveToStartingStateCommand with the specified arguments and game object map.
    *
    * @param arguments     The list of arguments for the command.
-   * @param gameObjectMap The map of game objects.
+   * @param gameObjectMap a map from object ids to the actual GameObject
    */
 
   public MoveToStartingStateCommand(List<Integer> arguments,

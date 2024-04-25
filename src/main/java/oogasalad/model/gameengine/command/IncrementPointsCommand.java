@@ -32,6 +32,7 @@ public class IncrementPointsCommand implements Command {
    *
    * @param arguments Consists of one argument: the ID of the GameObject to which the delayed points
    *                  should be incremented
+   * @param gameObjectMap a map from object ids to the actual GameObject
    */
 
   public IncrementPointsCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
@@ -40,7 +41,7 @@ public class IncrementPointsCommand implements Command {
   }
 
   /**
-   * Executes the command to increment a Scoreable's temporary score by a specified amount
+   * Executes the command to increment a Scoreable's temporary score by a specified amount.
    *
    * @param engine The game engine instance.
    */

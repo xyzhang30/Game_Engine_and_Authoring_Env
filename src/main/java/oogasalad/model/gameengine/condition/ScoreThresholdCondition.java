@@ -25,7 +25,7 @@ public class ScoreThresholdCondition implements Condition {
   /**
    * Constructs an instance of AllPlayersCompletedRoundCondition with a list of arguments.
    *
-   * @param arguments, a list of one element, representing the score threshold required for the
+   * @param arguments a list of one element, representing the score threshold required for the
    *                   condition to evaluate to true
    */
 

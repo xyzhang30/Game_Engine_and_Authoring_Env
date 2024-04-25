@@ -145,7 +145,7 @@
       "AdvanceRoundCommand": []
     },
     "strike_policy": "IncrementPointStrikePolicy",
-    "rank_comparator": "IDComparator",
+    "rank_comparator": "IdComparator",
     "static_checker": {
       "VelocityStaticChecker": []
     }

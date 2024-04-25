@@ -58,7 +58,7 @@ public class GameObject {
   /**
    * Initiates the GameObject.
    *
-   * @param co, the properties of the game object being created.
+   * @param co the properties of the game object being created.
    */
 
   public GameObject(GameObjectProperties co) {
@@ -152,7 +152,7 @@ public class GameObject {
    * Updates the next position of the GameObject to the next position using a kinematics function
    * dependent on the current position, current velocity, and the timestep.
    *
-   * @param dt, the current timestep.
+   * @param dt the current timestep.
    */
   public void move(double dt) {
     myNextX = myX + dt * myVelocityX;
@@ -346,7 +346,7 @@ public class GameObject {
   /**
    * Update y component of position based on prompt from controllable.
    *
-   * @param positive, true if movement in the positive x direction, false otherwise.
+   * @param positive true if movement in the positive x direction, false otherwise.
    */
   public void moveControllableY(boolean positive) {
     Optional<Controllable> controllable = getControllable();
@@ -366,7 +366,7 @@ public class GameObject {
   }
 
   /**
-   * Sets state of Game Object to its state at the beginning of the round
+   * Sets state of Game Object to its state at the beginning of the round.
    */
   public void toStartingState() {
     assignValuesFromRecord(gameObjectHistory.get(0));
@@ -385,7 +385,7 @@ public class GameObject {
   /**
    * Moves the location of a gameObject to place it on top of another game object.
    *
-   * @param gameObject, the game object representing where *this* should be teleported to.
+   * @param gameObject the game object representing where *this* should be teleported to.
    */
   public void teleportTo(GameObject gameObject) {
     myX = gameObject.getX();

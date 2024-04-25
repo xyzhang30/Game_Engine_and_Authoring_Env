@@ -36,7 +36,7 @@ public class Player {
   /**
    * Initializes a player object given its unique id.
    *
-   * @param id, the player's unique identifier.
+   * @param id the player's unique identifier.
    */
 
   public Player(int id) {
@@ -184,7 +184,7 @@ public class Player {
   }
 
   /**
-   * Adds the current state of the gameObject (as a record) to the history of the player
+   * Adds the current state of the gameObject (as a record) to the history of the player.
    */
 
   public void addPlayerHistory() {

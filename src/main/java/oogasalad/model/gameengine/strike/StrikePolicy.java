@@ -1,6 +1,5 @@
 package oogasalad.model.gameengine.strike;
 
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;

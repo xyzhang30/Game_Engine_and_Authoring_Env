@@ -33,6 +33,7 @@ public class SetDelayedPointsCommand implements Command {
    * @param arguments Consists of two arguments: the ID of the GameObject to which the delayed
    *                  points should be added, and the new amount of points for the Scoreable's
    *                  score
+   * @param gameObjectMap a map from object ids to the actual GameObject
    */
 
 
