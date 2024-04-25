@@ -259,6 +259,7 @@ public class SceneElementHandler {
     double fractionalVelocity = powerMeter.getHeight() / maxPower;
     if (ableToStrike) {
       gameController.hitPointScoringObject(fractionalVelocity, angle);
+      sceneManager.hideStrikingElements();
     }
   }
 
