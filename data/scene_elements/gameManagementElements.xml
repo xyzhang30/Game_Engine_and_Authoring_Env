@@ -3,7 +3,7 @@
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>Round: </text>
-    <x_layout_factor>0.9</x_layout_factor>
+    <x_layout_factor>0.89</x_layout_factor>
     <y_layout_factor>0.12</y_layout_factor>
     <styling>game-text</styling>
     <event>SET_ROUND</event>
@@ -13,7 +13,7 @@
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>Turn: </text>
-    <x_layout_factor>0.88</x_layout_factor>
+    <x_layout_factor>0.87</x_layout_factor>
     <y_layout_factor>0.17</y_layout_factor>
     <styling>game-text</styling>
     <event>SET_TURN</event>
