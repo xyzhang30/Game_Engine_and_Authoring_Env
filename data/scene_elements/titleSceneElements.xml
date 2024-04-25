@@ -41,5 +41,6 @@
     <x_layout_factor>0.8</x_layout_factor>
     <y_layout_factor>0.85</y_layout_factor>
     <styling>theme-selection-box</styling>
+    <event>CHANGE_THEME</event>
   </node>
 </scene_elements>

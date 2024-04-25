@@ -110,6 +110,9 @@ public class SceneElementHandler {
       case NEXT_ROUND -> {
         createNextRoundHandler(node);
       }
+      case CHANGE_THEME -> {
+        createChangethemeHandler(node);
+      }
     }
 
   }
@@ -298,5 +301,9 @@ public class SceneElementHandler {
   private void setScores(Node node) {
     gameStatusManager.setScoreList((ListView<String>) node);
     node.setOnMouseClicked(e -> sceneManager.getRoot().requestFocus());
+  }
+
+  private void createChangethemeHandler(Node node){
+
   }
 }
