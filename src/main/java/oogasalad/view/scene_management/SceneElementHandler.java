@@ -160,6 +160,7 @@ public class SceneElementHandler {
   private void createResumeHandler(Node node) {
     node.setOnMouseClicked(e -> {
       sceneManager.removePauseSheen();
+      sceneManager.getRoot().requestFocus();
       gameController.resumeGame();
     });
   }
@@ -288,7 +289,7 @@ public class SceneElementHandler {
 
   private void setScores(Node node) {
     gameStatusManager.setScoreList((ListView<String>) node);
-    node.setOnMouseClicked(e -> sceneManager.getRoot().requestFocus());
+    node.setOnMouseClicked(e -> {sceneManager.getRoot().requestFocus();});
   }
 
   private void createThemeChangeHandler(Node node) {
