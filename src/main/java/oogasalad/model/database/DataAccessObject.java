@@ -49,4 +49,30 @@ public class DataAccessObject {
     return null; // Return null if player not found or in case of an error
   }
 
+  public List<GameScore> getPlayerHighScores(int playerId) {
+    List<GameScore> scores = new ArrayList<>();
+    String query = "SELECT game_id, score, game_result FROM GameScores WHERE player_id = ? ORDER BY score DESC";
+
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(query)) {
+      pstmt.setInt(1, playerId);
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        int gameId = rs.getInt("game_id");
+        int score = rs.getInt("score");
+        String gameResult = rs.getString("game_result");
+
+        // Create a new GameScore object and add it to the list
+        scores.add(new GameScore(playerId, gameId, score, gameResult));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return scores;
+  }
+}
+
+
+
 }
