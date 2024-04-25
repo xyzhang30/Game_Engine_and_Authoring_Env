@@ -20,9 +20,10 @@ public class StaticCheckerFactory {
       throws InvalidCommandException {
     List<StaticChecker> checkers = new ArrayList<>();
     try {
-      for(String key : params.keySet()) {
+      for (String key : params.keySet()) {
         Class<?> clazz = Class.forName(BASE_PATH + STATIC_COMPARATOR_PATH + key);
-        checkers.add((StaticChecker) clazz.getDeclaredConstructor(List.class).newInstance(params.get(key)));
+        checkers.add(
+            (StaticChecker) clazz.getDeclaredConstructor(List.class).newInstance(params.get(key)));
       }
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              NoSuchMethodException | IllegalAccessException e) {

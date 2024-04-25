@@ -6,8 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This is an annotation used to indicate the package for available commands for a specific type of rules.
- * Used for prompting user command/condition/policy selection during game authoing
+ * This is an annotation used to indicate the package for available commands for a specific type of
+ * rules. Used for prompting user command/condition/policy selection during game authoing
  *
  * @author Alisha Zhang
  */

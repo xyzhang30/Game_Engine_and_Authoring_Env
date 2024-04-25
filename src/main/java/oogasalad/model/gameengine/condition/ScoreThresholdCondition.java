@@ -1,15 +1,12 @@
 package oogasalad.model.gameengine.condition;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
-import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
-import oogasalad.model.gameengine.player.Player;
 
 /**
  * The AllPlayersCompletedRoundCondition evaluates if any player's score has exceeded a certain

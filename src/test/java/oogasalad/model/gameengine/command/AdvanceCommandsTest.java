@@ -20,7 +20,7 @@ public class AdvanceCommandsTest {
   }
 
   @Test
-  public void testAdvanceRounf() {
+  public void testAdvanceRound() {
     GameEngine gameEngine = mock(GameEngine.class);
     AdvanceRoundCommand command = new AdvanceRoundCommand(Collections.emptyList(), Map.of());
     command.execute(gameEngine);

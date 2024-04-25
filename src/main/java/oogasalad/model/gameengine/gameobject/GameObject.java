@@ -39,6 +39,8 @@ public class GameObject {
   private final double myKineticMu;
   private final double myInclineAngle;
   private final Stack<GameObjectRecord> gameObjectHistory;
+  private final boolean inelastic;
+  private final boolean phaser;
   private double myX;
   private double myY;
   private double myVelocityX;
@@ -48,10 +50,6 @@ public class GameObject {
   private double myNextVelocityX;
   private double myNextVelocityY;
   private boolean myVisible;
-  private final boolean inelastic;
-
-  private final boolean phaser;
-
   private Strikeable strikeable;
   private Scoreable scoreable;
   private Controllable controllable;
@@ -329,7 +327,7 @@ public class GameObject {
   }
 
 
-//assign values to instance variables from a record, typically an old static state
+  //assign values to instance variables from a record, typically an old static state
   private void assignValuesFromRecord(GameObjectRecord record) {
     myX = record.x();
     myY = record.y();

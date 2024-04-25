@@ -6,8 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This is an annotation used to indicate whether a type of command/condition should have a singular command or multiple commands
- * Used for prompting user command/condition/policy selection during game authoing
+ * This is an annotation used to indicate whether a type of command/condition should have a singular
+ * command or multiple commands Used for prompting user command/condition/policy selection during
+ * game authoing
  *
  * @author Alisha Zhang
  */
@@ -16,7 +17,8 @@ import java.lang.annotation.Target;
 public @interface ChoiceType {
 
   /**
-   * @return boolean, true if the specific type of commands takes a singular command (false if takes in multiple)
+   * @return boolean, true if the specific type of commands takes a singular command (false if takes
+   * in multiple)
    */
   boolean singleChoice();
 }
