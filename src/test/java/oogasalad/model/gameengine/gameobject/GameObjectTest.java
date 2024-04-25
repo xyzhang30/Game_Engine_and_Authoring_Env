@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 import java.util.List;
+import oogasalad.model.api.data.Dimension;
+import oogasalad.model.api.data.GameObjectProperties;
+import oogasalad.model.api.data.Position;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.Optional;
@@ -15,7 +18,7 @@ public class GameObjectTest {
 
   @Before
   public void setUp() {
-    gameObject = new GameObject(1, 1, 1, 1, true, 1, 1, 1, 1, 1, "", false, false); // Create a test
+    gameObject = new GameObject(new GameObjectProperties(1, List.of("visible", "strikeable"), 1.0, new Position(1.0,1.0), "", new Dimension(1,1), List.of(), 1, 1, 1, "", 1.0, false, false)); //
   }
 
   @Test
@@ -68,7 +71,8 @@ public class GameObjectTest {
   @Test
   public void testTeleportTo() {
 
-    GameObject targetObject = new GameObject(2,10,10, 10, true, 1, 1, 1, 1, 1, "", false, false); // Create a test
+    GameObject targetObject = new GameObject(new GameObjectProperties(1, List.of("visible", "strikeable"), 1.0,
+        new Position(1.0,1.0), "", new Dimension(1,1), List.of(), 1, 1, 1, "", 1.0, false, false)); //
     gameObject.teleportTo(targetObject);
     assertEquals(targetObject.getX(), gameObject.getX(), 0.001);
     assertEquals(targetObject.getY(), gameObject.getY(), 0.001);

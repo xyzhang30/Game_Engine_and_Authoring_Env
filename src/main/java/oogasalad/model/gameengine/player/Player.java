@@ -34,9 +34,9 @@ public class Player {
   private double score;
 
   /**
-   * Initializes a player object given its unique id
+   * Initializes a player object given its unique id.
    *
-   * @param id, the player's unique identifier
+   * @param id the player's unique identifier.
    */
 
   public Player(int id) {
@@ -81,14 +81,14 @@ public class Player {
     }
   }
 
-  public void setControllable(Controllable controllable, int xMovement, int yMovement) {
+  public void setControllable(Controllable controllable, int movementXdir, int movementYdir) {
     myControllable = controllable;
-    myControllable.setMovement(xMovement, yMovement);
+    myControllable.setMovement(movementXdir, movementYdir);
   }
 
   public boolean areAllScoreablesInvisible() {
-    return myScoreables.stream().
-        noneMatch(scoreable -> scoreable.asGameObject().getVisible());
+    return myScoreables.stream()
+            .noneMatch(scoreable -> scoreable.asGameObject().getVisible());
   }
 
   public Controllable getControllable() {
@@ -184,7 +184,7 @@ public class Player {
   }
 
   /**
-   * Adds the current state of the gameObject (as a record) to the history of the player
+   * Adds the current state of the gameObject (as a record) to the history of the player.
    */
 
   public void addPlayerHistory() {
@@ -192,7 +192,7 @@ public class Player {
   }
 
   /**
-   * Restores the previous state of the gameObject (as a record) to the history of the gameObject
+   * Restores the previous state of the gameObject (as a record) to the history of the gameObject.
    */
 
   public void toLastStaticStatePlayers() {

@@ -24,6 +24,7 @@ public class LastStaticStateCommand implements Command {
    * anything, and exists for the sake of consistency across commands.
    *
    * @param arguments An empty list.
+   * @param gameObjectMap a map from object ids to the actual GameObject
    */
 
   public LastStaticStateCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {

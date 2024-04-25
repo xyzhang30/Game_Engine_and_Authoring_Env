@@ -48,7 +48,7 @@ public class NTurnCompletedConditionTest {
 
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
-    NTurnsCompletedCondition condition = new NTurnsCompletedCondition(List.of(3), Map.of());
+    TurnsCompletedCondition condition = new TurnsCompletedCondition(List.of(3), Map.of());
     assertFalse(condition.evaluate(gameEngine));
   }
 
@@ -70,7 +70,7 @@ public class NTurnCompletedConditionTest {
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
 
-    NTurnsCompletedCondition condition = new NTurnsCompletedCondition(List.of(3), Map.of());
+    TurnsCompletedCondition condition = new TurnsCompletedCondition(List.of(3), Map.of());
 
     assertTrue(condition.evaluate(gameEngine));
   }

@@ -31,7 +31,7 @@ public class TurnOverStaticStateHandler extends StaticStateHandler {
   }
 
   /**
-   * Executes all the commands specified in the game rules' AdvanceTurn on the current Game State
+   * Executes all the commands specified in the game rules' AdvanceTurn on the current Game State.
    *
    * @param engine The game engine instance.
    * @param rules  The rules record containing game rules and conditions.

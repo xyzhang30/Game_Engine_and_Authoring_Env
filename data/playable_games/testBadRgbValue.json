@@ -168,7 +168,7 @@
       "AllPlayersCompletedRoundCondition": []
     },
     "win_condition": {
-      "NRoundsCompletedCondition": [2.0]
+      "RoundsCompletedCondition": [2.0]
     },
     "advance_turn": [
       {

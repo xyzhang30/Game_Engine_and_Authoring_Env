@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Stack;
 import java.util.function.Supplier;
 import oogasalad.model.api.GameObjectRecord;
+import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.gameengine.gameobject.controllable.Controllable;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 
@@ -55,43 +56,28 @@ public class GameObject {
   private Controllable controllable;
 
   /**
-   * Initiates the GameObject
+   * Initiates the GameObject.
    *
-   * @param id,           the unique id
-   * @param mass,         the mass (in grams)
-   * @param x,            the x position (in meters)
-   * @param y,            the y position (in meters)
-   * @param visible,      the visibility state
-   * @param staticMu,     the static coefficient of friction
-   * @param kineticMu,    the kinetic coefficient of friction
-   * @param inclineAngle, the angle of incline if it is a surface (degrees)
-   * @param width,        the width of the game object (in meters)
-   * @param height,       the height of the game object (in meters)
-   * @param shape,        the shape of the game object (string representation)
+   * @param co the properties of the game object being created.
    */
 
-  public GameObject(int id, double mass, double x, double y,
-      boolean visible, double staticMu, double kineticMu, double inclineAngle, double width,
-      double height,
-      String shape, boolean inelastic, boolean phaser) {
-    myId = id;
-    myMass = mass;
-    myX = x;
-    myY = y;
-    myVelocityX = 0.0;
-    myVelocityY = 0.0;
-    myNextX = x;
-    myNextY = y;
-    myVisible = visible;
-    myWidth = width;
-    myHeight = height;
-    myShape = shape;
-    myStaticMu = staticMu;
-    myKineticMu = kineticMu;
-    myInclineAngle = inclineAngle;
+  public GameObject(GameObjectProperties co) {
+    myId = co.collidableId();
+    myMass = co.mass();
+    myX = co.position().xPosition();
+    myY = co.position().yPosition();
+    myVelocityX = 0;
+    myVelocityY = 0;
+    myVisible = co.properties().contains("visible") && !co.properties().contains("strikeable");
+    myStaticMu = co.staticFriction();
+    myKineticMu = co.kineticFriction();
+    myInclineAngle = co.inclineAngle();
+    myWidth = co.dimension().xDimension();
+    myHeight = co.dimension().yDimension();
+    myShape = co.shape();
+    inelastic = co.inelastic();
+    phaser = co.phaser();
     gameObjectHistory = new Stack<>();
-    this.inelastic = inelastic;
-    this.phaser = phaser;
   }
 
   /**
@@ -159,15 +145,14 @@ public class GameObject {
 
   public GameObjectRecord toGameObjectRecord() {
     return new GameObjectRecord(myId, myMass, myX, myY, myVelocityX, myVelocityY, myVisible,
-        myStaticMu, myKineticMu
-        , myInclineAngle, myWidth, myHeight, inelastic, phaser);
+        myStaticMu, myKineticMu, myInclineAngle, myWidth, myHeight, inelastic, phaser);
   }
 
   /**
    * Updates the next position of the GameObject to the next position using a kinematics function
-   * dependent on the current position, current velocity, and the timestep
+   * dependent on the current position, current velocity, and the timestep.
    *
-   * @param dt, the current timestep
+   * @param dt the current timestep.
    */
   public void move(double dt) {
     myNextX = myX + dt * myVelocityX;
@@ -341,7 +326,7 @@ public class GameObject {
   }
 
   /**
-   * Adds the current state of the gameObject (as a record) to the history of the gameObject
+   * Adds the current state of the gameObject (as a record) to the history of the gameObject.
    */
 
   public void addStaticStateGameObject() {
@@ -351,7 +336,7 @@ public class GameObject {
   /**
    * Update y component of position based on prompt from controllable
    *
-   * @param positive, true if movement in the positive x direction, false otherwise
+   * @param positive true if movement in the positive x direction, false otherwise
    */
   public void moveControllableX(boolean positive) {
     Optional<Controllable> controllable = getControllable();
@@ -359,9 +344,9 @@ public class GameObject {
   }
 
   /**
-   * Update y component of position based on prompt from controllable
+   * Update y component of position based on prompt from controllable.
    *
-   * @param positive, true if movement in the positive x direction, false otherwise
+   * @param positive true if movement in the positive x direction, false otherwise.
    */
   public void moveControllableY(boolean positive) {
     Optional<Controllable> controllable = getControllable();
@@ -381,14 +366,14 @@ public class GameObject {
   }
 
   /**
-   * Sets state of Game Object to its state at the beginning of the round
+   * Sets state of Game Object to its state at the beginning of the round.
    */
   public void toStartingState() {
     assignValuesFromRecord(gameObjectHistory.get(0));
   }
 
   /**
-   * Sets the velocity of game object to zero
+   * Sets the velocity of game object to zero.
    */
   public void stop() {
     myNextVelocityY = 0;
@@ -400,7 +385,7 @@ public class GameObject {
   /**
    * Moves the location of a gameObject to place it on top of another game object.
    *
-   * @param gameObject, the game object representing where *this* should be teleported to
+   * @param gameObject the game object representing where *this* should be teleported to.
    */
   public void teleportTo(GameObject gameObject) {
     myX = gameObject.getX();

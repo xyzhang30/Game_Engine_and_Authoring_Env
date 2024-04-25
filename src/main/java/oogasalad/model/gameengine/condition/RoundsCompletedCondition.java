@@ -9,7 +9,7 @@ import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
- * The NRoundsCompletedCondition class represents a condition that evaluates whether a specified
+ * The RoundsCompletedCondition class represents a condition that evaluates whether a specified
  * number of rounds have been completed in the game.
  *
  * @author Noah Loewy
@@ -19,18 +19,18 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
 @ExpectedParamNumber(1)
-public class NRoundsCompletedCondition implements Condition {
+public class RoundsCompletedCondition implements Condition {
 
   private final List<Integer> arguments;
 
   /**
-   * Constructs an instance of the NRoundsCompletedCondition with the provided arguments.
+   * Constructs an instance of the RoundsCompletedCondition with the provided arguments.
    *
    * @param arguments A one-element list which represents the number of rounds that need to be
    *                  completed for the condition to evaluate to true.
    */
 
-  public NRoundsCompletedCondition(List<Integer> arguments,
+  public RoundsCompletedCondition(List<Integer> arguments,
       Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
   }

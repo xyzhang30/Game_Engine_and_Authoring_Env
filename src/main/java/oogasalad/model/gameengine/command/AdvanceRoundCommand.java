@@ -10,7 +10,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
  * The AdvanceRoundCommand handles the internal transition from one round to another in the ooga
- * salad game engine
+ * salad game engine.
  *
  * @author Noah Loewy
  */
@@ -24,7 +24,8 @@ public class AdvanceRoundCommand implements Command {
    * Constructs an instance of AdvanceRoundCommand with a list of arguments. This constructor does
    * not actually do anything, and exists for the sake of consistency across commands.
    *
-   * @param arguments, an empty list
+   * @param arguments an empty list
+   * @param gameObjectMap a map from object ids to the actual GameObject
    */
 
   public AdvanceRoundCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {

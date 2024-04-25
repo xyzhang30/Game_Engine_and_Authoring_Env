@@ -10,20 +10,7 @@ public class CollidableFactory {
 
   public static GameObject createCollidable(GameObjectProperties co) {
 
-    GameObject c = new GameObject(
-        co.collidableId(),
-        co.mass(),
-        co.position().xPosition(),
-        co.position().yPosition(),
-        co.properties().contains("visible") && !co.properties().contains("strikeable"),
-        co.staticFriction(),
-        co.kineticFriction(),
-        co.inclineAngle(),
-        co.dimension().xDimension(),
-        co.dimension().yDimension(),
-        co.shape(),
-        co.inelastic(),
-        co.phaser());
+    GameObject c = new GameObject(co);
 
     if (co.properties().contains("strikeable")) {
       c.addStrikeable(new DefaultStrikeable(c));

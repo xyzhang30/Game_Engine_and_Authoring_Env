@@ -156,7 +156,7 @@
     ],
     "turn_policy": "StandardTurnPolicy",
     "win_condition": {
-      "NRoundsCompletedCommand": [2.0]
+      "RoundsCompletedCommand": [2.0]
     },
     "advance": [
       {
