@@ -29,6 +29,7 @@
     <styling>title-text</styling>
   </node>
 
+  <node>
   <class>javafx.scene.control.ListView</class>
   <width_factor>0.25</width_factor>
   <height_factor>0.2</height_factor>
