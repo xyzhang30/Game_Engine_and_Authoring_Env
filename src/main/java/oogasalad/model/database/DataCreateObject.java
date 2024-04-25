@@ -2,7 +2,9 @@ package oogasalad.model.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -110,22 +112,76 @@ public class DataCreateObject {
   }
 
   public boolean createGame(int ownerId, String gameName) {
-    String sql = "INSERT INTO Games (owner_id, name) VALUES (?, ?)";
+    // Start a transaction
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    PreparedStatement pstmtPermission = null;
+    ResultSet generatedKeys = null;
+    boolean success = false;
 
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    try {
+      conn = DatabaseConfig.getConnection();
+      conn.setAutoCommit(false); // Transaction block start
+
+      // Insert the new game and get its generated ID
+      String sqlInsertGame = "INSERT INTO Games (owner_id, name) VALUES (?, ?)";
+      pstmt = conn.prepareStatement(sqlInsertGame, Statement.RETURN_GENERATED_KEYS);
 
       pstmt.setInt(1, ownerId);
       pstmt.setString(2, gameName);
-
       int affectedRows = pstmt.executeUpdate();
-      return affectedRows > 0;
+
+      if (affectedRows == 0) {
+        throw new SQLException("Creating game failed, no rows affected.");
+      }
+
+      generatedKeys = pstmt.getGeneratedKeys();
+      if (generatedKeys.next()) {
+        // Retrieve the id of the newly inserted game
+        long newGameId = generatedKeys.getLong(1);
+
+        // Insert default permissions for all players with the role "Not Permitted"
+        String sqlInsertPermission = "INSERT INTO Permissions (player_id, game_id, role) "
+            + "SELECT player_id, ?, 'Not Permitted' FROM Players";
+        pstmtPermission = conn.prepareStatement(sqlInsertPermission);
+
+        pstmtPermission.setLong(1, newGameId);
+        pstmtPermission.executeUpdate();
+
+        // Commit the transaction
+        conn.commit();
+        success = true;
+      } else {
+        throw new SQLException("Creating game failed, no ID obtained.");
+      }
     } catch (SQLException e) {
+      // Rollback if there was an error
+      if (conn != null) {
+        try {
+          conn.rollback();
+        } catch (SQLException ex) {
+          ex.printStackTrace();
+        }
+      }
       e.printStackTrace();
+    } finally {
+      // Clean up resources
+      try {
+        if (generatedKeys != null) generatedKeys.close();
+        if (pstmt != null) pstmt.close();
+        if (pstmtPermission != null) pstmtPermission.close();
+        if (conn != null) {
+          conn.setAutoCommit(true); // Reset to default mode
+          conn.close();
+        }
+      } catch (SQLException ex) {
+        ex.printStackTrace();
+      }
     }
 
-    return false;
+    return success;
   }
+
 
 
   public boolean assignPermissionToPlayers(int gameId, List<Integer> playerIds, String permission) {
