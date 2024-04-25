@@ -138,6 +138,29 @@ public class DataAccessObject {
     return false; // Return false if user not found or password does not match
   }
 
+  public List<Integer> getPlayableGameIds(int playerId) {
+    List<Integer> gameIds = new ArrayList<>();
+    String sql = "SELECT game_id FROM Permissions WHERE player_id = ? AND role = 'PLAY'";
+
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      pstmt.setInt(1, playerId);
+
+      try (ResultSet rs = pstmt.executeQuery()) {
+        while (rs.next()) {
+          int gameId = rs.getInt("game_id");
+          gameIds.add(gameId);
+        }
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return gameIds;
+  }
+
 
 
 }
