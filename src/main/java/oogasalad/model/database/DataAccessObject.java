@@ -12,9 +12,10 @@ import org.mindrot.jbcrypt.BCrypt;
 public class DataAccessObject {
 
   // Method to retrieve a Player object by its ID
+  //TODO-combine password checker with this
   public Player getPlayer(int id) {
     // SQL query to select player details
-    String query = "SELECT player_id, username, avatar_url, language, age FROM Players WHERE player_id = ?";
+    String query = "SELECT * FROM Players WHERE player_id = ?";
 
     // Try-with-resources statement to ensure the closing of resources
     try (Connection conn = DatabaseConfig.getConnection();

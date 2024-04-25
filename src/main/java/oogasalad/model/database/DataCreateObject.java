@@ -8,7 +8,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class DataCreateObject {
 
   // Register a new user
-  public boolean registerUser(String username, String password, String avatarUrl, String language, int age, String favoriteVariantsJson, int tokens, String colorsJson) {
+  public static boolean registerUser(String username, String password, String avatarUrl, String language, int age, String favoriteVariantsJson, int tokens, String colorsJson) {
     try (Connection conn = DatabaseConfig.getConnection()) {
       String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
       String sql = "INSERT INTO Players (username, password, avatar_url, language, age, favorite_variants, tokens, colors) VALUES (?, ?, ?, ?, ?, ?::jsonb, ?, ?::jsonb)";
@@ -107,6 +107,46 @@ public class DataCreateObject {
     }
     return false;
   }
+
+  public boolean createGame(int ownerId, String gameName) {
+    String sql = "INSERT INTO Games (owner_id, name) VALUES (?, ?)";
+
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+      pstmt.setInt(1, ownerId);
+      pstmt.setString(2, gameName);
+
+      int affectedRows = pstmt.executeUpdate();
+      return affectedRows > 0;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return false;
+  }
+
+  public static void main(String[] args) {
+    // Sample user data for testing
+    String username = "testUser";
+    String password = "testPassword123!";
+    String avatarUrl = "http://example.com/avatar.jpg";
+    String language = "English";
+    int age = 30;
+    String favoriteVariantsJson = "{\"game\":\"chess\",\"variant\":\"speed\"}";
+    int tokens = 100;
+    String colorsJson = "{\"primary\":\"blue\",\"secondary\":\"green\"}";
+
+    // Attempt to register the user
+    boolean result = registerUser(username, password, avatarUrl, language, age, favoriteVariantsJson, tokens, colorsJson);
+
+    if (result) {
+      System.out.println("User registration successful.");
+    } else {
+      System.out.println("User registration failed.");
+    }
+  }
+
 
 
 }
