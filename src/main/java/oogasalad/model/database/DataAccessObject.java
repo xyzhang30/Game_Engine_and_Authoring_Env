@@ -138,7 +138,7 @@ public class DataAccessObject {
     return false; // Return false if user not found or password does not match
   }
 
-  public List<Integer> getPlayableGameIds(int playerId) {
+  public static List<Integer> getPlayableGameIds(int playerId) {
     List<Integer> gameIds = new ArrayList<>();
     String sql = "SELECT game_id FROM Permissions WHERE player_id = ? AND role = 'PLAY'";
 
