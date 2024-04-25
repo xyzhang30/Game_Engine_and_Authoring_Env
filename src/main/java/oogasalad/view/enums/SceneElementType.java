@@ -13,6 +13,7 @@ public enum SceneElementType {
   LISTVIEW,
   TEXT,
   RECTANGLE,
-  ARROW
+  ARROW,
+  COMBOBOX
 
 }

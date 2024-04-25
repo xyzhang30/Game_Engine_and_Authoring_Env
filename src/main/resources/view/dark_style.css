@@ -1,5 +1,5 @@
 .root {
-  -fx-background-color: #f0f0f0;
+  -fx-background-color: black;
 }
 
 .list-cell {
@@ -13,7 +13,7 @@
   -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 50px;
   -fx-font-weight: bold;
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
+  -fx-effect: dropshadow(three-pass-box, rgba(256, 256, 256, 0.3), 10, 0.5, 3, 3);
 }
 
 .game-button {
@@ -22,7 +22,7 @@
   -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 15px;
   -fx-font-weight: bold;
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
+  -fx-effect: dropshadow(three-pass-box, rgba(256, 256, 256, 0.3), 10, 0.5, 3, 3);
 }
 
 .game-text {
@@ -30,7 +30,7 @@
   -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 30px;
   -fx-font-weight: bold;
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
+  -fx-effect: dropshadow(three-pass-box, rgba(256, 256, 256, 0.3), 5, 0.5, 3, 3);
 }
 
 .title-text {
@@ -39,14 +39,14 @@
   -fx-font-size: 100px;
   -fx-font-weight: bold;
   -fx-alignment: center;
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
+  -fx-effect: dropshadow(three-pass-box, rgba(256, 256, 256, 0.3), 10, 0.5, 3, 3);
 }
 
 .menu-game-options {
   -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 30px;
   -fx-font-weight: bold;
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
+  -fx-effect: dropshadow(three-pass-box, rgba(256, 256, 256, 0.3), 10, 0.5, 3, 3);
 }
 
 .pause-sheen {
@@ -58,12 +58,12 @@
   -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 15px;
   -fx-font-weight: bold;
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
+  -fx-effect: dropshadow(three-pass-box, rgba(256, 256, 256, 0.3), 10, 0.5, 3, 3);
 }
 
 .power-outline {
   -fx-fill: darkgrey;
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
+  -fx-effect: dropshadow(three-pass-box, rgba(256, 256, 256, 0.3), 10, 0.5, 3, 3);
 }
 
 .power-bar {
@@ -72,6 +72,21 @@
 
 .angle-arrow {
   -fx-fill: #FF851B;
+}
+
+.theme-selection-box{
+  -fx-background-color: #0074D9;
+  -fx-font-family: "Impact", "Arial", sans-serif;
+  -fx-font-size: 25px;
+  -fx-text-fill: white;
+  -fx-effect: dropshadow(three-pass-box, rgba(256, 256, 256, 0.3), 10, 0.5, 3, 3);
+}
+
+.theme-selection-box .list-cell{
+  -fx-background-color: #0074D9;
+  -fx-font-family: "Impact", "Arial", sans-serif;
+  -fx-font-size: 25px;
+  -fx-text-fill: white;
 }
 
 

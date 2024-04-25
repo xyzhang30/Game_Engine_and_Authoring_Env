@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
@@ -11,6 +12,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.enums.SceneElementEventType;
+import oogasalad.view.enums.ThemeType;
 
 /**
  * Handles scene element events and interactions within a game environment.
@@ -101,6 +103,7 @@ public class SceneElementHandler {
     eventMap.put(SceneElementEventType.START_GAME, this::createStartGameHandler);
     eventMap.put(SceneElementEventType.NEXT_ROUND, this::createNextRoundHandler);
     eventMap.put(SceneElementEventType.NEW_GAME_WINDOW, this::createNewGameHandler);
+    eventMap.put(SceneElementEventType.CHANGE_THEME, this::createThemeChangeHandler);
   }
 
   private void addStrikingEventsToMap() {
@@ -259,6 +262,7 @@ public class SceneElementHandler {
     double fractionalVelocity = powerMeter.getHeight() / maxPower;
     if (ableToStrike) {
       gameController.hitPointScoringObject(fractionalVelocity, angle);
+      sceneManager.hideStrikingElements();
     }
   }
 
@@ -286,6 +290,15 @@ public class SceneElementHandler {
   private void setScores(Node node) {
     gameStatusManager.setScoreList((ListView<String>) node);
     node.setOnMouseClicked(e -> sceneManager.getRoot().requestFocus());
+  }
+
+  private void createThemeChangeHandler(Node node) {
+    ComboBox<ThemeType> comboBox = (ComboBox<ThemeType>) node;
+    comboBox.getItems().addAll(ThemeType.values());
+    comboBox.setOnAction(event -> {
+      ThemeType selectedTheme = comboBox.getValue();
+      sceneManager.changeTheme(selectedTheme);
+    });
   }
 
   private void createNewGameHandler(Node node) {

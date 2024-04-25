@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
 import oogasalad.view.controller.GameController;
+import oogasalad.view.enums.ThemeType;
 import oogasalad.view.visual_elements.CompositeElement;
 import org.xml.sax.SAXException;
 
@@ -29,6 +30,7 @@ public class SceneManager {
   private GameStatusManager gameStatusManager;
   private Pane pauseElements;
   private Pane transitionElements;
+  private Pane strikingElements;
   private int currentRound;
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
@@ -36,6 +38,7 @@ public class SceneManager {
   private final String transitionElementsPath = "data/scene_elements/transitionElements.xml";
   private final String gameOverSceneElementsPath = "data/scene_elements/gameOverElements.xml";
   private final String pausePath = "data/scene_elements/pauseElements.xml";
+  private final String strikingElementsPath = "data/scene_elements/strikingElements.xml";
 
 
   /**
@@ -103,6 +106,16 @@ public class SceneManager {
     checkEndRound(gameRecord);
   }
 
+  public void displayStrikingElements() {
+    if (!root.getChildren().contains(strikingElements)) {
+      root.getChildren().add(strikingElements);
+    }
+  }
+
+  void hideStrikingElements() {
+    root.getChildren().remove(strikingElements);
+  }
+
   /**
    * Called when next round is started, removes transition screen elements
    */
@@ -130,6 +143,14 @@ public class SceneManager {
   }
 
   /**
+   * Changes the theme by prompting the element styler to switch style sheets
+   * @param selectedTheme theme selected by user
+   */
+  void changeTheme(ThemeType selectedTheme){
+    sceneElementStyler.changeTheme(selectedTheme);
+  }
+
+  /**
    * Makes the game screen including game board elements, striker input, and game stat display
    *
    * @param compositeElement game board elements
@@ -139,6 +160,7 @@ public class SceneManager {
     this.compositeElement = compositeElement;
     pauseElements = createSceneElements(pausePath);
     transitionElements = createSceneElements(transitionElementsPath);
+    strikingElements = createSceneElements(strikingElementsPath);
     addGameManagementElementsToGame(gameRecord);
     addGameElementsToGame();
     root.requestFocus();
