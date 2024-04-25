@@ -168,43 +168,46 @@ public class SceneElementHandler {
   private void createPowerHandler(Node node) {
     powerMeter = (Rectangle) node;
     minPower = powerMeter.getHeight();
+    boolean ableToStrike = gameController.getAbleToStrike();
     Pane root = sceneManager.getRoot();
     root.setOnKeyPressed(e -> {
       switch (e.getCode()) {
         case UP: {
-          increasePower();
+          if (ableToStrike) {
+            increasePower();
+          } else {
+            gameController.moveY(true);
+          }
           break;
         }
         case DOWN: {
-          decreasePower();
+          if (ableToStrike) {
+            decreasePower();
+          } else {
+            gameController.moveY(false);
+          }
           break;
         }
         case LEFT: {
-          decreaseAngle();
+          if (ableToStrike) {
+            decreaseAngle();
+          } else {
+            gameController.moveX(false);
+          }
           break;
         }
         case RIGHT: {
-          increaseAngle();
+          if (ableToStrike) {
+            increaseAngle();
+          } else {
+            gameController.moveX(true);
+          }
           break;
         }
         case ENTER: {
-          handleStrike();
-          break;
-        }
-        case M: {
-          gameController.moveX(true);
-          break;
-        }
-        case N: {
-          gameController.moveX(false);
-          break;
-        }
-        case B: {
-          gameController.moveY(true);
-          break;
-        }
-        case V: {
-          gameController.moveY(false);
+          if (ableToStrike) {
+            handleStrike();
+          }
           break;
         }
       }

@@ -163,6 +163,7 @@ public class GameController {
     boolean staticState = gameRecord.staticState();
     if (staticState) {
       ableToStrike = true;
+      //sceneManager.displayStrikingElements();
     }
     sceneManager.update(gameRecord);
     return staticState;
@@ -182,6 +183,16 @@ public class GameController {
    */
   public void createNewWindow() {
     new GameWindow();
+  }
+
+  /**
+   * Getter for ableToStrike boolean
+   *
+   * @return true if static state and able to strike, false if not static state and not able to
+   * strike
+   */
+  public boolean getAbleToStrike() {
+    return ableToStrike;
   }
 
   private CompositeElement createCompositeElementFromGameLoader() {
