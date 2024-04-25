@@ -3,6 +3,7 @@ package oogasalad.view.authoring_environment.proxy;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Stack;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -13,8 +14,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import oogasalad.view.api.authoring.Panel;
 import oogasalad.view.authoring_environment.util.Coordinate;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The ShapeProxy class acts as a proxy for managing and manipulating shapes within the authoring
@@ -29,7 +33,11 @@ public class ShapeProxy {
   private GameObjectAttributesContainer gameObjectAttributesContainer = new GameObjectAttributesContainer();
   private int shapeCount;
   private final List<Shape> templates = new ArrayList<>();
-  private int numberOfMultiSelectAllowed = 1;
+  String RESOURCE_FOLDER_PATH = "view.";
+  String DEFAULT_VALUES_FILE = "DefaultAuthoringValues";
+  ResourceBundle defaultValuesResourceBundle = ResourceBundle.getBundle(RESOURCE_FOLDER_PATH + DEFAULT_VALUES_FILE);
+  private int numberOfMultiSelectAllowed = Integer.parseInt(
+      defaultValuesResourceBundle.getString("defaultNumShapesSelectedAllowed"));
 
   public Shape getShape() {
     if (shapeStack.isEmpty()) return null;

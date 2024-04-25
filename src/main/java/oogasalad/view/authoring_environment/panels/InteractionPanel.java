@@ -29,6 +29,11 @@ public class InteractionPanel implements Panel {
   private static final String COMMAND_PACKAGE_PATH = "src/main/java/oogasalad/model/gameengine/command";
   private static final String REFLECTION_COMMAND_PACKAGE_PATH = "oogasalad.model.gameengine.command";
   private final String language = "English"; // TODO: PASS IN LANGUAGE
+  String RESOURCE_FOLDER_PATH = "view.";
+  String DEFAULT_VALUES_FILE = "DefaultAuthoringValues";
+  ResourceBundle defaultValuesResourceBundle = ResourceBundle.getBundle(RESOURCE_FOLDER_PATH + DEFAULT_VALUES_FILE);
+  private int numMultiSelect = Integer.parseInt(
+      defaultValuesResourceBundle.getString("interactionNumShapesSelectedAllowed"));
   private final ShapeProxy shapeProxy;
   private final AuthoringProxy authoringProxy;
   private final AnchorPane containerPane;
@@ -36,7 +41,6 @@ public class InteractionPanel implements Panel {
   private CheckComboBox<String> checkComboBox;
   private Map<String, List<Integer>> tempSavedCommands = new HashMap<>();
   private Button saveSelectionButton;
-  private int numMultiSelect = 2; // TODO: REMOVE HARDCODING
   private final ResourceBundle resourceBundle;
 
   public InteractionPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
