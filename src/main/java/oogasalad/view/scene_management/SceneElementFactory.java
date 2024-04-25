@@ -83,7 +83,6 @@ public class SceneElementFactory {
         sceneElementPane.getChildren().add(node);
       } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
                IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-        System.out.println("exception in create elements");
         //TODO: Exception Handling
       }
     }
@@ -108,7 +107,9 @@ public class SceneElementFactory {
   private void configureText(Node node, Map<String, String> parameters) {
     String displayText = parameters.get(textTag);
     Text text = (Text) node;
-    text.setText(displayText);
+    if (displayText != null) {
+      text.setText(displayText);
+    }
   }
 
   private void configureArrow(Node node, Map<String, String> parameters) {
@@ -131,7 +132,9 @@ public class SceneElementFactory {
     double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
 
     Button button = (Button) node;
-    button.setText(displayText);
+    if (displayText != null) {
+      button.setText(displayText);
+    }
     button.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
   }
 
@@ -191,6 +194,5 @@ public class SceneElementFactory {
         configurationMethod.accept(node, parameters);
       }
     }
-
   }
 }
