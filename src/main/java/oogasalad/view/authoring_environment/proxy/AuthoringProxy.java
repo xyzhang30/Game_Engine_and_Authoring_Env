@@ -1,5 +1,6 @@
 package oogasalad.view.authoring_environment.proxy;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,8 +80,6 @@ public class AuthoringProxy {
 
   public void completeAuthoring()
       throws MissingInteractionException, MissingNonControllableTypeException {
-//    authoringController.endAuthoring(gameName, gameObjectMap, interactionMap, conditionsCommands,
-//        policies, playersMap);
     try {
       authoringController.writeRules(conditionsCommands, policies);
       authoringController.writePlayers(playersMap);
@@ -132,20 +131,10 @@ public class AuthoringProxy {
   public void setCurrentScreenTitle(String currentScreenTitle) {
     this.currentScreenTitle = currentScreenTitle;
   }
-
-  public AuthoringController getAuthoringController() {
-    return authoringController;
-  }
-
   public void setAuthoringController(
       AuthoringController authoringController) {
     this.authoringController = authoringController;
   }
-
-  public Map<List<Integer>, Map<String, List<Integer>>> getInteractionMap() {
-    return interactionMap;
-  }
-
   public int getNumPlayers() {
     return numPlayers;
   }
@@ -160,5 +149,40 @@ public class AuthoringProxy {
   public int getCurrentPlayerId() {
     return numPlayers-1;
   }
+  public void removeObjectFromPlayersAllLists(Integer shapeId) {
+    removeCollidableFromAllPlayers(CollidableType.STRIKABLE, shapeId);
+    removeCollidableFromAllPlayers(CollidableType.CONTROLLABLE, shapeId);
+    removeCollidableFromAllPlayers(CollidableType.SCOREABLE, shapeId);
+  }
+  public void removeCollidableFromAllPlayers(CollidableType collidableType, Integer shapeId) {
+    for (Integer player: playersMap.keySet()) {
+      removeCollidableFromPlayer(player, collidableType, shapeId);
+    }
+  }
+  public void removeCollidableFromPlayer(int playerId, CollidableType collidableType, Integer shapeId) {
+    if (playersMap.get(playerId).get(collidableType).contains(shapeId)) {
+      playersMap.get(playerId).get(collidableType).remove(shapeId);
+    }
+  }
+  public void addNewPlayer() {
+    playersMap.putIfAbsent(getCurrentPlayerId(), new HashMap<>());
+    playersMap.get(getCurrentPlayerId()).putIfAbsent(CollidableType.STRIKABLE, new ArrayList<>());
+    playersMap.get(getCurrentPlayerId()).putIfAbsent(CollidableType.CONTROLLABLE, new ArrayList<>());
+    playersMap.get(getCurrentPlayerId()).putIfAbsent(CollidableType.SCOREABLE, new ArrayList<>());
+  }
+  public void removeMostRecentAddedPlayer() {
+    playersMap.remove(getCurrentPlayerId());
+  }
+  public void addCollidableToPlayer(int selectedPlayerId, CollidableType collidableType, Integer shapeId, boolean isControllable, int controllableXSpeed, int controllableYSpeed) {
+    if (selectedPlayerId >= 0) {
+      if (isControllable) {
+        playersMap.get(selectedPlayerId).put(collidableType, List.of(shapeId, controllableXSpeed, controllableYSpeed));
+      }
+      else if (!playersMap.get(selectedPlayerId).get(collidableType).contains(shapeId)) {
+        playersMap.get(selectedPlayerId).get(collidableType).add(shapeId);
+      }
+    }
+  }
+
 
 }

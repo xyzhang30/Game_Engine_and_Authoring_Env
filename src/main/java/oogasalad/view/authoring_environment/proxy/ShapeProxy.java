@@ -21,11 +21,11 @@ import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
  * environment. It maintains a stack of shapes, allowing for selection, duplication, and other shape
  * manipulations.
  *
- * @author Judy He, Doga Ozmeng
+ * @author Judy He, Doga Ozmen
  */
 public class ShapeProxy {
-  private final Stack<Shape> shapeStack = new Stack<>(); // Top of stack = most recently selected shape
-  private final ListProperty<Integer> shapeStackProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
+  private final Stack<Shape> shapeStack = new Stack<>();
+  private final ListProperty<Integer> shapesListProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
   private GameObjectAttributesContainer gameObjectAttributesContainer = new GameObjectAttributesContainer();
   private int shapeCount;
   private final List<Shape> templates = new ArrayList<>();
@@ -37,18 +37,11 @@ public class ShapeProxy {
   }
   public void selectShape(Shape shape) {
     if (shape != null && !shapeStack.isEmpty() && shapeStack.contains(shape)) {
-      removeFromShapeStack(shape);
+      deselectShape(shape);
     }
     shapeStack.push(shape);
-    shapeStackProperty.setAll(getSelectedShapeIds());
+    shapesListProperty.setAll(getSelectedShapeIds());
     resetGameObjectAttributesContainer();
-  }
-  public int getShapeCount() {
-    return shapeCount;
-  }
-
-  public void setShapeCount(int shapeCount) {
-    this.shapeCount = shapeCount;
   }
 
   public GameObjectAttributesContainer getGameObjectAttributesContainer() {
@@ -115,7 +108,6 @@ public class ShapeProxy {
     };
   }
 
-
   public void setFinalShapeDisplay() {
     if (!shapeStack.isEmpty()) {
       gameObjectAttributesContainer.setWidth(shapeStack.peek().getLayoutBounds().getWidth()*shapeStack.peek().getScaleX());
@@ -126,11 +118,10 @@ public class ShapeProxy {
     }
   }
 
-  // TODO: RENAME (encapsulate stack implementation)
-  public void removeFromShapeStack(Shape shape) {
+  public void deselectShape(Shape shape) {
     if (!shapeStack.isEmpty()) {
       shapeStack.remove(shape);
-      shapeStackProperty.remove((Integer) Integer.parseInt(shape.getId()));
+      shapesListProperty.remove((Integer) Integer.parseInt(shape.getId()));
     }
   }
 
@@ -138,10 +129,6 @@ public class ShapeProxy {
     for (int i = 0; i < shapeStack.size() - numberOfMultiSelectAllowed; i++) {
       shapeStack.get(i).setStroke(Color.TRANSPARENT);
     }
-  }
-
-  public int getNumberOfMultiSelectAllowed() {
-    return numberOfMultiSelectAllowed;
   }
 
   public void setNumberOfMultiSelectAllowed(int numberOfMultiSelectAllowed) {
@@ -172,8 +159,8 @@ public class ShapeProxy {
     return templates;
   }
 
-  public ListProperty<Integer> getShapeStackProperty() {
-    return shapeStackProperty;
+  public ListProperty<Integer> getShapesListProperty() {
+    return shapesListProperty;
   }
 
 }

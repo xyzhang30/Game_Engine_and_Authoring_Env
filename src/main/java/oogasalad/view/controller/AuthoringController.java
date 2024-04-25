@@ -20,7 +20,16 @@ import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.view.authoring_environment.AuthoringScreen;
 import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
+import oogasalad.view.authoring_environment.panels.AuthoringFactory;
+import oogasalad.view.authoring_environment.panels.DefaultAuthoringFactory;
+import oogasalad.view.authoring_environment.panels.DefaultUIElementFactory;
+import oogasalad.view.authoring_environment.panels.UIElementFactory;
+import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
+import oogasalad.view.authoring_environment.proxy.ShapeProxy;
+import oogasalad.view.enums.AuthoringFactoryType;
 import oogasalad.view.enums.CollidableType;
+import oogasalad.view.enums.SupportedLanguage;
+import oogasalad.view.enums.UITheme;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,11 +41,16 @@ import org.apache.logging.log4j.Logger;
 public class AuthoringController {
   static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private final Stage stage;
-  private final AuthoringScreen authoringScreen = new AuthoringScreen();
+  private final AuthoringScreen authoringScreen;
   private final BuilderDirector builderDirector = new BuilderDirector();
+  private final ShapeProxy shapeProxy = new ShapeProxy();
+  private final AuthoringProxy authoringProxy = new AuthoringProxy();
 
-  public AuthoringController() {
+  public AuthoringController(SupportedLanguage language, UITheme uiTheme, AuthoringFactoryType authoringFactoryType) {
     stage = new Stage();
+    UIElementFactory uiElementFactory = new DefaultUIElementFactory();
+    AuthoringFactory authoringFactory = new DefaultAuthoringFactory(uiElementFactory, language, shapeProxy, authoringProxy);
+    this.authoringScreen = new AuthoringScreen(language, authoringFactory, shapeProxy, authoringProxy);
     authoringScreen.getAuthoringProxy().setAuthoringController(this);
   }
 

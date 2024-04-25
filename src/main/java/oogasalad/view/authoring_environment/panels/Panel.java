@@ -20,7 +20,7 @@ import org.apache.logging.log4j.Logger;
  * @author Judy He
  */
 public interface Panel {
-   Logger LOGGER = LogManager.getLogger(GameEngine.class);
+   Logger LOGGER = LogManager.getLogger(Panel.class);
    String RESOURCE_FOLDER_PATH = "view.";
    String UI_FILE_PREFIX = "UIElements";
 

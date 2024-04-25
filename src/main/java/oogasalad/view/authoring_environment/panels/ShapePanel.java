@@ -14,7 +14,7 @@ import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import oogasalad.view.enums.AuthoringScreenType;
 
-public class NewShapePanel implements Panel {
+public class ShapePanel implements Panel {
   private final ShapeProxy shapeProxy;
   private final AuthoringProxy authoringProxy;
   private final AuthoringFactory authoringFactory;
@@ -23,7 +23,7 @@ public class NewShapePanel implements Panel {
   private final AnchorPane containerPane;
   private Coordinate startPos;
   private Coordinate translatePos;
-  public NewShapePanel(AuthoringFactory authoringFactory, ShapeProxy shapeProxy, AuthoringProxy authoringProxy, StackPane canvas,
+  public ShapePanel(AuthoringFactory authoringFactory, ShapeProxy shapeProxy, AuthoringProxy authoringProxy, StackPane canvas,
       AnchorPane rootPane, AnchorPane containerPane) {
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;

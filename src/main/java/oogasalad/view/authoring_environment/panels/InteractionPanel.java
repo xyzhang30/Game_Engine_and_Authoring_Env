@@ -30,8 +30,6 @@ public class InteractionPanel implements Panel {
   private final String language = "English"; // TODO: PASS IN LANGUAGE
   private final ShapeProxy shapeProxy;
   private final AuthoringProxy authoringProxy;
-  private final StackPane canvas;
-  private final AnchorPane rootPane;
   private final AnchorPane containerPane;
   private TextField infoTextField;
   private CheckComboBox<String> checkComboBox;
@@ -44,9 +42,7 @@ public class InteractionPanel implements Panel {
       AnchorPane containerPane, StackPane canvas) {
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
-    this.rootPane = rootPane;
     this.containerPane = containerPane;
-    this.canvas = canvas;
     this.resourceBundle = ResourceBundle.getBundle(
         RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
     shapeProxy.setNumberOfMultiSelectAllowed(numMultiSelect);
@@ -61,7 +57,7 @@ public class InteractionPanel implements Panel {
   }
 
   private void createCommandsDropdown() {
-    Label label = new Label(resourceBundle.getString("commandDropdownLabel"));
+    Label label = new Label(resourceBundle.getString("commandLabel"));
     AnchorPane.setTopAnchor(label,100.0);
     AnchorPane.setLeftAnchor(label,350.0);
     List<String> availableCommands = getAvailableCommands();
@@ -75,7 +71,7 @@ public class InteractionPanel implements Panel {
     AnchorPane.setTopAnchor(checkComboBox,100.0);
     checkComboBox.setId("collision");
 
-    checkComboBox.disableProperty().bind(Bindings.size(shapeProxy.getShapeStackProperty()).lessThan(2));
+    checkComboBox.disableProperty().bind(Bindings.size(shapeProxy.getShapesListProperty()).lessThan(2));
 
     saveSelectionButton = new Button(resourceBundle.getString("saveButton"));
     AnchorPane.setRightAnchor(saveSelectionButton, 0.0);
@@ -96,11 +92,11 @@ public class InteractionPanel implements Panel {
 
     infoTextField.textProperty().bind(Bindings.createStringBinding(() -> {
       StringBuilder sb = new StringBuilder();
-      for (int shapeId : shapeProxy.getShapeStackProperty()) {
+      for (int shapeId : shapeProxy.getShapesListProperty()) {
         sb.append(shapeId).append("  ");
       }
       return sb.toString();
-    }, shapeProxy.getShapeStackProperty()));
+    }, shapeProxy.getShapesListProperty()));
 
     containerPane.getChildren().addAll(idsLabel, infoTextField);
   }

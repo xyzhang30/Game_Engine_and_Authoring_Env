@@ -3,7 +3,7 @@ package oogasalad.view.enums;
 public enum AuthoringScreenType {
   GAMEOBJECTS("Game Objects"),
   INTERACTIONS("Interactions"),
-  POLICIES("POLICIES");
+  POLICIES("Policies");
 
   private final String string;
 

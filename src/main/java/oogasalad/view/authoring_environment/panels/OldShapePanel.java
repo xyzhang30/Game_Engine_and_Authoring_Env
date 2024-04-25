@@ -36,7 +36,7 @@ import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import oogasalad.view.enums.CollidableType;
 import org.controlsfx.control.CheckComboBox;
 
-public class ShapePanel implements Panel {
+public class OldShapePanel implements Panel {
 
   protected final ShapeProxy shapeProxy;
   protected final AuthoringProxy authoringProxy;
@@ -65,7 +65,7 @@ public class ShapePanel implements Panel {
   private final String language = "English"; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
 
-  public ShapePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
+  public OldShapePanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy, AnchorPane rootPane,
       AnchorPane containerPane, StackPane canvas) {
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
