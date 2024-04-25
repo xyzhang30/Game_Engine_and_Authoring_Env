@@ -23,7 +23,6 @@ public class SceneElementFactory {
   private final double screenWidth;
   private final double screenHeight;
   private final String classTag = "class";
-  private final String typeTag = "type";
   private final String textTag = "text";
   private final String widthFactorTag = "width_factor";
   private final String heightFactorTag = "height_factor";
@@ -123,6 +122,7 @@ public class SceneElementFactory {
       } catch (NoSuchMethodException | SecurityException | IllegalAccessException |
                IllegalArgumentException | InvocationTargetException e) {
         //TODO: Excepetion Handling
+        System.out.println(widthFactor + " " + heightFactor);
         System.out.println("exception in size");
       }
     }
