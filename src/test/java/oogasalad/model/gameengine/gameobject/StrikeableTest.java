@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine;
+package oogasalad.model.gameengine.gameobject;
 
 import oogasalad.model.gameengine.gameobject.DefaultStrikeable;
 import oogasalad.model.gameengine.gameobject.GameObject;

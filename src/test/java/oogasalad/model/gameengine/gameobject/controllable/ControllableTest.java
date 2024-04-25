@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine.controllable;
+package oogasalad.model.gameengine.gameobject.controllable;
 
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.controllable.DefaultControllable;

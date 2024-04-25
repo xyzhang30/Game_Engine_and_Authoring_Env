@@ -1,4 +1,4 @@
-package oogasalad.model.gameengine.scoreable;
+package oogasalad.model.gameengine.gameobject.scoreable;
 
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.scoreable.DefaultScoreable;

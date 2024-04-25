@@ -14,12 +14,12 @@ import oogasalad.model.gameengine.player.PlayerContainer;
  * @author Noah Loewy
  */
 
-@IsCommand(isCommand = true)
-@CommandHelpInfo(description = "")
-public class SnakeTurnPolicy implements TurnPolicy {
+//@IsCommand(isCommand = true)
+//@CommandHelpInfo(description = "")
+//public class SnakeTurnPolicy implements TurnPolicy {
 
-  private final PlayerContainer playerContainer;
-  private final boolean forward;
+ // private final PlayerContainer playerContainer;
+  //private final boolean forward;
 
   /**
    * Initializes a SnakeTurnPolicy object with the specified player container.
@@ -27,11 +27,11 @@ public class SnakeTurnPolicy implements TurnPolicy {
    * @param playerContainer The player container containing the players in the game.
    */
 
-  public SnakeTurnPolicy(PlayerContainer playerContainer) {
-    this.playerContainer = playerContainer;
-    forward = true;
+  //public SnakeTurnPolicy(PlayerContainer playerContainer) {
+   // this.playerContainer = playerContainer;
+    //forward = true;
 
-  }
+  //}
 
   /**
    * Retrieves the player's turn based on the snake turn policy, which iterates through the player
@@ -41,8 +41,8 @@ public class SnakeTurnPolicy implements TurnPolicy {
    * @return The id of the player whose turn is next.
    */
 
-  @Override
-  public int getNextTurn() {
-    throw new RuntimeException("Not Implemented Yet");
-  }
-}
+  //@Override
+  //public int getNextTurn() {
+    //throw new RuntimeException("Not Implemented Yet");
+ // }
+//}
