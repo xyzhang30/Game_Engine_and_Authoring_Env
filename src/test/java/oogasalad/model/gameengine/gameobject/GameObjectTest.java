@@ -67,10 +67,24 @@ public class GameObjectTest {
 
   @Test
   public void testTeleportTo() {
+
     GameObject targetObject = new GameObject(2,10,10, 10, true, 1, 1, 1, 1, 1, "", false, false); // Create a test
     gameObject.teleportTo(targetObject);
     assertEquals(targetObject.getX(), gameObject.getX(), 0.001);
     assertEquals(targetObject.getY(), gameObject.getY(), 0.001);
+  }
+
+
+  @Test
+  public void testMultiplySpeed() {
+    Supplier<List<Double>> mockSpeedCalculator = () -> {
+      return List.of(2.0, 3.0);
+    };
+    gameObject.calculateSpeeds(mockSpeedCalculator);
+
+    gameObject.multiplySpeed(6);
+    assertEquals(12, gameObject.toGameObjectRecord().velocityX(), 0.001);
+    assertEquals(18, gameObject.toGameObjectRecord().velocityY(), 0.001);
   }
 
 
