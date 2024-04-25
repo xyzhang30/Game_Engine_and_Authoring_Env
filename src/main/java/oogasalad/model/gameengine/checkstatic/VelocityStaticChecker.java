@@ -17,6 +17,10 @@ public class VelocityStaticChecker implements StaticChecker {
 
   private final List<Integer> arguments;
 
+  /**
+   * Only the game objects with ids in arguments will be checked. If arguments is empty, then all
+   * ids will be checked
+   */
   public VelocityStaticChecker(List<Integer> arguments) {
     this.arguments = arguments;
   }

@@ -1,5 +1,6 @@
 <scene_elements>
   <node>
+    <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
     <text>Play</text>
     <width_factor>0.3</width_factor>
@@ -11,6 +12,7 @@
   </node>
 
   <node>
+    <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
     <text>Create</text>
     <width_factor>0.3</width_factor>
@@ -22,6 +24,7 @@
   </node>
 
   <node>
+    <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>Fysics Fun</text>
     <x_layout_factor>0.38</x_layout_factor>

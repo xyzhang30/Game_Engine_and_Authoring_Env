@@ -9,8 +9,8 @@ import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
- * Represents a command to move a game object to its starting state.
- * This command is responsible for resetting a game object to its initial state.
+ * Represents a command to move a game object to its starting state. This command is responsible for
+ * resetting a game object to its initial state.
  *
  * @author Noah Loewy
  */
@@ -26,7 +26,7 @@ public class MoveToStartingStateCommand implements Command {
   /**
    * Constructs a MoveToStartingStateCommand with the specified arguments and game object map.
    *
-   * @param arguments The list of arguments for the command.
+   * @param arguments     The list of arguments for the command.
    * @param gameObjectMap The map of game objects.
    */
 
@@ -37,8 +37,8 @@ public class MoveToStartingStateCommand implements Command {
   }
 
   /**
-   * Executes the command to move a game object to its starting state.
-   * This involves resetting the game object to its initial state.
+   * Executes the command to move a game object to its starting state. This involves resetting the
+   * game object to its initial state.
    *
    * @param engine The game engine in which the command is executed.
    */

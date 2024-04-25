@@ -43,7 +43,6 @@ public class AuthoringProxy {
 
   public void addNoParamPolicies(String type, String command) {
     policies.put(type, command);
-    System.out.println("ALL POLICIES:" + policies);
   }
 
   public void addConditionsCommandsWithParam(String type, String commandName, List<Integer> params) {
@@ -87,7 +86,7 @@ public class AuthoringProxy {
       authoringController.writePlayers(playersMap);
       authoringController.writeVariables();
       authoringController.writeGameObjects(gameObjectMap);
-      boolean saveGameSuccess = authoringController.submitGame();
+      boolean saveGameSuccess = authoringController.submitGame(gameName);
       if (saveGameSuccess) {
         showSuceessMessage("Game successfully saved!");
       } else {

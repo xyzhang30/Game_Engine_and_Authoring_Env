@@ -9,14 +9,20 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import oogasalad.model.gameengine.GameEngine;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
- * Represents a panel in the authoring environment, providing methods for creating elements and handling events.
+ * The Panel class represents a panel in the authoring environment, providing methods for creating elements and handling events.
  * Implementing classes should provide concrete behavior for these methods.
  *
  * @author Judy He
  */
 public interface Panel {
+   Logger LOGGER = LogManager.getLogger(GameEngine.class);
+   String RESOURCE_FOLDER_PATH = "view.";
+   String UI_FILE_PREFIX = "UIElements";
 
   /**
    * Creates the UI elements in the panel necessary for the panel's functionality.

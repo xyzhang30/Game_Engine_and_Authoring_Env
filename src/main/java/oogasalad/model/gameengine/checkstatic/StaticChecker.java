@@ -5,6 +5,7 @@ import oogasalad.model.api.GameObjectRecord;
 
 /**
  * Represents a functional interface for checking if a game object is static.
+ *
  * @author Noah Loewy
  */
 

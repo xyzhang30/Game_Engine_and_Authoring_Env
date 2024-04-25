@@ -1,5 +1,6 @@
 <scene_elements>
   <node>
+    <class>javafx.scene.shape.Rectangle</class>
     <type>RECTANGLE</type>
     <width_factor>1</width_factor>
     <height_factor>1</height_factor>
@@ -9,6 +10,7 @@
   </node>
 
   <node>
+    <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
     <text>Resume</text>
     <width_factor>0.3</width_factor>

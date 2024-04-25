@@ -1,5 +1,6 @@
 <scene_elements>
   <node>
+    <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>Round: </text>
     <x_layout_factor>0.9</x_layout_factor>
@@ -9,6 +10,7 @@
   </node>
 
   <node>
+    <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>Turn: </text>
     <x_layout_factor>0.88</x_layout_factor>
@@ -18,16 +20,18 @@
   </node>
 
   <node>
+    <class>javafx.scene.control.ListView</class>
     <type>LISTVIEW</type>
     <width_factor>0.12</width_factor>
     <height_factor>0.15</height_factor>
-    <x_layout_factor>0.92</x_layout_factor>
+    <x_layout_factor>0.86</x_layout_factor>
     <y_layout_factor>0.2</y_layout_factor>
     <styling>score-list</styling>
     <event>SET_SCORE</event>
   </node>
 
   <node>
+    <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
     <text>Pause</text>
     <width_factor>0.05</width_factor>
@@ -39,6 +43,7 @@
   </node>
 
   <node>
+    <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
     <text>Save</text>
     <width_factor>0.05</width_factor>
@@ -50,6 +55,7 @@
   </node>
 
   <node>
+    <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
     <text>Load</text>
     <width_factor>0.05</width_factor>
@@ -61,6 +67,7 @@
   </node>
 
   <node>
+    <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
     <text>Back</text>
     <width_factor>0.05</width_factor>
@@ -72,6 +79,7 @@
   </node>
 
   <node>
+    <class>javafx.scene.shape.Rectangle</class>
     <type>RECTANGLE</type>
     <width_factor>0.07</width_factor>
     <height_factor>0.7</height_factor>
@@ -82,25 +90,27 @@
   </node>
 
   <node>
+    <class>javafx.scene.shape.Rectangle</class>
     <type>RECTANGLE</type>
     <width_factor>0.05</width_factor>
     <height_factor>0.01</height_factor>
     <x_layout_factor>0.76</x_layout_factor>
-    <y_layout_factor>0.73</y_layout_factor>
+    <y_layout_factor>0.735</y_layout_factor>
     <styling>power-bar</styling>
     <event>SET_POWER</event>
   </node>
 
-  <node>
-    <type>ARROW</type>
-    <x_layout>1200</x_layout>
-    <y_layout>850</y_layout>
-    <stem_width>5</stem_width>
-    <stem_height>60</stem_height>
-    <arrow_width_offset>5</arrow_width_offset>
-    <arrow_height_offset>8</arrow_height_offset>
-    <styling>angle-arrow</styling>
-    <event>SET_ANGLE</event>
-  </node>
+    <node>
+      <class>oogasalad.view.visual_elements.Arrow</class>
+      <type>ARROW</type>
+      <x_layout_factor>0.79</x_layout_factor>
+      <y_layout_factor>0.9</y_layout_factor>
+      <stem_width>5</stem_width>
+      <stem_height>60</stem_height>
+      <arrow_width_offset>5</arrow_width_offset>
+      <arrow_height_offset>8</arrow_height_offset>
+      <styling>angle-arrow</styling>
+      <event>SET_ANGLE</event>
+    </node>
 
 </scene_elements>
