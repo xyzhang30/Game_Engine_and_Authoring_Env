@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import oogasalad.view.Window;
+import oogasalad.view.GameWindow;
 import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.panels.ColorPanel;
@@ -55,7 +55,7 @@ public class AuthoringScreen {
     handleScreenSelectionDropDown();
     createFinishButton();
     containerPane.getChildren().add(titleText);
-    scene = new Scene(rootPane, Window.SCREEN_WIDTH, Window.SCREEN_HEIGHT);
+    scene = new Scene(rootPane, GameWindow.SCREEN_WIDTH, GameWindow.SCREEN_HEIGHT);
     setScene(AuthoringScreenType.GAMEOBJECTS);
     authoringProxy.setCurrentScreenTitle(AuthoringScreenType.GAMEOBJECTS.toString());
   }

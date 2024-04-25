@@ -20,5 +20,6 @@ public enum SceneElementEventType {
   NEXT_ROUND,
   SET_ROUND,
   SET_TURN,
-  SET_SCORE
+  SET_SCORE,
+  NEW_GAME_WINDOW
 }

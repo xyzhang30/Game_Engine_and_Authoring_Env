@@ -110,6 +110,9 @@ public class SceneElementHandler {
       case NEXT_ROUND -> {
         createNextRoundHandler(node);
       }
+      case NEW_GAME_WINDOW -> {
+        createNewGameHandler(node);
+      }
     }
 
   }
@@ -298,5 +301,9 @@ public class SceneElementHandler {
   private void setScores(Node node) {
     gameStatusManager.setScoreList((ListView<String>) node);
     node.setOnMouseClicked(e -> sceneManager.getRoot().requestFocus());
+  }
+
+  private void createNewGameHandler(Node node) {
+    node.setOnMouseClicked(e -> gameController.createNewWindow());
   }
 }

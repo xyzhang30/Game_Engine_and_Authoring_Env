@@ -85,19 +85,22 @@ public class SceneManager {
   }
 
   /**
-   * Creates a pause display by adding elements created from pause xml file
-   */
-  void createPauseDisplay() {
-    if (!root.getChildren().contains(pauseElements)) {
-      root.getChildren().add(pauseElements);
-    }
-  }
-
-  /**
    * Called when game is resumed, removes pause screen elements
    */
   public void removePauseSheen() {
     root.getChildren().remove(pauseElements);
+  }
+
+  /**
+   * Updates game elements and stat display from GameRecord info
+   *
+   * @param gameRecord represents updated state of game
+   */
+  public void update(GameRecord gameRecord) {
+    compositeElement.update(gameRecord.gameObjectRecords());
+    gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
+    root.requestFocus();
+    checkEndRound(gameRecord);
   }
 
   /**
@@ -118,15 +121,12 @@ public class SceneManager {
   }
 
   /**
-   * Updates game elements and stat display from GameRecord info
-   *
-   * @param gameRecord represents updated state of game
+   * Creates a pause display by adding elements created from pause xml file
    */
-  public void update(GameRecord gameRecord) {
-    compositeElement.update(gameRecord.gameObjectRecords());
-    gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
-    root.requestFocus();
-    checkEndRound(gameRecord);
+  void createPauseDisplay() {
+    if (!root.getChildren().contains(pauseElements)) {
+      root.getChildren().add(pauseElements);
+    }
   }
 
   /**
