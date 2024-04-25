@@ -4,7 +4,6 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import oogasalad.model.api.GameRecord;
-import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
