@@ -1,7 +1,6 @@
 package oogasalad.view.visual_elements;
 
 import javafx.scene.shape.Polygon;
-import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
