@@ -195,6 +195,28 @@ public class GameController {
     return ableToStrike;
   }
 
+  /**
+   * Move controllable along x axis
+   *
+   * @param positive true if along positive x axis, false if along negative x axis
+   */
+  public void moveControllableX(boolean positive) {
+    if (animationManager.isRunning()) {
+      gameEngine.moveActiveControllableX(positive);
+    }
+  }
+
+  /**
+   * Move controllable along y axis
+   *
+   * @param positive true if along positive y axis, false if along negative y axis
+   */
+  public void moveControllableY(boolean positive) {
+    if (animationManager.isRunning()) {
+      gameEngine.moveActiveControllableY(positive);
+    }
+  }
+
   private CompositeElement createCompositeElementFromGameLoader() {
     try {
       List<ViewGameObjectRecord> recordList = gameLoaderView.getViewCollidableInfo();
@@ -202,18 +224,6 @@ public class GameController {
     } catch (InvalidShapeException | InvalidImageException e) {
       LOGGER.error(e.getMessage());
       return null;
-    }
-  }
-
-  public void moveX(boolean positive) {
-    if (animationManager.isRunning()) {
-      gameEngine.moveActiveControllableX(positive);
-    }
-  }
-
-  public void moveY(boolean positive) {
-    if (animationManager.isRunning()) {
-      gameEngine.moveActiveControllableY(positive);
     }
   }
 }

@@ -200,7 +200,7 @@ public class SceneElementHandler {
     if (ableToStrike) {
       increasePower();
     } else {
-      gameController.moveY(true);
+      gameController.moveControllableY(true);
     }
   }
 
@@ -208,7 +208,7 @@ public class SceneElementHandler {
     if (ableToStrike) {
       decreasePower();
     } else {
-      gameController.moveY(false);
+      gameController.moveControllableY(false);
     }
   }
 
@@ -216,7 +216,7 @@ public class SceneElementHandler {
     if (ableToStrike) {
       decreaseAngle();
     } else {
-      gameController.moveX(false);
+      gameController.moveControllableX(false);
     }
   }
 
@@ -224,7 +224,7 @@ public class SceneElementHandler {
     if (ableToStrike) {
       increaseAngle();
     } else {
-      gameController.moveX(true);
+      gameController.moveControllableX(true);
     }
   }
 
