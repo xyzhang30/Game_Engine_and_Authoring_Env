@@ -4,7 +4,6 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import oogasalad.model.api.GameRecord;
-import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
@@ -16,7 +15,8 @@ import oogasalad.view.api.enums.UITheme;
 import oogasalad.view.scene_management.AnimationManager;
 import oogasalad.view.scene_management.GameTitleParser;
 import oogasalad.view.scene_management.SceneManager;
-import oogasalad.view.api.enums.SceneType;
+import oogasalad.view.GameWindow;
+
 import oogasalad.view.visual_elements.CompositeElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,8 +34,6 @@ public class GameController {
   private final AnimationManager animationManager;
   private final GameTitleParser gameTitleParser;
   private final int maxVelocity;
-  private int strikeableID;
-  private int activePlayer;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
   private boolean ableToStrike;
@@ -55,7 +53,6 @@ public class GameController {
    */
   public GameController(double width, double height) {
     sceneManager = new SceneManager(this, width, height);
-    sceneManager.createNonGameScene(SceneType.TITLE);
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
     ableToStrike = true;
@@ -63,11 +60,22 @@ public class GameController {
   }
 
   /**
-   * Retrieves the current active scene of the game.
+   * Sets the scene to the title scene by prompting the scene manager to create it
    *
-   * @return The current `Scene` object being displayed in the game.
+   * @return title scene
    */
-  public Scene getScene() {
+  public Scene setSceneToTitle() {
+    sceneManager.createTitleScene();
+    return sceneManager.getScene();
+  }
+
+  /**
+   * Sets the scene to the menu scene by prompting the scene manager to create it
+   *
+   * @return menu scene
+   */
+  public Scene setSceneToMenu() {
+    sceneManager.createMenuScene();
     return sceneManager.getScene();
   }
 
@@ -81,7 +89,6 @@ public class GameController {
    * </p>
    */
   public void pauseGame() {
-    sceneManager.createNonGameScene(SceneType.PAUSE);
     animationManager.pauseAnimation();
   }
 
@@ -110,8 +117,6 @@ public class GameController {
   public void openAuthorEnvironment() {
     AuthoringController newAuthoringController = new AuthoringController(SupportedLanguage.ENGLISH, UITheme.DEFAULT, AuthoringImplementationType.DEFAULT);
     newAuthoringController.updateAuthoringScreen();
-//    AuthoringController authoringController = new AuthoringController();
-//    authoringController.startAuthoring();
   }
 
   /**
@@ -124,7 +129,6 @@ public class GameController {
     gameLoaderView = new GameLoaderView(selectedGame);
     gameEngine = new GameEngine(selectedGame);
     GameRecord gameRecord = gameEngine.restoreLastStaticGameRecord();
-    getCurrentStrikeable(gameRecord);
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScreen(compositeElement, gameRecord);
     sceneManager.update(gameRecord);
@@ -163,23 +167,57 @@ public class GameController {
     boolean staticState = gameRecord.staticState();
     if (staticState) {
       ableToStrike = true;
+      sceneManager.displayStrikingElements();
     }
-    getCurrentStrikeable(gameRecord);
     sceneManager.update(gameRecord);
     return staticState;
   }
 
+  /**
+   * Prompts the GameTitleParser to parse for the playable game titles
+   *
+   * @return a list of the playable game titles
+   */
   public ObservableList<String> getGameTitles() {
     return gameTitleParser.getGameTitles();
   }
 
-  private void getCurrentStrikeable(GameRecord gameRecord) {
-    activePlayer = gameRecord.turn();
-    for (PlayerRecord p : gameRecord.players()) {
-      if (p.playerId() == activePlayer) {
-        strikeableID = p.activeStrikeable();
-        break;
-      }
+  /**
+   * Creates a new game window for the user to play or author a games
+   */
+  public void createNewWindow() {
+    new GameWindow();
+  }
+
+  /**
+   * Getter for ableToStrike boolean
+   *
+   * @return true if static state and able to strike, false if not static state and not able to
+   * strike
+   */
+  public boolean getAbleToStrike() {
+    return ableToStrike;
+  }
+
+  /**
+   * Move controllable along x axis
+   *
+   * @param positive true if along positive x axis, false if along negative x axis
+   */
+  public void moveControllableX(boolean positive) {
+    if (animationManager.isRunning()) {
+      gameEngine.moveActiveControllableX(positive);
+    }
+  }
+
+  /**
+   * Move controllable along y axis
+   *
+   * @param positive true if along positive y axis, false if along negative y axis
+   */
+  public void moveControllableY(boolean positive) {
+    if (animationManager.isRunning()) {
+      gameEngine.moveActiveControllableY(positive);
     }
   }
 
@@ -190,22 +228,6 @@ public class GameController {
     } catch (InvalidShapeException | InvalidImageException e) {
       LOGGER.error(e.getMessage());
       return null;
-    }
-  }
-
-  public Object getGameEngine() {
-    return gameEngine;
-  }
-
-  public void moveX(boolean positive) {
-    if(animationManager.isRunning()) {
-      gameEngine.moveActiveControllableX(positive);
-    }
-  }
-
-  public void moveY(boolean positive) {
-    if(animationManager.isRunning()) {
-      gameEngine.moveActiveControllableY(positive);
     }
   }
 }

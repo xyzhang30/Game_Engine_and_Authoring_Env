@@ -2,8 +2,6 @@ package oogasalad.model.api.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
-import java.util.Optional;
-import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 
 /**
  * Represents the JSON data for a player in the game.

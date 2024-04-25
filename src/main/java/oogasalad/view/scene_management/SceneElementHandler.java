@@ -1,6 +1,10 @@
 package oogasalad.view.scene_management;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
@@ -8,7 +12,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.api.enums.SceneElementEventType;
-import oogasalad.view.api.enums.SceneType;
+import oogasalad.view.enums.ThemeType;
 
 /**
  * Handles scene element events and interactions within a game environment.
@@ -31,6 +35,7 @@ public class SceneElementHandler {
   private final SceneManager sceneManager;
   private final GameStatusManager gameStatusManager;
   private final int angleIncrement;
+  private Map<SceneElementEventType, Consumer<Node>> eventMap;
   private double maxPower;
   private double minPower;
   private Rectangle powerMeter;
@@ -57,6 +62,7 @@ public class SceneElementHandler {
     this.sceneManager = sceneManager;
     this.gameStatusManager = gameStatusManager;
     angleIncrement = 5;
+    createEventMap();
   }
 
   /**
@@ -71,77 +77,45 @@ public class SceneElementHandler {
    * @param event A string representing the type of event to handle.
    */
   public void createElementHandler(Node node, String event) {
-    checkForSceneChangeEvent(node, event);
-    checkForGamePlayChangeEvent(node, event);
-    checkForStrikingEvent(node, event);
-    checkForGameManagementEvent(node, event);
+    Consumer<Node> consumer = eventMap.get(SceneElementEventType.valueOf(event));
+    consumer.accept(node);
   }
 
-  private void checkForGamePlayChangeEvent(Node node, String event) {
-    switch (SceneElementEventType.valueOf(event)) {
-      case PAUSE -> {
-        createPauseHandler(node);
-      }
-      case RESUME -> {
-        createResumeHandler(node);
-      }
-      case SAVE -> {
-        createSaveHandler(node);
-      }
-      case LOAD -> {
-        createLoadHandler(node);
-      }
-    }
+  private void createEventMap() {
+    eventMap = new HashMap<>();
+    addSceneChangeEventsToMap();
+    addGamePlayChangeEventsToMap();
+    addStrikingEventsToMap();
+    addGameManagementEventsToMap();
   }
 
-  private void checkForSceneChangeEvent(Node node, String event) {
-    switch (SceneElementEventType.valueOf(event)) {
-      case START_TITLE -> {
-        createStartTitleHandler(node);
-      }
-      case START_MENU -> {
-        createStartMenuHandler(node);
-      }
-      case START_AUTHORING -> {
-        createStartAuthoringHandler(node);
-      }
-      case START_GAME -> {
-        createStartGameHandler(node);
-      }
-      case NEXT_ROUND -> {
-        createNextRoundHandler(node);
-      }
-    }
-
+  private void addGamePlayChangeEventsToMap() {
+    eventMap.put(SceneElementEventType.PAUSE, this::createPauseHandler);
+    eventMap.put(SceneElementEventType.RESUME, this::createResumeHandler);
+    eventMap.put(SceneElementEventType.SAVE, this::createSaveHandler);
+    eventMap.put(SceneElementEventType.LOAD, this::createLoadHandler);
   }
 
-  private void checkForStrikingEvent(Node node, String event) {
-    switch (SceneElementEventType.valueOf(event)) {
-      case POWER_HEIGHT -> {
-        getMaxPower(node);
-      }
-      case SET_POWER -> {
-        getMinPower(node);
-        createPowerHandler(node);
-      }
-      case SET_ANGLE -> {
-        setAngleArrow(node);
-      }
-    }
+  private void addSceneChangeEventsToMap() {
+    eventMap.put(SceneElementEventType.START_TITLE, this::createStartTitleHandler);
+    eventMap.put(SceneElementEventType.START_MENU, this::createStartMenuHandler);
+    eventMap.put(SceneElementEventType.START_AUTHORING, this::createStartAuthoringHandler);
+    eventMap.put(SceneElementEventType.START_GAME, this::createStartGameHandler);
+    eventMap.put(SceneElementEventType.NEXT_ROUND, this::createNextRoundHandler);
+    eventMap.put(SceneElementEventType.NEW_GAME_WINDOW, this::createNewGameHandler);
+    eventMap.put(SceneElementEventType.CHANGE_THEME, this::createThemeChangeHandler);
   }
 
-  private void checkForGameManagementEvent(Node node, String event) {
-    switch (SceneElementEventType.valueOf(event)) {
-      case SET_ROUND -> {
-        setRound(node);
-      }
-      case SET_TURN -> {
-        setTurn(node);
-      }
-      case SET_SCORE -> {
-        setScores(node);
-      }
-    }
+  private void addStrikingEventsToMap() {
+    eventMap.put(SceneElementEventType.POWER_HEIGHT, this::getMaxPower);
+    eventMap.put(SceneElementEventType.SET_POWER, this::createPowerHandler);
+    eventMap.put(SceneElementEventType.SET_ANGLE, this::setAngleArrow);
+  }
+
+  private void addGameManagementEventsToMap() {
+    eventMap.put(SceneElementEventType.SET_ROUND, this::setRound);
+    eventMap.put(SceneElementEventType.SET_TURN, this::setTurn);
+    eventMap.put(SceneElementEventType.SET_SCORE, this::setScores);
   }
 
   private void createSaveHandler(Node node) {
@@ -157,7 +131,7 @@ public class SceneElementHandler {
   }
 
   private void createStartMenuHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createNonGameScene(SceneType.MENU));
+    node.setOnMouseClicked(e -> sceneManager.createMenuScene());
   }
 
   private void createStartAuthoringHandler(Node node) {
@@ -177,66 +151,84 @@ public class SceneElementHandler {
 
   private void createPauseHandler(Node node) {
     node.setOnMouseClicked((e -> {
+      sceneManager.createPauseDisplay();
       gameController.pauseGame();
       sceneManager.getRoot().requestFocus();
     }));
   }
 
   private void createResumeHandler(Node node) {
-    node.setOnMouseClicked(e -> gameController.resumeGame());
+    node.setOnMouseClicked(e -> {
+      sceneManager.removePauseSheen();
+      gameController.resumeGame();
+    });
   }
 
   private void getMaxPower(Node node) {
     maxPower = ((Rectangle) node).getHeight();
   }
 
-  private void getMinPower(Node node) {
-    minPower = ((Rectangle) node).getHeight();
-  }
-
   private void createPowerHandler(Node node) {
     powerMeter = (Rectangle) node;
+    minPower = powerMeter.getHeight();
+    boolean ableToStrike = gameController.getAbleToStrike();
     Pane root = sceneManager.getRoot();
     root.setOnKeyPressed(e -> {
       switch (e.getCode()) {
         case UP: {
-          increasePower();
+          handleUpKey(ableToStrike);
           break;
         }
         case DOWN: {
-          decreasePower();
+          handleDownKey(ableToStrike);
           break;
         }
         case LEFT: {
-          decreaseAngle();
+          handleLeftKey(ableToStrike);
           break;
         }
         case RIGHT: {
-          increaseAngle();
+          handleRightKey(ableToStrike);
           break;
         }
         case ENTER: {
-          handleStrike();
-          break;
-        }
-        case M: {
-          gameController.moveX(true);
-          break;
-        }
-        case N: {
-          gameController.moveX(false);
-          break;
-        }
-        case B: {
-          gameController.moveY(true);
-          break;
-        }
-        case V: {
-          gameController.moveY(false);
+          handleStrike(ableToStrike);
           break;
         }
       }
     });
+  }
+
+  private void handleUpKey(boolean ableToStrike) {
+    if (ableToStrike) {
+      increasePower();
+    } else {
+      gameController.moveControllableY(true);
+    }
+  }
+
+  private void handleDownKey(boolean ableToStrike) {
+    if (ableToStrike) {
+      decreasePower();
+    } else {
+      gameController.moveControllableY(false);
+    }
+  }
+
+  private void handleLeftKey(boolean ableToStrike) {
+    if (ableToStrike) {
+      decreaseAngle();
+    } else {
+      gameController.moveControllableX(false);
+    }
+  }
+
+  private void handleRightKey(boolean ableToStrike) {
+    if (ableToStrike) {
+      increaseAngle();
+    } else {
+      gameController.moveControllableX(true);
+    }
   }
 
   private void decreaseAngle() {
@@ -265,10 +257,13 @@ public class SceneElementHandler {
     }
   }
 
-  private void handleStrike() {
+  private void handleStrike(boolean ableToStrike) {
     double angle = (-90 + angleArrow.getRotate()) * (Math.PI / 180);
     double fractionalVelocity = powerMeter.getHeight() / maxPower;
-    gameController.hitPointScoringObject(fractionalVelocity, angle);
+    if (ableToStrike) {
+      gameController.hitPointScoringObject(fractionalVelocity, angle);
+      sceneManager.hideStrikingElements();
+    }
   }
 
   private void setAngleArrow(Node node) {
@@ -281,7 +276,7 @@ public class SceneElementHandler {
   }
 
   private void createStartTitleHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createNonGameScene(SceneType.TITLE));
+    node.setOnMouseClicked(e -> sceneManager.createTitleScene());
   }
 
   private void setRound(Node node) {
@@ -295,5 +290,18 @@ public class SceneElementHandler {
   private void setScores(Node node) {
     gameStatusManager.setScoreList((ListView<String>) node);
     node.setOnMouseClicked(e -> sceneManager.getRoot().requestFocus());
+  }
+
+  private void createThemeChangeHandler(Node node) {
+    ComboBox<ThemeType> comboBox = (ComboBox<ThemeType>) node;
+    comboBox.getItems().addAll(ThemeType.values());
+    comboBox.setOnAction(event -> {
+      ThemeType selectedTheme = comboBox.getValue();
+      sceneManager.changeTheme(selectedTheme);
+    });
+  }
+
+  private void createNewGameHandler(Node node) {
+    node.setOnMouseClicked(e -> gameController.createNewWindow());
   }
 }

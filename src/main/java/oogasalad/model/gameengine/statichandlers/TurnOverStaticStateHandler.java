@@ -4,7 +4,6 @@ import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.RulesRecord;
-import oogasalad.model.gameengine.command.Command;
 
 /**
  * The TurnOverStaticStateHandler class represents a handler for the game over static state, which
@@ -40,11 +39,6 @@ public class TurnOverStaticStateHandler extends StaticStateHandler {
 
   @Override
   protected void handleIt(GameEngine engine, RulesRecord rules) {
-    rules.advanceTurn().stream()
-        .peek(cmd -> LOGGER.info(cmd.getClass().getSimpleName() + " (advance) "))
-        .forEach(cmd -> cmd.execute(engine));
-    if (getPrev().canHandle(engine, rules)) {
-      getPrev().handleIt(engine, rules);
-    }
+    executeCommands(rules.advanceTurn(), engine, rules);
   }
 }

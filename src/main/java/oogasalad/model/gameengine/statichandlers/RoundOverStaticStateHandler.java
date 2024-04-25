@@ -4,7 +4,6 @@ import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.RulesRecord;
-import oogasalad.model.gameengine.command.Command;
 
 /**
  * The RoundOverStaticStateHandler class represents a handler for the game over static state,
@@ -42,11 +41,6 @@ public class RoundOverStaticStateHandler extends StaticStateHandler {
   @Override
   protected void handleIt(GameEngine engine, RulesRecord rules) {
     LOGGER.info(rules.roundPolicy().getClass().getSimpleName() + " (round cond) evaluated True");
-    rules.advanceRound().stream()
-        .peek(cmd -> LOGGER.info(cmd.getClass().getSimpleName() + " (advance) "))
-        .forEach(cmd -> cmd.execute(engine));
-    if (getPrev().canHandle(engine, rules)) {
-      getPrev().handleIt(engine, rules);
-    }
+    executeCommands(rules.advanceRound(), engine, rules);
   }
 }

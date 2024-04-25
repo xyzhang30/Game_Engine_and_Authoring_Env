@@ -18,6 +18,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 @CommandHelpInfo(description = "")
 @ExpectedParamNumber(2)
 public class TeleportCommand implements Command {
+
   private final GameObject gameObjectFrom;
   private final GameObject gameObjectTo;
 

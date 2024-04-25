@@ -1,8 +1,10 @@
 package oogasalad.model.gameengine.statichandlers;
 
+import java.util.Collection;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.RulesRecord;
+import oogasalad.model.gameengine.command.Command;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -75,6 +77,16 @@ public abstract class StaticStateHandler {
    */
   protected void setPrev(StaticStateHandler h) {
     prev = h;
+  }
+
+  protected void executeCommands(Collection<Command> commands, GameEngine engine,
+      RulesRecord rules) {
+    commands.stream()
+        .peek(cmd -> LOGGER.info(cmd.getClass().getSimpleName() + " (advance) "))
+        .forEach(cmd -> cmd.execute(engine));
+    if (getPrev().canHandle(engine, rules)) {
+      getPrev().handleIt(engine, rules);
+    }
   }
 
   /**

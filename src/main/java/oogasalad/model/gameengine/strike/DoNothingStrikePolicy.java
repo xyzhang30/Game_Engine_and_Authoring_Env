@@ -24,7 +24,8 @@ public class DoNothingStrikePolicy implements StrikePolicy {
    */
   @Override
   public BiConsumer<Integer, GameEngine> getStrikePolicy() {
-    return (strikeableID, engine) -> {}; // Do nothing
+    return (strikeableID, engine) -> {
+    }; // Do nothing
   }
 }
 

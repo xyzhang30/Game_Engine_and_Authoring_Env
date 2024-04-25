@@ -23,10 +23,9 @@ public class IncrementPointStrikePolicy implements StrikePolicy {
 
 
   /**
-   * Returns a BiConsumer that defines the strike policy for a game engine.
-   * The BiConsumer takes an integer representing the ID of the strikeable object and the game engine.
-   * It increments the temporary score of the active player's strikeable object by 1.0, if it
-   * exists, or does nothing
+   * Returns a BiConsumer that defines the strike policy for a game engine. The BiConsumer takes an
+   * integer representing the ID of the strikeable object and the game engine. It increments the
+   * temporary score of the active player's strikeable object by 1.0, if it exists, or does nothing
    *
    * @return A BiConsumer representing the strike policy.
    */

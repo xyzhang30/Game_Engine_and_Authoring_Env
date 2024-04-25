@@ -1,5 +1,6 @@
 <scene_elements>
   <node>
+    <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
     <text>Play</text>
     <width_factor>0.3</width_factor>
@@ -11,6 +12,7 @@
   </node>
 
   <node>
+    <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
     <text>Create</text>
     <width_factor>0.3</width_factor>
@@ -22,6 +24,7 @@
   </node>
 
   <node>
+    <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>Game Over</text>
     <x_layout_factor>0.38</x_layout_factor>
@@ -30,12 +33,13 @@
   </node>
 
   <node>
+  <class>javafx.scene.control.ListView</class>
     <type>LISTVIEW</type>
-    <width_factor>0.25</width_factor>
-    <height_factor>0.2</height_factor>
-    <x_layout_factor>0.5</x_layout_factor>
-    <y_layout_factor>0.3</y_layout_factor>
-    <styling>score-list</styling>
-    <event>SET_SCORE</event>
-  </node>
-</scene_elements>
+  <width_factor>0.25</width_factor>
+  <height_factor>0.2</height_factor>
+  <x_layout_factor>0.5</x_layout_factor>
+  <y_layout_factor>0.3</y_layout_factor>
+  <styling>score-list</styling>
+  <event>SET_SCORE</event>
+</node>
+  </scene_elements>

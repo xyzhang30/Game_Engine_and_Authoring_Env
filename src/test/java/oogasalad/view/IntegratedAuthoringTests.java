@@ -9,7 +9,7 @@
 //import javafx.scene.Scene;
 //import javafx.scene.paint.Color;
 //import javafx.stage.Stage;
-//import javafx.stage.Window;
+//import javafx.stage.GameWindow;
 //import oogasalad.view.controller.AuthoringController;
 //import oogasalad.view.controller.GameController;
 //import oogasalad.view.game_environment.TitleScreen;
@@ -46,7 +46,7 @@
 //    Platform.runLater(latch::countDown);
 //    assertTrue(latch.await(2, TimeUnit.SECONDS), "Timeout waiting for the screen to load.");
 //
-//    for (Window window : Window.getWindows()) {
+//    for (GameWindow window : GameWindow.getWindows()) {
 //      if (window instanceof Stage stage) {
 //        if (stage.getTitle() != null && stage.getTitle().equals(title) && stage.isShowing()) {
 //          return true;

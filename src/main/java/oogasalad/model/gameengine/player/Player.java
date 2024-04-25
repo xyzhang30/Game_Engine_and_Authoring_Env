@@ -3,8 +3,8 @@ package oogasalad.model.gameengine.player;
 import java.util.List;
 import java.util.Stack;
 import oogasalad.model.api.PlayerRecord;
-import oogasalad.model.gameengine.gameobject.controllable.Controllable;
 import oogasalad.model.gameengine.gameobject.Strikeable;
+import oogasalad.model.gameengine.gameobject.controllable.Controllable;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -159,7 +159,7 @@ public class Player {
    */
 
   public void applyDelayedScore() {
-    myScoreables.forEach(scoreable -> score+=scoreable.getTemporaryScore());
+    myScoreables.forEach(scoreable -> score += scoreable.getTemporaryScore());
   }
 
   /**

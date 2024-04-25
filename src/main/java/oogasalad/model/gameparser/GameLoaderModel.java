@@ -14,24 +14,24 @@ import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.api.exception.InvalidFileException;
-import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import oogasalad.model.gameengine.RulesRecord;
+import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
-import oogasalad.model.gameengine.gameobject.controllable.Controllable;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.PhysicsHandler;
 import oogasalad.model.gameengine.gameobject.Strikeable;
 import oogasalad.model.gameengine.gameobject.collision.FrictionHandler;
 import oogasalad.model.gameengine.gameobject.collision.MomentumHandler;
+import oogasalad.model.gameengine.gameobject.controllable.Controllable;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
+import oogasalad.model.gameengine.rank.PlayerRecordComparator;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandler;
 import oogasalad.model.gameengine.statichandlers.StaticStateHandlerLinkedListFactory;
 import oogasalad.model.gameengine.strike.StrikePolicy;
 import oogasalad.model.gameengine.turn.TurnPolicy;
-import oogasalad.model.gameengine.rank.PlayerRecordComparator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -86,7 +86,6 @@ public class GameLoaderModel extends GameLoader {
   }
 
 
-
   public void prepareRound(int id) {
     createGameObjectContainer();
     addPlayerStrikeables();
@@ -115,7 +114,7 @@ public class GameLoaderModel extends GameLoader {
         optionalStrikeable.ifPresent(playerScoreableObjects::add);
       }
       playerMap.get(playerId).addScoreables(playerScoreableObjects);
-      if(!parserPlayer.myControllable().isEmpty()) {
+      if (!parserPlayer.myControllable().isEmpty()) {
         Optional<Controllable> optionalControllable = gameObjects.get(
             parserPlayer.myControllable().get(0)).getControllable();
         optionalControllable.ifPresent(controllable -> {
@@ -168,7 +167,9 @@ public class GameLoaderModel extends GameLoader {
       if (entry.getKey().test(id, co) && id != co.collidableId()) {
         physicsMap.put(new Pair(gameObjects.get(id), gameObjects.get(co.collidableId())),
             entry.getValue().apply(id, co));
-        System.out.println(id + " " + co.collidableId() + " " + entry.getValue().apply(id, co).getClass().getSimpleName());
+        System.out.println(
+            id + " " + co.collidableId() + " " + entry.getValue().apply(id, co).getClass()
+                .getSimpleName());
         break;
       }
     }
@@ -228,7 +229,8 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private List<StaticChecker> createStaticChecker() {
-    return StaticCheckerFactory.createStaticChecker(gameData.getRules().staticChecker());//  private StaticChecker createStaticChecker() {
+    return StaticCheckerFactory.createStaticChecker(
+        gameData.getRules().staticChecker());//  private StaticChecker createStaticChecker() {
   }
 
 
@@ -259,7 +261,7 @@ public class GameLoaderModel extends GameLoader {
     List<Command> ret = new ArrayList<>();
     commands.keySet().forEach(command -> {
       ret.add(CommandFactory.createCommand(command, commands.get(command), gameObjects));
-      System.out.println("command:"+command + " "+ commands.get(command));
+      System.out.println("command:" + command + " " + commands.get(command));
     });
     return ret;
   }
