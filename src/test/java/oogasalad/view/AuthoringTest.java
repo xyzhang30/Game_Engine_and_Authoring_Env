@@ -8,7 +8,7 @@
 //import javafx.scene.Parent;
 //import javafx.scene.Scene;
 //import javafx.stage.Stage;
-//import javafx.stage.Window;
+//import javafx.stage.GameWindow;
 //import oogasalad.view.controller.GameController;
 //import oogasalad.view.game_environment.TitleScreen;
 //import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@
 //    assertTrue(latch.await(2, TimeUnit.SECONDS));
 //
 //    boolean newWindowOpened = false;
-//    for (Window window : Window.getWindows()) {
+//    for (GameWindow window : GameWindow.getWindows()) {
 //      if (window instanceof Stage && window.isShowing()) {
 //        newWindowOpened = true;
 //        break;

@@ -3,6 +3,7 @@ package oogasalad.view.controller;
 import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
@@ -10,6 +11,7 @@ import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
+import oogasalad.view.GameWindow;
 import oogasalad.view.scene_management.AnimationManager;
 import oogasalad.view.scene_management.GameTitleParser;
 import oogasalad.view.scene_management.SceneManager;
@@ -51,12 +53,20 @@ public class GameController {
    */
   public GameController(double width, double height) {
     sceneManager = new SceneManager(this, width, height);
-    sceneManager.createTitleScene();
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
     ableToStrike = true;
     maxVelocity = 1000;
   }
+
+  public void setSceneToTitle() {
+    sceneManager.createTitleScene();
+  }
+
+  public void setSceneToMenu() {
+    sceneManager.createMenuScene();
+  }
+
 
   /**
    * Retrieves the current active scene of the game.
@@ -166,6 +176,10 @@ public class GameController {
     return gameTitleParser.getGameTitles();
   }
 
+  public void createNewWindow() {
+    GameWindow gameWindow = new GameWindow();
+  }
+
   private void getCurrentStrikeable(GameRecord gameRecord) {
     activePlayer = gameRecord.turn();
     for (PlayerRecord p : gameRecord.players()) {
@@ -187,13 +201,13 @@ public class GameController {
   }
 
   public void moveX(boolean positive) {
-    if(animationManager.isRunning()) {
+    if (animationManager.isRunning()) {
       gameEngine.moveActiveControllableX(positive);
     }
   }
 
   public void moveY(boolean positive) {
-    if(animationManager.isRunning()) {
+    if (animationManager.isRunning()) {
       gameEngine.moveActiveControllableY(positive);
     }
   }

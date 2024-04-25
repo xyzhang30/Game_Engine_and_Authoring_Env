@@ -304,6 +304,6 @@ public class SceneElementHandler {
   }
 
   private void createNewGameHandler(Node node) {
-    node.setOnMouseClicked(e -> gameController.);
+    node.setOnMouseClicked(e -> gameController.createNewWindow());
   }
 }
