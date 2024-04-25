@@ -1,7 +1,7 @@
 <scene_elements>
   <node>
     <class>javafx.scene.text.Text</class>
-    <text>Round: </text>
+    <text>Round:</text>
     <x_layout_factor>0.9</x_layout_factor>
     <y_layout_factor>0.12</y_layout_factor>
     <styling>game-text</styling>
@@ -10,7 +10,7 @@
 
   <node>
     <class>javafx.scene.text.Text</class>
-    <text>Turn: </text>
+    <text>Turn:</text>
     <x_layout_factor>0.88</x_layout_factor>
     <y_layout_factor>0.17</y_layout_factor>
     <styling>game-text</styling>
@@ -72,6 +72,17 @@
   </node>
 
   <node>
+    <class>javafx.scene.control.Button</class>
+    <text>Add Game</text>
+    <width_factor>0.05</width_factor>
+    <height_factor>0.05</height_factor>
+    <x_layout_factor>0.92</x_layout_factor>
+    <y_layout_factor>0.8</y_layout_factor>
+    <styling>game-button</styling>
+    <event>NEW_GAME_WINDOW</event>
+  </node>
+
+  <node>
     <class>javafx.scene.shape.Rectangle</class>
     <width_factor>0.07</width_factor>
     <height_factor>0.7</height_factor>
@@ -91,16 +102,16 @@
     <event>SET_POWER</event>
   </node>
 
-<!--  <node>-->
-<!--    <type>ARROW</type>-->
-<!--    <x_layout>1200</x_layout>-->
-<!--    <y_layout>850</y_layout>-->
-<!--    <stem_width>5</stem_width>-->
-<!--    <stem_height>60</stem_height>-->
-<!--    <arrow_width_offset>5</arrow_width_offset>-->
-<!--    <arrow_height_offset>8</arrow_height_offset>-->
-<!--    <styling>angle-arrow</styling>-->
-<!--    <event>SET_ANGLE</event>-->
-<!--  </node>-->
+  <!--  <node>-->
+  <!--    <type>ARROW</type>-->
+  <!--    <x_layout>1200</x_layout>-->
+  <!--    <y_layout>850</y_layout>-->
+  <!--    <stem_width>5</stem_width>-->
+  <!--    <stem_height>60</stem_height>-->
+  <!--    <arrow_width_offset>5</arrow_width_offset>-->
+  <!--    <arrow_height_offset>8</arrow_height_offset>-->
+  <!--    <styling>angle-arrow</styling>-->
+  <!--    <event>SET_ANGLE</event>-->
+  <!--  </node>-->
 
 </scene_elements>

@@ -13,14 +13,10 @@ public class Window {
 
   public final static double SCREEN_WIDTH = Screen.getPrimary().getBounds().getWidth();
   public final static double SCREEN_HEIGHT = Screen.getPrimary().getBounds().getHeight();
-  public final static String TITLE = "FYSICS FUN";
 
   public Window(Stage stage) {
     GameController controller = new GameController(SCREEN_WIDTH, SCREEN_HEIGHT);
     stage.setScene(controller.getScene());
-    stage.setTitle(TITLE); // Port this hard coding into data.
-//    stage.setWidth(SCREEN_WIDTH * 0.8);
-//    stage.setHeight(SCREEN_HEIGHT * 0.8);
     stage.setFullScreen(true);
     stage.show();
   }
