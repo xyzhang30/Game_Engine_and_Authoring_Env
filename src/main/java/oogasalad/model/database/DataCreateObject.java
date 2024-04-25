@@ -80,22 +80,33 @@ public class DataCreateObject {
     return false;
   }
 
-  public boolean updatePermission(int permissionId, String role) {
-    String sql = "UPDATE Permissions SET role = ? WHERE permission_id = ?;";
+  /**
+   * Grants a permission to multiple players for a specific game.
+   * @param gameId The game ID to which the permission relates.
+   * @param playerIds Array of player IDs to grant the permission.
+   * @param role The role to be granted.
+   * @return true if the permissions are successfully granted, false otherwise.
+   */
+  public boolean grantPermissions(int gameId, int[] playerIds, String role) {
+    String sql = "INSERT INTO Permissions (player_id, game_id, role) VALUES (?, ?, ?);";
 
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, role);
-      pstmt.setInt(2, permissionId);
-      int affectedRows = pstmt.executeUpdate();
-      return affectedRows > 0;
+      int count = 0;
+      for (int playerId : playerIds) {
+        pstmt.setInt(1, playerId);
+        pstmt.setInt(2, gameId);
+        pstmt.setString(3, role);
+        pstmt.addBatch();  // Add each set of parameters to the batch
+        count++;
+      }
+      int[] results = pstmt.executeBatch();  // Execute all the batched commands
+      return results.length == count;  // Check if all commands were successful
     } catch (SQLException e) {
       e.printStackTrace();
     }
     return false;
   }
-
-
 
 
 }
