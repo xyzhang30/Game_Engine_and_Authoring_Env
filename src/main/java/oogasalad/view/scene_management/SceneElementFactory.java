@@ -1,17 +1,14 @@
 package oogasalad.view.scene_management;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import oogasalad.view.enums.SceneElementType;
 
 /**
  * Creates elements from parameters received from sceneElementParser; outsources styling and event
@@ -21,11 +18,11 @@ import oogasalad.view.enums.SceneElementType;
  */
 public class SceneElementFactory {
 
-  private final SceneElementParser sceneElementParser;
   private final SceneElementStyler sceneElementStyler;
   private final SceneElementHandler sceneElementHandler;
   private final double screenWidth;
   private final double screenHeight;
+  private final String classTag = "class";
   private final String typeTag = "type";
   private final String textTag = "text";
   private final String widthFactorTag = "width_factor";
@@ -51,7 +48,6 @@ public class SceneElementFactory {
    */
   public SceneElementFactory(double screenWidth, double screenHeight,
       SceneElementStyler sceneElementStyler, SceneElementHandler sceneElementHandler) {
-    sceneElementParser = new SceneElementParser();
     this.sceneElementStyler = sceneElementStyler;
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
@@ -65,34 +61,31 @@ public class SceneElementFactory {
    * @return container for all scene elements
    */
   public Pane createSceneElements(List<Map<String, String>> parameterList) {
-    AnchorPane sceneElements = new AnchorPane();
-    sceneElements.setPrefWidth(screenWidth);
-    sceneElements.setPrefHeight(screenHeight);
+    AnchorPane sceneElementPane = new AnchorPane();
+    sceneElementPane.setPrefWidth(screenWidth);
+    sceneElementPane.setPrefHeight(screenHeight);
 
     for (Map<String, String> parameterMap : parameterList) {
-      String type = parameterMap.get(typeTag);
-      switch (SceneElementType.valueOf(type)) {
-        case BUTTON -> {
-          sceneElements.getChildren().add(createButton(parameterMap));
-        }
-        case TEXT -> {
-          sceneElements.getChildren().add(createText(parameterMap));
-        }
-        case LISTVIEW -> {
-          sceneElements.getChildren().add(createListView(parameterMap));
-        }
-        case RECTANGLE -> {
-          sceneElements.getChildren().add(createRectangle(parameterMap));
-        }
-        case ARROW -> {
-          sceneElements.getChildren().add(createArrow(parameterMap));
-        }
+
+      try {
+        String className = parameterMap.get(classTag);
+        Class<?> clazz = Class.forName(className);
+        Object obj = clazz.getDeclaredConstructor().newInstance();
+        Node node = (Node) obj;
+
+        configureElement(node, parameterMap);
+
+        sceneElementPane.getChildren().add(node);
+      } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
+               IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        System.out.println("exception in create elements");
+        //TODO: Exception Handling
       }
     }
-    return sceneElements;
+    return sceneElementPane;
   }
 
-  private Button createButton(Map<String, String> parameters) {
+  private void configureElement(Node node, Map<String, String> parameters) {
     String displayText = parameters.get(textTag);
     double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
     double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
@@ -101,71 +94,69 @@ public class SceneElementFactory {
     String style = parameters.get(styleTag);
     String event = parameters.get(eventTag);
 
-    Button button = new Button(displayText);
-    styleAndHandleElement(button, style, event);
-
-    button.setPrefSize(screenWidth * widthFactor, screenHeight * heightFactor);
-    button.setLayoutX(screenWidth * xLayoutFactor - button.getWidth() / 2);
-    button.setLayoutY(screenHeight * yLayoutFactor - button.getHeight() / 2);
-
-    return button;
+    handleTextDisplay(node, displayText);
+    handlePrefSize(node, widthFactor, heightFactor);
+    handleLayout(node, xLayoutFactor, yLayoutFactor);
+    handleStyle(node, style);
+    handleEvent(node, event);
   }
 
-  private Text createText(Map<String, String> parameters) {
-    String displayText = parameters.get(textTag);
-    double xLayoutFactor = parseDoubleParameter(parameters, xLayoutFactorTag);
-    double yLayoutFactor = parseDoubleParameter(parameters, yLayoutFactorTag);
-    String style = parameters.get(styleTag);
-    String event = parameters.get(eventTag);
-
-    Text text = new Text(displayText);
-    sceneElementStyler.style(text, style);
-
-    if (event != null) {
-      sceneElementHandler.createElementHandler(text, event);
+  private void handleTextDisplay(Node node, String displayText) {
+    if (displayText != null) {
+      try {
+        Method setDisplayTextMethod = node.getClass().getMethod("setText", String.class);
+        setDisplayTextMethod.invoke(node, displayText);
+      } catch (NoSuchMethodException | SecurityException | IllegalAccessException |
+               IllegalArgumentException | InvocationTargetException e) {
+        //TODO: Excepetion Handling
+        System.out.println("exception in create text");
+      }
     }
-
-    text.setLayoutX(screenWidth * xLayoutFactor - text.getLayoutBounds().getWidth() / 2);
-    text.setLayoutY(screenHeight * yLayoutFactor - text.getLayoutBounds().getHeight() / 2);
-
-    return text;
   }
 
-  private ListView<String> createListView(Map<String, String> parameters) {
-    double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
-    double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
-    double xLayoutFactor = parseDoubleParameter(parameters, xLayoutFactorTag);
-    double yLayoutFactor = parseDoubleParameter(parameters, yLayoutFactorTag);
-    String style = parameters.get(styleTag);
-    String event = parameters.get(eventTag);
-
-    ListView<String> listView = new ListView<>();
-    sceneElementStyler.style(listView, style);
-    sceneElementHandler.createElementHandler(listView, event);
-
-    listView.setPrefSize(screenWidth * widthFactor, screenHeight * heightFactor);
-    listView.setLayoutX(screenWidth * xLayoutFactor - listView.getPrefWidth() / 2);
-    listView.setLayoutY(screenHeight * yLayoutFactor);
-
-    return listView;
+  private void handlePrefSize(Node node, double widthFactor, double heightFactor) {
+    if (widthFactor != 0 && heightFactor != 0) {
+      try {
+        Method setPrefSizeMethod = node.getClass()
+            .getMethod("setPrefSize", double.class, double.class);
+        setPrefSizeMethod.invoke(node, widthFactor * screenWidth, heightFactor * screenHeight);
+      } catch (NoSuchMethodException | SecurityException | IllegalAccessException |
+               IllegalArgumentException | InvocationTargetException e) {
+        //TODO: Excepetion Handling
+        System.out.println("exception in size");
+      }
+    }
   }
 
-  private Rectangle createRectangle(Map<String, String> parameters) {
-    double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
-    double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
-    double xLayoutFactor = parseDoubleParameter(parameters, xLayoutFactorTag);
-    double yLayoutFactor = parseDoubleParameter(parameters, yLayoutFactorTag);
-    String style = parameters.get(styleTag);
-    String event = parameters.get(eventTag);
+  private void handleLayout(Node node, double xLayoutFactor, double yLayoutFactor) {
+    if (xLayoutFactor != 0 && yLayoutFactor != 0) {
+      try {
+        Method setLayoutXMethod = node.getClass()
+            .getMethod("setLayoutX", double.class);
+        Method setLayoutYMethod = node.getClass()
+            .getMethod("setLayoutY", double.class);
+        setLayoutXMethod.invoke(node,
+            xLayoutFactor * screenWidth - node.getLayoutBounds().getWidth() / 2);
+        setLayoutYMethod.invoke(node,
+            yLayoutFactor * screenHeight - node.getLayoutBounds().getHeight() / 2);
+      } catch (NoSuchMethodException | SecurityException | IllegalAccessException |
+               IllegalArgumentException | InvocationTargetException e) {
+        //TODO: Excepetion Handling
+        System.out.println("exception in layout");
+      }
+    }
+  }
 
-    Rectangle rectangle = new Rectangle(screenWidth * widthFactor,
-        screenHeight * heightFactor);
-    styleAndHandleElement(rectangle, style, event);
+  private void handleStyle(Node node, String style) {
+    if (style != null) {
+      sceneElementStyler.style(node, style);
+    }
+  }
 
-    rectangle.setLayoutX(screenWidth * xLayoutFactor);
-    rectangle.setLayoutY(screenHeight * yLayoutFactor);
-
-    return rectangle;
+  private void handleEvent(Node node, String event) {
+    if (event != null) {
+      sceneElementHandler.createElementHandler(node, event);
+    }
   }
 
   private Polygon createArrow(Map<String, String> parameters) {
@@ -212,15 +203,13 @@ public class SceneElementFactory {
     return arrowPoints;
   }
 
-  private void styleAndHandleElement(Node element, String style, String event) {
-    sceneElementStyler.style(element, style);
-    if (event != null) {
-      sceneElementHandler.createElementHandler(element, event);
-    }
-  }
-
   private double parseDoubleParameter(Map<String, String> parameters, String key) {
-    return Double.parseDouble(parameters.get(key));
+    try {
+      return Double.parseDouble(parameters.get(key));
+    } catch (Exception e) {
+      return 0;
+    }
+
   }
 
 }

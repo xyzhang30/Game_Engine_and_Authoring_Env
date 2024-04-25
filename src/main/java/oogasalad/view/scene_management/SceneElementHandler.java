@@ -8,7 +8,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.enums.SceneElementEventType;
-import oogasalad.view.enums.SceneType;
 
 /**
  * Handles scene element events and interactions within a game environment.
@@ -157,7 +156,7 @@ public class SceneElementHandler {
   }
 
   private void createStartMenuHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createNonGameScene(SceneType.MENU));
+    node.setOnMouseClicked(e -> sceneManager.createMenuScene());
   }
 
   private void createStartAuthoringHandler(Node node) {
@@ -285,7 +284,7 @@ public class SceneElementHandler {
   }
 
   private void createStartTitleHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createNonGameScene(SceneType.TITLE));
+    node.setOnMouseClicked(e -> sceneManager.createTitleScene());
   }
 
   private void setRound(Node node) {
