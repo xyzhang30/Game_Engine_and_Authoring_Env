@@ -83,8 +83,8 @@
     <type>RECTANGLE</type>
     <width_factor>0.07</width_factor>
     <height_factor>0.7</height_factor>
-    <x_layout_factor>0.78</x_layout_factor>
-    <y_layout_factor>0.4</y_layout_factor>
+    <x_layout_factor>0.75</x_layout_factor>
+    <y_layout_factor>0.05</y_layout_factor>
     <styling>power-outline</styling>
     <event>POWER_HEIGHT</event>
   </node>
@@ -94,7 +94,7 @@
     <type>RECTANGLE</type>
     <width_factor>0.05</width_factor>
     <height_factor>0.01</height_factor>
-    <x_layout_factor>0.78</x_layout_factor>
+    <x_layout_factor>0.76</x_layout_factor>
     <y_layout_factor>0.735</y_layout_factor>
     <styling>power-bar</styling>
     <event>SET_POWER</event>

@@ -150,8 +150,8 @@ public class SceneElementFactory {
   private void handleLayout(Node node, Map<String, String> parameters) {
     double xLayoutFactor = parseDoubleParameter(parameters, xLayoutFactorTag);
     double yLayoutFactor = parseDoubleParameter(parameters, yLayoutFactorTag);
-    node.setLayoutX(xLayoutFactor * screenWidth - node.getLayoutBounds().getWidth() / 2);
-    node.setLayoutY(yLayoutFactor * screenHeight - node.getLayoutBounds().getHeight() / 2);
+    node.setLayoutX(xLayoutFactor * screenWidth);
+    node.setLayoutY(yLayoutFactor * screenHeight);
   }
 
   private void handleStyle(Node node, Map<String, String> parameters) {
