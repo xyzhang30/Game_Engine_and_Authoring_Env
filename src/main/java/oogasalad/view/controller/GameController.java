@@ -13,7 +13,6 @@ import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.scene_management.AnimationManager;
 import oogasalad.view.scene_management.GameTitleParser;
 import oogasalad.view.scene_management.SceneManager;
-import oogasalad.view.enums.SceneType;
 import oogasalad.view.visual_elements.CompositeElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -52,7 +51,7 @@ public class GameController {
    */
   public GameController(double width, double height) {
     sceneManager = new SceneManager(this, width, height);
-    sceneManager.createNonGameScene(SceneType.TITLE);
+    sceneManager.createTitleScene();
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
     ableToStrike = true;
@@ -78,7 +77,6 @@ public class GameController {
    * </p>
    */
   public void pauseGame() {
-    sceneManager.createNonGameScene(SceneType.PAUSE);
     animationManager.pauseAnimation();
   }
 
@@ -107,8 +105,6 @@ public class GameController {
   public void openAuthorEnvironment() {
     AuthoringController newAuthoringController = new AuthoringController();
     newAuthoringController.updateAuthoringScreen();
-//    AuthoringController authoringController = new AuthoringController();
-//    authoringController.startAuthoring();
   }
 
   /**
@@ -188,10 +184,6 @@ public class GameController {
       LOGGER.error(e.getMessage());
       return null;
     }
-  }
-
-  public Object getGameEngine() {
-    return gameEngine;
   }
 
   public void moveX(boolean positive) {

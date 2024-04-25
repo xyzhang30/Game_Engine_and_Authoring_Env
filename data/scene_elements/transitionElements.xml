@@ -1,5 +1,6 @@
 <scene_elements>
   <node>
+    <class>javafx.scene.shape.Rectangle</class>
     <type>RECTANGLE</type>
     <width_factor>1</width_factor>
     <height_factor>1</height_factor>
@@ -9,6 +10,7 @@
   </node>
 
   <node>
+    <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
     <text>Continue</text>
     <width_factor>0.3</width_factor>
@@ -20,7 +22,7 @@
   </node>
 
   <node>
-    <type>TEXT</type>
+    <class>javafx.scene.text.Text</class>
     <text>Round Over</text>
     <x_layout_factor>0.38</x_layout_factor>
     <y_layout_factor>0.3</y_layout_factor>
