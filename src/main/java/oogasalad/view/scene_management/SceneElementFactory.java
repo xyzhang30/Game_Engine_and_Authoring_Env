@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -138,6 +139,18 @@ public class SceneElementFactory {
     button.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
   }
 
+  private void configureComboBox(Node node, Map<String, String> parameters) {
+    String displayText = parameters.get(textTag);
+    double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
+    double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
+
+    ComboBox<String> comboBox = (ComboBox<String>) node;
+    if (displayText != null) {
+      comboBox.setPromptText(displayText);
+    }
+    comboBox.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
+  }
+
   private void configureListView(Node node, Map<String, String> parameters) {
     double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
     double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
@@ -183,6 +196,7 @@ public class SceneElementFactory {
     elementConfigurationMap.put(SceneElementType.TEXT, this::configureText);
     elementConfigurationMap.put(SceneElementType.BUTTON, this::configureButton);
     elementConfigurationMap.put(SceneElementType.LISTVIEW, this::configureListView);
+    elementConfigurationMap.put(SceneElementType.COMBOBOX, this::configureComboBox);
   }
 
   private void executeConfigurationMethod(Node node, Map<String, String> parameters) {
