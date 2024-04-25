@@ -98,6 +98,24 @@ public class DataAccessObject {
     return scores;
   }
 
+  // Method to check if a player has the permission to play a game
+  public boolean hasPlayPermission(int playerId, int gameId) {
+    String query = "SELECT role FROM Permissions WHERE player_id = ? AND game_id = ? AND role = 'PLAY'";
+
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(query)) {
+      pstmt.setInt(1, playerId);
+      pstmt.setInt(2, gameId);
+      ResultSet rs = pstmt.executeQuery();
+
+      // If we find at least one row, it means the player has 'PLAY' permission
+      return rs.next();
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false; // Assume no permission if there's an exception
+    }
+  }
+
 
 
 }
