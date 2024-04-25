@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
 import oogasalad.view.controller.GameController;
+import oogasalad.view.enums.ThemeType;
 import oogasalad.view.visual_elements.CompositeElement;
 import org.xml.sax.SAXException;
 
@@ -139,6 +140,14 @@ public class SceneManager {
     if (!root.getChildren().contains(pauseElements)) {
       root.getChildren().add(pauseElements);
     }
+  }
+
+  /**
+   * Changes the theme by prompting the element styler to switch style sheets
+   * @param selectedTheme theme selected by user
+   */
+  void changeTheme(ThemeType selectedTheme){
+    sceneElementStyler.changeTheme(selectedTheme);
   }
 
   /**

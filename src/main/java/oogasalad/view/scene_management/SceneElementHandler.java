@@ -12,6 +12,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.enums.SceneElementEventType;
+import oogasalad.view.enums.ThemeType;
 
 /**
  * Handles scene element events and interactions within a game environment.
@@ -292,11 +293,11 @@ public class SceneElementHandler {
   }
 
   private void createThemeChangeHandler(Node node) {
-    //add options
-    ComboBox<String> comboBox = (ComboBox<String>) node;
+    ComboBox<ThemeType> comboBox = (ComboBox<ThemeType>) node;
+    comboBox.getItems().addAll(ThemeType.values());
     comboBox.setOnAction(event -> {
-      String selectedTheme = comboBox.getValue();
-      //sceneManager.changeTheme(selectedTheme);
+      ThemeType selectedTheme = comboBox.getValue();
+      sceneManager.changeTheme(selectedTheme);
     });
   }
 
