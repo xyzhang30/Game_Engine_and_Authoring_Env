@@ -10,7 +10,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
  * The AllPlayersCompletedRoundCondition evaluates if any player's score has exceeded a certain
- * number
+ * number.
  *
  * @author Noah Loewy
  */

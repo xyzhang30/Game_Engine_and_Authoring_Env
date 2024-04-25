@@ -9,7 +9,7 @@ import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
- * The NTurnsCompletedCondition class represents a condition that evaluates whether a specified
+ * The TurnsCompletedCondition class represents a condition that evaluates whether a specified
  * number of rounds have been completed in the game by ALL the players.
  *
  * @author Noah Loewy
@@ -18,24 +18,24 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
 @ExpectedParamNumber(1)
-public class NTurnsCompletedCondition implements Condition {
+public class TurnsCompletedCondition implements Condition {
 
   private final List<Integer> arguments;
 
   /**
-   * Constructs an instance of the NTurnsCompletedCondition with the provided arguments.
+   * Constructs an instance of the TurnsCompletedCondition with the provided arguments.
    *
    * @param arguments A one-element list which represents the number of turns that need to be
    *                  completed by each player for the condition to evaluate to true.
    */
 
-  public NTurnsCompletedCondition(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
+  public TurnsCompletedCondition(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
   }
 
   /**
    * Evaluates whether the specified number of turns have been completed in the game by each player.
-   * The work is delegated to PlayerContainer's allPlayersCompletedNTurns method.
+   * The work is delegated to PlayerContainer's allPlayersCompletedTurns method.
    *
    * @param engine The game engine instance.
    * @return true if the game engine's current round exceeds the specified number of rounds to be

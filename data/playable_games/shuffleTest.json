@@ -571,12 +571,12 @@
     ],
     "turn_policy": "StandardTurnPolicy",
     "round_policy": {
-      "NTurnsCompletedCondition": [
+      "TurnsCompletedCondition": [
         2
       ]
     },
     "win_condition": {
-      "NRoundsCompletedCondition": [
+      "RoundsCompletedCondition": [
         2
       ]
     },
