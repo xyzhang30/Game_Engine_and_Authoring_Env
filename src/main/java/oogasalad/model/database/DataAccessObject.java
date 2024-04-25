@@ -74,6 +74,29 @@ public class DataAccessObject {
     return scores;
   }
 
+  // Method to retrieve general high scores for a specific game
+  public List<GameScore> getGeneralHighScoresForGame(int gameId) {
+    List<GameScore> scores = new ArrayList<>();
+    String query = "SELECT player_id, score, game_result FROM GameScores WHERE game_id = ? ORDER BY score DESC";
+
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(query)) {
+      pstmt.setInt(1, gameId);
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        int playerId = rs.getInt("player_id");
+        int score = rs.getInt("score");
+        String gameResult = rs.getString("game_result");
+
+        // Create a new GameScore object and add it to the list
+        scores.add(new GameScore(playerId, gameId, score, gameResult));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return scores;
+  }
 
 
 
