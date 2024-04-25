@@ -2,7 +2,7 @@
   <node>
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
-    <text>Round:</text>
+    <text>Round: </text>
     <x_layout_factor>0.9</x_layout_factor>
     <y_layout_factor>0.12</y_layout_factor>
     <styling>game-text</styling>
@@ -12,7 +12,7 @@
   <node>
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
-    <text>Turn:</text>
+    <text>Turn: </text>
     <x_layout_factor>0.88</x_layout_factor>
     <y_layout_factor>0.17</y_layout_factor>
     <styling>game-text</styling>
@@ -21,7 +21,7 @@
 
   <node>
     <class>javafx.scene.control.ListView</class>
-    <type>CONTROL</type>
+    <type>LISTVIEW</type>
     <width_factor>0.12</width_factor>
     <height_factor>0.15</height_factor>
     <x_layout_factor>0.86</x_layout_factor>
@@ -32,7 +32,7 @@
 
   <node>
     <class>javafx.scene.control.Button</class>
-    <type>CONTROL</type>
+    <type>BUTTON</type>
     <text>Pause</text>
     <width_factor>0.05</width_factor>
     <height_factor>0.05</height_factor>
@@ -44,7 +44,7 @@
 
   <node>
     <class>javafx.scene.control.Button</class>
-    <type>CONTROL</type>
+    <type>BUTTON</type>
     <text>Save</text>
     <width_factor>0.05</width_factor>
     <height_factor>0.05</height_factor>
@@ -56,7 +56,7 @@
 
   <node>
     <class>javafx.scene.control.Button</class>
-    <type>CONTROL</type>
+    <type>BUTTON</type>
     <text>Load</text>
     <width_factor>0.05</width_factor>
     <height_factor>0.05</height_factor>
@@ -68,7 +68,7 @@
 
   <node>
     <class>javafx.scene.control.Button</class>
-    <type>CONTROL</type>
+    <type>BUTTON</type>
     <text>Back</text>
     <width_factor>0.05</width_factor>
     <height_factor>0.05</height_factor>
@@ -83,33 +83,34 @@
     <type>RECTANGLE</type>
     <width_factor>0.07</width_factor>
     <height_factor>0.7</height_factor>
-    <x_layout_factor>0.75</x_layout_factor>
-    <y_layout_factor>0.05</y_layout_factor>
+    <x_layout_factor>0.78</x_layout_factor>
+    <y_layout_factor>0.4</y_layout_factor>
     <styling>power-outline</styling>
     <event>POWER_HEIGHT</event>
   </node>
 
   <node>
     <class>javafx.scene.shape.Rectangle</class>
-    <type>TEXT</type>
+    <type>RECTANGLE</type>
     <width_factor>0.05</width_factor>
     <height_factor>0.01</height_factor>
-    <x_layout_factor>0.76</x_layout_factor>
-    <y_layout_factor>0.73</y_layout_factor>
+    <x_layout_factor>0.78</x_layout_factor>
+    <y_layout_factor>0.735</y_layout_factor>
     <styling>power-bar</styling>
     <event>SET_POWER</event>
   </node>
 
-  <!--  <node>-->
-  <!--    <type>ARROW</type>-->
-  <!--    <x_layout>1200</x_layout>-->
-  <!--    <y_layout>850</y_layout>-->
-  <!--    <stem_width>5</stem_width>-->
-  <!--    <stem_height>60</stem_height>-->
-  <!--    <arrow_width_offset>5</arrow_width_offset>-->
-  <!--    <arrow_height_offset>8</arrow_height_offset>-->
-  <!--    <styling>angle-arrow</styling>-->
-  <!--    <event>SET_ANGLE</event>-->
-  <!--  </node>-->
+    <node>
+      <class>oogasalad.view.visual_elements.Arrow</class>
+      <type>ARROW</type>
+      <x_layout_factor>0.8</x_layout_factor>
+      <y_layout_factor>0.9</y_layout_factor>
+      <stem_width>5</stem_width>
+      <stem_height>60</stem_height>
+      <arrow_width_offset>5</arrow_width_offset>
+      <arrow_height_offset>8</arrow_height_offset>
+      <styling>angle-arrow</styling>
+      <event>SET_ANGLE</event>
+    </node>
 
 </scene_elements>
