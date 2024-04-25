@@ -29,6 +29,7 @@ public class SceneManager {
   private GameStatusManager gameStatusManager;
   private Pane pauseElements;
   private Pane transitionElements;
+  private Pane strikingElements;
   private int currentRound;
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
@@ -36,6 +37,7 @@ public class SceneManager {
   private final String transitionElementsPath = "data/scene_elements/transitionElements.xml";
   private final String gameOverSceneElementsPath = "data/scene_elements/gameOverElements.xml";
   private final String pausePath = "data/scene_elements/pauseElements.xml";
+  private final String strikingElementsPath = "data/scene_elements/strikingElements.xml";
 
 
   /**
@@ -85,19 +87,32 @@ public class SceneManager {
   }
 
   /**
-   * Creates a pause display by adding elements created from pause xml file
-   */
-  void createPauseDisplay() {
-    if (!root.getChildren().contains(pauseElements)) {
-      root.getChildren().add(pauseElements);
-    }
-  }
-
-  /**
    * Called when game is resumed, removes pause screen elements
    */
   public void removePauseSheen() {
     root.getChildren().remove(pauseElements);
+  }
+
+  /**
+   * Updates game elements and stat display from GameRecord info
+   *
+   * @param gameRecord represents updated state of game
+   */
+  public void update(GameRecord gameRecord) {
+    compositeElement.update(gameRecord.gameObjectRecords());
+    gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
+    root.requestFocus();
+    checkEndRound(gameRecord);
+  }
+
+  public void displayStrikingElements() {
+    if (!root.getChildren().contains(strikingElements)) {
+      root.getChildren().add(strikingElements);
+    }
+  }
+
+  void hideStrikingElements() {
+    root.getChildren().remove(strikingElements);
   }
 
   /**
@@ -118,15 +133,12 @@ public class SceneManager {
   }
 
   /**
-   * Updates game elements and stat display from GameRecord info
-   *
-   * @param gameRecord represents updated state of game
+   * Creates a pause display by adding elements created from pause xml file
    */
-  public void update(GameRecord gameRecord) {
-    compositeElement.update(gameRecord.gameObjectRecords());
-    gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
-    root.requestFocus();
-    checkEndRound(gameRecord);
+  void createPauseDisplay() {
+    if (!root.getChildren().contains(pauseElements)) {
+      root.getChildren().add(pauseElements);
+    }
   }
 
   /**
@@ -139,6 +151,7 @@ public class SceneManager {
     this.compositeElement = compositeElement;
     pauseElements = createSceneElements(pausePath);
     transitionElements = createSceneElements(transitionElementsPath);
+    strikingElements = createSceneElements(strikingElementsPath);
     addGameManagementElementsToGame(gameRecord);
     addGameElementsToGame();
     root.requestFocus();

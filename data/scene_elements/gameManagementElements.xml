@@ -3,7 +3,7 @@
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>Round: </text>
-    <x_layout_factor>0.9</x_layout_factor>
+    <x_layout_factor>0.89</x_layout_factor>
     <y_layout_factor>0.12</y_layout_factor>
     <styling>game-text</styling>
     <event>SET_ROUND</event>
@@ -13,7 +13,7 @@
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>Turn: </text>
-    <x_layout_factor>0.88</x_layout_factor>
+    <x_layout_factor>0.87</x_layout_factor>
     <y_layout_factor>0.17</y_layout_factor>
     <styling>game-text</styling>
     <event>SET_TURN</event>
@@ -79,38 +79,14 @@
   </node>
 
   <node>
-    <class>javafx.scene.shape.Rectangle</class>
-    <type>RECTANGLE</type>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>Add Game</text>
     <width_factor>0.07</width_factor>
-    <height_factor>0.7</height_factor>
-    <x_layout_factor>0.75</x_layout_factor>
-    <y_layout_factor>0.05</y_layout_factor>
-    <styling>power-outline</styling>
-    <event>POWER_HEIGHT</event>
+    <height_factor>0.05</height_factor>
+    <x_layout_factor>0.9</x_layout_factor>
+    <y_layout_factor>0.8</y_layout_factor>
+    <styling>game-button</styling>
+    <event>NEW_GAME_WINDOW</event>
   </node>
-
-  <node>
-    <class>javafx.scene.shape.Rectangle</class>
-    <type>RECTANGLE</type>
-    <width_factor>0.05</width_factor>
-    <height_factor>0.01</height_factor>
-    <x_layout_factor>0.76</x_layout_factor>
-    <y_layout_factor>0.735</y_layout_factor>
-    <styling>power-bar</styling>
-    <event>SET_POWER</event>
-  </node>
-
-    <node>
-      <class>oogasalad.view.visual_elements.Arrow</class>
-      <type>ARROW</type>
-      <x_layout_factor>0.79</x_layout_factor>
-      <y_layout_factor>0.9</y_layout_factor>
-      <stem_width>5</stem_width>
-      <stem_height>60</stem_height>
-      <arrow_width_offset>5</arrow_width_offset>
-      <arrow_height_offset>8</arrow_height_offset>
-      <styling>angle-arrow</styling>
-      <event>SET_ANGLE</event>
-    </node>
-
 </scene_elements>
