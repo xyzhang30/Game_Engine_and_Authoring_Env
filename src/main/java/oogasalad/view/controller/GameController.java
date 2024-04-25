@@ -167,7 +167,6 @@ public class GameController {
     boolean staticState = gameRecord.staticState();
     if (staticState) {
       ableToStrike = true;
-      //sceneManager.displayStrikingElements();
     }
     sceneManager.update(gameRecord);
     return staticState;

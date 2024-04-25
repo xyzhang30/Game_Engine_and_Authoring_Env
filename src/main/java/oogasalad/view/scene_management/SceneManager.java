@@ -30,7 +30,6 @@ public class SceneManager {
   private GameStatusManager gameStatusManager;
   private Pane pauseElements;
   private Pane transitionElements;
-  private Pane strikingElements;
   private int currentRound;
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
@@ -38,7 +37,6 @@ public class SceneManager {
   private final String transitionElementsPath = "data/scene_elements/transitionElements.xml";
   private final String gameOverSceneElementsPath = "data/scene_elements/gameOverElements.xml";
   private final String pausePath = "data/scene_elements/pauseElements.xml";
-  private final String strikingElementsPath = "data/scene_elements/strikingElements.xml";
 
 
   /**
@@ -151,7 +149,6 @@ public class SceneManager {
     this.compositeElement = compositeElement;
     pauseElements = createSceneElements(pausePath);
     transitionElements = createSceneElements(transitionElementsPath);
-    strikingElements = createSceneElements(strikingElementsPath);
     addGameManagementElementsToGame(gameRecord);
     addGameElementsToGame();
     root.requestFocus();
@@ -190,7 +187,6 @@ public class SceneManager {
 
   private void addGameElementsToGame() {
     compositeElement.addElementsToRoot(root);
-    root.getChildren().add(strikingElements);
   }
 
   private void resetRoot() {
