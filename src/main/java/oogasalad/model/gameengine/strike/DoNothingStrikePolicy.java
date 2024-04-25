@@ -20,6 +20,8 @@ import oogasalad.model.gameengine.GameEngine;
 public class DoNothingStrikePolicy implements StrikePolicy {
 
   /**
+   * Does nothing.
+   *
    * @return a BiConsumer that does nothing.
    */
 

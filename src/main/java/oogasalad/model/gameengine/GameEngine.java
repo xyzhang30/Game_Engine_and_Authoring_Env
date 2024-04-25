@@ -119,7 +119,7 @@ public class GameEngine implements ExternalGameEngine {
   /**
    * Updates the X Position of the active controllable by an amount preset in game rules
    *
-   * @param positive, true if x position is increasing, false if decreasing
+   * @param positive true if x position is increasing, false if decreasing
    */
 
   @Override

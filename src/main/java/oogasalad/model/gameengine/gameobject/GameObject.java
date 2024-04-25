@@ -326,7 +326,7 @@ public class GameObject {
   }
 
   /**
-   * Adds the current state of the gameObject (as a record) to the history of the gameObject
+   * Adds the current state of the gameObject (as a record) to the history of the gameObject.
    */
 
   public void addStaticStateGameObject() {
@@ -336,7 +336,7 @@ public class GameObject {
   /**
    * Update y component of position based on prompt from controllable
    *
-   * @param positive, true if movement in the positive x direction, false otherwise
+   * @param positive true if movement in the positive x direction, false otherwise
    */
   public void moveControllableX(boolean positive) {
     Optional<Controllable> controllable = getControllable();
