@@ -9,10 +9,14 @@ import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
-import oogasalad.view.GameWindow;
+import oogasalad.view.api.enums.AuthoringImplementationType;
+import oogasalad.view.api.enums.SupportedLanguage;
+import oogasalad.view.api.enums.UITheme;
 import oogasalad.view.scene_management.AnimationManager;
 import oogasalad.view.scene_management.GameTitleParser;
 import oogasalad.view.scene_management.SceneManager;
+import oogasalad.view.GameWindow;
+
 import oogasalad.view.visual_elements.CompositeElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +25,7 @@ import org.apache.logging.log4j.Logger;
  * GameController class handles communications between model and view.  This class holds manager
  * class instances to delegate handling the information received from the model.
  *
- * @author Jordan Haytaian
+ * @author Jordan Haytaian, Judy He
  */
 public class GameController {
 
@@ -111,7 +115,7 @@ public class GameController {
    * </p>
    */
   public void openAuthorEnvironment() {
-    AuthoringController newAuthoringController = new AuthoringController();
+    AuthoringController newAuthoringController = new AuthoringController(SupportedLanguage.ENGLISH, UITheme.DEFAULT, AuthoringImplementationType.DEFAULT);
     newAuthoringController.updateAuthoringScreen();
   }
 

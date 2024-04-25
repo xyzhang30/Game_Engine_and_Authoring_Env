@@ -11,7 +11,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.controller.GameController;
-import oogasalad.view.enums.SceneElementEventType;
+import oogasalad.view.api.enums.SceneElementEventType;
 import oogasalad.view.enums.ThemeType;
 
 /**

@@ -1,4 +1,4 @@
-package oogasalad.view.enums;
+package oogasalad.view.api.enums;
 
 /**
  * Types of elements present in game environment; element type is specified in XML file

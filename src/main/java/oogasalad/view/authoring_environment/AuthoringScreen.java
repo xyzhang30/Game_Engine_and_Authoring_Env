@@ -12,17 +12,21 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
+import oogasalad.view.authoring_environment.util.Container;
+import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
+import oogasalad.view.api.authoring.AuthoringFactory;
+import oogasalad.view.authoring_environment.panels.ShapePanel;
 import oogasalad.view.GameWindow;
-import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.panels.ColorPanel;
 import oogasalad.view.authoring_environment.panels.ImagePanel;
 import oogasalad.view.authoring_environment.panels.InteractionPanel;
-import oogasalad.view.authoring_environment.panels.Panel;
+import oogasalad.view.api.authoring.Panel;
 import oogasalad.view.authoring_environment.panels.PolicyPanel;
-import oogasalad.view.authoring_environment.panels.ShapePanel;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
-import oogasalad.view.enums.AuthoringScreenType;
+import oogasalad.view.api.enums.AuthoringScreenType;
+import oogasalad.view.api.enums.SupportedLanguage;
 
 /**
  * Represents the authoring screen for the authoring environment in the application, providing the user interface for creating and managing various game elements.
@@ -34,20 +38,33 @@ public class AuthoringScreen {
   private final AnchorPane rootPane = new AnchorPane();
   private final AnchorPane containerPane = new AnchorPane(); // PASSED TO PANELS
   private final StackPane canvasPane = new StackPane();
-  private final ShapeProxy shapeProxy = new ShapeProxy();
-  private final AuthoringProxy authoringProxy = new AuthoringProxy();
+  private final ShapeProxy shapeProxy;
+  private final AuthoringProxy authoringProxy;
   private final Scene scene;
   private final Container container = new Container();
   ComboBox<AuthoringScreenType> screensDropDown = new ComboBox<>();
   Text titleText = new Text();
   private static final String RESOURCE_FOLDER_PATH = "view.";
   private static final String UI_FILE_PREFIX = "UIElements";
-  private final String language = "English"; // PASS IN LANGUAGE
+  private SupportedLanguage language; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
+  private final AuthoringFactory authoringFactory;
 
-  public AuthoringScreen() {
+  /**
+   * Constructs an AuthoringScreen instance.
+   *
+   * @param language        The language to use for resource bundle localization.
+   * @param authoringFactory The factory used to create authoring components.
+   * @param shapeProxy       The ShapeProxy instance associated with the game objects.
+   * @param authoringProxy   The AuthoringProxy instance for managing authoring operations.
+   */
+  public AuthoringScreen(SupportedLanguage language, AuthoringFactory authoringFactory, ShapeProxy shapeProxy, AuthoringProxy authoringProxy) {
+    this.language = language;
     this.resourceBundle = ResourceBundle.getBundle(
         RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
+    this.authoringFactory = authoringFactory;
+    this.shapeProxy = shapeProxy;
+    this.authoringProxy = authoringProxy;
     createCanvas();
     createContainerPane();
     createScreenSelectionDropDown(List.of(AuthoringScreenType.GAMEOBJECTS, AuthoringScreenType.INTERACTIONS,
@@ -65,10 +82,20 @@ public class AuthoringScreen {
     containerPane.getChildren().add(titleText);
   }
 
+  /**
+   * Returns the scene associated with the authoring screen.
+   *
+   * @return The scene associated with the authoring screen.
+   */
   public Scene getScene() {
     return this.scene;
   }
 
+  /**
+   * Sets the scene according to the specified authoring screen type.
+   *
+   * @param authoringScreenType The type of authoring screen to set.
+   */
   private void setScene(AuthoringScreenType authoringScreenType) {
     setTitle(authoringScreenType.toString());
     switch (authoringScreenType) {
@@ -89,16 +116,16 @@ public class AuthoringScreen {
     return List.of(
         new ColorPanel(shapeProxy, containerPane),
         new ImagePanel(authoringProxy, shapeProxy, containerPane),
-        new ShapePanel(authoringProxy, shapeProxy, rootPane, containerPane, canvasPane)
+        new ShapePanel(authoringFactory, shapeProxy, authoringProxy, canvasPane, rootPane, containerPane)
     );
   }
 
   private List<Panel> createInteractionsPanel() {
-    return List.of(new InteractionPanel(authoringProxy, shapeProxy, rootPane, containerPane, canvasPane));
+    return List.of(new InteractionPanel(authoringProxy, shapeProxy, rootPane, new DefaultUIElementFactory()));
   }
 
   private List<Panel> createPoliciesPanel() {
-    return List.of(new PolicyPanel(authoringProxy, shapeProxy, rootPane, containerPane, canvasPane));
+    return List.of(new PolicyPanel(authoringProxy, rootPane, containerPane, canvasPane, new DefaultUIElementFactory()));
   }
 
   private void setTitle(String title) {
@@ -107,6 +134,15 @@ public class AuthoringScreen {
     titleText.setFont(Font.font("Arial", 30));
     AnchorPane.setTopAnchor(titleText, 5.0);
     AnchorPane.setLeftAnchor(titleText, 400.0);
+  }
+
+  /**
+   * Sets the language for the resource bundle.
+   *
+   * @param language The language to set.
+   */
+  public void setLanguage(SupportedLanguage language) {
+    this.language = language;
   }
 
   private void createContainerPane() {
@@ -192,6 +228,11 @@ public class AuthoringScreen {
     });
   }
 
+  /**
+   * Gets the authoring proxy
+   *
+   * @return AuthoringProxy used by the current authoring env
+   */
   public AuthoringProxy getAuthoringProxy() {
     return authoringProxy;
   }

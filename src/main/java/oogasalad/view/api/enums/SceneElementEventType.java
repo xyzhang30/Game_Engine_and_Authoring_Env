@@ -1,4 +1,4 @@
-package oogasalad.view.enums;
+package oogasalad.view.api.enums;
 
 /**
  * Represents an event type; used to specify which type of handler should be added to nodes

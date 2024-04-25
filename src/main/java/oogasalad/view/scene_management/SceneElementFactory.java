@@ -13,7 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import oogasalad.view.enums.SceneElementType;
+import oogasalad.view.api.enums.SceneElementType;
 import oogasalad.view.visual_elements.Arrow;
 
 /**

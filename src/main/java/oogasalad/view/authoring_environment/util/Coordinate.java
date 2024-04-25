@@ -1,4 +1,4 @@
-package oogasalad.view.authoring_environment.data;
+package oogasalad.view.authoring_environment.util;
 
 /**
  * Represents the x,y position of a game object.
