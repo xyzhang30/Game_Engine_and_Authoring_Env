@@ -391,45 +391,4 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
     playerAssignmentListView.setVisible(visibility);
   }
 
-  // update authoring proxy
-//  private void addCollidableToPlayer(int selectedPlayerId, CollidableType collidableType, boolean isControllable) {
-//    Map<Integer, Map<CollidableType, List<Integer>>> playersMap = authoringProxy.getPlayers();
-//    if (selectedPlayerId >= 0) {
-//      if (isControllable) {
-//        int xSpeed = shapeProxy.getGameObjectAttributesContainer().getControllableXSpeed();
-//        int ySpeed = shapeProxy.getGameObjectAttributesContainer().getControllableYSpeed();
-//        playersMap.get(selectedPlayerId).put(collidableType, List.of(Integer.parseInt(shapeProxy.getShape().getId()), xSpeed, ySpeed));
-//      }
-//      else if (!playersMap.get(selectedPlayerId).get(collidableType).contains(Integer.parseInt(shapeProxy.getShape().getId()))) {
-//        playersMap.get(selectedPlayerId).get(collidableType).add(Integer.parseInt(shapeProxy.getShape().getId()));
-//      }
-//    }
-//  }
-//  private void removeObjectFromPlayersAllLists() {
-//    removeCollidableFromAllPlayers(CollidableType.STRIKABLE);
-//    removeCollidableFromAllPlayers(CollidableType.CONTROLLABLE);
-//    removeCollidableFromAllPlayers(CollidableType.SCOREABLE);
-//  }
-//  private void removeCollidableFromAllPlayers(CollidableType collidableType) {
-//    Map<Integer, Map<CollidableType, List<Integer>>> playersMap = authoringProxy.getPlayers();
-//    for (Integer player: playersMap.keySet()) {
-//      removeCollidableFromPlayer(player, collidableType);
-//    }
-//  }
-//  private void removeCollidableFromPlayer(int playerId, CollidableType collidableType) {
-//    Map<Integer, Map<CollidableType, List<Integer>>> playersMap = authoringProxy.getPlayers();
-//    if (playersMap.get(playerId).get(collidableType).contains(Integer.parseInt(shapeProxy.getShape().getId()))) {
-//      playersMap.get(playerId).get(collidableType).remove((Integer) Integer.parseInt(shapeProxy.getShape().getId()));
-//    }
-//  }
-//  private void addNewPlayerToProxy() {
-//    authoringProxy.getPlayers().putIfAbsent(authoringProxy.getCurrentPlayerId(), new HashMap<>());
-//    authoringProxy.getPlayers().get(authoringProxy.getCurrentPlayerId()).putIfAbsent(CollidableType.STRIKABLE, new ArrayList<>());
-//    authoringProxy.getPlayers().get(authoringProxy.getCurrentPlayerId()).putIfAbsent(CollidableType.CONTROLLABLE, new ArrayList<>());
-//    authoringProxy.getPlayers().get(authoringProxy.getCurrentPlayerId()).putIfAbsent(CollidableType.SCOREABLE, new ArrayList<>());
-//  }
-//  private void removePlayerFromProxy() {
-//    authoringProxy.getPlayers().remove(authoringProxy.getCurrentPlayerId());
-//  }
-
 }
