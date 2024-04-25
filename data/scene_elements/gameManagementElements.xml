@@ -103,7 +103,7 @@
     <node>
       <class>oogasalad.view.visual_elements.Arrow</class>
       <type>ARROW</type>
-      <x_layout_factor>0.8</x_layout_factor>
+      <x_layout_factor>0.79</x_layout_factor>
       <y_layout_factor>0.9</y_layout_factor>
       <stem_width>5</stem_width>
       <stem_height>60</stem_height>
