@@ -354,7 +354,8 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
 
   private void handleControllableType(CollidableType addedType) {
     if (addedType.equals(CollidableType.CONTROLLABLE)) {
-      List<Integer> xySpeeds = Panel.enterConstantParamsPopup(2, resourceBundle.getString("controllableXYSpeeds"));
+      List<Integer> xySpeeds = uiElementFactory.createConstantParamsPopup(
+          Integer.parseInt(defaultValuesResourceBundle.getString("numParamControllableSpeed")), resourceBundle.getString("controllableXYSpeeds"));
       shapeProxy.getGameObjectAttributesContainer().setControllableXSpeed(xySpeeds.get(0));
       shapeProxy.getGameObjectAttributesContainer().setControllableYSpeed(xySpeeds.get(1));
     }
