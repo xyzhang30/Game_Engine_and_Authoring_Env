@@ -23,7 +23,7 @@ import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
     "(int) number of points to add"})
 public class IncrementPointsCommand implements Command {
 
-  private final List<Integer> arguments;
+  private int increment;
   private final GameObject gameObject;
 
   /**
@@ -35,7 +35,7 @@ public class IncrementPointsCommand implements Command {
    */
 
   public IncrementPointsCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
-    this.arguments = arguments;
+    increment = arguments.get(1);
     gameObject = gameObjectMap.get(arguments.get(0));
   }
 
@@ -48,6 +48,6 @@ public class IncrementPointsCommand implements Command {
   @Override
   public void execute(GameEngine engine) {
     Optional<Scoreable> optionalScoreable = gameObject.getScoreable();
-    optionalScoreable.ifPresent(scoreable -> scoreable.incrementTemporaryScore(arguments.get(1)));
+    optionalScoreable.ifPresent(scoreable -> scoreable.incrementTemporaryScore(increment));
   }
 }

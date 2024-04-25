@@ -23,7 +23,7 @@ import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
     "(double) points to add"})
 public class SetDelayedPointsCommand implements Command {
 
-  private final List<Integer> arguments;
+  private int newScore;
   private final GameObject gameObject;
 
   /**
@@ -37,8 +37,8 @@ public class SetDelayedPointsCommand implements Command {
 
 
   public SetDelayedPointsCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
-    this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));
+    newScore = arguments.get(1);
 
   }
 
@@ -54,7 +54,7 @@ public class SetDelayedPointsCommand implements Command {
   @Override
   public void execute(GameEngine engine) {
     Optional<Scoreable> optionalScoreable = gameObject.getScoreable();
-    optionalScoreable.ifPresent(scoreable -> scoreable.setTemporaryScore(arguments.get(1)));
+    optionalScoreable.ifPresent(scoreable -> scoreable.setTemporaryScore(newScore));
   }
 
 }

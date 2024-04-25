@@ -105,7 +105,7 @@ public class PlayerTest {
     Strikeable strikeable1 = mock(Strikeable.class);
     strikeables.add(strikeable1);
     player.addStrikeables(strikeables);
-    assertEquals(strikeables, player.getStrikeable());
+    assertEquals(strikeable1, player.getStrikeable());
   }
 
   @Test

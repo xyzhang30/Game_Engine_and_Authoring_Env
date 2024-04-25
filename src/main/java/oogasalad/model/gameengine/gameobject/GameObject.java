@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Stack;
 import java.util.function.Supplier;
 import oogasalad.model.api.GameObjectRecord;
+import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.gameengine.gameobject.controllable.Controllable;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 
@@ -57,41 +58,26 @@ public class GameObject {
   /**
    * Initiates the GameObject
    *
-   * @param id,           the unique id
-   * @param mass,         the mass (in grams)
-   * @param x,            the x position (in meters)
-   * @param y,            the y position (in meters)
-   * @param visible,      the visibility state
-   * @param staticMu,     the static coefficient of friction
-   * @param kineticMu,    the kinetic coefficient of friction
-   * @param inclineAngle, the angle of incline if it is a surface (degrees)
-   * @param width,        the width of the game object (in meters)
-   * @param height,       the height of the game object (in meters)
-   * @param shape,        the shape of the game object (string representation)
+   * @param co, the properties of the game object being created
    */
 
-  public GameObject(int id, double mass, double x, double y,
-      boolean visible, double staticMu, double kineticMu, double inclineAngle, double width,
-      double height,
-      String shape, boolean inelastic, boolean phaser) {
-    myId = id;
-    myMass = mass;
-    myX = x;
-    myY = y;
-    myVelocityX = 0.0;
-    myVelocityY = 0.0;
-    myNextX = x;
-    myNextY = y;
-    myVisible = visible;
-    myWidth = width;
-    myHeight = height;
-    myShape = shape;
-    myStaticMu = staticMu;
-    myKineticMu = kineticMu;
-    myInclineAngle = inclineAngle;
+  public GameObject(GameObjectProperties co) {
+    myId = co.collidableId();
+    myMass = co.mass();
+    myX = co.position().xPosition();
+    myY = co.position().yPosition();
+    myVelocityX = 0;
+    myVelocityY = 0;
+    myVisible = co.properties().contains("visible") && !co.properties().contains("strikeable");
+    myStaticMu = co.staticFriction();
+    myKineticMu = co.kineticFriction();
+    myInclineAngle = co.inclineAngle();
+    myWidth = co.dimension().xDimension();
+    myHeight = co.dimension().yDimension();
+    myShape = co.shape();
+    inelastic = co.inelastic();
+    phaser = co.phaser();
     gameObjectHistory = new Stack<>();
-    this.inelastic = inelastic;
-    this.phaser = phaser;
   }
 
   /**
