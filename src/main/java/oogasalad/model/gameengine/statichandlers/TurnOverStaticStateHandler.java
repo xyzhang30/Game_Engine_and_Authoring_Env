@@ -39,11 +39,6 @@ public class TurnOverStaticStateHandler extends StaticStateHandler {
 
   @Override
   protected void handleIt(GameEngine engine, RulesRecord rules) {
-    rules.advanceTurn().stream()
-        .peek(cmd -> LOGGER.info(cmd.getClass().getSimpleName() + " (advance) "))
-        .forEach(cmd -> cmd.execute(engine));
-    if (getPrev().canHandle(engine, rules)) {
-      getPrev().handleIt(engine, rules);
-    }
+    executeCommands(rules.advanceTurn(), engine, rules);
   }
 }
