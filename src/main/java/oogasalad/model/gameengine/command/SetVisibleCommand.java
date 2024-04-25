@@ -29,6 +29,7 @@ public class SetVisibleCommand implements Command {
    * @param arguments Consists of two arguments: the ID of the GameObject whose visibility is to be
    *                  updated, and a boolean flag representing whether visibility should be set to
    *                  true or false.
+   * @param gameObjectMap a map from object ids to the actual GameObject
    */
 
   public SetVisibleCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {

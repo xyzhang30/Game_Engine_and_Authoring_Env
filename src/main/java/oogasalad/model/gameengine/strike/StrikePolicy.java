@@ -1,6 +1,6 @@
 package oogasalad.model.gameengine.strike;
 
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 
@@ -24,5 +24,5 @@ public interface StrikePolicy {
    * @return The strike policy as a BiConsumer function, that can be called when the strikeable is
    * struck.
    */
-  BiConsumer<Integer, GameEngine> getStrikePolicy();
+  Consumer<GameEngine> getStrikePolicy();
 }

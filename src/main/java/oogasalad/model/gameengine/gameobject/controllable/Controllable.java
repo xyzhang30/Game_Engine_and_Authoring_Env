@@ -40,9 +40,9 @@ public interface Controllable {
   /**
    * Sets the amount for the controllable object to move by for each prompt.
    *
-   * @param xMovement The amount to move along the x-axis.
-   * @param yMovement The amount to move along the y-axis.
+   * @param movementXaxis The amount to move along the x-axis.
+   * @param movementYaxis The amount to move along the y-axis.
    */
 
-  void setMovement(int xMovement, int yMovement);
+  void setMovement(int movementXaxis, int movementYaxis);
 }

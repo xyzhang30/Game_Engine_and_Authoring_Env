@@ -19,20 +19,17 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 @CommandHelpInfo(description = "")
 @ExpectedParamNumber(1)
 public class MoveToStartingStateCommand implements Command {
-
-  private final List<Integer> arguments;
   private final GameObject gameObject;
 
   /**
    * Constructs a MoveToStartingStateCommand with the specified arguments and game object map.
    *
    * @param arguments     The list of arguments for the command.
-   * @param gameObjectMap The map of game objects.
+   * @param gameObjectMap a map from object ids to the actual GameObject
    */
 
   public MoveToStartingStateCommand(List<Integer> arguments,
       Map<Integer, GameObject> gameObjectMap) {
-    this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));
   }
 

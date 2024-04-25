@@ -8,16 +8,28 @@ import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
 
+/**
+ * The AdvanceTurnCommand handles the internal transition when an 8 ball goes into a sink in
+ * billiards.
+ *
+ * @author Noah Loewy
+ */
+
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
 @ExpectedParamNumber(value = 1, paramDescription = {"(int) game object ID of 8 ball"})
 public class EightBallCommand implements Command {
 
-  private final List<Integer> arguments;
   private final GameObject gameObject;
 
+  /**
+   * Constructs an instance of the EightBallCommand with the provided arguments.
+   *
+   * @param arguments One element, 8 ball GameObject id.
+   * @param gameObjectMap a map from object ids to the actual GameObject
+   */
+
   public EightBallCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
-    this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));
 
   }

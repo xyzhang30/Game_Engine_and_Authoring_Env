@@ -21,7 +21,7 @@ import oogasalad.model.gameengine.GameEngine;
  * To use the Condition interface, you can create concrete implementations for specific condition.
  * For example:
  * <pre>{@code
- * public class NRoundsCompletedCondition implements Condition {
+ * public class RoundsCompletedCondition implements Condition {
  *     public boolean evaluate(GameEngine engine) {
  *         return engine.getRound() > arguments.get(0);
  *     }
@@ -36,7 +36,7 @@ import oogasalad.model.gameengine.GameEngine;
 public interface Condition {
 
   /**
-   * Evaluates the condition with the given arguments
+   * Evaluates the condition with the given arguments.
    *
    * @param engine The instance of the game engine that the condition will query
    * @return boolean representing whether the condition is satisfied

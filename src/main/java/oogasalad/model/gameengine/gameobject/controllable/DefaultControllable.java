@@ -2,16 +2,35 @@ package oogasalad.model.gameengine.gameobject.controllable;
 
 import oogasalad.model.gameengine.gameobject.GameObject;
 
+/**
+ * The DefaultControllable class represents a default implementation of the Controllable interface.
+ *
+ * <p>This implementation allows for GameObjects to be controlled by the user, and move along
+ * both the x and y axis.
+ *
+ * <p>This class acts as an adapter between general GameObjects and GameObjects that are
+ * Controllable. By holding a reference to the Controllable interface, GameObjects gain the
+ * ability to have a temporary score and be treated as Controllable objects.
+ *
+ * @author Noah Loewy
+ */
+
 public class DefaultControllable implements Controllable {
 
   private final GameObject go;
-  private int xMovement;
-  private int yMovement;
+  private int movementXaxis;
+  private int movementYaxis;
+
+  /**
+   * Constructs a DefaultControllable object with the specified GameObject.
+   *
+   * @param go The GameObject to associate with this DefaultControllable object.
+   */
 
   public DefaultControllable(GameObject go) {
     this.go = go;
-    xMovement = 0;
-    yMovement = 0;
+    movementXaxis = 0;
+    movementYaxis = 0;
   }
 
   /**
@@ -23,7 +42,7 @@ public class DefaultControllable implements Controllable {
 
   @Override
   public double moveX(boolean positive) {
-    return xMovement * (positive ? 1 : -1);
+    return movementXaxis * (positive ? 1 : -1);
   }
 
   /**
@@ -35,7 +54,7 @@ public class DefaultControllable implements Controllable {
 
   @Override
   public double moveY(boolean positive) {
-    return yMovement * (positive ? 1 : -1);
+    return movementYaxis * (positive ? 1 : -1);
   }
 
   /**
@@ -52,14 +71,14 @@ public class DefaultControllable implements Controllable {
   /**
    * Sets the amount for the controllable object to move by for each prompt.
    *
-   * @param xMovement The amount to move along the x-axis.
-   * @param yMovement The amount to move along the y-axis.
+   * @param movementXaxis The amount to move along the x-axis.
+   * @param movementYaxis The amount to move along the y-axis.
    */
 
   @Override
-  public void setMovement(int xMovement, int yMovement) {
-    this.xMovement = xMovement;
-    this.yMovement = yMovement;
+  public void setMovement(int movementXaxis, int movementYaxis) {
+    this.movementXaxis = movementXaxis;
+    this.movementYaxis = movementYaxis;
   }
 }
 

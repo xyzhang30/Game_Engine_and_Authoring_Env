@@ -95,7 +95,7 @@
       "AdvanceRoundCheck" : [ ]
     },
     "win_condition" : {
-      "NRoundsCompletedCommand" : [ 2 ]
+      "RoundsCompletedCommand" : [ 2 ]
     },
     "advance_turn" : {
       "AdjustPointsCommand" : [ 1, 1 ],

@@ -32,7 +32,7 @@ public class RoundOverStaticStateHandler extends StaticStateHandler {
   }
 
   /**
-   * Executes all the commands specified in the game rules' AdvanceRound on the current Game State
+   * Executes all the commands specified in the game rules' AdvanceRound on the current Game State.
    *
    * @param engine The game engine instance.
    * @param rules  The rules record containing game rules and conditions.

@@ -6,7 +6,7 @@ import java.util.Collection;
 /**
  * The PlayerContainer class manages a collection of Players within the game environment, and
  * provides efficient access to Players to be accessed/manipulated via their unique IDs, while also
- * encapsulating the Collection of players
+ * encapsulating the Collection of players.
  *
  * @author Noah Loewy
  */
@@ -17,10 +17,11 @@ public class PlayerContainer {
   private Player active;
 
   /**
-   * Initializes player container object
+   * Initializes player container object.
    *
-   * @param players, a map from the unique identifier of a player to the actual Player object
+   * @param players a map from the unique identifier of a player to the actual Player object
    */
+
   public PlayerContainer(Collection<Player> players) {
     myPlayers = players;
     myPlayers.forEach(Player::addPlayerHistory);
@@ -28,7 +29,7 @@ public class PlayerContainer {
   }
 
   /**
-   * Retrieves all the players in the game
+   * Retrieves all the players in the game.
    *
    * @return a list of all player objects
    */

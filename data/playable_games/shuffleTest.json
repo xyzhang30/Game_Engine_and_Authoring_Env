@@ -571,12 +571,12 @@
     ],
     "turn_policy": "StandardTurnPolicy",
     "round_policy": {
-      "NTurnsCompletedCondition": [
+      "TurnsCompletedCondition": [
         2
       ]
     },
     "win_condition": {
-      "NRoundsCompletedCondition": [
+      "RoundsCompletedCondition": [
         2
       ]
     },
@@ -588,7 +588,7 @@
       "AdvanceRoundCommand": []
     },
     "strike_policy": "DoNothingStrikePolicy",
-    "rank_comparator": "IDComparator",
+    "rank_comparator": "IdComparator",
     "static_checker": {
       "VelocityStaticChecker": []
     }

@@ -1083,7 +1083,7 @@
       "GameObjectsNotVisibleCondition": [8]
     },
     "win_condition": {
-      "NRoundsCompletedCondition": [
+      "RoundsCompletedCondition": [
         1
       ]
     },

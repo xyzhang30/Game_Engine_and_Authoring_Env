@@ -18,7 +18,7 @@ import oogasalad.model.gameengine.command.AdvanceTurnCommand;
 import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.AllPlayersCompletedRoundCondition;
 import oogasalad.model.gameengine.condition.Condition;
-import oogasalad.model.gameengine.condition.NRoundsCompletedCondition;
+import oogasalad.model.gameengine.condition.RoundsCompletedCondition;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.GameObjectContainer;
 import oogasalad.model.gameengine.gameobject.PhysicsHandler;
@@ -111,7 +111,7 @@ public class GameLoaderModelTest {
     Command c1 = new SetDelayedPointsCommand(List.of(1.0, 1.0));
     Command c2 = new AdvanceTurnCommand(List.of());
     Map<Pair, List<Command>> collisionHandlers = Map.of(new Pair(2, 3), List.of(c1, c2));
-    Condition winCondition = new NRoundsCompletedCondition(List.of(2.0));
+    Condition winCondition = new RoundsCompletedCondition(List.of(2.0));
 
     Condition roundPolicy = new AllPlayersCompletedRoundCondition(List.of());
 
