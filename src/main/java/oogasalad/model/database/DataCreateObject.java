@@ -3,6 +3,7 @@ package oogasalad.model.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class DataCreateObject {
@@ -125,6 +126,69 @@ public class DataCreateObject {
 
     return false;
   }
+
+
+  public boolean assignPermissionToPlayers(int gameId, List<Integer> playerIds, String permission) {
+    String sql = "INSERT INTO Permissions (player_id, game_id, role) VALUES (?, ?, ?)";
+    Connection conn = null;
+
+    try {
+      conn = DatabaseConfig.getConnection();
+      // Set auto-commit to false to manage the transaction manually
+      conn.setAutoCommit(false);
+
+      try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        // For each player ID, add a batch insert operation
+        for (Integer playerId : playerIds) {
+          pstmt.setInt(1, playerId);
+          pstmt.setInt(2, gameId);
+          pstmt.setString(3, permission);
+          pstmt.addBatch();
+        }
+        // Execute the batch insert
+        int[] affectedRows = pstmt.executeBatch();
+
+        // Verify if all insertions were successful
+        for (int rows : affectedRows) {
+          if (rows == 0) {
+            // If any insertion failed, roll back the transaction and return false
+            conn.rollback();
+            return false;
+          }
+        }
+        // Commit the transaction
+        conn.commit();
+      }
+
+      // If execution reaches here, all insertions were successful
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      if (conn != null) {
+        try {
+          // Attempt to roll back the transaction if anything goes wrong
+          conn.rollback();
+        } catch (SQLException ex) {
+          ex.printStackTrace();
+        }
+      }
+      return false;
+    } finally {
+      try {
+        if (conn != null && !conn.getAutoCommit()) {
+          conn.setAutoCommit(true);
+        }
+        if (conn != null && !conn.isClosed()) {
+          conn.close();
+        }
+      } catch (SQLException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+
+
+
 
   public static void main(String[] args) {
     // Sample user data for testing
