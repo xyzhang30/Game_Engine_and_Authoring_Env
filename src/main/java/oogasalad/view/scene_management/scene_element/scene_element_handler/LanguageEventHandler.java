@@ -51,7 +51,6 @@ public class LanguageEventHandler {
   }
 
   private void createLanguageHandler(Node node, SupportedLanguage language) {
-    System.out.println(language);
     node.setOnMouseClicked(e -> {
       sceneManager.setLanguage(language);
       sceneManager.createTitleScene();

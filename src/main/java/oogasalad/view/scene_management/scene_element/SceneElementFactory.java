@@ -164,6 +164,7 @@ public class SceneElementFactory {
   }
 
   private void configureListView(Node node, Map<String, String> parameters) {
+    System.out.println("here");
     double widthFactor = parseDoubleParameter(parameters,
         XMLTags.WIDTH_FACTOR.name().toLowerCase());
     double heightFactor = parseDoubleParameter(parameters,
