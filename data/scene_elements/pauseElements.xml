@@ -12,7 +12,7 @@
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>Resume</text>
+    <text>RESUME</text>
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.35</x_layout_factor>

@@ -2,7 +2,7 @@
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>Play</text>
+    <text>PLAY</text>
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.35</x_layout_factor>
@@ -14,7 +14,7 @@
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>Create</text>
+    <text>CREATE</text>
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.35</x_layout_factor>
@@ -26,7 +26,7 @@
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>Instructions</text>
+    <text>INSTRUCTIONS_TITLE</text>
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.35</x_layout_factor>
@@ -38,7 +38,7 @@
   <node>
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
-    <text>Fysics Fun</text>
+    <text>FYSICS_FUN</text>
     <x_layout_factor>0.36</x_layout_factor>
     <y_layout_factor>0.2</y_layout_factor>
     <styling>title-text</styling>
@@ -47,7 +47,7 @@
   <node>
     <class>javafx.scene.control.ComboBox</class>
     <type>COMBOBOX</type>
-    <text>Theme</text>
+    <text>THEME</text>
     <width_factor>0.15</width_factor>
     <height_factor>0.07</height_factor>
     <x_layout_factor>0.8</x_layout_factor>

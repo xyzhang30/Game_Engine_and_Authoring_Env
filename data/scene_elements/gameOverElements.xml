@@ -2,7 +2,7 @@
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>Play</text>
+    <text>PLAY</text>
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.35</x_layout_factor>
@@ -14,7 +14,7 @@
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>Create</text>
+    <text>CREATE</text>
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.35</x_layout_factor>
@@ -26,7 +26,7 @@
   <node>
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
-    <text>Game Over</text>
+    <text>GAME_OVER</text>
     <x_layout_factor>0.38</x_layout_factor>
     <y_layout_factor>0.25</y_layout_factor>
     <styling>title-text</styling>
