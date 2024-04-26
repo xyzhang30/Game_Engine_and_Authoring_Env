@@ -121,7 +121,7 @@ public class AuthoringScreen {
   }
 
   private List<Panel> createInteractionsPanel() {
-    return List.of(new InteractionPanel(authoringProxy, shapeProxy, rootPane, new DefaultUIElementFactory()));
+    return List.of(new InteractionPanel(authoringProxy, shapeProxy, containerPane, new DefaultUIElementFactory()));
   }
 
   private List<Panel> createPoliciesPanel() {
