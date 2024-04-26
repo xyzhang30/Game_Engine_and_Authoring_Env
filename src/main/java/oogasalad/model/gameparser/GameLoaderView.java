@@ -1,13 +1,20 @@
 package oogasalad.model.gameparser;
 
+import java.lang.reflect.Field;
+import java.security.Key;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import oogasalad.model.api.StrikeablesView;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.GameObjectShape;
+import oogasalad.model.api.data.KeyPreferences;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
+import oogasalad.model.api.exception.MissingJsonGameInfoException;
+import oogasalad.view.api.enums.KeyInputType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,20 +25,37 @@ import org.apache.logging.log4j.Logger;
  */
 public class GameLoaderView extends GameLoader {
 
-  private final String JAVAFX_SHAPE_CLASS_PATH = "javafx.scene.shape.";
+  private static final String JAVAFX_SHAPE_CLASS_PATH = "javafx.scene.shape.";
   private static final Logger LOGGER = LogManager.getLogger(GameLoaderView.class);
-
-//  private static final String RESOURCE_FOLDER_PATH = "src/main/resources/";
-//  private static final String PROPERTIES_FILE_EXTENSION = ".properties";
-//  private static final String COLLIDABLE_PROPERTIES_COMMENT = "collidable objects shape";
-//  private static final String COLLIDABLE_CSS_ID_PREFIX = "collidable";
-
   private List<ViewGameObjectRecord> viewGameObjectRecords;
   private StrikeablesView strikeablesView;
+  private Map<KeyInputType, String> keys;
 
   public GameLoaderView(String gameName) throws InvalidShapeException {
     super(gameName);
     createViewRecord();
+    createKeysMap();
+    System.out.println("FINAL KEYS:"+keys);
+  }
+
+  private void createKeysMap() {
+    keys = new HashMap<>();
+    KeyPreferences keyRecord = gameData.getKeyPreferences();
+    for (KeyInputType keyInputType : KeyInputType.values()){
+      String typeName = keyInputType.toString().toLowerCase(); //enum object name string
+      System.out.println("Record Type Name String:"+typeName);
+      try {
+        Field field = keyRecord.getClass().getDeclaredField(typeName); //get that field in the record
+        System.out.println("Record field:"+field);
+        field.setAccessible(true);
+        Object value = field.get(keyRecord);
+        System.out.println("the value:"+field.get(keyRecord));
+        keys.put(keyInputType, (String) value); //passing as a string bc can't have javafx stuff outside view
+      } catch (NoSuchFieldException | IllegalAccessException | NullPointerException e) {
+        e.printStackTrace(); // Handle the exception according to your application's logic
+        throw new MissingJsonGameInfoException("Missing key preference field in game JSON file");
+      }
+    }
   }
 
   private void createViewRecord() throws InvalidShapeException {
@@ -70,6 +94,10 @@ public class GameLoaderView extends GameLoader {
         throw new InvalidShapeException("Shape " + shape + " is not supported");
       }
     };
+  }
+
+  public Map<KeyInputType, String> getInputKeys(){
+    return keys;
   }
 
   public List<ViewGameObjectRecord> getViewCollidableInfo() {

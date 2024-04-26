@@ -315,65 +315,58 @@
       {
         "first_id": 1,
         "second_id": 6,
-        "command": [
+        "command":
           {
             "IncrementPointsCommand": [
               1,
               10
             ]
           }
-        ]
       },
       {
         "first_id": 1,
         "second_id": 9,
-        "command": [
+        "command":
           {
             "IncrementPointsCommand": [
               1,
               1
             ]
           }
-        ]
       },
       {
         "first_id": 1,
         "second_id": 8,
-        "command": [
+        "command":
           {
             "MultiplySpeedCommand": [
               1,
               3
             ]
           }
-        ]
       },
       {
         "first_id": 1,
         "second_id": 11,
-        "command": [
+        "command":
           {
             "MultiplySpeedCommand": [
               1,
               3
             ]
           }
-        ]
       },
       {
         "first_id": 1,
         "second_id": 16,
-        "command": [
+        "command":
           {
             "IncrementPointsCommand": [
               1,
               -50
-            ]
-          },
-          {
+            ],
             "PlayerCompletedRoundCommand": []
           }
-        ]
       }
     ],
     "turn_policy": "StandardTurnPolicy",
@@ -395,6 +388,16 @@
     "static_checker": {
       "VelocityStaticChecker": []
     }
+  },
+  "keys" : {
+    "angle_left" : "LEFT",
+    "angle_right" : "RIGHT",
+    "power_up" : "UP",
+    "power_down" : "DOWN",
+    "controllable_left" : "A",
+    "controllable_right" : "D",
+    "controllable_up" : "W",
+    "controllable_down" : "S"
   }
 }
 
