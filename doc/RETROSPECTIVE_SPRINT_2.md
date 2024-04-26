@@ -15,7 +15,7 @@
 * Plan for next Sprint?
 
 Next sprint, I plan on wearing “many hats”. I hope to have time to start working on the backend
-aspects of the database, but my main priority will be making sure the game engine is flexible enough
+aspects of the Database, but my main priority will be making sure the game engine is flexible enough
 to handle new games such as pinball and shuffle boarding. This will involve doing more robust
 testing of the turn policy and scoring related commands, as well as communicating with the front end
 to provide more of a concrete implementation of the concept of control labels.
@@ -95,7 +95,7 @@ JSONs not configured properly yet to handle angle, also realizing that I'm going
   * Refactor game builder and record creation for builder -- split it out of the authoring controller so it supports saving mid-game.
   * Add the remaining authoring screens and remove hard coded stuff in record creation
   * Improve logging and error handling
-  * Add frontend part of the database (?)
+  * Add frontend part of the Database (?)
 
 * Blockers/Issues in your way
   * Need to refactor stuff for better design (use more design patterns)
