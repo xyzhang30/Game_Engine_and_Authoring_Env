@@ -6,12 +6,16 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
 import oogasalad.view.authoring_environment.panels.KeySelectionPanel;
 import oogasalad.view.authoring_environment.util.Container;
@@ -51,6 +55,10 @@ public class AuthoringScreen {
   private SupportedLanguage language; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
   private final AuthoringFactory authoringFactory;
+  private TextField gameNameTextField;
+  private Stage gameNameStage;
+  private Button submitGameNameButton;
+
 
   /**
    * Constructs an AuthoringScreen instance.
@@ -199,12 +207,48 @@ public class AuthoringScreen {
           throw new RuntimeException(e);
         }
       }
-      authoringProxy.completeAuthoring();
+      endAuthoring();
+//      authoringProxy.completeAuthoring();
     });
     AnchorPane.setBottomAnchor(finishButton, 50.0);
     AnchorPane.setRightAnchor(finishButton, 50.0);
     rootPane.getChildren().add(finishButton);
   }
+
+  private void endAuthoring() {
+    showEnterGameNamePopup();
+  }
+
+  private void showEnterGameNamePopup() {
+    if (gameNameStage == null) {
+      gameNameStage = new Stage();
+      gameNameStage.initModality(Modality.APPLICATION_MODAL);
+      gameNameStage.setTitle("Enter Game Name");
+
+      VBox vbox = new VBox();
+      gameNameTextField = new TextField();
+      gameNameTextField.setPromptText("Enter game name...");
+      vbox.getChildren().addAll(gameNameTextField, submitGameNameButton());
+
+      Scene scene = new Scene(vbox, 400, 100);
+      gameNameStage.setScene(scene);
+    }
+    gameNameStage.showAndWait();
+  }
+
+
+  private Button submitGameNameButton() {
+    if (submitGameNameButton == null) {
+      submitGameNameButton = new Button("Submit");
+      submitGameNameButton.setOnAction(e -> {
+        gameNameStage.close();
+        authoringProxy.setGameName(gameNameTextField.getText());
+        authoringProxy.completeAuthoring();
+      });
+    }
+    return submitGameNameButton;
+  }
+
 
   private void createScreenSelectionDropDown(List<AuthoringScreenType> screenOptions) {
     screensDropDown.getItems().addAll(screenOptions);

@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Scene;
@@ -34,7 +32,6 @@ import oogasalad.view.api.authoring.Panel;
 import oogasalad.view.api.authoring.UIElementFactory;
 import oogasalad.view.api.enums.PolicyType;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
-import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.controlsfx.control.CheckComboBox;
@@ -246,15 +243,6 @@ public class PolicyPanel implements Panel {
         }
       });
     });
-//    for (TextArea area : textAreas) {
-    //only allow users to enter digits because the custom param commands can only take in int
-//      area.addEventFilter(KeyEvent.KEY_TYPED, event -> {
-//        String character = event.getCharacter();
-//        if (!character.matches("[0-9]")) {
-//          event.consume();
-//        }
-//      });
-//    }
 
     confirmSaveParam.setOnAction(e -> {
       for (TextArea area : textAreas) {
@@ -366,6 +354,4 @@ public class PolicyPanel implements Panel {
           });
     }
   }
-
-
 }
