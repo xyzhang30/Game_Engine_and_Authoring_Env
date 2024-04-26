@@ -6,6 +6,8 @@ import java.util.function.Consumer;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -315,14 +317,21 @@ public class SceneElementHandler {
   }
 
   private void createLoginHandler(Node node){
-    //node.setOnMouseClicked(e -> gameController.openLogin());
+    TextField username = new TextField();
+    TextField password = new PasswordField(); //maybe set this as a password in the enum...?
+    node.setOnMouseClicked(e -> gameController.openLogin(username.getText(), password.getText()));
+    //add another or continue to play (new screen) shows current players like is this good or move on
   }
 
   private void createUserCreatorHandler(Node node){
-    //node.setOnMouseClicked(e -> gameController.openCreateUser());
+    TextField username = new TextField();
+    TextField password = new PasswordField(); //maybe set this as a password in the enum...?
+    node.setOnMouseClicked(e -> gameController.openCreateUser(username.getText(), password.getText()));
+
   }
 
   private void createPasswordHandler(Node node) {
+    //userName = (Textfield)node;
   }
 
   private void createUsernameHandler(Node node) {

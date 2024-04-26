@@ -25,7 +25,7 @@ import org.apache.logging.log4j.Logger;
  * GameController class handles communications between model and view.  This class holds manager
  * class instances to delegate handling the information received from the model.
  *
- * @author Jordan Haytaian, Judy He
+ * @author Jordan Haytaian, Judy He, Doga Ozmen
  */
 public class GameController {
 
@@ -228,5 +228,15 @@ public class GameController {
       LOGGER.error(e.getMessage());
       return null;
     }
+  }
+
+  public void openLogin(String username, String password){
+    setSceneToTitle();
+  }
+
+  public void openCreateUser(String username, String password) {
+    setSceneToTitle();
+    //save username
+    //save password
   }
 }
