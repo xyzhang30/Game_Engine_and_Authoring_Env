@@ -52,7 +52,7 @@
     <height_factor>0.05</height_factor>
     <x_layout_factor>0.03</x_layout_factor>
     <y_layout_factor>0.9</y_layout_factor>
-    <styling>game-button</styling>
+    <style>game-button</style>
     <event>START_LANGUAGE</event>
   </node>
 </scene_elements>

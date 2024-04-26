@@ -186,6 +186,7 @@ public class SceneElementFactory {
     String style = parameters.get(XMLTags.STYLE.name().toLowerCase());
     if (style != null) {
       sceneElementStyler.style(node, style);
+    } else {
     }
   }
 
