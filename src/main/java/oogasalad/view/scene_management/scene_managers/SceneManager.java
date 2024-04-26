@@ -83,6 +83,15 @@ public class SceneManager {
   }
 
   /**
+   * Creates a language selection scene by resetting the root and creating new elements from
+   * language selection scene xml file
+   */
+  public void createLanguageSelectionScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(languageSelectionElementsPath));
+  }
+
+  /**
    * Creates a title scene by resetting the root and creating new elements from title scene xml
    * file
    */
@@ -181,12 +190,6 @@ public class SceneManager {
     addGameElementsToGame();
     root.requestFocus();
   }
-
-  private void createLanguageSelectionScene() {
-    resetRoot();
-    root.getChildren().add(createSceneElements(languageSelectionElementsPath));
-  }
-
 
   private void createTransitionDisplay() {
     root.getChildren().add(transitionElements);

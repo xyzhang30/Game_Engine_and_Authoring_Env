@@ -45,14 +45,14 @@
   </node>
 
   <node>
-    <class>javafx.scene.control.ComboBox</class>
-    <type>COMBOBOX</type>
-    <text>THEME</text>
-    <width_factor>0.15</width_factor>
-    <height_factor>0.07</height_factor>
-    <x_layout_factor>0.8</x_layout_factor>
-    <y_layout_factor>0.85</y_layout_factor>
-    <style>theme-selection-box</style>
-    <event>CHANGE_THEME</event>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>BACK</text>
+    <width_factor>0.05</width_factor>
+    <height_factor>0.05</height_factor>
+    <x_layout_factor>0.03</x_layout_factor>
+    <y_layout_factor>0.9</y_layout_factor>
+    <styling>game-button</styling>
+    <event>START_LANGUAGE</event>
   </node>
 </scene_elements>

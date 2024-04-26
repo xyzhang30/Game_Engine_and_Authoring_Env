@@ -100,6 +100,7 @@ public class SceneElementHandler {
   }
 
   private void addSceneChangeEventsToMap() {
+    eventMap.put(SceneElementEventType.START_LANGUAGE, this::createStartLanguageHandler);
     eventMap.put(SceneElementEventType.START_TITLE, this::createStartTitleHandler);
     eventMap.put(SceneElementEventType.START_MENU, this::createStartMenuHandler);
     eventMap.put(SceneElementEventType.START_AUTHORING, this::createStartAuthoringHandler);
@@ -318,9 +319,11 @@ public class SceneElementHandler {
   }
 
   private void createHelpInstructionsHandler(Node node) {
-    node.setOnMouseClicked(e -> {
-      sceneManager.createHelpInstructions();
-    });
+    node.setOnMouseClicked(e -> sceneManager.createHelpInstructions());
+  }
+
+  private void createStartLanguageHandler(Node node) {
+    node.setOnMouseClicked(e -> sceneManager.createLanguageSelectionScene());
   }
 
   private void createSetEnglishHandler(Node node) {

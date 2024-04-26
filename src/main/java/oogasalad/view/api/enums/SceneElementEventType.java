@@ -6,6 +6,7 @@ package oogasalad.view.api.enums;
  * @author Jordan Haytaian
  */
 public enum SceneElementEventType {
+  START_LANGUAGE,
   START_TITLE,
   START_MENU,
   START_AUTHORING,
