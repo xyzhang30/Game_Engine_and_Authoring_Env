@@ -1,4 +1,4 @@
-package oogasalad.model.database;
+package oogasalad.model.Database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -117,7 +117,12 @@ public class Database implements DatabaseApi {
         stmt.executeUpdate();
 
         for (String gameName : getAllGames()) {
-          grantPermissions(username, gameName, isGamePublic(gameName) ? "Player":"None");
+          try {
+            grantPermissions(username, gameName, isGamePublic(gameName) ? "Player" : "None");
+          }
+          catch (SQLException e) {
+
+          }
         }
         return true;
       }
@@ -218,6 +223,9 @@ public class Database implements DatabaseApi {
       pstmt.setString(4, permission);
       pstmt.executeUpdate();
     }
+    catch (SQLException e) {
+      return;
+    }
   }
 
 
@@ -265,10 +273,13 @@ public class Database implements DatabaseApi {
 
 
   @Override
-  public void assignPermissionToPlayers(String game, List<String> users, String permission)
-      throws SQLException {
+  public void assignPermissionToPlayers(String game, List<String> users, String permission) {
     for(String user : users) {
-      grantPermissions(user, game, permission);
+      try {
+        grantPermissions(user, game, permission);
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
     }
   }
 }

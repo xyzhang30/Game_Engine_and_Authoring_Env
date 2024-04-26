@@ -1,4 +1,4 @@
-package oogasalad.model.database;
+package oogasalad.model.Database;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -7,10 +7,8 @@ public interface DatabaseApi {
 
   List<GameScore> getPlayerHighScoresForGame(String gameName, String playerName, int n);
 
-  // Method to retrieve general high scores for a specific game
   List<GameScore> getGeneralHighScoresForGame(String gameName, int n);
 
-  // Method to verify user login credentials
   boolean loginUser(String username, String password);
 
   List<String> getPlayableGameIds(String playerName, int numPlayers);
@@ -23,6 +21,5 @@ public interface DatabaseApi {
 
   boolean addGameScore(int gameInstanceId, String user, int score, boolean result);
 
-  void assignPermissionToPlayers(String game, List<String> users, String permission)
-      throws SQLException;
+  void assignPermissionToPlayers(String game, List<String> users, String permission);
 }

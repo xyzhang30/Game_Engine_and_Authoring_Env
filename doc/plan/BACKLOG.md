@@ -172,10 +172,10 @@ public class LevelProgressionUI {
    game.**
 
 - **Actions:**
-    - The player's username, password, and id is added to the `Players` database
-    - The player's id is added to the `members` column of the `Leagues` database
+    - The player's username, password, and id is added to the `Players` Database
+    - The player's id is added to the `members` column of the `Leagues` Database
     - The game results, referencing both player's ids, as well as the league's id, is added to
-      the `Games` database, so it can be included in future standings queries.
+      the `Games` Database, so it can be included in future standings queries.
 
 6. **A User manually clicks the `pause` button and then later resumes the game with the `resume
    button`. The game designer, forseeing this, implemented a rule that the game cannot be paused
