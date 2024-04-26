@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
@@ -310,6 +309,8 @@ public class SceneElementHandler {
   }
 
   private void createHelpInstructionsHandler(Node node) {
-    node.setOnKeyPressed(e -> sceneManager.createHelpInstructions());
+    node.setOnMouseClicked(e -> {
+      sceneManager.createHelpInstructions();
+    });
   }
 }
