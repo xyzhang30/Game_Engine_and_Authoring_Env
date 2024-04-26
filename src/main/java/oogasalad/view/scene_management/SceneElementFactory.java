@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -159,6 +160,14 @@ public class SceneElementFactory {
     listView.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
   }
 
+  private void configureTextField(Node node, Map<String, String> parameters){
+    double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
+    double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
+
+    TextField textField = (TextField) node;
+    textField.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
+  }
+
 
   private void handleLayout(Node node, Map<String, String> parameters) {
     double xLayoutFactor = parseDoubleParameter(parameters, xLayoutFactorTag);
@@ -197,6 +206,7 @@ public class SceneElementFactory {
     elementConfigurationMap.put(SceneElementType.BUTTON, this::configureButton);
     elementConfigurationMap.put(SceneElementType.LISTVIEW, this::configureListView);
     elementConfigurationMap.put(SceneElementType.COMBOBOX, this::configureComboBox);
+    elementConfigurationMap.put(SceneElementType.TEXTFIELD, this::configureTextField);
   }
 
   private void executeConfigurationMethod(Node node, Map<String, String> parameters) {
