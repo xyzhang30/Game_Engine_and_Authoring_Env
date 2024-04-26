@@ -1,4 +1,4 @@
-package oogasalad.view.scene_management.scene_element;
+package oogasalad.view.scene_management.scene_element.scene_element_handler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +14,7 @@ import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.api.enums.SceneElementEvent;
+import oogasalad.view.scene_management.scene_element.GameStatusManager;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 
 /**
@@ -63,6 +64,7 @@ public class SceneElementHandler {
     this.gameController = gameController;
     this.sceneManager = sceneManager;
     this.gameStatusManager = gameStatusManager;
+
     angleIncrement = 5;
     createEventMap();
   }
@@ -97,17 +99,6 @@ public class SceneElementHandler {
     eventMap.put(SceneElementEvent.RESUME, this::createResumeHandler);
     eventMap.put(SceneElementEvent.SAVE, this::createSaveHandler);
     eventMap.put(SceneElementEvent.LOAD, this::createLoadHandler);
-  }
-
-  private void addSceneChangeEventsToMap() {
-    eventMap.put(SceneElementEvent.START_LANGUAGE, this::createStartLanguageHandler);
-    eventMap.put(SceneElementEvent.START_TITLE, this::createStartTitleHandler);
-    eventMap.put(SceneElementEvent.START_MENU, this::createStartMenuHandler);
-    eventMap.put(SceneElementEvent.START_AUTHORING, this::createStartAuthoringHandler);
-    eventMap.put(SceneElementEvent.START_GAME, this::createStartGameHandler);
-    eventMap.put(SceneElementEvent.NEXT_ROUND, this::createNextRoundHandler);
-    eventMap.put(SceneElementEvent.NEW_GAME_WINDOW, this::createNewGameHandler);
-    eventMap.put(SceneElementEvent.HELP, this::createHelpInstructionsHandler);
   }
 
   private void addPreferenceEventsToMap() {

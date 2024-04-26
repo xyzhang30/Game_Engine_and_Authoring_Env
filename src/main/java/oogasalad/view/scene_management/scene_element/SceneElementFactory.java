@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import oogasalad.view.api.enums.SceneElementType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.XMLTags;
+import oogasalad.view.scene_management.scene_element.scene_element_handler.SceneElementHandler;
 import oogasalad.view.visual_elements.Arrow;
 
 /**

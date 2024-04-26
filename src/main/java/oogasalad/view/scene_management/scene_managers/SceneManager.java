@@ -13,7 +13,7 @@ import oogasalad.view.controller.GameController;
 import oogasalad.view.scene_management.element_parsers.SceneElementParser;
 import oogasalad.view.scene_management.scene_element.GameStatusManager;
 import oogasalad.view.scene_management.scene_element.SceneElementFactory;
-import oogasalad.view.scene_management.scene_element.SceneElementHandler;
+import oogasalad.view.scene_management.scene_element.scene_element_handler.SceneElementHandler;
 import oogasalad.view.scene_management.scene_element.SceneElementStyler;
 import oogasalad.view.visual_elements.CompositeElement;
 import org.xml.sax.SAXException;
