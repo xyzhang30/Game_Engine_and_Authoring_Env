@@ -1,5 +1,6 @@
 package oogasalad.view.visual_elements;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,9 @@ public class CompositeElement {
 
   private final Map<Integer, VisualElement> elementMap;
 
-  public CompositeElement(List<ViewGameObjectRecord> recordList) {
+  public CompositeElement(List<ViewGameObjectRecord> recordList)
+      throws ClassNotFoundException, NoSuchMethodException, InstantiationException,
+      IllegalAccessException, InvocationTargetException {
     elementMap = new HashMap<>();
     for (ViewGameObjectRecord viewRecord : recordList) {
       elementMap.putIfAbsent(viewRecord.id(), new GameElement(viewRecord));

@@ -147,6 +147,8 @@ public class ShapePanel implements Panel {
       shape.setVisible(false);
       rootPane.getChildren().remove(shape);
       shapeProxy.deselectShape(shape);
+      authoringProxy.getGameObjectMap().remove(shape);
+      authoringProxy.removeObjectFromPlayersAllLists(Integer.valueOf(shape.getId()));
     }
   }
 

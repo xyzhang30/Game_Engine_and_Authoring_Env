@@ -1,5 +1,6 @@
 package oogasalad.view.visual_elements;
 
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -9,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.exception.InvalidImageException;
@@ -22,51 +24,35 @@ public class GameElement implements VisualElement {
   private final Node myNode;
   private final int id;
 
-  public GameElement(ViewGameObjectRecord viewData) throws InvalidShapeException {
+  public GameElement(ViewGameObjectRecord viewData)
+      throws ClassNotFoundException, NoSuchMethodException, InstantiationException,
+      IllegalAccessException, InvocationTargetException {
     id = viewData.id();
     myNode = makeShape(viewData);
     myNode.setTranslateX(viewData.startXpos());
     myNode.setTranslateY(viewData.startYpos());
   }
 
-  private Node makeShape(ViewGameObjectRecord data) throws InvalidShapeException {
-    try {
-      if (data.image().isEmpty()) {
-        List<Integer> rgb = data.color();
-        Color color = Color.rgb(rgb.get(0), rgb.get(1), rgb.get(2));
-        switch (data.shape()) { // Convert to reflection at later date
-          case "javafx.scene.shape.Ellipse" -> {
-            Ellipse ellipse = new Ellipse(data.width(), data.height());
-            ellipse.setFill(color);
-            return ellipse;
-          }
-          case "javafx.scene.shape.Rectangle" -> {
-            return new Rectangle(data.width(), data.height(), color);
-          }
-          default -> throw new InvalidShapeException("Invalid shape");
-        }
-      } else {
-        Path imgPath = Paths.get(data.image());
-        Image image = new Image(imgPath.toUri().toString());
-        switch (data.shape()) {
-          case "javafx.scene.shape.Ellipse" -> {
-            Ellipse ellipse = new Ellipse(data.width(), data.height());
-            ellipse.setFill(new ImagePattern(image));
-            return ellipse;
-          }
-          case "javafx.scene.shape.Rectangle" -> {
-            Rectangle rectangle = new Rectangle(data.width(), data.height());
-            rectangle.setFill(new ImagePattern(image));
-            return rectangle;
-          }
-          default -> throw new InvalidShapeException("Invalid shape");
-        }
-      }
-    } catch (IllegalArgumentException e) {
+  private Node makeShape(ViewGameObjectRecord data)
+      throws ClassNotFoundException, NoSuchMethodException, InstantiationException,
+      IllegalAccessException, InvocationTargetException {
+    String className = data.shape();
+    Class<?> classObj = Class.forName(className);
+    Object obj = classObj.getDeclaredConstructor(double.class, double.class)
+        .newInstance(data.width(), data.height());
+    Shape shape = (Shape) obj;
 
-      throw new InvalidImageException(e.getMessage());
+    if (data.image().isEmpty()) {
+      List<Integer> rgb = data.color();
+      Color color = Color.rgb(rgb.get(0), rgb.get(1), rgb.get(2));
+      shape.setFill(color);
+    } else {
+      Path imgPath = Paths.get(data.image());
+      Image image = new Image(imgPath.toUri().toString());
+      shape.setFill(new ImagePattern(image));
     }
 
+    return shape;
   }
 
 
