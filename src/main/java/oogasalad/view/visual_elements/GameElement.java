@@ -35,12 +35,12 @@ public class GameElement implements VisualElement {
         List<Integer> rgb = data.color();
         Color color = Color.rgb(rgb.get(0), rgb.get(1), rgb.get(2));
         switch (data.shape()) { // Convert to reflection at later date
-          case ELLIPSE -> {
+          case "javafx.scene.shape.Ellipse" -> {
             Ellipse ellipse = new Ellipse(data.width(), data.height());
             ellipse.setFill(color);
             return ellipse;
           }
-          case RECTANGLE -> {
+          case "javafx.scene.shape.Rectangle" -> {
             return new Rectangle(data.width(), data.height(), color);
           }
           default -> throw new InvalidShapeException("Invalid shape");
@@ -49,12 +49,12 @@ public class GameElement implements VisualElement {
         Path imgPath = Paths.get(data.image());
         Image image = new Image(imgPath.toUri().toString());
         switch (data.shape()) {
-          case ELLIPSE -> {
+          case "javafx.scene.shape.Ellipse" -> {
             Ellipse ellipse = new Ellipse(data.width(), data.height());
             ellipse.setFill(new ImagePattern(image));
             return ellipse;
           }
-          case RECTANGLE -> {
+          case "javafx.scene.shape.Rectangle" -> {
             Rectangle rectangle = new Rectangle(data.width(), data.height());
             rectangle.setFill(new ImagePattern(image));
             return rectangle;
@@ -68,6 +68,7 @@ public class GameElement implements VisualElement {
     }
 
   }
+
 
   /**
    * getter for element id
