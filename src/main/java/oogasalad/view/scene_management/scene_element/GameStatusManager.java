@@ -1,4 +1,4 @@
-package oogasalad.view.scene_management;
+package oogasalad.view.scene_management.scene_element;
 
 import java.util.ArrayList;
 import java.util.List;

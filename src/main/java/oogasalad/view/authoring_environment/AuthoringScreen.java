@@ -17,7 +17,7 @@ import oogasalad.view.authoring_environment.util.Container;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.api.authoring.AuthoringFactory;
 import oogasalad.view.authoring_environment.panels.ShapePanel;
-import oogasalad.view.GameWindow;
+import oogasalad.view.scene_management.GameWindow;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.panels.ColorPanel;
 import oogasalad.view.authoring_environment.panels.ImagePanel;

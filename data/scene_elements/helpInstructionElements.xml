@@ -2,30 +2,20 @@
   <node>
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
-    <text>Instructions</text>
+    <text>INSTRUCTIONS_TITLE</text>
     <x_layout_factor>0.34</x_layout_factor>
     <y_layout_factor>0.2</y_layout_factor>
-    <styling>title-text</styling>
+    <style>title-text</style>
   </node>
 
   <node>
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
-    <text>
-      Press Play to play a 2D physics game
-
-      You will have the option to choose from previously authored games
-
-      Games are played by striking or moving game elements via game specific keys
-
-      Press Create to author a new game
-
-      You will be able to place game elements, style game elements, control element interactions, and choose game policies
-    </text>
+    <text>INSTRUCTIONS</text>
     <width_factor>0.6</width_factor>
     <x_layout_factor>0.2</x_layout_factor>
     <y_layout_factor>0.35</y_layout_factor>
-    <styling>instructions-text</styling>
+    <style>instructions-text</style>
   </node>
 
   <node>
@@ -36,7 +26,7 @@
     <height_factor>0.05</height_factor>
     <x_layout_factor>0.03</x_layout_factor>
     <y_layout_factor>0.9</y_layout_factor>
-    <styling>game-button</styling>
+    <style>game-button</style>
     <event>START_TITLE</event>
   </node>
 </scene_elements>

@@ -12,11 +12,11 @@ import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
-import oogasalad.view.scene_management.AnimationManager;
-import oogasalad.view.scene_management.GameTitleParser;
-import oogasalad.view.scene_management.SceneManager;
-import oogasalad.view.GameWindow;
+import oogasalad.view.scene_management.scene_managers.AnimationManager;
+import oogasalad.view.scene_management.element_parsers.GameTitleParser;
+import oogasalad.view.scene_management.GameWindow;
 
+import oogasalad.view.scene_management.scene_managers.SceneManager;
 import oogasalad.view.visual_elements.CompositeElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,10 +33,10 @@ public class GameController {
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
   private final GameTitleParser gameTitleParser;
-  private final int maxVelocity;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
   private boolean ableToStrike;
+  private final int maxVelocity;
 
   /**
    * Initializes the GameController with the specified screen width and height.
@@ -60,22 +60,9 @@ public class GameController {
   }
 
   /**
-   * Sets the scene to the title scene by prompting the scene manager to create it
-   *
-   * @return title scene
+   * Getter for scene to display on stage
    */
-  public Scene setSceneToTitle() {
-    sceneManager.createTitleScene();
-    return sceneManager.getScene();
-  }
-
-  /**
-   * Sets the scene to the menu scene by prompting the scene manager to create it
-   *
-   * @return menu scene
-   */
-  public Scene setSceneToMenu() {
-    sceneManager.createMenuScene();
+  public Scene getScene() {
     return sceneManager.getScene();
   }
 
@@ -115,7 +102,8 @@ public class GameController {
    * </p>
    */
   public void openAuthorEnvironment() {
-    AuthoringController newAuthoringController = new AuthoringController(SupportedLanguage.ENGLISH, UITheme.DEFAULT, AuthoringImplementationType.DEFAULT);
+    AuthoringController newAuthoringController = new AuthoringController(SupportedLanguage.ENGLISH,
+        UITheme.DEFAULT, AuthoringImplementationType.DEFAULT);
     newAuthoringController.updateAuthoringScreen();
   }
 
@@ -130,7 +118,7 @@ public class GameController {
     gameEngine = new GameEngine(selectedGame);
     GameRecord gameRecord = gameEngine.restoreLastStaticGameRecord();
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
-    sceneManager.makeGameScreen(compositeElement, gameRecord);
+    sceneManager.makeGameScene(compositeElement, gameRecord);
     sceneManager.update(gameRecord);
   }
 

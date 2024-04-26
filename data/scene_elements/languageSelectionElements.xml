@@ -2,37 +2,37 @@
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>PLAY</text>
+    <text>ENGLISH</text>
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.3</y_layout_factor>
     <style>title-button</style>
-    <event>START_MENU</event>
+    <event>SET_ENGLISH</event>
   </node>
 
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>CREATE</text>
+    <text>SPANISH</text>
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.5</y_layout_factor>
     <style>title-button</style>
-    <event>START_AUTHORING</event>
+    <event>SET_SPANISH</event>
   </node>
 
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>INSTRUCTIONS_TITLE</text>
+    <text>FRENCH</text>
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.7</y_layout_factor>
     <style>title-button</style>
-    <event>HELP</event>
+    <event>SET_FRENCH</event>
   </node>
 
   <node>
