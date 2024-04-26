@@ -121,10 +121,12 @@ public class SceneElementHandler {
   }
 
   private void addDatabaseEventsToMap(){
-    eventMap.put(SceneElementEventType.LOGIN, this::createLoginHandler);
-    eventMap.put(SceneElementEventType.CREATE_USER, this::createUserCreatorHandler);
-    eventMap.put(SceneElementEventType.USER_TEXT, this::createUsernameHandler);
-    eventMap.put(SceneElementEventType.PASSWORD_TEXT, this::createPasswordHandler);
+    eventMap.put(SceneElementEventType.LOGIN, this::createLoginHandler); //opens the currentplayers screen with the user that has been entered
+    eventMap.put(SceneElementEventType.CREATE_USER, this::createUserCreatorHandler); //opens the currentplayers scene with the new user and adds new user to database(sends to backend?)
+    eventMap.put(SceneElementEventType.USER_TEXT, this::createUsernameHandler); //saves the username
+    eventMap.put(SceneElementEventType.PASSWORD_TEXT, this::createPasswordHandler); //saves the password
+    eventMap.put(SceneElementEventType.START_LOGIN, this::createStartLoginHandler); //goes back to the login/createuser screen
+    eventMap.put(SceneElementEventType.LEADERBOARD, this::createLeaderboardHandler); //opens the leaderboard scene
   }
 
 
@@ -344,10 +346,24 @@ public class SceneElementHandler {
   }
 
   private void createPasswordHandler(Node node) {
-    //userName = (Textfield)node;
+    PasswordField password = (PasswordField) node;
+
   }
 
   private void createUsernameHandler(Node node) {
+    TextField username = (TextField) node;
+  }
+
+  private void createStartLoginHandler(Node node){
+    node.setOnMouseClicked(e -> sceneManager.createLoginScene());
+  }
+
+  private void createLeaderboardHandler(Node node){
+    node.setOnMouseClicked(e -> sceneManager.createLeaderboardScene());
+  }
+
+  private void createCurrentPlayersHandler(Node node){
+    node.setOnMouseClicked(e -> sceneManager.createCurrentPlayersScene());
   }
 
 

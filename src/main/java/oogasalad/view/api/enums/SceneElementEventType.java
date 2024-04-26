@@ -32,5 +32,7 @@ public enum SceneElementEventType {
   HELP,
   SET_ENGLISH,
   SET_SPANISH,
-  SET_FRENCH
+  SET_FRENCH,
+  START_LOGIN,
+  LEADERBOARD
 }

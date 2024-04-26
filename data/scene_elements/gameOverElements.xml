@@ -43,4 +43,16 @@
   <event>SET_SCORE</event>
 </node>
 
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>LEADERBOARD</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
+    <y_layout_factor>0.94</y_layout_factor>
+    <style>title-button</style>
+    <event>LEADERBOARD</event>
+  </node>
+
   </scene_elements>

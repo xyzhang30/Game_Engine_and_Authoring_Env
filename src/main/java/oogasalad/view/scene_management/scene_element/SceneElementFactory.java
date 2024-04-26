@@ -174,8 +174,10 @@ public class SceneElementFactory {
   }
 
   private void configureTextField(Node node, Map<String, String> parameters){
-    double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
-    double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
+    double widthFactor = parseDoubleParameter(parameters,
+        XMLTags.WIDTH_FACTOR.name().toLowerCase());
+    double heightFactor = parseDoubleParameter(parameters,
+        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
 
     TextField textField = (TextField) node;
     textField.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);

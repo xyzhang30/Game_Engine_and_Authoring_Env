@@ -49,6 +49,13 @@ public class SceneManager {
       "data/scene_elements/helpInstructionElements.xml";
   private final String languageSelectionElementsPath =
       "data/scene_elements/languageSelectionElements.xml";
+  private final String loginElementsPath =
+      "data/scene_elements/loginElements.xml";
+  private final String currentPlayersElementsPath =
+      "data/scene_elements/currentPlayersElements.xml";
+  private final String leaderboardElementsPath =
+      "data/scene_elements/leaderboardElements.xml";
+
 
 
   /**
@@ -238,4 +245,20 @@ public class SceneManager {
       createTransitionDisplay();
     }
   }
+
+  public void createLoginScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(loginElementsPath));
+  }
+
+  public void createCurrentPlayersScene(){
+    resetRoot();
+    root.getChildren().add(createSceneElements(currentPlayersElementsPath));
+  }
+
+  public void createLeaderboardScene(){
+    resetRoot();
+    root.getChildren().add(createSceneElements(leaderboardElementsPath));
+  }
+
 }
