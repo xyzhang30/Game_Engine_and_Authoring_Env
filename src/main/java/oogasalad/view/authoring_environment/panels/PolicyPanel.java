@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -59,7 +60,6 @@ public class PolicyPanel implements Panel {
   private final String language = "English"; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
   private final UIElementFactory uiElementFactory;
-
   /**
    * Constructor for PolicyPanel.
    *
@@ -130,8 +130,13 @@ public class PolicyPanel implements Panel {
       AnchorPane.setTopAnchor(comboBox, 50.0 * heightIdx);
 
       comboBox.getItems().addAll(availableCommands);
-      comboBox.setPromptText(resourceBundle.getString("policyPromptText"));
       comboBox.setId(ruleTypeName);
+
+      if (authoringProxy.ruleAlreadySelected(ruleTypeName)){
+        comboBox.setValue(authoringProxy.getSelectedSingleChoiceCommands(ruleTypeName));
+      } else {
+        comboBox.setPromptText(resourceBundle.getString("policyPromptText"));
+      }
 
       containerPane.getChildren().addAll(label, comboBox);
       comboBox.setMinWidth(300);
@@ -149,6 +154,12 @@ public class PolicyPanel implements Panel {
       AnchorPane.setLeftAnchor(checkComboBox, 500.0);
       AnchorPane.setTopAnchor(checkComboBox, 50.0 * heightIdx);
       checkComboBox.setId(ruleTypeName);
+
+      if (authoringProxy.getMultiCommandCheckedIdx().containsKey(checkComboBox.getId())){
+        authoringProxy.getMultiCommandCheckedIdx().get(checkComboBox.getId()).forEach(idx -> {
+          checkComboBox.getCheckModel().checkIndices(idx);
+        });
+      }
 
       multiChoiceCheckBoxes.put(checkComboBox, checkComboBox.getId());
     }
@@ -340,16 +351,21 @@ public class PolicyPanel implements Panel {
                     authoringProxy.addConditionsCommandsWithParam(checkComboBox.getId(),
                         selectedCommand, params);
                   }
+                  authoringProxy.updateMultiCommandCheckedIdx(checkComboBox.getId(), checkComboBox.getCheckModel().getCheckedIndices());
+                  System.out.println("ADDED -- NEW CHECKEDIDX MAP: "+authoringProxy.getMultiCommandCheckedIdx());
                 }
               }
               if (c.wasRemoved()) {
                 for (String removedCommand : c.getRemoved()) {
                   authoringProxy.removeConditionsCommandsWithParam(checkComboBox.getId(),
                       removedCommand);
+                  authoringProxy.updateMultiCommandCheckedIdx(checkComboBox.getId(), checkComboBox.getCheckModel().getCheckedIndices());
                 }
               }
             }
           });
     }
   }
+
+
 }
