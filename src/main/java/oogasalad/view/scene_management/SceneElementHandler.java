@@ -160,6 +160,7 @@ public class SceneElementHandler {
   private void createResumeHandler(Node node) {
     node.setOnMouseClicked(e -> {
       sceneManager.removePauseSheen();
+      sceneManager.getRoot().requestFocus();
       gameController.resumeGame();
     });
   }
@@ -262,13 +263,12 @@ public class SceneElementHandler {
     double fractionalVelocity = powerMeter.getHeight() / maxPower;
     if (ableToStrike) {
       gameController.hitPointScoringObject(fractionalVelocity, angle);
-      sceneManager.hideStrikingElements();
+      //sceneManager.hideStrikingElements();
     }
   }
 
   private void setAngleArrow(Node node) {
     angleArrow = (Polygon) node;
-    System.out.println(angleArrow.getRotate());
   }
 
   private void createNextRoundHandler(Node node) {
@@ -289,7 +289,7 @@ public class SceneElementHandler {
 
   private void setScores(Node node) {
     gameStatusManager.setScoreList((ListView<String>) node);
-    node.setOnMouseClicked(e -> sceneManager.getRoot().requestFocus());
+    node.setOnMouseClicked(e -> {sceneManager.getRoot().requestFocus();});
   }
 
   private void createThemeChangeHandler(Node node) {

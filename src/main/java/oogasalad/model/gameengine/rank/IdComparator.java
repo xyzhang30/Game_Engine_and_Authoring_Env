@@ -9,7 +9,7 @@ import oogasalad.model.api.PlayerRecord;
  * @author Noah Loewy
  */
 @IsCommand(isCommand = true)
-public class IDComparator extends PlayerRecordComparator {
+public class IdComparator extends PlayerRecordComparator {
 
   /**
    * Compares two PlayerRecord objects based on their player IDs.

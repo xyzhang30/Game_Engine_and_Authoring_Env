@@ -92,7 +92,7 @@ public class ComparatorTest {
 
   @Test
   public void testIdComp() {
-    PlayerRecordComparator comp = new IDComparator();
+    PlayerRecordComparator comp = new IdComparator();
     List<PlayerRecord> records = container.getPlayers().stream()
         .map(Player::getPlayerRecord)
         .sorted(comp)

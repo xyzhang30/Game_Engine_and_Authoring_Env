@@ -191,7 +191,7 @@
     ],
     "turn_policy": "StandardTurnPolicy",
     "win_condition": {
-      "NRoundsCompletedCommand": [1]
+      "RoundsCompletedCommand": [1]
     },
     "advance": [
       {

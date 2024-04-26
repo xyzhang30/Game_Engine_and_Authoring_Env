@@ -28,6 +28,7 @@ public class DivideSpeedCommand implements Command {
    *
    * @param arguments Consists of two arguments: the ID of the GameObject whose speed is to be
    *                  multiplied and the factor by which the speed should be divided by.
+   * @param gameObjectMap a map from object ids to the actual GameObject
    */
   public DivideSpeedCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;

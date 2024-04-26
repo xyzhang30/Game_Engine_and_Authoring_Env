@@ -97,7 +97,7 @@
       "AdvanceRoundCheck": []
     },
     "win_condition": {
-      "NRoundsCompletedCommand": [2.0]
+      "RoundsCompletedCommand": [2.0]
     },
     "advance_turn": [
       {

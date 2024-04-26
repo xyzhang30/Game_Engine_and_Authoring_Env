@@ -381,7 +381,7 @@
       "AllPlayersCompletedRoundCondition": []
     },
     "win_condition": {
-      "NRoundsCompletedCondition": [
+      "RoundsCompletedCondition": [
         3.0
       ]
     },

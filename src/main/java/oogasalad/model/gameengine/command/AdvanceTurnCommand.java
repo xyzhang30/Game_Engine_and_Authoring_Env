@@ -9,8 +9,8 @@ import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
- * The AdvanceYutnCommand handles the internal transition from one turn to another in the ooga salad
- * game engine
+ * The AdvanceTurnCommand handles the internal transition from one turn to another in the ooga salad
+ * game engine.
  *
  * @author Noah Loewy
  */
@@ -24,7 +24,8 @@ public class AdvanceTurnCommand implements Command {
    * Constructs an instance of AdvanceTurnCommand with a list of arguments. This constructor does
    * not actually do anything, and exists for the sake of consistency across commands.
    *
-   * @param arguments, an empty list
+   * @param arguments an empty list
+   * @param gameObjectMap a map from object ids to the actual GameObject
    */
 
   public AdvanceTurnCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {

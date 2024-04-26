@@ -1,5 +1,9 @@
 package oogasalad.model.gameengine.gameobject;
 
+import java.util.List;
+import oogasalad.model.api.data.Dimension;
+import oogasalad.model.api.data.GameObjectProperties;
+import oogasalad.model.api.data.Position;
 import oogasalad.model.gameengine.gameobject.DefaultStrikeable;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +17,7 @@ public class StrikeableTest {
 
   @BeforeEach
   public void setUp() {
-    gameObject = new GameObject(1, 1, 1, 1, true, 1, 1, 1, 1, 1, "", false, false); // Create a test
+    gameObject = new GameObject(new GameObjectProperties(1, List.of("visible", "strikeable"), 1.0, new Position(1.0,1.0), "", new Dimension(1,1), List.of(), 1, 1, 1, "", 1.0, false, false)); //
     defaultStrikeable = new DefaultStrikeable(gameObject);
   }
 

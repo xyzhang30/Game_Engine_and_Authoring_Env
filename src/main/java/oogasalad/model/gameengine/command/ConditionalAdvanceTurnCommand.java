@@ -11,12 +11,28 @@ import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.player.Player;
-import oogasalad.model.gameengine.rank.IDComparator;
+import oogasalad.model.gameengine.rank.IdComparator;
+
+/**
+ * Command to conditionally advance turn if certain conditions are met.
+ *
+ * @author Noah Loewy
+ */
 
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
 @ExpectedParamNumber(0)
 public class ConditionalAdvanceTurnCommand implements Command {
+
+
+  /**
+   * Constructs an instance of ConditionalAdvanceTurnCommand with a list of arguments. This
+   * constructor does not actually do anything, and exists for the sake of consistency across
+   * commands.
+   *
+   * @param arguments an empty list
+   * @param gameObjectMap a map from object ids to the actual GameObject
+   */
 
   public ConditionalAdvanceTurnCommand(List<Integer> arguments,
       Map<Integer, GameObject> gameObjectMap) {
@@ -33,7 +49,6 @@ public class ConditionalAdvanceTurnCommand implements Command {
    * @param engine The game engine in which the command is executed.
    */
 
-
   @Override
   public void execute(GameEngine engine) {
     List<PlayerRecord> lasts = engine.getPlayerContainer().getPlayers().stream()
@@ -43,7 +58,7 @@ public class ConditionalAdvanceTurnCommand implements Command {
     List<PlayerRecord> currents =
         engine.getPlayerContainer().getPlayers().stream()
             .map(Player::getPlayerRecord)
-            .sorted(new IDComparator())
+            .sorted(new IdComparator())
             .toList();
     if (!engine.getPlayerContainer().getActive().getStrikeable().asGameObject().getVisible()
         || IntStream.range(0, currents.size())

@@ -1,6 +1,6 @@
 package oogasalad.model.gameengine.strike;
 
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.gameengine.GameEngine;
@@ -20,11 +20,14 @@ import oogasalad.model.gameengine.GameEngine;
 public class DoNothingStrikePolicy implements StrikePolicy {
 
   /**
-   * @return a BiConsumer that does nothing
+   * Does nothing.
+   *
+   * @return a BiConsumer that does nothing.
    */
+
   @Override
-  public BiConsumer<Integer, GameEngine> getStrikePolicy() {
-    return (strikeableID, engine) -> {
+  public Consumer<GameEngine> getStrikePolicy() {
+    return (engine) -> {
     }; // Do nothing
   }
 }

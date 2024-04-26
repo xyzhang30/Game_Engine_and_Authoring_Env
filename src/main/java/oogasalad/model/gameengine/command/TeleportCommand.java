@@ -28,6 +28,7 @@ public class TeleportCommand implements Command {
    *
    * @param arguments Consists of two arguments: the ID of the GameObject whose teleporting and the
    *                  game object (a surface) where the first object teleports to.
+   * @param gameObjectMap a map from object ids to the actual GameObject
    */
 
   public TeleportCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
