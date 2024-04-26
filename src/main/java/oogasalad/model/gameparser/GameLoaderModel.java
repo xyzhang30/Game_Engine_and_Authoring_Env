@@ -270,10 +270,8 @@ public class GameLoaderModel extends GameLoader {
     Map<Pair, List<Command>> commandMap = new HashMap<>();
     gameData.getRules().collisions().forEach(rule -> {
       List<Command> commands = new ArrayList<>();
-      rule.command().forEach(commandsToParams -> {
-        commandsToParams.keySet().forEach(s -> {
-          commands.add(CommandFactory.createCommand(s, commandsToParams.get(s), gameObjects));
-        });
+      rule.command().forEach((cmdName, params) -> {
+        commands.add(CommandFactory.createCommand(cmdName, params, gameObjects));
       });
       commandMap.put(new Pair(gameObjects.get(rule.firstId()), gameObjects.get(rule.secondId())),
           commands);

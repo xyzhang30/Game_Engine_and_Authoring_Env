@@ -90,9 +90,14 @@ public class AuthoringController {
     builderDirector.constructPlayers(players);
   }
 
-  public void writeRules(Map<String, Map<String, List<Integer>>> commandsConditions, Map<String,
+  public void writeRules(Map<List<Integer>, Map<String, List<Integer>>> interactions, Map<String, Map<String, List<Integer>>> commandsConditions, Map<String,
       String> policies) throws InCompleteRulesAuthoringException{
     List<CollisionRule> collisions = new ArrayList<>();
+
+    interactions.forEach((gameObjects, commands) -> {
+      CollisionRule collisionRule = new CollisionRule(gameObjects.get(0), gameObjects.get(1), commands);
+    });
+
     String turnPolicy = policies.get("turnpolicy");
     Map<String, List<Integer>> roundPolicy = commandsConditions.get("roundpolicy");
     Map<String, List<Integer>> winCondition = commandsConditions.get("wincondition");

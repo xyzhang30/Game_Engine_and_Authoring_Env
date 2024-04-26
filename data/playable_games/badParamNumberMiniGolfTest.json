@@ -279,20 +279,18 @@
       {
         "first_id": 8,
         "second_id": 9,
-        "command": [
+        "command":
           {
             "AdvanceRoundCommand": []
           }
-        ]
       },
       {
         "first_id": 6,
         "second_id": 8,
-        "command": [
+        "command":
           {
             "LastStaticStateCommand": []
           }
-        ]
       }
     ],
     "turn_policy": "StandardTurnPolicy",

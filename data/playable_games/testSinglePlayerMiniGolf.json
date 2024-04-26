@@ -153,11 +153,10 @@
       {
         "first_id": 2,
         "second_id": 3,
-        "command": [
+        "command":
           {
             "AdvanceTurnCommand": []
           }
-        ]
       }
     ],
     "turn_policy": "StandardTurnPolicy",

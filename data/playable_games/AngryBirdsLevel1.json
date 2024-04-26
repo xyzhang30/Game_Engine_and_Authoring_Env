@@ -419,148 +419,131 @@
       {
         "first_id": 1,
         "second_id": 5,
-        "command": [
-          {
-            "MoveToStartingStateCommand": [
-              5
-            ],
-            "SetVisibleCommand": [
-              5,
-              0
-            ]
-          }
-        ]
+        "command": {
+          "MoveToStartingStateCommand": [
+            5
+          ],
+          "SetVisibleCommand": [
+            5,
+            0
+          ]
+        }
       },
       {
         "first_id": 2,
         "second_id": 5,
-        "command": [
-          {
-            "MoveToStartingStateCommand": [
-              5
-            ],
-            "SetVisibleCommand": [
-              5,
-              0
-            ]
-          }
-        ]
+        "command": {
+          "MoveToStartingStateCommand": [
+            5
+          ],
+          "SetVisibleCommand": [
+            5,
+            0
+          ]
+        }
       },
       {
         "first_id": 3,
         "second_id": 5,
-        "command": [
-          {
-            "MoveToStartingStateCommand": [
-              5
-            ],
-            "SetVisibleCommand": [
-              5,
-              0
-            ]
-          }
-        ]
+        "command": {
+          "MoveToStartingStateCommand": [
+            5
+          ],
+          "SetVisibleCommand": [
+            5,
+            0
+          ]
+        }
       },
       {
         "first_id": 4,
         "second_id": 5,
-        "command": [
+        "command":
           {
             "SetVisibleCommand": [
               5,
               0
             ]
           }
-        ]
       },
       {
         "first_id": 6,
         "second_id": 5,
-        "command": [
+        "command":
           {
             "SetVisibleCommand": [
               6,
               0
             ]
           }
-        ]
+
       },
       {
         "first_id": 7,
         "second_id": 5,
-        "command": [
-          {
-            "SetVisibleCommand": [
-              7,
-              0
-            ]
-          }
-        ]
+        "command": {
+          "SetVisibleCommand": [
+            7,
+            0
+          ]
+        }
       },
       {
         "first_id": 8,
         "second_id": 5,
-        "command": [
+        "command":
           {
             "SetVisibleCommand": [
               8,
               0
             ]
           }
-        ]
       },
       {
         "first_id": 9,
         "second_id": 5,
-        "command": [
+        "command":
           {
             "SetVisibleCommand": [
               9,
               0
             ]
           }
-        ]
       },
       {
         "first_id": 11,
         "second_id": 5,
-        "command": [
+        "command":
           {
             "SetVisibleCommand": [
               11,
               0
             ]
           }
-        ]
       },
       {
         "first_id": 12,
         "second_id": 5,
-        "command": [
+        "command":
           {
             "SetVisibleCommand": [
               12,
               0
             ]
           }
-        ]
       },
       {
         "first_id": 13,
         "second_id": 5,
-        "command": [
-          {
-            "SetVisibleCommand": [
-              5,
-              0
-            ]
-          },
-          {
-            "MoveToStartingStateCommand": [
-              5
-            ]
-            }
-        ]
+        "command": {
+          "SetVisibleCommand": [
+            5,
+            0
+          ],
+          "MoveToStartingStateCommand": [
+            5
+          ]
+        }
       }
     ],
     "turn_policy": "StandardTurnPolicy",

@@ -551,155 +551,125 @@
       {
         "first_id": 17,
         "second_id": 18,
-        "command": [
+        "command":
           {
-            "PlayerCompletedRoundCommand": []
-          },
-          {
+            "PlayerCompletedRoundCommand": [],
             "SetVisibleCommand": [18,0]
           }
-        ]
       },
       {
         "first_id": 17,
         "second_id": 19,
-        "command": [
+        "command":
           {
-            "PlayerCompletedRoundCommand": []
-          },
-          {
+            "PlayerCompletedRoundCommand": [],
             "SetVisibleCommand": [19,0]
           }
-        ]
       },
       {
         "first_id": 17,
         "second_id": 20,
-        "command": [
+        "command":
           {
-            "PlayerCompletedRoundCommand": []
-          },
-          {
+            "PlayerCompletedRoundCommand": [],
             "SetVisibleCommand": [20,0]
           }
-        ]
       },
       {
         "first_id": 11,
         "second_id": 18,
-        "command": [
+        "command":
           {
-            "LastStaticStateCommand": []
-          },
-          {
+            "LastStaticStateCommand": [],
             "SetDelayedPointsCommand": [
               18,
               1
             ]
           }
-        ]
       },
       {
         "first_id": 11,
         "second_id": 19,
-        "command": [
+        "command":
           {
-            "LastStaticStateCommand": []
-          },
-          {
+            "LastStaticStateCommand": [],
             "SetDelayedPointsCommand": [
               19,
               1
             ]
-          }        ]
-      },
+          }      },
       {
         "first_id": 11,
         "second_id": 20,
-        "command": [
+        "command":
           {
-            "LastStaticStateCommand": []
-          },
-          {
+            "LastStaticStateCommand": [],
             "SetDelayedPointsCommand": [
               20,
               1
             ]
           }
-        ]
       },
       {
         "first_id": 10,
         "second_id": 18,
-        "command": [
+        "command":
           {
-            "LastStaticStateCommand": []
-          },
-          {
+            "LastStaticStateCommand": [],
             "SetDelayedPointsCommand": [
               18,
               1
             ]
           }
-        ]
       },
       {
         "first_id": 10,
         "second_id": 19,
-        "command": [
+        "command":
           {
-            "LastStaticStateCommand": []
-          },
-          {
+            "LastStaticStateCommand": [],
             "SetDelayedPointsCommand": [
               19,
               1
             ]
           }
-        ]
       },
       {
         "first_id": 10,
         "second_id": 20,
-        "command": [
+        "command":
           {
-            "LastStaticStateCommand": []
-          },
-          {
+            "LastStaticStateCommand": [],
             "SetDelayedPointsCommand": [
               20,
               1
             ]
           }
-        ]
       },
       {
         "first_id": 15,
         "second_id": 18,
-        "command": [
+        "command":
           {
             "TeleportCommand": [18,16]
 
           }
-        ]
       },
       {
         "first_id": 15,
         "second_id": 19,
-        "command": [
+        "command":
           {
             "TeleportCommand": [19,16]
           }
-        ]
       },
       {
         "first_id": 15,
         "second_id": 20,
-        "command": [
+        "command":
           {
             "TeleportCommand": [20,16]
           }
-        ]
       }
     ],
     "turn_policy": "StandardTurnPolicy",

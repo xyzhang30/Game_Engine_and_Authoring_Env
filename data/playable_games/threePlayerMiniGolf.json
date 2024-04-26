@@ -432,83 +432,65 @@
       {
         "first_id": 9,
         "second_id": 8,
-        "command": [
+        "command":
           {
-            "PlayerCompletedRoundCommand": []
-          },
-          {
+            "PlayerCompletedRoundCommand": [],
             "SetVisibleCommand": [8,0]
           }
-        ]
       },
       {
         "first_id": 9,
         "second_id": 14,
-        "command": [
+        "command":
           {
-            "PlayerCompletedRoundCommand": []
-          },
-          {
+            "PlayerCompletedRoundCommand": [],
             "SetVisibleCommand": [14,0]
           }
-        ]
       },
       {
         "first_id": 9,
         "second_id": 15,
-        "command": [
+        "command":
           {
-            "PlayerCompletedRoundCommand": []
-          },
-          {
+            "PlayerCompletedRoundCommand": [],
             "SetVisibleCommand": [15,0]
           }
-        ]
       },
       {
         "first_id": 6,
         "second_id": 8,
-        "command": [
+        "command":
           {
-            "LastStaticStateCommand": []
-          },
-          {
+            "LastStaticStateCommand": [],
             "SetDelayedPointsCommand": [
               8,
               1
             ]
           }
-        ]
       },
       {
         "first_id": 6,
         "second_id": 14,
-        "command": [
+        "command":
           {
-            "LastStaticStateCommand": []
-          },
-          {
+            "LastStaticStateCommand": [],
             "SetDelayedPointsCommand": [
               14,
               1
             ]
           }
-        ]
       },
       {
         "first_id": 6,
         "second_id": 15,
-        "command": [
+        "command":
           {
-            "LastStaticStateCommand": []
-          },
-          {
+            "LastStaticStateCommand": [],
             "SetDelayedPointsCommand": [
               15,
               1
             ]
           }
-        ]
       }
     ],
     "turn_policy": "StandardTurnPolicy",

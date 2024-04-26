@@ -154,7 +154,7 @@ public class AuthoringProxy {
   public void completeAuthoring()
       throws MissingInteractionException, MissingNonControllableTypeException {
     try {
-      authoringController.writeRules(conditionsCommands, policies);
+      authoringController.writeRules(interactionMap, conditionsCommands, policies);
       authoringController.writePlayers(playersMap);
       authoringController.writeVariables();
       authoringController.writeGameObjects(gameObjectMap);

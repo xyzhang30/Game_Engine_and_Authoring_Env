@@ -153,14 +153,11 @@
       {
         "first_id": 2,
         "second_id": 3,
-        "command": [
+        "command":
           {
-            "AdjustPointsCommand": [1.0,1.0]
-          },
-          {
+            "AdjustPointsCommand": [1.0,1.0],
             "AdvanceTurnCommand": []
           }
-        ]
       }
     ],
     "turn_policy": "StandardTurnPolicy",

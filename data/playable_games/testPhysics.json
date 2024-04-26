@@ -286,17 +286,14 @@
       {
         "first_id": 1,
         "second_id": 5,
-        "command": [
+        "command":
           {
-            "LastStaticStateCommand": []
-          },
-          {
+            "LastStaticStateCommand": [],
             "SetDelayedPointsCommand": [
               1,
               1
             ]
           }
-        ]
       }
     ],
     "turn_policy": "StandardTurnPolicy",

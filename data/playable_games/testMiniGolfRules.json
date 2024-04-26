@@ -101,7 +101,7 @@
       {
         "first_id": 1,
         "second_id": 3,
-        "command": [
+        "command":
           {
             "SetVisibleCommand": [
               1.0,
@@ -111,12 +111,11 @@
               1.0
             ]
           }
-        ]
       },
       {
         "first_id": 2,
         "second_id": 3,
-        "command": [
+        "command":
           {
             "SetVisibleCommand": [
               2.0,
@@ -126,7 +125,6 @@
               2.0
             ]
           }
-        ]
       }
     ],
     "turn_policy": "StandardTurnPolicy",

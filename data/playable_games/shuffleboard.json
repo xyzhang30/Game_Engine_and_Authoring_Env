@@ -349,151 +349,139 @@
       {
         "first_id": 9,
         "second_id": 12,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               12,
               3
             ]
           }
-        ]
       },
       {
         "first_id": 9,
         "second_id": 13,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               13,
               3
             ]
           }
-        ]
       },
       {
         "first_id": 9,
         "second_id": 14,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               14,
               3
             ]
           }
-        ]
       },
       {
         "first_id": 9,
         "second_id": 15,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               15,
               3
             ]
           }
-        ]
       },
       {
         "first_id": 10,
         "second_id": 12,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               12,
               2
             ]
           }
-        ]
       },
       {
         "first_id": 10,
         "second_id": 13,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               13,
               2
             ]
           }
-        ]
       },
       {
         "first_id": 10,
         "second_id": 14,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               14,
               2
             ]
           }
-        ]
       },
       {
         "first_id": 10,
         "second_id": 15,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               15,
               2
             ]
           }
-        ]
       },
       {
         "first_id": 11,
         "second_id": 12,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               12,
               1
             ]
           }
-        ]
       },
       {
         "first_id": 11,
         "second_id": 13,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               13,
               1
             ]
           }
-        ]
       },
       {
         "first_id": 11,
         "second_id": 14,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               14,
               1
             ]
           }
-        ]
       },
       {
         "first_id": 11,
         "second_id": 15,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               15,
               1
             ]
           }
-        ]
       },
       {
         "first_id": 2,
         "second_id": 12,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               12,
@@ -504,12 +492,11 @@
               0
             ]
           }
-        ]
       },
       {
         "first_id": 2,
         "second_id": 13,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               13,
@@ -520,12 +507,11 @@
               0
             ]
           }
-        ]
       },
       {
         "first_id": 2,
         "second_id": 14,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               14,
@@ -536,12 +522,11 @@
               0
             ]
           }
-        ]
       },
       {
         "first_id": 2,
         "second_id": 15,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               15,
@@ -552,12 +537,11 @@
               0
             ]
           }
-        ]
       },
       {
         "first_id": 1,
         "second_id": 12,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               12,
@@ -568,12 +552,11 @@
               0
             ]
           }
-        ]
       },
       {
         "first_id": 1,
         "second_id": 13,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               13,
@@ -584,12 +567,11 @@
               0
             ]
           }
-        ]
       },
       {
         "first_id": 1,
         "second_id": 14,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               14,
@@ -600,12 +582,11 @@
               0
             ]
           }
-        ]
       },
       {
         "first_id": 1,
         "second_id": 15,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               15,
@@ -616,12 +597,11 @@
               0
             ]
           }
-        ]
       },
       {
         "first_id": 3,
         "second_id": 12,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               12,
@@ -632,12 +612,11 @@
               0
             ]
           }
-        ]
       },
       {
         "first_id": 3,
         "second_id": 13,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               13,
@@ -648,12 +627,11 @@
               0
             ]
           }
-        ]
       },
       {
         "first_id": 3,
         "second_id": 14,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               14,
@@ -664,12 +642,11 @@
               0
             ]
           }
-        ]
       },
       {
         "first_id": 3,
         "second_id": 15,
-        "command": [
+        "command":
           {
             "SetDelayedPointsCommand": [
               15,
@@ -680,7 +657,6 @@
               0
             ]
           }
-        ]
       }
     ],
     "turn_policy": "StandardTurnPolicy",
