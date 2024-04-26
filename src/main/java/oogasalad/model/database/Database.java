@@ -1,4 +1,4 @@
-package oogasalad.model.Database;
+package oogasalad.model.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +11,15 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.postgresql.util.PSQLException;
 
 public class Database implements DatabaseApi {
+
+  /**
+   * Retrieves the high scores of a player for a specific game.
+   *
+   * @param gameName   The name of the game.
+   * @param playerName The name of the player.
+   * @param n          The number of high scores to retrieve.
+   * @return A list of GameScore objects representing the high scores of the player.
+   */
 
   @Override
   public List<GameScore> getPlayerHighScoresForGame(String gameName, String playerName, int n) {
@@ -37,7 +46,15 @@ public class Database implements DatabaseApi {
     }
     return scores.subList(0,Math.min(scores.size(),n));
   }
-  // Method to retrieve general high scores for a specific game
+
+  /**
+   * Retrieves the general high scores for a specific game.
+   *
+   * @param gameName The name of the game.
+   * @param n        The number of high scores to retrieve.
+   * @return A list of GameScore objects representing the general high scores of the game.
+   */
+
   @Override
   public List<GameScore> getGeneralHighScoresForGame(String gameName, int n) {
     List<GameScore> scores = new ArrayList<>();
@@ -63,7 +80,13 @@ public class Database implements DatabaseApi {
     return scores.subList(0,Math.min(scores.size(),n));
   }
 
-  // Method to verify user login credentials
+  /**
+   * Verifies the login credentials of a user.
+   *
+   * @param username The username of the user.
+   * @param password The password of the user.
+   * @return True if the login credentials are valid, false otherwise.
+   */
   @Override
   public boolean loginUser(String username, String password) {
     String query = "SELECT password FROM Players WHERE username = ?";
@@ -80,9 +103,16 @@ public class Database implements DatabaseApi {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return false; // Return false if user not found or password does not match
+    return false;
   }
 
+  /**
+   * Retrieves the IDs of playable games for a player with a specified number of players.
+   *
+   * @param playerName The name of the player.
+   * @param numPlayers The number of players required for the game.
+   * @return A list of game IDs that are playable by the player.
+   */
   @Override
   public List<String> getPlayableGameIds(String playerName, int numPlayers) {
     List<String> gameNames = new ArrayList<>();
@@ -104,6 +134,15 @@ public class Database implements DatabaseApi {
     }
     return gameNames;
   }
+
+  /**
+   * Registers a new user.
+   *
+   * @param username  The username of the user.
+   * @param password  The password of the user.
+   * @param avatarUrl The URL of the user's avatar.
+   * @return True if the user is successfully registered, false otherwise.
+   */
 
   @Override
   public boolean registerUser(String username, String password, String avatarUrl)   {
@@ -135,6 +174,7 @@ public class Database implements DatabaseApi {
     }
   }
 
+  //returns true if game is publicly available, otherwise false
   private boolean isGamePublic(String gameName) {
     String sql = "SELECT public FROM Games WHERE gamename = ?";
     try (Connection conn = DatabaseConfig.getConnection();
@@ -150,6 +190,16 @@ public class Database implements DatabaseApi {
     }
     return false;
   }
+
+  /**
+   * Registers a new game.
+   *
+   * @param gameName        The name of the game.
+   * @param ownerName       The name of the owner of the game.
+   * @param numPlayers      The number of players required for the game.
+   * @param publicOrPrivate True if the game is public, false if private.
+   * @return True if the game is successfully registered, false otherwise.
+   */
 
   @Override
   public boolean registerGame(String gameName, String ownerName, int numPlayers,
@@ -176,8 +226,7 @@ public class Database implements DatabaseApi {
     return false;
   }
 
-
-
+//retrieves list of all usernames
   private List<String> getAllPlayers() {
     List<String> usernames = new ArrayList<>();
     String sql = "SELECT username FROM Players";
@@ -194,6 +243,7 @@ public class Database implements DatabaseApi {
     return usernames;
   }
 
+  //retireves list of all game names
   private List<String> getAllGames() {
     List<String> gamenames = new ArrayList<>();
     String sql = "SELECT gamename FROM Games";
@@ -211,6 +261,7 @@ public class Database implements DatabaseApi {
   }
 
 
+  //grants permissiosn to player for game in permissions db
   private void grantPermissions( String username, String gameName,
       String permission) throws SQLException {
     String sql = "INSERT INTO Permissions (playerusername, gamename, permissions) VALUES (?, ?, ?) "
@@ -228,6 +279,12 @@ public class Database implements DatabaseApi {
     }
   }
 
+  /**
+   * Adds a new game instance.
+   *
+   * @param game The name of the game.
+   * @return The ID of the newly added game instance.
+   */
 
   @Override
   public int addGameInstance(String game) {
@@ -253,6 +310,17 @@ public class Database implements DatabaseApi {
     return -1;
   }
 
+
+  /**
+   * Adds a game score for a specific game instance and player.
+   *
+   * @param gameInstanceId The ID of the game instance.
+   * @param user           The username of the player.
+   * @param score          The score achieved by the player.
+   * @param result         The result of the game (true for win, false for loss).
+   * @return True if the game score is successfully added, false otherwise.
+   */
+
   @Override
   public boolean addGameScore(int gameInstanceId, String user, int score, boolean result) {
     String sql = "INSERT INTO GameResult (gameinstanceid, playerusername, score, gameresult) "
@@ -270,6 +338,14 @@ public class Database implements DatabaseApi {
     }
     return false;
   }
+
+  /**
+   * Assigns a permission to a list of players for a specific game.
+   *
+   * @param game       The name of the game.
+   * @param users      The list of usernames of the players.
+   * @param permission The permission to assign (Owner, Player, None).
+   */
 
 
   @Override
