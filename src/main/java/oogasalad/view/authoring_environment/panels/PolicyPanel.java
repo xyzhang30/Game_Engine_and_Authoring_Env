@@ -227,15 +227,23 @@ public class PolicyPanel implements Panel {
     confirmSaveParam.setDisable(false);
     //allowed to save at any time because no restriction for param numbers
 
-    for (TextArea area : textAreas) {
-      //only allow users to enter digits because the custom param commands can only take in int
+    textAreas.forEach(area -> {
       area.addEventFilter(KeyEvent.KEY_TYPED, event -> {
         String character = event.getCharacter();
         if (!character.matches("[0-9]")) {
           event.consume();
         }
       });
-    }
+    });
+//    for (TextArea area : textAreas) {
+    //only allow users to enter digits because the custom param commands can only take in int
+//      area.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+//        String character = event.getCharacter();
+//        if (!character.matches("[0-9]")) {
+//          event.consume();
+//        }
+//      });
+//    }
 
     confirmSaveParam.setOnAction(e -> {
       for (TextArea area : textAreas) {

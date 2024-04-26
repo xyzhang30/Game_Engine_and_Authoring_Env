@@ -23,6 +23,7 @@ import oogasalad.view.api.enums.CollidableType;
  */
 public class AuthoringProxy {
 
+  private final Map<String, String> keyPreferences = new HashMap<>();
   private final Map<String, Map<String, List<Integer>>> conditionsCommands = new HashMap<>();
   private final Map<String, String> policies = new HashMap<>();
   private final Map<List<Integer>, Map<String, List<Integer>>> interactionMap = new HashMap<>();
@@ -105,6 +106,11 @@ public class AuthoringProxy {
     }
     conditionsCommands.get(type).remove(commandName);
     System.out.println("ALL CONDITIONS:" + conditionsCommands);
+  }
+
+  public void addKeyPreference(String keyType, String keyCode){
+    keyPreferences.put(keyType, keyCode);
+    System.out.println("CURRENT KEY PREFS: "+keyPreferences);
   }
 
   /**

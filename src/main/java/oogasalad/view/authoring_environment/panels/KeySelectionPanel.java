@@ -1,5 +1,7 @@
 package oogasalad.view.authoring_environment.panels;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -17,6 +19,8 @@ public class KeySelectionPanel implements Panel {
   private final AnchorPane containerPane;
   private final StackPane canvas;
   private final UIElementFactory uiElementFactory;
+
+  private List<TextField> keyInputFields = new ArrayList<>();
 
   public KeySelectionPanel(AuthoringProxy authoringProxy, AnchorPane rootPane,
       AnchorPane containerPane, StackPane canvas, UIElementFactory uiElementFactory) {
@@ -45,26 +49,33 @@ public class KeySelectionPanel implements Panel {
   }
 
   private void createInput(String label, int heightIdx) {
-    Label keyInputLabel = new Label(label);
+    Label keyInputLabel = new Label(label + ":");
+    keyInputLabel.setId(label);
     AnchorPane.setTopAnchor(keyInputLabel, 50.0 * heightIdx);
     AnchorPane.setLeftAnchor(keyInputLabel, 300.0);
 
-//    TextField inputField = new TextField();
-//    inputField.setEditable(false);
-//
-//    inputField.setOnKeyPressed(event -> {
-//      KeyCode keycode = event.getCode();
-//      if (!keycodes.toString().contains(keycode.toString())) {
-//        keycodes.append(keycode).append(", ");
-//        updateInputField(inputField);
-//      }
-//    });
+    TextField inputField = new TextField();
+    inputField.setEditable(false);
+    AnchorPane.setLeftAnchor(inputField, 500.0);
+    AnchorPane.setTopAnchor(inputField, 50.0 * heightIdx);
+    inputField.setId(label);
 
-    containerPane.getChildren().add(keyInputLabel);
+    keyInputFields.add(inputField);
+
+    containerPane.getChildren().addAll(keyInputLabel, inputField);
   }
 
   @Override
   public void handleEvents() {
-
+    keyInputFields.forEach(inputField -> {
+      inputField.setOnKeyPressed(event -> {
+        KeyCode keycode = event.getCode();
+        String keyCodeString = keycode.toString();
+        String jsonKeyTypeLabel = String.join("_",inputField.getId().split(" ")).toLowerCase();
+        authoringProxy.addKeyPreference(jsonKeyTypeLabel, keyCodeString);
+        inputField.setText(keyCodeString);
+        System.out.println("INPUT KEY: "+keyCodeString);
+      });
+    });
   }
 }
