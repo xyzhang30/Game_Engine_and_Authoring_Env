@@ -317,6 +317,16 @@
     "strike_policy": "IncrementPointStrikePolicy",
     "rank_comparator": "LowestScoreComparator",
     "static_checker": {"VelocityStaticChecker": [1]
-}
-}
+    }
+  },
+  "keys" : {
+    "angle_left" : "LEFT",
+    "angle_right" : "RIGHT",
+    "power_up" : "UP",
+    "power_down" : "DOWN",
+    "controllable_left" : "A",
+    "controllable_right" : "D",
+    "controllable_up" : "W",
+    "controllable_down" : "S"
+  }
 }

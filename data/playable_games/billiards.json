@@ -1098,6 +1098,16 @@
     "static_checker": {
       "VelocityStaticChecker": [7,8,18,19,20,21,22,23]
     }
+  },
+  "keys" : {
+    "angle_left" : "LEFT",
+    "angle_right" : "RIGHT",
+    "power_up" : "UP",
+    "power_down" : "DOWN",
+    "controllable_left" : "A",
+    "controllable_right" : "D",
+    "controllable_up" : "W",
+    "controllable_down" : "S"
   }
 }
 

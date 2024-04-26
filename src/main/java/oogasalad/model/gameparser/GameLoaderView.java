@@ -13,6 +13,7 @@ import oogasalad.model.api.data.GameObjectShape;
 import oogasalad.model.api.data.KeyPreferences;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
+import oogasalad.model.api.exception.MissingJsonGameInfoException;
 import oogasalad.view.api.enums.KeyInputType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -50,8 +51,9 @@ public class GameLoaderView extends GameLoader {
         Object value = field.get(keyRecord);
         System.out.println("the value:"+field.get(keyRecord));
         keys.put(keyInputType, (String) value); //passing as a string bc can't have javafx stuff outside view
-      } catch (NoSuchFieldException | IllegalAccessException e) {
+      } catch (NoSuchFieldException | IllegalAccessException | NullPointerException e) {
         e.printStackTrace(); // Handle the exception according to your application's logic
+        throw new MissingJsonGameInfoException("Missing key preference field in game JSON file");
       }
     }
   }
