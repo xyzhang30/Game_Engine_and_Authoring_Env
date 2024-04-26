@@ -172,6 +172,8 @@ public class Database implements DatabaseApi {
     }
   }
 
+
+
   //returns true if game is publicly available, otherwise false
   private boolean isGamePublic(String gameName) {
     String sql = "SELECT public FROM Games WHERE gamename = ?";

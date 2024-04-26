@@ -8,6 +8,7 @@ import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
+import oogasalad.model.database.Database;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.api.enums.AuthoringImplementationType;
@@ -36,6 +37,7 @@ public class GameController {
   private final GameTitleParser gameTitleParser;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
+  private Database databaseView;
   private boolean ableToStrike;
   private final int maxVelocity;
 
@@ -220,15 +222,18 @@ public class GameController {
     }
   }
 
-  public void openLogin(String username, String password){
-    sceneManager.createTitleScene(); //create player scene where the players currently added are shown and
-  }
+//  public void openLogin(String username, String password){
+//    sceneManager.createCurrentPlayersScene(); //create player scene where the players currently added are shown and
+//  }
+//
+//  public void openCreateUser(String username, String password) {
+//    sceneManager.createCurrentPlayersScene();
+//    //save username
+//    //save password
+//  }
 
-  public void openCreateUser(String username, String password) {
-    sceneManager.createTitleScene();
-    //save username
-    //save password
+  public void openCurrentPlayers(String username, String password, String avatarURL){
+    
   }
-
 
 }
