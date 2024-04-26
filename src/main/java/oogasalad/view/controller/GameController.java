@@ -118,7 +118,7 @@ public class GameController {
     gameEngine = new GameEngine(selectedGame);
     GameRecord gameRecord = gameEngine.restoreLastStaticGameRecord();
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
-    sceneManager.makeGameScreen(compositeElement, gameRecord);
+    sceneManager.makeGameScene(compositeElement, gameRecord);
     sceneManager.update(gameRecord);
   }
 

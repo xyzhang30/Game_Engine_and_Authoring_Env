@@ -156,12 +156,12 @@ public class SceneManager {
   }
 
   /**
-   * Makes the game screen including game board elements, striker input, and game stat display
+   * Makes the game scene including game board elements, striker input, and game stat display
    *
    * @param compositeElement game board elements
    * @param gameRecord       holds score, turn, and round info for stat display
    */
-  public void makeGameScreen(CompositeElement compositeElement, GameRecord gameRecord) {
+  public void makeGameScene(CompositeElement compositeElement, GameRecord gameRecord) {
     this.compositeElement = compositeElement;
     pauseElements = createSceneElements(pauseElementsPath);
     transitionElements = createSceneElements(transitionElementsPath);
