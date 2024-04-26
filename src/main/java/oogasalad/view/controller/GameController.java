@@ -2,7 +2,6 @@ package oogasalad.view.controller;
 
 import java.util.List;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.exception.InvalidImageException;
@@ -12,9 +11,9 @@ import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
-import oogasalad.view.scene_management.AnimationManager;
+import oogasalad.view.scene_management.scene_managers.AnimationManager;
 import oogasalad.view.scene_management.GameTitleParser;
-import oogasalad.view.scene_management.SceneManager;
+import oogasalad.view.scene_management.scene_managers.GameSceneManager;
 import oogasalad.view.GameWindow;
 
 import oogasalad.view.visual_elements.CompositeElement;
@@ -30,13 +29,13 @@ import org.apache.logging.log4j.Logger;
 public class GameController {
 
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
-  private final SceneManager sceneManager;
+  private final GameSceneManager gameSceneManager;
   private final AnimationManager animationManager;
   private final GameTitleParser gameTitleParser;
-  private final int maxVelocity;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
   private boolean ableToStrike;
+  private final int maxVelocity;
 
   /**
    * Initializes the GameController with the specified screen width and height.
@@ -52,31 +51,11 @@ public class GameController {
    * @param height The height of the screen for the game.
    */
   public GameController(double width, double height) {
-    sceneManager = new SceneManager(this, width, height);
+    gameSceneManager = new GameSceneManager(this, width, height);
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
     ableToStrike = true;
     maxVelocity = 1000;
-  }
-
-  /**
-   * Sets the scene to the title scene by prompting the scene manager to create it
-   *
-   * @return title scene
-   */
-  public Scene setSceneToTitle() {
-    sceneManager.createTitleScene();
-    return sceneManager.getScene();
-  }
-
-  /**
-   * Sets the scene to the menu scene by prompting the scene manager to create it
-   *
-   * @return menu scene
-   */
-  public Scene setSceneToMenu() {
-    sceneManager.createMenuScene();
-    return sceneManager.getScene();
   }
 
   /**
@@ -101,7 +80,7 @@ public class GameController {
    * </p>
    */
   public void resumeGame() {
-    sceneManager.removePauseSheen();
+    gameSceneManager.removePauseSheen();
     animationManager.resumeAnimation();
   }
 
@@ -130,8 +109,8 @@ public class GameController {
     gameEngine = new GameEngine(selectedGame);
     GameRecord gameRecord = gameEngine.restoreLastStaticGameRecord();
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
-    sceneManager.makeGameScreen(compositeElement, gameRecord);
-    sceneManager.update(gameRecord);
+    gameSceneManager.makeGameScreen(compositeElement, gameRecord);
+    gameSceneManager.update(gameRecord);
   }
 
   /**
@@ -168,7 +147,7 @@ public class GameController {
     if (staticState) {
       ableToStrike = true;
     }
-    sceneManager.update(gameRecord);
+    gameSceneManager.update(gameRecord);
     return staticState;
   }
 

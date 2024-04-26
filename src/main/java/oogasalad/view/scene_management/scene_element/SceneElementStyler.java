@@ -1,4 +1,4 @@
-package oogasalad.view.scene_management;
+package oogasalad.view.scene_management.scene_element;
 
 import java.net.URL;
 import java.util.HashMap;

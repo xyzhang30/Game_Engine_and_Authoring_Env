@@ -3,6 +3,8 @@ package oogasalad.view;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import oogasalad.view.controller.GameController;
+import oogasalad.view.scene_management.scene_managers.GameSceneManager;
+import oogasalad.view.scene_management.scene_managers.NonGameSceneManager;
 
 /**
  * The `GameWindow` class represents the stage being shown to the user It provides functionality to
@@ -15,6 +17,7 @@ public class GameWindow {
 
   public final static double SCREEN_WIDTH = Screen.getPrimary().getBounds().getWidth();
   public final static double SCREEN_HEIGHT = Screen.getPrimary().getBounds().getHeight();
+  private final NonGameSceneManager nonGameSceneManager;
 
   /**
    * Constructs a `GameWindow` instance and sets the scene to the main menu. A new stage is created
@@ -25,8 +28,9 @@ public class GameWindow {
    */
   public GameWindow() {
     GameController controller = new GameController(SCREEN_WIDTH, SCREEN_HEIGHT);
+    nonGameSceneManager = new NonGameSceneManager(controller, SCREEN_WIDTH, SCREEN_HEIGHT);
     Stage newStage = new Stage();
-    newStage.setScene(controller.setSceneToMenu());
+    newStage.setScene(nonGameSceneManager.getScene());
     newStage.setFullScreen(true);
     newStage.show();
   }
@@ -42,7 +46,8 @@ public class GameWindow {
    */
   public GameWindow(Stage stage) {
     GameController controller = new GameController(SCREEN_WIDTH, SCREEN_HEIGHT);
-    stage.setScene(controller.setSceneToTitle());
+    nonGameSceneManager = new NonGameSceneManager(controller, SCREEN_WIDTH, SCREEN_HEIGHT);
+    stage.setScene(nonGameSceneManager.getScene());
     stage.setFullScreen(true);
     stage.show();
   }

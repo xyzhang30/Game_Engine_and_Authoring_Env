@@ -1,4 +1,4 @@
-package oogasalad.view.scene_management;
+package oogasalad.view.scene_management.scene_element;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.api.enums.SceneElementEventType;
+import oogasalad.view.scene_management.scene_managers.SceneManager;
 
 /**
  * Handles scene element events and interactions within a game environment.

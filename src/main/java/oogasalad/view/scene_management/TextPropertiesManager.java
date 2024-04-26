@@ -12,10 +12,10 @@ import oogasalad.view.api.enums.TextPropertyType;
  *
  * @author Jordan Haytaian
  */
-public class LanguageManager {
+public class TextPropertiesManager {
 
-  private final String englishPropertiesPath = "EnglishText.properties";
-  private final String xmlTagPropertiesPath = "XMLTags.properties";
+  private final String englishPropertiesPath = "src/main/resources/view/properties/EnglishText.properties";
+  private final String xmlTagPropertiesPath = "src/main/resources/view/properties/XMLTags.properties";
   Properties englishProperties;
   Properties xmlTagProperties;
   Map<TextPropertyType, Properties> propertyMap;
@@ -24,7 +24,7 @@ public class LanguageManager {
    * Constructor creates properties from property file paths and maps enums to corresponding
    * properties
    */
-  public LanguageManager() {
+  public TextPropertiesManager() {
     englishProperties = loadProperties(englishPropertiesPath);
     xmlTagProperties = loadProperties(xmlTagPropertiesPath);
     createPropertyMap();
@@ -48,6 +48,7 @@ public class LanguageManager {
       properties.load(inputStream);
     } catch (IOException e) {
       //TODO: Exception Handling
+      System.out.println(e.getMessage());
     }
     return properties;
   }

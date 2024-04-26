@@ -1,0 +1,58 @@
+<scene_elements>
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>ENGLISH</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
+    <y_layout_factor>0.3</y_layout_factor>
+    <style>title-button</style>
+    <event>START_MENU</event>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>SPANISH</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
+    <y_layout_factor>0.5</y_layout_factor>
+    <style>title-button</style>
+    <event>START_AUTHORING</event>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>FRENCH</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
+    <y_layout_factor>0.7</y_layout_factor>
+    <style>title-button</style>
+    <event>HELP</event>
+  </node>
+
+  <node>
+    <class>javafx.scene.text.Text</class>
+    <type>TEXT</type>
+    <text>FYSICS_FUN</text>
+    <x_layout_factor>0.36</x_layout_factor>
+    <y_layout_factor>0.2</y_layout_factor>
+    <style>title-text</style>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.ComboBox</class>
+    <type>COMBOBOX</type>
+    <text>THEME</text>
+    <width_factor>0.15</width_factor>
+    <height_factor>0.07</height_factor>
+    <x_layout_factor>0.8</x_layout_factor>
+    <y_layout_factor>0.85</y_layout_factor>
+    <style>theme-selection-box</style>
+    <event>CHANGE_THEME</event>
+  </node>
+</scene_elements>
