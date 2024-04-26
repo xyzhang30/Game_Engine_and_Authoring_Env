@@ -1,7 +1,6 @@
 package oogasalad.view.scene_management.scene_element.scene_element_handler;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Consumer;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
@@ -37,7 +36,7 @@ public class SceneElementHandler {
   private final GameController gameController;
   private final SceneManager sceneManager;
   private final ChangeSceneEventHandler;
-  private final GameManagementEventHandler;
+  private final GameStatManagementHandler;
   private final LanguageEventHandler;
 
   /**

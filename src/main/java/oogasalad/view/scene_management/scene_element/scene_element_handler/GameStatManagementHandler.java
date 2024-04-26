@@ -12,25 +12,25 @@ import oogasalad.view.scene_management.scene_managers.SceneManager;
 
 
 /**
- * The GameManagementEventHandler class handles events related to managing game-related scenes and status updates.
+ * The GameStatManagementHandler class handles events related to managing game-related scenes and status updates.
  * It maps scene element events to their respective event handlers for setting the round, turn, and scores.
  *
  * @author Jordan Haytaian
  */
-public class GameManagementEventHandler {
+public class GameStatManagementHandler {
 
   private final SceneManager sceneManager;
   private final GameStatusManager gameStatusManager;
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
 
   /**
-   * Constructs a GameManagementEventHandler with the specified SceneManager and GameStatusManager.
+   * Constructs a GameStatManagementHandler with the specified SceneManager and GameStatusManager.
    * Initializes the event map by creating the mapping between SceneElementEvents and their respective handlers.
    *
    * @param sceneManager The scene manager for handling scene transitions and updates.
    * @param gameStatusManager The game status manager for managing game status displays.
    */
-  public GameManagementEventHandler(SceneManager sceneManager,
+  public GameStatManagementHandler(SceneManager sceneManager,
       GameStatusManager gameStatusManager) {
     this.sceneManager = sceneManager;
     this.gameStatusManager = gameStatusManager;
