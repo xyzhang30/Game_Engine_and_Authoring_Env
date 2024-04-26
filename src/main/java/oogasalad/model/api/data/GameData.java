@@ -16,6 +16,16 @@ public class GameData {
   private List<ParserPlayer> players;
   private List<Variables> variables;
   private Rules rules;
+  private @JsonProperty("keys") KeyPreferences keyPreferences;
+
+
+  public KeyPreferences getKeyPreferences() {
+    return keyPreferences;
+  }
+
+  public void setKeyPreferences(KeyPreferences keys){
+    this.keyPreferences = keys;
+  }
 
   public Rules getRules() {
     return rules;

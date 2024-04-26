@@ -158,6 +158,7 @@ public class AuthoringProxy {
       authoringController.writePlayers(playersMap);
       authoringController.writeVariables();
       authoringController.writeGameObjects(gameObjectMap);
+      authoringController.writeKeyPreferences(keyPreferences);
       boolean saveGameSuccess = authoringController.submitGame(gameName);
       if (saveGameSuccess) {
         showSuceessMessage("Game successfully saved!");
