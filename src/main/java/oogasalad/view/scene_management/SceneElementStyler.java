@@ -16,9 +16,9 @@ public class SceneElementStyler {
 
   private final Pane root;
   private Map<ThemeType, String> themePathMap;
-  private final String defaultPath = "/view/default_style.css";
-  private final String darkPath = "/view/dark_style.css";
-  private final String funPath = "/view/fun_style.css";
+  private final String defaultPath = "/view/styles/default_style.css";
+  private final String darkPath = "/view/styles/dark_style.css";
+  private final String funPath = "/view/styles/fun_style.css";
 
   /**
    * Constructor adds style sheet to root

@@ -2,7 +2,7 @@
   <node>
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
-    <text>Round: </text>
+    <text>ROUND</text>
     <x_layout_factor>0.89</x_layout_factor>
     <y_layout_factor>0.12</y_layout_factor>
     <styling>game-text</styling>
@@ -12,7 +12,7 @@
   <node>
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
-    <text>Turn: </text>
+    <text>TURN</text>
     <x_layout_factor>0.87</x_layout_factor>
     <y_layout_factor>0.17</y_layout_factor>
     <styling>game-text</styling>
@@ -33,7 +33,7 @@
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>Pause</text>
+    <text>PAUSE</text>
     <width_factor>0.05</width_factor>
     <height_factor>0.05</height_factor>
     <x_layout_factor>0.92</x_layout_factor>
@@ -45,7 +45,7 @@
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>Save</text>
+    <text>SAVE</text>
     <width_factor>0.05</width_factor>
     <height_factor>0.05</height_factor>
     <x_layout_factor>0.92</x_layout_factor>
@@ -57,7 +57,7 @@
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>Load</text>
+    <text>LOAD</text>
     <width_factor>0.05</width_factor>
     <height_factor>0.05</height_factor>
     <x_layout_factor>0.92</x_layout_factor>
@@ -69,7 +69,7 @@
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>Back</text>
+    <text>BACK</text>
     <width_factor>0.05</width_factor>
     <height_factor>0.05</height_factor>
     <x_layout_factor>0.92</x_layout_factor>
@@ -81,7 +81,7 @@
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>Add Game</text>
+    <text>ADD_GAME</text>
     <width_factor>0.07</width_factor>
     <height_factor>0.05</height_factor>
     <x_layout_factor>0.9</x_layout_factor>
