@@ -1,4 +1,4 @@
-package oogasalad.view.scene_management;
+package oogasalad.view.scene_management.scene_element;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,9 +10,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import oogasalad.view.api.enums.SupportedLanguage;
+import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.api.enums.SceneElementEventType;
-import oogasalad.view.enums.ThemeType;
+import oogasalad.view.scene_management.scene_managers.SceneManager;
 
 /**
  * Handles scene element events and interactions within a game environment.
@@ -87,6 +89,7 @@ public class SceneElementHandler {
     addGamePlayChangeEventsToMap();
     addStrikingEventsToMap();
     addGameManagementEventsToMap();
+    addPreferenceEventsToMap();
   }
 
   private void addGamePlayChangeEventsToMap() {
@@ -97,13 +100,21 @@ public class SceneElementHandler {
   }
 
   private void addSceneChangeEventsToMap() {
+    eventMap.put(SceneElementEventType.START_LANGUAGE, this::createStartLanguageHandler);
     eventMap.put(SceneElementEventType.START_TITLE, this::createStartTitleHandler);
     eventMap.put(SceneElementEventType.START_MENU, this::createStartMenuHandler);
     eventMap.put(SceneElementEventType.START_AUTHORING, this::createStartAuthoringHandler);
     eventMap.put(SceneElementEventType.START_GAME, this::createStartGameHandler);
     eventMap.put(SceneElementEventType.NEXT_ROUND, this::createNextRoundHandler);
     eventMap.put(SceneElementEventType.NEW_GAME_WINDOW, this::createNewGameHandler);
+    eventMap.put(SceneElementEventType.HELP, this::createHelpInstructionsHandler);
+  }
+
+  private void addPreferenceEventsToMap() {
     eventMap.put(SceneElementEventType.CHANGE_THEME, this::createThemeChangeHandler);
+    eventMap.put(SceneElementEventType.SET_ENGLISH, this::createSetEnglishHandler);
+    eventMap.put(SceneElementEventType.SET_SPANISH, this::createSetSpanishHandler);
+    eventMap.put(SceneElementEventType.SET_FRENCH, this::createSetFrenchHandler);
   }
 
   private void addStrikingEventsToMap() {
@@ -289,7 +300,9 @@ public class SceneElementHandler {
 
   private void setScores(Node node) {
     gameStatusManager.setScoreList((ListView<String>) node);
-    node.setOnMouseClicked(e -> {sceneManager.getRoot().requestFocus();});
+    node.setOnMouseClicked(e -> {
+      sceneManager.getRoot().requestFocus();
+    });
   }
 
   private void createThemeChangeHandler(Node node) {
@@ -303,5 +316,34 @@ public class SceneElementHandler {
 
   private void createNewGameHandler(Node node) {
     node.setOnMouseClicked(e -> gameController.createNewWindow());
+  }
+
+  private void createHelpInstructionsHandler(Node node) {
+    node.setOnMouseClicked(e -> sceneManager.createHelpInstructions());
+  }
+
+  private void createStartLanguageHandler(Node node) {
+    node.setOnMouseClicked(e -> sceneManager.createLanguageSelectionScene());
+  }
+
+  private void createSetEnglishHandler(Node node) {
+    node.setOnMouseClicked(e -> {
+      sceneManager.setLanguage(SupportedLanguage.ENGLISH);
+      sceneManager.createTitleScene();
+    });
+  }
+
+  private void createSetSpanishHandler(Node node) {
+    node.setOnMouseClicked(e -> {
+      sceneManager.setLanguage(SupportedLanguage.SPANISH);
+      sceneManager.createTitleScene();
+    });
+  }
+
+  private void createSetFrenchHandler(Node node) {
+    node.setOnMouseClicked(e -> {
+      sceneManager.setLanguage(SupportedLanguage.FRENCH);
+      sceneManager.createTitleScene();
+    });
   }
 }

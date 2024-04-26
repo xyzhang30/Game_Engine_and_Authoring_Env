@@ -1,7 +1,7 @@
 package oogasalad.view.api.enums;
 
 /**
- * Enumeration representing supported languages for the authoring environment.
+ * Enumeration representing supported TextPropertyType for the authoring environment.
  *
  * @author Judy He
  */

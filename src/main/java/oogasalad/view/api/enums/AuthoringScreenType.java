@@ -18,7 +18,9 @@ public enum AuthoringScreenType {
   /**
    * Screen type for configuring policies such as game rules and mechanics.
    */
-  POLICIES("Policies");
+  POLICIES("Policies"),
+
+  KEY_PREFERENCES("Key Preferences");
 
   private final String string;
 

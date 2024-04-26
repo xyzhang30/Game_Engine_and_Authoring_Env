@@ -37,9 +37,10 @@ public class ShapeProxy {
   private int shapeCount;
   private final List<Shape> templates = new ArrayList<>();
   String RESOURCE_FOLDER_PATH = "view.";
+  String VIEW_PROPERTIES_PATH = "properties.";
   String DEFAULT_VALUES_FILE = "DefaultAuthoringValues";
   ResourceBundle defaultValuesResourceBundle = ResourceBundle.getBundle(
-      RESOURCE_FOLDER_PATH + DEFAULT_VALUES_FILE);
+      RESOURCE_FOLDER_PATH + VIEW_PROPERTIES_PATH + DEFAULT_VALUES_FILE);
   private int numberOfMultiSelectAllowed = Integer.parseInt(
       defaultValuesResourceBundle.getString("defaultNumShapesSelectedAllowed"));
 

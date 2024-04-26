@@ -13,11 +13,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
+import oogasalad.view.authoring_environment.panels.KeySelectionPanel;
 import oogasalad.view.authoring_environment.util.Container;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.api.authoring.AuthoringFactory;
 import oogasalad.view.authoring_environment.panels.ShapePanel;
-import oogasalad.view.GameWindow;
+import oogasalad.view.scene_management.GameWindow;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.panels.ColorPanel;
 import oogasalad.view.authoring_environment.panels.ImagePanel;
@@ -45,6 +46,7 @@ public class AuthoringScreen {
   ComboBox<AuthoringScreenType> screensDropDown = new ComboBox<>();
   Text titleText = new Text();
   private static final String RESOURCE_FOLDER_PATH = "view.";
+  private static final String VIEW_PROPERTIES_FOLDER = "properties.";
   private static final String UI_FILE_PREFIX = "UIElements";
   private SupportedLanguage language; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
@@ -61,14 +63,14 @@ public class AuthoringScreen {
   public AuthoringScreen(SupportedLanguage language, AuthoringFactory authoringFactory, ShapeProxy shapeProxy, AuthoringProxy authoringProxy) {
     this.language = language;
     this.resourceBundle = ResourceBundle.getBundle(
-        RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
+        RESOURCE_FOLDER_PATH + VIEW_PROPERTIES_FOLDER + UI_FILE_PREFIX + language);
     this.authoringFactory = authoringFactory;
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
     createCanvas();
     createContainerPane();
     createScreenSelectionDropDown(List.of(AuthoringScreenType.GAMEOBJECTS, AuthoringScreenType.INTERACTIONS,
-        AuthoringScreenType.POLICIES));
+        AuthoringScreenType.POLICIES, AuthoringScreenType.KEY_PREFERENCES));
     handleScreenSelectionDropDown();
     createFinishButton();
     containerPane.getChildren().add(titleText);
@@ -108,8 +110,11 @@ public class AuthoringScreen {
       case POLICIES:
         container.setPanels(createPoliciesPanel());
         break;
-
+      case KEY_PREFERENCES:
+        container.setPanels(createKeySelectionPanel());
+        break;
     }
+    System.out.println();
   }
 
   private List<Panel> createGameObjectsPanel() {
@@ -126,6 +131,10 @@ public class AuthoringScreen {
 
   private List<Panel> createPoliciesPanel() {
     return List.of(new PolicyPanel(authoringProxy, rootPane, containerPane, canvasPane, new DefaultUIElementFactory()));
+  }
+
+  private List<Panel> createKeySelectionPanel(){
+    return List.of(new KeySelectionPanel(authoringProxy, rootPane, containerPane, canvasPane, new DefaultUIElementFactory()));
   }
 
   private void setTitle(String title) {

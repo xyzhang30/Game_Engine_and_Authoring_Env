@@ -56,6 +56,8 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
   private Button addPlayerButton, removePlayerButton;
   private Text numPlayers;
 
+  private final String VIEW_PROPERTIES_FOLDER = "properties.";
+
   /**
    * Constructor for default AuthoringFactory
    *
@@ -68,7 +70,7 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
       ShapeProxy shapeProxy, AuthoringProxy authoringProxy) {
     this.uiElementFactory = uiElementFactory;
     this.resourceBundle = ResourceBundle.getBundle(
-        RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
+        RESOURCE_FOLDER_PATH + VIEW_PROPERTIES_FOLDER + UI_FILE_PREFIX + language);
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
   }
@@ -258,10 +260,13 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
     } else if (labelText.equals(resourceBundle.getString("YScaleLabel"))) {
       this.ySlider = slider;
     } else {
+      slider = uiElementFactory.createSlider(id, 200, 0, 360, 1);
       this.angleSlider = slider;
+//      this.angleSlider = uiElementFactory.createSlider(id, 200, 0, 360, 1);
     }
     Label label = new Label(labelText);
-    return uiElementFactory.createHContainer(10, 200, 10, label, slider);
+    label.setMinWidth(80);
+    return uiElementFactory.createHContainer(10, 1500, 10, label, slider);
   }
 
   private void updateSlider(double xScale, double yScale, double angle) {
@@ -280,6 +285,7 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
     TextField textField = uiElementFactory.createTextField(id, 100, 20);
     textField.textProperty().addListener(new TextFieldListener(textField.getId(), shapeProxy));
     Label label = new Label(labelText);
+    label.setMinWidth(100);
     textFields.add(textField);
     return uiElementFactory.createHContainer(10, 100, 20, label, textField);
   }

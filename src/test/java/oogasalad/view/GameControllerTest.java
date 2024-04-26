@@ -2,8 +2,6 @@ package oogasalad.view;
 
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleWrapper;
-import oogasalad.view.controller.GameController;
-import oogasalad.view.scene_management.AnimationManager;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 

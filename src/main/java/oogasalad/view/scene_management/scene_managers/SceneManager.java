@@ -1,4 +1,4 @@
-package oogasalad.view.scene_management;
+package oogasalad.view.scene_management.scene_managers;
 
 import java.io.IOException;
 import java.util.List;
@@ -7,8 +7,14 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
+import oogasalad.view.api.enums.SupportedLanguage;
+import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.GameController;
-import oogasalad.view.enums.ThemeType;
+import oogasalad.view.scene_management.element_parsers.SceneElementParser;
+import oogasalad.view.scene_management.scene_element.GameStatusManager;
+import oogasalad.view.scene_management.scene_element.SceneElementFactory;
+import oogasalad.view.scene_management.scene_element.SceneElementHandler;
+import oogasalad.view.scene_management.scene_element.SceneElementStyler;
 import oogasalad.view.visual_elements.CompositeElement;
 import org.xml.sax.SAXException;
 
@@ -31,12 +37,18 @@ public class SceneManager {
   private Pane pauseElements;
   private Pane transitionElements;
   private int currentRound;
+  private SupportedLanguage selectedLanguage;
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
-  private final String gameManagementElementsPath = "data/scene_elements/gameManagementElements.xml";
+  private final String gameManagementElementsPath =
+      "data/scene_elements/gameManagementElements.xml";
   private final String transitionElementsPath = "data/scene_elements/transitionElements.xml";
   private final String gameOverSceneElementsPath = "data/scene_elements/gameOverElements.xml";
-  private final String pausePath = "data/scene_elements/pauseElements.xml";
+  private final String pauseElementsPath = "data/scene_elements/pauseElements.xml";
+  private final String helpInstructionElementsPath =
+      "data/scene_elements/helpInstructionElements.xml";
+  private final String languageSelectionElementsPath =
+      "data/scene_elements/languageSelectionElements.xml";
 
 
   /**
@@ -51,12 +63,14 @@ public class SceneManager {
       double screenHeight) {
     root = new Pane();
     scene = new Scene(root);
+    selectedLanguage = SupportedLanguage.ENGLISH;
 
     sceneElementParser = new SceneElementParser();
     sceneElementStyler = new SceneElementStyler(root);
     gameStatusManager = new GameStatusManager();
     sceneElementFactory = new SceneElementFactory(screenWidth, screenHeight, sceneElementStyler,
         new SceneElementHandler(gameController, this, gameStatusManager));
+    createLanguageSelectionScene();
   }
 
   /**
@@ -66,6 +80,15 @@ public class SceneManager {
    */
   public Scene getScene() {
     return scene;
+  }
+
+  /**
+   * Creates a language selection scene by resetting the root and creating new elements from
+   * language selection scene xml file
+   */
+  public void createLanguageSelectionScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(languageSelectionElementsPath));
   }
 
   /**
@@ -107,7 +130,7 @@ public class SceneManager {
   /**
    * Called when next round is started, removes transition screen elements
    */
-  void removeTransitionSheen() {
+  public void removeTransitionSheen() {
     root.getChildren().remove(transitionElements);
     root.requestFocus();
   }
@@ -117,17 +140,22 @@ public class SceneManager {
    *
    * @return root node of scene
    */
-  Pane getRoot() {
+  public Pane getRoot() {
     return root;
   }
 
   /**
    * Creates a pause display by adding elements created from pause xml file
    */
-  void createPauseDisplay() {
+  public void createPauseDisplay() {
     if (!root.getChildren().contains(pauseElements)) {
       root.getChildren().add(pauseElements);
     }
+  }
+
+  public void createHelpInstructions() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(helpInstructionElementsPath));
   }
 
   /**
@@ -135,25 +163,33 @@ public class SceneManager {
    *
    * @param selectedTheme theme selected by user
    */
-  void changeTheme(ThemeType selectedTheme) {
+  public void changeTheme(ThemeType selectedTheme) {
     sceneElementStyler.changeTheme(selectedTheme);
   }
 
   /**
-   * Makes the game screen including game board elements, striker input, and game stat display
+   * Setter for selected language
+   *
+   * @param language represents user selected language
+   */
+  public void setLanguage(SupportedLanguage language) {
+    selectedLanguage = language;
+  }
+
+  /**
+   * Makes the game scene including game board elements, striker input, and game stat display
    *
    * @param compositeElement game board elements
    * @param gameRecord       holds score, turn, and round info for stat display
    */
-  public void makeGameScreen(CompositeElement compositeElement, GameRecord gameRecord) {
+  public void makeGameScene(CompositeElement compositeElement, GameRecord gameRecord) {
     this.compositeElement = compositeElement;
-    pauseElements = createSceneElements(pausePath);
+    pauseElements = createSceneElements(pauseElementsPath);
     transitionElements = createSceneElements(transitionElementsPath);
     addGameManagementElementsToGame(gameRecord);
     addGameElementsToGame();
     root.requestFocus();
   }
-
 
   private void createTransitionDisplay() {
     root.getChildren().add(transitionElements);
@@ -169,7 +205,7 @@ public class SceneManager {
     try {
       List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(
           filePath);
-      return sceneElementFactory.createSceneElements(sceneElementParameters);
+      return sceneElementFactory.createSceneElements(sceneElementParameters, selectedLanguage);
 
     } catch (ParserConfigurationException | SAXException | IOException e) {
       //TODO: Exception Handling
@@ -200,7 +236,6 @@ public class SceneManager {
     } else if (gameRecord.round() != currentRound) {
       currentRound = gameRecord.round();
       createTransitionDisplay();
-
     }
   }
 }
