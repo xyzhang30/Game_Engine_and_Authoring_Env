@@ -1,0 +1,75 @@
+<scene_elements>
+  <node>
+    <class>javafx.scene.text.Text</class>
+    <type>TEXT</type>
+    <text>Fysics Fun</text>
+    <x_layout_factor>0.12</x_layout_factor>
+    <y_layout_factor>0.3</y_layout_factor>
+    <styling>title-text</styling>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.textfield</class>
+    <type>TEXTFIELD</type>
+    <width_factor>0.25</width_factor>
+    <height_factor>0.2</height_factor>
+    <x_layout_factor>0.5</x_layout_factor>
+    <y_layout_factor>0.65</y_layout_factor>
+    <styling>game-text</styling>
+    <event>SAVE_TEXT</event>
+  </node>
+
+  <node>
+    <class>javafx.scene.text.Text</class>
+    <type>TEXT</type>
+    <text>Login</text>
+    <x_layout_factor>0.36</x_layout_factor>
+    <y_layout_factor>0.65</y_layout_factor>
+    <styling>game-text</styling>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.textfield</class>
+    <type>TEXTFIELD</type>
+    <width_factor>0.25</width_factor>
+    <height_factor>0.2</height_factor>
+    <x_layout_factor>0.5</x_layout_factor>
+    <y_layout_factor>0.68</y_layout_factor>
+    <styling>game-text</styling>
+    <event>SAVE_TEXT</event>
+  </node>
+
+  <node>
+    <class>javafx.scene.text.Text</class>
+    <type>TEXT</type>
+    <text>Create User</text>
+    <x_layout_factor>0.36</x_layout_factor>
+    <y_layout_factor>0.68</y_layout_factor>
+    <styling>game-text</styling>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>Login</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.48</x_layout_factor>
+    <y_layout_factor>0.85</y_layout_factor>
+    <styling>title-button</styling>
+    <event>LOGIN</event>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>Login</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.48</x_layout_factor>
+    <y_layout_factor>0.85</y_layout_factor>
+    <styling>title-button</styling>
+    <event>CREATE_USER</event>
+  </node>
+
+</scene_elements>
