@@ -6,6 +6,7 @@
     <x_layout_factor>0.89</x_layout_factor>
     <y_layout_factor>0.12</y_layout_factor>
     <style>game-text</style>
+    <event_type>MANAGE_GAME</event_type>
     <event>SET_ROUND</event>
   </node>
 
@@ -16,6 +17,7 @@
     <x_layout_factor>0.87</x_layout_factor>
     <y_layout_factor>0.17</y_layout_factor>
     <style>game-text</style>
+    <event_type>MANAGE_GAME</event_type>
     <event>SET_TURN</event>
   </node>
 
@@ -27,6 +29,7 @@
     <x_layout_factor>0.86</x_layout_factor>
     <y_layout_factor>0.2</y_layout_factor>
     <style>score-list</style>
+    <event_type>MANAGE_GAME</event_type>
     <event>SET_SCORE</event>
   </node>
 
@@ -39,6 +42,7 @@
     <x_layout_factor>0.92</x_layout_factor>
     <y_layout_factor>0.4</y_layout_factor>
     <style>game-button</style>
+    <event_type>MANAGE_GAME</event_type>
     <event>PAUSE</event>
   </node>
 
@@ -51,6 +55,7 @@
     <x_layout_factor>0.92</x_layout_factor>
     <y_layout_factor>0.5</y_layout_factor>
     <style>game-button</style>
+    <event_type>PARSE</event_type>
     <event>SAVE</event>
   </node>
 
@@ -63,6 +68,7 @@
     <x_layout_factor>0.92</x_layout_factor>
     <y_layout_factor>0.6</y_layout_factor>
     <style>game-button</style>
+    <event_type>MANAGE_GAME</event_type>
     <event>LOAD</event>
   </node>
 
@@ -75,6 +81,7 @@
     <x_layout_factor>0.92</x_layout_factor>
     <y_layout_factor>0.7</y_layout_factor>
     <style>game-button</style>
+    <event_type>CHANGE_SCENE</event_type>
     <event>START_MENU</event>
   </node>
 
@@ -87,6 +94,7 @@
     <x_layout_factor>0.9</x_layout_factor>
     <y_layout_factor>0.8</y_layout_factor>
     <style>game-button</style>
+    <event_type>CHANGE_SCENE</event_type>
     <event>NEW_GAME_WINDOW</event>
   </node>
 
@@ -98,6 +106,7 @@
     <x_layout_factor>0.75</x_layout_factor>
     <y_layout_factor>0.05</y_layout_factor>
     <style>power-outline</style>
+    <event_type>STRIKE</event_type>
     <event>POWER_HEIGHT</event>
   </node>
 
@@ -109,6 +118,7 @@
     <x_layout_factor>0.76</x_layout_factor>
     <y_layout_factor>0.735</y_layout_factor>
     <style>power-bar</style>
+    <event>STRIKE</event>
     <event>SET_POWER</event>
   </node>
 
@@ -122,6 +132,7 @@
     <arrow_width_offset>5</arrow_width_offset>
     <arrow_height_offset>8</arrow_height_offset>
     <style>angle-arrow</style>
+    <event_type>STRIKE</event_type>
     <event>SET_ANGLE</event>
   </node>
 </scene_elements>

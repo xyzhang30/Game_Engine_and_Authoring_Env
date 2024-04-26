@@ -27,6 +27,7 @@
     <x_layout_factor>0.03</x_layout_factor>
     <y_layout_factor>0.9</y_layout_factor>
     <style>game-button</style>
+    <event_type>CHANGE_SCENE</event_type>
     <event>START_TITLE</event>
   </node>
 </scene_elements>

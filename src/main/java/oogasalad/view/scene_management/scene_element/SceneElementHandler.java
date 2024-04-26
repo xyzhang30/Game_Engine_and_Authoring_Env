@@ -13,7 +13,7 @@ import javafx.scene.text.Text;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.GameController;
-import oogasalad.view.api.enums.SceneElementEventType;
+import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 
 /**
@@ -37,7 +37,7 @@ public class SceneElementHandler {
   private final SceneManager sceneManager;
   private final GameStatusManager gameStatusManager;
   private final int angleIncrement;
-  private Map<SceneElementEventType, Consumer<Node>> eventMap;
+  private Map<SceneElementEvent, Consumer<Node>> eventMap;
   private double maxPower;
   private double minPower;
   private Rectangle powerMeter;
@@ -79,7 +79,7 @@ public class SceneElementHandler {
    * @param event A string representing the type of event to handle.
    */
   public void createElementHandler(Node node, String event) {
-    Consumer<Node> consumer = eventMap.get(SceneElementEventType.valueOf(event));
+    Consumer<Node> consumer = eventMap.get(SceneElementEvent.valueOf(event));
     consumer.accept(node);
   }
 
@@ -93,40 +93,40 @@ public class SceneElementHandler {
   }
 
   private void addGamePlayChangeEventsToMap() {
-    eventMap.put(SceneElementEventType.PAUSE, this::createPauseHandler);
-    eventMap.put(SceneElementEventType.RESUME, this::createResumeHandler);
-    eventMap.put(SceneElementEventType.SAVE, this::createSaveHandler);
-    eventMap.put(SceneElementEventType.LOAD, this::createLoadHandler);
+    eventMap.put(SceneElementEvent.PAUSE, this::createPauseHandler);
+    eventMap.put(SceneElementEvent.RESUME, this::createResumeHandler);
+    eventMap.put(SceneElementEvent.SAVE, this::createSaveHandler);
+    eventMap.put(SceneElementEvent.LOAD, this::createLoadHandler);
   }
 
   private void addSceneChangeEventsToMap() {
-    eventMap.put(SceneElementEventType.START_LANGUAGE, this::createStartLanguageHandler);
-    eventMap.put(SceneElementEventType.START_TITLE, this::createStartTitleHandler);
-    eventMap.put(SceneElementEventType.START_MENU, this::createStartMenuHandler);
-    eventMap.put(SceneElementEventType.START_AUTHORING, this::createStartAuthoringHandler);
-    eventMap.put(SceneElementEventType.START_GAME, this::createStartGameHandler);
-    eventMap.put(SceneElementEventType.NEXT_ROUND, this::createNextRoundHandler);
-    eventMap.put(SceneElementEventType.NEW_GAME_WINDOW, this::createNewGameHandler);
-    eventMap.put(SceneElementEventType.HELP, this::createHelpInstructionsHandler);
+    eventMap.put(SceneElementEvent.START_LANGUAGE, this::createStartLanguageHandler);
+    eventMap.put(SceneElementEvent.START_TITLE, this::createStartTitleHandler);
+    eventMap.put(SceneElementEvent.START_MENU, this::createStartMenuHandler);
+    eventMap.put(SceneElementEvent.START_AUTHORING, this::createStartAuthoringHandler);
+    eventMap.put(SceneElementEvent.START_GAME, this::createStartGameHandler);
+    eventMap.put(SceneElementEvent.NEXT_ROUND, this::createNextRoundHandler);
+    eventMap.put(SceneElementEvent.NEW_GAME_WINDOW, this::createNewGameHandler);
+    eventMap.put(SceneElementEvent.HELP, this::createHelpInstructionsHandler);
   }
 
   private void addPreferenceEventsToMap() {
-    eventMap.put(SceneElementEventType.CHANGE_THEME, this::createThemeChangeHandler);
-    eventMap.put(SceneElementEventType.SET_ENGLISH, this::createSetEnglishHandler);
-    eventMap.put(SceneElementEventType.SET_SPANISH, this::createSetSpanishHandler);
-    eventMap.put(SceneElementEventType.SET_FRENCH, this::createSetFrenchHandler);
+    eventMap.put(SceneElementEvent.CHANGE_THEME, this::createThemeChangeHandler);
+    eventMap.put(SceneElementEvent.SET_ENGLISH, this::createSetEnglishHandler);
+    eventMap.put(SceneElementEvent.SET_SPANISH, this::createSetSpanishHandler);
+    eventMap.put(SceneElementEvent.SET_FRENCH, this::createSetFrenchHandler);
   }
 
   private void addStrikingEventsToMap() {
-    eventMap.put(SceneElementEventType.POWER_HEIGHT, this::getMaxPower);
-    eventMap.put(SceneElementEventType.SET_POWER, this::createPowerHandler);
-    eventMap.put(SceneElementEventType.SET_ANGLE, this::setAngleArrow);
+    eventMap.put(SceneElementEvent.POWER_HEIGHT, this::getMaxPower);
+    eventMap.put(SceneElementEvent.SET_POWER, this::createPowerHandler);
+    eventMap.put(SceneElementEvent.SET_ANGLE, this::setAngleArrow);
   }
 
   private void addGameManagementEventsToMap() {
-    eventMap.put(SceneElementEventType.SET_ROUND, this::setRound);
-    eventMap.put(SceneElementEventType.SET_TURN, this::setTurn);
-    eventMap.put(SceneElementEventType.SET_SCORE, this::setScores);
+    eventMap.put(SceneElementEvent.SET_ROUND, this::setRound);
+    eventMap.put(SceneElementEvent.SET_TURN, this::setTurn);
+    eventMap.put(SceneElementEvent.SET_SCORE, this::setScores);
   }
 
   private void createSaveHandler(Node node) {
