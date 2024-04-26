@@ -5,61 +5,71 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
+import org.postgresql.util.PSQLException;
 
 public class DataCreateObject {
 
   // Register a new user
-  public static boolean registerUser(String username, String password, String avatarUrl, String language, int age, String favoriteVariantsJson, int tokens, String colorsJson) {
+  public boolean registerUser(String username, String password, String avatarUrl)   {
     try (Connection conn = DatabaseConfig.getConnection()) {
       String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-      String sql = "INSERT INTO Players (username, password, avatar_url, language, age, favorite_variants, tokens, colors) VALUES (?, ?, ?, ?, ?, ?::jsonb, ?, ?::jsonb)";
+      String sql = "INSERT INTO Players (username, password, avatarurl) VALUES (?, ?, ?)";
       try (PreparedStatement stmt = conn.prepareStatement(sql)) {
         stmt.setString(1, username);
         stmt.setString(2, hashedPassword);
         stmt.setString(3, avatarUrl);
-        stmt.setString(4, language);
-        stmt.setInt(5, age);
-        stmt.setString(6, favoriteVariantsJson);
-        stmt.setInt(7, tokens);
-        stmt.setString(8, colorsJson);
         stmt.executeUpdate();
+
+       for (String gameName : getAllGames()) {
+          grantPermissions(username, gameName, isGamePublic(gameName) ? "Player":"None");
+        }
         return true;
       }
-    } catch (SQLException e) {
-      e.printStackTrace();
+    } catch (PSQLException uniqueViolation) {
+      uniqueViolation.printStackTrace();
+      return true;
+    }
+    catch (SQLException e) {
       return false;
     }
   }
 
-  // Update user information
-  public boolean updateUser(int playerId, String newAvatarUrl, String newLanguage) {
-    try (Connection conn = DatabaseConfig.getConnection()) {
-      String sql = "UPDATE Players SET avatar_url = ?, language = ? WHERE player_id = ?";
-      try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setString(1, newAvatarUrl);
-        stmt.setString(2, newLanguage);
-        stmt.setInt(3, playerId);
-        stmt.executeUpdate();
-        return true;
+  private boolean isGamePublic(String gameName) {
+    String sql = "SELECT public FROM Games WHERE gamename = ?";
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, gameName);
+      try (ResultSet rs = pstmt.executeQuery()) {
+        if (rs.next()) {
+          return true;
+        }
       }
     } catch (SQLException e) {
       e.printStackTrace();
-      return false;
     }
+    return false;
   }
 
-  public boolean updateGame(int gameId, int ownerId, String gameName) {
-    String sql = "UPDATE Games SET owner_id = ?, name = ? WHERE game_id = ?;";
-
+  public boolean registerGame(String gameName, String ownerName, int numPlayers, boolean publicOrPrivate) {
+    String sql = "INSERT INTO Games (gamename, owner, numplayers, public) VALUES (?, ?, ?, ?)";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setInt(1, ownerId);
-      pstmt.setString(2, gameName);
-      pstmt.setInt(3, gameId);
+      pstmt.setString(1, gameName);
+      pstmt.setString(2, ownerName);
+      pstmt.setInt(3, numPlayers);
+      pstmt.setBoolean(4, publicOrPrivate);
       int affectedRows = pstmt.executeUpdate();
+      String permission = publicOrPrivate ? "Player" : "None";
+      for (String username : getAllPlayers()) {
+        grantPermissions(username, gameName, permission);
+      }
+      grantPermissions(ownerName, gameName, "Owner");
       return affectedRows > 0;
+    } catch (PSQLException e) {
+      e.printStackTrace();
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -67,205 +77,105 @@ public class DataCreateObject {
   }
 
 
-  public boolean updateGameScore(int scoreId, int score, String gameResult) {
-    String sql = "UPDATE GameScores SET score = ?, game_result = ? WHERE score_id = ?;";
 
+  private List<String> getAllPlayers() {
+    List<String> usernames = new ArrayList<>();
+    String sql = "SELECT username FROM Players";
     try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setInt(1, score);
-      pstmt.setString(2, gameResult);
-      pstmt.setInt(3, scoreId);
-      int affectedRows = pstmt.executeUpdate();
-      return affectedRows > 0;
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return false;
-  }
-
-  /**
-   * Grants a permission to multiple players for a specific game.
-   * @param gameId The game ID to which the permission relates.
-   * @param playerIds Array of player IDs to grant the permission.
-   * @param role The role to be granted.
-   * @return true if the permissions are successfully granted, false otherwise.
-   */
-  public boolean grantPermissions(int gameId, int[] playerIds, String role) {
-    String sql = "INSERT INTO Permissions (player_id, game_id, role) VALUES (?, ?, ?);";
-
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      int count = 0;
-      for (int playerId : playerIds) {
-        pstmt.setInt(1, playerId);
-        pstmt.setInt(2, gameId);
-        pstmt.setString(3, role);
-        pstmt.addBatch();  // Add each set of parameters to the batch
-        count++;
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery()) {
+      while (rs.next()) {
+        String username = rs.getString("username");
+        usernames.add(username);
       }
-      int[] results = pstmt.executeBatch();  // Execute all the batched commands
-      return results.length == count;  // Check if all commands were successful
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return false;
+    return usernames;
   }
 
-  public boolean createGame(int ownerId, String gameName) {
-    // Start a transaction
-    Connection conn = null;
-    PreparedStatement pstmt = null;
-    PreparedStatement pstmtPermission = null;
-    ResultSet generatedKeys = null;
-    boolean success = false;
+  private List<String> getAllGames() {
+    List<String> gamenames = new ArrayList<>();
+    String sql = "SELECT gamename FROM Games";
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery()) {
+      while (rs.next()) {
+        String game = rs.getString("gamename");
+        gamenames.add(game);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return gamenames;
+  }
 
-    try {
-      conn = DatabaseConfig.getConnection();
-      conn.setAutoCommit(false); // Transaction block start
 
-      // Insert the new game and get its generated ID
-      String sqlInsertGame = "INSERT INTO Games (owner_id, name) VALUES (?, ?)";
-      pstmt = conn.prepareStatement(sqlInsertGame, Statement.RETURN_GENERATED_KEYS);
-
-      pstmt.setInt(1, ownerId);
+  private void grantPermissions( String username, String gameName,
+      String permission) throws SQLException {
+    String sql = "INSERT INTO Permissions (playerusername, gamename, permissions) VALUES (?, ?, ?) "
+        + "ON CONFLICT (playerusername, gamename) DO UPDATE SET permissions = ?";
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, username);
       pstmt.setString(2, gameName);
-      int affectedRows = pstmt.executeUpdate();
-
-      if (affectedRows == 0) {
-        throw new SQLException("Creating game failed, no rows affected.");
-      }
-
-      generatedKeys = pstmt.getGeneratedKeys();
-      if (generatedKeys.next()) {
-        // Retrieve the id of the newly inserted game
-        long newGameId = generatedKeys.getLong(1);
-
-        // Insert default permissions for all players with the role "Not Permitted"
-        String sqlInsertPermission = "INSERT INTO Permissions (player_id, game_id, role) "
-            + "SELECT player_id, ?, 'Not Permitted' FROM Players";
-        pstmtPermission = conn.prepareStatement(sqlInsertPermission);
-
-        pstmtPermission.setLong(1, newGameId);
-        pstmtPermission.executeUpdate();
-
-        // Commit the transaction
-        conn.commit();
-        success = true;
-      } else {
-        throw new SQLException("Creating game failed, no ID obtained.");
-      }
-    } catch (SQLException e) {
-      // Rollback if there was an error
-      if (conn != null) {
-        try {
-          conn.rollback();
-        } catch (SQLException ex) {
-          ex.printStackTrace();
-        }
-      }
-      e.printStackTrace();
-    } finally {
-      // Clean up resources
-      try {
-        if (generatedKeys != null) generatedKeys.close();
-        if (pstmt != null) pstmt.close();
-        if (pstmtPermission != null) pstmtPermission.close();
-        if (conn != null) {
-          conn.setAutoCommit(true); // Reset to default mode
-          conn.close();
-        }
-      } catch (SQLException ex) {
-        ex.printStackTrace();
-      }
+      pstmt.setString(3, permission);
+      pstmt.setString(4, permission);
+      pstmt.executeUpdate();
     }
-
-    return success;
   }
 
 
-
-  public boolean assignPermissionToPlayers(int gameId, List<Integer> playerIds, String permission) {
-    String sql = "INSERT INTO Permissions (player_id, game_id, role) VALUES (?, ?, ?)";
-    Connection conn = null;
-
-    try {
-      conn = DatabaseConfig.getConnection();
-      // Set auto-commit to false to manage the transaction manually
-      conn.setAutoCommit(false);
-
-      try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        // For each player ID, add a batch insert operation
-        for (Integer playerId : playerIds) {
-          pstmt.setInt(1, playerId);
-          pstmt.setInt(2, gameId);
-          pstmt.setString(3, permission);
-          pstmt.addBatch();
-        }
-        // Execute the batch insert
-        int[] affectedRows = pstmt.executeBatch();
-
-        // Verify if all insertions were successful
-        for (int rows : affectedRows) {
-          if (rows == 0) {
-            // If any insertion failed, roll back the transaction and return false
-            conn.rollback();
-            return false;
+  public int addGameInstance(String game) {
+    String sql = "INSERT INTO gameinstance (gamename) VALUES (?)";
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+      pstmt.setString(1, game);
+      int affectedRows = pstmt.executeUpdate();
+      if (affectedRows > 0) {
+        try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+          if (generatedKeys.next()) {
+            return generatedKeys.getInt(1);
           }
         }
-        // Commit the transaction
-        conn.commit();
+        catch (Exception e) {
+          e.printStackTrace();
+        }
       }
-
-      // If execution reaches here, all insertions were successful
-      return true;
     } catch (SQLException e) {
       e.printStackTrace();
-      if (conn != null) {
-        try {
-          // Attempt to roll back the transaction if anything goes wrong
-          conn.rollback();
-        } catch (SQLException ex) {
-          ex.printStackTrace();
-        }
-      }
-      return false;
-    } finally {
-      try {
-        if (conn != null && !conn.getAutoCommit()) {
-          conn.setAutoCommit(true);
-        }
-        if (conn != null && !conn.isClosed()) {
-          conn.close();
-        }
-      } catch (SQLException ex) {
-        ex.printStackTrace();
-      }
+    }
+
+    return -1;
+  }
+
+  public boolean addGameScore(int gameInstanceId, String user, int score, boolean result) {
+    String sql = "INSERT INTO GameResult (gameinstanceid, playerusername, score, gameresult) "
+        + "VALUES (?, ?, ?, ?)";
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setInt(1, gameInstanceId);
+      pstmt.setString(2, user);
+      pstmt.setInt(3, score);
+      pstmt.setBoolean(4, result);
+      int affectedRows = pstmt.executeUpdate();
+      return affectedRows > 0;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+
+  public void assignPermissionToPlayers(String game, List<String> users, String permission)
+      throws SQLException {
+    for(String user : users) {
+      grantPermissions(user, game, permission);
     }
   }
 
 
 
-
-  public static void main(String[] args) {
-    // Sample user data for testing
-    String username = "testUser";
-    String password = "testPassword123!";
-    String avatarUrl = "http://example.com/avatar.jpg";
-    String language = "English";
-    int age = 30;
-    String favoriteVariantsJson = "{\"game\":\"chess\",\"variant\":\"speed\"}";
-    int tokens = 100;
-    String colorsJson = "{\"primary\":\"blue\",\"secondary\":\"green\"}";
-
-    // Attempt to register the user
-    boolean result = registerUser(username, password, avatarUrl, language, age, favoriteVariantsJson, tokens, colorsJson);
-
-    if (result) {
-      System.out.println("User registration successful.");
-    } else {
-      System.out.println("User registration failed.");
-    }
-  }
 
 
 

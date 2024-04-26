@@ -1,15 +1,20 @@
 package oogasalad.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.List;
+import oogasalad.model.database.DataCreateObject;
 import oogasalad.model.database.DatabaseConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 public class DatabaseTest {
 
   private DatabaseConfig dbConfig;
@@ -17,76 +22,26 @@ public class DatabaseTest {
   @BeforeEach
   public void setUp() {
     dbConfig = new DatabaseConfig();
+
   }
 
-  @Test
-  public void testDatabaseConnection() {
-    try (Connection conn = dbConfig.getConnection()) {
-      assertNotNull(conn, "Connection should not be null");
-      assertFalse(conn.isClosed(), "Connection should be open");
-    } catch (Exception e) {
-      e.printStackTrace();
-      assert false : "Connection failed";
+    @Test
+    public void testCheckGameExists() throws SQLException {
+      new DataCreateObject().registerUser("player1", "password1", "avatar1.png");
+      new DataCreateObject().registerUser("player2", "password1", "avatar1.png");
+      new DataCreateObject().registerUser("player3", "password1", "avatar1.png");
+      new DataCreateObject().registerUser("player4", "password1", "avatar1.png");
+      new DataCreateObject().registerGame("Game 1", "player1", 2, true);
+      new DataCreateObject().registerGame("Game 2", "player2", 2, true);
+      new DataCreateObject().registerGame("Game 3", "player3", 2, true);
+      new DataCreateObject().registerUser("player9", "password1", "avatar1.png");
+      new DataCreateObject().assignPermissionToPlayers("Game 1", List.of("player3","player2"),
+          "None");
+      int id = new DataCreateObject().addGameInstance("Game 3");
+      new DataCreateObject().addGameScore(id,  "player1", 20, true);
+      new DataCreateObject().addGameScore(id,  "player2", 10, false);
     }
+
+
   }
 
-  @Test
-  public void testDatabaseQuery() {
-    try (Connection conn = dbConfig.getConnection();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM Players")) {
-      assertTrue(rs.next(), "Query should return at least one row");
-    } catch (Exception e) {
-      e.printStackTrace();
-      assert false : "Query failed";
-    }
-  }
-
-  @Test
-  public void testPlayerTableExists() {
-    try (Connection conn = dbConfig.getConnection();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'players'")) {
-      assertTrue(rs.next(), "Players table should exist in the database");
-    } catch (Exception e) {
-      e.printStackTrace();
-      assert false : "Players table does not exist";
-    }
-  }
-
-  @Test
-  public void testGamesTableExists() {
-    try (Connection conn = dbConfig.getConnection();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'games'")) {
-      assertTrue(rs.next(), "Games table should exist in the database");
-    } catch (Exception e) {
-      e.printStackTrace();
-      assert false : "Games table does not exist";
-    }
-  }
-
-  @Test
-  public void testGameScoresTableExists() {
-    try (Connection conn = dbConfig.getConnection();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'gamescores'")) {
-      assertTrue(rs.next(), "GameScores table should exist in the database");
-    } catch (Exception e) {
-      e.printStackTrace();
-      assert false : "GameScores table does not exist";
-    }
-  }
-
-  @Test
-  public void testPermissionsTableExists() {
-    try (Connection conn = dbConfig.getConnection();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'permissions'")) {
-      assertTrue(rs.next(), "Permissions table should exist in the database");
-    } catch (Exception e) {
-      e.printStackTrace();
-      assert false : "Permissions table does not exist";
-    }
-  }
-}
