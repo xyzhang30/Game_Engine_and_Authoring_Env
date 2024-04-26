@@ -4,6 +4,7 @@ import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.GameController;
 
 public class NonGameSceneManager extends SceneManager {
+
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
   private final String helpInstructionPath = "data/scene_elements/helpInstructionElements.xml";
@@ -54,7 +55,7 @@ public class NonGameSceneManager extends SceneManager {
    * @param selectedTheme theme selected by user
    */
   void changeTheme(ThemeType selectedTheme) {
-    sceneElementStyler.changeTheme(selectedTheme);
+    getSceneElementStyler().changeTheme(selectedTheme);
   }
 
 }

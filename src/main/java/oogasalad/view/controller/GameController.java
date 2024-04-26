@@ -12,9 +12,9 @@ import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
 import oogasalad.view.scene_management.scene_managers.AnimationManager;
-import oogasalad.view.scene_management.GameTitleParser;
+import oogasalad.view.scene_management.element_parsers.GameTitleParser;
 import oogasalad.view.scene_management.scene_managers.GameSceneManager;
-import oogasalad.view.GameWindow;
+import oogasalad.view.scene_management.GameWindow;
 
 import oogasalad.view.visual_elements.CompositeElement;
 import org.apache.logging.log4j.LogManager;

@@ -1,4 +1,4 @@
-package oogasalad.view;
+package oogasalad.view.scene_management;
 
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -20,8 +20,7 @@ public class GameWindow {
   private final NonGameSceneManager nonGameSceneManager;
 
   /**
-   * Constructs a `GameWindow` instance and sets the scene to the main menu. A new stage is created
-   * for displaying the game window.
+   * Constructs a `GameWindow` instance. A new stage is created for displaying the game window.
    * <p>
    * This constructor does not require any parameters and uses the primary screen dimensions for
    * initializing the game window.
@@ -36,11 +35,7 @@ public class GameWindow {
   }
 
   /**
-   * Constructs a `GameWindow` instance with the given stage and sets the scene to the title
-   * screen.
-   * <p>
-   * This constructor initializes a `GameController` with the primary screen dimensions and sets the
-   * scene to the title screen of the game.
+   * Constructs a `GameWindow` instance with the given stage.
    *
    * @param stage The stage to be used for displaying the game window.
    */

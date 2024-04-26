@@ -1,4 +1,4 @@
-package oogasalad.view.scene_management;
+package oogasalad.view.scene_management.scene_element;
 
 import java.io.FileInputStream;
 import java.io.IOException;

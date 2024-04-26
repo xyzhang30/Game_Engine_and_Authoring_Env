@@ -10,7 +10,7 @@ import oogasalad.view.controller.GameController;
 import oogasalad.view.scene_management.scene_element.GameStatusManager;
 import oogasalad.view.scene_management.scene_element.SceneElementFactory;
 import oogasalad.view.scene_management.scene_element.SceneElementHandler;
-import oogasalad.view.scene_management.SceneElementParser;
+import oogasalad.view.scene_management.element_parsers.SceneElementParser;
 import oogasalad.view.scene_management.scene_element.SceneElementStyler;
 import org.xml.sax.SAXException;
 
@@ -66,6 +66,15 @@ public class SceneManager {
    */
   public Pane getRoot() {
     return root;
+  }
+
+  /**
+   * Getter for sceneElementStyler, used to change stylesheets
+   *
+   * @return instance of 'SceneElementStyler'
+   */
+  SceneElementStyler getSceneElementStyler() {
+    return sceneElementStyler;
   }
 
   /**
