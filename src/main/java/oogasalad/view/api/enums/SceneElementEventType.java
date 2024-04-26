@@ -23,5 +23,8 @@ public enum SceneElementEventType {
   SET_SCORE,
   CHANGE_THEME,
   NEW_GAME_WINDOW,
-  HELP
+  HELP,
+  SET_ENGLISH,
+  SET_SPANISH,
+  SET_FRENCH,
 }

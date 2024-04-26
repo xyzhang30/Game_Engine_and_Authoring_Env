@@ -8,7 +8,7 @@
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.3</y_layout_factor>
     <style>title-button</style>
-    <event>START_MENU</event>
+    <event>SET_ENGLISH</event>
   </node>
 
   <node>
@@ -20,7 +20,7 @@
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.5</y_layout_factor>
     <style>title-button</style>
-    <event>START_AUTHORING</event>
+    <event>SET_SPANISH</event>
   </node>
 
   <node>
@@ -32,7 +32,7 @@
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.7</y_layout_factor>
     <style>title-button</style>
-    <event>HELP</event>
+    <event>SET_FRENCH</event>
   </node>
 
   <node>

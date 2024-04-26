@@ -88,6 +88,7 @@ public class SceneElementHandler {
     addGamePlayChangeEventsToMap();
     addStrikingEventsToMap();
     addGameManagementEventsToMap();
+    addPreferenceEventsToMap();
   }
 
   private void addGamePlayChangeEventsToMap() {
@@ -104,8 +105,14 @@ public class SceneElementHandler {
     eventMap.put(SceneElementEventType.START_GAME, this::createStartGameHandler);
     eventMap.put(SceneElementEventType.NEXT_ROUND, this::createNextRoundHandler);
     eventMap.put(SceneElementEventType.NEW_GAME_WINDOW, this::createNewGameHandler);
-    eventMap.put(SceneElementEventType.CHANGE_THEME, this::createThemeChangeHandler);
     eventMap.put(SceneElementEventType.HELP, this::createHelpInstructionsHandler);
+  }
+
+  private void addPreferenceEventsToMap() {
+    eventMap.put(SceneElementEventType.CHANGE_THEME, this::createThemeChangeHandler);
+    eventMap.put(SceneElementEventType.SET_ENGLISH, this::createSetEnglishHandler);
+    eventMap.put(SceneElementEventType.SET_SPANISH, this::createSetSpanishHandler);
+    eventMap.put(SceneElementEventType.SET_FRENCH, this::createSetFrenchHandler);
   }
 
   private void addStrikingEventsToMap() {
@@ -313,5 +320,14 @@ public class SceneElementHandler {
     node.setOnMouseClicked(e -> {
       sceneManager.createHelpInstructions();
     });
+  }
+
+  private void createSetEnglishHandler(Node node) {
+  }
+
+  private void createSetSpanishHandler(Node node) {
+  }
+
+  private void createSetFrenchHandler(Node node) {
   }
 }
