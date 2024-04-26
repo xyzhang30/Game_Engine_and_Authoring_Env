@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
@@ -13,7 +14,7 @@ import oogasalad.view.controller.GameController;
 import oogasalad.view.scene_management.element_parsers.SceneElementParser;
 import oogasalad.view.scene_management.scene_element.GameStatusManager;
 import oogasalad.view.scene_management.scene_element.SceneElementFactory;
-import oogasalad.view.scene_management.scene_element.SceneElementHandler;
+import oogasalad.view.scene_management.scene_element.scene_element_handler.SceneElementHandler;
 import oogasalad.view.scene_management.scene_element.SceneElementStyler;
 import oogasalad.view.visual_elements.CompositeElement;
 import org.xml.sax.SAXException;
@@ -106,6 +107,7 @@ public class SceneManager {
   public void createMenuScene() {
     resetRoot();
     root.getChildren().add(createSceneElements(menuSceneElementsPath));
+    AnchorPane pane = (AnchorPane)root.getChildren().get(0);
   }
 
   /**

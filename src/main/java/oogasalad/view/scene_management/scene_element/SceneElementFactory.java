@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import oogasalad.view.api.enums.SceneElementType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.XMLTags;
+import oogasalad.view.scene_management.scene_element.scene_element_handler.SceneElementHandler;
 import oogasalad.view.visual_elements.Arrow;
 
 /**
@@ -186,14 +187,14 @@ public class SceneElementFactory {
     String style = parameters.get(XMLTags.STYLE.name().toLowerCase());
     if (style != null) {
       sceneElementStyler.style(node, style);
-    } else {
     }
   }
 
   private void handleEvent(Node node, Map<String, String> parameters) {
     String event = parameters.get(XMLTags.EVENT.name().toLowerCase());
+    String eventType = parameters.get(XMLTags.EVENT_TYPE.name().toLowerCase());
     if (event != null) {
-      sceneElementHandler.createElementHandler(node, event);
+      sceneElementHandler.createElementHandler(node, eventType, event);
     }
   }
 

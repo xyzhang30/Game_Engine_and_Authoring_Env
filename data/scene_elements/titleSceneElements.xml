@@ -8,6 +8,7 @@
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.3</y_layout_factor>
     <style>title-button</style>
+    <event_type>CHANGE_SCENE</event_type>
     <event>START_MENU</event>
   </node>
 
@@ -20,6 +21,7 @@
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.5</y_layout_factor>
     <style>title-button</style>
+    <event_type>CHANGE_SCENE</event_type>
     <event>START_AUTHORING</event>
   </node>
 
@@ -32,6 +34,7 @@
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.7</y_layout_factor>
     <style>title-button</style>
+    <event_type>CHANGE_SCENE</event_type>
     <event>HELP</event>
   </node>
 
@@ -53,6 +56,7 @@
     <x_layout_factor>0.03</x_layout_factor>
     <y_layout_factor>0.9</y_layout_factor>
     <style>game-button</style>
+    <event_type>CHANGE_SCENE</event_type>
     <event>START_LANGUAGE</event>
   </node>
 </scene_elements>
