@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import oogasalad.model.api.GameBuilder;
 import oogasalad.model.api.data.GameData;
-import oogasalad.model.api.data.KeyPreferences;
 import oogasalad.model.api.exception.InvalidJSONDataException;
 import oogasalad.model.gamebuilder.GameObjectsBuilder;
 import oogasalad.model.gamebuilder.KeysBuilder;

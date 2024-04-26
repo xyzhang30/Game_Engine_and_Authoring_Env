@@ -368,16 +368,15 @@
       {
         "first_id": 8,
         "second_id": 9,
-        "command": [
+        "command":
           {
             "AdvanceRoundCommand": []
           }
-        ]
       },
       {
         "first_id": 6,
         "second_id": 8,
-        "command": [
+        "command":
           {
             "LastStaticStateCommand": [],
             "SetDelayedPointsCommand": [
@@ -385,7 +384,6 @@
               1
             ]
           }
-        ]
       }
     ],
     "turn_policy": "StandardTurnPolicy",
@@ -407,5 +405,15 @@
     "rank_comparator": "LowestScoreComparator",
     "static_checker": {"VelocityStaticChecker": []
     }
+  },
+  "keys" : {
+    "angle_left" : "LEFT",
+    "angle_right" : "RIGHT",
+    "power_up" : "UP",
+    "power_down" : "DOWN",
+    "controllable_left" : "A",
+    "controllable_right" : "D",
+    "controllable_up" : "W",
+    "controllable_down" : "S"
   }
 }
