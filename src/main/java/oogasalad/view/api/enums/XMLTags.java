@@ -19,5 +19,6 @@ public enum XMLTags {
   ARROW_WIDTH_OFFSET,
   ARROW_HEIGHT_OFFSET,
   STYLE,
+  EVENT_TYPE,
   EVENT,
 }

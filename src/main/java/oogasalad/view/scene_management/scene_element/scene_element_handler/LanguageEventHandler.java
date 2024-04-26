@@ -40,7 +40,7 @@ public class LanguageEventHandler {
    * @param event The event type as a string that specifies the event to handle.
    */
   public void createElementHandler(Node node, String event) {
-    createLanguageHandler(node, languageMap.get(event));
+    createLanguageHandler(node, languageMap.get(SceneElementEvent.valueOf(event)));
   }
 
   private void createLanguageMap() {
@@ -51,6 +51,7 @@ public class LanguageEventHandler {
   }
 
   private void createLanguageHandler(Node node, SupportedLanguage language) {
+    System.out.println(language);
     node.setOnMouseClicked(e -> {
       sceneManager.setLanguage(language);
       sceneManager.createTitleScene();

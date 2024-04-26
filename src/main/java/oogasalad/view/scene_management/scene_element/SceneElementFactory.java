@@ -193,8 +193,9 @@ public class SceneElementFactory {
 
   private void handleEvent(Node node, Map<String, String> parameters) {
     String event = parameters.get(XMLTags.EVENT.name().toLowerCase());
+    String eventType = parameters.get(XMLTags.EVENT_TYPE.name().toLowerCase());
     if (event != null) {
-      sceneElementHandler.createElementHandler(node, event);
+      sceneElementHandler.createElementHandler(node, eventType, event);
     }
   }
 
