@@ -221,11 +221,11 @@ public class GameController {
   }
 
   public void openLogin(String username, String password){
-    setSceneToTitle();
+    sceneManager.createTitleScene(); //create player scene where the players currently added are shown and
   }
 
   public void openCreateUser(String username, String password) {
-    setSceneToTitle();
+    sceneManager.createTitleScene();
     //save username
     //save password
   }

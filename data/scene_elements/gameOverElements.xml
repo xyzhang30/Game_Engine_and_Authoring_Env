@@ -42,4 +42,5 @@
   <style>score-list</style>
   <event>SET_SCORE</event>
 </node>
+
   </scene_elements>
