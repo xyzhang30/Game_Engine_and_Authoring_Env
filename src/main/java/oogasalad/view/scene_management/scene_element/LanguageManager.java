@@ -1,6 +1,5 @@
 package oogasalad.view.scene_management.scene_element;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend.Prop;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,7 +12,7 @@ import oogasalad.view.api.enums.SupportedLanguage;
  *
  * @author Jordan Haytaian
  */
-public class TextPropertiesManager {
+public class LanguageManager {
 
   private final Properties englishProperties;
   private final Properties spanishProperties;
@@ -32,7 +31,7 @@ public class TextPropertiesManager {
    * Constructor creates properties from property file paths and maps enums to corresponding
    * properties
    */
-  public TextPropertiesManager() {
+  public LanguageManager() {
     englishProperties = loadProperties(englishPropertiesPath);
     spanishProperties = loadProperties(spanishPropertiesPath);
     frenchProperties = loadProperties(frenchPropertiesPath);

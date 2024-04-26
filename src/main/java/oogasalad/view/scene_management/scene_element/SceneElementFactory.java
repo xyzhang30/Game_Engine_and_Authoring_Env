@@ -14,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.api.enums.SceneElementType;
+import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.XMLTags;
 import oogasalad.view.visual_elements.Arrow;
 
@@ -27,7 +28,7 @@ public class SceneElementFactory {
 
   private final SceneElementStyler sceneElementStyler;
   private final SceneElementHandler sceneElementHandler;
-  private final TextPropertiesManager textPropertiesManager;
+  private final LanguageManager languageManager;
   private final double screenWidth;
   private final double screenHeight;
   private Map<SceneElementType, BiConsumer<Node, Map<String, String>>> elementConfigurationMap;
@@ -46,7 +47,7 @@ public class SceneElementFactory {
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
     this.sceneElementHandler = sceneElementHandler;
-    textPropertiesManager = new TextPropertiesManager();
+    languageManager = new LanguageManager();
     createElementConfigurationMap();
   }
 
@@ -56,7 +57,8 @@ public class SceneElementFactory {
    * @param parameterList maps parameter name to value
    * @return container for all scene elements
    */
-  public Pane createSceneElements(List<Map<String, String>> parameterList) {
+  public Pane createSceneElements(List<Map<String, String>> parameterList,
+      SupportedLanguage language) {
     AnchorPane sceneElementPane = new AnchorPane();
     sceneElementPane.setPrefWidth(screenWidth);
     sceneElementPane.setPrefHeight(screenHeight);
@@ -64,8 +66,7 @@ public class SceneElementFactory {
     for (Map<String, String> parameterMap : parameterList) {
 
       try {
-        String className = parameterMap.get(
-            textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.CLASS_TAG.name()));
+        String className = parameterMap.get(XMLTags.CLASS.name().toLowerCase());
         Class<?> classObj = Class.forName(className);
         Object obj = classObj.getDeclaredConstructor().newInstance();
         Node node = (Node) obj;
@@ -88,85 +89,82 @@ public class SceneElementFactory {
 
   private void configureRectangle(Node node, Map<String, String> parameters) {
     double widthFactor = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.WIDTH_FACTOR_TAG.name()));
+        XMLTags.WIDTH_FACTOR.name().toLowerCase());
     double heightFactor = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.HEIGHT_FACTOR_TAG.name()));
+        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
     Rectangle rectangle = (Rectangle) node;
     rectangle.setWidth(widthFactor * screenWidth);
     rectangle.setHeight(heightFactor * screenHeight);
   }
 
   private void configureText(Node node, Map<String, String> parameters) {
-    String displayText = parameters.get(
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.TEXT_TAG.name()));
+    String textTag = parameters.get(XMLTags.TEXT.name().toLowerCase());
     double widthFactor = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.WIDTH_FACTOR_TAG.name()));
+        XMLTags.WIDTH_FACTOR.name().toLowerCase());
     Text text = (Text) node;
     if (widthFactor != 0) {
       text.setWrappingWidth(widthFactor * screenWidth);
     }
-    if (displayText != null) {
-      text.setText(displayText);
+    if (textTag != null) {
+      String translatedText = languageManager.getText(textTag);
+      text.setText(translatedText);
     }
   }
 
   private void configureArrow(Node node, Map<String, String> parameters) {
     double xLayoutFactor = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.X_LAYOUT_FACTOR_TAG.name()));
+        XMLTags.X_LAYOUT_FACTOR.name().toLowerCase());
     double yLayoutFactor = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.Y_LAYOUT_FACTOR_TAG.name()));
+        XMLTags.Y_LAYOUT_FACTOR.name().toLowerCase());
     double stemWidth = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.STEM_WIDTH_TAG.name()));
-    double stemHeight = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.STEM_HEIGHT_TAG.name()));
+        XMLTags.Y_LAYOUT_FACTOR.name().toLowerCase());
+    double stemHeight = parseDoubleParameter(parameters, XMLTags.STEM_HEIGHT.name().toLowerCase());
     double arrowWidthOffset = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG,
-            XMLTags.ARROW_WIDTH_OFFSET_TAG.name()));
+        XMLTags.ARROW_WIDTH_OFFSET.name().toLowerCase());
     double arrowHeightOffset = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG,
-            XMLTags.ARROW_HEIGHT_OFFSET_TAG.name()));
+        XMLTags.ARROW_HEIGHT_OFFSET.name().toLowerCase());
 
     Arrow arrow = (Arrow) node;
 
-    arrow.setArrowDimensions(xLayoutFactor * screenWidth, yLayoutFactor * screenHeight, stemWidth,
-        stemHeight, arrowWidthOffset, arrowHeightOffset);
+    arrow.setArrowDimensions(xLayoutFactor * screenWidth, yLayoutFactor * screenHeight,
+        stemWidth, stemHeight, arrowWidthOffset, arrowHeightOffset);
   }
 
   private void configureButton(Node node, Map<String, String> parameters) {
-    String displayText = parameters.get(
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.TEXT_TAG.name()));
+    String textTag = parameters.get(XMLTags.TEXT.name().toLowerCase());
     double widthFactor = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.WIDTH_FACTOR_TAG.name()));
+        XMLTags.WIDTH_FACTOR.name().toLowerCase());
     double heightFactor = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.HEIGHT_FACTOR_TAG.name()));
+        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
 
     Button button = (Button) node;
-    if (displayText != null) {
-      button.setText(displayText);
+    if (textTag != null) {
+      String translatedText = languageManager.getText(textTag);
+      button.setText(translatedText);
     }
     button.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
   }
 
   private void configureComboBox(Node node, Map<String, String> parameters) {
-    String displayText = parameters.get(
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.TEXT_TAG.name()));
+    String textTag = parameters.get(XMLTags.TEXT.name().toLowerCase());
     double widthFactor = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.WIDTH_FACTOR_TAG.name()));
+        XMLTags.WIDTH_FACTOR.name().toLowerCase());
     double heightFactor = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.HEIGHT_FACTOR_TAG.name()));
+        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
 
     ComboBox<String> comboBox = (ComboBox<String>) node;
-    if (displayText != null) {
-      comboBox.setPromptText(displayText);
+    if (textTag != null) {
+      String translatedText = languageManager.getText(textTag);
+      comboBox.setPromptText(translatedText);
     }
     comboBox.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
   }
 
   private void configureListView(Node node, Map<String, String> parameters) {
     double widthFactor = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.WIDTH_FACTOR_TAG.name()));
+        XMLTags.WIDTH_FACTOR.name().toLowerCase());
     double heightFactor = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.HEIGHT_FACTOR_TAG.name()));
+        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
 
     ListView<String> listView = (ListView<String>) node;
     listView.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
@@ -175,24 +173,22 @@ public class SceneElementFactory {
 
   private void handleLayout(Node node, Map<String, String> parameters) {
     double xLayoutFactor = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.X_LAYOUT_FACTOR_TAG.name()));
+        XMLTags.X_LAYOUT_FACTOR.name().toLowerCase());
     double yLayoutFactor = parseDoubleParameter(parameters,
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.Y_LAYOUT_FACTOR_TAG.name()));
+        XMLTags.Y_LAYOUT_FACTOR.name().toLowerCase());
     node.setLayoutX(xLayoutFactor * screenWidth);
     node.setLayoutY(yLayoutFactor * screenHeight);
   }
 
   private void handleStyle(Node node, Map<String, String> parameters) {
-    String style = parameters.get(
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.STYLE_TAG.name()));
+    String style = parameters.get(XMLTags.STYLE.name().toLowerCase());
     if (style != null) {
       sceneElementStyler.style(node, style);
     }
   }
 
   private void handleEvent(Node node, Map<String, String> parameters) {
-    String event = parameters.get(
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.EVENT_TAG.name()));
+    String event = parameters.get(XMLTags.EVENT.name().toLowerCase());
     if (event != null) {
       sceneElementHandler.createElementHandler(node, event);
     }
@@ -217,8 +213,7 @@ public class SceneElementFactory {
   }
 
   private void executeConfigurationMethod(Node node, Map<String, String> parameters) {
-    String type = parameters.get(
-        textPropertiesManager.getText(TextPropertyType.XMLTAG, XMLTags.TYPE_TAG.name()));
+    String type = parameters.get(XMLTags.TYPE.name().toLowerCase());
     if (type != null) {
       BiConsumer<Node, Map<String, String>> configurationMethod = elementConfigurationMap.get(
           SceneElementType.valueOf(type));
