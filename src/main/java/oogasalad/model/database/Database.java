@@ -148,7 +148,8 @@ public class Database implements DatabaseApi {
   public boolean registerUser(String username, String password, String avatarUrl) {
     try (Connection conn = DatabaseConfig.getConnection()) {
       String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-      String sql = "INSERT INTO Players (username, password, avatarurl) VALUES (?, ?, ?)";
+      String sql = "INSERT INTO Players (username, password, avatarurl) VALUES (?, ?, ?) ON "
+          + "CONFLICT DO NOTHING";
       try (PreparedStatement stmt = conn.prepareStatement(sql)) {
         stmt.setString(1, username);
         stmt.setString(2, hashedPassword);
@@ -202,7 +203,8 @@ public class Database implements DatabaseApi {
   @Override
   public boolean registerGame(String gameName, String ownerName, int numPlayers,
       boolean publicOrPrivate) {
-    String sql = "INSERT INTO Games (gamename, owner, numplayers, public) VALUES (?, ?, ?, ?)";
+    String sql = "INSERT INTO Games (gamename, owner, numplayers, public) VALUES (?, ?, ?, ?) ON "
+        + "CONFLICT DO NOTHING";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, gameName);

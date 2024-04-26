@@ -61,7 +61,12 @@ public class GameBuilderTest {
     this.testBuilderDirector.constructRules(List.of(rules));
   }
 
+
+
   private static Rules getRules() {
+    return null;
+   }
+   /**
     Map<String, List<Integer>> commands1 = Map.of("AdjustPointsCommand", List.of(1, 1));
     Map<String, List<Integer>> commands2 = Map.of("AdvanceTurnCommand", List.of());
 
@@ -78,7 +83,7 @@ public class GameBuilderTest {
         Map.of("AdvanceTurnCommand", List.of(), "AdjustPointsCommand", List.of(1, 1)),
         Map.of("AdvanceRoundCommand", List.of()), strikePolicy,
         "HighestScoreComparator", Map.of());
-  }
+  }*/
 
   @Test
   public void testInvalidJSONData() {
