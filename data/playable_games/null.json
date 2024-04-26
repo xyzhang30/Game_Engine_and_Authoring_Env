@@ -1,0 +1,93 @@
+{
+  "gameName" : null,
+  "game_objects" : [ {
+    "properties" : [ "visible" ],
+    "mass" : 0.0,
+    "position" : {
+      "x_position" : 835.4000244140625,
+      "y_position" : 497.79998779296875
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 66.0,
+      "y_dimension" : 66.0
+    },
+    "color" : null,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : null,
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "gameobject_id" : 2
+  }, {
+    "properties" : [ "visible" ],
+    "mass" : 0.0,
+    "position" : {
+      "x_position" : 812.2000122070312,
+      "y_position" : 641.5999755859375
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 106.0,
+      "y_dimension" : 56.0
+    },
+    "color" : null,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : null,
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "gameobject_id" : 1
+  } ],
+  "players" : [ {
+    "player_id" : 0,
+    "my_strikeable" : [ ],
+    "my_scoreable" : [ ],
+    "my_controllable" : [ ]
+  } ],
+  "variables" : [ {
+    "global" : {
+      "max_turns" : 0,
+      "max_rounds" : 0
+    },
+    "player" : {
+      "strokes" : 0,
+      "finished" : 0
+    }
+  } ],
+  "rules" : {
+    "collisions" : [ ],
+    "turn_policy" : "StandardTurnPolicy",
+    "round_policy" : {
+      "AllPlayersCompletedRoundCondition" : [ ]
+    },
+    "win_condition" : {
+      "AllPlayersCompletedRoundCondition" : [ ]
+    },
+    "advance_turn" : {
+      "AdvanceRoundCommand" : [ ]
+    },
+    "advance_round" : {
+      "AdvanceTurnCommand" : [ ]
+    },
+    "strike_policy" : "DoNothingStrikePolicy",
+    "rank_comparator" : "HighestScoreComparator",
+    "static_checker" : {
+      "VelocityStaticChecker" : [ ]
+    }
+  },
+  "keys" : {
+    "angle_left" : "LEFT",
+    "angle_right" : "RIGHT",
+    "power_up" : "UP",
+    "power_down" : "DOWN",
+    "controllable_left" : "A",
+    "controllable_right" : "D",
+    "controllable_up" : "W",
+    "controllable_down" : "S"
+  }
+}

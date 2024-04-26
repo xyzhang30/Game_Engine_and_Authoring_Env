@@ -93,7 +93,6 @@ public class AuthoringController {
   public void writeRules(Map<String, Map<String, List<Integer>>> commandsConditions, Map<String,
       String> policies) throws InCompleteRulesAuthoringException{
     List<CollisionRule> collisions = new ArrayList<>();
-    //TODO: implement collisions
     String turnPolicy = policies.get("turnpolicy");
     Map<String, List<Integer>> roundPolicy = commandsConditions.get("roundpolicy");
     Map<String, List<Integer>> winCondition = commandsConditions.get("wincondition");

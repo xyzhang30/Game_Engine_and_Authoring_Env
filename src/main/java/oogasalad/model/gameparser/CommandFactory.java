@@ -25,8 +25,8 @@ public class CommandFactory {
       throws InvalidCommandException {
     try {
       Class<?> clazz = Class.forName(BASE_PATH + COMMAND_PATH + cmdName);
-      Constructor<?> constructor = clazz.getConstructor(List.class, Map.class);
-      ExpectedParamNumber annotation = constructor.getAnnotation(ExpectedParamNumber.class);
+//      Constructor<?> constructor = clazz.getConstructor(List.class, Map.class);
+      ExpectedParamNumber annotation = clazz.getAnnotation(ExpectedParamNumber.class);
 
       System.out.println("is annotation null?: " + annotation);
       if (annotation != null) {
