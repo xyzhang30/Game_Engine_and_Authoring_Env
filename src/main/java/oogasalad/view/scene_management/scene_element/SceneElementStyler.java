@@ -31,6 +31,12 @@ public class SceneElementStyler {
     addStyleSheetToRoot(defaultPath);
   }
 
+  /**
+   * Changes theme by changing root's style sheet; gets style sheet by retrieving mapping to
+   * specified theme enum
+   *
+   * @param selectedTheme represents user selected theme
+   */
   public void changeTheme(ThemeType selectedTheme) {
     addStyleSheetToRoot(themePathMap.get(selectedTheme));
   }
