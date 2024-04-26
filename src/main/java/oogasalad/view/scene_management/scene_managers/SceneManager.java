@@ -107,7 +107,6 @@ public class SceneManager {
   public void createMenuScene() {
     resetRoot();
     root.getChildren().add(createSceneElements(menuSceneElementsPath));
-    AnchorPane pane = (AnchorPane)root.getChildren().get(0);
   }
 
   /**
