@@ -2,6 +2,7 @@ package oogasalad.view.controller;
 
 import java.util.List;
 import javafx.collections.ObservableList;
+import javafx.scene.Scene;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.exception.InvalidImageException;
@@ -13,9 +14,9 @@ import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
 import oogasalad.view.scene_management.scene_managers.AnimationManager;
 import oogasalad.view.scene_management.element_parsers.GameTitleParser;
-import oogasalad.view.scene_management.scene_managers.GameSceneManager;
 import oogasalad.view.scene_management.GameWindow;
 
+import oogasalad.view.scene_management.scene_managers.SceneManager;
 import oogasalad.view.visual_elements.CompositeElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,7 +30,7 @@ import org.apache.logging.log4j.Logger;
 public class GameController {
 
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
-  private final GameSceneManager gameSceneManager;
+  private final SceneManager sceneManager;
   private final AnimationManager animationManager;
   private final GameTitleParser gameTitleParser;
   private GameEngine gameEngine;
@@ -51,11 +52,18 @@ public class GameController {
    * @param height The height of the screen for the game.
    */
   public GameController(double width, double height) {
-    gameSceneManager = new GameSceneManager(this, width, height);
+    sceneManager = new SceneManager(this, width, height);
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
     ableToStrike = true;
     maxVelocity = 1000;
+  }
+
+  /**
+   * Getter for scene to display on stage
+   */
+  public Scene getScene() {
+    return sceneManager.getScene();
   }
 
   /**
@@ -80,7 +88,7 @@ public class GameController {
    * </p>
    */
   public void resumeGame() {
-    gameSceneManager.removePauseSheen();
+    sceneManager.removePauseSheen();
     animationManager.resumeAnimation();
   }
 
@@ -94,7 +102,8 @@ public class GameController {
    * </p>
    */
   public void openAuthorEnvironment() {
-    AuthoringController newAuthoringController = new AuthoringController(SupportedLanguage.ENGLISH, UITheme.DEFAULT, AuthoringImplementationType.DEFAULT);
+    AuthoringController newAuthoringController = new AuthoringController(SupportedLanguage.ENGLISH,
+        UITheme.DEFAULT, AuthoringImplementationType.DEFAULT);
     newAuthoringController.updateAuthoringScreen();
   }
 
@@ -109,8 +118,8 @@ public class GameController {
     gameEngine = new GameEngine(selectedGame);
     GameRecord gameRecord = gameEngine.restoreLastStaticGameRecord();
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
-    gameSceneManager.makeGameScreen(compositeElement, gameRecord);
-    gameSceneManager.update(gameRecord);
+    sceneManager.makeGameScreen(compositeElement, gameRecord);
+    sceneManager.update(gameRecord);
   }
 
   /**
@@ -147,7 +156,7 @@ public class GameController {
     if (staticState) {
       ableToStrike = true;
     }
-    gameSceneManager.update(gameRecord);
+    sceneManager.update(gameRecord);
     return staticState;
   }
 
