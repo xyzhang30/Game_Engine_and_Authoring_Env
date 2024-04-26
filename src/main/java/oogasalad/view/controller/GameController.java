@@ -1,5 +1,6 @@
 package oogasalad.view.controller;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -212,7 +213,8 @@ public class GameController {
     try {
       List<ViewGameObjectRecord> recordList = gameLoaderView.getViewCollidableInfo();
       return new CompositeElement(recordList);
-    } catch (InvalidShapeException | InvalidImageException e) {
+    } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
+             IllegalAccessException | InvocationTargetException | InvalidImageException e) {
       LOGGER.error(e.getMessage());
       return null;
     }

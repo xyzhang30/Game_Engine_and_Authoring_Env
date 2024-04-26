@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 import oogasalad.model.api.GameBuilder;
 import oogasalad.model.api.data.GameData;
+import oogasalad.model.api.data.KeyPreferences;
 import oogasalad.model.api.exception.InvalidJSONDataException;
 import oogasalad.model.gamebuilder.GameObjectsBuilder;
+import oogasalad.model.gamebuilder.KeysBuilder;
 import oogasalad.model.gamebuilder.PlayersBuilder;
 import oogasalad.model.gamebuilder.RulesBuilder;
 import oogasalad.model.gamebuilder.VariablesBuilder;
@@ -57,6 +59,11 @@ public class BuilderDirector {
   public <T> void constructRules(List<T> fieldData) {
     RulesBuilder rulesBuilder = new RulesBuilder();
     rulesBuilder.buildGameField(gameData, fieldData);
+  }
+
+  public <T> void constructKeys(List<T> fieldData) {
+    KeysBuilder keysBuilder = new KeysBuilder();
+    keysBuilder.buildGameField(gameData, fieldData);
   }
 
   public void writeGame(String fileName) throws InvalidJSONDataException {

@@ -2,8 +2,10 @@ package oogasalad.view.authoring_environment.proxy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.shape.Shape;
@@ -23,6 +25,7 @@ import oogasalad.view.api.enums.CollidableType;
  */
 public class AuthoringProxy {
 
+  private final Map<String, String> keyPreferences = new HashMap<>();
   private final Map<String, Map<String, List<Integer>>> conditionsCommands = new HashMap<>();
   private final Map<String, String> policies = new HashMap<>();
   private final Map<List<Integer>, Map<String, List<Integer>>> interactionMap = new HashMap<>();
@@ -107,6 +110,21 @@ public class AuthoringProxy {
     System.out.println("ALL CONDITIONS:" + conditionsCommands);
   }
 
+  public void addKeyPreference(String keyType, String keyCode){
+    keyPreferences.put(keyType, keyCode);
+    System.out.println("CURRENT KEY PREFS: "+keyPreferences);
+  }
+
+  public boolean keyAlreadyUsed(String key){
+    System.out.println("EXISTING KEYS: "+keyPreferences.values());
+    for (String keyCode : keyPreferences.values()){
+      if (key.equals(keyCode)){
+        return true;
+      }
+    }
+    return false;
+  }
+
   /**
    * Returns the map of game objects.
    *
@@ -140,6 +158,7 @@ public class AuthoringProxy {
       authoringController.writePlayers(playersMap);
       authoringController.writeVariables();
       authoringController.writeGameObjects(gameObjectMap);
+      authoringController.writeKeyPreferences(keyPreferences);
       boolean saveGameSuccess = authoringController.submitGame(gameName);
       if (saveGameSuccess) {
         showSuceessMessage("Game successfully saved!");

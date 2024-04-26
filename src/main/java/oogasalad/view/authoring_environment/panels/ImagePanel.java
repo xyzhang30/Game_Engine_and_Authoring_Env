@@ -29,6 +29,7 @@ public class ImagePanel implements Panel {
   private final String language = "English"; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
 
+
   /**
    * Constructs an ImagePanel with the specified AuthoringProxy, ShapeProxy, and container pane.
    *
@@ -42,7 +43,7 @@ public class ImagePanel implements Panel {
     this.authoringProxy = authoringProxy;
     this.shapeProxy = shapeProxy;
     this.resourceBundle = ResourceBundle.getBundle(
-        RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
+        RESOURCE_FOLDER_PATH + VIEW_PROPERTIES_FOLDER + UI_FILE_PREFIX + language);
     createElements();
     handleEvents();
   }

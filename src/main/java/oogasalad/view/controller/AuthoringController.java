@@ -1,5 +1,6 @@
 package oogasalad.view.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import oogasalad.model.api.data.CollisionRule;
 import oogasalad.model.api.data.Dimension;
 import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.GlobalVariables;
+import oogasalad.model.api.data.KeyPreferences;
 import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.data.PlayerVariables;
 import oogasalad.model.api.data.Position;
@@ -143,4 +145,17 @@ public class AuthoringController {
     builderDirector.constructCollidableObjects(gameObjects);
   }
 
+  public void writeKeyPreferences(Map<String, String> keyPreferences) {
+    String angleLeft = keyPreferences.get("angle_left");
+    String angleRight = keyPreferences.get("angle_right");
+    String powerUp = keyPreferences.get("power_up");
+    String powerDown = keyPreferences.get("power_down");
+    String controllableLeft = keyPreferences.get("controllable_left");
+    String controllableRight = keyPreferences.get("controllable_right");
+    String controllableUp = keyPreferences.get("controllable_up");
+    String controllableDown = keyPreferences.get("controllable_down");
+
+    KeyPreferences keys = new KeyPreferences(angleLeft, angleRight, powerUp, powerDown, controllableLeft, controllableRight, controllableUp, controllableDown);
+    builderDirector.constructKeys(List.of(keys));
+  }
 }
