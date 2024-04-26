@@ -1,11 +1,12 @@
 package oogasalad.view.scene_management.scene_element;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend.Prop;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import oogasalad.view.api.enums.TextPropertyType;
+import oogasalad.view.api.enums.SupportedLanguage;
 
 /**
  * Retrieves Strings from given tags, by retrieving mapping in properties file
@@ -14,11 +15,18 @@ import oogasalad.view.api.enums.TextPropertyType;
  */
 public class TextPropertiesManager {
 
-  private final String englishPropertiesPath = "src/main/resources/view/properties/EnglishText.properties";
+  private final Properties englishProperties;
+  private final Properties spanishProperties;
+  private final Properties frenchProperties;
+  private final Properties xmlTagProperties;
+  Map<SupportedLanguage, Properties> languageMap;
+  private final String englishPropertiesPath =
+      "src/main/resources/view/properties/EnglishText.properties";
+  private final String spanishPropertiesPath =
+      "src/main/resources/view/properties/SpanishText.properties";
+  private final String frenchPropertiesPath =
+      "src/main/resources/view/properties/FrenchText.properties";
   private final String xmlTagPropertiesPath = "src/main/resources/view/properties/XMLTags.properties";
-  Properties englishProperties;
-  Properties xmlTagProperties;
-  Map<TextPropertyType, Properties> propertyMap;
 
   /**
    * Constructor creates properties from property file paths and maps enums to corresponding
@@ -26,19 +34,21 @@ public class TextPropertiesManager {
    */
   public TextPropertiesManager() {
     englishProperties = loadProperties(englishPropertiesPath);
+    spanishProperties = loadProperties(spanishPropertiesPath);
+    frenchProperties = loadProperties(frenchPropertiesPath);
     xmlTagProperties = loadProperties(xmlTagPropertiesPath);
     createPropertyMap();
   }
 
   /**
-   * Retrieves the String text corresponding to the given tag in the given properties file
+   * Retrieves text corresponding to tag in specified language
    *
-   * @param textPropertyType the type of property file to search
-   * @param tag              the tag to search for
-   * @return the String corresponding to the given tag
+   * @param language language of translation
+   * @param tag      tag corresponding to requested text
+   * @return translated String
    */
-  public String getText(TextPropertyType textPropertyType, String tag) {
-    return propertyMap.get(textPropertyType).getProperty(tag);
+  public String getText(SupportedLanguage language, String tag) {
+    return languageMap.get(language).getProperty(tag);
   }
 
   private Properties loadProperties(String filePath) {
@@ -54,8 +64,9 @@ public class TextPropertiesManager {
   }
 
   private void createPropertyMap() {
-    propertyMap = new HashMap<>();
-    propertyMap.put(TextPropertyType.ENGLISH, englishProperties);
-    propertyMap.put(TextPropertyType.XMLTAG, xmlTagProperties);
+    languageMap = new HashMap<>();
+    languageMap.put(SupportedLanguage.ENGLISH, englishProperties);
+    languageMap.put(SupportedLanguage.SPANISH, spanishProperties);
+    languageMap.put(SupportedLanguage.FRENCH, frenchProperties);
   }
 }
