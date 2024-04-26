@@ -37,6 +37,7 @@ public class SceneManager {
   private final String transitionElementsPath = "data/scene_elements/transitionElements.xml";
   private final String gameOverSceneElementsPath = "data/scene_elements/gameOverElements.xml";
   private final String pausePath = "data/scene_elements/pauseElements.xml";
+  private final String helpInstructionPath = "data/scene_elements/helpInstructionElements.xml";
 
 
   /**
@@ -128,6 +129,11 @@ public class SceneManager {
     if (!root.getChildren().contains(pauseElements)) {
       root.getChildren().add(pauseElements);
     }
+  }
+
+  void createHelpInstructions() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(helpInstructionPath));
   }
 
   /**

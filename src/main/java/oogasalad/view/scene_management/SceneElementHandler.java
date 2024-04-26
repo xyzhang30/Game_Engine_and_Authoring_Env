@@ -104,6 +104,7 @@ public class SceneElementHandler {
     eventMap.put(SceneElementEventType.NEXT_ROUND, this::createNextRoundHandler);
     eventMap.put(SceneElementEventType.NEW_GAME_WINDOW, this::createNewGameHandler);
     eventMap.put(SceneElementEventType.CHANGE_THEME, this::createThemeChangeHandler);
+    eventMap.put(SceneElementEventType.HELP, this::createHelpInstructionsHandler);
   }
 
   private void addStrikingEventsToMap() {
@@ -289,7 +290,9 @@ public class SceneElementHandler {
 
   private void setScores(Node node) {
     gameStatusManager.setScoreList((ListView<String>) node);
-    node.setOnMouseClicked(e -> {sceneManager.getRoot().requestFocus();});
+    node.setOnMouseClicked(e -> {
+      sceneManager.getRoot().requestFocus();
+    });
   }
 
   private void createThemeChangeHandler(Node node) {
@@ -303,5 +306,11 @@ public class SceneElementHandler {
 
   private void createNewGameHandler(Node node) {
     node.setOnMouseClicked(e -> gameController.createNewWindow());
+  }
+
+  private void createHelpInstructionsHandler(Node node) {
+    node.setOnMouseClicked(e -> {
+      sceneManager.createHelpInstructions();
+    });
   }
 }

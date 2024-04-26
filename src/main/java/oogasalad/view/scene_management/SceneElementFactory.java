@@ -107,7 +107,11 @@ public class SceneElementFactory {
 
   private void configureText(Node node, Map<String, String> parameters) {
     String displayText = parameters.get(textTag);
+    double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
     Text text = (Text) node;
+    if (widthFactor != 0) {
+      text.setWrappingWidth(widthFactor * screenWidth);
+    }
     if (displayText != null) {
       text.setText(displayText);
     }
