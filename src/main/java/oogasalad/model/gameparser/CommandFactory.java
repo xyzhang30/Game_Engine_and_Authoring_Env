@@ -39,7 +39,8 @@ public class CommandFactory {
               " parameters for command " + cmdName + " but found " + params.size());
         }
       }
-      return (Command) clazz.getDeclaredConstructor(List.class, Map.class).newInstance(params, gameObjects);
+      return (Command) clazz.getDeclaredConstructor(List.class, Map.class)
+          .newInstance(params, gameObjects);
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              NoSuchMethodException | IllegalAccessException e) {
       LOGGER.error("command " + cmdName + " is invalid");

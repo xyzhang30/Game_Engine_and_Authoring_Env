@@ -39,7 +39,7 @@ public class DataAccessObject {
           //player.setUsername(username);  //TODO - create method in Player
           //player.setAvatarUrl(avatarUrl); //TODO - create method in Player
           //player.setLanguage(language); //TODO - create method in Player
-         // player.setAge(age); //TODO - create method in Player
+          // player.setAge(age); //TODO - create method in Player
 
           // Retrieve and set other properties as needed
           // For example, retrieving associated scoreables, strikeables, etc.

@@ -38,6 +38,7 @@ public class GameEngine implements ExternalGameEngine {
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private final GameLoaderModel loader;
   private final PlayerContainer playerContainer;
+  private final CollisionDetector collisionDetector;
   private RulesRecord rules;
   private Collection<GameObject> gameObjects;
   private int round;
@@ -45,7 +46,6 @@ public class GameEngine implements ExternalGameEngine {
   private boolean gameOver;
   private boolean staticState;
   private Stack<GameRecord> staticStateStack;
-  private final CollisionDetector collisionDetector;
 
   /**
    * Initializes a new GameEngine instance for the specified game title.
@@ -105,7 +105,7 @@ public class GameEngine implements ExternalGameEngine {
     playerContainer.getActive().getStrikeable().asGameObject().applyInitialVelocity(magnitude,
         direction);
     rules.strikePolicy().getStrikePolicy()
-        .accept(playerContainer.getActive().getStrikeable().asGameObject().getId(), this);
+        .accept(this);
   }
 
   /**
@@ -118,7 +118,8 @@ public class GameEngine implements ExternalGameEngine {
 
   /**
    * Updates the X Position of the active controllable by an amount preset in game rules
-   * @param positive, true if x position is increasing, false if decreasing
+   *
+   * @param positive true if x position is increasing, false if decreasing
    */
 
   @Override
@@ -128,8 +129,9 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   /**
-   * Updates the Y Position of the active controllable by an amount preset in game rules
-   * @param positive, true if y position is increasing, false if decreasing
+   * Updates the Y Position of the active controllable by an amount preset in game rules.
+   *
+   * @param positive true if y position is increasing, false if decreasing
    */
 
   @Override
@@ -225,7 +227,8 @@ public class GameEngine implements ExternalGameEngine {
   private Set<Pair> getCollisionPairs() {
     return gameObjects.stream()
         .flatMap(go1 -> gameObjects.stream()
-            .filter(go2 -> !go1.equals(go2) && go2.getVisible() && go1.getVisible() && collisionDetector.isColliding(go1, go2))
+            .filter(go2 -> !go1.equals(go2) && go2.getVisible() && go1.getVisible()
+                && collisionDetector.isColliding(go1, go2))
             .map(go2 -> new Pair(go1, go2)))
         .collect(Collectors.toSet());
   }

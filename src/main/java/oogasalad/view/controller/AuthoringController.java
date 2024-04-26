@@ -1,5 +1,6 @@
 package oogasalad.view.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import oogasalad.model.api.data.CollisionRule;
 import oogasalad.model.api.data.Dimension;
 import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.GlobalVariables;
+import oogasalad.model.api.data.KeyPreferences;
 import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.data.PlayerVariables;
 import oogasalad.model.api.data.Position;
@@ -19,8 +21,17 @@ import oogasalad.model.api.data.Variables;
 import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.view.authoring_environment.AuthoringScreen;
-import oogasalad.view.authoring_environment.data.GameObjectAttributesContainer;
-import oogasalad.view.enums.CollidableType;
+import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
+import oogasalad.view.api.authoring.AuthoringFactory;
+import oogasalad.view.authoring_environment.factories.DefaultAuthoringFactory;
+import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
+import oogasalad.view.api.authoring.UIElementFactory;
+import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
+import oogasalad.view.authoring_environment.proxy.ShapeProxy;
+import oogasalad.view.api.enums.AuthoringImplementationType;
+import oogasalad.view.api.enums.CollidableType;
+import oogasalad.view.api.enums.SupportedLanguage;
+import oogasalad.view.api.enums.UITheme;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,11 +43,16 @@ import org.apache.logging.log4j.Logger;
 public class AuthoringController {
   static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private final Stage stage;
-  private final AuthoringScreen authoringScreen = new AuthoringScreen();
+  private final AuthoringScreen authoringScreen;
   private final BuilderDirector builderDirector = new BuilderDirector();
+  private final ShapeProxy shapeProxy = new ShapeProxy();
+  private final AuthoringProxy authoringProxy = new AuthoringProxy();
 
-  public AuthoringController() {
+  public AuthoringController(SupportedLanguage language, UITheme uiTheme, AuthoringImplementationType authoringFactoryType) {
     stage = new Stage();
+    UIElementFactory uiElementFactory = new DefaultUIElementFactory();
+    AuthoringFactory authoringFactory = new DefaultAuthoringFactory(uiElementFactory, language, shapeProxy, authoringProxy);
+    this.authoringScreen = new AuthoringScreen(language, authoringFactory, shapeProxy, authoringProxy);
     authoringScreen.getAuthoringProxy().setAuthoringController(this);
   }
 
@@ -129,4 +145,17 @@ public class AuthoringController {
     builderDirector.constructCollidableObjects(gameObjects);
   }
 
+  public void writeKeyPreferences(Map<String, String> keyPreferences) {
+    String angleLeft = keyPreferences.get("angle_left");
+    String angleRight = keyPreferences.get("angle_right");
+    String powerUp = keyPreferences.get("power_up");
+    String powerDown = keyPreferences.get("power_down");
+    String controllableLeft = keyPreferences.get("controllable_left");
+    String controllableRight = keyPreferences.get("controllable_right");
+    String controllableUp = keyPreferences.get("controllable_up");
+    String controllableDown = keyPreferences.get("controllable_down");
+
+    KeyPreferences keys = new KeyPreferences(angleLeft, angleRight, powerUp, powerDown, controllableLeft, controllableRight, controllableUp, controllableDown);
+    builderDirector.constructKeys(List.of(keys));
+  }
 }

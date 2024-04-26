@@ -15,7 +15,9 @@ import oogasalad.model.gameengine.gameobject.GameObject;
  */
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
-@ExpectedParamNumber(2)
+@ExpectedParamNumber(value = 2, paramDescription = {"game object to have its speed change",
+    "factor to divide speed by"})
+
 public class DivideSpeedCommand implements Command {
 
   private final List<Integer> arguments;
@@ -26,10 +28,14 @@ public class DivideSpeedCommand implements Command {
    *
    * @param arguments Consists of two arguments: the ID of the GameObject whose speed is to be
    *                  multiplied and the factor by which the speed should be divided by.
+   * @param gameObjectMap a map from object ids to the actual GameObject
    */
   public DivideSpeedCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {
     this.arguments = arguments;
     gameObject = gameObjectMap.get(arguments.get(0));
+    if (arguments.get(1) == 0) {
+      throw new IllegalArgumentException("Cannot Divide by Zero");
+    }
   }
 
   /**

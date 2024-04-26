@@ -4,21 +4,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import oogasalad.model.annotations.CommandHelpInfo;
-import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.annotations.VariableParamNumber;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
 
 /**
- * Represents a condition that evaluates whether certain game objects are not visible.
- * This condition is true if all specified game objects are not visible.
+ * Represents a condition that evaluates whether certain game objects are not visible. This
+ * condition is true if all specified game objects are not visible.
  *
  * @author Noah Loewy
  */
 
 
- @IsCommand(isCommand = true)
+@IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
 @VariableParamNumber(isVariable = true)
 public class GameObjectsNotVisibleCondition implements Condition {
@@ -29,7 +28,7 @@ public class GameObjectsNotVisibleCondition implements Condition {
   /**
    * Constructs a GameObjectsNotVisibleCondition for the specified GameObjects.
    *
-   * @param arguments The list of arguments for the condition.
+   * @param arguments     The list of arguments for the condition.
    * @param gameObjectMap The map of game objects.
    */
 

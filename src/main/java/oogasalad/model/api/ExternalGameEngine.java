@@ -35,14 +35,16 @@ public interface ExternalGameEngine {
   void reset();
 
   /**
-   * Updates the X Position of the active controllable by an amount preset in game rules
-   * @param positive, true if x position is increasing, false if decreasing
+   * Updates the X Position of the active controllable by an amount preset in game rules.
+   *
+   * @param positive true if x position is increasing, false if decreasing
    */
   void moveActiveControllableX(boolean positive);
 
   /**
-   * Updates the Y Position of the active controllable by an amount preset in game rules
-   * @param positive, true if y position is increasing, false if decreasing
+   * Updates the Y Position of the active controllable by an amount preset in game rules.
+   *
+   * @param positive true if y position is increasing, false if decreasing
    */
   void moveActiveControllableY(boolean positive);
 }

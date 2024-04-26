@@ -11,7 +11,7 @@ import oogasalad.model.gameengine.player.Player;
 
 /**
  * The AllPlayersCompletedRoundCondition evaluates if the current round has been completed by every
- * player in the game
+ * player in the game.
  *
  * @author Noah Loewy
  */
@@ -26,7 +26,7 @@ public class AllPlayersCompletedRoundCondition implements Condition {
    * constructor does not actually do anything, and exists for the sake of consistency across
    * conditions.
    *
-   * @param arguments, an empty list
+   * @param arguments an empty list
    */
 
   public AllPlayersCompletedRoundCondition(List<Integer> arguments,
@@ -36,7 +36,7 @@ public class AllPlayersCompletedRoundCondition implements Condition {
 
   /**
    * Delegates the work to the PlayerContainers allPlayersCompletedRound function, which handles the
-   * logic for determining if every player has completed the current round
+   * logic for determining if every player has completed the current round.
    *
    * @param engine the GameEngine instance
    */

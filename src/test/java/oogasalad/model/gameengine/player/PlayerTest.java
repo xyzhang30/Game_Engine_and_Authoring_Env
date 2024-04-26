@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 import oogasalad.model.gameengine.gameobject.GameObject;
+import oogasalad.model.gameengine.gameobject.controllable.Controllable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import oogasalad.model.api.PlayerRecord;
@@ -66,12 +67,6 @@ public class PlayerTest {
     assertTrue(player.isRoundCompleted());
   }
 
-  @Test
-  public void testGetStrikeableID() {
-
-    when(strikeable1.asGameObject().getId()).thenReturn(101);
-    assertEquals(101, player.getStrikeable().asGameObject().getId());
-  }
 
   @Test
   public void testCompleteTurn() {
@@ -103,6 +98,41 @@ public class PlayerTest {
     assertEquals(10.0, playerRecord.score());
     assertEquals(101, playerRecord.activeStrikeable());
   }
+
+  @Test
+  public void testAddStrikeables() {
+    List<Strikeable> strikeables = new ArrayList<>();
+    Strikeable strikeable1 = mock(Strikeable.class);
+    strikeables.add(strikeable1);
+    player.addStrikeables(strikeables);
+    assertEquals(strikeable1, player.getStrikeable());
+  }
+
+  @Test
+  public void testSetControllable() {
+    Controllable controllable = mock(Controllable.class);
+    int xMovement = 1;
+    int yMovement = -1;
+    player.setControllable(controllable, xMovement, yMovement);
+    assertEquals(controllable, player.getControllable());
+  }
+
+  @Test
+  public void testAreAllScoreablesInvisible() {
+    List<Scoreable> scoreables = new ArrayList<>();
+    Scoreable scoreable1 =  mock(Scoreable.class);
+    Scoreable scoreable2 =  mock(Scoreable.class);
+    when(scoreable1.asGameObject()).thenReturn(mock(GameObject.class));
+    when(scoreable2.asGameObject()).thenReturn(mock(GameObject.class));
+    scoreables.add(scoreable1);
+    scoreables.add(scoreable2);
+    when(scoreable1.asGameObject().getVisible()).thenReturn(true);
+    when(scoreable2.asGameObject().getVisible()).thenReturn(false);
+    player.addScoreables(scoreables);
+    assertFalse(player.areAllScoreablesInvisible());
+  }
+
+
 
 
 }

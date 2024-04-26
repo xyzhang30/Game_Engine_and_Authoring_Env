@@ -33,9 +33,9 @@ import oogasalad.model.gameengine.GameEngine;
 public interface Command {
 
   /**
-   * Executes the command with the given arguments, updating the GameEngine as needed
+   * Executes the command with the given arguments, updating the GameEngine as needed.
    *
-   * @param engine The instance of the game engine that the command will query/update
+   * @param engine The instance of the game engine that the command will query/update.
    */
 
   void execute(GameEngine engine);

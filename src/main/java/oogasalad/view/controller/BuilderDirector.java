@@ -7,14 +7,23 @@ import java.util.List;
 import java.util.ResourceBundle;
 import oogasalad.model.api.GameBuilder;
 import oogasalad.model.api.data.GameData;
+import oogasalad.model.api.data.KeyPreferences;
 import oogasalad.model.api.exception.InvalidJSONDataException;
 import oogasalad.model.gamebuilder.GameObjectsBuilder;
+import oogasalad.model.gamebuilder.KeysBuilder;
 import oogasalad.model.gamebuilder.PlayersBuilder;
 import oogasalad.model.gamebuilder.RulesBuilder;
 import oogasalad.model.gamebuilder.VariablesBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * BuilderDirector manages the construction of game elements and data.
+ * It handles the creation of game objects, players, variables, and rules from provided data.
+ * The class also writes game data to JSON files.
+ *
+ * @author Judy He, Alisha Zhang
+ */
 public class BuilderDirector {
 
   private static final Logger LOGGER = LogManager.getLogger(GameBuilder.class);
@@ -50,6 +59,11 @@ public class BuilderDirector {
   public <T> void constructRules(List<T> fieldData) {
     RulesBuilder rulesBuilder = new RulesBuilder();
     rulesBuilder.buildGameField(gameData, fieldData);
+  }
+
+  public <T> void constructKeys(List<T> fieldData) {
+    KeysBuilder keysBuilder = new KeysBuilder();
+    keysBuilder.buildGameField(gameData, fieldData);
   }
 
   public void writeGame(String fileName) throws InvalidJSONDataException {

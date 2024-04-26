@@ -25,6 +25,7 @@ public class PlayerCompletedRoundCommand implements Command {
    * do anything, and exists for the sake of consistency across commands.
    *
    * @param arguments An empty list.
+   * @param gameObjectMap a map from object ids to the actual GameObject
    */
 
   public PlayerCompletedRoundCommand(List<Integer> arguments,

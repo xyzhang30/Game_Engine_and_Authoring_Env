@@ -1,30 +1,33 @@
 <scene_elements>
   <node>
+    <class>javafx.scene.control.ListView</class>
     <type>LISTVIEW</type>
     <width_factor>0.5</width_factor>
     <height_factor>0.5</height_factor>
-    <x_layout_factor>0.5</x_layout_factor>
+    <x_layout_factor>0.25</x_layout_factor>
     <y_layout_factor>0.3</y_layout_factor>
-    <styling>menu-game-options</styling>
+    <style>menu-game-options</style>
     <event>START_GAME</event>
   </node>
 
   <node>
+    <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
-    <text>Game Options</text>
-    <x_layout_factor>0.35</x_layout_factor>
+    <text>GAME_OPTIONS</text>
+    <x_layout_factor>0.32</x_layout_factor>
     <y_layout_factor>0.2</y_layout_factor>
-    <styling>title-text</styling>
+    <style>title-text</style>
   </node>
 
   <node>
+    <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>Back</text>
+    <text>BACK</text>
     <width_factor>0.05</width_factor>
     <height_factor>0.05</height_factor>
     <x_layout_factor>0.03</x_layout_factor>
     <y_layout_factor>0.9</y_layout_factor>
-    <styling>game-button</styling>
+    <style>game-button</style>
     <event>START_TITLE</event>
   </node>
 </scene_elements>
