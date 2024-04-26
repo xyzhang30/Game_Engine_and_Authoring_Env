@@ -77,7 +77,7 @@ public class PolicyPanel implements Panel {
     this.canvas = canvas;
     this.uiElementFactory = uiElementFactory;
     this.resourceBundle = ResourceBundle.getBundle(
-        RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
+        RESOURCE_FOLDER_PATH + VIEW_PROPERTIES_FOLDER + UI_FILE_PREFIX + language);
     createElements();
     System.out.println("comboboxs");
     for (ComboBox<String> c : singleChoiceComboxBoxes.keySet()) {

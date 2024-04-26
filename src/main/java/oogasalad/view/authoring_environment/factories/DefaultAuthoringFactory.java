@@ -56,6 +56,8 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
   private Button addPlayerButton, removePlayerButton;
   private Text numPlayers;
 
+  private final String VIEW_PROPERTIES_FOLDER = "properties.";
+
   /**
    * Constructor for default AuthoringFactory
    *
@@ -68,7 +70,7 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
       ShapeProxy shapeProxy, AuthoringProxy authoringProxy) {
     this.uiElementFactory = uiElementFactory;
     this.resourceBundle = ResourceBundle.getBundle(
-        RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
+        RESOURCE_FOLDER_PATH + VIEW_PROPERTIES_FOLDER + UI_FILE_PREFIX + language);
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
   }

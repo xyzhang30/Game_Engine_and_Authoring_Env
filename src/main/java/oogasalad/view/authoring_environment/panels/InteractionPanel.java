@@ -42,7 +42,7 @@ public class InteractionPanel implements Panel {
   String RESOURCE_FOLDER_PATH = "view.";
   String DEFAULT_VALUES_FILE = "DefaultAuthoringValues";
   ResourceBundle defaultValuesResourceBundle = ResourceBundle.getBundle(
-      RESOURCE_FOLDER_PATH + DEFAULT_VALUES_FILE);
+      RESOURCE_FOLDER_PATH + VIEW_PROPERTIES_FOLDER + DEFAULT_VALUES_FILE);
   private int numMultiSelect = Integer.parseInt(
       defaultValuesResourceBundle.getString("interactionNumShapesSelectedAllowed"));
   private final ShapeProxy shapeProxy;
@@ -71,7 +71,7 @@ public class InteractionPanel implements Panel {
     this.containerPane = containerPane;
     this.uiElementFactory = uiElementFactory;
     this.resourceBundle = ResourceBundle.getBundle(
-        RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
+        RESOURCE_FOLDER_PATH + VIEW_PROPERTIES_FOLDER + UI_FILE_PREFIX + language);
     shapeProxy.setNumberOfMultiSelectAllowed(numMultiSelect);
     createElements();
     handleEvents();

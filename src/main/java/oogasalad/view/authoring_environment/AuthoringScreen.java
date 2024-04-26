@@ -46,6 +46,7 @@ public class AuthoringScreen {
   ComboBox<AuthoringScreenType> screensDropDown = new ComboBox<>();
   Text titleText = new Text();
   private static final String RESOURCE_FOLDER_PATH = "view.";
+  private static final String VIEW_PROPERTIES_FOLDER = "properties.";
   private static final String UI_FILE_PREFIX = "UIElements";
   private SupportedLanguage language; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
@@ -62,7 +63,7 @@ public class AuthoringScreen {
   public AuthoringScreen(SupportedLanguage language, AuthoringFactory authoringFactory, ShapeProxy shapeProxy, AuthoringProxy authoringProxy) {
     this.language = language;
     this.resourceBundle = ResourceBundle.getBundle(
-        RESOURCE_FOLDER_PATH + UI_FILE_PREFIX + language);
+        RESOURCE_FOLDER_PATH + VIEW_PROPERTIES_FOLDER + UI_FILE_PREFIX + language);
     this.authoringFactory = authoringFactory;
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
