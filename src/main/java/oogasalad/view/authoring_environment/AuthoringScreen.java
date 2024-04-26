@@ -13,6 +13,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
+import oogasalad.view.authoring_environment.panels.KeySelectionPanel;
 import oogasalad.view.authoring_environment.util.Container;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.api.authoring.AuthoringFactory;
@@ -68,7 +69,7 @@ public class AuthoringScreen {
     createCanvas();
     createContainerPane();
     createScreenSelectionDropDown(List.of(AuthoringScreenType.GAMEOBJECTS, AuthoringScreenType.INTERACTIONS,
-        AuthoringScreenType.POLICIES));
+        AuthoringScreenType.POLICIES, AuthoringScreenType.KEY_PREFERENCES));
     handleScreenSelectionDropDown();
     createFinishButton();
     containerPane.getChildren().add(titleText);
@@ -108,8 +109,11 @@ public class AuthoringScreen {
       case POLICIES:
         container.setPanels(createPoliciesPanel());
         break;
-
+      case KEY_PREFERENCES:
+        container.setPanels(createKeySelectionPanel());
+        break;
     }
+    System.out.println();
   }
 
   private List<Panel> createGameObjectsPanel() {
@@ -126,6 +130,10 @@ public class AuthoringScreen {
 
   private List<Panel> createPoliciesPanel() {
     return List.of(new PolicyPanel(authoringProxy, rootPane, containerPane, canvasPane, new DefaultUIElementFactory()));
+  }
+
+  private List<Panel> createKeySelectionPanel(){
+    return List.of(new KeySelectionPanel(authoringProxy, rootPane, containerPane, canvasPane, new DefaultUIElementFactory()));
   }
 
   private void setTitle(String title) {

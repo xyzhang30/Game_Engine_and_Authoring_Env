@@ -53,10 +53,6 @@ public class PolicyPanel implements Panel {
   private Map<String, String> commandPackageMap = new HashMap<>();
   private Map<ComboBox<String>, String> singleChoiceComboxBoxes = new HashMap<>();
   private Map<CheckComboBox<String>, String> multiChoiceCheckBoxes = new HashMap<>();
-  private Map<CheckComboBox<String>, ListChangeListener<String>> multiChoiceEventListeners =
-      new HashMap<>();
-  private Map<ComboBox<String>, ChangeListener<String>> singleChoiceEventListeners =
-      new HashMap<>();
   private static final String GAME_ENGINE_PACKAGE_PATH = "src/main/java/oogasalad/model"
       + "/gameengine/";
   private static final String REFLECTION_ENGINE_PACKAGE_PATH = "oogasalad.model.gameengine.";
@@ -165,11 +161,9 @@ public class PolicyPanel implements Panel {
     try {
       System.out.println("path: " + classPath);
       Class<?> clazz = Class.forName(classPath);
-//      Constructor<?> constructor;
       if (!commandPackage.equals("strike") && !commandPackage.equals("turn")
           && !commandPackage.equals("rank")) {
         //commands that takes in arguments (or empty param list)
-//        constructor = clazz.getConstructor(List.class, Map.class);
         if (clazz.getAnnotation(ExpectedParamNumber.class) != null
             && clazz.getDeclaredAnnotation(ExpectedParamNumber.class).value() != 0) {
           //prompt user to enter param
@@ -188,7 +182,7 @@ public class PolicyPanel implements Panel {
       } else {
         //commands that don't take in arguments (turn policy and strike policy) -- call save
         // directly (because no need to distinguish between adding a command and replacing a
-        // command based on whether it's a combobox or a checkcombobox)
+        // command based on whether it's a combobox or a checkComboBox)
         saveSelectionNoParam(commandType, newValue);
         return null;
       }
@@ -204,15 +198,6 @@ public class PolicyPanel implements Panel {
     System.out.println("commandName: " + commandName);
     authoringProxy.addNoParamPolicies(commandType, commandName);
   }
-
-//  private void saveSelectionWithParam(String commandType, String commandName, List<Double>
-//  params) {
-//    System.out.println("---SAVING TO PROXY | WITH PARAM ---");
-//    System.out.println("commandType: "+commandType);
-//    System.out.println("commandName: "+commandName);
-//    System.out.println("paramList: "+params);
-//    authoringProxy.addConditionsCommandsWithParam(commandType, commandName, params);
-//  }
 
 
   private List<Integer> enterCustomNumParamsPopup(String newValue) {
@@ -239,8 +224,8 @@ public class PolicyPanel implements Panel {
     vbox.getChildren().add(buttonBox);
 
     Button confirmSaveParam = new Button(resourceBundle.getString("saveButton"));
-    confirmSaveParam.setDisable(
-        false); //allowed to save at any time because no restriction for param numbers
+    confirmSaveParam.setDisable(false);
+    //allowed to save at any time because no restriction for param numbers
 
     for (TextArea area : textAreas) {
       //only allow users to enter digits because the custom param commands can only take in int
@@ -300,7 +285,8 @@ public class PolicyPanel implements Panel {
             }
             return isCommand;
           } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return false;
           }
         }
         return false;
@@ -310,7 +296,7 @@ public class PolicyPanel implements Panel {
   }
 
   /**
-   * Handles events for the policy panel.
+   * Handles command selection for policy panel
    */
   @Override
   public void handleEvents() {

@@ -126,8 +126,10 @@ public class InteractionPanel implements Panel {
     infoTextField.textProperty().bind(Bindings.createStringBinding(() -> {
       StringBuilder sb = new StringBuilder();
       for (int shapeId : shapeProxy.getShapesListProperty()) {
-        sb.append(shapeId).append("  ");
+        sb.append(shapeId).append(",");
       }
+//      String idText = sb.toString();
+//      return idText.substring(0, idText.length()-1);
       return sb.toString();
     }, shapeProxy.getShapesListProperty()));
 

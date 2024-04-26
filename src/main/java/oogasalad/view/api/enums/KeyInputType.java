@@ -1,0 +1,12 @@
+package oogasalad.view.api.enums;
+
+public enum KeyInputType {
+  ANGLE_LEFT,
+  ANGLE_RIGHT,
+  POWER_UP,
+  POWER_DOWN,
+  LEFT_CONTROLLABLE,
+  RIGHT_CONTROLLABLE,
+  UP_CONTROLLABLE,
+  DOWN_CONTROLLABLE
+}

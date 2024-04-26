@@ -258,10 +258,13 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
     } else if (labelText.equals(resourceBundle.getString("YScaleLabel"))) {
       this.ySlider = slider;
     } else {
+      slider = uiElementFactory.createSlider(id, 200, 0, 360, 1);
       this.angleSlider = slider;
+//      this.angleSlider = uiElementFactory.createSlider(id, 200, 0, 360, 1);
     }
     Label label = new Label(labelText);
-    return uiElementFactory.createHContainer(10, 200, 10, label, slider);
+    label.setMinWidth(80);
+    return uiElementFactory.createHContainer(10, 1500, 10, label, slider);
   }
 
   private void updateSlider(double xScale, double yScale, double angle) {
@@ -280,6 +283,7 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
     TextField textField = uiElementFactory.createTextField(id, 100, 20);
     textField.textProperty().addListener(new TextFieldListener(textField.getId(), shapeProxy));
     Label label = new Label(labelText);
+    label.setMinWidth(100);
     textFields.add(textField);
     return uiElementFactory.createHContainer(10, 100, 20, label, textField);
   }
