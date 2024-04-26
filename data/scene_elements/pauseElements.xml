@@ -6,7 +6,7 @@
     <height_factor>1</height_factor>
     <x_layout_factor>0</x_layout_factor>
     <y_layout_factor>0</y_layout_factor>
-    <styling>pause-sheen</styling>
+    <style>pause-sheen</style>
   </node>
 
   <node>
@@ -17,7 +17,7 @@
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.4</y_layout_factor>
-    <styling>title-button</styling>
+    <style>title-button</style>
     <event>RESUME</event>
   </node>
 </scene_elements>

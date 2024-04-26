@@ -26,25 +26,10 @@ public class SceneElementFactory {
 
   private final SceneElementStyler sceneElementStyler;
   private final SceneElementHandler sceneElementHandler;
-  private final LanguageManager
+  private final LanguageManager languageManager;
   private final double screenWidth;
   private final double screenHeight;
   private Map<SceneElementType, BiConsumer<Node, Map<String, String>>> elementConfigurationMap;
-  private final String classTag = "class";
-  private final String textTag = "text";
-  private final String typeTag = "type";
-  private final String widthFactorTag = "width_factor";
-  private final String heightFactorTag = "height_factor";
-  private final String xLayoutFactorTag = "x_layout_factor";
-  private final String yLayoutFactorTag = "y_layout_factor";
-  private final String xLayoutTag = "x_layout";
-  private final String yLayoutTag = "y_layout";
-  private final String stemWidthTag = "stem_width";
-  private final String stemHeightTag = "stem_height";
-  private final String arrowWidthOffsetTag = "arrow_width_offset";
-  private final String arrowHeightOffsetTag = "arrow_height_offset";
-  private final String styleTag = "styling";
-  private final String eventTag = "event";
 
   /**
    * Constructor creates sceneElementParser to get parameters from xml files
@@ -60,6 +45,7 @@ public class SceneElementFactory {
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
     this.sceneElementHandler = sceneElementHandler;
+    languageManager = new LanguageManager();
     createElementConfigurationMap();
   }
 
@@ -119,8 +105,8 @@ public class SceneElementFactory {
   }
 
   private void configureArrow(Node node, Map<String, String> parameters) {
-    double xLayoutFactor = parseDoubleParameter(parameters, xLayoutTag);
-    double yLayoutFactor = parseDoubleParameter(parameters, yLayoutTag);
+    double xLayoutFactor = parseDoubleParameter(parameters, xLayoutFactorTag);
+    double yLayoutFactor = parseDoubleParameter(parameters, yLayoutFactorTag);
     double stemWidth = parseDoubleParameter(parameters, stemWidthTag);
     double stemHeight = parseDoubleParameter(parameters, stemHeightTag);
     double arrowWidthOffset = parseDoubleParameter(parameters, arrowWidthOffsetTag);

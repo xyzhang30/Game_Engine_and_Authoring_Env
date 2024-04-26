@@ -6,7 +6,7 @@
     <height_factor>0.5</height_factor>
     <x_layout_factor>0.25</x_layout_factor>
     <y_layout_factor>0.3</y_layout_factor>
-    <styling>menu-game-options</styling>
+    <style>menu-game-options</style>
     <event>START_GAME</event>
   </node>
 
@@ -16,7 +16,7 @@
     <text>GAME_OPTIONS</text>
     <x_layout_factor>0.32</x_layout_factor>
     <y_layout_factor>0.2</y_layout_factor>
-    <styling>title-text</styling>
+    <style>title-text</style>
   </node>
 
   <node>
@@ -27,7 +27,7 @@
     <height_factor>0.05</height_factor>
     <x_layout_factor>0.03</x_layout_factor>
     <y_layout_factor>0.9</y_layout_factor>
-    <styling>game-button</styling>
+    <style>game-button</style>
     <event>START_TITLE</event>
   </node>
 </scene_elements>
