@@ -23,7 +23,8 @@ public enum SceneElementEventType {
   SET_SCORE,
   CHANGE_THEME,
   NEW_GAME_WINDOW,
-  SAVE_TEXT,
+  USER_TEXT,
+  PASSWORD_TEXT,
   LOGIN,
   CREATE_USER
 }

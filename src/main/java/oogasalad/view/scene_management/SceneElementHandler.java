@@ -87,6 +87,7 @@ public class SceneElementHandler {
     addGamePlayChangeEventsToMap();
     addStrikingEventsToMap();
     addGameManagementEventsToMap();
+    addDatabaseEventsToMap();
   }
 
   private void addGamePlayChangeEventsToMap() {
@@ -105,6 +106,14 @@ public class SceneElementHandler {
     eventMap.put(SceneElementEventType.NEW_GAME_WINDOW, this::createNewGameHandler);
     eventMap.put(SceneElementEventType.CHANGE_THEME, this::createThemeChangeHandler);
   }
+
+  private void addDatabaseEventsToMap(){
+    eventMap.put(SceneElementEventType.LOGIN, this::createLoginHandler);
+    eventMap.put(SceneElementEventType.CREATE_USER, this::createUserCreatorHandler);
+    eventMap.put(SceneElementEventType.USER_TEXT, this::createUsernameHandler);
+    eventMap.put(SceneElementEventType.PASSWORD_TEXT, this::createPasswordHandler);
+  }
+
 
   private void addStrikingEventsToMap() {
     eventMap.put(SceneElementEventType.POWER_HEIGHT, this::getMaxPower);
@@ -304,4 +313,20 @@ public class SceneElementHandler {
   private void createNewGameHandler(Node node) {
     node.setOnMouseClicked(e -> gameController.createNewWindow());
   }
+
+  private void createLoginHandler(Node node){
+    //node.setOnMouseClicked(e -> gameController.openLogin());
+  }
+
+  private void createUserCreatorHandler(Node node){
+    //node.setOnMouseClicked(e -> gameController.openCreateUser());
+  }
+
+  private void createPasswordHandler(Node node) {
+  }
+
+  private void createUsernameHandler(Node node) {
+  }
+
+
 }

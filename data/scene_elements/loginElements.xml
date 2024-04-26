@@ -9,20 +9,9 @@
   </node>
 
   <node>
-    <class>javafx.scene.control.textfield</class>
-    <type>TEXTFIELD</type>
-    <width_factor>0.25</width_factor>
-    <height_factor>0.2</height_factor>
-    <x_layout_factor>0.5</x_layout_factor>
-    <y_layout_factor>0.65</y_layout_factor>
-    <styling>game-text</styling>
-    <event>SAVE_TEXT</event>
-  </node>
-
-  <node>
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
-    <text>Login</text>
+    <text>Enter Username</text>
     <x_layout_factor>0.36</x_layout_factor>
     <y_layout_factor>0.65</y_layout_factor>
     <styling>game-text</styling>
@@ -34,18 +23,29 @@
     <width_factor>0.25</width_factor>
     <height_factor>0.2</height_factor>
     <x_layout_factor>0.5</x_layout_factor>
-    <y_layout_factor>0.68</y_layout_factor>
+    <y_layout_factor>0.65</y_layout_factor>
     <styling>game-text</styling>
-    <event>SAVE_TEXT</event>
+    <event>USER_TEXT</event>
   </node>
 
   <node>
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
-    <text>Create User</text>
+    <text>Enter Password</text>
     <x_layout_factor>0.36</x_layout_factor>
     <y_layout_factor>0.68</y_layout_factor>
     <styling>game-text</styling>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.textfield</class>
+    <type>TEXTFIELD</type>
+    <width_factor>0.25</width_factor>
+    <height_factor>0.2</height_factor>
+    <x_layout_factor>0.5</x_layout_factor>
+    <y_layout_factor>0.68</y_layout_factor>
+    <styling>game-text</styling>
+    <event>PASSWORD_TEXT</event>
   </node>
 
   <node>
