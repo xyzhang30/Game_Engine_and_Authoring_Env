@@ -54,7 +54,6 @@ public class LanguageManager {
       properties.load(inputStream);
     } catch (IOException e) {
       //TODO: Exception Handling
-      System.out.println(e.getMessage());
     }
     return properties;
   }

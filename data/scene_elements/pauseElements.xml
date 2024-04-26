@@ -18,7 +18,7 @@
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.4</y_layout_factor>
     <style>title-button</style>
-    <event_type>MANAGE_GAME</event_type>
+    <event_type>MANAGE_GAME_PLAY</event_type>
     <event>RESUME</event>
   </node>
 </scene_elements>

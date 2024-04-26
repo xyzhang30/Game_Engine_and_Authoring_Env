@@ -118,6 +118,7 @@
     <x_layout_factor>0.76</x_layout_factor>
     <y_layout_factor>0.735</y_layout_factor>
     <style>power-bar</style>
+    <event_type>STRIKE</event_type>
     <event>STRIKE</event>
     <event>SET_POWER</event>
   </node>

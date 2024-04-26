@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import oogasalad.view.api.enums.SceneElementEvent;
+import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 
@@ -17,6 +19,7 @@ import oogasalad.view.scene_management.scene_managers.SceneManager;
  * @author Jordan Haytaian
  */
 public class ChangeSceneEventHandler {
+
   private final GameController gameController;
   private final SceneManager sceneManager;
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
@@ -28,7 +31,7 @@ public class ChangeSceneEventHandler {
    * respective handlers.
    *
    * @param gameController The game controller for managing game state and behavior.
-   * @param sceneManager The scene manager for handling scene transitions and updates.
+   * @param sceneManager   The scene manager for handling scene transitions and updates.
    */
   public ChangeSceneEventHandler(GameController gameController, SceneManager sceneManager) {
     this.gameController = gameController;
@@ -37,10 +40,10 @@ public class ChangeSceneEventHandler {
   }
 
   /**
-   * Creates an event handler for the specified node and event type.
-   * The handler will be invoked when the event occurs on the given node.
+   * Creates an event handler for the specified node and event type. The handler will be invoked
+   * when the event occurs on the given node.
    *
-   * @param node The node to which the event handler will be attached.
+   * @param node  The node to which the event handler will be attached.
    * @param event The event type as a string that specifies the event to handle.
    */
   public void createElementHandler(Node node, String event) {
@@ -58,6 +61,7 @@ public class ChangeSceneEventHandler {
     eventMap.put(SceneElementEvent.NEXT_ROUND, this::createNextRoundHandler);
     eventMap.put(SceneElementEvent.NEW_GAME_WINDOW, this::createNewGameHandler);
     eventMap.put(SceneElementEvent.HELP, this::createHelpInstructionsHandler);
+    eventMap.put(SceneElementEvent.CHANGE_THEME, this::createThemeChangeHandler);
   }
 
   private void createStartMenuHandler(Node node) {
@@ -98,4 +102,14 @@ public class ChangeSceneEventHandler {
   private void createStartLanguageHandler(Node node) {
     node.setOnMouseClicked(e -> sceneManager.createLanguageSelectionScene());
   }
+
+  private void createThemeChangeHandler(Node node) {
+    ComboBox<ThemeType> comboBox = (ComboBox<ThemeType>) node;
+    comboBox.getItems().addAll(ThemeType.values());
+    comboBox.setOnAction(event -> {
+      ThemeType selectedTheme = comboBox.getValue();
+      sceneManager.changeTheme(selectedTheme);
+    });
+  }
+
 }

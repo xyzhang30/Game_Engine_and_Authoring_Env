@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
@@ -106,6 +107,8 @@ public class SceneManager {
   public void createMenuScene() {
     resetRoot();
     root.getChildren().add(createSceneElements(menuSceneElementsPath));
+    AnchorPane pane = (AnchorPane)root.getChildren().get(0);
+    System.out.println(pane.getChildren());
   }
 
   /**
