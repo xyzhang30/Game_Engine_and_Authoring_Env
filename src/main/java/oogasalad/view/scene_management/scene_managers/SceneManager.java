@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
+import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.scene_management.element_parsers.SceneElementParser;
@@ -36,6 +37,7 @@ public class SceneManager {
   private Pane pauseElements;
   private Pane transitionElements;
   private int currentRound;
+  private SupportedLanguage selectedLanguage;
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
   private final String gameManagementElementsPath =
@@ -61,6 +63,7 @@ public class SceneManager {
       double screenHeight) {
     root = new Pane();
     scene = new Scene(root);
+    selectedLanguage = SupportedLanguage.ENGLISH;
 
     sceneElementParser = new SceneElementParser();
     sceneElementStyler = new SceneElementStyler(root);
@@ -156,6 +159,15 @@ public class SceneManager {
   }
 
   /**
+   * Setter for selected language
+   *
+   * @param language represents user selected language
+   */
+  public void setLanguage(SupportedLanguage language) {
+    selectedLanguage = language;
+  }
+
+  /**
    * Makes the game scene including game board elements, striker input, and game stat display
    *
    * @param compositeElement game board elements
@@ -190,7 +202,7 @@ public class SceneManager {
     try {
       List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(
           filePath);
-      return sceneElementFactory.createSceneElements(sceneElementParameters);
+      return sceneElementFactory.createSceneElements(sceneElementParameters, selectedLanguage);
 
     } catch (ParserConfigurationException | SAXException | IOException e) {
       //TODO: Exception Handling

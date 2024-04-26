@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.api.enums.SceneElementEventType;
@@ -323,11 +324,14 @@ public class SceneElementHandler {
   }
 
   private void createSetEnglishHandler(Node node) {
+    node.setOnMouseClicked(e -> sceneManager.setLanguage(SupportedLanguage.ENGLISH));
   }
 
   private void createSetSpanishHandler(Node node) {
+    node.setOnMouseClicked(e -> sceneManager.setLanguage(SupportedLanguage.SPANISH));
   }
 
   private void createSetFrenchHandler(Node node) {
+    node.setOnMouseClicked(e -> sceneManager.setLanguage(SupportedLanguage.FRENCH));
   }
 }

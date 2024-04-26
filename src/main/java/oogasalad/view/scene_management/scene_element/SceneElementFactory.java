@@ -31,6 +31,7 @@ public class SceneElementFactory {
   private final LanguageManager languageManager;
   private final double screenWidth;
   private final double screenHeight;
+  private SupportedLanguage language;
   private Map<SceneElementType, BiConsumer<Node, Map<String, String>>> elementConfigurationMap;
 
   /**
@@ -59,6 +60,7 @@ public class SceneElementFactory {
    */
   public Pane createSceneElements(List<Map<String, String>> parameterList,
       SupportedLanguage language) {
+    this.language = language;
     AnchorPane sceneElementPane = new AnchorPane();
     sceneElementPane.setPrefWidth(screenWidth);
     sceneElementPane.setPrefHeight(screenHeight);
@@ -106,7 +108,7 @@ public class SceneElementFactory {
       text.setWrappingWidth(widthFactor * screenWidth);
     }
     if (textTag != null) {
-      String translatedText = languageManager.getText(textTag);
+      String translatedText = languageManager.getText(language, textTag);
       text.setText(translatedText);
     }
   }
@@ -139,7 +141,7 @@ public class SceneElementFactory {
 
     Button button = (Button) node;
     if (textTag != null) {
-      String translatedText = languageManager.getText(textTag);
+      String translatedText = languageManager.getText(language, textTag);
       button.setText(translatedText);
     }
     button.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
@@ -154,7 +156,7 @@ public class SceneElementFactory {
 
     ComboBox<String> comboBox = (ComboBox<String>) node;
     if (textTag != null) {
-      String translatedText = languageManager.getText(textTag);
+      String translatedText = languageManager.getText(language, textTag);
       comboBox.setPromptText(translatedText);
     }
     comboBox.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
