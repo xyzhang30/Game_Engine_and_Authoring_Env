@@ -324,14 +324,23 @@ public class SceneElementHandler {
   }
 
   private void createSetEnglishHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.setLanguage(SupportedLanguage.ENGLISH));
+    node.setOnMouseClicked(e -> {
+      sceneManager.setLanguage(SupportedLanguage.ENGLISH);
+      sceneManager.createTitleScene();
+    });
   }
 
   private void createSetSpanishHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.setLanguage(SupportedLanguage.SPANISH));
+    node.setOnMouseClicked(e -> {
+      sceneManager.setLanguage(SupportedLanguage.SPANISH);
+      sceneManager.createTitleScene();
+    });
   }
 
   private void createSetFrenchHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.setLanguage(SupportedLanguage.FRENCH));
+    node.setOnMouseClicked(e -> {
+      sceneManager.setLanguage(SupportedLanguage.FRENCH);
+      sceneManager.createTitleScene();
+    });
   }
 }
