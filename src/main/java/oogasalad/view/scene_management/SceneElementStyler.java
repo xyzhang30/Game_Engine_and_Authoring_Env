@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import oogasalad.view.enums.ThemeType;
+import oogasalad.view.api.enums.ThemeType;
 
 /**
  * Styles scene elements using css style sheets
