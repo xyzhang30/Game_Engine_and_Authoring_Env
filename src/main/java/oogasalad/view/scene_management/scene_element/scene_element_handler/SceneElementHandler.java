@@ -36,13 +36,9 @@ public class SceneElementHandler {
 
   private final GameController gameController;
   private final SceneManager sceneManager;
-  private final GameStatusManager gameStatusManager;
-  private final int angleIncrement;
-  private Map<SceneElementEvent, Consumer<Node>> eventMap;
-  private double maxPower;
-  private double minPower;
-  private Rectangle powerMeter;
-  private Polygon angleArrow;
+  private final ChangeSceneEventHandler;
+  private final GameManagementEventHandler;
+  private final LanguageEventHandler;
 
   /**
    * Constructs a new instance of the SceneElementHandler class.

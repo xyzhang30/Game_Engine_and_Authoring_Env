@@ -8,7 +8,7 @@
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.3</y_layout_factor>
     <style>title-button</style>
-    <event_type>SET_PREFERENCE</event_type>
+    <event_type>SET_LANGUAGE</event_type>
     <event>SET_ENGLISH</event>
   </node>
 
@@ -21,7 +21,7 @@
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.5</y_layout_factor>
     <style>title-button</style>
-    <event_type>SET_PREFERENCE</event_type>
+    <event_type>SET_LANGUAGE</event_type>
     <event>SET_SPANISH</event>
   </node>
 
@@ -34,7 +34,7 @@
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.7</y_layout_factor>
     <style>title-button</style>
-    <event_type>SET_PREFERENCE</event_type>
+    <event_type>SET_LANGUAGE</event_type>
     <event>SET_FRENCH</event>
   </node>
 
@@ -57,6 +57,6 @@
     <y_layout_factor>0.85</y_layout_factor>
     <style>theme-selection-box</style>
     <event_type>SET_PREFERENCE</event_type>
-    <event>CHANGE_THEME</event>
+    <event>CHANGE_SCENE</event>
   </node>
 </scene_elements>

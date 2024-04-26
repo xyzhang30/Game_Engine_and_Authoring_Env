@@ -10,6 +10,13 @@ import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.scene_management.scene_element.GameStatusManager;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 
+
+/**
+ * The GameManagementEventHandler class handles events related to managing game-related scenes and status updates.
+ * It maps scene element events to their respective event handlers for setting the round, turn, and scores.
+ *
+ * @author Jordan Haytaian
+ */
 public class GameManagementEventHandler {
 
   private final SceneManager sceneManager;
@@ -17,17 +24,11 @@ public class GameManagementEventHandler {
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
 
   /**
-   * Constructs a new instance of the SceneElementHandler class.
-   * <p>
-   * This constructor initializes a SceneElementHandler object with the specified game controller
-   * and scene manager. The game controller is responsible for managing the game state, while the
-   * scene manager is responsible for managing different scenes within the game environment.
-   * Additionally, the constructor sets the angle increment value to a default of 5 degrees.
+   * Constructs a GameManagementEventHandler with the specified SceneManager and GameStatusManager.
+   * Initializes the event map by creating the mapping between SceneElementEvents and their respective handlers.
    *
-   * @param sceneManager      An instance of the `SceneManager` class, responsible for managing
-   *                          different scenes within the game environment.
-   * @param gameStatusManager An instance of the 'GameStatusManager' class, responsible for managing
-   *                          the game elements related to displaying the game status
+   * @param sceneManager The scene manager for handling scene transitions and updates.
+   * @param gameStatusManager The game status manager for managing game status displays.
    */
   public GameManagementEventHandler(SceneManager sceneManager,
       GameStatusManager gameStatusManager) {
@@ -38,15 +39,11 @@ public class GameManagementEventHandler {
   }
 
   /**
-   * Handles events for the specified node based on the given event type.
-   * <p>
-   * This method checks the event type of the given node and delegates the handling of the event to
-   * the appropriate method. It checks for different types of events such as scene change events,
-   * gameplay change events, and striking events, and calls the corresponding handler method for
-   * each event type.
+   * Creates an event handler for the specified node and event type.
+   * The handler will invoke the appropriate event function when the event occurs on the given node.
    *
-   * @param node  The scene element node to handle events for.
-   * @param event A string representing the type of event to handle.
+   * @param node The node to which the event handler will be attached.
+   * @param event The event type as a string that specifies the event to handle.
    */
   public void createElementHandler(Node node, String event) {
     Consumer<Node> consumer = eventMap.get(SceneElementEvent.valueOf(event));
