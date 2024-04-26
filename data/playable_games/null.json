@@ -1,32 +1,11 @@
 {
   "gameName" : null,
   "game_objects" : [ {
-    "properties" : [ "visible" ],
+    "properties" : [ "visible", "visible" ],
     "mass" : 0.0,
     "position" : {
-      "x_position" : 835.4000244140625,
-      "y_position" : 497.79998779296875
-    },
-    "shape" : "Circle",
-    "dimension" : {
-      "x_dimension" : 66.0,
-      "y_dimension" : 66.0
-    },
-    "color" : null,
-    "staticFriction" : 0.0,
-    "kineticFriction" : 0.0,
-    "inclineAngle" : 0.0,
-    "image" : null,
-    "direction" : 0.0,
-    "inelastic" : false,
-    "phaser" : false,
-    "gameobject_id" : 2
-  }, {
-    "properties" : [ "visible" ],
-    "mass" : 0.0,
-    "position" : {
-      "x_position" : 812.2000122070312,
-      "y_position" : 641.5999755859375
+      "x_position" : 819.4000244140625,
+      "y_position" : 256.7999954223633
     },
     "shape" : "Rectangle",
     "dimension" : {
@@ -41,7 +20,70 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "gameobject_id" : 2
+  }, {
+    "properties" : [ "visible", "visible" ],
+    "mass" : 0.0,
+    "position" : {
+      "x_position" : 801.7999877929688,
+      "y_position" : 450.6000061035156
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 66.0,
+      "y_dimension" : 66.0
+    },
+    "color" : null,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : null,
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
     "gameobject_id" : 1
+  }, {
+    "properties" : [ "visible", "visible" ],
+    "mass" : 0.0,
+    "position" : {
+      "x_position" : 603.4000244140625,
+      "y_position" : 333.79998779296875
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 66.0,
+      "y_dimension" : 66.0
+    },
+    "color" : null,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : null,
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "gameobject_id" : 3
+  }, {
+    "properties" : [ "visible", "visible" ],
+    "mass" : 0.0,
+    "position" : {
+      "x_position" : 827.4000244140625,
+      "y_position" : 592.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 106.0,
+      "y_dimension" : 56.0
+    },
+    "color" : null,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : null,
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "gameobject_id" : 0
   } ],
   "players" : [ {
     "player_id" : 0,
@@ -60,24 +102,38 @@
     }
   } ],
   "rules" : {
-    "collisions" : [ ],
+    "collisions" : [ {
+      "first_id" : 3,
+      "second_id" : 2,
+      "command" : {
+        "AdvanceRoundCommand" : [ ],
+        "AdvanceTurnCommand" : [ ]
+      }
+    }, {
+      "first_id" : 1,
+      "second_id" : 3,
+      "command" : {
+        "ConditionalAdvanceTurnCommand" : [ ]
+      }
+    } ],
     "turn_policy" : "StandardTurnPolicy",
     "round_policy" : {
       "AllPlayersCompletedRoundCondition" : [ ]
     },
     "win_condition" : {
-      "AllPlayersCompletedRoundCondition" : [ ]
+      "RoundsCompletedCondition" : [ ]
     },
     "advance_turn" : {
-      "AdvanceRoundCommand" : [ ]
+      "AdvanceRoundCommand" : [ ],
+      "AdvanceTurnCommand" : [ ]
     },
     "advance_round" : {
-      "AdvanceTurnCommand" : [ ]
+      "AdvanceRoundCommand" : [ ]
     },
     "strike_policy" : "DoNothingStrikePolicy",
     "rank_comparator" : "HighestScoreComparator",
     "static_checker" : {
-      "VelocityStaticChecker" : [ ]
+      "VisibilityStaticChecker" : [ ]
     }
   },
   "keys" : {

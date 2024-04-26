@@ -96,6 +96,7 @@ public class AuthoringController {
 
     interactions.forEach((gameObjects, commands) -> {
       CollisionRule collisionRule = new CollisionRule(gameObjects.get(0), gameObjects.get(1), commands);
+      collisions.add(collisionRule);
     });
 
     String turnPolicy = policies.get("turnpolicy");
