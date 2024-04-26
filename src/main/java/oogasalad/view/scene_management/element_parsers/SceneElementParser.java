@@ -1,4 +1,4 @@
-package oogasalad.view.scene_management;
+package oogasalad.view.scene_management.element_parsers;
 
 import java.io.IOException;
 import java.util.ArrayList;

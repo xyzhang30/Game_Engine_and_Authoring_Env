@@ -33,6 +33,14 @@
   -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
 }
 
+.instructions-text {
+  -fx-fill: #FF851B;;
+  -fx-font-family: "Impact", "Arial", sans-serif;
+  -fx-font-size: 30px;
+  -fx-font-weight: bold;
+  -fx-text-alignment: center;
+}
+
 .title-text {
   -fx-fill: #0074D9;
   -fx-font-family: "Impact", "Arial", sans-serif;
