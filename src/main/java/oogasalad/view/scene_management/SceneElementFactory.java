@@ -26,6 +26,7 @@ public class SceneElementFactory {
 
   private final SceneElementStyler sceneElementStyler;
   private final SceneElementHandler sceneElementHandler;
+  private final LanguageManager
   private final double screenWidth;
   private final double screenHeight;
   private Map<SceneElementType, BiConsumer<Node, Map<String, String>>> elementConfigurationMap;
