@@ -5,13 +5,16 @@ import java.util.Map;
 import java.util.function.Consumer;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 import oogasalad.view.visual_elements.Arrow;
 
+/**
+ * The StrikeHandler class handles events related to striking in a game. It provides event handling
+ * for adjusting power and angle when preparing to strike.
+ */
 public class StrikeHandler {
 
   private final GameController gameController;
@@ -23,6 +26,13 @@ public class StrikeHandler {
   private Rectangle powerMeter;
   private Arrow angleArrow;
 
+  /**
+   * Constructs a StrikeHandler with the specified GameController and SceneManager. Initializes the
+   * event map by creating the mapping between SceneElementEvents and their respective handlers.
+   *
+   * @param gameController The game controller for managing game state and behavior.
+   * @param sceneManager   The scene manager for handling scene transitions and updates.
+   */
   public StrikeHandler(GameController gameController, SceneManager sceneManager) {
     this.gameController = gameController;
     this.sceneManager = sceneManager;
@@ -30,6 +40,13 @@ public class StrikeHandler {
     createEventMap();
   }
 
+  /**
+   * Creates an event handler for the specified node and event type. The handler will invoke the
+   * appropriate event function when the event occurs on the given node.
+   *
+   * @param node  The node to which the event handler will be attached.
+   * @param event The event type as a string that specifies the event to handle.
+   */
   public void createElementHandler(Node node, String event) {
     Consumer<Node> consumer = eventMap.get(SceneElementEvent.valueOf(event));
     consumer.accept(node);

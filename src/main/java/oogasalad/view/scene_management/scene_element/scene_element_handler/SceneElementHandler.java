@@ -1,335 +1,49 @@
 package oogasalad.view.scene_management.scene_element.scene_element_handler;
 
 import java.util.HashMap;
-import java.util.function.Consumer;
+import java.util.Map;
+import java.util.function.BiConsumer;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import oogasalad.view.api.enums.SupportedLanguage;
-import oogasalad.view.api.enums.ThemeType;
+import oogasalad.view.api.enums.SceneElementEventType;
 import oogasalad.view.controller.GameController;
-import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.scene_management.scene_element.GameStatusManager;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 
-/**
- * Handles scene element events and interactions within a game environment.
- * <p>
- * The `SceneElementHandler` class is responsible for managing the behavior of various elements
- * within a game scene. It interacts with the game controller and scene manager to facilitate
- * different types of events such as scene changes, gameplay changes, and striking actions. The
- * class uses the event type specified in the event parameter to determine the appropriate handler
- * method to call for the provided scene element.
- * <p>
- * The class allows for the creation of different event handlers for pause, resume, save, load, and
- * game start events. It also includes methods to handle power and angle adjustments for striking
- * events, as well as key event handlers to modify the power and angle based on user input.
- *
- * @author Jordan Haytaian
- */
 public class SceneElementHandler {
 
-  private final GameController gameController;
-  private final SceneManager sceneManager;
-  private final ChangeSceneEventHandler;
-  private final GameStatManagementHandler;
-  private final LanguageEventHandler;
+  private final ChangeSceneEventHandler changeSceneEventHandler;
+  private final GameStatManagementHandler gameStatManagementHandler;
+  private final LanguageEventHandler languageEventHandler;
+  private final GamePlayManagementHandler gamePlayManagementHandler;
+  private final StrikeHandler strikeHandler;
+  private Map<SceneElementEventType, BiConsumer<Node, String>> eventTypeMap;
 
-  /**
-   * Constructs a new instance of the SceneElementHandler class.
-   * <p>
-   * This constructor initializes a SceneElementHandler object with the specified game controller
-   * and scene manager. The game controller is responsible for managing the game state, while the
-   * scene manager is responsible for managing different scenes within the game environment.
-   * Additionally, the constructor sets the angle increment value to a default of 5 degrees.
-   *
-   * @param gameController    An instance of the `GameController` class, responsible for managing
-   *                          the game state.
-   * @param sceneManager      An instance of the `SceneManager` class, responsible for managing
-   *                          different scenes within the game environment.
-   * @param gameStatusManager An instance of the 'GameStatusManager' class, responsible for managing
-   *                          the game elements related to displaying the game status
-   */
   public SceneElementHandler(GameController gameController, SceneManager sceneManager,
       GameStatusManager gameStatusManager) {
-    this.gameController = gameController;
-    this.sceneManager = sceneManager;
-    this.gameStatusManager = gameStatusManager;
-
-    angleIncrement = 5;
-    createEventMap();
+    this.changeSceneEventHandler = new ChangeSceneEventHandler(gameController, sceneManager);
+    this.gameStatManagementHandler = new GameStatManagementHandler(sceneManager, gameStatusManager);
+    this.languageEventHandler = new LanguageEventHandler(sceneManager);
+    this.gamePlayManagementHandler = new GamePlayManagementHandler(gameController, sceneManager);
+    this.strikeHandler = new StrikeHandler(gameController, sceneManager);
+    createEventTypeMap();
   }
 
-  /**
-   * Handles events for the specified node based on the given event type.
-   * <p>
-   * This method checks the event type of the given node and delegates the handling of the event to
-   * the appropriate method. It checks for different types of events such as scene change events,
-   * gameplay change events, and striking events, and calls the corresponding handler method for
-   * each event type.
-   *
-   * @param node  The scene element node to handle events for.
-   * @param event A string representing the type of event to handle.
-   */
-  public void createElementHandler(Node node, String event) {
-    Consumer<Node> consumer = eventMap.get(SceneElementEvent.valueOf(event));
-    consumer.accept(node);
+  public void createElementHandler(Node node, String eventType, String event) {
+    BiConsumer<Node, String> handler = eventTypeMap.get(SceneElementEventType.valueOf(eventType));
+    handler.accept(node, event);
   }
 
-  private void createEventMap() {
-    eventMap = new HashMap<>();
-    addSceneChangeEventsToMap();
-    addGamePlayChangeEventsToMap();
-    addStrikingEventsToMap();
-    addGameManagementEventsToMap();
-    addPreferenceEventsToMap();
-  }
-
-  private void addGamePlayChangeEventsToMap() {
-    eventMap.put(SceneElementEvent.PAUSE, this::createPauseHandler);
-    eventMap.put(SceneElementEvent.RESUME, this::createResumeHandler);
-    eventMap.put(SceneElementEvent.SAVE, this::createSaveHandler);
-    eventMap.put(SceneElementEvent.LOAD, this::createLoadHandler);
-  }
-
-  private void addPreferenceEventsToMap() {
-    eventMap.put(SceneElementEvent.CHANGE_THEME, this::createThemeChangeHandler);
-    eventMap.put(SceneElementEvent.SET_ENGLISH, this::createSetEnglishHandler);
-    eventMap.put(SceneElementEvent.SET_SPANISH, this::createSetSpanishHandler);
-    eventMap.put(SceneElementEvent.SET_FRENCH, this::createSetFrenchHandler);
-  }
-
-  private void addStrikingEventsToMap() {
-    eventMap.put(SceneElementEvent.POWER_HEIGHT, this::getMaxPower);
-    eventMap.put(SceneElementEvent.SET_POWER, this::createPowerHandler);
-    eventMap.put(SceneElementEvent.SET_ANGLE, this::setAngleArrow);
-  }
-
-  private void addGameManagementEventsToMap() {
-    eventMap.put(SceneElementEvent.SET_ROUND, this::setRound);
-    eventMap.put(SceneElementEvent.SET_TURN, this::setTurn);
-    eventMap.put(SceneElementEvent.SET_SCORE, this::setScores);
-  }
-
-  private void createSaveHandler(Node node) {
-    node.setOnMouseClicked((e -> {
-      sceneManager.getRoot().requestFocus();
-    }));
-  }
-
-  private void createLoadHandler(Node node) {
-    node.setOnMouseClicked((e -> {
-      sceneManager.getRoot().requestFocus();
-    }));
-  }
-
-  private void createStartMenuHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createMenuScene());
-  }
-
-  private void createStartAuthoringHandler(Node node) {
-    node.setOnMouseClicked(e -> gameController.openAuthorEnvironment());
-  }
-
-  private void createStartGameHandler(Node node) {
-    ListView<String> gameList = (ListView<String>) node;
-    gameList.setItems(gameController.getGameTitles());
-    node.setOnMouseClicked(e -> {
-      String game = gameList.getSelectionModel().getSelectedItem();
-      if (game != null) {
-        gameController.startGamePlay(game);
-      }
-    });
-  }
-
-  private void createPauseHandler(Node node) {
-    node.setOnMouseClicked((e -> {
-      sceneManager.createPauseDisplay();
-      gameController.pauseGame();
-      sceneManager.getRoot().requestFocus();
-    }));
-  }
-
-  private void createResumeHandler(Node node) {
-    node.setOnMouseClicked(e -> {
-      sceneManager.removePauseSheen();
-      sceneManager.getRoot().requestFocus();
-      gameController.resumeGame();
-    });
-  }
-
-  private void getMaxPower(Node node) {
-    maxPower = ((Rectangle) node).getHeight();
-  }
-
-  private void createPowerHandler(Node node) {
-    powerMeter = (Rectangle) node;
-    minPower = powerMeter.getHeight();
-    boolean ableToStrike = gameController.getAbleToStrike();
-    Pane root = sceneManager.getRoot();
-    root.setOnKeyPressed(e -> {
-      switch (e.getCode()) {
-        case UP: {
-          handleUpKey(ableToStrike);
-          break;
-        }
-        case DOWN: {
-          handleDownKey(ableToStrike);
-          break;
-        }
-        case LEFT: {
-          handleLeftKey(ableToStrike);
-          break;
-        }
-        case RIGHT: {
-          handleRightKey(ableToStrike);
-          break;
-        }
-        case ENTER: {
-          handleStrike(ableToStrike);
-          break;
-        }
-      }
-    });
-  }
-
-  private void handleUpKey(boolean ableToStrike) {
-    if (ableToStrike) {
-      increasePower();
-    } else {
-      gameController.moveControllableY(true);
-    }
-  }
-
-  private void handleDownKey(boolean ableToStrike) {
-    if (ableToStrike) {
-      decreasePower();
-    } else {
-      gameController.moveControllableY(false);
-    }
-  }
-
-  private void handleLeftKey(boolean ableToStrike) {
-    if (ableToStrike) {
-      decreaseAngle();
-    } else {
-      gameController.moveControllableX(false);
-    }
-  }
-
-  private void handleRightKey(boolean ableToStrike) {
-    if (ableToStrike) {
-      increaseAngle();
-    } else {
-      gameController.moveControllableX(true);
-    }
-  }
-
-  private void decreaseAngle() {
-    if (angleArrow.getRotate() > -180) {
-      angleArrow.setRotate(angleArrow.getRotate() - angleIncrement);
-    }
-  }
-
-  private void increaseAngle() {
-    if (angleArrow.getRotate() < 180) {
-      angleArrow.setRotate(angleArrow.getRotate() + angleIncrement);
-    }
-  }
-
-  private void increasePower() {
-    if (powerMeter.getHeight() < maxPower - 3 * minPower) {
-      powerMeter.setLayoutY(powerMeter.getLayoutY() - 10);
-      powerMeter.setHeight(powerMeter.getHeight() + 10);
-    }
-  }
-
-  private void decreasePower() {
-    if (powerMeter.getHeight() > 2 * minPower) {
-      powerMeter.setLayoutY(powerMeter.getLayoutY() + 10);
-      powerMeter.setHeight(powerMeter.getHeight() - 10);
-    }
-  }
-
-  private void handleStrike(boolean ableToStrike) {
-    double angle = (-90 + angleArrow.getRotate()) * (Math.PI / 180);
-    double fractionalVelocity = powerMeter.getHeight() / maxPower;
-    if (ableToStrike) {
-      gameController.hitPointScoringObject(fractionalVelocity, angle);
-      //sceneManager.hideStrikingElements();
-    }
-  }
-
-  private void setAngleArrow(Node node) {
-    angleArrow = (Polygon) node;
-  }
-
-  private void createNextRoundHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.removeTransitionSheen());
-  }
-
-  private void createStartTitleHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createTitleScene());
-  }
-
-  private void setRound(Node node) {
-    gameStatusManager.setRoundText(((Text) node));
-  }
-
-  private void setTurn(Node node) {
-    gameStatusManager.setTurnText(((Text) node));
-  }
-
-  private void setScores(Node node) {
-    gameStatusManager.setScoreList((ListView<String>) node);
-    node.setOnMouseClicked(e -> {
-      sceneManager.getRoot().requestFocus();
-    });
-  }
-
-  private void createThemeChangeHandler(Node node) {
-    ComboBox<ThemeType> comboBox = (ComboBox<ThemeType>) node;
-    comboBox.getItems().addAll(ThemeType.values());
-    comboBox.setOnAction(event -> {
-      ThemeType selectedTheme = comboBox.getValue();
-      sceneManager.changeTheme(selectedTheme);
-    });
-  }
-
-  private void createNewGameHandler(Node node) {
-    node.setOnMouseClicked(e -> gameController.createNewWindow());
-  }
-
-  private void createHelpInstructionsHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createHelpInstructions());
-  }
-
-  private void createStartLanguageHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createLanguageSelectionScene());
-  }
-
-  private void createSetEnglishHandler(Node node) {
-    node.setOnMouseClicked(e -> {
-      sceneManager.setLanguage(SupportedLanguage.ENGLISH);
-      sceneManager.createTitleScene();
-    });
-  }
-
-  private void createSetSpanishHandler(Node node) {
-    node.setOnMouseClicked(e -> {
-      sceneManager.setLanguage(SupportedLanguage.SPANISH);
-      sceneManager.createTitleScene();
-    });
-  }
-
-  private void createSetFrenchHandler(Node node) {
-    node.setOnMouseClicked(e -> {
-      sceneManager.setLanguage(SupportedLanguage.FRENCH);
-      sceneManager.createTitleScene();
-    });
+  private void createEventTypeMap() {
+    eventTypeMap = new HashMap<>();
+    eventTypeMap.put(SceneElementEventType.CHANGE_SCENE,
+        changeSceneEventHandler::createElementHandler);
+    eventTypeMap.put(SceneElementEventType.SET_LANGUAGE,
+        languageEventHandler::createElementHandler);
+    eventTypeMap.put(SceneElementEventType.MANAGE_GAME_STATS,
+        gameStatManagementHandler::createElementHandler);
+    eventTypeMap.put(SceneElementEventType.MANAGE_GAME_PLAY,
+        gamePlayManagementHandler::createElementHandler);
+    eventTypeMap.put(SceneElementEventType.STRIKE,
+        strikeHandler::createElementHandler);
   }
 }
