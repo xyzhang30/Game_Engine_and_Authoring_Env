@@ -3,9 +3,10 @@ package oogasalad.view.api.enums;
 /**
  * Represents an event type; used to specify which type of handler should be added to nodes
  *
- * @author Jordan Haytaian
+ * @author Jordan Haytaian (Doga Ozmen)
  */
 public enum SceneElementEventType {
+  START_LANGUAGE,
   START_TITLE,
   START_MENU,
   START_AUTHORING,
@@ -23,8 +24,13 @@ public enum SceneElementEventType {
   SET_SCORE,
   CHANGE_THEME,
   NEW_GAME_WINDOW,
+
   USER_TEXT,
   PASSWORD_TEXT,
   LOGIN,
-  CREATE_USER
+  CREATE_USER,
+  HELP,
+  SET_ENGLISH,
+  SET_SPANISH,
+  SET_FRENCH
 }

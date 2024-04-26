@@ -1,4 +1,4 @@
-package oogasalad.view.scene_management;
+package oogasalad.view.scene_management.scene_element;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -15,6 +15,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.api.enums.SceneElementType;
+import oogasalad.view.api.enums.SupportedLanguage;
+import oogasalad.view.api.enums.XMLTags;
 import oogasalad.view.visual_elements.Arrow;
 
 /**
@@ -27,24 +29,11 @@ public class SceneElementFactory {
 
   private final SceneElementStyler sceneElementStyler;
   private final SceneElementHandler sceneElementHandler;
+  private final LanguageManager languageManager;
   private final double screenWidth;
   private final double screenHeight;
+  private SupportedLanguage language;
   private Map<SceneElementType, BiConsumer<Node, Map<String, String>>> elementConfigurationMap;
-  private final String classTag = "class";
-  private final String textTag = "text";
-  private final String typeTag = "type";
-  private final String widthFactorTag = "width_factor";
-  private final String heightFactorTag = "height_factor";
-  private final String xLayoutFactorTag = "x_layout_factor";
-  private final String yLayoutFactorTag = "y_layout_factor";
-  private final String xLayoutTag = "x_layout";
-  private final String yLayoutTag = "y_layout";
-  private final String stemWidthTag = "stem_width";
-  private final String stemHeightTag = "stem_height";
-  private final String arrowWidthOffsetTag = "arrow_width_offset";
-  private final String arrowHeightOffsetTag = "arrow_height_offset";
-  private final String styleTag = "styling";
-  private final String eventTag = "event";
 
   /**
    * Constructor creates sceneElementParser to get parameters from xml files
@@ -60,6 +49,7 @@ public class SceneElementFactory {
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
     this.sceneElementHandler = sceneElementHandler;
+    languageManager = new LanguageManager();
     createElementConfigurationMap();
   }
 
@@ -69,7 +59,9 @@ public class SceneElementFactory {
    * @param parameterList maps parameter name to value
    * @return container for all scene elements
    */
-  public Pane createSceneElements(List<Map<String, String>> parameterList) {
+  public Pane createSceneElements(List<Map<String, String>> parameterList,
+      SupportedLanguage language) {
+    this.language = language;
     AnchorPane sceneElementPane = new AnchorPane();
     sceneElementPane.setPrefWidth(screenWidth);
     sceneElementPane.setPrefHeight(screenHeight);
@@ -77,7 +69,7 @@ public class SceneElementFactory {
     for (Map<String, String> parameterMap : parameterList) {
 
       try {
-        String className = parameterMap.get(classTag);
+        String className = parameterMap.get(XMLTags.CLASS.name().toLowerCase());
         Class<?> classObj = Class.forName(className);
         Object obj = classObj.getDeclaredConstructor().newInstance();
         Node node = (Node) obj;
@@ -99,62 +91,83 @@ public class SceneElementFactory {
   }
 
   private void configureRectangle(Node node, Map<String, String> parameters) {
-    double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
-    double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
+    double widthFactor = parseDoubleParameter(parameters,
+        XMLTags.WIDTH_FACTOR.name().toLowerCase());
+    double heightFactor = parseDoubleParameter(parameters,
+        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
     Rectangle rectangle = (Rectangle) node;
     rectangle.setWidth(widthFactor * screenWidth);
     rectangle.setHeight(heightFactor * screenHeight);
   }
 
   private void configureText(Node node, Map<String, String> parameters) {
-    String displayText = parameters.get(textTag);
+    String textTag = parameters.get(XMLTags.TEXT.name().toLowerCase());
+    double widthFactor = parseDoubleParameter(parameters,
+        XMLTags.WIDTH_FACTOR.name().toLowerCase());
     Text text = (Text) node;
-    if (displayText != null) {
-      text.setText(displayText);
+    if (widthFactor != 0) {
+      text.setWrappingWidth(widthFactor * screenWidth);
+    }
+    if (textTag != null) {
+      String translatedText = languageManager.getText(language, textTag);
+      text.setText(translatedText);
     }
   }
 
   private void configureArrow(Node node, Map<String, String> parameters) {
-    double xLayoutFactor = parseDoubleParameter(parameters, xLayoutTag);
-    double yLayoutFactor = parseDoubleParameter(parameters, yLayoutTag);
-    double stemWidth = parseDoubleParameter(parameters, stemWidthTag);
-    double stemHeight = parseDoubleParameter(parameters, stemHeightTag);
-    double arrowWidthOffset = parseDoubleParameter(parameters, arrowWidthOffsetTag);
-    double arrowHeightOffset = parseDoubleParameter(parameters, arrowHeightOffsetTag);
+    double xLayoutFactor = parseDoubleParameter(parameters,
+        XMLTags.X_LAYOUT_FACTOR.name().toLowerCase());
+    double yLayoutFactor = parseDoubleParameter(parameters,
+        XMLTags.Y_LAYOUT_FACTOR.name().toLowerCase());
+    double stemWidth = parseDoubleParameter(parameters,
+        XMLTags.Y_LAYOUT_FACTOR.name().toLowerCase());
+    double stemHeight = parseDoubleParameter(parameters, XMLTags.STEM_HEIGHT.name().toLowerCase());
+    double arrowWidthOffset = parseDoubleParameter(parameters,
+        XMLTags.ARROW_WIDTH_OFFSET.name().toLowerCase());
+    double arrowHeightOffset = parseDoubleParameter(parameters,
+        XMLTags.ARROW_HEIGHT_OFFSET.name().toLowerCase());
 
     Arrow arrow = (Arrow) node;
 
-    arrow.setArrowDimensions(xLayoutFactor * screenWidth, yLayoutFactor * screenHeight, stemWidth,
-        stemHeight, arrowWidthOffset, arrowHeightOffset);
+    arrow.setArrowDimensions(xLayoutFactor * screenWidth, yLayoutFactor * screenHeight,
+        stemWidth, stemHeight, arrowWidthOffset, arrowHeightOffset);
   }
 
   private void configureButton(Node node, Map<String, String> parameters) {
-    String displayText = parameters.get(textTag);
-    double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
-    double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
+    String textTag = parameters.get(XMLTags.TEXT.name().toLowerCase());
+    double widthFactor = parseDoubleParameter(parameters,
+        XMLTags.WIDTH_FACTOR.name().toLowerCase());
+    double heightFactor = parseDoubleParameter(parameters,
+        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
 
     Button button = (Button) node;
-    if (displayText != null) {
-      button.setText(displayText);
+    if (textTag != null) {
+      String translatedText = languageManager.getText(language, textTag);
+      button.setText(translatedText);
     }
     button.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
   }
 
   private void configureComboBox(Node node, Map<String, String> parameters) {
-    String displayText = parameters.get(textTag);
-    double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
-    double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
+    String textTag = parameters.get(XMLTags.TEXT.name().toLowerCase());
+    double widthFactor = parseDoubleParameter(parameters,
+        XMLTags.WIDTH_FACTOR.name().toLowerCase());
+    double heightFactor = parseDoubleParameter(parameters,
+        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
 
     ComboBox<String> comboBox = (ComboBox<String>) node;
-    if (displayText != null) {
-      comboBox.setPromptText(displayText);
+    if (textTag != null) {
+      String translatedText = languageManager.getText(language, textTag);
+      comboBox.setPromptText(translatedText);
     }
     comboBox.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
   }
 
   private void configureListView(Node node, Map<String, String> parameters) {
-    double widthFactor = parseDoubleParameter(parameters, widthFactorTag);
-    double heightFactor = parseDoubleParameter(parameters, heightFactorTag);
+    double widthFactor = parseDoubleParameter(parameters,
+        XMLTags.WIDTH_FACTOR.name().toLowerCase());
+    double heightFactor = parseDoubleParameter(parameters,
+        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
 
     ListView<String> listView = (ListView<String>) node;
     listView.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
@@ -170,21 +183,24 @@ public class SceneElementFactory {
 
 
   private void handleLayout(Node node, Map<String, String> parameters) {
-    double xLayoutFactor = parseDoubleParameter(parameters, xLayoutFactorTag);
-    double yLayoutFactor = parseDoubleParameter(parameters, yLayoutFactorTag);
+    double xLayoutFactor = parseDoubleParameter(parameters,
+        XMLTags.X_LAYOUT_FACTOR.name().toLowerCase());
+    double yLayoutFactor = parseDoubleParameter(parameters,
+        XMLTags.Y_LAYOUT_FACTOR.name().toLowerCase());
     node.setLayoutX(xLayoutFactor * screenWidth);
     node.setLayoutY(yLayoutFactor * screenHeight);
   }
 
   private void handleStyle(Node node, Map<String, String> parameters) {
-    String style = parameters.get(styleTag);
+    String style = parameters.get(XMLTags.STYLE.name().toLowerCase());
     if (style != null) {
       sceneElementStyler.style(node, style);
+    } else {
     }
   }
 
   private void handleEvent(Node node, Map<String, String> parameters) {
-    String event = parameters.get(eventTag);
+    String event = parameters.get(XMLTags.EVENT.name().toLowerCase());
     if (event != null) {
       sceneElementHandler.createElementHandler(node, event);
     }
@@ -210,7 +226,7 @@ public class SceneElementFactory {
   }
 
   private void executeConfigurationMethod(Node node, Map<String, String> parameters) {
-    String type = parameters.get(typeTag);
+    String type = parameters.get(XMLTags.TYPE.name().toLowerCase());
     if (type != null) {
       BiConsumer<Node, Map<String, String>> configurationMethod = elementConfigurationMap.get(
           SceneElementType.valueOf(type));

@@ -1,5 +1,6 @@
 package oogasalad.view.authoring_environment.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import oogasalad.view.api.authoring.Panel;
@@ -28,6 +29,7 @@ public class Container {
    * @param panels A list of Panel objects to be set in the container.
    */
   public void setPanels(List<Panel> panels) {
+    this.panels = new ArrayList<>();
     this.panels = panels;
   }
 

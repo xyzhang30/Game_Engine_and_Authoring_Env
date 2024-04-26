@@ -6,6 +6,7 @@ import oogasalad.model.api.StrikeablesView;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.GameObjectShape;
+import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +18,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class GameLoaderView extends GameLoader {
 
+  private final String JAVAFX_SHAPE_CLASS_PATH = "javafx.scene.shape.";
   private static final Logger LOGGER = LogManager.getLogger(GameLoaderView.class);
 
 //  private static final String RESOURCE_FOLDER_PATH = "src/main/resources/";
@@ -40,7 +42,7 @@ public class GameLoaderView extends GameLoader {
         strikeableIDs.add(o.collidableId());
       }
       int id = o.collidableId();
-      GameObjectShape shape = matchShape(o.shape());
+      String shape = matchShape(o.shape());
       List<Integer> colorRgb = new ArrayList<>();
       for (int i : o.color()) {
         colorRgb.add(validateRgbValue(i));
@@ -57,11 +59,12 @@ public class GameLoaderView extends GameLoader {
     strikeablesView = new StrikeablesView(strikeableIDs);
   }
 
-  private GameObjectShape matchShape(String shape) throws InvalidShapeException {
+
+  private String matchShape(String shape) throws InvalidShapeException {
     System.out.println(shape);
     return switch (shape) {
-      case "Circle", "circle" -> GameObjectShape.ELLIPSE;
-      case "Rectangle", "rectangle" -> GameObjectShape.RECTANGLE;
+      case "Circle", "circle" -> JAVAFX_SHAPE_CLASS_PATH + "Ellipse";
+      case "Rectangle", "rectangle" -> JAVAFX_SHAPE_CLASS_PATH + "Rectangle";
       default -> {
         LOGGER.error("Shape" + shape + " is not supported");
         throw new InvalidShapeException("Shape " + shape + " is not supported");

@@ -14,6 +14,7 @@ public interface Panel {
 
   Logger LOGGER = LogManager.getLogger(Panel.class);
   String RESOURCE_FOLDER_PATH = "view.";
+  String VIEW_PROPERTIES_FOLDER = "properties.";
   String UI_FILE_PREFIX = "UIElements";
 
   /**
