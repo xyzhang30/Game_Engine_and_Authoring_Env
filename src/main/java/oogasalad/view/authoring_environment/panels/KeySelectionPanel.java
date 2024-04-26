@@ -71,10 +71,14 @@ public class KeySelectionPanel implements Panel {
       inputField.setOnKeyPressed(event -> {
         KeyCode keycode = event.getCode();
         String keyCodeString = keycode.toString();
+        if (authoringProxy.keyAlreadyUsed(keyCodeString)){
+          System.out.println("---EVENT CONSUMED---");
+          event.consume();
+          return;
+        }
         String jsonKeyTypeLabel = String.join("_",inputField.getId().split(" ")).toLowerCase();
         authoringProxy.addKeyPreference(jsonKeyTypeLabel, keyCodeString);
         inputField.setText(keyCodeString);
-        System.out.println("INPUT KEY: "+keyCodeString);
       });
     });
   }

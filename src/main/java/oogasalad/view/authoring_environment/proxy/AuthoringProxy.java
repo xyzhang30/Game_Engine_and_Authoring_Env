@@ -2,8 +2,10 @@ package oogasalad.view.authoring_environment.proxy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.shape.Shape;
@@ -111,6 +113,16 @@ public class AuthoringProxy {
   public void addKeyPreference(String keyType, String keyCode){
     keyPreferences.put(keyType, keyCode);
     System.out.println("CURRENT KEY PREFS: "+keyPreferences);
+  }
+
+  public boolean keyAlreadyUsed(String key){
+    System.out.println("EXISTING KEYS: "+keyPreferences.values());
+    for (String keyCode : keyPreferences.values()){
+      if (key.equals(keyCode)){
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
