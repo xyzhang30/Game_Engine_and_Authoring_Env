@@ -1,12 +1,11 @@
 package oogasalad.model.database;
 
 /**
- * The DatabaseApi interface defines methods for interacting with the database
- * to manage user accounts, game data, and permissions.
+ * The DatabaseApi interface defines methods for interacting with the database to manage user
+ * accounts, game data, and permissions.
  */
 
 import java.util.List;
-import oogasalad.model.database.GameScore;
 
 public interface DatabaseApi {
 

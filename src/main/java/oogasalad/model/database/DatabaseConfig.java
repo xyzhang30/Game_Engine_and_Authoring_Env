@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 
 public class DatabaseConfig {
+
   private static final String URL = "jdbc:postgresql://fysicsfun.c7m0ky02uhmn.us-east-2.rds"
       + ".amazonaws.com:5432/fysicsfundatabase2";
 

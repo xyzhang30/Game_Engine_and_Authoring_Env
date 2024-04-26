@@ -24,7 +24,7 @@ public class Database implements DatabaseApi {
   @Override
   public List<GameScore> getPlayerHighScoresForGame(String gameName, String playerName, int n) {
     List<GameScore> scores = new ArrayList<>();
-    String query  = "SELECT gr.playerusername, gr.score, gr.gameresult " +
+    String query = "SELECT gr.playerusername, gr.score, gr.gameresult " +
         "FROM gameresult gr " +
         "JOIN gameinstance gi ON gr.gameinstanceid = gi.gameinstanceid " +
         "WHERE gi.gamename = ? AND gr.playerusername = ?" +
@@ -44,7 +44,7 @@ public class Database implements DatabaseApi {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return scores.subList(0,Math.min(scores.size(),n));
+    return scores.subList(0, Math.min(scores.size(), n));
   }
 
   /**
@@ -58,7 +58,7 @@ public class Database implements DatabaseApi {
   @Override
   public List<GameScore> getGeneralHighScoresForGame(String gameName, int n) {
     List<GameScore> scores = new ArrayList<>();
-    String query  = "SELECT gr.playerusername, gr.score, gr.gameresult " +
+    String query = "SELECT gr.playerusername, gr.score, gr.gameresult " +
         "FROM gameresult gr " +
         "JOIN gameinstance gi ON gr.gameinstanceid = gi.gameinstanceid " +
         "WHERE gi.gamename = ? " +
@@ -69,7 +69,7 @@ public class Database implements DatabaseApi {
       pstmt.setString(1, gameName);
       ResultSet rs = pstmt.executeQuery();
       while (rs.next()) {
-        String playerusername= rs.getString("playerusername");
+        String playerusername = rs.getString("playerusername");
         int score = rs.getInt("score");
         boolean gameResult = rs.getBoolean("gameresult");
         scores.add(new GameScore(playerusername, gameName, score, gameResult));
@@ -77,7 +77,7 @@ public class Database implements DatabaseApi {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return scores.subList(0,Math.min(scores.size(),n));
+    return scores.subList(0, Math.min(scores.size(), n));
   }
 
   /**
@@ -145,7 +145,7 @@ public class Database implements DatabaseApi {
    */
 
   @Override
-  public boolean registerUser(String username, String password, String avatarUrl)   {
+  public boolean registerUser(String username, String password, String avatarUrl) {
     try (Connection conn = DatabaseConfig.getConnection()) {
       String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
       String sql = "INSERT INTO Players (username, password, avatarurl) VALUES (?, ?, ?)";
@@ -158,8 +158,7 @@ public class Database implements DatabaseApi {
         for (String gameName : getAllGames()) {
           try {
             grantPermissions(username, gameName, isGamePublic(gameName) ? "Player" : "None");
-          }
-          catch (SQLException e) {
+          } catch (SQLException e) {
 
           }
         }
@@ -168,8 +167,7 @@ public class Database implements DatabaseApi {
     } catch (PSQLException uniqueViolation) {
       uniqueViolation.printStackTrace();
       return true;
-    }
-    catch (SQLException e) {
+    } catch (SQLException e) {
       return false;
     }
   }
@@ -226,7 +224,7 @@ public class Database implements DatabaseApi {
     return false;
   }
 
-//retrieves list of all usernames
+  //retrieves list of all usernames
   private List<String> getAllPlayers() {
     List<String> usernames = new ArrayList<>();
     String sql = "SELECT username FROM Players";
@@ -262,7 +260,7 @@ public class Database implements DatabaseApi {
 
 
   //grants permissiosn to player for game in permissions db
-  private void grantPermissions( String username, String gameName,
+  private void grantPermissions(String username, String gameName,
       String permission) throws SQLException {
     String sql = "INSERT INTO Permissions (playerusername, gamename, permissions) VALUES (?, ?, ?) "
         + "ON CONFLICT (playerusername, gamename) DO UPDATE SET permissions = ?";
@@ -273,9 +271,7 @@ public class Database implements DatabaseApi {
       pstmt.setString(3, permission);
       pstmt.setString(4, permission);
       pstmt.executeUpdate();
-    }
-    catch (SQLException e) {
-      return;
+    } catch (SQLException e) {
     }
   }
 
@@ -298,8 +294,7 @@ public class Database implements DatabaseApi {
           if (generatedKeys.next()) {
             return generatedKeys.getInt(1);
           }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
           e.printStackTrace();
         }
       }
@@ -350,7 +345,7 @@ public class Database implements DatabaseApi {
 
   @Override
   public void assignPermissionToPlayers(String game, List<String> users, String permission) {
-    for(String user : users) {
+    for (String user : users) {
       try {
         grantPermissions(user, game, permission);
       } catch (SQLException e) {
