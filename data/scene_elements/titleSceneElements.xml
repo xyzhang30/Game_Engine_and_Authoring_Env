@@ -6,7 +6,7 @@
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.35</x_layout_factor>
-    <y_layout_factor>0.4</y_layout_factor>
+    <y_layout_factor>0.3</y_layout_factor>
     <styling>title-button</styling>
     <event>START_MENU</event>
   </node>
@@ -18,9 +18,21 @@
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.35</x_layout_factor>
-    <y_layout_factor>0.6</y_layout_factor>
+    <y_layout_factor>0.5</y_layout_factor>
     <styling>title-button</styling>
     <event>START_AUTHORING</event>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>Instructions</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
+    <y_layout_factor>0.7</y_layout_factor>
+    <styling>title-button</styling>
+    <event>HELP</event>
   </node>
 
   <node>
@@ -28,7 +40,7 @@
     <type>TEXT</type>
     <text>Fysics Fun</text>
     <x_layout_factor>0.36</x_layout_factor>
-    <y_layout_factor>0.3</y_layout_factor>
+    <y_layout_factor>0.2</y_layout_factor>
     <styling>title-text</styling>
   </node>
 
