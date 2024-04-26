@@ -336,26 +336,31 @@ public class SceneElementHandler {
     TextField password = new PasswordField(); //maybe set this as a password in the enum...?
     node.setOnMouseClicked(e -> gameController.openLogin(username.getText(), password.getText()));
     //add another or continue to play (new screen) shows current players like is this good or move on
+    //open the currentplayers screen with this player added to it
   }
 
   private void createUserCreatorHandler(Node node){
     TextField username = new TextField();
     TextField password = new PasswordField(); //maybe set this as a password in the enum...?
     node.setOnMouseClicked(e -> gameController.openCreateUser(username.getText(), password.getText()));
-
+    //add the new user to the database
+    //open the currentplayers screen with this player added to it
   }
 
   private void createPasswordHandler(Node node) {
     PasswordField password = (PasswordField) node;
+    //save the password and add to database with username if not already there
 
   }
 
   private void createUsernameHandler(Node node) {
     TextField username = (TextField) node;
+    //save username and add to database if not already there
   }
 
   private void createStartLoginHandler(Node node){
     node.setOnMouseClicked(e -> sceneManager.createLoginScene());
+
   }
 
   private void createLeaderboardHandler(Node node){
