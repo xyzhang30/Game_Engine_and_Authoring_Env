@@ -38,11 +38,15 @@ public class SceneManager {
   private int currentRound;
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
-  private final String gameManagementElementsPath = "data/scene_elements/gameManagementElements.xml";
+  private final String gameManagementElementsPath =
+      "data/scene_elements/gameManagementElements.xml";
   private final String transitionElementsPath = "data/scene_elements/transitionElements.xml";
   private final String gameOverSceneElementsPath = "data/scene_elements/gameOverElements.xml";
-  private final String pausePath = "data/scene_elements/pauseElements.xml";
-  private final String helpInstructionPath = "data/scene_elements/helpInstructionElements.xml";
+  private final String pauseElementsPath = "data/scene_elements/pauseElements.xml";
+  private final String helpInstructionElementsPath =
+      "data/scene_elements/helpInstructionElements.xml";
+  private final String languageSelectionElementsPath =
+      "data/scene_elements/languageSelectionElements.xml";
 
 
   /**
@@ -63,6 +67,7 @@ public class SceneManager {
     gameStatusManager = new GameStatusManager();
     sceneElementFactory = new SceneElementFactory(screenWidth, screenHeight, sceneElementStyler,
         new SceneElementHandler(gameController, this, gameStatusManager));
+    createLanguageSelectionScene();
   }
 
   /**
@@ -138,7 +143,7 @@ public class SceneManager {
 
   public void createHelpInstructions() {
     resetRoot();
-    root.getChildren().add(createSceneElements(helpInstructionPath));
+    root.getChildren().add(createSceneElements(helpInstructionElementsPath));
   }
 
   /**
@@ -158,11 +163,16 @@ public class SceneManager {
    */
   public void makeGameScreen(CompositeElement compositeElement, GameRecord gameRecord) {
     this.compositeElement = compositeElement;
-    pauseElements = createSceneElements(pausePath);
+    pauseElements = createSceneElements(pauseElementsPath);
     transitionElements = createSceneElements(transitionElementsPath);
     addGameManagementElementsToGame(gameRecord);
     addGameElementsToGame();
     root.requestFocus();
+  }
+
+  private void createLanguageSelectionScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(languageSelectionElementsPath));
   }
 
 
