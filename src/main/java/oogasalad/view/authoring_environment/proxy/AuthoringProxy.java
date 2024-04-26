@@ -31,6 +31,8 @@ public class AuthoringProxy {
   private final Map<List<Integer>, Map<String, List<Integer>>> interactionMap = new HashMap<>();
   private final Map<Shape, GameObjectAttributesContainer> gameObjectMap = new HashMap<>();
   private final Map<Integer, Map<CollidableType, List<Integer>>> playersMap = new HashMap<>();
+  private Map<String, List<Integer>> multiCommandCheckedIdx = new HashMap<>(); //checkComboBoxId mapped to checkedIndices
+
   private String gameName; // POPUP FOR SET GAME NAME
   private String currentScreenTitle;
   private AuthoringController authoringController;
@@ -125,6 +127,11 @@ public class AuthoringProxy {
     return false;
   }
 
+  public boolean ruleAlreadySelected(String ruleType){
+    return (this.policies.containsKey(ruleType) || this.conditionsCommands.containsKey(ruleType));
+  }
+
+
   /**
    * Returns the map of game objects.
    *
@@ -154,7 +161,7 @@ public class AuthoringProxy {
   public void completeAuthoring()
       throws MissingInteractionException, MissingNonControllableTypeException {
     try {
-      authoringController.writeRules(conditionsCommands, policies);
+      authoringController.writeRules(interactionMap, conditionsCommands, policies);
       authoringController.writePlayers(playersMap);
       authoringController.writeVariables();
       authoringController.writeGameObjects(gameObjectMap);
@@ -349,5 +356,23 @@ public class AuthoringProxy {
     }
   }
 
+  public String getSelectedSingleChoiceCommands(String ruleType) {
+    if (policies.containsKey(ruleType)){
+      return policies.get(ruleType);
+    } else {
+      String cmd = "";
+      for (String s : conditionsCommands.get(ruleType).keySet()){
+        cmd = s;
+      }
+      return cmd;
+    }
+  }
 
+  public Map<String,List<Integer>> getMultiCommandCheckedIdx(){
+    return multiCommandCheckedIdx;
+  }
+
+  public void updateMultiCommandCheckedIdx(String key, List<Integer> newIndices){
+    multiCommandCheckedIdx.put(key, newIndices);
+  }
 }

@@ -54,7 +54,7 @@ gen/
 *.war
 *.ear
 
-# Logs and databases #
+# Logs and Databases #
 ######################
 log/
 *.log

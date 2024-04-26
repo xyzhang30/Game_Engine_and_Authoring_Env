@@ -16,7 +16,7 @@
 
 * Plan for next Sprint?
 
-I hope to have time to start working on the backend aspects of the database and both extension
+I hope to have time to start working on the backend aspects of the Database and both extension
 requirements, as well as live games such as soccer and air hockey. This will require some
 interaction with the GameController as well. Furthermore, it will require the use of a socket to
 allow players to use multiple devices. The GameEngine is mostly done, but I will likely need to make
