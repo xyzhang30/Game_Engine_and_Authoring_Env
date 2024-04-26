@@ -173,6 +173,20 @@ public class Database implements DatabaseApi {
     }
   }
 
+  //checking whether user exists or not
+  public boolean doesUserExist(String username) {
+    String query = "SELECT 1 FROM Players WHERE username = ?";
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(query)) {
+      pstmt.setString(1, username);
+      ResultSet rs = pstmt.executeQuery();
+      return rs.next();  //true if user exists (bc at least one row exists)
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;  //false if user does not exist
+    }
+  }
+
 
 
   //returns true if game is publicly available, otherwise false

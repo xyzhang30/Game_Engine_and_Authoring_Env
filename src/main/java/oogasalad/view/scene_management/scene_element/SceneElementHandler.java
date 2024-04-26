@@ -334,7 +334,8 @@ public class SceneElementHandler {
   private void createLoginHandler(Node node){
     TextField username = new TextField();
     TextField password = new PasswordField(); //maybe set this as a password in the enum...?
-    node.setOnMouseClicked(e -> gameController.openLogin(username.getText(), password.getText()));
+    //TextField avatarUrl = new TextField(); //this should be from a button the same way that we choose the controllable or background images
+    node.setOnMouseClicked(e -> gameController.loginUser(username.getText(), password.getText()));
     //add another or continue to play (new screen) shows current players like is this good or move on
     //open the currentplayers screen with this player added to it
   }
@@ -342,7 +343,21 @@ public class SceneElementHandler {
   private void createUserCreatorHandler(Node node){
     TextField username = new TextField();
     TextField password = new PasswordField(); //maybe set this as a password in the enum...?
-    node.setOnMouseClicked(e -> gameController.openCreateUser(username.getText(), password.getText()));
+    TextField avatarUrl = new TextField(); //this should be from a button the same way that we choose the controllable or background images
+    node.setOnMouseClicked(e -> {
+      try {
+        boolean userCreated = gameController.createUser(username.getText(), password.getText(), avatarUrl.getText());
+        if (userCreated) {
+          // user created
+          sceneManager.createCurrentPlayersScene();
+        } else {
+          // user already exists or can't be created
+          sceneManager.displayErrorMessage("User already exists or could not be created.");
+        }
+      } catch (Exception ex) {
+        sceneManager.displayErrorMessage("Error: " + ex.getMessage());
+      }
+    });
     //add the new user to the database
     //open the currentplayers screen with this player added to it
   }

@@ -14,6 +14,7 @@ import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
+import oogasalad.view.database.CurrentPlayersList;
 import oogasalad.view.scene_management.scene_managers.AnimationManager;
 import oogasalad.view.scene_management.element_parsers.GameTitleParser;
 import oogasalad.view.scene_management.GameWindow;
@@ -37,6 +38,7 @@ public class GameController {
   private final GameTitleParser gameTitleParser;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
+  private CurrentPlayersList currentPlayersList;
   private Database databaseView;
   private boolean ableToStrike;
   private final int maxVelocity;
@@ -58,6 +60,8 @@ public class GameController {
     sceneManager = new SceneManager(this, width, height);
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
+    databaseView = new Database();
+    currentPlayersList = new CurrentPlayersList();
     ableToStrike = true;
     maxVelocity = 1000;
   }
@@ -232,8 +236,29 @@ public class GameController {
 //    //save password
 //  }
 
-  public void openCurrentPlayers(String username, String password, String avatarURL){
-    
+
+
+  public boolean loginUser(String username, String password) {
+    if (databaseView.doesUserExist(username)) {
+      currentPlayersList.saveUserInfo(username);  // save to listview for current players
+      return true;  // user exists, can log in
+    } else {
+      return false;
+      // if false then throw this exception throw new Exception("Login failed: User does not exist.");
+    }
   }
+
+  public boolean createUser(String username, String password, String avatarUrl) throws Exception {
+    if (!databaseView.doesUserExist(username)) {
+      databaseView.registerUser(username, password, avatarUrl);  // add to database
+      currentPlayersList.saveUserInfo(username);  // save to listview for current players
+      return true;  // new user created
+    } else {
+      throw new Exception("User creation failed: User already exists.");
+    }
+  }
+
+
+
 
 }
