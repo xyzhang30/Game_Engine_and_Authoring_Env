@@ -3,6 +3,7 @@ package oogasalad.view.authoringenvironment.panels;
 import java.util.List;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -24,31 +25,35 @@ public class ColorPanelTest extends DukeApplicationTest {
   private AnchorPane containerPane;
 
   @BeforeEach
-  public void setUp() {
-    // Mock the ShapeProxy to simulate shape interaction
-    mockShapeProxy = new ShapeProxy() {
-      // Mock implementation for test purposes, to track color changes
-      private Color color;
+  public void setUp() throws Exception {
+    // Ensure JavaFX thread is properly initialized
+    interact(() -> {
+      containerPane = new AnchorPane();
+      mockShapeProxy = new ShapeProxy() {
+        @Override
+        public javafx.scene.shape.Shape getShape() {
+          return new javafx.scene.shape.Rectangle();
+        }
+        @Override
+        public GameObjectAttributesContainer getGameObjectAttributesContainer() {
+          return new GameObjectAttributesContainer();
+        }
+      };
+      // Create the ColorPanel after initializing the containerPane
+      colorPanel = new ColorPanel(mockShapeProxy, containerPane);
 
-      @Override
-      public javafx.scene.shape.Shape getShape() {
-        return new javafx.scene.shape.Rectangle() {{
-          setFill(Color.WHITE); // Default color
-        }};
-      }
-
-      @Override
-      public GameObjectAttributesContainer getGameObjectAttributesContainer() {
-        return new GameObjectAttributesContainer() {
-          @Override
-          public void setColor(List<Integer> colorComponents) {
-            // Convert to Color and set
-            color = new Color(colorComponents.get(0) / 255.0,
-                colorComponents.get(1) / 255.0,
-                colorComponents.get(2) / 255.0, 1.0);
-          }
-        };
-      }
-    };
+      // Setup stage and scene to host the test elements
+      Stage stage = new Stage();
+      stage.setScene(new javafx.scene.Scene(containerPane, 400, 400));
+      stage.show();
+    });
   }
+
+  @Test
+  public void testColorPickerExists() {
+    // Ensure ColorPicker is properly added to the container
+    ColorPicker colorPicker = (ColorPicker) containerPane.lookup("#colorPicker");
+    assertNotNull(colorPicker, "ColorPicker should be initialized and added to the pane.");
+  }
+
 }
