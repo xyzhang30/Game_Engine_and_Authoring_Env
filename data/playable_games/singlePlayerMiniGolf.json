@@ -19,11 +19,12 @@
       },
       "staticFriction": 3.03873,
       "kineticFriction": 2.03873,
-      "color": [
+ "color": {"Default":  [
         124,
         252,
         0
-      ],
+      ]},
+
       "image": {"Default": ""}
 ,
       "direction": 0
@@ -46,11 +47,12 @@
       },
       "staticFriction": 3.03873,
       "kineticFriction": 2.03873,
-      "color": [
+ "color": {"Default":  [
         124,
         252,
         0
-      ],
+      ]},
+
       "image": {"Default": ""}
 ,
       "direction": 0
@@ -74,11 +76,12 @@
       "staticFriction": 3.03873,
       "kineticFriction": 2.03873,
       "inclineAngle": 0,
-      "color": [
+ "color": {"Default":  [
         124,
         252,
         0
-      ],
+      ]},
+
       "image": {"Default": ""}
 ,
       "direction": 0
@@ -182,11 +185,12 @@
       },
       "staticFriction": 3.03873,
       "kineticFriction": 2.03873,
-      "color": [
+ "color": {"Default":  [
         124,
         252,
         0
-      ],
+      ]},
+
       "image": {"Default": ""}
 ,
       "direction": 0
@@ -211,11 +215,12 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         255,
         255,
         255
-      ],
+      ]},
+
       "image": {"Default": ""}
 ,
       "direction": 0
@@ -238,11 +243,12 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
+      ]},
+
       "image": {"Default": ""}
 ,
       "direction": 0
@@ -265,11 +271,12 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
+      ]},
+
       "image": {"Default": ""}
 ,
       "direction": 0
@@ -292,11 +299,12 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
+      ]},
+
       "image": {"Default": ""}
 ,
       "direction": 0
@@ -319,11 +327,12 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
+      ]},
+
       "image": {"Default": ""}
 ,
       "direction": 0
@@ -346,11 +355,12 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
+      ]},
+
       "image": {"Default": ""}
 ,
       "direction": 0

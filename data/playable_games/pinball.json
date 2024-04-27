@@ -274,7 +274,8 @@
       "color" : [ 255, 0, 0 ],
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
-      "image" : ""
+      "image": {"Default": ""}
+
     },
     {
     "gameobject_id" : 1,
