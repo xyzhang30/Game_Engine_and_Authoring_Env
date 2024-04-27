@@ -3,7 +3,7 @@ package oogasalad.view.api.enums;
 /**
  * Represents an event type; used to specify which type of handler should be added to nodes
  *
- * @author Jordan Haytaian (Doga Ozmen)
+ * @author Jordan Haytaian, Doga Ozmen
  */
 public enum SceneElementEventType {
   START_LANGUAGE,

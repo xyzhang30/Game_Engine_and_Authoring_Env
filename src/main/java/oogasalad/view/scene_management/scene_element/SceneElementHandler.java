@@ -355,8 +355,11 @@ public class SceneElementHandler {
         boolean userCanLogin = databaseController.canUserLogin(usernameTextField.getText());
         if  (userCanLogin){
           currentPlayersManager.saveUserInfo(usernameTextField.getText());
-          databaseController.loginUser(usernameTextField.getText(), passwordField.getText());
-          System.out.println("createLoginHandler: user logged in");
+          boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(), passwordField.getText()); //true of user logged in
+          if (userLoggedIn){
+            sceneManager.createCurrentPlayersScene();
+            System.out.println("createLoginHandler: user logged in");
+          }
         } else {
           sceneManager.displayErrorMessage("User does not exist.");
           System.out.println("createLoginHandler printed an error message");

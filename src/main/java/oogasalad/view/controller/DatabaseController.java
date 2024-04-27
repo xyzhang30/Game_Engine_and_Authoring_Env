@@ -16,11 +16,13 @@ public class DatabaseController {
 
   public boolean canUserLogin(String username) {
     // if false then throw this exception throw new Exception("Login failed: User does not exist.");
+    System.out.println(databaseView.doesUserExist(username));
     return databaseView.doesUserExist(username);  // user exists, can log in
   }
 
-  public void loginUser(String username, String password){
-    databaseView.loginUser(username, password);
+  public boolean loginUser(String username, String password){
+    System.out.println(databaseView.loginUser(username, password));
+    return databaseView.loginUser(username, password);
   }
 
   public boolean canCreateUser(String username, String password, String avatarUrl) throws Exception {

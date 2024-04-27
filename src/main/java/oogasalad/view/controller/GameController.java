@@ -60,10 +60,10 @@ public class GameController {
    * @param height The height of the screen for the game.
    */
   public GameController(double width, double height) {
+    databaseController = new DatabaseController();
     sceneManager = new SceneManager(this, databaseController, width, height);
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
-    databaseController = new DatabaseController();
     currentPlayersManager = new CurrentPlayersManager();
     ableToStrike = true;
     maxVelocity = 1000;
