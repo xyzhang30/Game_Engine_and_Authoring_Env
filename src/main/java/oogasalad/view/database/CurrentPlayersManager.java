@@ -1,5 +1,7 @@
 package oogasalad.view.database;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -13,22 +15,17 @@ import javafx.scene.text.Text;
  */
 public class CurrentPlayersManager {
 
-  private ListView<String> playersListView;
+  private ObservableList<String> currentPlayersList;
+
+  public CurrentPlayersManager() {
+    this.currentPlayersList = FXCollections.observableList(new ArrayList<>());
+  }
 
 
   public void setPlayersListView(ListView<String> playersListView){
-    this.playersListView = playersListView;
+    playersListView.setItems(currentPlayersList);
   }
 
-
-  /**
-   * Gets the ListView for displaying current players.
-   *
-   * @return ListView for displaying players.
-   */
-  public ListView<String> getPlayersListView() {
-    return playersListView;
-  }
 
   /**
    * Updates the ListView with the current players by adding a new username.
@@ -37,11 +34,7 @@ public class CurrentPlayersManager {
    * @param username the username of the player to add
    */
   public void saveUserInfo(String username) {
-    if (playersListView != null) {
-      ObservableList<String> items = playersListView.getItems();
-      items.add(username);
-      playersListView.setItems(items);
-    }
+    currentPlayersList.add(username);
   }
 
 }
