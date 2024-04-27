@@ -117,7 +117,7 @@
       }
     } ],
     "turn_policy" : "StandardTurnPolicy",
-    "round_policy" : {
+    "round_condition" : {
       "AllPlayersCompletedRoundCondition" : [ ]
     },
     "win_condition" : {

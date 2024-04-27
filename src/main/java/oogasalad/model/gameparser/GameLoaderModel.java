@@ -63,9 +63,11 @@ public class GameLoaderModel extends GameLoader {
    */
   public GameLoaderModel(String gameTitle) throws InvalidFileException {
     super(gameTitle);
-    createPlayerContainer();
     collidables = new ArrayList<>();
     physicsMap = new HashMap<>();
+    playerMap = new HashMap<>();
+    gameData.getPlayers().forEach(p -> playerMap.put(p.playerId(), new Player(p.playerId())));
+    playerContainer = new PlayerContainer(playerMap.values());
     staticHandler = StaticStateHandlerLinkedListFactory.buildLinkedList(List.of(
         "GameOverStaticStateHandler",
         "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
@@ -175,15 +177,6 @@ public class GameLoaderModel extends GameLoader {
     );
   }
 
-  private void createPlayerContainer() {
-    playerMap = new HashMap<>();
-    gameData.getPlayers().forEach(p -> {
-      playerMap.put(p.playerId(), new Player(p.playerId()));
-      Player player = new Player(p.playerId());
-      playerMap.put(p.playerId(), player);
-    });
-    this.playerContainer = new PlayerContainer(playerMap.values());
-  }
 
   private void createRulesRecord() {
     Rules rules = gameData.getRules();
@@ -191,14 +184,13 @@ public class GameLoaderModel extends GameLoader {
     List<Command> advanceTurnCmds = createCommands(rules.advanceTurn());
     List<Command> advanceRoundCmds = createCommands(rules.advanceRound());
     Condition winCondition = createCondition(rules.winCondition());
-    Condition roundPolicy = createCondition(rules.roundPolicy());
-    TurnPolicy turnPolicy = TurnPolicyFactory.createTurnPolicy(rules.turnPolicy(),
-        playerContainer);;
+    Condition roundCondition = createCondition(rules.roundCondition());
+    TurnPolicy turnPolicy = TurnPolicyFactory.createTurnPolicy(rules.turnPolicy(), playerContainer);
     StrikePolicy strikePolicy = StrikePolicyFactory.createStrikePolicy(rules.strikePolicy());
     PlayerRecordComparator comp = PlayerRankComparatorFactory.createRankComparator(rules.rankComparator());
     List<StaticChecker> checkers =  StaticCheckerFactory.createStaticChecker(rules.staticChecker());
     rulesRecord = new RulesRecord(commandMap,
-        winCondition, roundPolicy, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy,
+        winCondition, roundCondition, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy,
         staticHandler, strikePolicy, comp, checkers);
   }
 
@@ -218,16 +210,12 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private Map<Pair, List<Command>> createCommandMap() {
-    Map<Pair, List<Command>> commandMap = new HashMap<>();
-    gameData.getRules().collisions().forEach(rule -> {
-      List<Command> commands = new ArrayList<>();
-      rule.command().forEach((cmdName, params) -> {
-        commands.add(CommandFactory.createCommand(cmdName, params, gameObjects));
-      });
-      commandMap.put(new Pair(gameObjects.get(rule.firstId()), gameObjects.get(rule.secondId())),
-          commands);
-    });
-    return commandMap;
+    return gameData.getRules().collisions().stream()
+        .collect(Collectors.toMap(
+            rule -> new Pair(gameObjects.get(rule.firstId()), gameObjects.get(rule.secondId())),
+            rule -> rule.command().entrySet().stream()
+                .map(entry -> CommandFactory.createCommand(entry.getKey(), entry.getValue(), gameObjects))
+                .collect(Collectors.toList())));
   }
 
 }

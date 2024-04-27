@@ -546,7 +546,7 @@
       }
     ],
     "turn_policy": "StandardTurnPolicy",
-    "round_policy": {
+    "round_condition": {
       "TurnsCompletedCondition": [
         2
       ]
