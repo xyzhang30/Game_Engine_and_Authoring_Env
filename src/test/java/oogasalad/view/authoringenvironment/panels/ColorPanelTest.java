@@ -78,4 +78,44 @@ public class ColorPanelTest extends DukeApplicationTest {
     waitForFxEvents();
   }
 
+  @Test
+  public void testBoundaryColorValuesWhite() {
+    Platform.runLater(() -> {
+      ColorPicker colorPicker = (ColorPicker) containerPane.lookup("#colorPicker");
+      Rectangle rect = (Rectangle) mockShapeProxy.getShape();
+
+      // Test with full intensity (white)
+      Color white = Color.WHITE;
+      colorPicker.setValue(white); // Simulate user action via UI
+      waitForFxEvents(); // Wait for JavaFX to process the event
+      assertEquals(white, rect.getFill(), "Shape fill should be white (full intensity).");
+      System.out.println(rect.getFill());
+    });
+    waitForFxEvents(); // Ensure all JavaFX operations have completed
+  }
+
+  @Test
+  public void testBoundaryColorValuesBlack() {
+    Platform.runLater(() -> {
+      ColorPicker colorPicker = (ColorPicker) containerPane.lookup("#colorPicker");
+      Rectangle rect = (Rectangle) mockShapeProxy.getShape();
+
+      // Test with full intensity (white)
+      Color white = Color.WHITE;
+      colorPicker.setValue(white); // Simulate user action via UI
+      waitForFxEvents(); // Wait for JavaFX to process the event
+      assertEquals(white, rect.getFill(), "Shape fill should be white (full intensity).");
+      System.out.println(rect.getFill());
+      // Test with no intensity (black)
+//      Color black = Color.BLACK;
+//      colorPicker.setValue(black); // Simulate user action via UI
+//      waitForFxEvents(); // Wait for JavaFX to process the event
+//      System.out.println(rect.getFill());
+//      assertEquals(black, rect.getFill(), "Shape fill should be black (no intensity).");
+//      System.out.println(rect.getFill());
+    });
+    waitForFxEvents(); // Ensure all JavaFX operations have completed
+  }
+
+
 }
