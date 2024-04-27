@@ -47,6 +47,7 @@ public class AuthoringController {
   private final BuilderDirector builderDirector = new BuilderDirector();
   private final ShapeProxy shapeProxy = new ShapeProxy();
   private final AuthoringProxy authoringProxy = new AuthoringProxy();
+  private int firstActiveStrikeableId;
 
   public AuthoringController(SupportedLanguage language, UITheme uiTheme, AuthoringImplementationType authoringFactoryType) {
     stage = new Stage();
@@ -86,8 +87,10 @@ public class AuthoringController {
           playersMap.get(playerId).get(CollidableType.SCOREABLE),
           playersMap.get(playerId).get(CollidableType.CONTROLLABLE),0, playersMap.get(playerId).get(CollidableType.STRIKABLE).get(0));
       players.add(player);
+      if (playerId == 1){
+        firstActiveStrikeableId = playersMap.get(playerId).get(CollidableType.STRIKABLE).get(0);
+      }
     });
-
     builderDirector.constructPlayers(players);
   }
 
@@ -133,8 +136,9 @@ public class AuthoringController {
     List<GameObjectProperties> gameObjects = new ArrayList<>();
     gameObjectMap.forEach((gameObjectShape, properties) -> {
       List<String> objectProperties = properties.getProperties();
-      objectProperties.add("visible");
-
+      if (!properties.getProperties().contains("strikeable") || properties.getId() == firstActiveStrikeableId){
+        objectProperties.add("visible");
+      }
       String shapeName = (gameObjectShape instanceof Ellipse) ? "Circle" : "Rectangle";
 
       Dimension objDimension = new Dimension(properties.getWidth(), properties.getHeight());

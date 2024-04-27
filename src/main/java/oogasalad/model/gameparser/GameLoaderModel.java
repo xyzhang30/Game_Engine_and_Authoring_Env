@@ -100,7 +100,12 @@ public class GameLoaderModel extends GameLoader {
     createGameObjectContainer();
     addPlayerObjects(ParserPlayer::myStrikeable,
         gameId -> gameObjects.get(gameId).getStrikeable(),
-        (playerId, strikeables) -> playerMap.get(playerId).addStrikeables(strikeables));
+        (playerId, strikeables) -> {
+          int activeStrikeableId = getParserPlayerById(playerId).activeStrikeable();
+          System.out.println("GAME OBJECTS"+gameObjects);
+          System.out.println("ACTIVE:"+activeStrikeableId);
+          playerMap.get(playerId).addStrikeables(strikeables, gameObjects.get(activeStrikeableId).getStrikeable().get());
+        });
     addPlayerObjects(ParserPlayer::myScoreable,
         gameId -> gameObjects.get(gameId).getScoreable(),
         (playerId, scoreables) -> playerMap.get(playerId).addScoreables(scoreables));
