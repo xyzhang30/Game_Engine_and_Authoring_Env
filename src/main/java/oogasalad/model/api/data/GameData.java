@@ -43,7 +43,7 @@ public class GameData {
     this.gameName = gameName;
   }
 
-  public @JsonProperty("game_objects") List<GameObjectProperties> getGameObjects() {
+  public @JsonProperty("game_objects") List<GameObjectProperties> getGameObjectProperties() {
     System.out.println(gameObjectProperties);
     return gameObjectProperties;
   }

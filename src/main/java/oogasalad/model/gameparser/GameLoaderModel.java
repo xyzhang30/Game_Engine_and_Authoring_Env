@@ -91,6 +91,8 @@ public class GameLoaderModel extends GameLoader {
   public Collection<GameObject> getGameObjects() {
     createGameObjectContainer();
     addPlayerStrikeables();
+    addPlayerScoreables();
+    addPlayerControllables();
     return gameObjects.values();
   }
 
@@ -116,7 +118,11 @@ public class GameLoaderModel extends GameLoader {
         optionalStrikeable.ifPresent(playerStrikeableObjects::add);
       }
       playerMap.get(playerId).addStrikeables(playerStrikeableObjects);
-
+    }
+  }
+  private void addPlayerScoreables() {
+    for (ParserPlayer parserPlayer : gameData.getPlayers()) {
+      int playerId = parserPlayer.playerId();
       List<Integer> playerScoreableIds = parserPlayer.myScoreable();
       List<Scoreable> playerScoreableObjects = new ArrayList<>();
       for (int i : playerScoreableIds) {
@@ -125,6 +131,11 @@ public class GameLoaderModel extends GameLoader {
         optionalStrikeable.ifPresent(playerScoreableObjects::add);
       }
       playerMap.get(playerId).addScoreables(playerScoreableObjects);
+    }
+  }
+  private void addPlayerControllables() {
+    for (ParserPlayer parserPlayer : gameData.getPlayers()) {
+      int playerId = parserPlayer.playerId();
       if (!parserPlayer.myControllable().isEmpty()) {
         Optional<Controllable> optionalControllable = gameObjects.get(
             parserPlayer.myControllable().get(0)).getControllable();
@@ -138,30 +149,30 @@ public class GameLoaderModel extends GameLoader {
 
   private void createGameObjectContainer() {
     gameObjects = new HashMap<>();
-    gameData.getGameObjects().forEach(co -> {
+    populateGameObjects();
+    gameData.getGameObjectProperties().forEach(co -> {
+      gameObjects.keySet().forEach(id -> addPairToPhysicsMap(co, id, conditionsList));
+    });
+  }
+
+  private void populateGameObjects() {
+    gameData.getGameObjectProperties().forEach(co -> {
       if (co.properties().contains("collidable")) {
         this.collidables.add(co.collidableId());
       }
+
       gameObjects.put(co.collidableId(), CollidableFactory.createCollidable(co));
 
-    });
-    gameData.getGameObjects().forEach(co -> {
-      gameObjects.keySet().forEach(id -> addPairToPhysicsMap(co,
-          id,
-          conditionsList));
     });
   }
 
   private void addPairToPhysicsMap(GameObjectProperties co, int id,
       List<Entry<BiPredicate<Integer, GameObjectProperties>, BiFunction<Integer, GameObjectProperties, PhysicsHandler>>> conditionsList) {
-    for (Entry<BiPredicate<Integer, GameObjectProperties>,
-        BiFunction<Integer, GameObjectProperties, PhysicsHandler>> entry : conditionsList) {
-      if (entry.getKey().test(id, co) && id != co.collidableId()) {
-        physicsMap.put(new Pair(gameObjects.get(id), gameObjects.get(co.collidableId())),
-            entry.getValue().apply(id, co));
-        break;
-      }
-    }
+    conditionsList.stream()
+        .filter(entry -> entry.getKey().test(id, co) && id != co.collidableId())
+        .findFirst()
+        .ifPresent(entry -> physicsMap.put(new Pair(gameObjects.get(id), gameObjects.get(co.collidableId())),
+            entry.getValue().apply(id, co)));
   }
 
   private void createCollisionTypeMap() {
@@ -195,13 +206,10 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private Condition createCondition(Map<String, List<Integer>> conditionToParams) {
-    if (conditionToParams.keySet().iterator().hasNext()) {
-      String conditionName = conditionToParams.keySet().iterator().next();
-      return ConditionFactory.createCondition(conditionName, conditionToParams.get(conditionName)
-          , gameObjects);
-    } else {
-      throw new InvalidCommandException("");
-    }
+    return conditionToParams.keySet().stream()
+        .findFirst()
+        .map(conditionName -> ConditionFactory.createCondition(conditionName, conditionToParams.get(conditionName), gameObjects))
+        .orElseThrow(() -> new InvalidCommandException(""));
   }
 
   private List<Command> createCommands(Map<String, List<Integer>> commands) {
