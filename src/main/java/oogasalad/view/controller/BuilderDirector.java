@@ -89,7 +89,7 @@ public class BuilderDirector {
     gameData.setGameName(fileName);
     gameData.setGameDescription(gameDescription);
     ObjectMapper mapper = new ObjectMapper();
-    if (gameData.getGameObjects() == null || gameData.getPlayers() == null
+    if (gameData.getGameObjectProperties() == null || gameData.getPlayers() == null
         || gameData.getVariables() == null || gameData.getRules() == null) {
       LOGGER.error(resourceBundle.getString("NullJSONFieldError"));
       throw new InvalidJSONDataException(String.format(

@@ -31,7 +31,7 @@ public class StaticStateHandlerTest {
     GameEngine gameEngine = mock(GameEngine.class);
     RulesRecord rulesRecord = mock(RulesRecord.class);
     Condition dummyCondition = mock(Condition.class);
-    when(rulesRecord.roundPolicy()).thenReturn(dummyCondition);
+    when(rulesRecord.roundCondition()).thenReturn(dummyCondition);
     when(dummyCondition.evaluate(gameEngine)).thenReturn(true);
     RoundOverStaticStateHandler handler = new RoundOverStaticStateHandler();
     handler.setPrev(new GameOverStaticStateHandler());
@@ -65,7 +65,7 @@ public class StaticStateHandlerTest {
     Condition dummyCondition = mock(Condition.class);
     assertTrue(handler.canHandle(gameEngine, rulesRecord));
     when(rulesRecord.winCondition()).thenReturn(dummyCondition);
-    when(rulesRecord.roundPolicy()).thenReturn(dummyCondition);
+    when(rulesRecord.roundCondition()).thenReturn(dummyCondition);
     assertTrue(handler.canHandle(gameEngine, rulesRecord));
     handler.handle(gameEngine, rulesRecord);
     verify(rulesRecord, atLeastOnce()).advanceTurn();

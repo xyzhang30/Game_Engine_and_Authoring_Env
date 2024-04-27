@@ -101,7 +101,7 @@ public class AuthoringController {
     });
 
     String turnPolicy = policies.get("turnpolicy");
-    Map<String, List<Integer>> roundPolicy = commandsConditions.get("roundpolicy");
+    Map<String, List<Integer>> roundCondition = commandsConditions.get("roundCondition");
     Map<String, List<Integer>> winCondition = commandsConditions.get("wincondition");
     Map<String, List<Integer>> advanceTurn = commandsConditions.get("advanceturn");
     Map<String, List<Integer>> advanceRound = commandsConditions.get("advanceround");
@@ -120,12 +120,12 @@ public class AuthoringController {
       throw new InCompleteRulesAuthoringException("Please make a selection for all rule types");
     }
 
-    if (turnPolicy == null || roundPolicy == null || winCondition == null || advanceTurn == null || advanceRound == null || strikePolicy == null || rankComparator == null) {
+    if (turnPolicy == null || roundCondition == null || winCondition == null || advanceTurn == null || advanceRound == null || strikePolicy == null || rankComparator == null) {
       LOGGER.error("InCompleteRulesAuthoringException: Please make a selection for all rule types");
       throw new InCompleteRulesAuthoringException("Please make a selection for all rule types");
     }
 
-    Rules rules = new Rules(collisions, turnPolicy, roundPolicy, winCondition, advanceTurn, advanceRound, strikePolicy, rankComparator, staticChecker);
+    Rules rules = new Rules(collisions, turnPolicy, roundCondition, winCondition, advanceTurn, advanceRound, strikePolicy, rankComparator, staticChecker);
     builderDirector.constructRules(List.of(rules));
   }
 

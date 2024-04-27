@@ -61,7 +61,7 @@ public class GameLoaderView extends GameLoader {
   private void createViewRecord() throws InvalidShapeException {
     List<Integer> strikeableIDs = new ArrayList<>();
     viewGameObjectRecords = new ArrayList<>();
-    for (GameObjectProperties o : gameData.getGameObjects()) {
+    for (GameObjectProperties o : gameData.getGameObjectProperties()) {
       if (o.properties().contains("strikeable")) {
         strikeableIDs.add(o.collidableId());
       }
