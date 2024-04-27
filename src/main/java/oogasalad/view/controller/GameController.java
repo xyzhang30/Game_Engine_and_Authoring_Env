@@ -264,11 +264,8 @@ public class GameController {
    * @return Formatted string representing the score.
    */
   private String formatScoreForDisplay(GameScore score) {
-    return score.playerName() + ": " + score.score() + (score.gameWon() ? " (Won)" : " (Lost)");
+    return score.playerName() + ": " + score.score();
   }
-
-
-
 
 
 }
