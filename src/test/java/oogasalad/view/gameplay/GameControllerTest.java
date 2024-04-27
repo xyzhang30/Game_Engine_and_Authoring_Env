@@ -1,6 +1,8 @@
 package oogasalad.view.gameplay;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -57,6 +59,12 @@ public class GameControllerTest extends DukeApplicationTest {
     assertNotNull(scene, "Scene should not be null after initialization.");
   }
 
+  @Test
+  public void testOpenAuthorEnvironment() {
+    runAsJFXAction(() -> gameController.openAuthorEnvironment());
+    // Verify that some authoring environment is displayed or initialized
+    // This might need checking specific components if they are available through getters or observed via changes in the scene
+  }
 
 
 
