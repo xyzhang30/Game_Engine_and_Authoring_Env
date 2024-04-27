@@ -95,13 +95,9 @@ public class GameLoaderModel extends GameLoader {
     addPlayerObjects(ParserPlayer::myStrikeable,
         gameId -> gameObjects.get(gameId).getStrikeable(),
         (playerId, strikeables) -> playerMap.get(playerId).addStrikeables(strikeables));
-
     addPlayerObjects(ParserPlayer::myScoreable,
         gameId -> gameObjects.get(gameId).getScoreable(),
         (playerId, scoreables) -> playerMap.get(playerId).addScoreables(scoreables));
-
-
-
     addPlayerControllables();
     return gameObjects.values();
   }
@@ -131,6 +127,7 @@ public class GameLoaderModel extends GameLoader {
     }
   }
 
+
   private void addPlayerControllables() {
     gameData.getPlayers().stream()
         .filter(parserPlayer -> !parserPlayer.myControllable().isEmpty())
@@ -155,11 +152,12 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private void populateGameObjects() {
-    Map<Integer, GameObject> collidablesMap = gameData.getGameObjectProperties().stream()
-        .filter(co -> co.properties().contains("collidable"))
-        .peek(co -> this.collidables.add(co.collidableId()))
-        .collect(Collectors.toMap(GameObjectProperties::collidableId, CollidableFactory::createCollidable));
-    gameObjects.putAll(collidablesMap);
+    gameData.getGameObjectProperties().forEach(co -> {
+      if (co.properties().contains("collidable")) {
+        this.collidables.add(co.collidableId());
+      }
+      gameObjects.put(co.collidableId(), CollidableFactory.createCollidable(co));
+    });
   }
 
   private void addPairToPhysicsMap(GameObjectProperties co, int id,
@@ -183,6 +181,7 @@ public class GameLoaderModel extends GameLoader {
         )
     );
   }
+
 
   private void createRulesRecord() {
     Rules rules = gameData.getRules();
