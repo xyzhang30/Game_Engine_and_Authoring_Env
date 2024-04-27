@@ -33,7 +33,7 @@ import oogasalad.view.scene_management.scene_managers.SceneManager;
  * game start events. It also includes methods to handle power and angle adjustments for striking
  * events, as well as key event handlers to modify the power and angle based on user input.
  *
- * @author Jordan Haytaian (Doga Ozmen)
+ * @author Jordan Haytaian, sDoga Ozmen
  */
 public class SceneElementHandler {
 

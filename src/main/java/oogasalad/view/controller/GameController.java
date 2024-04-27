@@ -8,6 +8,7 @@ import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.database.Database;
+import oogasalad.model.database.GameScore;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.api.enums.AuthoringImplementationType;
@@ -241,6 +242,14 @@ public class GameController {
     }
   }
 
+  /**
+   * Retrieves and returns all scores from the database for a given game.
+   * @param gameName The game name for which scores are needed.
+   * @return List of scores and usernames as GameScore objects.
+   */
+  public List<GameScore> getAllScores(String gameName) {
+    return databaseView.getGeneralHighScoresForGame(gameName, Integer.MAX_VALUE);
+  }
 
 
 
