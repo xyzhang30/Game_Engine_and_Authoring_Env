@@ -66,6 +66,15 @@ public class GameControllerTest extends DukeApplicationTest {
     // This might need checking specific components if they are available through getters or observed via changes in the scene
   }
 
+  @Test
+  public void testGetGameTitles() {
+    // Assuming gameController.getNewGameTitles() and gameController.getSavedGameTitles() should return non-empty lists
+    assertFalse(gameController.getNewGameTitles().isEmpty(), "Should retrieve new game titles");
+    assertFalse(gameController.getSavedGameTitles().isEmpty(), "Should retrieve saved game titles");
+  }
+
+
+
 
 
   /**
