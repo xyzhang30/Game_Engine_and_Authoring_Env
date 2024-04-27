@@ -14,6 +14,7 @@ import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import oogasalad.model.gameengine.gameobject.CollisionDetector;
 import oogasalad.model.gameengine.gameobject.GameObject;
+import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameparser.GameLoaderModel;
@@ -56,7 +57,7 @@ public class GameEngine implements ExternalGameEngine {
   public GameEngine(String gameTitle) {
     loader = new GameLoaderModel(gameTitle);
     playerContainer = loader.getPlayerContainer();
-    round = 1;
+    round = loader.getCurrRound();
     collisionDetector = new CollisionDetector();
     startRound(loader);
   }
@@ -237,22 +238,17 @@ public class GameEngine implements ExternalGameEngine {
   // loader.
   private void startRound(GameLoaderModel loader) {
     gameOver = false;
-    turn = 1; //first player ideally should have id 1
+    turn = loader.getCurrTurn();
     staticState = true;
-    loadRoundSpecificInformation(loader);
+    gameObjects = loader.getGameObjects();
+    gameObjects.forEach(GameObject::addStaticStateGameObject);
+    rules = loader.getRulesRecord();
     playerContainer.getActive().updateActiveStrikeable();
     playerContainer.getActive().getStrikeable().asGameObject().setVisible(true);
     playerContainer.getPlayers().forEach(Player::startRound);
     addInitialStaticStateToHistory();
   }
 
-  //gets game objects, and rules for the game objects, for a specific round from game loader
-  private void loadRoundSpecificInformation(GameLoaderModel loader) {
-    loader.prepareRound(round);
-    gameObjects = loader.getGameObjects();
-    gameObjects.forEach(GameObject::addStaticStateGameObject);
-    rules = loader.getRulesRecord();
-  }
 
   //adds the initial state of the game (before the round starts) to the game history
   private void addInitialStaticStateToHistory() {
@@ -313,6 +309,15 @@ public class GameEngine implements ExternalGameEngine {
 
   public Collection<GameObject> getGameObjects() {
     return gameObjects;
+  }
+
+  public double getScoreableScoreById(int id){
+    for (GameObject gameObject : gameObjects){
+      if (gameObject.getId() == id && gameObject.getScoreable().isPresent()){
+        return gameObject.getScoreable().get().getTemporaryScore();
+      }
+    }
+    return 0;
   }
 
 }

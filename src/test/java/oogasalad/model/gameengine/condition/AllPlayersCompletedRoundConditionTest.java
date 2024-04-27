@@ -18,8 +18,8 @@ public class AllPlayersCompletedRoundConditionTest {
 
   @Test
   public void testEvaluate_AllPlayersCompletedRound() {
-    Player player1 = new Player(1);
-    Player player2 = new Player(2);
+    Player player1 = new Player(1, 0);
+    Player player2 = new Player(2, 0);
     PlayerContainer playerContainer = new PlayerContainer(List.of(player1,player2));
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);
@@ -32,8 +32,8 @@ public class AllPlayersCompletedRoundConditionTest {
 
   @Test
   public void testEvaluate_NotAllPlayersCompletedRound() {
-    Player player1 = new Player(1);
-    Player player2 = new Player(2);
+    Player player1 = new Player(1, 0);
+    Player player2 = new Player(2, 0);
     PlayerContainer playerContainer = new PlayerContainer(List.of(player1,player2));
     GameEngine gameEngine = mock(GameEngine.class);
     when(gameEngine.getPlayerContainer()).thenReturn(playerContainer);

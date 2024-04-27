@@ -9,7 +9,7 @@ public class MiniGolfGameRulesIntegrationTest {
 
 
   private static final double DELTA = .0001;
-  private static final String TITLE = "testMiniGolfRules";
+  private static final String TITLE = "data/playable_games/testMiniGolfRules";
   private GameEngine gameEngine;
 
   @BeforeEach

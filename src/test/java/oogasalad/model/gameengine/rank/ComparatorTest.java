@@ -47,13 +47,13 @@ public class ComparatorTest {
     when(s2.getTemporaryScore()).thenReturn(3.0);
     when(s3.getTemporaryScore()).thenReturn(2.0);
 
-    Player p1 = new Player(1);
+    Player p1 = new Player(1,0);
     p1.addScoreables(List.of(s1));
     p1.addStrikeables(List.of(ss1));
-    Player p2 = new Player(2);
+    Player p2 = new Player(2,0);
     p2.addScoreables(List.of(s2));
     p2.addStrikeables(List.of(ss2));
-    Player p3 = new Player(3);
+    Player p3 = new Player(3,0);
     p3.addScoreables(List.of(s3));
     p3.addStrikeables(List.of(ss3));
 

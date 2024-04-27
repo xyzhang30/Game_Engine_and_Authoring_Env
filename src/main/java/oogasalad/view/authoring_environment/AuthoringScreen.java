@@ -6,6 +6,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -56,7 +58,7 @@ public class AuthoringScreen {
   private final ResourceBundle resourceBundle;
   private final AuthoringFactory authoringFactory;
   private TextField gameNameTextField;
-  private TextField gameDescriptionTextField;
+  private TextArea gameDescriptionTextField;
   private Stage gameNameStage;
   private Button submitGameNameButton;
 
@@ -227,12 +229,16 @@ public class AuthoringScreen {
       gameNameStage.setTitle("Enter Game Name and Description");
 
       VBox vbox = new VBox();
+      Label enterName = new Label("Game Name: ");
       gameNameTextField = new TextField();
       gameNameTextField.setPromptText("Enter game name...");
-      gameDescriptionTextField = new TextField();
+      Label enterDescription = new Label("Game Description: ");
+      gameDescriptionTextField = new TextArea();
       gameDescriptionTextField.setPromptText("Enter game description");
+      gameDescriptionTextField.setPrefHeight(200);
+      gameDescriptionTextField.setWrapText(true);
 
-      vbox.getChildren().addAll(gameNameTextField, submitGameNameButton());
+      vbox.getChildren().addAll(enterName, gameNameTextField, enterDescription, gameDescriptionTextField, makeSubmitGameNameButton());
 
       Scene scene = new Scene(vbox, 500, 500);
       gameNameStage.setScene(scene);
@@ -240,50 +246,25 @@ public class AuthoringScreen {
     gameNameStage.showAndWait();
   }
 
-
-  private Button submitGameNameButton() {
+  private Button makeSubmitGameNameButton() {
     if (submitGameNameButton == null) {
       submitGameNameButton = new Button("Submit");
+      submitGameNameButton.setDisable(true);
+
+      gameNameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+        submitGameNameButton.setDisable(newValue.trim().isEmpty());
+      });
+
       submitGameNameButton.setOnAction(e -> {
         gameNameStage.close();
         authoringProxy.setGameName(gameNameTextField.getText());
+        authoringProxy.setGameDescription(gameDescriptionTextField.getText());
         authoringProxy.completeAuthoring();
       });
     }
 
     return submitGameNameButton;
   }
-//
-//  private Node createGameDescriptionText() {
-//    Label gameDescriptionLabel = new Label("Enter Game Description");
-//    TextField gameDescriptionTextField = uiElementFactory.createTextField(
-//        "", 200,
-//        50);
-//    gameDescriptionTextField.setEditable(
-//        true);
-//    gameDescriptionTextField.setFocusTraversable(false);
-//    VBox box = uiElementFactory.createVContainer(10, 200, 100,
-//        gameDescriptionLabel, gameDescriptionTextField);
-//    box.setLayoutX(400.0);
-//    box.setLayoutY(600.0);
-//    return box;
-//  }
-//
-//  private Node createGameNameText() {
-//    Label gameNameLabel = new Label("Select Game Name");
-//    TextField gameNameTextField = uiElementFactory.createTextField(
-//        "", 200,
-//        50);
-//    gameNameTextField.setEditable(true);
-//    gameNameTextField.setFocusTraversable(false);
-//    VBox box = uiElementFactory.createVContainer(10, 200, 100,
-//        gameNameLabel, gameNameTextField);
-//    box.setLayoutX(400.0);
-//    box.setLayoutY(700.0);
-//    return box;
-//  }
-
-
 
 
   private void createScreenSelectionDropDown(List<AuthoringScreenType> screenOptions) {

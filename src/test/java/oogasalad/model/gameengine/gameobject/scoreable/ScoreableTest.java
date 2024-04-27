@@ -17,9 +17,11 @@ public class ScoreableTest {
 
   @BeforeEach
   public void setUp() {
-    gameObject = new GameObject(new GameObjectProperties(1, List.of("visible", "strikeable"), 1.0, new Position(1.0,1.0), "", new Dimension(1,1), List.of(), 1, 1, 1, "", 1.0, false, false)); //
+    gameObject = new GameObject(new GameObjectProperties(1, List.of("visible", "strikeable"), 1.0
+        , new Position(1.0,1.0), "", new Dimension(1,1), List.of(), 1, 1, 1, "", 1.0, false,
+        false,0)); //
     defaultScoreable = new DefaultScoreable(gameObject);
-    gameObject.addScoreable(defaultScoreable);
+    gameObject.addScoreable();
   }
 
   @Test

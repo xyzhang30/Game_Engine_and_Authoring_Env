@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 public class StaticCheckerFactory {
 
   private static final String STATIC_COMPARATOR_PATH = "checkstatic.";
-  private static final Logger LOGGER = LogManager.getLogger(PlayerRankComparatorFactory.class);
+
 
   public static List<StaticChecker> createStaticChecker(Map<String, List<Integer>> params)
       throws InvalidCommandException {
@@ -27,7 +27,6 @@ public class StaticCheckerFactory {
       }
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              NoSuchMethodException | IllegalAccessException e) {
-      LOGGER.error("static checker is invalid");
       throw new InvalidCommandException("invalid command");
     }
     return checkers;

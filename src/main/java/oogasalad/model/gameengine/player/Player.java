@@ -39,11 +39,11 @@ public class Player {
    * @param id the player's unique identifier.
    */
 
-  public Player(int id) {
+  public Player(int id, double score) {
     playerId = id;
     roundCompleted = false;
     turnsCompleted = 0;
-    score = 0;
+    this.score = score;
     playerHistory = new Stack<>();
   }
 
@@ -212,5 +212,9 @@ public class Player {
 
   public int getId() {
     return playerId;
+  }
+
+  public void setScore(double score) {
+    this.score = score;
   }
 }

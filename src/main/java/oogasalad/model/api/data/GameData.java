@@ -12,6 +12,7 @@ import java.util.List;
 public class GameData {
 
   private @JsonProperty("gameName") String gameName;
+  private @JsonProperty("game_description") String gameDescription;
   private @JsonProperty("game_objects") List<GameObjectProperties> gameObjectProperties;
   private List<ParserPlayer> players;
   private List<Variables> variables;
@@ -43,7 +44,7 @@ public class GameData {
     this.gameName = gameName;
   }
 
-  public @JsonProperty("game_objects") List<GameObjectProperties> getGameObjects() {
+  public @JsonProperty("game_objects") List<GameObjectProperties> getGameObjectProperties() {
     System.out.println(gameObjectProperties);
     return gameObjectProperties;
   }
@@ -67,5 +68,13 @@ public class GameData {
 
   public void setVariables(List<Variables> variables) {
     this.variables = variables;
+  }
+
+  public void setGameDescription(String gameDescription){
+    this.gameDescription = gameDescription;
+  }
+
+  public String getGameDescription(){
+    return gameDescription;
   }
 }

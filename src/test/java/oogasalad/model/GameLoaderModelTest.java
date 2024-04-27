@@ -113,7 +113,7 @@ public class GameLoaderModelTest {
     Map<Pair, List<Command>> collisionHandlers = Map.of(new Pair(2, 3), List.of(c1, c2));
     Condition winCondition = new RoundsCompletedCondition(List.of(2.0));
 
-    Condition roundPolicy = new AllPlayersCompletedRoundCondition(List.of());
+    Condition roundCondition = new AllPlayersCompletedRoundCondition(List.of());
 
     Command advanceC1 = new AdvanceTurnCommand(List.of());
     Command advanceC2 = new SetDelayedPointsCommand(List.of(1.0, 1.0));
@@ -151,7 +151,7 @@ public class GameLoaderModelTest {
 
     StrikePolicy strikePolicy = new DoNothingStrikePolicy();
 
-    RulesRecord mockRulesRecord = new RulesRecord(collisionHandlers, winCondition, roundPolicy,
+    RulesRecord mockRulesRecord = new RulesRecord(collisionHandlers, winCondition, roundCondition,
         advanceTurn, advanceRound, physicsMap, mockTurnPolicy, mockStaticStateHandler,
         strikePolicy, new HighestScoreComparator(), List.of());
 

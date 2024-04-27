@@ -3,6 +3,7 @@ package oogasalad.view.authoring_environment.factories;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -55,7 +56,6 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
   private ListView<String> playerAssignmentListView = new ListView<>();
   private Button addPlayerButton, removePlayerButton;
   private Text numPlayers;
-
   private final String VIEW_PROPERTIES_FOLDER = "properties.";
 
   /**
@@ -139,6 +139,47 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
     updateSlider(shapeProxy.getShape().getScaleX(), shapeProxy.getShape().getScaleY(),
         shapeProxy.getShape().getRotate());
   }
+
+//  @Override
+//  public List<Node> createGameConfiguration() {
+//    List<Node> nodes = List.of(//createGameNameLabel(),
+//         createGameNameText(),
+//       // createGameDescriptionLabel(),
+//        createGameDescriptionText());//,
+//      //  createGameImage());
+//    return nodes;
+//  }
+
+  private Node createGameDescriptionText() {
+    TextField gameDescriptionTextField = uiElementFactory.createTextField(
+        "Provide Game Description", 200,
+        50);
+    gameDescriptionTextField.setEditable(
+        true); //ids are populated automatically after user clicks on object, user can't edit it
+    gameDescriptionTextField.setFocusTraversable(false);
+    AnchorPane.setLeftAnchor(gameDescriptionTextField, 450.0);
+    AnchorPane.setTopAnchor(gameDescriptionTextField, 700.0);
+    return gameDescriptionTextField;
+  }
+
+//  private Node createGameDescriptionLabel() {
+//return null;
+//  }
+
+//  private Node createGameNameText() {
+//    Label gameNameLabel = new Label("Select Game Name");
+//
+//
+//    TextField gameDescriptionTextField = uiElementFactory.createTextField(
+//        "Provide Game Name", 200,
+//        50);
+//    gameDescriptionTextField.setEditable(
+//        true); //ids are populated automatically after user clicks on object, user can't edit it
+//    gameDescriptionTextField.setFocusTraversable(false);
+//    AnchorPane.setLeftAnchor(gameDescriptionTextField, 450.0);
+//    AnchorPane.setTopAnchor(gameDescriptionTextField, 800.0);
+//    return gameDescriptionTextField;
+//  }
 
   private Node createGameObjectTypeSelection() {
     this.gameObjectTypeDropdown = uiElementFactory.createComboBox("gameObjectTypeDropdown",
