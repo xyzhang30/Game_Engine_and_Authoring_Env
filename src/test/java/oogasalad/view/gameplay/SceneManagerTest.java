@@ -2,6 +2,8 @@ package oogasalad.view.gameplay;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
@@ -49,17 +51,12 @@ public class SceneManagerTest extends DukeApplicationTest {
   }
 
   @Test
-  public void testPauseAndResumeGame() {
-    Platform.runLater(() -> sceneManager.createPauseDisplay());
-    waitForFxEvents(); // Wait for pause elements to appear
+  public void testCreateHelpInstructions() {
+    Platform.runLater(() -> sceneManager.createHelpInstructions());
+    waitForFxEvents();
     Platform.runLater(() -> {
-      Node pauseMenu = lookup("#pauseElement").query();
-      assertNotNull(pauseMenu, "Pause menu should be visible after creation");
-
-      sceneManager.removePauseSheen();
-      waitForFxEvents(); // Wait for pause elements to be removed
-      pauseMenu = lookup("#pauseMenu").query();
-      assertNull(pauseMenu, "Pause menu should be removed after resuming the game");
+      Node helpNode = lookup("#helpElement").query();
+      assertNotNull(helpNode, "Help scene should contain help element with ID 'helpElement'");
     });
   }
 

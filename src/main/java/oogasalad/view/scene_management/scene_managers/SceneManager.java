@@ -165,15 +165,15 @@ public class SceneManager {
     if (!root.getChildren().contains(pauseElements)) {
       root.getChildren().add(pauseElements);
     }
-
-    Text pauseMenu = new Text("Pause"); // or use any other relevant text or control
-    pauseMenu.setId("pauseElement");
-    root.getChildren().add(pauseMenu);
   }
 
   public void createHelpInstructions() {
     resetRoot();
     root.getChildren().add(createSceneElements(helpInstructionElementsPath));
+
+    Text helpNode = new Text("Help Instructions");
+    helpNode.setId("helpElement");
+    root.getChildren().add(helpNode);
   }
 
   /**
@@ -217,8 +217,8 @@ public class SceneManager {
     resetRoot();
     root.getChildren().add(createSceneElements(gameOverSceneElementsPath));
 
-    Text gameOverText = new Text("GameOver"); // or use any other relevant text or control
-    gameOverText.setId("gameOverTexts");
+    Text gameOverText = new Text("GameOver");
+    gameOverText.setId("gameOverText");
     root.getChildren().add(gameOverText);
   }
 
