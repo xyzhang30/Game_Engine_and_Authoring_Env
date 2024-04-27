@@ -36,7 +36,7 @@ public class Leaderboard {
    * This ListView displays the sorted and formatted scores.
    * @return The ListView containing the formatted scores.
    */
-  public ListView<String> gegtLeaderboardListView() {
+  public ListView<String> getLeaderboardListView() {
     return leaderboardListView;
   }
 }
