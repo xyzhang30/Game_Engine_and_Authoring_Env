@@ -24,7 +24,6 @@ public abstract class GameLoader {
 
   private static final Logger LOGGER = LogManager.getLogger(GameLoader.class);
 
-  private static final String DATA_FOLDER_PATH = "data/playable_games/";
   private static final String JSON_EXTENSION = ".json";
   private static final String RESOURCE_FOLDER_PATH = "model.";
   private static final String ERROR_RESOURCE_FOLDER = "error.";
@@ -44,7 +43,7 @@ public abstract class GameLoader {
     this.resourceBundle = ResourceBundle.getBundle(
         RESOURCE_FOLDER_PATH + ERROR_RESOURCE_FOLDER + ERROR_FILE_PREFIX + language);
     try {
-      parseJSON(DATA_FOLDER_PATH + gameName + JSON_EXTENSION);
+      parseJSON( gameName + JSON_EXTENSION);
 
     } catch (IOException e) {
       LOGGER.error(resourceBundle.getString("JSONParsingError"), e.getMessage());

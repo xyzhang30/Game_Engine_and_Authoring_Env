@@ -144,7 +144,7 @@ public class AuthoringController {
       GameObjectProperties gameObject = new GameObjectProperties(properties.getId(),
           objectProperties, properties.getMass(), objPosition, shapeName, objDimension,
           properties.getColor(), properties.getsFriction(), properties.getkFriction(), 0,
-          properties.getImagePath(), 0, properties.isElasticity(), false);
+          properties.getImagePath(), 0, properties.isElasticity(), false, 0);
 
       gameObjects.add(gameObject);
     });

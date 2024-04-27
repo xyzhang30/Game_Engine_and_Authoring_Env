@@ -69,7 +69,7 @@ public class GameLoaderModel extends GameLoader {
     collidables = new ArrayList<>();
     physicsMap = new HashMap<>();
     playerMap = new HashMap<>();
-    gameData.getPlayers().forEach(p -> playerMap.put(p.playerId(), new Player(p.playerId())));
+    gameData.getPlayers().forEach(p -> playerMap.put(p.playerId(), new Player(p.playerId(), p.score())));
     playerContainer = new PlayerContainer(playerMap.values());
     staticHandler = StaticStateHandlerLinkedListFactory.buildLinkedList(List.of(
         "GameOverStaticStateHandler",
