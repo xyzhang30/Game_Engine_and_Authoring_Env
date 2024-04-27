@@ -1,11 +1,7 @@
 package oogasalad.view.database;
 
 import javafx.scene.control.ListView;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-//import oogasalad.model.database.GameScore;
-import java.util.List;
-import java.util.stream.Collectors;
 import oogasalad.view.controller.GameController;
 
 /**
@@ -20,19 +16,29 @@ public class Leaderboard {
   private ListView<String> leaderboardListView = new ListView<>();
 
   /**
-   * Constructs a Leaderboard with a reference to the GameController to fetch score data.
-   * @param controller The GameController that provides access to the game scores.
+   * Constructs a Leaderboard with a reference to the GameController to fetch formatted score data.
+   * @param controller The GameController that provides access to formatted game scores.
    */
   public Leaderboard(GameController controller) {
     this.gameController = controller;
   }
 
   /**
+   * Updates the leaderboard display for a specified game by fetching formatted scores and
+   * displaying them in the ListView.
+   * @param gameName The name of the game for which the leaderboard should be updated.
+   */
+  public void updateLeaderboard(String gameName) {
+    ObservableList<String> formattedScores = gameController.getFormattedScoresForLeaderboard(gameName);
+    leaderboardListView.setItems(formattedScores);
+  }
+
+  /**
    * Provides the ListView for integration into the UI, allowing for direct inclusion in the application's layout.
-   * This ListView displays the sorted and formatted scores, reflecting each player's performance and game outcome.
+   * This ListView displays the sorted and formatted scores.
    * @return The ListView containing the formatted scores.
    */
-  public ListView<String> getLeaderboardListView() {
+  public ListView<String> gegtLeaderboardListView() {
     return leaderboardListView;
   }
 }
