@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.controller.GameController;
@@ -17,8 +18,11 @@ import oogasalad.view.controller.GameController;
  */
 public class LoadGameEventHandler {
 
+  private final String newGameDir = "data/playable_games/";
+  private final String resumeGameDir = "data/resume_game/";
   private final GameController gameController;
   private Map<SceneElementEvent, Callable> eventMap;
+  private Map<SceneElementEvent, String> dirPathMap;
 
   /**
    * Constructs a LoadGameEventHandler with the specified GameController.
@@ -28,6 +32,7 @@ public class LoadGameEventHandler {
   public LoadGameEventHandler(GameController gameController) {
     this.gameController = gameController;
     createEventMap();
+    createDirPathMap();
   }
 
   /**
@@ -38,7 +43,8 @@ public class LoadGameEventHandler {
    */
   public void createElementHandler(Node node, String event) {
     Callable callable = eventMap.get(SceneElementEvent.valueOf(event));
-    createStartGameHandler(node, callable);
+    String dirPath = dirPathMap.get(SceneElementEvent.valueOf(event));
+    createStartGameHandler(node, callable, dirPath);
   }
 
   private void createEventMap() {
@@ -47,7 +53,13 @@ public class LoadGameEventHandler {
     eventMap.put(SceneElementEvent.START_SAVED_GAME, gameController::getSavedGameTitles);
   }
 
-  private void createStartGameHandler(Node node, Callable callable) {
+  private void createDirPathMap() {
+    dirPathMap = new HashMap<>();
+    dirPathMap.put(SceneElementEvent.START_NEW_GAME, newGameDir);
+    dirPathMap.put(SceneElementEvent.START_SAVED_GAME, resumeGameDir);
+  }
+
+  private void createStartGameHandler(Node node, Callable callable, String dirPath) {
     try {
       ListView<String> gameList = (ListView<String>) node;
       ObservableList<String> items = (ObservableList<String>) callable.call();
@@ -55,7 +67,7 @@ public class LoadGameEventHandler {
       node.setOnMouseClicked(e -> {
         String game = gameList.getSelectionModel().getSelectedItem();
         if (game != null) {
-          gameController.startGamePlay(game);
+          gameController.startGamePlay(dirPath + game);
         }
       });
     } catch (Exception e) {
