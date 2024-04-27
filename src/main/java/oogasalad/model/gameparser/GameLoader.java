@@ -3,8 +3,12 @@ package oogasalad.model.gameparser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.ResourceBundle;
 import oogasalad.model.api.data.GameData;
+import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.exception.InvalidFileException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +30,8 @@ public abstract class GameLoader {
   private static final String ERROR_FILE_PREFIX = "Error";
   private final String language = "English";
   private final ResourceBundle resourceBundle;
-  public GameData gameData;
+  protected GameData gameData;
+  private Map<Integer, GameObjectProperties> idToObjMap = new HashMap<>();
 
   /**
    * Constructs a GameLoader object with the specified file path.
@@ -50,6 +55,21 @@ public abstract class GameLoader {
     ObjectMapper objectMapper = new ObjectMapper();
     File f = new File(filePath);
     this.gameData = objectMapper.readValue(f, GameData.class);
+    createIdToObjectMap();
+  }
+
+  private void createIdToObjectMap() {
+    gameData.getGameObjects().forEach((gameObj) -> {
+      idToObjMap.put(gameObj.collidableId(), gameObj);
+    });
+  }
+
+  public GameData getGameData(){
+    return gameData;
+  }
+
+  public GameObjectProperties getGameObjRecordById(int id){
+    return idToObjMap.get(id);
   }
 
 }

@@ -56,6 +56,7 @@ public class GamePlayManagementHandler {
   private void createSaveHandler(Node node) {
     node.setOnMouseClicked((e -> {
       sceneManager.getRoot().requestFocus();
+      gameController.saveGame();
     }));
   }
 

@@ -13,6 +13,7 @@ public record ParserPlayer(@JsonProperty("player_id") int playerId,
 
                            @JsonProperty("my_scoreable") List<Integer> myScoreable,
 
-                           @JsonProperty("my_controllable") List<Integer> myControllable) {
+                           @JsonProperty("my_controllable") List<Integer> myControllable,
+                           int score) {
 
 }
