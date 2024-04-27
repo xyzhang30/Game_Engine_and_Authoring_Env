@@ -6,12 +6,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import oogasalad.model.database.Database;
 import oogasalad.model.database.GameScore;
+import oogasalad.view.database.CurrentPlayersManager;
 
 
 public class DatabaseController {
+  private CurrentPlayersManager currentPlayersManager;
   private Database databaseView;
   public DatabaseController(){
     this.databaseView = new Database();
+    currentPlayersManager = new CurrentPlayersManager();
   }
 
   public boolean canUserLogin(String username) {

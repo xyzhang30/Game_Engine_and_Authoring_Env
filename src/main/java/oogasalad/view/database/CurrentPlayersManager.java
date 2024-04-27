@@ -6,32 +6,20 @@ import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 
 /**
- * Manages the display and updates of current players in the game.
+ * Manages the display and updates of current players logged in into the game.
  * This class is responsible for handling the visual representation of the players' list in the user interface.
  *
  * @author Doga Ozmen
  */
 public class CurrentPlayersManager {
 
-  private Text playersDisplayTitle;
   private ListView<String> playersListView;
 
-  /**
-   * Constructor initializes the ListView and optionally the title Text.
-   */
-  public CurrentPlayersManager() {
-    playersListView = new ListView<>();
-    playersDisplayTitle = new Text("Current Players:");
+
+  public void setPlayersListView(ListView<String> playersListView){
+    this.playersListView = playersListView;
   }
 
-  /**
-   * Sets the Text element for displaying the title above the players list.
-   *
-   * @param playersDisplayTitle Text element for displaying the title.
-   */
-  public void setPlayersDisplayTitle(Text playersDisplayTitle) {
-    this.playersDisplayTitle = playersDisplayTitle;
-  }
 
   /**
    * Gets the ListView for displaying current players.
@@ -43,14 +31,17 @@ public class CurrentPlayersManager {
   }
 
   /**
-   * Adds a new player's username to the ListView.
+   * Updates the ListView with the current players by adding a new username.
+   * This method assumes the username and password have been verified and the username should be added to the list.
    *
-   * @param username the username of the player to add.
+   * @param username the username of the player to add
    */
   public void saveUserInfo(String username) {
-    ObservableList<String> items = playersListView.getItems();
-    items.add(username);
-    playersListView.setItems(items);
+    if (playersListView != null) {
+      ObservableList<String> items = playersListView.getItems();
+      items.add(username);
+      playersListView.setItems(items);
+    }
   }
 
 }

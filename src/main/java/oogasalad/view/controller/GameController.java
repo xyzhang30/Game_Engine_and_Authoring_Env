@@ -64,7 +64,6 @@ public class GameController {
     sceneManager = new SceneManager(this, databaseController, width, height);
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
-    currentPlayersManager = new CurrentPlayersManager();
     ableToStrike = true;
     maxVelocity = 1000;
   }
