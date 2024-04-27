@@ -6,7 +6,7 @@ import oogasalad.model.annotations.ChoiceType;
 public enum PolicyType {
   @ChoiceType(singleChoice = false) @AvailableCommands(commandPackage = "command") ADVANCE_TURN,
   @ChoiceType(singleChoice = false) @AvailableCommands(commandPackage = "command") ADVANCE_ROUND,
-  @ChoiceType(singleChoice = true) @AvailableCommands(commandPackage = "condition") ROUND_POLICY,
+  @ChoiceType(singleChoice = true) @AvailableCommands(commandPackage = "condition") round_condition,
   @ChoiceType(singleChoice = true) @AvailableCommands(commandPackage = "turn") TURN_POLICY,
   @ChoiceType(singleChoice = true) @AvailableCommands(commandPackage = "strike") STRIKE_POLICY,
   @ChoiceType(singleChoice = true) @AvailableCommands(commandPackage = "condition") WIN_CONDITION,

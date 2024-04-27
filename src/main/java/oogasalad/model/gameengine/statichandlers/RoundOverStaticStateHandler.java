@@ -28,7 +28,7 @@ public class RoundOverStaticStateHandler extends StaticStateHandler {
 
   @Override
   protected boolean canHandle(GameEngine engine, RulesRecord rules) {
-    return rules.roundPolicy().evaluate(engine);
+    return rules.roundCondition().evaluate(engine);
   }
 
   /**
@@ -40,7 +40,7 @@ public class RoundOverStaticStateHandler extends StaticStateHandler {
 
   @Override
   protected void handleIt(GameEngine engine, RulesRecord rules) {
-    LOGGER.info(rules.roundPolicy().getClass().getSimpleName() + " (round cond) evaluated True");
+    LOGGER.info(rules.roundCondition().getClass().getSimpleName() + " (round cond) evaluated True");
     executeCommands(rules.advanceRound(), engine, rules);
   }
 }

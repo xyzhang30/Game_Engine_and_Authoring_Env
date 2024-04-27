@@ -239,20 +239,15 @@ public class GameEngine implements ExternalGameEngine {
     gameOver = false;
     turn = 1; //first player ideally should have id 1
     staticState = true;
-    loadRoundSpecificInformation(loader);
+    gameObjects = loader.getGameObjects();
+    gameObjects.forEach(GameObject::addStaticStateGameObject);
+    rules = loader.getRulesRecord();
     playerContainer.getActive().updateActiveStrikeable();
     playerContainer.getActive().getStrikeable().asGameObject().setVisible(true);
     playerContainer.getPlayers().forEach(Player::startRound);
     addInitialStaticStateToHistory();
   }
 
-  //gets game objects, and rules for the game objects, for a specific round from game loader
-  private void loadRoundSpecificInformation(GameLoaderModel loader) {
-    loader.prepareRound(round);
-    gameObjects = loader.getGameObjects();
-    gameObjects.forEach(GameObject::addStaticStateGameObject);
-    rules = loader.getRulesRecord();
-  }
 
   //adds the initial state of the game (before the round starts) to the game history
   private void addInitialStaticStateToHistory() {

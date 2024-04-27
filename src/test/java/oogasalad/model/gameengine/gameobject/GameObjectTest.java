@@ -23,11 +23,9 @@ public class GameObjectTest {
 
   @Test
   public void testAddStrikeable() {
-    Strikeable mockStrikeable = mock(Strikeable.class);
-    gameObject.addStrikeable(mockStrikeable);
+    gameObject.addStrikeable();
     Optional<Strikeable> result = gameObject.getStrikeable();
     assertTrue(result.isPresent());
-    assertEquals(mockStrikeable, result.get());
   }
 
 

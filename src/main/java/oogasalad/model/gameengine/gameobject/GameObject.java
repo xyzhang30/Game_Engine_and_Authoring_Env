@@ -7,6 +7,8 @@ import java.util.function.Supplier;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.gameengine.gameobject.controllable.Controllable;
+import oogasalad.model.gameengine.gameobject.controllable.DefaultControllable;
+import oogasalad.model.gameengine.gameobject.scoreable.DefaultScoreable;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 
 /**
@@ -83,28 +85,25 @@ public class GameObject {
   /**
    * Associates a Strikeable behavior with the GameObject.
    *
-   * @param strikeable The Strikeable behavior to be associated with the GameObject.
    */
-  public void addStrikeable(Strikeable strikeable) {
-    this.strikeable = strikeable;
+  public void addStrikeable() {
+    this.strikeable = new DefaultStrikeable(this);
   }
 
   /**
    * Associates a Scoreable behavior with the GameObject.
    *
-   * @param scoreable The Scoreable behavior to be associated with the GameObject.
    */
-  public void addScoreable(Scoreable scoreable) {
-    this.scoreable = scoreable;
+  public void addScoreable() {
+    this.scoreable = new DefaultScoreable(this);
   }
 
   /**
    * Associates a Controllable behavior with the GameObject.
    *
-   * @param controllable The Controllable behavior to be associated with the GameObject.
    */
-  public void addControllable(Controllable controllable) {
-    this.controllable = controllable;
+  public void addControllable() {
+    this.controllable = new DefaultControllable(this);
   }
 
   /**
