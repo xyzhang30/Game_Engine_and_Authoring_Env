@@ -383,10 +383,12 @@ public class SceneElementHandler {
     node.setOnMouseClicked(e -> {
       try {
         boolean userCreated = databaseController.canCreateUser(usernameTextField.getText(), passwordField.getText(), avatarUrlField);
+        System.out.println(userCreated);
         if (userCreated) {
           // user created
           sceneManager.createCurrentPlayersScene();
           currentPlayersManager.saveUserInfo(usernameTextField.getText());
+          System.out.println("createLoginHandler: user created");
         } else {
           // user already exists or can't be created
           sceneManager.displayErrorMessage("User already exists or could not be created.");
