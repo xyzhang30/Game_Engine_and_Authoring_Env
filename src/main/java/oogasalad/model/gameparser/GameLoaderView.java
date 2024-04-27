@@ -33,9 +33,8 @@ public class GameLoaderView extends GameLoader {
 
   public GameLoaderView(String gameName) throws InvalidShapeException {
     super(gameName);
-    createViewRecord();
+    createViewRecord("Default");
     createKeysMap();
-    System.out.println("FINAL KEYS:"+keys);
   }
 
   private void createKeysMap() {
@@ -58,7 +57,7 @@ public class GameLoaderView extends GameLoader {
     }
   }
 
-  private void createViewRecord() throws InvalidShapeException {
+  private void createViewRecord(String mod) throws InvalidShapeException {
     List<Integer> strikeableIDs = new ArrayList<>();
     viewGameObjectRecords = new ArrayList<>();
     for (GameObjectProperties o : gameData.getGameObjectProperties()) {
@@ -68,7 +67,7 @@ public class GameLoaderView extends GameLoader {
       int id = o.collidableId();
       String shape = matchShape(o.shape());
       List<Integer> colorRgb = new ArrayList<>();
-      for (int i : o.color()) {
+      for (int i : o.color().getOrDefault(mod, o.color().get("Default"))) {
         colorRgb.add(validateRgbValue(i));
       }
       double xdimension = o.dimension().xDimension();
@@ -77,7 +76,7 @@ public class GameLoaderView extends GameLoader {
       double startYpos = o.position().yPosition();
       ViewGameObjectRecord viewCollidable = new ViewGameObjectRecord(id, colorRgb, shape,
           xdimension,
-          ydimension, startXpos, startYpos, o.image(), o.direction());
+          ydimension, startXpos, startYpos, o.image().getOrDefault(mod, ""), o.direction());
       viewGameObjectRecords.add(viewCollidable);
     }
     strikeablesView = new StrikeablesView(strikeableIDs);
