@@ -61,9 +61,9 @@ public class AuthoringController {
     stage.show();
   }
 
-  public boolean submitGame(String gameName){
+  public boolean submitGame(String gameName, String gameDescription){
     try {
-      builderDirector.writeGame(gameName);
+      builderDirector.writeGame(gameName, gameDescription);
       return true;
     } catch (RuntimeException e) {
       LOGGER.error(e);
@@ -80,6 +80,7 @@ public class AuthoringController {
   public void writePlayers(Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
     List<ParserPlayer> players = new ArrayList<>();
     playersMap.forEach((playerId, myGameObjects) -> {
+      System.out.println("collidables:"+playersMap.get(playerId).get(CollidableType.STRIKABLE));
       ParserPlayer player = new ParserPlayer(playerId,
           playersMap.get(playerId).get(CollidableType.STRIKABLE),
           playersMap.get(playerId).get(CollidableType.SCOREABLE),
@@ -164,4 +165,5 @@ public class AuthoringController {
     KeyPreferences keys = new KeyPreferences(angleLeft, angleRight, powerUp, powerDown, controllableLeft, controllableRight, controllableUp, controllableDown, striking);
     builderDirector.constructKeys(List.of(keys));
   }
+
 }

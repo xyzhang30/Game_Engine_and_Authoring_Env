@@ -65,8 +65,8 @@ public class BuilderDirector {
     keysBuilder.buildGameField(gameData, fieldData);
   }
 
-  public void writeGame(String fileName) throws InvalidJSONDataException {
-    writeGame(fileName, this.gameData, NEW_GAME_DATA_FOLDER_PATH);
+  public void writeGame(String fileName, String gameDescription) throws InvalidJSONDataException {
+    writeGame(fileName, gameDescription, this.gameData, NEW_GAME_DATA_FOLDER_PATH);
 //    this.gameData.setGameName(fileName);
 //    ObjectMapper mapper = new ObjectMapper();
 //    if (gameData.getGameObjects() == null || gameData.getPlayers() == null
@@ -85,8 +85,9 @@ public class BuilderDirector {
 //    }
   }
 
-  public void writeGame(String fileName, GameData gameData, String folderPath) throws InvalidJSONDataException {
+  public void writeGame(String fileName, String gameDescription, GameData gameData, String folderPath) throws InvalidJSONDataException {
     gameData.setGameName(fileName);
+    gameData.setGameDescription(gameDescription);
     ObjectMapper mapper = new ObjectMapper();
     if (gameData.getGameObjects() == null || gameData.getPlayers() == null
         || gameData.getVariables() == null || gameData.getRules() == null) {
