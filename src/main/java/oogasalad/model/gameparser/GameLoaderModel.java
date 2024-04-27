@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import oogasalad.model.Pair;
 import oogasalad.model.api.data.GameObjectProperties;
@@ -90,8 +92,16 @@ public class GameLoaderModel extends GameLoader {
    */
   public Collection<GameObject> getGameObjects() {
     createGameObjectContainer();
-    addPlayerStrikeables();
-    addPlayerScoreables();
+    addPlayerObjects(ParserPlayer::myStrikeable,
+        gameId -> gameObjects.get(gameId).getStrikeable(),
+        (playerId, strikeables) -> playerMap.get(playerId).addStrikeables(
+            (List<Strikeable>) strikeables));
+
+    addPlayerObjects(ParserPlayer::myScoreable,
+        gameId -> gameObjects.get(gameId).getScoreable(),
+        (playerId, scoreables) -> playerMap.get(playerId).addScoreables(
+            (List<Scoreable>) scoreables));
+
     addPlayerControllables();
     return gameObjects.values();
   }
@@ -106,33 +116,21 @@ public class GameLoaderModel extends GameLoader {
     return rulesRecord;
   }
 
-
-  private void addPlayerStrikeables() {
+  private void addPlayerObjects(Function<ParserPlayer, List<Integer>> scoreableIdExtractor,
+      Function<Integer, Optional<?>> scoreableObjectExtractor,
+      BiConsumer<Integer, List<?>> playerMethod) {
     for (ParserPlayer parserPlayer : gameData.getPlayers()) {
       int playerId = parserPlayer.playerId();
-      List<Integer> playerStrikeableIds = parserPlayer.myStrikeable();
-      List<Strikeable> playerStrikeableObjects = new ArrayList<>();
-      for (int i : playerStrikeableIds) {
-        Optional<Strikeable> optionalStrikeable = gameObjects.get(i)
-            .getStrikeable();
-        optionalStrikeable.ifPresent(playerStrikeableObjects::add);
-      }
-      playerMap.get(playerId).addStrikeables(playerStrikeableObjects);
-    }
-  }
-  private void addPlayerScoreables() {
-    for (ParserPlayer parserPlayer : gameData.getPlayers()) {
-      int playerId = parserPlayer.playerId();
-      List<Integer> playerScoreableIds = parserPlayer.myScoreable();
-      List<Scoreable> playerScoreableObjects = new ArrayList<>();
+      List<Integer> playerScoreableIds = scoreableIdExtractor.apply(parserPlayer);
+      List<Object> playerScoreableObjects = new ArrayList<>();
       for (int i : playerScoreableIds) {
-        Optional<Scoreable> optionalStrikeable = gameObjects.get(i)
-            .getScoreable();
-        optionalStrikeable.ifPresent(playerScoreableObjects::add);
+        Optional<?> optionalScoreable = scoreableObjectExtractor.apply(i);
+        optionalScoreable.ifPresent(playerScoreableObjects::add);
       }
-      playerMap.get(playerId).addScoreables(playerScoreableObjects);
+      playerMethod.accept(playerId, playerScoreableObjects);
     }
   }
+
   private void addPlayerControllables() {
     for (ParserPlayer parserPlayer : gameData.getPlayers()) {
       int playerId = parserPlayer.playerId();
