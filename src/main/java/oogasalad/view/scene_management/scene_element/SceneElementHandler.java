@@ -423,21 +423,21 @@ public class SceneElementHandler {
   private void createSetEnglishHandler(Node node) {
     node.setOnMouseClicked(e -> {
       sceneManager.setLanguage(SupportedLanguage.ENGLISH);
-      sceneManager.createTitleScene();
+      sceneManager.createLoginScene();
     });
   }
 
   private void createSetSpanishHandler(Node node) {
     node.setOnMouseClicked(e -> {
       sceneManager.setLanguage(SupportedLanguage.SPANISH);
-      sceneManager.createTitleScene();
+      sceneManager.createLoginScene();
     });
   }
 
   private void createSetFrenchHandler(Node node) {
     node.setOnMouseClicked(e -> {
       sceneManager.setLanguage(SupportedLanguage.FRENCH);
-      sceneManager.createTitleScene();
+      sceneManager.createLoginScene();
     });
   }
 }
