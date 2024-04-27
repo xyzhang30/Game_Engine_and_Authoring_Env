@@ -18,7 +18,9 @@ public class GameObjectTest {
 
   @Before
   public void setUp() {
-    gameObject = new GameObject(new GameObjectProperties(1, List.of("visible", "strikeable"), 1.0, new Position(1.0,1.0), "", new Dimension(1,1), List.of(), 1, 1, 1, "", 1.0, false, false)); //
+    gameObject = new GameObject(new GameObjectProperties(1, List.of("visible", "strikeable"), 1.0
+        , new Position(1.0,1.0), "", new Dimension(1,1), List.of(), 1, 1, 1, "", 1.0, false,
+        false,0)); //
   }
 
   @Test
@@ -70,7 +72,8 @@ public class GameObjectTest {
   public void testTeleportTo() {
 
     GameObject targetObject = new GameObject(new GameObjectProperties(1, List.of("visible", "strikeable"), 1.0,
-        new Position(1.0,1.0), "", new Dimension(1,1), List.of(), 1, 1, 1, "", 1.0, false, false)); //
+        new Position(1.0,1.0), "", new Dimension(1,1), List.of(), 1, 1, 1, "", 1.0, false,
+        false,0)); //
     gameObject.teleportTo(targetObject);
     assertEquals(targetObject.getX(), gameObject.getX(), 0.001);
     assertEquals(targetObject.getY(), gameObject.getY(), 0.001);

@@ -36,17 +36,17 @@ public class GameBuilderTest {
 
     GameObjectProperties co1 = new GameObjectProperties(1, List.of("visible", "surface"), 100.0,
         new Position(0, 0), "rectangle", new Dimension(500, 500), List.of(100, 200, 100), 3.03873
-        , 2.03873, 0,"sample.img",0, false, false);
+        , 2.03873, 0,"sample.img",0, false, false, 0.0);
     GameObjectProperties co2 = new GameObjectProperties(2, List.of("visible", "collidable"), 1.0,
         new Position(250, 450), "circle", new Dimension(2, 2), List.of(255, 255, 255), 0.0, 0.0,0
-        ,"sample.img",0, false, false);
+        ,"sample.img",0, false, false, 0.0);
     GameObjectProperties co3 = new GameObjectProperties(3, List.of("visible", "surface"), 0.0,
         new Position(250, 50), "circle", new Dimension(5, 5), List.of(0, 0, 0), 0.0, 0.0, 0,
-        "sample.img",0, false, false);
+        "sample.img",0, false, false, 0.0);
 
     this.testBuilderDirector.constructCollidableObjects(List.of(co1, co2, co3));
 
-    ParserPlayer p1 = new ParserPlayer(1, List.of(2), List.of(),List.of(), 0, 2);
+    ParserPlayer p1 = new ParserPlayer(1, List.of(2), List.of(),List.of(), 0.0, 1);
 
     this.testBuilderDirector.constructPlayers(List.of(p1));
 

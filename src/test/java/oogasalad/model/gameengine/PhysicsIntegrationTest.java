@@ -17,7 +17,7 @@ public class PhysicsIntegrationTest {
   private Collection<GameObject> gameObjects;
   @BeforeEach
   public void setUp() {
-    gameEngine = new GameEngine("testPhysics");
+    gameEngine = new GameEngine("data/playable_games/testPhysics");
     gameObjects = gameEngine.getGameObjects();
   }
 

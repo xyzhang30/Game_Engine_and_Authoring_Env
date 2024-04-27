@@ -26,7 +26,7 @@ public class PlayerTest {
 
   @BeforeEach
   public void setUp() {
-    player = new Player(1);
+    player = new Player(1,0);
     strikeable1 = mock(Strikeable.class);
     strikeable2 = mock(Strikeable.class);
     scoreable = mock(Scoreable.class);
