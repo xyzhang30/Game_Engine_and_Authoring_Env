@@ -219,6 +219,12 @@ public class GameController {
   }
 
 
+  /**
+   * Gets the input key for the requested input type
+   *
+   * @param inputType the type of input being requested
+   * @return KeyCode associated with the given input
+   */
   public KeyCode getKey(KeyInputType inputType) {
     Map<KeyInputType, String> keyMap = gameLoaderView.getInputKeys();
     return KeyCode.valueOf(keyMap.get(inputType));
@@ -261,7 +267,8 @@ public class GameController {
           initialGameObjRecord.color(), initialGameObjRecord.staticFriction(),
           initialGameObjRecord.kineticFriction(), initialGameObjRecord.inclineAngle(),
           initialGameObjRecord.image(), initialGameObjRecord.direction(),
-          initialGameObjRecord.inelastic(), initialGameObjRecord.phaser(), gameEngine.getScoreableScoreById(gameObjectRecord.id()));
+          initialGameObjRecord.inelastic(), initialGameObjRecord.phaser(),
+          gameEngine.getScoreableScoreById(gameObjectRecord.id()));
       //add new game obj to the list
       newGameObjectRecords.add(newGameObj);
     });
@@ -284,7 +291,7 @@ public class GameController {
       //create a new parserPlayer with the new score
       double totalScore = player.score();
       double objScores = 0;
-      for (int id : parserPlayer.myScoreable()){
+      for (int id : parserPlayer.myScoreable()) {
         objScores += gameEngine.getScoreableScoreById(id);
       }
       ParserPlayer newParserPlayer = new ParserPlayer(player.playerId(),
@@ -296,6 +303,7 @@ public class GameController {
 
     //call builderDirector to serialize gameData into JSON
     BuilderDirector builderDirector = new BuilderDirector();
-    builderDirector.writeGame(gameData.getGameName(), gameData.getGameDescription(), gameData, RESUME_GAME_DATA_FOLDER);
+    builderDirector.writeGame(gameData.getGameName(), gameData.getGameDescription(), gameData,
+        RESUME_GAME_DATA_FOLDER);
   }
 }

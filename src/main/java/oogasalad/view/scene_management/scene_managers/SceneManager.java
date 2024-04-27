@@ -3,9 +3,7 @@ package oogasalad.view.scene_management.scene_managers;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javax.xml.parsers.ParserConfigurationException;
@@ -77,6 +75,25 @@ public class SceneManager {
   }
 
   /**
+   * Gets the x coordinate of the left side of the game board by querying composite element
+   *
+   * @return double representing the x coordinate of the left side of the game board
+   */
+  public double getGameBoardLeftBound() {
+    return compositeElement.getGameBoardLeftBound();
+  }
+
+
+  /**
+   * Gets the x coordinate of the right side of the game board by querying composite element
+   *
+   * @return double representing the x coordinate of the right side of the game board
+   */
+  public double getGameBoardRightBound() {
+    return compositeElement.getGameBoardRightBound();
+  }
+
+  /**
    * Getter for the scene
    *
    * @return scene displaying game visuals
@@ -105,7 +122,6 @@ public class SceneManager {
   public void createTitleScene() {
     resetRoot();
     root.getChildren().add(createSceneElements(titleSceneElementsPath));
-
 
     Text titleNode = new Text("Title"); // or use any other relevant text or control
     titleNode.setId("titleElement");

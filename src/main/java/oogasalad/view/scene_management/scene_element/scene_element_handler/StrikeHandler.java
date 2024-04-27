@@ -1,9 +1,7 @@
 package oogasalad.view.scene_management.scene_element.scene_element_handler;
 
-import java.security.Key;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
@@ -102,13 +100,11 @@ public class StrikeHandler {
   private Map<KeyCode, Consumer<Boolean>> createControllableKeyMap() {
     Map<KeyCode, Consumer<Boolean>> keyMap = new HashMap<>();
     keyMap.put(gameController.getKey(KeyInputType.CONTROLLABLE_LEFT),
-        c -> gameController.moveControllableX(false,
-            sceneManager.getRoot().getBoundsInLocal().getMinX(),
-            sceneManager.getRoot().getBoundsInLocal().getMaxX()));
+        c -> gameController.moveControllableX(false, sceneManager.getGameBoardLeftBound(),
+            sceneManager.getGameBoardRightBound()));
     keyMap.put(gameController.getKey(KeyInputType.CONTROLLABLE_RIGHT),
-        c -> gameController.moveControllableX(true,
-            sceneManager.getRoot().getBoundsInLocal().getMinX(),
-            sceneManager.getRoot().getBoundsInLocal().getMaxX()));
+        c -> gameController.moveControllableX(true, sceneManager.getGameBoardLeftBound(),
+            sceneManager.getGameBoardRightBound()));
     return keyMap;
   }
 
