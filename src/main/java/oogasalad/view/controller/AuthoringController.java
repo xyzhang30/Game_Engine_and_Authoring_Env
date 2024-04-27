@@ -83,7 +83,7 @@ public class AuthoringController {
       ParserPlayer player = new ParserPlayer(playerId,
           playersMap.get(playerId).get(CollidableType.STRIKABLE),
           playersMap.get(playerId).get(CollidableType.SCOREABLE),
-          playersMap.get(playerId).get(CollidableType.CONTROLLABLE),0);
+          playersMap.get(playerId).get(CollidableType.CONTROLLABLE),0, playersMap.get(playerId).get(CollidableType.STRIKABLE).get(0));
       players.add(player);
     });
 

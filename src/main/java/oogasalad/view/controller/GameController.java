@@ -6,6 +6,7 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javax.swing.text.html.parser.Parser;
 import net.bytebuddy.agent.builder.AgentBuilder.CircularityLock.Global;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
@@ -273,7 +274,16 @@ public class GameController {
     gameData.setVariables(List.of(variables));
 
     //update players
-
+    List<ParserPlayer> updatedPlayers = new ArrayList<>();
+    currentGameStatus.players().forEach((player) -> {
+      //for each player in the game record
+      //get the old parser player
+      ParserPlayer parserPlayer = gameLoaderView.getParserPlayerById(player.playerId());
+      //create a new parserPlayer with the new score
+      ParserPlayer newParserPlayer = new ParserPlayer(player.playerId(), parserPlayer.myStrikeable(), parserPlayer.myScoreable(), parserPlayer.myControllable(), player.score(), player.activeStrikeable());
+      updatedPlayers.add(newParserPlayer);
+    });
+    gameData.setPlayers(updatedPlayers);
 
     //call builderDirector to serialize gameData into JSON
     BuilderDirector builderDirector = new BuilderDirector();
