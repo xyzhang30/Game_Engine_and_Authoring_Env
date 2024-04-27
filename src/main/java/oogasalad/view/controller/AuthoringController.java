@@ -159,8 +159,9 @@ public class AuthoringController {
     String controllableRight = keyPreferences.get("controllable_right");
     String controllableUp = keyPreferences.get("controllable_up");
     String controllableDown = keyPreferences.get("controllable_down");
+    String striking = keyPreferences.get("striking");
 
-    KeyPreferences keys = new KeyPreferences(angleLeft, angleRight, powerUp, powerDown, controllableLeft, controllableRight, controllableUp, controllableDown);
+    KeyPreferences keys = new KeyPreferences(angleLeft, angleRight, powerUp, powerDown, controllableLeft, controllableRight, controllableUp, controllableDown, striking);
     builderDirector.constructKeys(List.of(keys));
   }
 }
