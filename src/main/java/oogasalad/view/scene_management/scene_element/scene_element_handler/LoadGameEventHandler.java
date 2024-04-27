@@ -5,7 +5,9 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tooltip;
 import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.controller.GameController;
 
@@ -63,14 +65,31 @@ public class LoadGameEventHandler {
       ListView<String> gameList = (ListView<String>) node;
       ObservableList<String> items = (ObservableList<String>) callable.call();
       gameList.setItems(items);
-      node.setOnMouseClicked(e -> {
-        String game = gameList.getSelectionModel().getSelectedItem();
-        if (game != null) {
-          gameController.startGamePlay(dirPath + game);
+      gameList.setCellFactory(lv -> new ListCell<String>() {
+        @Override
+        protected void updateItem(String item, boolean empty) {
+          super.updateItem(item, empty);
+          if (empty || item == null) {
+            setText(null);
+            setTooltip(null);
+            setOnMouseClicked(null);
+          } else {
+            setText(item);
+            Tooltip tooltip = new Tooltip("Additional info about " + item);
+            setTooltip(tooltip);
+
+            setOnMouseClicked(event -> handleSelectGame(dirPath, item));
+          }
         }
       });
     } catch (Exception e) {
       //TODO: error handling
+    }
+  }
+
+  private void handleSelectGame(String dirPath, String gameTitle) {
+    if (gameTitle != null) {
+      gameController.startGamePlay(dirPath + gameTitle);
     }
   }
 }
