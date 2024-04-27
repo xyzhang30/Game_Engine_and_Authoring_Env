@@ -65,25 +65,25 @@ public class GameBuilderTest {
 
   private static Rules getRules() {
     return null;
-   }
-   /**
-    Map<String, List<Integer>> commands1 = Map.of("AdjustPointsCommand", List.of(1, 1));
-    Map<String, List<Integer>> commands2 = Map.of("AdvanceTurnCommand", List.of());
+  }
+  /**
+   Map<String, List<Integer>> commands1 = Map.of("AdjustPointsCommand", List.of(1, 1));
+   Map<String, List<Integer>> commands2 = Map.of("AdvanceTurnCommand", List.of());
 
-    CollisionRule collisionRule = new CollisionRule(2, 3, List.of(commands1, commands2));
-    String turnPolicy = "StandardTurnPolicy";
-    Map<String, List<Integer>> roundCondition = Map.of("AdvanceRoundCheck", List.of());
-    Map<String, List<Integer>> winConditions = Map.of("RoundsCompletedCommand", List.of(2));
-    Map<String, List<Integer>> advance1 = Map.of("AdvanceTurnCommand", List.of());
-    Map<String, List<Integer>> advance2 = Map.of("AdjustPointsCommand", List.of(1, 1));
-    Map<String, List<Integer>> advance3 = Map.of("AdvanceRoundCommand", List.of());
-    String strikePolicy = "DoNothingStrikePolicy";
+   CollisionRule collisionRule = new CollisionRule(2, 3, List.of(commands1, commands2));
+   String turnPolicy = "StandardTurnPolicy";
+   Map<String, List<Integer>> roundCondition = Map.of("AdvanceRoundCheck", List.of());
+   Map<String, List<Integer>> winConditions = Map.of("RoundsCompletedCommand", List.of(2));
+   Map<String, List<Integer>> advance1 = Map.of("AdvanceTurnCommand", List.of());
+   Map<String, List<Integer>> advance2 = Map.of("AdjustPointsCommand", List.of(1, 1));
+   Map<String, List<Integer>> advance3 = Map.of("AdvanceRoundCommand", List.of());
+   String strikePolicy = "DoNothingStrikePolicy";
 
-    return new Rules(List.of(collisionRule), turnPolicy, roundCondition, winConditions,
-        Map.of("AdvanceTurnCommand", List.of(), "AdjustPointsCommand", List.of(1, 1)),
-        Map.of("AdvanceRoundCommand", List.of()), strikePolicy,
-        "HighestScoreComparator", Map.of());
-  }*/
+   return new Rules(List.of(collisionRule), turnPolicy, roundCondition, winConditions,
+   Map.of("AdvanceTurnCommand", List.of(), "AdjustPointsCommand", List.of(1, 1)),
+   Map.of("AdvanceRoundCommand", List.of()), strikePolicy,
+   "HighestScoreComparator", Map.of());
+   }*/
 
   @Test
   public void testInvalidJSONData() {
