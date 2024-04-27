@@ -1,5 +1,10 @@
 package oogasalad.view.gameplay;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.io.File;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import oogasalad.view.controller.GameController;
@@ -45,6 +50,15 @@ public class GameControllerTest extends DukeApplicationTest {
     runAsJFXAction(() -> gameController.resumeGame());
 
   }
+
+  @Test
+  public void testGameInitialization() {
+    assertNotNull(gameController, "GameController should not be null after initialization.");
+    assertNotNull(scene, "Scene should not be null after initialization.");
+  }
+
+
+
 
   /**
    * Test starting a game play.
