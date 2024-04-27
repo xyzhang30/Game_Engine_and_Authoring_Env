@@ -23,7 +23,7 @@ import javafx.collections.ObservableList;
 public class GameTitleParser {
 
   private final String newGameDir = "data/playable_games";
-  private final String resumeGameDir = "data/resume_games";
+  private final String resumeGameDir = "data/resume_game";
   private final String testFileIdentifier = "test";
 
   /**

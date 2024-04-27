@@ -67,21 +67,21 @@ public abstract class GameLoader {
     });
   }
 
-  private void createIdtoPlayerMap(){
+  private void createIdtoPlayerMap() {
     gameData.getPlayers().forEach((player) -> {
       idToPlayerMap.put(player.playerId(), player);
     });
   }
 
-  public GameData getGameData(){
+  public GameData getGameData() {
     return gameData;
   }
 
-  public GameObjectProperties getGameObjRecordById(int id){
+  public GameObjectProperties getGameObjRecordById(int id) {
     return idToObjMap.get(id);
   }
 
-  public ParserPlayer getParserPlayerById(int id){
+  public ParserPlayer getParserPlayerById(int id) {
     return idToPlayerMap.get(id);
   }
 }

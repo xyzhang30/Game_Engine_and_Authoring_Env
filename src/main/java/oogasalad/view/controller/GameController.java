@@ -40,7 +40,6 @@ import org.apache.logging.log4j.Logger;
 public class GameController {
 
   private static final String RESUME_GAME_DATA_FOLDER = "data/resume_game/";
-
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
