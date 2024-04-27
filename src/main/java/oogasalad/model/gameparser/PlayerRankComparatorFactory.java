@@ -16,7 +16,6 @@ public class PlayerRankComparatorFactory {
   public static PlayerRecordComparator createRankComparator(String compName)
       throws InvalidCommandException {
     try {
-      System.out.println(BASE_PATH + RANK_COMPARATOR_PATH + compName);
       Class<?> clazz = Class.forName(BASE_PATH + RANK_COMPARATOR_PATH + compName);
       return (PlayerRecordComparator) clazz.getDeclaredConstructor().newInstance();
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |

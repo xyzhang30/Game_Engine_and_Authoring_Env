@@ -43,7 +43,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class GameLoaderModel extends GameLoader {
 
-  protected static final String BASE_PATH = "oogasalad.model.gameengine.";
+  public static final String BASE_PATH = "oogasalad.model.gameengine.";
   private static final Logger LOGGER = LogManager.getLogger(GameLoaderModel.class);
   private final Map<Pair, PhysicsHandler> physicsMap;
   private final List<Integer> collidables;
@@ -187,9 +187,9 @@ public class GameLoaderModel extends GameLoader {
     List<Command> advanceRoundCmds = createCommands(rules.advanceRound());
     Condition winCondition = createCondition(rules.winCondition());
     Condition roundCondition = createCondition(rules.roundCondition());
-    TurnPolicy turnPolicy = TurnPolicyFactory.createTurnPolicy(rules.turnPolicy(), playerContainer);
-    StrikePolicy strikePolicy = StrikePolicyFactory.createStrikePolicy(rules.strikePolicy());
-    PlayerRecordComparator comp = PlayerRankComparatorFactory.createRankComparator(rules.rankComparator());
+    TurnPolicy turnPolicy = GenericFactory.createTurnPolicy(rules.turnPolicy(), playerContainer);
+    StrikePolicy strikePolicy = GenericFactory.createStrikePolicy(rules.strikePolicy());
+    PlayerRecordComparator comp = GenericFactory.createRankComparator(rules.rankComparator());
     List<StaticChecker> checkers =  StaticCheckerFactory.createStaticChecker(rules.staticChecker());
     rulesRecord = new RulesRecord(commandMap,
         winCondition, roundCondition, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy,
