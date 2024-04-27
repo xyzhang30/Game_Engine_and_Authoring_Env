@@ -24,11 +24,8 @@ import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.PhysicsHandler;
-import oogasalad.model.gameengine.gameobject.Strikeable;
 import oogasalad.model.gameengine.gameobject.collision.FrictionHandler;
 import oogasalad.model.gameengine.gameobject.collision.MomentumHandler;
-import oogasalad.model.gameengine.gameobject.controllable.Controllable;
-import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameengine.rank.PlayerRecordComparator;
@@ -156,7 +153,7 @@ public class GameLoaderModel extends GameLoader {
       if (co.properties().contains("collidable")) {
         this.collidables.add(co.collidableId());
       }
-      gameObjects.put(co.collidableId(), CollidableFactory.createCollidable(co));
+      gameObjects.put(co.collidableId(), GameObjectFactory.createCollidable(co));
     });
   }
 
