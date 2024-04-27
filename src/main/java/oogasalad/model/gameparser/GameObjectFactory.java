@@ -30,8 +30,10 @@ public class GameObjectFactory {
     co.properties().forEach(property -> {
       String methodName = properties.getProperty(property.toLowerCase());
       try {
-        Method method = GameObject.class.getMethod(methodName);
-        method.invoke(gameObject);
+        if(!methodName.isEmpty()) {
+          Method method = GameObject.class.getMethod(methodName);
+          method.invoke(gameObject);
+        }
       } catch (Exception e) {
         LOGGER.warn(property + " is not a valid property");
       }

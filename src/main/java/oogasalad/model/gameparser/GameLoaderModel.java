@@ -199,12 +199,13 @@ public class GameLoaderModel extends GameLoader {
   private Condition createCondition(Map<String, List<Integer>> conditionToParams) {
     return conditionToParams.keySet().stream()
         .findFirst()
-        .map(conditionName -> ConditionFactory.createCondition(conditionName, conditionToParams.get(conditionName), gameObjects))
+        .map(conditionName -> ExecutableFactory.createCondition(conditionName,
+            conditionToParams.get(conditionName), gameObjects))
         .orElseThrow(() -> new InvalidCommandException(""));
   }
 
   private List<Command> createCommands(Map<String, List<Integer>> commands) {
-    return commands.keySet().stream().map(command -> CommandFactory.createCommand(command,
+    return commands.keySet().stream().map(command -> ExecutableFactory.createCommand(command,
         commands.get(command), gameObjects)).collect(Collectors.toList());
   }
 
@@ -213,7 +214,7 @@ public class GameLoaderModel extends GameLoader {
         .collect(Collectors.toMap(
             rule -> new Pair(gameObjects.get(rule.firstId()), gameObjects.get(rule.secondId())),
             rule -> rule.command().entrySet().stream()
-                .map(entry -> CommandFactory.createCommand(entry.getKey(), entry.getValue(), gameObjects))
+                .map(entry -> ExecutableFactory.createCommand(entry.getKey(), entry.getValue(), gameObjects))
                 .collect(Collectors.toList())));
   }
 
