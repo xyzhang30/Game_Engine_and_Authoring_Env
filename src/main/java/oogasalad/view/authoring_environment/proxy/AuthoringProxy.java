@@ -127,6 +127,14 @@ public class AuthoringProxy {
     return false;
   }
 
+  public boolean keyTypeAlreadySelected(String keyType){
+    return (this.keyPreferences.containsKey(keyType));
+  }
+
+  public String getSelectedKey(String keyType){
+    return this.keyPreferences.get(keyType);
+  }
+
   public boolean ruleAlreadySelected(String ruleType){
     return (this.policies.containsKey(ruleType) || this.conditionsCommands.containsKey(ruleType));
   }

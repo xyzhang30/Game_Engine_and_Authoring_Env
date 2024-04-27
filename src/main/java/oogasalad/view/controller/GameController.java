@@ -1,15 +1,22 @@
 package oogasalad.view.controller;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import oogasalad.model.api.GameRecord;
+import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
+import oogasalad.model.api.data.GameData;
+import oogasalad.model.api.data.GameObjectProperties;
+import oogasalad.model.api.data.GlobalVariables;
+import oogasalad.model.api.data.ParserPlayer;
+import oogasalad.model.api.data.Position;
+import oogasalad.model.api.data.Variables;
 import oogasalad.model.api.exception.InvalidImageException;
-import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.api.enums.AuthoringImplementationType;
@@ -32,6 +39,8 @@ import org.apache.logging.log4j.Logger;
  * @author Jordan Haytaian, Judy He
  */
 public class GameController {
+
+  private static final String RESUME_GAME_DATA_FOLDER = "data/resume_game/";
 
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private final SceneManager sceneManager;
@@ -226,5 +235,61 @@ public class GameController {
       LOGGER.error(e.getMessage());
       return null;
     }
+  }
+
+  public void saveGame() {
+    GameData gameData = gameLoaderView.getGameData();
+
+    //this is the current game record from engine
+    GameRecord currentGameStatus = gameEngine.restoreLastStaticGameRecord();
+
+    //create new game object records
+    //new game object records with updated position and visibility
+    List<GameObjectProperties> newGameObjectRecords = new ArrayList<>();
+    currentGameStatus.gameObjectRecords().forEach((gameObjectRecord) -> {
+      //get the initial game obj record corresponding to this current one
+      GameObjectProperties initialGameObjRecord = gameLoaderView.getGameObjRecordById(gameObjectRecord.id());
+      //update visibility
+      List<String> properties = initialGameObjRecord.properties();
+      properties.remove("visible");
+      properties.add(gameObjectRecord.visible() ? "visible" : "invisible");
+      //update position
+      Position newPos = new Position(gameObjectRecord.x(), gameObjectRecord.y());
+      //write new obj record
+      GameObjectProperties newGameObj = new GameObjectProperties(gameObjectRecord.id(),
+          properties, initialGameObjRecord.mass(), newPos,
+          initialGameObjRecord.shape(), initialGameObjRecord.dimension(),
+          initialGameObjRecord.color(), initialGameObjRecord.staticFriction(),
+          initialGameObjRecord.kineticFriction(), initialGameObjRecord.inclineAngle(),
+          initialGameObjRecord.image(), initialGameObjRecord.direction(),
+          initialGameObjRecord.inelastic(), initialGameObjRecord.phaser());
+      //add new game obj to the list
+      newGameObjectRecords.add(newGameObj);
+    });
+    //update gameData with the new list
+    gameData.setGameObject(newGameObjectRecords);
+
+    //update the variables
+    int currTurn = currentGameStatus.turn();
+    int currRound = currentGameStatus.round();
+    GlobalVariables globalVariables = new GlobalVariables(currTurn, currRound);
+    Variables variables = new Variables(globalVariables, gameData.getVariables().get(0).player());
+    gameData.setVariables(List.of(variables));
+
+    //update players
+    List<ParserPlayer> updatedPlayers = new ArrayList<>();
+    currentGameStatus.players().forEach((player) -> {
+      //for each player in the game record
+      //get the old parser player
+      ParserPlayer parserPlayer = gameLoaderView.getParserPlayerById(player.playerId());
+      //create a new parserPlayer with the new score
+      ParserPlayer newParserPlayer = new ParserPlayer(player.playerId(), parserPlayer.myStrikeable(), parserPlayer.myScoreable(), parserPlayer.myControllable(), player.score(), player.activeStrikeable());
+      updatedPlayers.add(newParserPlayer);
+    });
+    gameData.setPlayers(updatedPlayers);
+
+    //call builderDirector to serialize gameData into JSON
+    BuilderDirector builderDirector = new BuilderDirector();
+    builderDirector.writeGame(gameData.getGameName(), gameData, RESUME_GAME_DATA_FOLDER);
   }
 }

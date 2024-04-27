@@ -58,7 +58,11 @@ public class KeySelectionPanel implements Panel {
     inputField.setEditable(false);
     AnchorPane.setLeftAnchor(inputField, 500.0);
     AnchorPane.setTopAnchor(inputField, 50.0 * heightIdx);
-    inputField.setId(label);
+    String jsonKeyTypeLabel = String.join("_",label.split(" ")).toLowerCase();
+    inputField.setId(jsonKeyTypeLabel);
+    if (authoringProxy.keyTypeAlreadySelected(jsonKeyTypeLabel)){
+      inputField.setText(authoringProxy.getSelectedKey(jsonKeyTypeLabel));
+    }
 
     keyInputFields.add(inputField);
 
@@ -76,8 +80,7 @@ public class KeySelectionPanel implements Panel {
           event.consume();
           return;
         }
-        String jsonKeyTypeLabel = String.join("_",inputField.getId().split(" ")).toLowerCase();
-        authoringProxy.addKeyPreference(jsonKeyTypeLabel, keyCodeString);
+        authoringProxy.addKeyPreference(inputField.getId(), keyCodeString);
         inputField.setText(keyCodeString);
       });
     });

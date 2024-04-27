@@ -405,8 +405,8 @@
   "variables": [
     {
       "global": {
-        "max_turns": 1,
-        "max_rounds": 2
+        "current_turn" : 1,
+        "current_round" : 1
       },
       "player": {
         "strokes": 0,
@@ -579,7 +579,8 @@
     "controllable_left" : "A",
     "controllable_right" : "D",
     "controllable_up" : "W",
-    "controllable_down" : "S"
+    "controllable_down" : "S",
+    "striking": "ENTER"
   }
 }
 

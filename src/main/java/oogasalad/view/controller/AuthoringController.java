@@ -73,7 +73,7 @@ public class AuthoringController {
 
   public void writeVariables() {
     //player variables always start with 0, 0 for a new game
-    Variables variables = new Variables(new GlobalVariables(0, 0), new PlayerVariables(0, 0));
+    Variables variables = new Variables(new GlobalVariables(1, 1), new PlayerVariables(0, 0));
     builderDirector.constructVaraibles(List.of(variables));
   }
 
@@ -83,7 +83,7 @@ public class AuthoringController {
       ParserPlayer player = new ParserPlayer(playerId,
           playersMap.get(playerId).get(CollidableType.STRIKABLE),
           playersMap.get(playerId).get(CollidableType.SCOREABLE),
-          playersMap.get(playerId).get(CollidableType.CONTROLLABLE));
+          playersMap.get(playerId).get(CollidableType.CONTROLLABLE),0, playersMap.get(playerId).get(CollidableType.STRIKABLE).get(0));
       players.add(player);
     });
 
@@ -159,8 +159,9 @@ public class AuthoringController {
     String controllableRight = keyPreferences.get("controllable_right");
     String controllableUp = keyPreferences.get("controllable_up");
     String controllableDown = keyPreferences.get("controllable_down");
+    String striking = keyPreferences.get("striking");
 
-    KeyPreferences keys = new KeyPreferences(angleLeft, angleRight, powerUp, powerDown, controllableLeft, controllableRight, controllableUp, controllableDown);
+    KeyPreferences keys = new KeyPreferences(angleLeft, angleRight, powerUp, powerDown, controllableLeft, controllableRight, controllableUp, controllableDown, striking);
     builderDirector.constructKeys(List.of(keys));
   }
 }

@@ -6,12 +6,16 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
 import oogasalad.view.authoring_environment.panels.KeySelectionPanel;
 import oogasalad.view.authoring_environment.util.Container;
@@ -51,6 +55,11 @@ public class AuthoringScreen {
   private SupportedLanguage language; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
   private final AuthoringFactory authoringFactory;
+  private TextField gameNameTextField;
+  private TextField gameDescriptionTextField;
+  private Stage gameNameStage;
+  private Button submitGameNameButton;
+
 
   /**
    * Constructs an AuthoringScreen instance.
@@ -199,12 +208,83 @@ public class AuthoringScreen {
           throw new RuntimeException(e);
         }
       }
-      authoringProxy.completeAuthoring();
+      endAuthoring();
+//      authoringProxy.completeAuthoring();
     });
     AnchorPane.setBottomAnchor(finishButton, 50.0);
     AnchorPane.setRightAnchor(finishButton, 50.0);
     rootPane.getChildren().add(finishButton);
   }
+
+  private void endAuthoring() {
+    showEnterGameNamePopup();
+  }
+
+  private void showEnterGameNamePopup() {
+    if (gameNameStage == null) {
+      gameNameStage = new Stage();
+      gameNameStage.initModality(Modality.APPLICATION_MODAL);
+      gameNameStage.setTitle("Enter Game Name and Description");
+
+      VBox vbox = new VBox();
+      gameNameTextField = new TextField();
+      gameNameTextField.setPromptText("Enter game name...");
+      gameDescriptionTextField = new TextField();
+      gameDescriptionTextField.setPromptText("Enter game description");
+
+      vbox.getChildren().addAll(gameNameTextField, submitGameNameButton());
+
+      Scene scene = new Scene(vbox, 500, 500);
+      gameNameStage.setScene(scene);
+    }
+    gameNameStage.showAndWait();
+  }
+
+
+  private Button submitGameNameButton() {
+    if (submitGameNameButton == null) {
+      submitGameNameButton = new Button("Submit");
+      submitGameNameButton.setOnAction(e -> {
+        gameNameStage.close();
+        authoringProxy.setGameName(gameNameTextField.getText());
+        authoringProxy.completeAuthoring();
+      });
+    }
+
+    return submitGameNameButton;
+  }
+//
+//  private Node createGameDescriptionText() {
+//    Label gameDescriptionLabel = new Label("Enter Game Description");
+//    TextField gameDescriptionTextField = uiElementFactory.createTextField(
+//        "", 200,
+//        50);
+//    gameDescriptionTextField.setEditable(
+//        true);
+//    gameDescriptionTextField.setFocusTraversable(false);
+//    VBox box = uiElementFactory.createVContainer(10, 200, 100,
+//        gameDescriptionLabel, gameDescriptionTextField);
+//    box.setLayoutX(400.0);
+//    box.setLayoutY(600.0);
+//    return box;
+//  }
+//
+//  private Node createGameNameText() {
+//    Label gameNameLabel = new Label("Select Game Name");
+//    TextField gameNameTextField = uiElementFactory.createTextField(
+//        "", 200,
+//        50);
+//    gameNameTextField.setEditable(true);
+//    gameNameTextField.setFocusTraversable(false);
+//    VBox box = uiElementFactory.createVContainer(10, 200, 100,
+//        gameNameLabel, gameNameTextField);
+//    box.setLayoutX(400.0);
+//    box.setLayoutY(700.0);
+//    return box;
+//  }
+
+
+
 
   private void createScreenSelectionDropDown(List<AuthoringScreenType> screenOptions) {
     screensDropDown.getItems().addAll(screenOptions);

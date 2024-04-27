@@ -50,18 +50,12 @@ public class GamePlayManagementHandler {
     eventMap.put(SceneElementEvent.PAUSE, this::createPauseHandler);
     eventMap.put(SceneElementEvent.RESUME, this::createResumeHandler);
     eventMap.put(SceneElementEvent.SAVE, this::createSaveHandler);
-    eventMap.put(SceneElementEvent.LOAD, this::createLoadHandler);
   }
 
   private void createSaveHandler(Node node) {
     node.setOnMouseClicked((e -> {
       sceneManager.getRoot().requestFocus();
-    }));
-  }
-
-  private void createLoadHandler(Node node) {
-    node.setOnMouseClicked((e -> {
-      sceneManager.getRoot().requestFocus();
+      gameController.saveGame();
     }));
   }
 
