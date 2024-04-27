@@ -3,9 +3,11 @@ package oogasalad.view.scene_management.scene_managers;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
 import oogasalad.view.api.enums.SupportedLanguage;
@@ -90,6 +92,10 @@ public class SceneManager {
   public void createLanguageSelectionScene() {
     resetRoot();
     root.getChildren().add(createSceneElements(languageSelectionElementsPath));
+
+    Text titleNode = new Text("Language"); // or use any other relevant text or control
+    titleNode.setId("languageElement");
+    root.getChildren().add(titleNode);
   }
 
   /**
@@ -99,6 +105,13 @@ public class SceneManager {
   public void createTitleScene() {
     resetRoot();
     root.getChildren().add(createSceneElements(titleSceneElementsPath));
+
+
+    Text titleNode = new Text("Title"); // or use any other relevant text or control
+    titleNode.setId("titleElement");
+    root.getChildren().add(titleNode);
+
+
   }
 
   /**
@@ -152,6 +165,10 @@ public class SceneManager {
     if (!root.getChildren().contains(pauseElements)) {
       root.getChildren().add(pauseElements);
     }
+
+    Text pauseMenu = new Text("Pause"); // or use any other relevant text or control
+    pauseMenu.setId("pauseElement");
+    root.getChildren().add(pauseMenu);
   }
 
   public void createHelpInstructions() {
@@ -196,9 +213,13 @@ public class SceneManager {
     root.getChildren().add(transitionElements);
   }
 
-  private void createGameOverScene() {
+  public void createGameOverScene() {
     resetRoot();
     root.getChildren().add(createSceneElements(gameOverSceneElementsPath));
+
+    Text gameOverText = new Text("GameOver"); // or use any other relevant text or control
+    gameOverText.setId("gameOverTexts");
+    root.getChildren().add(gameOverText);
   }
 
 
@@ -239,4 +260,6 @@ public class SceneManager {
       createTransitionDisplay();
     }
   }
+
+
 }
