@@ -173,12 +173,21 @@ public class GameController {
   }
 
   /**
-   * Prompts the GameTitleParser to parse for the playable game titles
+   * Prompts the GameTitleParser to parse for the playable new game titles
    *
-   * @return a list of the playable game titles
+   * @return a list of the playable new game titles
    */
-  public ObservableList<String> getGameTitles() {
-    return gameTitleParser.getGameTitles();
+  public ObservableList<String> getNewGameTitles() {
+    return gameTitleParser.getNewGameTitles();
+  }
+
+  /**
+   * Prompts the GameTitleParser to parse for the playable savedgame titles
+   *
+   * @return a list of the playable saved game titles
+   */
+  public ObservableList<String> getSavedGameTitles() {
+    return gameTitleParser.getSavedGameTitles();
   }
 
   /**
@@ -235,6 +244,7 @@ public class GameController {
       return null;
     }
   }
+
   public void saveGame() {
     GameData gameData = gameLoaderView.getGameData();
 
@@ -246,7 +256,8 @@ public class GameController {
     List<GameObjectProperties> newGameObjectRecords = new ArrayList<>();
     currentGameStatus.gameObjectRecords().forEach((gameObjectRecord) -> {
       //get the initial game obj record corresponding to this current one
-      GameObjectProperties initialGameObjRecord = gameLoaderView.getGameObjRecordById(gameObjectRecord.id());
+      GameObjectProperties initialGameObjRecord = gameLoaderView.getGameObjRecordById(
+          gameObjectRecord.id());
       //update visibility
       List<String> properties = initialGameObjRecord.properties();
       properties.remove("visible");
@@ -281,7 +292,9 @@ public class GameController {
       //get the old parser player
       ParserPlayer parserPlayer = gameLoaderView.getParserPlayerById(player.playerId());
       //create a new parserPlayer with the new score
-      ParserPlayer newParserPlayer = new ParserPlayer(player.playerId(), parserPlayer.myStrikeable(), parserPlayer.myScoreable(), parserPlayer.myControllable(), player.score(), player.activeStrikeable());
+      ParserPlayer newParserPlayer = new ParserPlayer(player.playerId(),
+          parserPlayer.myStrikeable(), parserPlayer.myScoreable(), parserPlayer.myControllable(),
+          player.score(), player.activeStrikeable());
       updatedPlayers.add(newParserPlayer);
     });
     gameData.setPlayers(updatedPlayers);
