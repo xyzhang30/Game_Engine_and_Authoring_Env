@@ -21,15 +21,6 @@ public interface Controllable {
   double moveX(boolean positive);
 
   /**
-   * Moves the controllable object along the y-axis.
-   *
-   * @param positive True if the movement is in the positive direction, false otherwise.
-   * @return The amount of movement along the y-axis.
-   */
-
-  double moveY(boolean positive);
-
-  /**
    * Retrieves the controllable object as a GameObject.
    *
    * @return The controllable object as a GameObject.
@@ -41,8 +32,7 @@ public interface Controllable {
    * Sets the amount for the controllable object to move by for each prompt.
    *
    * @param movementXaxis The amount to move along the x-axis.
-   * @param movementYaxis The amount to move along the y-axis.
    */
 
-  void setMovement(int movementXaxis, int movementYaxis);
+  void setMovement(int movementXaxis);
 }

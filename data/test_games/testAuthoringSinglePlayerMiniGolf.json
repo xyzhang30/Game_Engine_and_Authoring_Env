@@ -93,7 +93,7 @@
       }
     ],
     "turn_policy": "StandardTurnPolicy",
-    "round_policy": {
+    "round_condition": {
       "AdvanceRoundCheck": []
     },
     "win_condition": {

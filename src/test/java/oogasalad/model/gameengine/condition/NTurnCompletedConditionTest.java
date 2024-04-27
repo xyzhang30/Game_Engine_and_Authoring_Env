@@ -23,7 +23,7 @@ public class NTurnCompletedConditionTest {
   public static class TestPlayer extends Player {
 
     public TestPlayer(int id) {
-      super(id);
+      super(id, 0);
     }
 
     @Override

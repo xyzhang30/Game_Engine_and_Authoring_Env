@@ -20,11 +20,12 @@ public class GameEngineTest {
   private GameEngine gameEngine;
   private GameLoaderModel loader;
 
+
   private Collection<GameObject> gameObjects;
   @BeforeEach
   public void setUp() {
     loader = mock(GameLoaderModel.class);
-    gameEngine = new GameEngine("threePlayerMiniGolf");
+    gameEngine = new GameEngine("data/playable_games/threePlayerMiniGolf");
     gameObjects = gameEngine.getGameObjects();
   }
 

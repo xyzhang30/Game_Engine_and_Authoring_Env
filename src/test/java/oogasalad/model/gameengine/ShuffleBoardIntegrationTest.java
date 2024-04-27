@@ -14,7 +14,7 @@ public class ShuffleBoardIntegrationTest {
 
 
   private static final double DELTA = .0001;
-  private static final String TITLE = "shuffleTest";
+  private static final String TITLE = "data/playable_games/shuffleTest";
   private GameEngine gameEngine;
 
   private boolean isStatic(GameRecord r) {

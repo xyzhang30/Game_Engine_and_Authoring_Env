@@ -21,7 +21,8 @@ public record GameObjectProperties(@JsonProperty("gameobject_id") int collidable
                                    String image,
                                    double direction,
                                    boolean inelastic,
-                                   boolean phaser
+                                   boolean phaser,
+                                   double score
 ) {
 
 }

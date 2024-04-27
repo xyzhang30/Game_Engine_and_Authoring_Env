@@ -19,7 +19,6 @@ public class DefaultControllable implements Controllable {
 
   private final GameObject go;
   private int movementXaxis;
-  private int movementYaxis;
 
   /**
    * Constructs a DefaultControllable object with the specified GameObject.
@@ -30,7 +29,6 @@ public class DefaultControllable implements Controllable {
   public DefaultControllable(GameObject go) {
     this.go = go;
     movementXaxis = 0;
-    movementYaxis = 0;
   }
 
   /**
@@ -43,18 +41,6 @@ public class DefaultControllable implements Controllable {
   @Override
   public double moveX(boolean positive) {
     return movementXaxis * (positive ? 1 : -1);
-  }
-
-  /**
-   * Moves the controllable object along the y-axis.
-   *
-   * @param positive True if the movement is in the positive direction, false otherwise.
-   * @return The amount of movement along the y-axis.
-   */
-
-  @Override
-  public double moveY(boolean positive) {
-    return movementYaxis * (positive ? 1 : -1);
   }
 
   /**
@@ -72,13 +58,11 @@ public class DefaultControllable implements Controllable {
    * Sets the amount for the controllable object to move by for each prompt.
    *
    * @param movementXaxis The amount to move along the x-axis.
-   * @param movementYaxis The amount to move along the y-axis.
    */
 
   @Override
-  public void setMovement(int movementXaxis, int movementYaxis) {
+  public void setMovement(int movementXaxis) {
     this.movementXaxis = movementXaxis;
-    this.movementYaxis = movementYaxis;
   }
 }
 

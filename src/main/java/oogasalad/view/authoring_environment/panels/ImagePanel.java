@@ -70,18 +70,21 @@ public class ImagePanel implements Panel {
   @Override
   public void handleEvents() {
     imageButton.setOnAction(event -> {
-      String relativePath = chooseImage();
-      if (relativePath != null && shapeProxy.getShape() != null) {
+      File imgFile = chooseImage();
+      if (imgFile == null){
+        return;
+      }
+      String relativePath = imgFile.getPath();
+      if (shapeProxy.getShape() != null) {
         shapeProxy.getGameObjectAttributesContainer().setColor(null);
         shapeProxy.getGameObjectAttributesContainer().setImagePath(relativePath);
         String imgPath = Paths.get(relativePath).toUri().toString();
         shapeProxy.getShape().setFill(new ImagePattern(new Image(imgPath)));
       }
     });
-
   }
 
-  private String chooseImage() {
+  private File chooseImage() {
     FileChooser fileChooser = new FileChooser();
 
     File initialDirectory = new File("data/");
@@ -91,9 +94,7 @@ public class ImagePanel implements Panel {
         new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
     );
     File file = null;
-    while (file == null) {
-      file = fileChooser.showOpenDialog(new Stage());
-    }
-    return file.getPath();
+    file = fileChooser.showOpenDialog(new Stage());
+    return file;
   }
 }

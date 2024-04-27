@@ -20,7 +20,7 @@ public class CommandExceptionTest {
       GameEngine gameEngine = new GameEngine("badParamNumberMiniGolfTest");
       cmd.execute(gameEngine);
       GameLoaderModel loader = new GameLoaderModel("badParamNumberMiniGolfTest");
-      loader.prepareRound(1);
+
     });
   }
 }

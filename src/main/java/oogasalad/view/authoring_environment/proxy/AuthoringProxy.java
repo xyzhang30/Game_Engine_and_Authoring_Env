@@ -30,13 +30,15 @@ public class AuthoringProxy {
   private final Map<String, String> policies = new HashMap<>();
   private final Map<List<Integer>, Map<String, List<Integer>>> interactionMap = new HashMap<>();
   private final Map<Shape, GameObjectAttributesContainer> gameObjectMap = new HashMap<>();
-  private final Map<Integer, Map<CollidableType, List<Integer>>> playersMap = new HashMap<>();
+  private final Map<Integer, Map<CollidableType, List<Integer>>> playersMap
+      = new HashMap<>();
   private Map<String, List<Integer>> multiCommandCheckedIdx = new HashMap<>(); //checkComboBoxId mapped to checkedIndices
 
-  private String gameName; // POPUP FOR SET GAME NAME
+  private String gameName;
   private String currentScreenTitle;
   private AuthoringController authoringController;
   private int numPlayers = 1;
+  private String gameDescription;
 
   /**
    * Adds an interaction for a given list of shapes.
@@ -174,7 +176,7 @@ public class AuthoringProxy {
       authoringController.writeVariables();
       authoringController.writeGameObjects(gameObjectMap);
       authoringController.writeKeyPreferences(keyPreferences);
-      boolean saveGameSuccess = authoringController.submitGame(gameName);
+      boolean saveGameSuccess = authoringController.submitGame(gameName, gameDescription);
       if (saveGameSuccess) {
         showSuceessMessage("Game successfully saved!");
       } else {
@@ -225,6 +227,15 @@ public class AuthoringProxy {
    */
   public void setGameName(String gameName) {
     this.gameName = gameName;
+  }
+
+  /**
+   * Sets the game description.
+   *
+   * @param gameDescription The description of the game.
+   */
+  public void setGameDescription(String gameDescription){
+    this.gameDescription = gameDescription;
   }
 
   /**
@@ -356,10 +367,14 @@ public class AuthoringProxy {
       Integer shapeId, boolean isControllable, int controllableXSpeed, int controllableYSpeed) {
     if (selectedPlayerId >= 0) {
       if (isControllable) {
+        System.out.println("IS CONTROLLABLE:");
         playersMap.get(selectedPlayerId)
             .put(collidableType, List.of(shapeId, controllableXSpeed, controllableYSpeed));
+        System.out.println("UPDATE MAP: "+playersMap);
       } else if (!playersMap.get(selectedPlayerId).get(collidableType).contains(shapeId)) {
         playersMap.get(selectedPlayerId).get(collidableType).add(shapeId);
+        System.out.println("NOT CONTROLLABLE:");
+        System.out.println("UPDATING MAP: "+playersMap);
       }
     }
   }

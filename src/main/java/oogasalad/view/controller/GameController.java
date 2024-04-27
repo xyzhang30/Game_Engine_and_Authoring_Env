@@ -17,6 +17,7 @@ import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Variables;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.gameengine.GameEngine;
+import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.KeyInputType;
@@ -211,23 +212,19 @@ public class GameController {
    *
    * @param positive true if along positive x axis, false if along negative x axis
    */
-  public void moveControllableX(boolean positive) {
+  public void moveControllableX(boolean positive, double minBound, double maxBound) {
     if (animationManager.isRunning()) {
-      gameEngine.moveActiveControllableX(positive);
+      gameEngine.moveActiveControllableX(positive, minBound, maxBound);
     }
   }
+
 
   /**
-   * Move controllable along y axis
+   * Gets the input key for the requested input type
    *
-   * @param positive true if along positive y axis, false if along negative y axis
+   * @param inputType the type of input being requested
+   * @return KeyCode associated with the given input
    */
-  public void moveControllableY(boolean positive) {
-    if (animationManager.isRunning()) {
-      gameEngine.moveActiveControllableY(positive);
-    }
-  }
-
   public KeyCode getKey(KeyInputType inputType) {
     Map<KeyInputType, String> keyMap = gameLoaderView.getInputKeys();
     return KeyCode.valueOf(keyMap.get(inputType));
@@ -270,7 +267,8 @@ public class GameController {
           initialGameObjRecord.color(), initialGameObjRecord.staticFriction(),
           initialGameObjRecord.kineticFriction(), initialGameObjRecord.inclineAngle(),
           initialGameObjRecord.image(), initialGameObjRecord.direction(),
-          initialGameObjRecord.inelastic(), initialGameObjRecord.phaser());
+          initialGameObjRecord.inelastic(), initialGameObjRecord.phaser(),
+          gameEngine.getScoreableScoreById(gameObjectRecord.id()));
       //add new game obj to the list
       newGameObjectRecords.add(newGameObj);
     });
@@ -291,15 +289,21 @@ public class GameController {
       //get the old parser player
       ParserPlayer parserPlayer = gameLoaderView.getParserPlayerById(player.playerId());
       //create a new parserPlayer with the new score
+      double totalScore = player.score();
+      double objScores = 0;
+      for (int id : parserPlayer.myScoreable()) {
+        objScores += gameEngine.getScoreableScoreById(id);
+      }
       ParserPlayer newParserPlayer = new ParserPlayer(player.playerId(),
           parserPlayer.myStrikeable(), parserPlayer.myScoreable(), parserPlayer.myControllable(),
-          player.score(), player.activeStrikeable());
+          totalScore - objScores, player.activeStrikeable());
       updatedPlayers.add(newParserPlayer);
     });
     gameData.setPlayers(updatedPlayers);
 
     //call builderDirector to serialize gameData into JSON
     BuilderDirector builderDirector = new BuilderDirector();
-    builderDirector.writeGame(gameData.getGameName(), gameData, RESUME_GAME_DATA_FOLDER);
+    builderDirector.writeGame(gameData.getGameName(), gameData.getGameDescription(), gameData,
+        RESUME_GAME_DATA_FOLDER);
   }
 }

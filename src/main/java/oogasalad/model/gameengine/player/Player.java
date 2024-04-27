@@ -39,11 +39,11 @@ public class Player {
    * @param id the player's unique identifier.
    */
 
-  public Player(int id) {
+  public Player(int id, double score) {
     playerId = id;
     roundCompleted = false;
     turnsCompleted = 0;
-    score = 0;
+    this.score = score;
     playerHistory = new Stack<>();
   }
 
@@ -81,9 +81,9 @@ public class Player {
     }
   }
 
-  public void setControllable(Controllable controllable, int movementXdir, int movementYdir) {
+  public void setControllable(Controllable controllable, int movementXdir) {
     myControllable = controllable;
-    myControllable.setMovement(movementXdir, movementYdir);
+    myControllable.setMovement(movementXdir);
   }
 
   public boolean areAllScoreablesInvisible() {
@@ -212,5 +212,9 @@ public class Player {
 
   public int getId() {
     return playerId;
+  }
+
+  public void setScore(double score) {
+    this.score = score;
   }
 }

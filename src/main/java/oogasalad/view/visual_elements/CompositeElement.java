@@ -11,14 +11,34 @@ import oogasalad.model.api.ViewGameObjectRecord;
 public class CompositeElement {
 
   private final Map<Integer, VisualElement> elementMap;
+  private Pane gameBoard;
 
   public CompositeElement(List<ViewGameObjectRecord> recordList)
       throws ClassNotFoundException, NoSuchMethodException, InstantiationException,
       IllegalAccessException, InvocationTargetException {
     elementMap = new HashMap<>();
+    gameBoard = new Pane();
     for (ViewGameObjectRecord viewRecord : recordList) {
       elementMap.putIfAbsent(viewRecord.id(), new GameElement(viewRecord));
     }
+  }
+
+  /**
+   * Gets the x coordinate of the left side of the game board
+   *
+   * @return double representing the x coordinate of the left side of the game board
+   */
+  public double getGameBoardLeftBound() {
+    return gameBoard.getBoundsInLocal().getMinX();
+  }
+
+  /**
+   * Gets the x coordinate of the right side of the game board
+   *
+   * @return double representing the x coordinate of the right side of the game board
+   */
+  public double getGameBoardRightBound() {
+    return gameBoard.getBoundsInLocal().getMaxX();
   }
 
   /**
@@ -39,7 +59,8 @@ public class CompositeElement {
    */
   public void addElementsToRoot(Pane root) {
     for (VisualElement element : elementMap.values()) {
-      root.getChildren().add(element.getNode());
+      gameBoard.getChildren().add(element.getNode());
     }
+    root.getChildren().add(gameBoard);
   }
 }

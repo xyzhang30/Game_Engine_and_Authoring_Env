@@ -12,7 +12,7 @@ import java.util.Map;
 
 public record Rules(List<CollisionRule> collisions,
                     @JsonProperty("turn_policy") String turnPolicy,
-                    @JsonProperty("round_policy") Map<String, List<Integer>> roundPolicy,
+                    @JsonProperty("round_condition") Map<String, List<Integer>> roundCondition,
                     @JsonProperty("win_condition") Map<String, List<Integer>> winCondition,
                     @JsonProperty("advance_turn") Map<String, List<Integer>> advanceTurn,
                     @JsonProperty("advance_round") Map<String, List<Integer>> advanceRound,

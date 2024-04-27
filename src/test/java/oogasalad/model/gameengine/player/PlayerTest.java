@@ -26,7 +26,7 @@ public class PlayerTest {
 
   @BeforeEach
   public void setUp() {
-    player = new Player(1);
+    player = new Player(1,0);
     strikeable1 = mock(Strikeable.class);
     strikeable2 = mock(Strikeable.class);
     scoreable = mock(Scoreable.class);
@@ -113,7 +113,7 @@ public class PlayerTest {
     Controllable controllable = mock(Controllable.class);
     int xMovement = 1;
     int yMovement = -1;
-    player.setControllable(controllable, xMovement, yMovement);
+    player.setControllable(controllable, xMovement);
     assertEquals(controllable, player.getControllable());
   }
 

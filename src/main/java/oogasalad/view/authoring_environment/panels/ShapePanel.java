@@ -69,6 +69,7 @@ public class ShapePanel implements Panel {
     containerPane.getChildren().addAll(authoringFactory.createSurfacesConfiguration());
     containerPane.getChildren().addAll(authoringFactory.createCollidablesConfiguration());
     containerPane.getChildren().addAll(authoringFactory.createPlayersConfiguration());
+//    containerPane.getChildren().addAll(authoringFactory.createGameConfiguration());
     shapeProxy.createGameObjectTemplates();
     containerPane.getChildren().addAll(shapeProxy.getTemplates());
   }
