@@ -94,13 +94,13 @@ public class GameLoaderModel extends GameLoader {
     createGameObjectContainer();
     addPlayerObjects(ParserPlayer::myStrikeable,
         gameId -> gameObjects.get(gameId).getStrikeable(),
-        (playerId, strikeables) -> playerMap.get(playerId).addStrikeables(
-            (List<Strikeable>) strikeables));
+        (playerId, strikeables) -> playerMap.get(playerId).addStrikeables(strikeables));
 
     addPlayerObjects(ParserPlayer::myScoreable,
         gameId -> gameObjects.get(gameId).getScoreable(),
-        (playerId, scoreables) -> playerMap.get(playerId).addScoreables(
-            (List<Scoreable>) scoreables));
+        (playerId, scoreables) -> playerMap.get(playerId).addScoreables(scoreables));
+
+
 
     addPlayerControllables();
     return gameObjects.values();
@@ -116,20 +116,21 @@ public class GameLoaderModel extends GameLoader {
     return rulesRecord;
   }
 
-  private void addPlayerObjects(Function<ParserPlayer, List<Integer>> scoreableIdExtractor,
-      Function<Integer, Optional<?>> scoreableObjectExtractor,
-      BiConsumer<Integer, List<?>> playerMethod) {
+  private <T> void addPlayerObjects(Function<? super ParserPlayer, ? extends List<Integer>> scoreableIdExtractor,
+      Function<? super Integer, ? extends Optional<? extends T>> scoreableObjectExtractor,
+      BiConsumer<Integer, List<T>> playerMethod) {
     for (ParserPlayer parserPlayer : gameData.getPlayers()) {
       int playerId = parserPlayer.playerId();
       List<Integer> playerScoreableIds = scoreableIdExtractor.apply(parserPlayer);
-      List<Object> playerScoreableObjects = new ArrayList<>();
+      List<T> playerScoreableObjects = new ArrayList<>();
       for (int i : playerScoreableIds) {
-        Optional<?> optionalScoreable = scoreableObjectExtractor.apply(i);
+        Optional<? extends T> optionalScoreable = scoreableObjectExtractor.apply(i);
         optionalScoreable.ifPresent(playerScoreableObjects::add);
       }
       playerMethod.accept(playerId, playerScoreableObjects);
     }
   }
+
 
   private void addPlayerControllables() {
     for (ParserPlayer parserPlayer : gameData.getPlayers()) {
