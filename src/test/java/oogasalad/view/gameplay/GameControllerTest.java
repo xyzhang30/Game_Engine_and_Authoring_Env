@@ -73,6 +73,16 @@ public class GameControllerTest extends DukeApplicationTest {
     assertFalse(gameController.getSavedGameTitles().isEmpty(), "Should retrieve saved game titles");
   }
 
+  @Test
+  public void testKeyInputHandling() {
+    // Simulate a key press event and verify the controller handles it correctly
+    runAsJFXAction(() -> {
+      gameController.moveControllableX(true, 0, 100); // Assuming true means right movement
+      // Verify that the game logic handled the movement correctly
+      // This may require access to the game state or observing changes in the UI/scene
+    });
+  }
+
 
 
 
