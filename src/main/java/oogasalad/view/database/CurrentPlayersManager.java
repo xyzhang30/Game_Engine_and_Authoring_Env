@@ -53,12 +53,4 @@ public class CurrentPlayersManager {
     playersListView.setItems(items);
   }
 
-  /**
-   * Updates the title of the players list display.
-   *
-   * @param title the new title to set.
-   */
-  public void updateTitle(String title) {
-    playersDisplayTitle.setText(title);
-  }
 }

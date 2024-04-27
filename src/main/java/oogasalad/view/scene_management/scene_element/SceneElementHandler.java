@@ -343,7 +343,20 @@ public class SceneElementHandler {
 
   private void createLoginHandler(Node node){
   //TextField avatarUrl = new TextField(); //this should be from a button the same way that we choose the controllable or background images
-    node.setOnMouseClicked(e -> gameController.canUserLogin(usernameTextField.getText()));
+    node.setOnMouseClicked(e ->
+    {
+      try {
+        boolean userCanLogin = gameController.canUserLogin(usernameTextField.getText());
+        if  (userCanLogin){
+          currentPlayersManager.saveUserInfo(usernameTextField.getText());
+        } else {
+          sceneManager.displayErrorMessage("User does not exist.");
+        }
+      }
+      catch (Exception ex) {
+        sceneManager.displayErrorMessage("Error: " + ex.getMessage());
+      }
+    });
     //add another or continue to play (new screen) shows current players like is this good or move on
     //open the currentplayers screen with this player added to it
   }
