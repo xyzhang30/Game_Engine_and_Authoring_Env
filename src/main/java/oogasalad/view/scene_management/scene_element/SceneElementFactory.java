@@ -114,23 +114,20 @@ public class SceneElementFactory {
   }
 
   private void configureArrow(Node node, Map<String, String> parameters) {
-    double xLayoutFactor = parseDoubleParameter(parameters,
-        XMLTags.X_LAYOUT_FACTOR.name().toLowerCase());
-    double yLayoutFactor = parseDoubleParameter(parameters,
-        XMLTags.Y_LAYOUT_FACTOR.name().toLowerCase());
-    double stemWidth = parseDoubleParameter(parameters,
-        XMLTags.Y_LAYOUT_FACTOR.name().toLowerCase());
-    double stemHeight = parseDoubleParameter(parameters, XMLTags.STEM_HEIGHT.name().toLowerCase());
-    double arrowWidthOffset = parseDoubleParameter(parameters,
-        XMLTags.ARROW_WIDTH_OFFSET.name().toLowerCase());
-    double arrowHeightOffset = parseDoubleParameter(parameters,
-        XMLTags.ARROW_HEIGHT_OFFSET.name().toLowerCase());
+    double xLayoutFactor = parseDoubleParameter(parameters, "x_layout");
+    double yLayoutFactor = parseDoubleParameter(parameters, "y_layout");
+    double stemWidth = parseDoubleParameter(parameters, "stem_width");
+    double stemHeight = parseDoubleParameter(parameters, "stem_height");
+    double arrowWidthOffset = parseDoubleParameter(parameters, "arrow_width_offset");
+    double arrowHeightOffset = parseDoubleParameter(parameters, "arrow_height_offset");
 
     Arrow arrow = (Arrow) node;
 
-    arrow.setArrowDimensions(xLayoutFactor * screenWidth, yLayoutFactor * screenHeight,
-        stemWidth, stemHeight, arrowWidthOffset, arrowHeightOffset);
+    arrow.setArrowDimensions(xLayoutFactor * screenWidth, yLayoutFactor * screenHeight, stemWidth,
+        stemHeight, arrowWidthOffset, arrowHeightOffset);
   }
+
+
 
   private void configureButton(Node node, Map<String, String> parameters) {
     String textTag = parameters.get(XMLTags.TEXT.name().toLowerCase());

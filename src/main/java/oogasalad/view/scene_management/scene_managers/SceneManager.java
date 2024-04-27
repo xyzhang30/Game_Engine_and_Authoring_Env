@@ -3,6 +3,7 @@ package oogasalad.view.scene_management.scene_managers;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javax.xml.parsers.ParserConfigurationException;
@@ -189,6 +190,12 @@ public class SceneManager {
     addGameManagementElementsToGame(gameRecord);
     addGameElementsToGame();
     root.requestFocus();
+
+    Pane pane = (Pane) root.getChildren().get(0);
+    for (Node node : pane.getChildren()) {
+      System.out.println(node.getClass());
+      System.out.println("visible " + node.isVisible());
+    }
   }
 
   private void createTransitionDisplay() {

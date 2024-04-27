@@ -121,7 +121,9 @@
     <stem_height>60</stem_height>
     <arrow_width_offset>5</arrow_width_offset>
     <arrow_height_offset>8</arrow_height_offset>
-    <style>angle-arrow</style>
+    <styling>angle-arrow</styling>
     <event>SET_ANGLE</event>
   </node>
+
+
 </scene_elements>
