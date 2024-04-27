@@ -6,8 +6,6 @@ import oogasalad.view.controller.GameController;
 
 /**
  * Manages and displays the leaderboard in the user interface, showing player scores for specific games.
- * This class is responsible for fetching, sorting, and updating the display of player scores using a ListView,
- * leveraging the GameScore record to encapsulate score data.
  *
  * @author Doga Ozmen
  */
