@@ -95,7 +95,7 @@ public class StrikeHandler {
     keyMap.put(gameController.getKey(KeyInputType.ANGLE_RIGHT), this::increaseAngle);
     keyMap.put(gameController.getKey(KeyInputType.POWER_UP), this::increasePower);
     keyMap.put(gameController.getKey(KeyInputType.POWER_DOWN), this::decreasePower);
-    //keyMap.put(gameController.getKey(KeyInputType.)), this::handleStrike);
+    keyMap.put(gameController.getKey(KeyInputType.STRIKING), this::handleStrike);
     return keyMap;
   }
 
@@ -138,12 +138,10 @@ public class StrikeHandler {
     }
   }
 
-  private void handleStrike(boolean ableToStrike) {
+  private void handleStrike() {
     double angle = (-90 + angleArrow.getRotate()) * (Math.PI / 180);
     double fractionalVelocity = powerMeter.getHeight() / maxPower;
-    if (ableToStrike) {
-      gameController.hitPointScoringObject(fractionalVelocity, angle);
-    }
+    gameController.hitPointScoringObject(fractionalVelocity, angle);
   }
 
   private void setAngleArrow(Node node) {
