@@ -187,9 +187,9 @@ public class GameLoaderModel extends GameLoader {
     List<Command> advanceRoundCmds = createCommands(rules.advanceRound());
     Condition winCondition = createCondition(rules.winCondition());
     Condition roundCondition = createCondition(rules.roundCondition());
-    TurnPolicy turnPolicy = GenericFactory.createTurnPolicy(rules.turnPolicy(), playerContainer);
-    StrikePolicy strikePolicy = GenericFactory.createStrikePolicy(rules.strikePolicy());
-    PlayerRecordComparator comp = GenericFactory.createRankComparator(rules.rankComparator());
+    TurnPolicy turnPolicy = PolicyFactory.createTurnPolicy(rules.turnPolicy(), playerContainer);
+    StrikePolicy strikePolicy = PolicyFactory.createStrikePolicy(rules.strikePolicy());
+    PlayerRecordComparator comp = PolicyFactory.createRankComparator(rules.rankComparator());
     List<StaticChecker> checkers =  StaticCheckerFactory.createStaticChecker(rules.staticChecker());
     rulesRecord = new RulesRecord(commandMap,
         winCondition, roundCondition, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy,
