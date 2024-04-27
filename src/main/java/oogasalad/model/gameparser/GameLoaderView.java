@@ -118,4 +118,8 @@ public class GameLoaderView extends GameLoader {
     }
   }
 
+  public String getGameDescription(){
+    return gameData.getGameDescription();
+  }
+
 }
