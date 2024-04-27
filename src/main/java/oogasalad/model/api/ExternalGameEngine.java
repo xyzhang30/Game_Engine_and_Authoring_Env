@@ -38,13 +38,16 @@ public interface ExternalGameEngine {
    * Updates the X Position of the active controllable by an amount preset in game rules.
    *
    * @param positive true if x position is increasing, false if decreasing
+   * @param minBound lowest allowed x position for game engine
+   * @param maxBound highest allowed x position for game engine
    */
-  void moveActiveControllableX(boolean positive);
+  void moveActiveControllableX(boolean positive, double minBound, double maxBound);
 
   /**
    * Updates the Y Position of the active controllable by an amount preset in game rules.
    *
    * @param positive true if y position is increasing, false if decreasing
+   * @param minBound lowest allowed y position for game engine
+   * @param maxBound highest allowed y position for game engine
    */
-  void moveActiveControllableY(boolean positive);
 }

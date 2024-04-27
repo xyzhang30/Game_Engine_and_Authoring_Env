@@ -212,22 +212,12 @@ public class GameController {
    *
    * @param positive true if along positive x axis, false if along negative x axis
    */
-  public void moveControllableX(boolean positive) {
+  public void moveControllableX(boolean positive, double minBound, double maxBound) {
     if (animationManager.isRunning()) {
-      gameEngine.moveActiveControllableX(positive);
+      gameEngine.moveActiveControllableX(positive, minBound, maxBound);
     }
   }
 
-  /**
-   * Move controllable along y axis
-   *
-   * @param positive true if along positive y axis, false if along negative y axis
-   */
-  public void moveControllableY(boolean positive) {
-    if (animationManager.isRunning()) {
-      gameEngine.moveActiveControllableY(positive);
-    }
-  }
 
   public KeyCode getKey(KeyInputType inputType) {
     Map<KeyInputType, String> keyMap = gameLoaderView.getInputKeys();

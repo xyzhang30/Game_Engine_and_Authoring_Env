@@ -101,14 +101,14 @@ public class StrikeHandler {
 
   private Map<KeyCode, Consumer<Boolean>> createControllableKeyMap() {
     Map<KeyCode, Consumer<Boolean>> keyMap = new HashMap<>();
-    keyMap.put(gameController.getKey(KeyInputType.CONTROLLABLE_UP),
-        c -> gameController.moveControllableY(true));
-    keyMap.put(gameController.getKey(KeyInputType.CONTROLLABLE_DOWN),
-        c -> gameController.moveControllableY(false));
     keyMap.put(gameController.getKey(KeyInputType.CONTROLLABLE_LEFT),
-        c -> gameController.moveControllableX(false));
+        c -> gameController.moveControllableX(false,
+            sceneManager.getRoot().getBoundsInLocal().getMinX(),
+            sceneManager.getRoot().getBoundsInLocal().getMaxX()));
     keyMap.put(gameController.getKey(KeyInputType.CONTROLLABLE_RIGHT),
-        c -> gameController.moveControllableX(true));
+        c -> gameController.moveControllableX(true,
+            sceneManager.getRoot().getBoundsInLocal().getMinX(),
+            sceneManager.getRoot().getBoundsInLocal().getMaxX()));
     return keyMap;
   }
 

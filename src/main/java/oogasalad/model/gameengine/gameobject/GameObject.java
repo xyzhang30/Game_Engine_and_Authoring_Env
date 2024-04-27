@@ -337,19 +337,10 @@ public class GameObject {
    *
    * @param positive true if movement in the positive x direction, false otherwise
    */
-  public void moveControllableX(boolean positive) {
+  public void moveControllableX(boolean positive, double boundMin, double boundMax) {
     Optional<Controllable> controllable = getControllable();
     controllable.ifPresent(value -> myX += value.moveX(positive));
-  }
-
-  /**
-   * Update y component of position based on prompt from controllable.
-   *
-   * @param positive true if movement in the positive x direction, false otherwise.
-   */
-  public void moveControllableY(boolean positive) {
-    Optional<Controllable> controllable = getControllable();
-    controllable.ifPresent(value -> myY += value.moveY(positive));
+    myX = Math.min(boundMax-myWidth, Math.max(myX, boundMin));
   }
 
   //Sets the next velocity of the GameObject.

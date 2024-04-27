@@ -124,20 +124,10 @@ public class GameEngine implements ExternalGameEngine {
    */
 
   @Override
-  public void moveActiveControllableX(boolean positive) {
-    playerContainer.getActive().getControllable().asGameObject().moveControllableX(positive);
+  public void moveActiveControllableX(boolean positive, double boundMin, double boundMax) {
+    playerContainer.getActive().getControllable().asGameObject().moveControllableX(positive,
+        boundMin, boundMax);
 
-  }
-
-  /**
-   * Updates the Y Position of the active controllable by an amount preset in game rules.
-   *
-   * @param positive true if y position is increasing, false if decreasing
-   */
-
-  @Override
-  public void moveActiveControllableY(boolean positive) {
-    playerContainer.getActive().getControllable().asGameObject().moveControllableY(positive);
   }
 
   /**
