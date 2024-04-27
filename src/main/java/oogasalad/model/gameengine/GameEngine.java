@@ -233,7 +233,7 @@ public class GameEngine implements ExternalGameEngine {
     gameObjects = loader.getGameObjects();
     gameObjects.forEach(GameObject::addStaticStateGameObject);
     rules = loader.getRulesRecord();
-    playerContainer.getActive().updateActiveStrikeable();
+//    playerContainer.getActive().updateActiveStrikeable();
     playerContainer.getActive().getStrikeable().asGameObject().setVisible(true);
     playerContainer.getPlayers().forEach(Player::startRound);
     addInitialStaticStateToHistory();

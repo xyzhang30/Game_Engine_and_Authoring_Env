@@ -20,6 +20,7 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 0.0,
     "gameobject_id" : 1
   }, {
     "properties" : [ "collidable", "visible" ],
@@ -41,6 +42,7 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 0.0,
     "gameobject_id" : 2
   }, {
     "properties" : [ "collidable", "visible" ],
@@ -62,6 +64,7 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 0.0,
     "gameobject_id" : 3
   }, {
     "properties" : [ "collidable", "visible" ],
@@ -83,6 +86,7 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 0.0,
     "gameobject_id" : 4
   }, {
     "properties" : [ "surface", "visible" ],
@@ -104,6 +108,7 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 0.0,
     "gameobject_id" : 5
   }, {
     "properties" : [ "surface", "visible" ],
@@ -125,6 +130,7 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 0.0,
     "gameobject_id" : 9
   }, {
     "properties" : [ "surface", "visible" ],
@@ -146,6 +152,7 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 0.0,
     "gameobject_id" : 10
   }, {
     "properties" : [ "surface", "visible" ],
@@ -167,13 +174,14 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 0.0,
     "gameobject_id" : 11
   }, {
     "properties" : [ "collidable", "strikeable", "scoreable", "visible" ],
     "mass" : 10.0,
     "position" : {
-      "x_position" : 508.51021500359525,
-      "y_position" : 377.7592213415177
+      "x_position" : 149.46187723214598,
+      "y_position" : 226.1232653448264
     },
     "shape" : "Circle",
     "dimension" : {
@@ -188,6 +196,7 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 3.0,
     "gameobject_id" : 12
   }, {
     "properties" : [ "surface", "visible" ],
@@ -209,6 +218,7 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 0.0,
     "gameobject_id" : 77
   }, {
     "properties" : [ "collidable", "strikeable", "scoreable", "invisible" ],
@@ -230,28 +240,8 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 0.0,
     "gameobject_id" : 13
-  }, {
-    "properties" : [ "collidable", "strikeable", "scoreable", "visible" ],
-    "mass" : 10.0,
-    "position" : {
-      "x_position" : 699.7382473189787,
-      "y_position" : 387.633354784445
-    },
-    "shape" : "Circle",
-    "dimension" : {
-      "x_dimension" : 30.0,
-      "y_dimension" : 30.0
-    },
-    "color" : [ 0, 100, 0 ],
-    "staticFriction" : 0.0,
-    "kineticFriction" : 0.0,
-    "inclineAngle" : 0.0,
-    "image" : "",
-    "direction" : 0.0,
-    "inelastic" : false,
-    "phaser" : false,
-    "gameobject_id" : 14
   }, {
     "properties" : [ "collidable", "strikeable", "scoreable", "invisible" ],
     "mass" : 10.0,
@@ -272,6 +262,29 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 0.0,
+    "gameobject_id" : 14
+  }, {
+    "properties" : [ "collidable", "strikeable", "scoreable", "visible" ],
+    "mass" : 10.0,
+    "position" : {
+      "x_position" : 887.9206390427905,
+      "y_position" : 218.61586483073762
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 30.0,
+      "y_dimension" : 30.0
+    },
+    "color" : [ 0, 100, 0 ],
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : "",
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "score" : 3.0,
     "gameobject_id" : 15
   }, {
     "properties" : [ "surface", "visible" ],
@@ -293,6 +306,7 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 0.0,
     "gameobject_id" : 80
   }, {
     "properties" : [ "surface", "visible" ],
@@ -314,6 +328,7 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 0.0,
     "gameobject_id" : 16
   }, {
     "properties" : [ "surface", "visible" ],
@@ -335,6 +350,7 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 0.0,
     "gameobject_id" : 17
   }, {
     "properties" : [ "surface", "visible" ],
@@ -356,6 +372,7 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 0.0,
     "gameobject_id" : 18
   }, {
     "properties" : [ "surface", "visible" ],
@@ -377,22 +394,23 @@
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
+    "score" : 0.0,
     "gameobject_id" : 60
   } ],
   "players" : [ {
-    "score" : 2.0,
+    "score" : 0.0,
     "player_id" : 1,
     "my_strikeable" : [ 12, 13 ],
     "my_scoreable" : [ 12, 13 ],
     "my_controllable" : [ ],
     "active_strikeable" : 13
   }, {
-    "score" : 2.0,
+    "score" : 0.0,
     "player_id" : 2,
     "my_strikeable" : [ 14, 15 ],
     "my_scoreable" : [ 14, 15 ],
     "my_controllable" : [ ],
-    "active_strikeable" : 14
+    "active_strikeable" : 15
   } ],
   "variables" : [ {
     "global" : {
@@ -563,7 +581,7 @@
       }
     } ],
     "turn_policy" : "StandardTurnPolicy",
-    "round_policy" : {
+    "round_condition" : {
       "TurnsCompletedCondition" : [ 2 ]
     },
     "win_condition" : {
@@ -582,6 +600,7 @@
       "VelocityStaticChecker" : [ ]
     }
   },
+  "game_description" : null,
   "keys" : {
     "striking" : "ENTER",
     "angle_left" : "LEFT",

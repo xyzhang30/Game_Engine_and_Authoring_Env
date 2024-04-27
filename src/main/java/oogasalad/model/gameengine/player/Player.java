@@ -53,9 +53,10 @@ public class Player {
    * @param strikeables The list of strikeable objects to add.
    */
 
-  public void addStrikeables(List<Strikeable> strikeables) {
+  public void addStrikeables(List<Strikeable> strikeables, Strikeable activeStrikeable) {
     myStrikeables = strikeables;
-    activeStrikeable = strikeables.get(strikeables.size() - 1);
+    this.activeStrikeable = activeStrikeable;
+//    activeStrikeable = strikeables.get(strikeables.size() - 1);
   }
 
   /**

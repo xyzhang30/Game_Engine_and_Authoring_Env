@@ -256,7 +256,8 @@
       "my_scoreable": [
         1
       ],
-      "my_controllable": []
+      "my_controllable": [],
+      "active_strikeable": 1
     },
     {
       "player_id": 2,
@@ -266,7 +267,8 @@
       "my_scoreable": [
         6
       ],
-      "my_controllable": []
+      "my_controllable": [],
+      "active_strikeable":6
     }
   ],
   "variables": [

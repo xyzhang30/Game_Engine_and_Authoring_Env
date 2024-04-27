@@ -70,7 +70,7 @@ public class GameObject {
     myY = co.position().yPosition();
     myVelocityX = 0;
     myVelocityY = 0;
-    myVisible = co.properties().contains("visible") && !co.properties().contains("strikeable");
+    myVisible = co.properties().contains("visible");
     myStaticMu = co.staticFriction();
     myKineticMu = co.kineticFriction();
     myInclineAngle = co.inclineAngle();

@@ -1487,7 +1487,8 @@
       "player_id": 1,
       "my_strikeable": [6],
       "my_scoreable": [6],
-      "my_controllable": [5, 20]
+      "my_controllable": [5, 20],
+      "active_strikeable": 6
     }
   ],
   "variables": [
