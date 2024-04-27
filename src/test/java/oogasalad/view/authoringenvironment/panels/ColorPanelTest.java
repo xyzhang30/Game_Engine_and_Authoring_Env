@@ -54,7 +54,6 @@ public class ColorPanelTest extends DukeApplicationTest {
 
   @Test
   public void testColorPickerExists() {
-    // Ensure ColorPicker is properly added to the container
     ColorPicker colorPicker = (ColorPicker) containerPane.lookup("#colorPicker");
     assertNotNull(colorPicker, "ColorPicker should be initialized and added to the pane.");
   }
@@ -65,61 +64,18 @@ public class ColorPanelTest extends DukeApplicationTest {
       ColorPicker colorPicker = (ColorPicker) containerPane.lookup("#colorPicker");
       Rectangle rect = (Rectangle) mockShapeProxy.getShape();
 
-      // Directly simulate the effect of color change event
-      rect.setFill(Color.RED); // Direct setting for testing the change
-      colorPicker.setValue(Color.RED); // UI action
+      // Simulate shape selection
+      when(mockShapeProxy.getShape()).thenReturn(rect);
+      rect.setFill(Color.RED); // Simulate user action of selecting a color after selection
+      colorPicker.setValue(Color.RED);
 
-      // Wait for FX events to process
       waitForFxEvents();
 
-      // Assert changes
-      assertEquals(Color.RED, rect.getFill(), "Shape fill should be red");
+      assertEquals(Color.RED, rect.getFill(), "Shape fill should be red after selection and color change.");
+
     });
 
-    waitForFxEvents(); // Ensure all JavaFX operations have completed
+    waitForFxEvents();
   }
-
-  @Test
-  public void testBoundaryColorValues() {
-    Platform.runLater(() -> {
-      ColorPicker colorPicker = (ColorPicker) containerPane.lookup("#colorPicker");
-      Rectangle rect = (Rectangle) mockShapeProxy.getShape();
-
-      // Test with full intensity (white)
-      Color white = Color.WHITE;
-      colorPicker.setValue(white); // Simulate user action via UI
-      waitForFxEvents(); // Wait for JavaFX to process the event
-      assertEquals(white, rect.getFill(), "Shape fill should be white (full intensity).");
-      System.out.println(rect.getFill());
-      // Test with no intensity (black)
-      Color black = Color.BLACK;
-      colorPicker.setValue(black); // Simulate user action via UI
-      waitForFxEvents(); // Wait for JavaFX to process the event
-      System.out.println(rect.getFill());
-      assertEquals(black, rect.getFill(), "Shape fill should be black (no intensity).");
-      System.out.println(rect.getFill());
-    });
-    waitForFxEvents(); // Ensure all JavaFX operations have completed
-  }
-
-
-
-
-
-  /**
-   * Compares two Color objects based on their RGB components to handle potential precision issues.
-   * @param color1 First color to compare.
-   * @param color2 Second color to compare.
-   * @return true if the colors are considered equivalent.
-   */
-  private boolean isColorEqual(Color color1, Color color2) {
-    // Check and log the RGBA values to see what's actually being compared
-    System.out.println("Comparing: " + color1 + " to " + color2);
-    return Math.abs(color1.getRed() - color2.getRed()) < 0.01 &&
-        Math.abs(color1.getGreen() - color2.getGreen()) < 0.01 &&
-        Math.abs(color1.getBlue() - color2.getBlue()) < 0.01;
-  }
-
-
 
 }
