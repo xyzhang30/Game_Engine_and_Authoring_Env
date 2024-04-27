@@ -1,11 +1,15 @@
 package oogasalad.view.scene_management.scene_element.scene_element_handler;
 
+import java.security.Key;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import javafx.scene.Node;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import oogasalad.view.api.enums.KeyInputType;
 import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
@@ -66,64 +70,46 @@ public class StrikeHandler {
   private void createPowerHandler(Node node) {
     powerMeter = (Rectangle) node;
     minPower = powerMeter.getHeight();
-    boolean ableToStrike = gameController.getAbleToStrike();
     Pane root = sceneManager.getRoot();
+    Map<KeyCode, Runnable> strikableKeyMap = createStrikableKeyMap();
+    Map<KeyCode, Consumer<Boolean>> controllableKeyMap = createControllableKeyMap();
     root.setOnKeyPressed(e -> {
-      switch (e.getCode()) {
-        case UP: {
-          handleUpKey(ableToStrike);
-          break;
+      if (gameController.getAbleToStrike()) {
+        Runnable keyHandler = strikableKeyMap.get(e.getCode());
+        if (keyHandler != null) {
+          keyHandler.run();
         }
-        case DOWN: {
-          handleDownKey(ableToStrike);
-          break;
-        }
-        case LEFT: {
-          handleLeftKey(ableToStrike);
-          break;
-        }
-        case RIGHT: {
-          handleRightKey(ableToStrike);
-          break;
-        }
-        case ENTER: {
-          handleStrike(ableToStrike);
-          break;
+      } else {
+        Consumer<Boolean> keyHandler = controllableKeyMap.get(e.getCode());
+        if (keyHandler != null) {
+          keyHandler.accept(gameController.getAbleToStrike());
         }
       }
+
     });
   }
 
-  private void handleUpKey(boolean ableToStrike) {
-    if (ableToStrike) {
-      increasePower();
-    } else {
-      gameController.moveControllableY(true);
-    }
+  private Map<KeyCode, Runnable> createStrikableKeyMap() {
+    Map<KeyCode, Runnable> keyMap = new HashMap<>();
+    keyMap.put(gameController.getKey(KeyInputType.ANGLE_LEFT), this::decreaseAngle);
+    keyMap.put(gameController.getKey(KeyInputType.ANGLE_RIGHT), this::increaseAngle);
+    keyMap.put(gameController.getKey(KeyInputType.POWER_UP), this::increasePower);
+    keyMap.put(gameController.getKey(KeyInputType.POWER_DOWN), this::decreasePower);
+    keyMap.put(gameController.getKey(KeyInputType.STRIKING), this::handleStrike);
+    return keyMap;
   }
 
-  private void handleDownKey(boolean ableToStrike) {
-    if (ableToStrike) {
-      decreasePower();
-    } else {
-      gameController.moveControllableY(false);
-    }
-  }
-
-  private void handleLeftKey(boolean ableToStrike) {
-    if (ableToStrike) {
-      decreaseAngle();
-    } else {
-      gameController.moveControllableX(false);
-    }
-  }
-
-  private void handleRightKey(boolean ableToStrike) {
-    if (ableToStrike) {
-      increaseAngle();
-    } else {
-      gameController.moveControllableX(true);
-    }
+  private Map<KeyCode, Consumer<Boolean>> createControllableKeyMap() {
+    Map<KeyCode, Consumer<Boolean>> keyMap = new HashMap<>();
+    keyMap.put(gameController.getKey(KeyInputType.CONTROLLABLE_UP),
+        c -> gameController.moveControllableY(true));
+    keyMap.put(gameController.getKey(KeyInputType.CONTROLLABLE_DOWN),
+        c -> gameController.moveControllableY(false));
+    keyMap.put(gameController.getKey(KeyInputType.CONTROLLABLE_LEFT),
+        c -> gameController.moveControllableX(false));
+    keyMap.put(gameController.getKey(KeyInputType.CONTROLLABLE_RIGHT),
+        c -> gameController.moveControllableX(true));
+    return keyMap;
   }
 
   private void decreaseAngle() {
@@ -152,12 +138,10 @@ public class StrikeHandler {
     }
   }
 
-  private void handleStrike(boolean ableToStrike) {
+  private void handleStrike() {
     double angle = (-90 + angleArrow.getRotate()) * (Math.PI / 180);
     double fractionalVelocity = powerMeter.getHeight() / maxPower;
-    if (ableToStrike) {
-      gameController.hitPointScoringObject(fractionalVelocity, angle);
-    }
+    gameController.hitPointScoringObject(fractionalVelocity, angle);
   }
 
   private void setAngleArrow(Node node) {

@@ -14,7 +14,6 @@ public enum SceneElementEvent {
   PAUSE,
   RESUME,
   SAVE,
-  LOAD,
   POWER_HEIGHT,
   SET_POWER,
   SET_ANGLE,

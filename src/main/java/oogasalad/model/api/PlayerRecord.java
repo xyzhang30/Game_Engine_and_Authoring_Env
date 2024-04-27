@@ -10,6 +10,5 @@ package oogasalad.model.api;
  * @author Noah Loewy
  */
 public record PlayerRecord(int playerId, double score, int activeStrikeable) {
-
 }
 

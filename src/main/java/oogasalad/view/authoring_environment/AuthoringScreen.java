@@ -56,6 +56,7 @@ public class AuthoringScreen {
   private final ResourceBundle resourceBundle;
   private final AuthoringFactory authoringFactory;
   private TextField gameNameTextField;
+  private TextField gameDescriptionTextField;
   private Stage gameNameStage;
   private Button submitGameNameButton;
 
@@ -223,14 +224,17 @@ public class AuthoringScreen {
     if (gameNameStage == null) {
       gameNameStage = new Stage();
       gameNameStage.initModality(Modality.APPLICATION_MODAL);
-      gameNameStage.setTitle("Enter Game Name");
+      gameNameStage.setTitle("Enter Game Name and Description");
 
       VBox vbox = new VBox();
       gameNameTextField = new TextField();
       gameNameTextField.setPromptText("Enter game name...");
+      gameDescriptionTextField = new TextField();
+      gameDescriptionTextField.setPromptText("Enter game description");
+
       vbox.getChildren().addAll(gameNameTextField, submitGameNameButton());
 
-      Scene scene = new Scene(vbox, 400, 100);
+      Scene scene = new Scene(vbox, 500, 500);
       gameNameStage.setScene(scene);
     }
     gameNameStage.showAndWait();
@@ -246,8 +250,40 @@ public class AuthoringScreen {
         authoringProxy.completeAuthoring();
       });
     }
+
     return submitGameNameButton;
   }
+//
+//  private Node createGameDescriptionText() {
+//    Label gameDescriptionLabel = new Label("Enter Game Description");
+//    TextField gameDescriptionTextField = uiElementFactory.createTextField(
+//        "", 200,
+//        50);
+//    gameDescriptionTextField.setEditable(
+//        true);
+//    gameDescriptionTextField.setFocusTraversable(false);
+//    VBox box = uiElementFactory.createVContainer(10, 200, 100,
+//        gameDescriptionLabel, gameDescriptionTextField);
+//    box.setLayoutX(400.0);
+//    box.setLayoutY(600.0);
+//    return box;
+//  }
+//
+//  private Node createGameNameText() {
+//    Label gameNameLabel = new Label("Select Game Name");
+//    TextField gameNameTextField = uiElementFactory.createTextField(
+//        "", 200,
+//        50);
+//    gameNameTextField.setEditable(true);
+//    gameNameTextField.setFocusTraversable(false);
+//    VBox box = uiElementFactory.createVContainer(10, 200, 100,
+//        gameNameLabel, gameNameTextField);
+//    box.setLayoutX(400.0);
+//    box.setLayoutY(700.0);
+//    return box;
+//  }
+
+
 
 
   private void createScreenSelectionDropDown(List<AuthoringScreenType> screenOptions) {

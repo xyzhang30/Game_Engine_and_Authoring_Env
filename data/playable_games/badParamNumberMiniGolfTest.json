@@ -258,15 +258,14 @@
       "player_id": 1,
       "my_strikeable": [8],
       "my_scoreable" : [ 8 ],
-
       "my_controllable": []
     }
   ],
   "variables": [
     {
       "global": {
-        "max_turns": 1,
-        "max_rounds": 1
+        "current_turn" : 1,
+        "current_round" : 1
       },
       "player": {
         "strokes": 0,
