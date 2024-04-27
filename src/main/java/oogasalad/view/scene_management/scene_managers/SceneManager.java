@@ -190,12 +190,6 @@ public class SceneManager {
     addGameManagementElementsToGame(gameRecord);
     addGameElementsToGame();
     root.requestFocus();
-
-    Pane pane = (Pane) root.getChildren().get(0);
-    for (Node node : pane.getChildren()) {
-      System.out.println(node.getClass());
-      System.out.println("visible " + node.isVisible());
-    }
   }
 
   private void createTransitionDisplay() {
