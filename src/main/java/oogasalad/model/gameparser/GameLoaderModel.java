@@ -131,19 +131,19 @@ public class GameLoaderModel extends GameLoader {
     }
   }
 
-
   private void addPlayerControllables() {
-    for (ParserPlayer parserPlayer : gameData.getPlayers()) {
-      int playerId = parserPlayer.playerId();
-      if (!parserPlayer.myControllable().isEmpty()) {
-        Optional<Controllable> optionalControllable = gameObjects.get(
-            parserPlayer.myControllable().get(0)).getControllable();
-        optionalControllable.ifPresent(controllable -> {
-          playerMap.get(playerId).setControllable(controllable,
-              parserPlayer.myControllable().get(1), parserPlayer.myControllable().get(2));
+    gameData.getPlayers().stream()
+        .filter(parserPlayer -> !parserPlayer.myControllable().isEmpty())
+        .forEach(parserPlayer -> {
+          parserPlayer.myControllable().stream()
+              .map(gameObjects::get)
+              .map(GameObject::getControllable)
+              .filter(Optional::isPresent)
+              .map(Optional::get)
+              .findFirst()
+              .ifPresent(controllable -> playerMap.get(parserPlayer.playerId()).setControllable(controllable,
+                  parserPlayer.myControllable().get(1), parserPlayer.myControllable().get(2)));
         });
-      }
-    }
   }
 
   private void createGameObjectContainer() {
@@ -155,14 +155,11 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private void populateGameObjects() {
-    gameData.getGameObjectProperties().forEach(co -> {
-      if (co.properties().contains("collidable")) {
-        this.collidables.add(co.collidableId());
-      }
-
-      gameObjects.put(co.collidableId(), CollidableFactory.createCollidable(co));
-
-    });
+    Map<Integer, GameObject> collidablesMap = gameData.getGameObjectProperties().stream()
+        .filter(co -> co.properties().contains("collidable"))
+        .peek(co -> this.collidables.add(co.collidableId()))
+        .collect(Collectors.toMap(GameObjectProperties::collidableId, CollidableFactory::createCollidable));
+    gameObjects.putAll(collidablesMap);
   }
 
   private void addPairToPhysicsMap(GameObjectProperties co, int id,
@@ -186,7 +183,6 @@ public class GameLoaderModel extends GameLoader {
         )
     );
   }
-
 
   private void createRulesRecord() {
     Rules rules = gameData.getRules();
