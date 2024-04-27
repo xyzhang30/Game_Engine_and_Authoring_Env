@@ -2,19 +2,19 @@
   <node>
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
-    <text>Fysics Fun</text>
-    <x_layout_factor>0.12</x_layout_factor>
-    <y_layout_factor>0.3</y_layout_factor>
-    <styling>title-text</styling>
+    <text>FYSICS_FUN</text>
+    <x_layout_factor>1</x_layout_factor>
+    <y_layout_factor>1</y_layout_factor>
+    <style>title-text</style>
   </node>
 
   <node>
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
-    <text>Enter Username</text>
+    <text>USERNAME</text>
     <x_layout_factor>0.36</x_layout_factor>
     <y_layout_factor>0.65</y_layout_factor>
-    <styling>game-text</styling>
+    <style>game-text</style>
   </node>
 
   <node>
@@ -24,17 +24,17 @@
     <height_factor>0.2</height_factor>
     <x_layout_factor>0.5</x_layout_factor>
     <y_layout_factor>0.65</y_layout_factor>
-    <styling>game-text</styling>
+    <style>game-text</style>
     <event>USER_TEXT</event>
   </node>
 
   <node>
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
-    <text>Enter Password</text>
+    <text>PASSWORD</text>
     <x_layout_factor>0.36</x_layout_factor>
     <y_layout_factor>0.68</y_layout_factor>
-    <styling>game-text</styling>
+    <style>game-text</style>
   </node>
 
   <node>
@@ -44,31 +44,31 @@
     <height_factor>0.2</height_factor>
     <x_layout_factor>1</x_layout_factor>
     <y_layout_factor>1</y_layout_factor>
-    <styling>game-text</styling>
+    <style>game-text</style>
     <event>PASSWORD_TEXT</event>
   </node>
 
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>Login</text>
+    <text>LOGIN</text>
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.48</x_layout_factor>
     <y_layout_factor>0.85</y_layout_factor>
-    <styling>title-button</styling>
+    <style>title-button</style>
     <event>LOGIN</event>
   </node>
 
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
-    <text>Login</text>
+    <text>CREATE_USER</text>
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.48</x_layout_factor>
     <y_layout_factor>0.85</y_layout_factor>
-    <styling>title-button</styling>
+    <style>title-button</style>
     <event>CREATE_USER</event>
   </node>
 
