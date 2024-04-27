@@ -3,8 +3,8 @@
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>FYSICS_FUN</text>
-    <x_layout_factor>1</x_layout_factor>
-    <y_layout_factor>1</y_layout_factor>
+    <x_layout_factor>0.3</x_layout_factor>
+    <y_layout_factor>0.2</y_layout_factor>
     <style>title-text</style>
   </node>
 
@@ -13,17 +13,17 @@
     <type>TEXT</type>
     <text>USERNAME</text>
     <x_layout_factor>0.36</x_layout_factor>
-    <y_layout_factor>0.65</y_layout_factor>
+    <y_layout_factor>0.35</y_layout_factor>
     <style>game-text</style>
   </node>
 
   <node>
     <class>javafx.scene.control.TextField</class>
     <type>TEXTFIELD</type>
-    <width_factor>0.25</width_factor>
-    <height_factor>0.2</height_factor>
-    <x_layout_factor>0.5</x_layout_factor>
-    <y_layout_factor>0.65</y_layout_factor>
+    <width_factor>0.15</width_factor>
+    <height_factor>0.05</height_factor>
+    <x_layout_factor>0.52</x_layout_factor>
+    <y_layout_factor>0.32</y_layout_factor>
     <style>game-text</style>
     <event>USER_TEXT</event>
   </node>
@@ -33,17 +33,17 @@
     <type>TEXT</type>
     <text>PASSWORD</text>
     <x_layout_factor>0.36</x_layout_factor>
-    <y_layout_factor>0.68</y_layout_factor>
+    <y_layout_factor>0.5</y_layout_factor>
     <style>game-text</style>
   </node>
 
   <node>
     <class>javafx.scene.control.TextField</class>
     <type>TEXTFIELD</type>
-    <width_factor>0.25</width_factor>
-    <height_factor>0.2</height_factor>
-    <x_layout_factor>1</x_layout_factor>
-    <y_layout_factor>1</y_layout_factor>
+    <width_factor>0.15</width_factor>
+    <height_factor>0.05</height_factor>
+    <x_layout_factor>0.52</x_layout_factor>
+    <y_layout_factor>0.46</y_layout_factor>
     <style>game-text</style>
     <event>PASSWORD_TEXT</event>
   </node>
@@ -52,10 +52,10 @@
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
     <text>LOGIN</text>
-    <width_factor>0.3</width_factor>
-    <height_factor>0.1</height_factor>
-    <x_layout_factor>0.48</x_layout_factor>
-    <y_layout_factor>0.85</y_layout_factor>
+    <width_factor>0.2</width_factor>
+    <height_factor>0.08</height_factor>
+    <x_layout_factor>0.4</x_layout_factor>
+    <y_layout_factor>0.6</y_layout_factor>
     <style>title-button</style>
     <event>LOGIN</event>
   </node>
@@ -64,10 +64,10 @@
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
     <text>CREATE_USER</text>
-    <width_factor>0.3</width_factor>
-    <height_factor>0.1</height_factor>
-    <x_layout_factor>0.48</x_layout_factor>
-    <y_layout_factor>0.85</y_layout_factor>
+    <width_factor>0.2</width_factor>
+    <height_factor>0.08</height_factor>
+    <x_layout_factor>0.4</x_layout_factor>
+    <y_layout_factor>0.8</y_layout_factor>
     <style>title-button</style>
     <event>CREATE_USER</event>
   </node>
