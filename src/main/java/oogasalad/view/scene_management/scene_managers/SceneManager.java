@@ -185,6 +185,9 @@ public class SceneManager {
     Pane pane = (Pane) root.getChildren().get(0);
     for (Node node : pane.getChildren()) {
       System.out.println(node.getClass());
+      System.out.println("visible " + node.isVisible());
+      System.out.println("root width " + root.getBoundsInLocal().getWidth());
+      System.out.println("root height " + root.getBoundsInLocal().getHeight());
     }
   }
 
