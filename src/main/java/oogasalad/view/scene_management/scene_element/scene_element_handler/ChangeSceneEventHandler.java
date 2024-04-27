@@ -58,7 +58,7 @@ public class ChangeSceneEventHandler {
     eventMap.put(SceneElementEvent.START_MENU, this::createStartMenuHandler);
     eventMap.put(SceneElementEvent.START_AUTHORING, this::createStartAuthoringHandler);
     eventMap.put(SceneElementEvent.START_NEW_GAME, this::createStartNewGameHandler);
-    eventMap.put(SceneElementEvent.START_SAVE_GAME, this::createStartSaveGameHandler);
+    eventMap.put(SceneElementEvent.START_SAVED_GAME, this::createStartSaveGameHandler);
     eventMap.put(SceneElementEvent.NEXT_ROUND, this::createNextRoundHandler);
     eventMap.put(SceneElementEvent.NEW_GAME_WINDOW, this::createNewGameHandler);
     eventMap.put(SceneElementEvent.HELP, this::createHelpInstructionsHandler);

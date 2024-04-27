@@ -3,7 +3,7 @@
     <class>javafx.scene.control.ListView</class>
     <type>LISTVIEW</type>
     <width_factor>0.3</width_factor>
-    <height_factor>0.3</height_factor>
+    <height_factor>0.45</height_factor>
     <x_layout_factor>0.1</x_layout_factor>
     <y_layout_factor>0.4</y_layout_factor>
     <style>menu-game-options</style>
@@ -15,7 +15,7 @@
     <class>javafx.scene.control.ListView</class>
     <type>LISTVIEW</type>
     <width_factor>0.3</width_factor>
-    <height_factor>0.5</height_factor>
+    <height_factor>0.45</height_factor>
     <x_layout_factor>0.6</x_layout_factor>
     <y_layout_factor>0.4</y_layout_factor>
     <style>menu-game-options</style>
@@ -27,8 +27,8 @@
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>NEW_GAME</text>
-    <x_layout_factor>0.1</x_layout_factor>
-    <y_layout_factor>0.3</y_layout_factor>
+    <x_layout_factor>0.2</x_layout_factor>
+    <y_layout_factor>0.35</y_layout_factor>
     <style>game-text</style>
   </node>
 
@@ -36,8 +36,8 @@
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>SAVED_GAME</text>
-    <x_layout_factor>0.6</x_layout_factor>
-    <y_layout_factor>0.3</y_layout_factor>
+    <x_layout_factor>0.7</x_layout_factor>
+    <y_layout_factor>0.35</y_layout_factor>
     <style>game-text</style>
   </node>
 

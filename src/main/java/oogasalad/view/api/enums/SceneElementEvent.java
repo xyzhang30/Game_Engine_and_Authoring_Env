@@ -11,7 +11,7 @@ public enum SceneElementEvent {
   START_MENU,
   START_AUTHORING,
   START_NEW_GAME,
-  START_SAVE_GAME,
+  START_SAVED_GAME,
   PAUSE,
   RESUME,
   SAVE,
