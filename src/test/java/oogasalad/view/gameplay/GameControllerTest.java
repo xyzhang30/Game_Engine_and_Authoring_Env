@@ -85,8 +85,6 @@ public class GameControllerTest extends DukeApplicationTest {
 
 
 
-
-
   /**
    * Test starting a game play.
    */
