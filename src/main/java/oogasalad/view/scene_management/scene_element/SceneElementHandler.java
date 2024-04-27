@@ -15,6 +15,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.ThemeType;
+import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.api.enums.SceneElementEventType;
 import oogasalad.view.database.CurrentPlayersManager;
@@ -33,11 +34,12 @@ import oogasalad.view.scene_management.scene_managers.SceneManager;
  * game start events. It also includes methods to handle power and angle adjustments for striking
  * events, as well as key event handlers to modify the power and angle based on user input.
  *
- * @author Jordan Haytaian, sDoga Ozmen
+ * @author Jordan Haytaian, Doga Ozmen
  */
 public class SceneElementHandler {
 
   private final GameController gameController;
+  private final DatabaseController databaseController;
   private final SceneManager sceneManager;
   private final GameStatusManager gameStatusManager;
   private final CurrentPlayersManager currentPlayersManager;
@@ -67,10 +69,13 @@ public class SceneElementHandler {
    *                              managing the game elements related to displaying the game status
    * @param currentPlayersManager An instance of the 'CurrentPlayersManager' class, responsible for
    *                              managing the current players of the new game.
+   * @param databaseController    An instance of 'DatabaseController' class, responsible for managing
+   *                              interactions with the database.
    */
-  public SceneElementHandler(GameController gameController, SceneManager sceneManager,
+  public SceneElementHandler(GameController gameController, DatabaseController databaseController, SceneManager sceneManager,
       GameStatusManager gameStatusManager, CurrentPlayersManager currentPlayersManager) {
     this.gameController = gameController;
+    this.databaseController = databaseController;
     this.sceneManager = sceneManager;
     this.gameStatusManager = gameStatusManager;
     this.currentPlayersManager = currentPlayersManager;
@@ -342,15 +347,19 @@ public class SceneElementHandler {
   }
 
   private void createLoginHandler(Node node){
-  //TextField avatarUrl = new TextField(); //this should be from a button the same way that we choose the controllable or background images
+  //avatar should be from a button the same way that we choose the controllable or background images
+    System.out.println("createLoginHandler in scene element handler called");
     node.setOnMouseClicked(e ->
     {
       try {
-        boolean userCanLogin = gameController.canUserLogin(usernameTextField.getText());
+        boolean userCanLogin = databaseController.canUserLogin(usernameTextField.getText());
         if  (userCanLogin){
           currentPlayersManager.saveUserInfo(usernameTextField.getText());
+          databaseController.loginUser(usernameTextField.getText(), passwordField.getText());
+          System.out.println("createLoginHandler: user logged in");
         } else {
           sceneManager.displayErrorMessage("User does not exist.");
+          System.out.println("createLoginHandler printed an error message");
         }
       }
       catch (Exception ex) {
@@ -366,7 +375,7 @@ public class SceneElementHandler {
     //this should be from a button the same way that we choose the controllable or background images
     node.setOnMouseClicked(e -> {
       try {
-        boolean userCreated = gameController.createUser(usernameTextField.getText(), passwordField.getText(), avatarUrlField);
+        boolean userCreated = databaseController.canCreateUser(usernameTextField.getText(), passwordField.getText(), avatarUrlField);
         if (userCreated) {
           // user created
           sceneManager.createCurrentPlayersScene();

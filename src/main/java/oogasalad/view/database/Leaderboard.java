@@ -2,6 +2,7 @@ package oogasalad.view.database;
 
 import javafx.scene.control.ListView;
 import javafx.collections.ObservableList;
+import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
 
 /**
@@ -10,15 +11,15 @@ import oogasalad.view.controller.GameController;
  * @author Doga Ozmen
  */
 public class Leaderboard {
-  private GameController gameController;
+  private DatabaseController databaseController;
   private ListView<String> leaderboardListView = new ListView<>();
 
   /**
    * Constructs a Leaderboard with a reference to the GameController to fetch formatted score data.
    * @param controller The GameController that provides access to formatted game scores.
    */
-  public Leaderboard(GameController controller) {
-    this.gameController = controller;
+  public Leaderboard(DatabaseController controller) {
+    this.databaseController = controller;
   }
 
   /**
@@ -27,7 +28,7 @@ public class Leaderboard {
    * @param gameName The name of the game for which the leaderboard should be updated.
    */
   public void updateLeaderboard(String gameName) {
-    ObservableList<String> formattedScores = gameController.getFormattedScoresForLeaderboard(gameName);
+    ObservableList<String> formattedScores = databaseController.getFormattedScoresForLeaderboard(gameName);
     leaderboardListView.setItems(formattedScores);
   }
 

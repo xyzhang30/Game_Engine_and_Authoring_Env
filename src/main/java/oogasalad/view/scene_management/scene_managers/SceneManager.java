@@ -10,6 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.ThemeType;
+import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.database.CurrentPlayersManager;
 import oogasalad.view.scene_management.element_parsers.SceneElementParser;
@@ -67,8 +68,9 @@ public class SceneManager {
    * @param gameController handles model/view interactions
    * @param screenWidth    screen width to be used for scaling ratio based elements
    * @param screenHeight   screen height to be used for scaling ratio based elements
+   * @param databaseController handles database interactions
    */
-  public SceneManager(GameController gameController, double screenWidth,
+  public SceneManager(GameController gameController, DatabaseController databaseController, double screenWidth,
       double screenHeight) {
     root = new Pane();
     scene = new Scene(root);
@@ -79,7 +81,7 @@ public class SceneManager {
     gameStatusManager = new GameStatusManager();
     currentPlayersManager = new CurrentPlayersManager();
     sceneElementFactory = new SceneElementFactory(screenWidth, screenHeight, sceneElementStyler,
-        new SceneElementHandler(gameController, this, gameStatusManager, currentPlayersManager));
+        new SceneElementHandler(gameController, databaseController, this, gameStatusManager, currentPlayersManager));
     createLanguageSelectionScene();
   }
 

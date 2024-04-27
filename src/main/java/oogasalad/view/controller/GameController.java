@@ -40,6 +40,7 @@ public class GameController {
   private final GameTitleParser gameTitleParser;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
+  private DatabaseController databaseController;
   private CurrentPlayersManager currentPlayersManager;
   private Database databaseView;
   private boolean ableToStrike;
@@ -59,10 +60,10 @@ public class GameController {
    * @param height The height of the screen for the game.
    */
   public GameController(double width, double height) {
-    sceneManager = new SceneManager(this, width, height);
+    sceneManager = new SceneManager(this, databaseController, width, height);
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
-    databaseView = new Database();
+    databaseController = new DatabaseController();
     currentPlayersManager = new CurrentPlayersManager();
     ableToStrike = true;
     maxVelocity = 1000;
@@ -226,45 +227,6 @@ public class GameController {
       LOGGER.error(e.getMessage());
       return null;
     }
-  }
-
-
-
-  public boolean canUserLogin(String username) {
-    // if false then throw this exception throw new Exception("Login failed: User does not exist.");
-    return databaseView.doesUserExist(username);  // user exists, can log in
-  }
-
-  public boolean createUser(String username, String password, String avatarUrl) throws Exception {
-    if (!databaseView.doesUserExist(username)) {
-      databaseView.registerUser(username, password, avatarUrl);  // add to database
-      return true;  // new user created
-    } else {
-      throw new Exception("User creation failed: User already exists.");
-    }
-  }
-
-  /**
-   * Retrieves formatted score strings for a specified game, suitable for leaderboard display.
-   * @param gameName The game name for which formatted scores are needed.
-   * @return ObservableList of formatted score strings.
-   */
-  public ObservableList<String> getFormattedScoresForLeaderboard(String gameName) {
-    List<GameScore> scores = databaseView.getGeneralHighScoresForGame(gameName, Integer.MAX_VALUE);
-    return scores.stream()
-        .sorted((s1, s2) -> Integer.compare(s2.score(), s1.score()))  //from high to low
-        .map(score -> formatScoreForDisplay(score))
-        .limit(5)  // only top 5 scores
-        .collect(Collectors.toCollection(FXCollections::observableArrayList));
-  }
-
-  /**
-   * Formats a single GameScore into a string representation.
-   * @param score The GameScore to format.
-   * @return Formatted string representing the score.
-   */
-  private String formatScoreForDisplay(GameScore score) {
-    return score.playerName() + ": " + score.score();
   }
 
 
