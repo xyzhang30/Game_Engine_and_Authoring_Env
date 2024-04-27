@@ -46,8 +46,8 @@ public class PlayerTest {
     when(strikeable2.asGameObject().getId()).thenReturn(2);
     when(scoreable.asGameObject().getId()).thenReturn(1);
     when(scoreable.getTemporaryScore()).thenReturn(10.0);
-    player.addStrikeables(strikeables);
-    player.addStrikeables(strikeables);
+    player.addStrikeables(strikeables, strikeable1);
+    player.addStrikeables(strikeables, strikeable2);
     player.addScoreables(scoreables);
     player.updateActiveStrikeable();
   }
@@ -104,7 +104,7 @@ public class PlayerTest {
     List<Strikeable> strikeables = new ArrayList<>();
     Strikeable strikeable1 = mock(Strikeable.class);
     strikeables.add(strikeable1);
-    player.addStrikeables(strikeables);
+    player.addStrikeables(strikeables, strikeable1);
     assertEquals(strikeable1, player.getStrikeable());
   }
 

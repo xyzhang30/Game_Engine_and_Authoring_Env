@@ -49,13 +49,13 @@ public class ComparatorTest {
 
     Player p1 = new Player(1,0);
     p1.addScoreables(List.of(s1));
-    p1.addStrikeables(List.of(ss1));
+    p1.addStrikeables(List.of(ss1), ss1);
     Player p2 = new Player(2,0);
     p2.addScoreables(List.of(s2));
-    p2.addStrikeables(List.of(ss2));
+    p2.addStrikeables(List.of(ss2), ss2);
     Player p3 = new Player(3,0);
     p3.addScoreables(List.of(s3));
-    p3.addStrikeables(List.of(ss3));
+    p3.addStrikeables(List.of(ss3), ss3);
 
 
     container = new PlayerContainer(List.of(p1,p2,p3));

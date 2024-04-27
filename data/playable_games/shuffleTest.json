@@ -219,7 +219,8 @@
       "player_id" : 2,
       "my_strikeable" : [ 12, 13 ],
       "my_scoreable" : [ 12, 13 ],
-      "my_controllable": []
+      "my_controllable": [],
+      "active_strikeable": 12
     }],
   "variables" : [ {
     "global" : {

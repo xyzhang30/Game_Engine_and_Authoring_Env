@@ -25,6 +25,7 @@ import oogasalad.model.gameengine.command.Command;
 import oogasalad.model.gameengine.condition.Condition;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.PhysicsHandler;
+import oogasalad.model.gameengine.gameobject.Strikeable;
 import oogasalad.model.gameengine.gameobject.collision.FrictionHandler;
 import oogasalad.model.gameengine.gameobject.collision.MomentumHandler;
 import oogasalad.model.gameengine.player.Player;
@@ -104,7 +105,12 @@ public class GameLoaderModel extends GameLoader {
           int activeStrikeableId = getParserPlayerById(playerId).activeStrikeable();
           System.out.println("GAME OBJECTS"+gameObjects);
           System.out.println("ACTIVE:"+activeStrikeableId);
-          playerMap.get(playerId).addStrikeables(strikeables, gameObjects.get(activeStrikeableId).getStrikeable().get());
+          Optional<Strikeable> strikeable = gameObjects.get(activeStrikeableId).getStrikeable();
+          strikeable.ifPresent(strikeable1 -> {
+            gameObjects.get(activeStrikeableId).addStrikeable();
+            playerMap.get(playerId).addStrikeables(strikeables, strikeable1);
+          });
+
         });
     addPlayerObjects(ParserPlayer::myScoreable,
         gameId -> gameObjects.get(gameId).getScoreable(),
