@@ -47,9 +47,8 @@ public class GameTitleParserTest {
 
     try (MockedStatic<File> mockedFile = Mockito.mockStatic(File.class)) {
 
-
       // Execute the method under test
-      ObservableList<String> titles = parser.getGameTitles();
+      ObservableList<String> titles = parser.getNewGameTitles();
 
       // Assertions to check the outcomes
 //      assertEquals(3, titles.size(), "Expected 3 valid game titles.");

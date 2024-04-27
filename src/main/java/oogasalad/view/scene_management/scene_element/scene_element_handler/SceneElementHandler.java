@@ -15,6 +15,7 @@ public class SceneElementHandler {
   private final GameStatManagementHandler gameStatManagementHandler;
   private final LanguageEventHandler languageEventHandler;
   private final GamePlayManagementHandler gamePlayManagementHandler;
+  private final LoadGameEventHandler loadGameEventHandler;
   private final StrikeHandler strikeHandler;
   private Map<SceneElementEventType, BiConsumer<Node, String>> eventTypeMap;
 
@@ -25,6 +26,7 @@ public class SceneElementHandler {
     this.languageEventHandler = new LanguageEventHandler(sceneManager);
     this.gamePlayManagementHandler = new GamePlayManagementHandler(gameController, sceneManager);
     this.strikeHandler = new StrikeHandler(gameController, sceneManager);
+    this.loadGameEventHandler = new LoadGameEventHandler(gameController);
     createEventTypeMap();
   }
 
@@ -43,6 +45,8 @@ public class SceneElementHandler {
         gameStatManagementHandler::createElementHandler);
     eventTypeMap.put(SceneElementEventType.MANAGE_GAME_PLAY,
         gamePlayManagementHandler::createElementHandler);
+    eventTypeMap.put(SceneElementEventType.LOAD_GAME,
+        loadGameEventHandler::createElementHandler);
     eventTypeMap.put(SceneElementEventType.STRIKE,
         strikeHandler::createElementHandler);
   }
