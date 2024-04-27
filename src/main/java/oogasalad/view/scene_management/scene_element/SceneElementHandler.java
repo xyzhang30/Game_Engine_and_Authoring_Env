@@ -48,7 +48,7 @@ public class SceneElementHandler {
   private Rectangle powerMeter;
   private Polygon angleArrow;
   private TextField usernameTextField;
-  private PasswordField passwordField;
+  private TextField passwordField;
   private String avatarUrlField;
 
   /**
@@ -384,7 +384,7 @@ public class SceneElementHandler {
   }
 
   private void createPasswordHandler(Node node) {
-    passwordField = (PasswordField) node;
+    passwordField = (TextField) node;
     //save the password and add to database with username if not already there
 
   }

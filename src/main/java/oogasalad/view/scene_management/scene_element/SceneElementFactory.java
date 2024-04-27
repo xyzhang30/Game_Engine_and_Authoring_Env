@@ -67,7 +67,6 @@ public class SceneElementFactory {
     sceneElementPane.setPrefHeight(screenHeight);
 
     for (Map<String, String> parameterMap : parameterList) {
-
       try {
         String className = parameterMap.get(XMLTags.CLASS.name().toLowerCase());
         Class<?> classObj = Class.forName(className);
@@ -78,6 +77,7 @@ public class SceneElementFactory {
       } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
                IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
         //TODO: Exception Handling
+        System.out.println(e.getMessage());
       }
     }
     return sceneElementPane;

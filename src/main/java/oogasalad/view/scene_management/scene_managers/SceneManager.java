@@ -60,7 +60,6 @@ public class SceneManager {
       "data/scene_elements/leaderboardElements.xml";
 
 
-
   /**
    * Constructor initializes scene, root, sceneElementParser, and sceneElementFactory which are
    * necessary to update scenes with new elements
@@ -217,7 +216,6 @@ public class SceneManager {
       List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(
           filePath);
       return sceneElementFactory.createSceneElements(sceneElementParameters, selectedLanguage);
-
     } catch (ParserConfigurationException | SAXException | IOException e) {
       //TODO: Exception Handling
       return null;
@@ -253,17 +251,19 @@ public class SceneManager {
   public void createLoginScene() {
     resetRoot();
     root.getChildren().add(createSceneElements(loginElementsPath));
+    System.out.println(((Pane) (root.getChildren().get(0))).getChildren());
   }
 
-  public void createCurrentPlayersScene(){
+  public void createCurrentPlayersScene() {
     resetRoot();
     root.getChildren().add(createSceneElements(currentPlayersElementsPath));
   }
 
-  public void createLeaderboardScene(){
+  public void createLeaderboardScene() {
     resetRoot();
     root.getChildren().add(createSceneElements(leaderboardElementsPath));
   }
+
   public void displayErrorMessage(String message) {
     Alert alert = new Alert(Alert.AlertType.ERROR);
     alert.setTitle("Error");
