@@ -2,8 +2,10 @@ package oogasalad.view.controller;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.exception.InvalidImageException;
@@ -11,6 +13,7 @@ import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.api.enums.AuthoringImplementationType;
+import oogasalad.view.api.enums.KeyInputType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
 import oogasalad.view.scene_management.scene_managers.AnimationManager;
@@ -207,6 +210,11 @@ public class GameController {
     if (animationManager.isRunning()) {
       gameEngine.moveActiveControllableY(positive);
     }
+  }
+
+  public KeyCode getKey(KeyInputType inputType) {
+    Map<KeyInputType, String> keyMap = gameLoaderView.getInputKeys();
+    return KeyCode.valueOf(keyMap.get(inputType));
   }
 
   private CompositeElement createCompositeElementFromGameLoader() {
