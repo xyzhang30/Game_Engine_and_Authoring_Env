@@ -24,7 +24,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 2,
@@ -49,7 +50,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 3,
@@ -74,7 +76,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 4,
@@ -99,7 +102,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 5,
@@ -124,7 +128,8 @@
         252,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 7,
@@ -201,7 +206,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 10,
@@ -226,7 +232,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 11,
@@ -251,7 +258,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 12,
@@ -276,7 +284,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 13,
@@ -301,7 +310,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
 
     {
@@ -327,7 +337,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
 
     {

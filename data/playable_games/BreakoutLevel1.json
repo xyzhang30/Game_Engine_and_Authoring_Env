@@ -35,7 +35,8 @@
       "color": [0, 0, 0],
       "staticFriction": 7.0,
       "kineticFriction": 5.0,
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 2,
@@ -53,7 +54,8 @@
       "color": [0, 0, 0],
       "staticFriction": 0,
       "kineticFriction": 0,
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 3,
@@ -71,7 +73,8 @@
       "color": [0, 0, 0],
       "staticFriction": 0,
       "kineticFriction": 0,
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 4,
@@ -89,7 +92,8 @@
       "color": [0, 0, 0],
       "staticFriction": 0,
       "kineticFriction": 0,
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 5,
@@ -107,7 +111,8 @@
       "color": [0, 250, 0],
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id" : 6,
@@ -151,7 +156,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 10,
@@ -201,7 +207,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 12,
@@ -226,7 +233,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 13,
@@ -251,7 +259,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 14,
@@ -276,7 +285,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 15,
@@ -301,7 +311,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 16,
@@ -326,7 +337,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 17,
@@ -376,7 +388,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 19,
@@ -401,7 +414,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 20,
@@ -426,7 +440,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 21,
@@ -451,7 +466,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 22,
@@ -526,7 +542,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 25,
@@ -551,7 +568,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 26,
@@ -576,7 +594,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 27,
@@ -601,7 +620,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 28,
@@ -626,7 +646,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 29,
@@ -651,7 +672,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 30,
@@ -676,7 +698,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 31,
@@ -726,7 +749,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 33,
@@ -776,7 +800,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 35,
@@ -826,7 +851,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 37,
@@ -851,7 +877,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 38,
@@ -876,7 +903,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 39,
@@ -901,7 +929,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 40,
@@ -951,7 +980,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 42,
@@ -976,7 +1006,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 43,
@@ -1001,7 +1032,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 44,
@@ -1026,7 +1058,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 45,
@@ -1051,7 +1084,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 46,
@@ -1076,7 +1110,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 47,
@@ -1101,7 +1136,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 48,
@@ -1151,7 +1187,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 50,
@@ -1201,7 +1238,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 52,
@@ -1251,7 +1289,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 54,
@@ -1276,7 +1315,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 55,
@@ -1301,7 +1341,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 56,
@@ -1326,7 +1367,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 57,
@@ -1351,7 +1393,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 58,
@@ -1376,7 +1419,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 59,
@@ -1401,7 +1445,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 60,
@@ -1426,7 +1471,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 61,
@@ -1476,7 +1522,8 @@
           ],
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         }
       ],
 

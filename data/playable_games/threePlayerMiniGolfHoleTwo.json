@@ -24,7 +24,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 2,
@@ -49,7 +50,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 3,
@@ -74,7 +76,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 4,
@@ -99,7 +102,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 5,
@@ -124,7 +128,8 @@
         252,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 6,
@@ -149,7 +154,8 @@
         252,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 7,
@@ -174,7 +180,8 @@
         252,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
 
     {
@@ -200,7 +207,8 @@
         100,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 9,
@@ -223,7 +231,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 10,
@@ -246,7 +255,8 @@
         0,
         255
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 11,
@@ -269,7 +279,8 @@
         0,
         255
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 12,
@@ -294,7 +305,8 @@
         252,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 13,
@@ -319,7 +331,8 @@
         252,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 14,
@@ -344,7 +357,8 @@
         252,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 15,
@@ -369,7 +383,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 16,
@@ -394,7 +409,8 @@
         0,
         255
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 17,
@@ -419,7 +435,8 @@
         0,
         0
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 18,
@@ -446,7 +463,8 @@
         255,
         255
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 19,
@@ -473,7 +491,8 @@
         255,
         255
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     },    {
       "gameobject_id": 20,
       "properties": [
@@ -499,7 +518,8 @@
         255,
         255
       ],
-      "image": ""
+      "image": {"Default": ""}
+
     }
   ],
   "players": [
