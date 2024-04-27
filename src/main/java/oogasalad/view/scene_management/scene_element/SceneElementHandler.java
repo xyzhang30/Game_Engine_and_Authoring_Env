@@ -141,7 +141,7 @@ public class SceneElementHandler {
     eventMap.put(SceneElementEventType.PASSWORD_TEXT, this::createPasswordHandler); //saves the password
     eventMap.put(SceneElementEventType.START_LOGIN, this::createStartLoginHandler); //goes back to the login/createuser screen
     eventMap.put(SceneElementEventType.LEADERBOARD, this::createLeaderboardHandler); //opens the leaderboard scene
-    //eventMap.put(SceneElementEventType.)
+    eventMap.put(SceneElementEventType.UPDATE_CURRENT_PLAYERS, this::setCurrentPlayers); //current players displayed on listview
   }
 
 
@@ -331,6 +331,10 @@ public class SceneElementHandler {
     node.setOnMouseClicked(e -> {
       sceneManager.getRoot().requestFocus();
     });
+  }
+
+  private void setCurrentPlayers(Node node){
+    currentPlayersManager.setPlayersListView((ListView<String>) node);
   }
 
   private void createThemeChangeHandler(Node node) {

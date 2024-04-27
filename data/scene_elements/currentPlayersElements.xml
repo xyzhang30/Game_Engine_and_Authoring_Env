@@ -16,7 +16,7 @@
     <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.3</y_layout_factor>
     <style>score-list</style>
-    <event>SET_SCORE</event>
+    <event>UPDATE_CURRENT_PLAYERS</event>
   </node>
 
   <node>
