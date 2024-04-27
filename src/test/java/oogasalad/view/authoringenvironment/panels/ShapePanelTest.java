@@ -22,7 +22,7 @@ public class ShapePanelTest extends DukeApplicationTest {
   private ShapePanel shapePanel;
   private ShapeProxy mockShapeProxy;
   private AuthoringProxy mockAuthoringProxy;
-  private AuthoringFactory mockAuthoringFactory;
+  private AuthoringFactory testAuthoringFactory;
   private StackPane canvas;
   private AnchorPane rootPane;
   private AnchorPane containerPane;
@@ -33,13 +33,13 @@ public class ShapePanelTest extends DukeApplicationTest {
       try {
         mockShapeProxy = mock(ShapeProxy.class);
         mockAuthoringProxy = mock(AuthoringProxy.class);
-        mockAuthoringFactory = mock(AuthoringFactory.class);
+        testAuthoringFactory = new TestAuthoringFactory(); // Use the concrete test factory
 
         canvas = new StackPane();
         rootPane = new AnchorPane();
         containerPane = new AnchorPane();
 
-        shapePanel = new ShapePanel(mockAuthoringFactory, mockShapeProxy, mockAuthoringProxy, canvas, rootPane, containerPane);
+        shapePanel = new ShapePanel(testAuthoringFactory, mockShapeProxy, mockAuthoringProxy, canvas, rootPane, containerPane);
 
         Stage stage = new Stage();
         Scene scene = new Scene(containerPane);
