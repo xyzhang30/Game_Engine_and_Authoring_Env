@@ -423,7 +423,7 @@ public class SceneElementHandler {
   private void createSetEnglishHandler(Node node) {
     node.setOnMouseClicked(e -> {
       sceneManager.setLanguage(SupportedLanguage.ENGLISH);
-      sceneManager.createLoginScene();
+      sceneManager.createTitleScene();
     });
   }
 
