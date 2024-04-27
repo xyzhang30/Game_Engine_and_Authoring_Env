@@ -3,26 +3,23 @@ package oogasalad.view.controller;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javax.swing.text.html.parser.Parser;
-import net.bytebuddy.agent.builder.AgentBuilder.CircularityLock.Global;
+import javafx.scene.input.KeyCode;
 import oogasalad.model.api.GameRecord;
-import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.data.GameData;
 import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.GlobalVariables;
 import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.data.Position;
-import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
 import oogasalad.model.api.exception.InvalidImageException;
-import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.api.enums.AuthoringImplementationType;
+import oogasalad.view.api.enums.KeyInputType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
 import oogasalad.view.scene_management.scene_managers.AnimationManager;
@@ -43,7 +40,6 @@ import org.apache.logging.log4j.Logger;
 public class GameController {
 
   private static final String RESUME_GAME_DATA_FOLDER = "data/resume_game/";
-
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
@@ -176,12 +172,21 @@ public class GameController {
   }
 
   /**
-   * Prompts the GameTitleParser to parse for the playable game titles
+   * Prompts the GameTitleParser to parse for the playable new game titles
    *
-   * @return a list of the playable game titles
+   * @return a list of the playable new game titles
    */
-  public ObservableList<String> getGameTitles() {
-    return gameTitleParser.getGameTitles();
+  public ObservableList<String> getNewGameTitles() {
+    return gameTitleParser.getNewGameTitles();
+  }
+
+  /**
+   * Prompts the GameTitleParser to parse for the playable savedgame titles
+   *
+   * @return a list of the playable saved game titles
+   */
+  public ObservableList<String> getSavedGameTitles() {
+    return gameTitleParser.getSavedGameTitles();
   }
 
   /**
@@ -223,6 +228,11 @@ public class GameController {
     }
   }
 
+  public KeyCode getKey(KeyInputType inputType) {
+    Map<KeyInputType, String> keyMap = gameLoaderView.getInputKeys();
+    return KeyCode.valueOf(keyMap.get(inputType));
+  }
+
   private CompositeElement createCompositeElementFromGameLoader() {
     try {
       List<ViewGameObjectRecord> recordList = gameLoaderView.getViewCollidableInfo();
@@ -245,7 +255,8 @@ public class GameController {
     List<GameObjectProperties> newGameObjectRecords = new ArrayList<>();
     currentGameStatus.gameObjectRecords().forEach((gameObjectRecord) -> {
       //get the initial game obj record corresponding to this current one
-      GameObjectProperties initialGameObjRecord = gameLoaderView.getGameObjRecordById(gameObjectRecord.id());
+      GameObjectProperties initialGameObjRecord = gameLoaderView.getGameObjRecordById(
+          gameObjectRecord.id());
       //update visibility
       List<String> properties = initialGameObjRecord.properties();
       properties.remove("visible");
@@ -280,7 +291,9 @@ public class GameController {
       //get the old parser player
       ParserPlayer parserPlayer = gameLoaderView.getParserPlayerById(player.playerId());
       //create a new parserPlayer with the new score
-      ParserPlayer newParserPlayer = new ParserPlayer(player.playerId(), parserPlayer.myStrikeable(), parserPlayer.myScoreable(), parserPlayer.myControllable(), player.score(), player.activeStrikeable());
+      ParserPlayer newParserPlayer = new ParserPlayer(player.playerId(),
+          parserPlayer.myStrikeable(), parserPlayer.myScoreable(), parserPlayer.myControllable(),
+          player.score(), player.activeStrikeable());
       updatedPlayers.add(newParserPlayer);
     });
     gameData.setPlayers(updatedPlayers);

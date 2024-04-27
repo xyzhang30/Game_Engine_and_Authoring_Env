@@ -5,5 +5,6 @@ public enum SceneElementEventType {
   SET_LANGUAGE,
   MANAGE_GAME_STATS,
   MANAGE_GAME_PLAY,
+  LOAD_GAME,
   STRIKE
 }
