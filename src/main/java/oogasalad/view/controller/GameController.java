@@ -2,6 +2,8 @@ package oogasalad.view.controller;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.stream.Collectors;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import oogasalad.model.api.GameRecord;
@@ -243,12 +245,26 @@ public class GameController {
   }
 
   /**
-   * Retrieves and returns all scores from the database for a given game.
-   * @param gameName The game name for which scores are needed.
-   * @return List of scores and usernames as GameScore objects.
+   * Retrieves formatted score strings for a specified game, suitable for leaderboard display.
+   * @param gameName The game name for which formatted scores are needed.
+   * @return ObservableList of formatted score strings.
    */
-  public List<GameScore> getAllScores(String gameName) {
-    return databaseView.getGeneralHighScoresForGame(gameName, Integer.MAX_VALUE);
+  public ObservableList<String> getFormattedScoresForLeaderboard(String gameName) {
+    List<GameScore> scores = databaseView.getGeneralHighScoresForGame(gameName, Integer.MAX_VALUE);
+    return scores.stream()
+        .sorted((s1, s2) -> Integer.compare(s2.score(), s1.score()))  //from high to low
+        .map(score -> formatScoreForDisplay(score))
+        .limit(5)  // only top 5 scores
+        .collect(Collectors.toCollection(FXCollections::observableArrayList));
+  }
+
+  /**
+   * Formats a single GameScore into a string representation.
+   * @param score The GameScore to format.
+   * @return Formatted string representing the score.
+   */
+  private String formatScoreForDisplay(GameScore score) {
+    return score.playerName() + ": " + score.score() + (score.gameWon() ? " (Won)" : " (Lost)");
   }
 
 
