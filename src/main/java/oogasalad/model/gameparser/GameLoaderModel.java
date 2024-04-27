@@ -81,12 +81,27 @@ public class GameLoaderModel extends GameLoader {
     return playerContainer;
   }
 
-
-  public void prepareRound(int id) {
+  /**
+   * Retrieves the collidable container.
+   *
+   * @return The collidable container.
+   */
+  public Collection<GameObject> getGameObjects() {
     createGameObjectContainer();
     addPlayerStrikeables();
-    createRulesRecord();
+    return gameObjects.values();
   }
+
+  /**
+   * Retrieves the rules record.
+   *
+   * @return The rules record.
+   */
+  public RulesRecord getRulesRecord() {
+    createRulesRecord();
+    return rulesRecord;
+  }
+
 
   private void addPlayerStrikeables() {
     for (ParserPlayer parserPlayer : gameData.getPlayers()) {
@@ -117,25 +132,6 @@ public class GameLoaderModel extends GameLoader {
         });
       }
     }
-  }
-
-  /**
-   * Retrieves the collidable container.
-   *
-   * @return The collidable container.
-   */
-  public Collection<GameObject> getGameObjects() {
-    return gameObjects.values();
-  }
-
-  /**
-   * Retrieves the rules record.
-   *
-   * @return The rules record.
-   */
-  public RulesRecord getRulesRecord() {
-
-    return rulesRecord;
   }
 
   private void createGameObjectContainer() {

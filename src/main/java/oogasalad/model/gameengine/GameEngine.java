@@ -239,7 +239,6 @@ public class GameEngine implements ExternalGameEngine {
     gameOver = false;
     turn = 1; //first player ideally should have id 1
     staticState = true;
-    loader.prepareRound(round);
     gameObjects = loader.getGameObjects();
     gameObjects.forEach(GameObject::addStaticStateGameObject);
     rules = loader.getRulesRecord();
