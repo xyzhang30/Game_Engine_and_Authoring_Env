@@ -12,6 +12,7 @@ import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import net.bytebuddy.agent.builder.AgentBuilder.CircularityLock.Global;
 import oogasalad.model.Pair;
 import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.ParserPlayer;
@@ -74,6 +75,14 @@ public class GameLoaderModel extends GameLoader {
         "GameOverStaticStateHandler",
         "RoundOverStaticStateHandler", "TurnOverStaticStateHandler"));
     createCollisionTypeMap();
+  }
+
+  public int getCurrTurn(){
+    return gameData.getVariables().get(0).global().currentTurn();
+  }
+
+  public int getCurrRound(){
+    return gameData.getVariables().get(0).global().currentRound();
   }
 
   /**

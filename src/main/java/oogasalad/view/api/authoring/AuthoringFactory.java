@@ -51,5 +51,5 @@ public interface AuthoringFactory {
   void resetAuthoringElements();
 
 
-  List<Node> createGameConfiguration();
+//  List<Node> createGameConfiguration();
 }

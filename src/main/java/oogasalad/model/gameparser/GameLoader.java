@@ -62,7 +62,7 @@ public abstract class GameLoader {
   }
 
   private void createIdToObjectMap() {
-    gameData.getGameObjects().forEach((gameObj) -> {
+    gameData.getGameObjectProperties().forEach((gameObj) -> {
       idToObjMap.put(gameObj.collidableId(), gameObj);
     });
   }

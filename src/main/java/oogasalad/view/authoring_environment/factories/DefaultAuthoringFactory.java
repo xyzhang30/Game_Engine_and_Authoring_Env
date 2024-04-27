@@ -140,15 +140,15 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
         shapeProxy.getShape().getRotate());
   }
 
-  @Override
-  public List<Node> createGameConfiguration() {
-    List<Node> nodes = List.of(//createGameNameLabel(),
-         createGameNameText(),
-       // createGameDescriptionLabel(),
-        createGameDescriptionText());//,
-      //  createGameImage());
-    return nodes;
-  }
+//  @Override
+//  public List<Node> createGameConfiguration() {
+//    List<Node> nodes = List.of(//createGameNameLabel(),
+//         createGameNameText(),
+//       // createGameDescriptionLabel(),
+//        createGameDescriptionText());//,
+//      //  createGameImage());
+//    return nodes;
+//  }
 
   private Node createGameDescriptionText() {
     TextField gameDescriptionTextField = uiElementFactory.createTextField(
@@ -162,24 +162,24 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
     return gameDescriptionTextField;
   }
 
-  private Node createGameDescriptionLabel() {
-return null;
-  }
+//  private Node createGameDescriptionLabel() {
+//return null;
+//  }
 
-  private Node createGameNameText() {
-    Label gameNameLabel = new Label("Select Game Name");
-
-
-    TextField gameDescriptionTextField = uiElementFactory.createTextField(
-        "Provide Game Name", 200,
-        50);
-    gameDescriptionTextField.setEditable(
-        true); //ids are populated automatically after user clicks on object, user can't edit it
-    gameDescriptionTextField.setFocusTraversable(false);
-    AnchorPane.setLeftAnchor(gameDescriptionTextField, 450.0);
-    AnchorPane.setTopAnchor(gameDescriptionTextField, 800.0);
-    return gameDescriptionTextField;
-  }
+//  private Node createGameNameText() {
+//    Label gameNameLabel = new Label("Select Game Name");
+//
+//
+//    TextField gameDescriptionTextField = uiElementFactory.createTextField(
+//        "Provide Game Name", 200,
+//        50);
+//    gameDescriptionTextField.setEditable(
+//        true); //ids are populated automatically after user clicks on object, user can't edit it
+//    gameDescriptionTextField.setFocusTraversable(false);
+//    AnchorPane.setLeftAnchor(gameDescriptionTextField, 450.0);
+//    AnchorPane.setTopAnchor(gameDescriptionTextField, 800.0);
+//    return gameDescriptionTextField;
+//  }
 
   private Node createGameObjectTypeSelection() {
     this.gameObjectTypeDropdown = uiElementFactory.createComboBox("gameObjectTypeDropdown",
