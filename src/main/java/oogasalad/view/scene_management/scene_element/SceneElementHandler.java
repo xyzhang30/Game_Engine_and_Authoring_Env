@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
@@ -16,6 +17,7 @@ import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.api.enums.SceneElementEventType;
+import oogasalad.view.database.CurrentPlayersManager;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 
 /**
@@ -38,12 +40,16 @@ public class SceneElementHandler {
   private final GameController gameController;
   private final SceneManager sceneManager;
   private final GameStatusManager gameStatusManager;
+  private final CurrentPlayersManager currentPlayersManager;
   private final int angleIncrement;
   private Map<SceneElementEventType, Consumer<Node>> eventMap;
   private double maxPower;
   private double minPower;
   private Rectangle powerMeter;
   private Polygon angleArrow;
+  private TextField usernameTextField;
+  private PasswordField passwordField;
+  private String avatarUrlField;
 
   /**
    * Constructs a new instance of the SceneElementHandler class.
@@ -53,18 +59,21 @@ public class SceneElementHandler {
    * scene manager is responsible for managing different scenes within the game environment.
    * Additionally, the constructor sets the angle increment value to a default of 5 degrees.
    *
-   * @param gameController    An instance of the `GameController` class, responsible for managing
-   *                          the game state.
-   * @param sceneManager      An instance of the `SceneManager` class, responsible for managing
-   *                          different scenes within the game environment.
-   * @param gameStatusManager An instance of the 'GameStatusManager' class, responsible for managing
-   *                          the game elements related to displaying the game status
+   * @param gameController        An instance of the `GameController` class, responsible for
+   *                              managing the game state.
+   * @param sceneManager          An instance of the `SceneManager` class, responsible for managing
+   *                              different scenes within the game environment.
+   * @param gameStatusManager     An instance of the 'GameStatusManager' class, responsible for
+   *                              managing the game elements related to displaying the game status
+   * @param currentPlayersManager An instance of the 'CurrentPlayersManager' class, responsible for
+   *                              managing the current players of the new game.
    */
   public SceneElementHandler(GameController gameController, SceneManager sceneManager,
-      GameStatusManager gameStatusManager) {
+      GameStatusManager gameStatusManager, CurrentPlayersManager currentPlayersManager) {
     this.gameController = gameController;
     this.sceneManager = sceneManager;
     this.gameStatusManager = gameStatusManager;
+    this.currentPlayersManager = currentPlayersManager;
     angleIncrement = 5;
     createEventMap();
   }
@@ -127,6 +136,7 @@ public class SceneElementHandler {
     eventMap.put(SceneElementEventType.PASSWORD_TEXT, this::createPasswordHandler); //saves the password
     eventMap.put(SceneElementEventType.START_LOGIN, this::createStartLoginHandler); //goes back to the login/createuser screen
     eventMap.put(SceneElementEventType.LEADERBOARD, this::createLeaderboardHandler); //opens the leaderboard scene
+    //eventMap.put(SceneElementEventType.)
   }
 
 
@@ -332,24 +342,22 @@ public class SceneElementHandler {
   }
 
   private void createLoginHandler(Node node){
-    TextField username = new TextField();
-    TextField password = new PasswordField(); //maybe set this as a password in the enum...?
-    //TextField avatarUrl = new TextField(); //this should be from a button the same way that we choose the controllable or background images
-    node.setOnMouseClicked(e -> gameController.loginUser(username.getText(), password.getText()));
+  //TextField avatarUrl = new TextField(); //this should be from a button the same way that we choose the controllable or background images
+    node.setOnMouseClicked(e -> gameController.canUserLogin(usernameTextField.getText()));
     //add another or continue to play (new screen) shows current players like is this good or move on
     //open the currentplayers screen with this player added to it
   }
 
   private void createUserCreatorHandler(Node node){
-    TextField username = new TextField();
-    TextField password = new PasswordField(); //maybe set this as a password in the enum...?
-    TextField avatarUrl = new TextField(); //this should be from a button the same way that we choose the controllable or background images
+
+    //this should be from a button the same way that we choose the controllable or background images
     node.setOnMouseClicked(e -> {
       try {
-        boolean userCreated = gameController.createUser(username.getText(), password.getText(), avatarUrl.getText());
+        boolean userCreated = gameController.createUser(usernameTextField.getText(), passwordField.getText(), avatarUrlField);
         if (userCreated) {
           // user created
           sceneManager.createCurrentPlayersScene();
+          currentPlayersManager.saveUserInfo(usernameTextField.getText());
         } else {
           // user already exists or can't be created
           sceneManager.displayErrorMessage("User already exists or could not be created.");
@@ -363,14 +371,18 @@ public class SceneElementHandler {
   }
 
   private void createPasswordHandler(Node node) {
-    PasswordField password = (PasswordField) node;
+    passwordField = (PasswordField) node;
     //save the password and add to database with username if not already there
 
   }
 
   private void createUsernameHandler(Node node) {
-    TextField username = (TextField) node;
+    usernameTextField = (TextField) node;
     //save username and add to database if not already there
+  }
+
+  private void createAvatarHandler(Node node){
+    //needs to be integrated
   }
 
   private void createStartLoginHandler(Node node){

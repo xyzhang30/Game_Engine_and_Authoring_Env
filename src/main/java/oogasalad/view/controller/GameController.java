@@ -7,14 +7,13 @@ import javafx.scene.Scene;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.exception.InvalidImageException;
-import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.database.Database;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
-import oogasalad.view.database.CurrentPlayersList;
+import oogasalad.view.database.CurrentPlayersManager;
 import oogasalad.view.scene_management.scene_managers.AnimationManager;
 import oogasalad.view.scene_management.element_parsers.GameTitleParser;
 import oogasalad.view.scene_management.GameWindow;
@@ -38,7 +37,7 @@ public class GameController {
   private final GameTitleParser gameTitleParser;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
-  private CurrentPlayersList currentPlayersList;
+  private CurrentPlayersManager currentPlayersManager;
   private Database databaseView;
   private boolean ableToStrike;
   private final int maxVelocity;
@@ -61,7 +60,7 @@ public class GameController {
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
     databaseView = new Database();
-    currentPlayersList = new CurrentPlayersList();
+    currentPlayersManager = new CurrentPlayersManager();
     ableToStrike = true;
     maxVelocity = 1000;
   }
@@ -226,32 +225,16 @@ public class GameController {
     }
   }
 
-//  public void openLogin(String username, String password){
-//    sceneManager.createCurrentPlayersScene(); //create player scene where the players currently added are shown and
-//  }
-//
-//  public void openCreateUser(String username, String password) {
-//    sceneManager.createCurrentPlayersScene();
-//    //save username
-//    //save password
-//  }
 
 
-
-  public boolean loginUser(String username, String password) {
-    if (databaseView.doesUserExist(username)) {
-      currentPlayersList.saveUserInfo(username);  // save to listview for current players
-      return true;  // user exists, can log in
-    } else {
-      return false;
-      // if false then throw this exception throw new Exception("Login failed: User does not exist.");
-    }
+  public boolean canUserLogin(String username) {
+    // if false then throw this exception throw new Exception("Login failed: User does not exist.");
+    return databaseView.doesUserExist(username);  // user exists, can log in
   }
 
   public boolean createUser(String username, String password, String avatarUrl) throws Exception {
     if (!databaseView.doesUserExist(username)) {
       databaseView.registerUser(username, password, avatarUrl);  // add to database
-      currentPlayersList.saveUserInfo(username);  // save to listview for current players
       return true;  // new user created
     } else {
       throw new Exception("User creation failed: User already exists.");

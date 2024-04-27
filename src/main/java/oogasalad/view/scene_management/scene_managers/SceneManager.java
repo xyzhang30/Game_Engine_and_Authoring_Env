@@ -11,6 +11,7 @@ import oogasalad.model.api.GameRecord;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.GameController;
+import oogasalad.view.database.CurrentPlayersManager;
 import oogasalad.view.scene_management.element_parsers.SceneElementParser;
 import oogasalad.view.scene_management.scene_element.GameStatusManager;
 import oogasalad.view.scene_management.scene_element.SceneElementFactory;
@@ -35,6 +36,7 @@ public class SceneManager {
   private final SceneElementStyler sceneElementStyler;
   private CompositeElement compositeElement;
   private GameStatusManager gameStatusManager;
+  private CurrentPlayersManager currentPlayersManager;
   private Pane pauseElements;
   private Pane transitionElements;
   private int currentRound;
@@ -76,8 +78,9 @@ public class SceneManager {
     sceneElementParser = new SceneElementParser();
     sceneElementStyler = new SceneElementStyler(root);
     gameStatusManager = new GameStatusManager();
+    currentPlayersManager = new CurrentPlayersManager();
     sceneElementFactory = new SceneElementFactory(screenWidth, screenHeight, sceneElementStyler,
-        new SceneElementHandler(gameController, this, gameStatusManager));
+        new SceneElementHandler(gameController, this, gameStatusManager, currentPlayersManager));
     createLanguageSelectionScene();
   }
 
