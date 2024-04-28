@@ -19,9 +19,7 @@ public class Leaderboard {
   /**
    * Constructor that initializes the leaderboard's ObservableList and ListView.
    */
-  public Leaderboard() {
-    this.leaderboardScores = FXCollections.observableArrayList();
-  }
+  public Leaderboard() {}
 
   /**
    * Updates the leaderboard display for a specified game by fetching formatted scores and
