@@ -1,6 +1,8 @@
 package oogasalad.view.scene_management.scene_element.scene_element_handler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import javafx.beans.value.ChangeListener;
@@ -29,6 +31,7 @@ public class DatabaseHandler {
   private final SceneManager sceneManager;
   private TextField usernameTextField;
   private TextField passwordField;
+  private ListView<String> playerPermissions;
   private String avatarUrlField;
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
 
@@ -73,6 +76,7 @@ public class DatabaseHandler {
     eventMap.put(SceneElementEvent.LEADERBOARD_SCORES,
         this::setLeaderboard); //make sure listview is populated w leaderboard
     eventMap.put(SceneElementEvent.PLAYER_PERMISSIONS, this::setUpPlayerPermissions);
+    eventMap.put(SceneElementEvent.SUBMIT_PERMISSIONS, this::createFinishHandler);
 
   }
 
@@ -152,12 +156,12 @@ public class DatabaseHandler {
   }
 
   private void setUpPlayerPermissions(Node node) {
-    ListView<String> listView = (ListView<String>) node;
-    Map<String, Boolean> playerPermissions = gameController.getPlayerPermissions("Game 2");
+    playerPermissions = (ListView<String>) node;
+    Map<String, Boolean> playerPermissionMap = gameController.getPlayerPermissions("Game 2");
     ObservableList<String> playerNames = FXCollections.observableArrayList(
-        playerPermissions.keySet());
-    listView.setItems(playerNames);
-    listView.setCellFactory(lv -> new ListCell<String>() {
+        playerPermissionMap.keySet());
+    playerPermissions.setItems(playerNames);
+    playerPermissions.setCellFactory(lv -> new ListCell<String>() {
       private CheckBox checkBox = new CheckBox();
 
       @Override
@@ -168,7 +172,7 @@ public class DatabaseHandler {
           setGraphic(null);
         } else {
           setText(item);
-          Boolean permission = playerPermissions.get(item);
+          Boolean permission = playerPermissionMap.get(item);
           if (permission) {
             checkBox.setSelected(true);
           } else {
@@ -177,6 +181,30 @@ public class DatabaseHandler {
           setGraphic(checkBox);
         }
       }
+    });
+  }
+
+  private void createFinishHandler(Node node) {
+    node.setOnMouseClicked(e -> {
+      List<String> checkedPlayers = new ArrayList<>();
+      List<String> uncheckedPlayers = new ArrayList<>();
+
+      for (String item : playerPermissions.getItems()) {
+        ListCell<String> cell = (ListCell<String>) playerPermissions.lookup(
+            ".cell:contains('" + item + "')");
+        if (cell != null) {
+          CheckBox checkBox = (CheckBox) cell.getGraphic();
+          if (checkBox != null) {
+            if (checkBox.isSelected()) {
+              checkedPlayers.add(item);
+            } else {
+              uncheckedPlayers.add(item);
+            }
+          }
+        }
+      }
+      databaseController.writePlayerPermissions("Game 2", checkedPlayers, uncheckedPlayers);
+      sceneManager.createMenuScene();
     });
   }
 

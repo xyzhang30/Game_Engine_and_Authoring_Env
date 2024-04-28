@@ -13,19 +13,26 @@ import oogasalad.view.database.Leaderboard;
 
 
 public class DatabaseController {
+
   private Database databaseView;
   private CurrentPlayersManager currentPlayersManager;
-//  public DatabaseController(CurrentPlayersManager currentPlayersManager){
+  //  public DatabaseController(CurrentPlayersManager currentPlayersManager){
 //=======
   private Leaderboard leaderboard;
 
-  public DatabaseController(Leaderboard leaderboard, CurrentPlayersManager currentPlayersManager){
+  public DatabaseController(Leaderboard leaderboard, CurrentPlayersManager currentPlayersManager) {
     this.databaseView = new Database();
     this.leaderboard = leaderboard;
     this.currentPlayersManager = currentPlayersManager;
   }
 
-  public Map<String, Boolean> getPlayerPermissions(String gameName){
+  public void writePlayerPermissions(String gameName, List<String> playersWithAccess,
+      List<String> playersWithoutAccess) {
+    databaseView.assignPermissionToPlayers(gameName, playersWithAccess, "Player");
+    databaseView.assignPermissionToPlayers(gameName, playersWithoutAccess, "None");
+  }
+
+  public Map<String, Boolean> getPlayerPermissions(String gameName) {
     return databaseView.getPlayerPermissionsForGames(gameName);
   }
 
@@ -35,12 +42,13 @@ public class DatabaseController {
     return databaseView.doesUserExist(username);  // user exists, can log in
   }
 
-  public boolean loginUser(String username, String password){
+  public boolean loginUser(String username, String password) {
     System.out.println(databaseView.loginUser(username, password));
     return databaseView.loginUser(username, password);
   }
 
-  public boolean canCreateUser(String username, String password, String avatarUrl) throws Exception {
+  public boolean canCreateUser(String username, String password, String avatarUrl)
+      throws Exception {
     if (!databaseView.doesUserExist(username)) {
       databaseView.registerUser(username, password, avatarUrl);  // add to database
       return true;  // new user created
@@ -50,7 +58,8 @@ public class DatabaseController {
   }
 
   /**
-   * Updates the UI component directly with the top five formatted high scores for a specified game.
+   * Updates the UI component directly with the top five formatted high scores for a specified
+   * game.
    *
    * @param gameName The name of the game for which to update the leaderboard scores.
    */
@@ -67,6 +76,7 @@ public class DatabaseController {
 
   /**
    * Formats a single GameScore into a string representation.
+   *
    * @param score The GameScore to format.
    * @return Formatted string representing the score.
    */
@@ -77,8 +87,8 @@ public class DatabaseController {
   public List<String> getPlayerNames() {
     return currentPlayersManager.getPlayerNames();
   }
-  
-  public void leaderboardSet(ListView<String> scoresListView){
+
+  public void leaderboardSet(ListView<String> scoresListView) {
     leaderboard.setLeaderboard(scoresListView);
   }
 
