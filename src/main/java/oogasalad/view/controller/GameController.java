@@ -1,9 +1,15 @@
 package oogasalad.view.controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.Properties;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -50,7 +56,7 @@ public class GameController {
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
   private DatabaseController databaseController;
-  private Database databaseView;
+  private Map<Integer, String> playerMap;
   private boolean ableToStrike;
   private final int maxVelocity;
 
@@ -135,10 +141,17 @@ public class GameController {
   public void startGamePlay(String selectedGame) {
     gameLoaderView = new GameLoaderView(selectedGame);
     gameEngine = new GameEngine(selectedGame);
+    List<String> players = databaseController.getPlayerNames();
+    playerMap = IntStream.range(1, players.size()+1)
+        .boxed()
+        .collect(Collectors.toMap(
+            i -> i,
+            i -> players.get(i-1)
+        ));
     GameRecord gameRecord = gameEngine.restoreLastStaticGameRecord();
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScene(compositeElement, gameRecord);
-    sceneManager.update(gameRecord);
+    sceneManager.update(gameRecord, playerMap);
   }
 
   /**
@@ -175,18 +188,10 @@ public class GameController {
     if (staticState) {
       ableToStrike = true;
     }
-    sceneManager.update(gameRecord);
+    sceneManager.update(gameRecord, playerMap);
     return staticState;
   }
 
-  /**
-   * Prompts the GameTitleParser to parse for the playable new game titles
-   *
-   * @return a list of the playable new game titles
-   */
-  public ObservableList<String> getNewGameTitles() {
-    return gameTitleParser.getNewGameTitles();
-  }
 
   /**
    * Prompts the GameTitleParser to parse for the playable savedgame titles
@@ -247,6 +252,25 @@ public class GameController {
     Map<KeyInputType, String> keyMap = gameLoaderView.getInputKeys();
     return KeyCode.valueOf(keyMap.get(inputType));
   }
+
+  /**
+   * Gets the description associated with the given game
+   * @param selectedGame the game to get the description for
+   * @return the description for the given game
+   */
+  public String getDescription(String selectedGame){
+      Properties properties = new Properties();
+      try {
+        FileInputStream inputStream = new FileInputStream("src/main/resources/view/properties"
+            + "/GameDescriptions.properties");
+        properties.load(inputStream);
+      } catch (IOException e) {
+        //TODO: Exception Handling
+      }
+      System.out.println(properties.getProperty(selectedGame, ""));
+      return properties.getProperty(selectedGame, "");
+    }
+
 
   private CompositeElement createCompositeElementFromGameLoader() {
     try {
@@ -322,7 +346,7 @@ public class GameController {
 
     //call builderDirector to serialize gameData into JSON
     BuilderDirector builderDirector = new BuilderDirector();
-    builderDirector.writeGame(gameData.getGameName(), gameData.getGameDescription(), gameData,
+    builderDirector.writeGame(gameData.getGameName(), gameData,
         RESUME_GAME_DATA_FOLDER);
   }
 

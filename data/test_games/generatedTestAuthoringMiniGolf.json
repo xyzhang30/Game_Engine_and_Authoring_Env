@@ -29,7 +29,7 @@
       "x_dimension" : 2.0,
       "y_dimension" : 2.0
     },
-    "color" : [ 255, 255, 255 ],
+    "color" : {"Default" : [255,255,255]},
     "friction" : 0.0,
     "image" : "sample.img"
   }, {

@@ -69,6 +69,10 @@ public class DatabaseController {
     return score.playerName() + ": " + score.score();
   }
 
+  public List<String> getPlayerNames() {
+    return currentPlayersManager.getPlayerNames();
+  }
+  
   public void leaderboardSet(ListView<String> scoresListView){
     leaderboard.setLeaderboard(scoresListView);
   }

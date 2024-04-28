@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -129,7 +131,7 @@ public class SceneElementFactory {
 
   }
 
-    private void configureButton(Node node, Map<String, String> parameters) {
+  private void configureButton(Node node, Map<String, String> parameters) {
     String textTag = parameters.get(XMLTags.TEXT.name().toLowerCase());
     double widthFactor = parseDoubleParameter(parameters,
         XMLTags.WIDTH_FACTOR.name().toLowerCase());
@@ -169,7 +171,7 @@ public class SceneElementFactory {
     listView.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
   }
 
-  private void configureTextField(Node node, Map<String, String> parameters){
+  private void configureTextField(Node node, Map<String, String> parameters) {
     double widthFactor = parseDoubleParameter(parameters,
         XMLTags.WIDTH_FACTOR.name().toLowerCase());
     double heightFactor = parseDoubleParameter(parameters,
@@ -177,6 +179,16 @@ public class SceneElementFactory {
 
     TextField textField = (TextField) node;
     textField.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
+  }
+
+  private void configureToggle(Node node, Map<String, String> parameters) {
+    double widthFactor = parseDoubleParameter(parameters,
+        XMLTags.WIDTH_FACTOR.name().toLowerCase());
+    double heightFactor = parseDoubleParameter(parameters,
+        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
+
+    ToggleButton toggleButton = (ToggleButton) node;
+    toggleButton.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
   }
 
 
@@ -221,6 +233,7 @@ public class SceneElementFactory {
     elementConfigurationMap.put(SceneElementType.LISTVIEW, this::configureListView);
     elementConfigurationMap.put(SceneElementType.COMBOBOX, this::configureComboBox);
     elementConfigurationMap.put(SceneElementType.TEXTFIELD, this::configureTextField);
+    elementConfigurationMap.put(SceneElementType.TOGGLE, this::configureToggle);
   }
 
   private void executeConfigurationMethod(Node node, Map<String, String> parameters) {

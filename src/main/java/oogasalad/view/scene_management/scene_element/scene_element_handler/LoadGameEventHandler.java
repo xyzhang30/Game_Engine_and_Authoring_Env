@@ -58,6 +58,7 @@ public class LoadGameEventHandler {
     eventMap.put(SceneElementEvent.MANAGE_GAME, databaseController::getManageableGames);
   }
 
+
   private void createDirPathMap() {
     dirPathMap = new HashMap<>();
     dirPathMap.put(SceneElementEvent.START_NEW_GAME, newGameDir);
@@ -80,8 +81,9 @@ public class LoadGameEventHandler {
             setOnMouseClicked(null);
           } else {
             setText(item);
-            Tooltip tooltip = new Tooltip("Additional info about " + item);
+            Tooltip tooltip = new Tooltip(gameController.getDescription(item));
             setTooltip(tooltip);
+
 
             setOnMouseClicked(event -> handleSelectGame(dirPath, item));
           }
