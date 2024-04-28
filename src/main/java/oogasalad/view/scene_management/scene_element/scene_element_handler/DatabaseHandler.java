@@ -92,8 +92,13 @@ public class DatabaseHandler {
       try {
         boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(), passwordField.getText());
         if (userLoggedIn) {
-          currentPlayersManager.add(usernameTextField.getText());
-          sceneManager.createCurrentPlayersScene();
+          if(currentPlayersManager.contains(usernameTextField.getText())) {
+            showAlert("Player Already Added to Game", "You can't play against yourself!");
+          }
+          else {
+            currentPlayersManager.add(usernameTextField.getText());
+            sceneManager.createCurrentPlayersScene();
+          }
         }
       } catch (UserNotFoundException ex) {
         System.err.println(ex.getMessage());
@@ -130,13 +135,7 @@ public class DatabaseHandler {
         boolean userCreated = databaseController.canCreateUser(usernameTextField.getText(),
             passwordField.getText(), avatarUrlField);
         System.out.println(userCreated);
-        if (userCreated) {
-          // user created
-          sceneManager.createCurrentPlayersScene();
-          currentPlayersManager.add(usernameTextField.getText());
-          System.out.println("createLoginHandler: user created");
-        } else {
-          // user already exists or can't be created
+        if (!userCreated) {
           sceneManager.displayErrorMessage("User already exists or could not be created.");
         }
       } catch (Exception ex) {
