@@ -222,7 +222,7 @@ public class ShapeProxy {
    * Resets the GameObjectAttributesContainer due to new shape selection.
    */
   public void resetGameObjectAttributesContainer() {
-    gameObjectAttributesContainer = new GameObjectAttributesContainer();
+//    gameObjectAttributesContainer = new GameObjectAttributesContainer();
     if (!shapeStack.isEmpty()) {
       Shape currentShape = shapeStack.peek();
       gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));

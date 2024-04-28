@@ -76,8 +76,9 @@ public class ImagePanel implements Panel {
       }
       String relativePath = imgFile.getPath();
       if (shapeProxy.getShape() != null) {
-        shapeProxy.getGameObjectAttributesContainer().setColor(null);
-        shapeProxy.getGameObjectAttributesContainer().setImagePath(relativePath);
+        shapeProxy.getGameObjectAttributesContainer().setColor(null, shapeProxy.getCurrentMod());
+        shapeProxy.getGameObjectAttributesContainer().setImagePath(relativePath,
+            shapeProxy.getCurrentMod());
         String imgPath = Paths.get(relativePath).toUri().toString();
         shapeProxy.getShape().setFill(new ImagePattern(new Image(imgPath)));
       }
