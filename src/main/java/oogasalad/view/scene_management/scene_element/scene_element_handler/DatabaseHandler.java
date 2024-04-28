@@ -10,17 +10,24 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import oogasalad.model.gameengine.GameEngine;
+import oogasalad.view.Warning;
 import oogasalad.view.api.enums.SceneElementEvent;
+import oogasalad.view.api.exception.CreateNewUserException;
+import oogasalad.view.api.exception.CreatingDuplicateUserException;
 import oogasalad.view.api.exception.IncorrectPasswordException;
 import oogasalad.view.api.exception.UserNotFoundException;
 import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DatabaseHandler {
 
@@ -38,8 +45,9 @@ public class DatabaseHandler {
   private String currentGame;
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
   private Map<String, Boolean> playerPermissionMap;
+  private static final Logger LOGGER = LogManager.getLogger(DatabaseHandler.class);
+  private static final Warning WARNING = new Warning();
   private Map<String, Boolean> friendsMap;
-
 
   public DatabaseHandler(GameController gameController, SceneManager sceneManager,
       DatabaseController databaseController,
@@ -100,18 +108,15 @@ public class DatabaseHandler {
             sceneManager.createCurrentPlayersScene();
           }
         }
-      } catch (UserNotFoundException ex) {
-        System.err.println(ex.getMessage());
-        // Show an alert or update the UI to notify the user that the username does not exist
-        showAlert("Login Error", ex.getMessage());
-      } catch (IncorrectPasswordException ex) {
-        System.err.println(ex.getMessage());
-        // Show an alert or update the UI to notify the user that the password is incorrect
-        showAlert("Login Error", ex.getMessage());
+      } catch (UserNotFoundException | IncorrectPasswordException ex) {
+        LOGGER.error(ex.getMessage());
+        Warning warning = new Warning();
+        warning.showAlert(this.sceneManager.getScene(), AlertType.ERROR, "Login Error", null, ex.getMessage());
       } catch (Exception ex) {
-        System.err.println("An unexpected error occurred during login: " + ex.getMessage());
+        LOGGER.error("An unexpected error occurred during login: " + ex.getMessage());
         // Handle other unexpected errors
-        showAlert("Login Error", "An unexpected error occurred during login.");
+        Warning warning = new Warning();
+        warning.showAlert(this.sceneManager.getScene(), AlertType.ERROR, "Login Error", null, "An unexpected error occurred during login.");
       }
     });
   }
@@ -136,10 +141,11 @@ public class DatabaseHandler {
             passwordField.getText(), avatarUrlField);
         System.out.println(userCreated);
         if (!userCreated) {
-          sceneManager.displayErrorMessage("User already exists or could not be created.");
+          LOGGER.error("User creation error - user already exists or could not be created.");
+          throw new CreateNewUserException("User already exists or could not be created.");
         }
-      } catch (Exception ex) {
-        sceneManager.displayErrorMessage("Error: " + ex.getMessage());
+      } catch (CreateNewUserException | CreatingDuplicateUserException ex) {
+        WARNING.showAlert(this.sceneManager.getScene(), AlertType.ERROR,"Creating New User Error", null, ex.getMessage());
       }
     });
     //add the new user to the database

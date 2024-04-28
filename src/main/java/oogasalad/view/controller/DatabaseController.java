@@ -10,16 +10,20 @@ import javafx.scene.control.ListView;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.database.Database;
 import oogasalad.model.database.GameScore;
+import oogasalad.view.api.exception.CreatingDuplicateUserException;
 import oogasalad.view.api.exception.IncorrectPasswordException;
 import oogasalad.view.api.exception.UserNotFoundException;
 import oogasalad.view.database.Leaderboard;
+import oogasalad.view.scene_management.scene_element.scene_element_handler.DatabaseHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class DatabaseController {
   public Database databaseView;
-
   private List<String> currentPlayersManager;
   private Leaderboard leaderboard;
+  private static final Logger LOGGER = LogManager.getLogger(DatabaseController.class);
 
   public DatabaseController(Leaderboard leaderboard, List<String> currentPlayersManager) {
     this.databaseView = new Database();
@@ -57,10 +61,12 @@ public class DatabaseController {
   public boolean loginUser(String username, String password) throws UserNotFoundException, IncorrectPasswordException{
     System.out.println(databaseView.loginUser(username, password));
     if (canUserLogin(username) == false) {
-      throw new UserNotFoundException("Username does not exist.");
+      LOGGER.error("login failed - username does not exist");
+      throw new UserNotFoundException("username does not exist.");
     }
 
     else if (databaseView.loginUser(username, password) == false) {
+      LOGGER.error("login failed - incorrect password");
       throw new IncorrectPasswordException("Password is incorrect.");
     }
     return true;
@@ -79,12 +85,13 @@ public class DatabaseController {
 
 
   public boolean canCreateUser(String username, String password, String avatarUrl)
-      throws Exception {
+      throws CreatingDuplicateUserException {
     if (!databaseView.doesUserExist(username)) {
       databaseView.registerUser(username, password, avatarUrl);  // add to database
       return true;  // new user created
     } else {
-      throw new Exception("User creation failed: User already exists.");
+      LOGGER.error("User creation failed: User already exists");
+      throw new CreatingDuplicateUserException("User creation failed: User already exists.");
     }
   }
 
