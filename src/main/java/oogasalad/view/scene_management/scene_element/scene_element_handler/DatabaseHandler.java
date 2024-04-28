@@ -59,6 +59,7 @@ private final GameController gameController;
     eventMap.put(SceneElementEvent.START_LOGIN, this::createStartLoginHandler); //goes back to the login/createuser screen
     eventMap.put(SceneElementEvent.LEADERBOARD, this::createLeaderboardHandler); //opens the leaderboard scene
     eventMap.put(SceneElementEvent.UPDATE_CURRENT_PLAYERS, this::setCurrentPlayers); //current players displayed on listview
+    eventMap.put(SceneElementEvent.LEADERBOARD_SCORES, this::setLeaderboard); //make sure listview is populated w leaderboard
 
   }
 

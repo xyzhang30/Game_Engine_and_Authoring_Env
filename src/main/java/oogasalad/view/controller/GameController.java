@@ -313,6 +313,7 @@ public class GameController {
 
   public void getGameName(){
     databaseController.getFormattedScoresForLeaderboard(gameLoaderView.getGameName());
+    System.out.println("game name" + gameLoaderView.getGameName());
   }
 
 

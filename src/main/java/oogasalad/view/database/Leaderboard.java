@@ -35,6 +35,7 @@ public class Leaderboard {
 
   public void saveGameScores(ObservableList<String> score){
     leaderboardScores = score;
+    System.out.println("Leaderboard" + leaderboardScores);
 
   }
 

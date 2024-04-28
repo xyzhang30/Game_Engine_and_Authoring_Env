@@ -47,13 +47,18 @@ public class DatabaseController {
    */
   public void getFormattedScoresForLeaderboard(String gameName) {
     List<GameScore> scores = databaseView.getGeneralHighScoresForGame(gameName, Integer.MAX_VALUE);
-    ObservableList<String> formattedScores = scores.stream()
-        .sorted((s1, s2) -> Integer.compare(s2.score(), s1.score()))  // Sort from high to low
-        .map(score -> formatScoreForDisplay(score))  // Format each score for display
-        .limit(5)  // Limit to only top 5 scores
-        .collect(Collectors.toCollection(FXCollections::observableArrayList));  // Collect into an ObservableList
-
-    // Assuming you have a ListView<String> member variable named `leaderboardListView`
+//    ObservableList<String> formattedScores = scores.stream()
+//        .map(score -> formatScoreForDisplay(score))
+//        .limit(5)
+//        .collect(Collectors.toCollection(FXCollections::observableArrayList));
+    ObservableList<String> formattedScores = FXCollections.observableArrayList(
+        "Alpha Centauri",
+        "Beta Carotene",
+        "Gamma Rays",
+        "Delta Force",
+        "Epsilon Minus"
+    );
+    System.out.println("scores: " + formattedScores);
     leaderboard.saveGameScores(formattedScores);
   }
 
