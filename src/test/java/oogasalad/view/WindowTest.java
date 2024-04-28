@@ -8,7 +8,7 @@ import util.DukeApplicationTest;
 public class WindowTest extends DukeApplicationTest {
   @Test
   void TestWindowConstructors() {
-    new GameWindow(new Stage());
-    new GameWindow();
+    runAsJFXAction(() -> new GameWindow(new Stage()) );
+    runAsJFXAction(() -> new GameWindow());
   }
 }
