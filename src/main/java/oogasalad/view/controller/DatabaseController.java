@@ -10,6 +10,8 @@ import javafx.scene.control.ListView;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.database.Database;
 import oogasalad.model.database.GameScore;
+import oogasalad.view.api.exception.IncorrectPasswordException;
+import oogasalad.view.api.exception.UserNotFoundException;
 import oogasalad.view.database.Leaderboard;
 
 
@@ -49,9 +51,16 @@ public class DatabaseController {
     return databaseView.doesUserExist(username);  // user exists, can log in
   }
 
-  public boolean loginUser(String username, String password) {
+  public boolean loginUser(String username, String password) throws UserNotFoundException, IncorrectPasswordException{
     System.out.println(databaseView.loginUser(username, password));
-    return databaseView.loginUser(username, password);
+    if (canUserLogin(username) == false) {
+      throw new UserNotFoundException("Username does not exist.");
+    }
+
+    else if (databaseView.loginUser(username, password) == false) {
+      throw new IncorrectPasswordException("Password is incorrect.");
+    }
+    return true;
   }
 
   /**
