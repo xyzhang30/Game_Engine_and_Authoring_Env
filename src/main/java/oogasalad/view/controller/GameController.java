@@ -1,9 +1,12 @@
 package oogasalad.view.controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -239,8 +242,18 @@ public class GameController {
    * @return the description for the given game
    */
   public String getDescription(String selectedGame){
-    return "description placeholder";
-  }
+      Properties properties = new Properties();
+      try {
+        FileInputStream inputStream = new FileInputStream("src/main/resources/view/properties"
+            + "/GameDescriptions.properties");
+        properties.load(inputStream);
+      } catch (IOException e) {
+        //TODO: Exception Handling
+      }
+      System.out.println(properties.getProperty(selectedGame, ""));
+      return properties.getProperty(selectedGame, "");
+    }
+
 
   private CompositeElement createCompositeElementFromGameLoader() {
     try {

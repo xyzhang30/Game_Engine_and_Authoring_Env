@@ -78,6 +78,7 @@ public class LoadGameEventHandler {
             Tooltip tooltip = new Tooltip(gameController.getDescription(item));
             setTooltip(tooltip);
 
+
             setOnMouseClicked(event -> handleSelectGame(dirPath, item));
           }
         }
