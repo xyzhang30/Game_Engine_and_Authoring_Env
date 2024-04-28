@@ -72,16 +72,14 @@ public class DatabaseHandler {
   }
 
   private void createLoginHandler(Node node) {
-    //avatar should be from a button the same way that we choose the controllable or background images
     System.out.println("createLoginHandler in scene element handler called");
-    node.setOnMouseClicked(e ->
-    {
-          boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(),
-              passwordField.getText()); //true of user logged in
-          if (userLoggedIn) {
-            currentPlayersManager.add(usernameTextField.getText());
-            sceneManager.createCurrentPlayersScene();
-          }
+    node.setOnMouseClicked(e -> {
+      try {
+        boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(), passwordField.getText());
+        if (userLoggedIn) {
+          currentPlayersManager.add(usernameTextField.getText());
+          sceneManager.createCurrentPlayersScene();
+        }
     });
     //add another or continue to play (new screen) shows current players like is this good or move on
     //open the currentplayers screen with this player added to it
