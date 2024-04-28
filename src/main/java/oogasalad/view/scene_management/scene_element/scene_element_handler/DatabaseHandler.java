@@ -1,29 +1,27 @@
 package oogasalad.view.scene_management.scene_element.scene_element_handler;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
+import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javax.xml.crypto.Data;
 import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
-import oogasalad.view.database.CurrentPlayersManager;
-import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 
 public class DatabaseHandler {
 
   private final GameController gameController;
   private final DatabaseController databaseController;
-  private final CurrentPlayersManager currentPlayersManager;
+  private final List<String> currentPlayersManager;
   private final SceneManager sceneManager;
   private TextField usernameTextField;
   private TextField passwordField;
@@ -33,12 +31,11 @@ public class DatabaseHandler {
 
   public DatabaseHandler(GameController gameController, SceneManager sceneManager,
       DatabaseController databaseController,
-      CurrentPlayersManager currentPlayersManager) {
+      List<String> currentPlayersManager) {
     this.gameController = gameController;
     this.sceneManager = sceneManager;
     this.databaseController = databaseController;
     this.currentPlayersManager = currentPlayersManager;
-
     createEventMap();
   }
 
@@ -79,12 +76,12 @@ public class DatabaseHandler {
     System.out.println("createLoginHandler in scene element handler called");
     node.setOnMouseClicked(e ->
     {
-      boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(),
-          passwordField.getText()); //true of user logged in
-      if (userLoggedIn) {
-        currentPlayersManager.saveUserInfo(usernameTextField.getText());
-        sceneManager.createCurrentPlayersScene();
-      }
+          boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(),
+              passwordField.getText()); //true of user logged in
+          if (userLoggedIn) {
+            currentPlayersManager.add(usernameTextField.getText());
+            sceneManager.createCurrentPlayersScene();
+          }
     });
     //add another or continue to play (new screen) shows current players like is this good or move on
     //open the currentplayers screen with this player added to it
@@ -101,7 +98,7 @@ public class DatabaseHandler {
         if (userCreated) {
           // user created
           sceneManager.createCurrentPlayersScene();
-          currentPlayersManager.saveUserInfo(usernameTextField.getText());
+          currentPlayersManager.add(usernameTextField.getText());
           System.out.println("createLoginHandler: user created");
         } else {
           // user already exists or can't be created
@@ -140,13 +137,13 @@ public class DatabaseHandler {
   }
 
   private void setCurrentPlayers(Node node) {
-    currentPlayersManager.setPlayersListView((ListView<String>) node);
+    ListView<String> node2 = (ListView<String>) node;
+    node2.setItems(FXCollections.observableList(currentPlayersManager));
   }
 
   private void setLeaderboard(Node node) {
     gameController.getGameName();
     databaseController.leaderboardSet((ListView<String>) node);
-    //add method to data base controller to update leaderboard (contained in the controller)
   }
 
   private void setUpPlayerPermissions(Node node) {

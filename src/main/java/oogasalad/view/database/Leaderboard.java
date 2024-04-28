@@ -26,8 +26,6 @@ public class Leaderboard {
    * displaying them in the ListView.
    */
   public void setLeaderboard(ListView<String> scoresListView) {
-    System.out.println("jordan");
-    System.out.println(leaderboardScores);
     scoresListView.setItems(leaderboardScores);
   }
 

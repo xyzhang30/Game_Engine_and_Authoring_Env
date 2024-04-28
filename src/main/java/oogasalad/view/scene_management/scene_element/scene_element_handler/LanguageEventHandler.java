@@ -44,10 +44,10 @@ public class LanguageEventHandler {
   }
 
   private void createLanguageMap() {
-    languageMap = new HashMap<>();
-    languageMap.put(SceneElementEvent.SET_ENGLISH, SupportedLanguage.ENGLISH);
-    languageMap.put(SceneElementEvent.SET_SPANISH, SupportedLanguage.SPANISH);
-    languageMap.put(SceneElementEvent.SET_FRENCH, SupportedLanguage.FRENCH);
+    languageMap = Map.of(SceneElementEvent.SET_ENGLISH, SupportedLanguage.ENGLISH,
+                         SceneElementEvent.SET_SPANISH, SupportedLanguage.SPANISH,
+                         SceneElementEvent.SET_FRENCH, SupportedLanguage.FRENCH,
+                          SceneElementEvent.SET_HEBREW, SupportedLanguage.HEBREW);
   }
 
   private void createLanguageHandler(Node node, SupportedLanguage language) {

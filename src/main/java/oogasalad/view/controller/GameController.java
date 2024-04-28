@@ -22,14 +22,12 @@ import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Variables;
 import oogasalad.model.api.exception.InvalidImageException;
-import oogasalad.model.database.Database;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.KeyInputType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
-import oogasalad.view.database.CurrentPlayersManager;
 import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.scene_managers.AnimationManager;
 import oogasalad.view.scene_management.element_parsers.GameTitleParser;
@@ -59,6 +57,7 @@ public class GameController {
   private Map<Integer, String> playerMap;
   private boolean ableToStrike;
   private final int maxVelocity;
+  private String selectedGame;
 
   /**
    * Initializes the GameController with the specified screen width and height.
@@ -75,9 +74,9 @@ public class GameController {
    */
   public GameController(double width, double height) {
 
-    CurrentPlayersManager currentPlayersManager = new CurrentPlayersManager();
+    List<String> currentPlayersManager = new ArrayList<>();
     databaseController = new DatabaseController(new Leaderboard(), currentPlayersManager);
-    sceneManager = new SceneManager(this, databaseController, width, height);
+    sceneManager = new SceneManager(this, databaseController, width, height, currentPlayersManager);
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
     ableToStrike = true;
@@ -151,7 +150,8 @@ public class GameController {
     GameRecord gameRecord = gameEngine.restoreLastStaticGameRecord();
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScene(compositeElement, gameRecord);
-    sceneManager.update(gameRecord, playerMap);
+    this.selectedGame = selectedGame.substring(selectedGame.lastIndexOf("/")+1);
+    sceneManager.update(gameRecord, playerMap, selectedGame);
   }
 
   /**
@@ -188,7 +188,7 @@ public class GameController {
     if (staticState) {
       ableToStrike = true;
     }
-    sceneManager.update(gameRecord, playerMap);
+    sceneManager.update(gameRecord, playerMap, selectedGame);
     return staticState;
   }
 
@@ -351,8 +351,9 @@ public class GameController {
   }
 
   public void getGameName(){
-    databaseController.getFormattedScoresForLeaderboard(gameLoaderView.getGameName());
-    System.out.println("game name" + gameLoaderView.getGameName());
+    databaseController.getFormattedScoresForLeaderboard(selectedGame,
+        !gameLoaderView.getGameData().getRules().rankComparator().equals("LowestScoreComparator"));
+
   }
 
 

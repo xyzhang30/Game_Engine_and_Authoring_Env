@@ -1,24 +1,26 @@
 package oogasalad.view.controller;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
+import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.database.Database;
 import oogasalad.model.database.GameScore;
-import oogasalad.view.database.CurrentPlayersManager;
 import oogasalad.view.database.Leaderboard;
 
 
 public class DatabaseController {
   private Database databaseView;
-  private CurrentPlayersManager currentPlayersManager;
+  private List<String> currentPlayersManager;
 //  public DatabaseController(CurrentPlayersManager currentPlayersManager){
 //=======
   private Leaderboard leaderboard;
 
-  public DatabaseController(Leaderboard leaderboard, CurrentPlayersManager currentPlayersManager){
+  public DatabaseController(Leaderboard leaderboard, List<String> currentPlayersManager){
     this.databaseView = new Database();
     this.leaderboard = leaderboard;
     this.currentPlayersManager = currentPlayersManager;
@@ -35,6 +37,18 @@ public class DatabaseController {
     return databaseView.loginUser(username, password);
   }
 
+  /**
+   * Formats a single GameScore into a string representation.
+   * @param score The GameScore to format.
+   * @return Formatted string representing the score.
+   *
+   * @author Doga
+   */
+  private String formatScoreForDisplay(GameScore score) {
+    return score.playerName() + ": " + score.score();
+  }
+
+
   public boolean canCreateUser(String username, String password, String avatarUrl) throws Exception {
     if (!databaseView.doesUserExist(username)) {
       databaseView.registerUser(username, password, avatarUrl);  // add to database
@@ -49,28 +63,20 @@ public class DatabaseController {
    *
    * @param gameName The name of the game for which to update the leaderboard scores.
    */
-  public void getFormattedScoresForLeaderboard(String gameName) {
-    List<GameScore> scores = databaseView.getGeneralHighScoresForGame(gameName, Integer.MAX_VALUE);
+  public void getFormattedScoresForLeaderboard(String gameName, boolean descending) {
+    List<GameScore> scores = databaseView.getGeneralHighScoresForGame(gameName);
     ObservableList<String> formattedScores = scores.stream()
-        .map(score -> formatScoreForDisplay(score))
-        .limit(5)
+        .sorted(Comparator.comparing(GameScore::score))
+        .map(this::formatScoreForDisplay)
         .collect(Collectors.toCollection(FXCollections::observableArrayList));
-
-    System.out.println("scores: " + formattedScores);
+    if (descending) {
+      formattedScores.sort(Comparator.reverseOrder());
+    }
     leaderboard.saveGameScores(formattedScores);
   }
 
-  /**
-   * Formats a single GameScore into a string representation.
-   * @param score The GameScore to format.
-   * @return Formatted string representing the score.
-   */
-  private String formatScoreForDisplay(GameScore score) {
-    return score.playerName() + ": " + score.score();
-  }
-
   public List<String> getPlayerNames() {
-    return currentPlayersManager.getPlayerNames();
+    return currentPlayersManager;
   }
   
   public void leaderboardSet(ListView<String> scoresListView){
@@ -79,14 +85,33 @@ public class DatabaseController {
 
 
   public ObservableList<String> getManageableGames() {
-    String host = currentPlayersManager.getHost();
+    String host = currentPlayersManager.get(0);
     return databaseView.getManageableGames(host);
   }
 
   public ObservableList<String> getNewGameTitles() {
-    String host = currentPlayersManager.getHost();
-    int size = currentPlayersManager.getPartySize();
+    String host = currentPlayersManager.get(0);
+    int size = currentPlayersManager.size();
     return databaseView.getPlayableGameIds(host, size);
   }
 
+  public void addGameResult(Map<Integer, String> playerMap, List<PlayerRecord> players,
+      String gameName) {
+    int id = databaseView.addGameInstance(gameName);
+    databaseView.addGameScore(id, playerMap.get(players.get(0).playerId()),
+        getScoreFromId(players, players.get(0).playerId()), true);
+    for(int i = 1; i < players.size(); i++) {
+      databaseView.addGameScore(id, playerMap.get(players.get(i).playerId()),
+          getScoreFromId(players, players.get(i).playerId()), false);
+    }
+  }
+
+  public int getScoreFromId(List<PlayerRecord> players, int id) {
+    for(PlayerRecord p : players) {
+      if(id==p.playerId()) {
+        return (int) p.score();
+      }
+    }
+    return 0;
+  }
 }

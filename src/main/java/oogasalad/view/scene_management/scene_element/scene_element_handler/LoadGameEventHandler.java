@@ -96,7 +96,7 @@ public class LoadGameEventHandler {
 
   private void handleSelectGame(String dirPath, String gameTitle) {
     if (gameTitle != null) {
-      gameController.startGamePlay(dirPath + gameTitle);
+      gameController.startGamePlay(gameTitle);
     }
   }
 }
