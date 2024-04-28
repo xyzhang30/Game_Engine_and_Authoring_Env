@@ -14,7 +14,6 @@ import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
-import oogasalad.view.database.CurrentPlayersManager;
 import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.element_parsers.SceneElementParser;
 import oogasalad.view.scene_management.scene_element.GameStatusManager;
@@ -40,12 +39,12 @@ public class SceneManager {
   private final SceneElementStyler sceneElementStyler;
   private CompositeElement compositeElement;
   private GameStatusManager gameStatusManager;
-  private CurrentPlayersManager currentPlayersManager;
   private Leaderboard leaderboard;
   private Pane pauseElements;
   private Pane transitionElements;
   private int currentRound;
   private SupportedLanguage selectedLanguage;
+  private final String manageGamePath = "data/scene_elements/managePermissionElements.xml";
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
   private final String gameManagementElementsPath =
@@ -64,6 +63,9 @@ public class SceneManager {
   private final String leaderboardElementsPath =
       "data/scene_elements/leaderboardElements.xml";
 
+  private final String addFriendScenePath =
+      "data/scene_elements/addFriends.xml";
+
   private DatabaseController databaseController;
 
 
@@ -79,7 +81,7 @@ public class SceneManager {
    */
   public SceneManager(GameController gameController, DatabaseController databaseController,
       double screenWidth,
-      double screenHeight, CurrentPlayersManager currentPlayersManager) {
+      double screenHeight, List<String> currentPlayersManager) {
     root = new Pane();
     scene = new Scene(root);
     selectedLanguage = SupportedLanguage.ENGLISH;
@@ -171,7 +173,8 @@ public class SceneManager {
    */
   public void update(GameRecord gameRecord, Map<Integer, String> playerMap, String gameName) {
     compositeElement.update(gameRecord.gameObjectRecords());
-    gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round(), playerMap);
+    gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round(),
+        playerMap);
     root.requestFocus();
     checkEndRound(gameRecord, playerMap, gameName);
   }
@@ -182,6 +185,11 @@ public class SceneManager {
   public void removeTransitionSheen() {
     root.getChildren().remove(transitionElements);
     root.requestFocus();
+  }
+
+  public void createManagePermissionsScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(manageGamePath));
   }
 
   /**
@@ -252,9 +260,10 @@ public class SceneManager {
     root.getChildren().add(transitionElements);
   }
 
-  public void createGameOverScene() {
+  public void createGameOverScene( ) {
     resetRoot();
     root.getChildren().add(createSceneElements(gameOverSceneElementsPath));
+    gameStatusManager.restoreLastUpdate();
   }
 
 
@@ -311,13 +320,14 @@ public class SceneManager {
     root.getChildren().clear();
   }
 
+
   private void checkEndRound(GameRecord gameRecord, Map<Integer,String> playerMap,
       String gameName) {
     if (gameRecord.gameOver()) {
       databaseController.addGameResult(playerMap, gameRecord.players(), gameName);
-      createGameOverScene();
       gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round(),
           playerMap);
+      createGameOverScene();
     } else if (gameRecord.round() != currentRound) {
       currentRound = gameRecord.round();
       createTransitionDisplay();
@@ -343,12 +353,16 @@ public class SceneManager {
     root.getChildren().add(createSceneElements(leaderboardElementsPath));
   }
 
-  public void displayErrorMessage(String message) {
-    Alert alert = new Alert(Alert.AlertType.ERROR);
-    alert.setTitle("Error");
-    alert.setHeaderText(null);
-    alert.setContentText(message);
-    alert.showAndWait();
-  }
+//  public void displayErrorMessage(String message) {
+//    Alert alert = new Alert(Alert.AlertType.ERROR);
+//    alert.setTitle("Error");
+//    alert.setHeaderText(null);
+//    alert.setContentText(message);
+//    alert.showAndWait();
+//  }
 
+  public void createAddFriendScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(addFriendScenePath));
+  }
 }

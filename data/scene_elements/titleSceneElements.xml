@@ -28,6 +28,19 @@
   <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
+    <text>ADD_FRIENDS</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.08</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
+    <y_layout_factor>0.9</y_layout_factor>
+    <style>title-button</style>
+    <event_type>CHANGE_SCENE</event_type>
+    <event>PLAYER_FRIENDS</event>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
     <text>INSTRUCTIONS_TITLE</text>
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
@@ -57,6 +70,6 @@
     <y_layout_factor>0.9</y_layout_factor>
     <style>game-button</style>
     <event_type>CHANGE_SCENE</event_type>
-    <event>START_LANGUAGE</event>
+    <event>UPDATE_CURRENT_PLAYERS</event>
   </node>
 </scene_elements>

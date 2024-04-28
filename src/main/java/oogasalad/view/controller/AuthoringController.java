@@ -19,6 +19,7 @@ import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
 import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
+import oogasalad.model.api.exception.IncompletePlayerStrikeableAuthoringException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.view.authoring_environment.AuthoringScreen;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
@@ -48,13 +49,19 @@ public class AuthoringController {
   private final ShapeProxy shapeProxy = new ShapeProxy();
   private final AuthoringProxy authoringProxy = new AuthoringProxy();
   private int firstActiveStrikeableId;
+  private String hostPlayer;
 
-  public AuthoringController(SupportedLanguage language, UITheme uiTheme, AuthoringImplementationType authoringFactoryType) {
+  public AuthoringController(SupportedLanguage language, UITheme uiTheme, AuthoringImplementationType authoringFactoryType, String hostPlayer) {
     stage = new Stage();
     UIElementFactory uiElementFactory = new DefaultUIElementFactory();
     AuthoringFactory authoringFactory = new DefaultAuthoringFactory(uiElementFactory, language, shapeProxy, authoringProxy);
     this.authoringScreen = new AuthoringScreen(language, authoringFactory, shapeProxy, authoringProxy);
     authoringScreen.getAuthoringProxy().setAuthoringController(this);
+    this.hostPlayer = hostPlayer;
+  }
+
+  public String getHostPlayer(){
+    return hostPlayer;
   }
 
   public void updateAuthoringScreen() {
@@ -78,14 +85,19 @@ public class AuthoringController {
     builderDirector.constructVaraibles(List.of(variables));
   }
 
-  public void writePlayers(Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
+  public void writePlayers(Map<Integer, Map<CollidableType, List<Integer>>> playersMap) throws IncompletePlayerStrikeableAuthoringException {
     List<ParserPlayer> players = new ArrayList<>();
     playersMap.forEach((playerId, myGameObjects) -> {
       System.out.println("collidables:"+playersMap.get(playerId).get(CollidableType.STRIKABLE));
-      ParserPlayer player = new ParserPlayer(playerId,
-          playersMap.get(playerId).get(CollidableType.STRIKABLE),
-          playersMap.get(playerId).get(CollidableType.SCOREABLE),
-          playersMap.get(playerId).get(CollidableType.CONTROLLABLE),0, playersMap.get(playerId).get(CollidableType.STRIKABLE).get(0));
+      ParserPlayer player;
+      try {
+        player = new ParserPlayer(playerId,
+            playersMap.get(playerId).get(CollidableType.STRIKABLE),
+            playersMap.get(playerId).get(CollidableType.SCOREABLE),
+            playersMap.get(playerId).get(CollidableType.CONTROLLABLE),0, playersMap.get(playerId).get(CollidableType.STRIKABLE).get(0));
+      } catch (IndexOutOfBoundsException e) {
+        throw new IncompletePlayerStrikeableAuthoringException("Please assign a strikeable game object to each player.");
+      }
       players.add(player);
       if (playerId == 1){
         firstActiveStrikeableId = playersMap.get(playerId).get(CollidableType.STRIKABLE).get(0);
@@ -147,9 +159,9 @@ public class AuthoringController {
 
       GameObjectProperties gameObject = new GameObjectProperties(properties.getId(),
           objectProperties, properties.getMass(), objPosition, shapeName, objDimension,
-          Map.of("Default",properties.getColor()), properties.getsFriction(),
+          null, properties.getsFriction(),
           properties.getkFriction(), 0,
-          Map.of("Default", properties.getImagePath()), 0, properties.isElasticity(), false, 0);
+          null, 0, properties.isElasticity(), false, 0);
 
       gameObjects.add(gameObject);
     });

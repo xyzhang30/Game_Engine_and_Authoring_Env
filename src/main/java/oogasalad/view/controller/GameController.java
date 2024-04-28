@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,6 +11,7 @@ import java.util.stream.IntStream;
 import java.util.Properties;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
@@ -21,15 +21,17 @@ import oogasalad.model.api.data.GlobalVariables;
 import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Variables;
+import oogasalad.model.api.exception.InvalidColorParsingException;
+import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.api.exception.InvalidImageException;
-import oogasalad.model.database.Database;
+import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
+import oogasalad.view.Warning;
 import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.KeyInputType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
-import oogasalad.view.database.CurrentPlayersManager;
 import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.scene_managers.AnimationManager;
 import oogasalad.view.scene_management.element_parsers.GameTitleParser;
@@ -50,6 +52,7 @@ public class GameController {
 
   private static final String RESUME_GAME_DATA_FOLDER = "data/resume_game/";
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
+  private static final Warning WARNING = new Warning();
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
   private final GameTitleParser gameTitleParser;
@@ -76,7 +79,7 @@ public class GameController {
    */
   public GameController(double width, double height) {
 
-    CurrentPlayersManager currentPlayersManager = new CurrentPlayersManager();
+    List<String> currentPlayersManager = new ArrayList<>();
     databaseController = new DatabaseController(new Leaderboard(), currentPlayersManager);
     sceneManager = new SceneManager(this, databaseController, width, height, currentPlayersManager);
     animationManager = new AnimationManager();
@@ -129,7 +132,8 @@ public class GameController {
    */
   public void openAuthorEnvironment() {
     AuthoringController newAuthoringController = new AuthoringController(SupportedLanguage.ENGLISH,
-        UITheme.DEFAULT, AuthoringImplementationType.DEFAULT);
+        UITheme.DEFAULT, AuthoringImplementationType.DEFAULT,
+        databaseController.getPlayerNames().get(0));
     newAuthoringController.updateAuthoringScreen();
   }
 
@@ -140,19 +144,30 @@ public class GameController {
    * @param selectedGame the game title selected to play
    */
   public void startGamePlay(String selectedGame) {
-    gameLoaderView = new GameLoaderView(selectedGame);
-    gameEngine = new GameEngine(selectedGame);
+    try {
+      gameLoaderView = new GameLoaderView(selectedGame);
+      gameEngine = new GameEngine(selectedGame);
+    } catch (InvalidFileException e){
+      WARNING.showAlert(this.getScene(), AlertType.ERROR, "Start Game Error", null, "Can't find game file");
+      return;
+    } catch (InvalidColorParsingException e){
+      WARNING.showAlert(this.getScene(), AlertType.ERROR, "Parsing Color Error", null, "Cannot find corresponding color or mod");
+      return;
+    } catch (InvalidShapeException e){
+      WARNING.showAlert(this.getScene(), AlertType.ERROR, "Parsing Shape Error", null, e.getMessage());
+      return;
+    }
     List<String> players = databaseController.getPlayerNames();
-    playerMap = IntStream.range(1, players.size()+1)
+    playerMap = IntStream.range(1, players.size() + 1)
         .boxed()
         .collect(Collectors.toMap(
             i -> i,
-            i -> players.get(i-1)
+            i -> players.get(i - 1)
         ));
     GameRecord gameRecord = gameEngine.restoreLastStaticGameRecord();
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScene(compositeElement, gameRecord);
-    this.selectedGame = selectedGame.substring(selectedGame.lastIndexOf("/")+1);
+    this.selectedGame = selectedGame.substring(selectedGame.lastIndexOf("/") + 1);
     sceneManager.update(gameRecord, playerMap, selectedGame);
   }
 
@@ -239,7 +254,15 @@ public class GameController {
   }
 
   public void changeMod(String selectedMod) {
-    gameLoaderView.createViewRecord(selectedMod);
+    try{
+      gameLoaderView.createViewRecord(selectedMod);
+    } catch (InvalidColorParsingException e){
+      WARNING.showAlert(this.getScene(), AlertType.ERROR, "Parsing Color Error", null, "Cannot find corresponding color or mod");
+      return;
+    } catch (InvalidShapeException e){
+      WARNING.showAlert(this.getScene(), AlertType.ERROR, "Parsing Shape Error", null, e.getMessage());
+      return;
+    }
     sceneManager.changeMod(gameLoaderView.getViewCollidableInfo());
   }
 
@@ -257,22 +280,30 @@ public class GameController {
 
   /**
    * Gets the description associated with the given game
+   *
    * @param selectedGame the game to get the description for
    * @return the description for the given game
    */
-  public String getDescription(String selectedGame){
-      Properties properties = new Properties();
-      try {
-        FileInputStream inputStream = new FileInputStream("src/main/resources/view/properties"
-            + "/GameDescriptions.properties");
-        properties.load(inputStream);
-      } catch (IOException e) {
-        //TODO: Exception Handling
-      }
-      System.out.println(properties.getProperty(selectedGame, ""));
-      return properties.getProperty(selectedGame, "");
+  public String getDescription(String selectedGame) {
+    Properties properties = new Properties();
+    try {
+      FileInputStream inputStream = new FileInputStream("src/main/resources/view/properties"
+          + "/GameDescriptions.properties");
+      properties.load(inputStream);
+    } catch (IOException e) {
+      //TODO: Exception Handling
     }
+    System.out.println(properties.getProperty(selectedGame, ""));
+    return properties.getProperty(selectedGame, "");
+  }
 
+  public Map<String, Boolean> getPlayerPermissions(String gamePath) {
+    return databaseController.getPlayerPermissions(gamePath);
+  }
+
+  public void managePermissions(String gamePath) {
+    sceneManager.createManagePermissionsScene();
+  }
 
   private CompositeElement createCompositeElementFromGameLoader() {
     try {
@@ -352,10 +383,14 @@ public class GameController {
         RESUME_GAME_DATA_FOLDER);
   }
 
-  public void getGameName(){
-    databaseController.getFormattedScoresForLeaderboard(selectedGame);
 
+  public void getGameName() {
+    databaseController.getFormattedScoresForLeaderboard(selectedGame,
+        !gameLoaderView.getGameData().getRules().rankComparator().equals("LowestScoreComparator"));
   }
 
 
+  public void openAddFriends() {
+    sceneManager.createAddFriendScene();
+  }
 }

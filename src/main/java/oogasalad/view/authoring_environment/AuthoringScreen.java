@@ -18,6 +18,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
+import oogasalad.model.api.exception.IncompletePlayerStrikeableAuthoringException;
 import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
 import oogasalad.view.authoring_environment.panels.KeySelectionPanel;
 import oogasalad.view.authoring_environment.util.Container;
@@ -61,6 +63,7 @@ public class AuthoringScreen {
   private TextArea gameDescriptionTextField;
   private Stage gameNameStage;
   private Button submitGameNameButton;
+  private ComboBox<String> permissionSelection;
 
 
   /**
@@ -237,8 +240,12 @@ public class AuthoringScreen {
       gameDescriptionTextField.setPromptText("Enter game description");
       gameDescriptionTextField.setPrefHeight(200);
       gameDescriptionTextField.setWrapText(true);
+      Label permission = new Label("Game Permission: ");
+      permissionSelection = new ComboBox<>();
+      permissionSelection.getItems().addAll("public", "private", "friends");
+      permissionSelection.setPromptText("Specify game permission");
 
-      vbox.getChildren().addAll(enterName, gameNameTextField, enterDescription, gameDescriptionTextField, makeSubmitGameNameButton());
+      vbox.getChildren().addAll(enterName, gameNameTextField, enterDescription, gameDescriptionTextField, permission, permissionSelection, makeSubmitGameNameButton());
 
       Scene scene = new Scene(vbox, 500, 500);
       gameNameStage.setScene(scene);
@@ -252,20 +259,29 @@ public class AuthoringScreen {
       submitGameNameButton.setDisable(true);
 
       gameNameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-        submitGameNameButton.setDisable(newValue.trim().isEmpty());
+        updateSubmitButtonState(newValue.trim());
       });
+
+      permissionSelection.valueProperty().addListener((observable, oldValue, newValue) -> {
+        updateSubmitButtonState(gameNameTextField.getText().trim());
+      });
+
 
       submitGameNameButton.setOnAction(e -> {
         gameNameStage.close();
         authoringProxy.setGameName(gameNameTextField.getText());
         authoringProxy.saveGameDescription(gameDescriptionTextField.getText());
-        authoringProxy.completeAuthoring();
+        authoringProxy.setGamePermission(permissionSelection.getValue());
+        authoringProxy.completeAuthoring(scene);
       });
     }
 
     return submitGameNameButton;
   }
 
+  private void updateSubmitButtonState(String gameName) {
+    submitGameNameButton.setDisable(gameName.isEmpty() || permissionSelection.getValue() == null);
+  }
 
   private void createScreenSelectionDropDown(List<AuthoringScreenType> screenOptions) {
     screensDropDown.getItems().addAll(screenOptions);

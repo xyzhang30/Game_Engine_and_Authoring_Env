@@ -23,6 +23,8 @@ public class GameStatusManager {
   private ListView<String> scoreListDisplay;
   private Text turnDisplay;
   private Text roundDisplay;
+  private List<PlayerRecord> lastPlayerRecord;
+  private Map<Integer, String> lastPlayerMap;
 
   /**
    * Sets the Text element for displaying the current round
@@ -77,6 +79,8 @@ public class GameStatusManager {
 
   private void updateScore(List<PlayerRecord> players, Map<Integer,
       String> playerMap) {
+    lastPlayerRecord = players;
+    lastPlayerMap = playerMap;
     scoreListDisplay.getItems().clear();
     scoreListDisplay.setItems(createScoreListItems(players, playerMap));
   }
@@ -88,5 +92,10 @@ public class GameStatusManager {
       scores.add(playerMap.get(player.playerId()) + playerScoreSeparator + player.score());
     }
     return FXCollections.observableList(scores);
+  }
+
+  public void restoreLastUpdate() {
+    scoreListDisplay.getItems().clear();
+    scoreListDisplay.setItems(createScoreListItems(lastPlayerRecord, lastPlayerMap));
   }
 }
