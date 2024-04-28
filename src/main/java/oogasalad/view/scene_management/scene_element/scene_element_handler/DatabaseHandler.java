@@ -173,19 +173,15 @@ public class DatabaseHandler {
   private Optional<String> showAvatarSelectionDialog() {
     Dialog<String> dialog = new Dialog<>();
     dialog.setTitle("Select Avatar");
-    dialog.setHeaderText("Click on your avatar and then press ENTER");
-
-    // Set the owner to the current window
-    dialog.initOwner(sceneManager.getScene().getWindow());
-    dialog.initModality(Modality.WINDOW_MODAL); // This line makes it block input to other windows
+    dialog.setHeaderText("Choose your avatar");
+    dialog.initOwner(sceneManager.getScene().getWindow()); // Make sure it's modal in respect to the application window
+    dialog.initModality(Modality.WINDOW_MODAL); // Set modality to block user interaction with other windows
 
     ButtonType selectButtonType = new ButtonType("Select", ButtonBar.ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(selectButtonType, ButtonType.CANCEL);
 
     ComboBox<String> avatarComboBox = new ComboBox<>();
-    ObservableList<String> avatars = FXCollections.observableArrayList(
-        "loewyhappy.png", "loewycreamed.png", "duvall.png", "moffett.png"
-    );
+    ObservableList<String> avatars = loadAvatarNamesFromDirectory(); // Use the method to load avatar names dynamically
     avatarComboBox.setItems(avatars);
     avatarComboBox.setCellFactory(lv -> new ListCell<>() {
       @Override
@@ -201,6 +197,7 @@ public class DatabaseHandler {
         }
       }
     });
+
     avatarComboBox.setButtonCell(new ListCell<>() {
       @Override
       protected void updateItem(String item, boolean empty) {
@@ -209,7 +206,7 @@ public class DatabaseHandler {
           setText(null);
           setGraphic(null);
         } else {
-          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), 100, 100, true, false);
+          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), 50, 50, true, false);
           ImageView imageView = new ImageView(img);
           setGraphic(imageView);
         }
@@ -227,6 +224,7 @@ public class DatabaseHandler {
 
     return dialog.showAndWait();
   }
+
 
   private ObservableList<String> loadAvatarNamesFromDirectory() {
     try {
