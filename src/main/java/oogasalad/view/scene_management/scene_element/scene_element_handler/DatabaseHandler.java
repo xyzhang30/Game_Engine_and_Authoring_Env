@@ -184,7 +184,7 @@ public class DatabaseHandler {
           setText(null);
           setGraphic(null);
         } else {
-          Image img = new Image(getClass().getResourceAsStream("/" + item), 50, 50, true, true);
+          Image img = new Image(getClass().getResourceAsStream("/" + item), 100, 100, true, true);
           ImageView imageView = new ImageView(img);
           setGraphic(imageView);
         }
