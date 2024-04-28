@@ -16,6 +16,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.view.Warning;
 import oogasalad.view.api.enums.SceneElementEvent;
@@ -48,6 +50,7 @@ public class DatabaseHandler {
   private static final Logger LOGGER = LogManager.getLogger(DatabaseHandler.class);
   private static final Warning WARNING = new Warning();
   private Map<String, Boolean> friendsMap;
+  private ComboBox<String> avatarComboBox;  // ComboBox for selecting an avatar
 
   public DatabaseHandler(GameController gameController, SceneManager sceneManager,
       DatabaseController databaseController,
@@ -92,6 +95,7 @@ public class DatabaseHandler {
     eventMap.put(SceneElementEvent.PLAYER_FRIENDS, this::setUpFriendPermissions);
     eventMap.put(SceneElementEvent.SUBMIT_FRIENDS, this::confirmFriendsHandler);
     eventMap.put(SceneElementEvent.SET_PUBLIC, this::createAccessibilityHandler);
+    eventMap.put(SceneElementEvent.AVATAR_SELECTION, this::createAvatarHandler);  // Handle avatar selection
   }
 
   public void createLoginHandler(Node node) {
@@ -164,8 +168,57 @@ public class DatabaseHandler {
   }
 
   private void createAvatarHandler(Node node) {
-    //needs to be integrated
+    avatarComboBox = (ComboBox<String>) node; // Cast the node to ComboBox assuming it's the correct type
+    // Assuming avatar URLs or identifiers are to be loaded from a service or predefined list
+    ObservableList<String> avatars = FXCollections.observableArrayList(
+        "view/avatar_images/hletgoat.png", // These should be paths relative to src/main/resources
+        "view/avatar_images/loewycreamed.png",
+        "view/avatar_images/loewyhappy.png"
+    );
+    avatarComboBox.setItems(avatars); // Set the items in the ComboBox
+
+    // Set a prompt text for better user guidance
+    avatarComboBox.setPromptText("Select an avatar");
+
+    // Customize rendering of the combo box list to display images
+    avatarComboBox.setCellFactory(lv -> new ListCell<String>() {
+      @Override
+      protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+          setGraphic(null);
+        } else {
+          Image img = new Image(getClass().getResourceAsStream("/" + item), 100, 100, true, true);
+          ImageView imageView = new ImageView(img);
+          setGraphic(imageView);
+        }
+      }
+    });
+
+    // Ensure selected item also shows as an image
+    avatarComboBox.setButtonCell(new ListCell<String>() {
+      @Override
+      protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+          setGraphic(null);
+        } else {
+          Image img = new Image(getClass().getResourceAsStream("/" + item), 50, 50, true, true);
+          ImageView imageView = new ImageView(img);
+          setGraphic(imageView);
+        }
+      }
+    });
+
+    // Handle the selection of an avatar
+    avatarComboBox.setOnAction(e -> {
+      avatarUrlField = avatarComboBox.getValue(); // Save the selected avatar URL
+      System.out.println("Avatar selected: " + avatarUrlField); // Optional: for debugging
+    });
   }
+
 
   private void createStartLoginHandler(Node node) {
     node.setOnMouseClicked(e -> sceneManager.createLoginScene());
