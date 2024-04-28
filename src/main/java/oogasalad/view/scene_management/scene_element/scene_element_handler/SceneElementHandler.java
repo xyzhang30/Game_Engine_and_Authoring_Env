@@ -1,14 +1,13 @@
 package oogasalad.view.scene_management.scene_element.scene_element_handler;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import javafx.scene.Node;
 import oogasalad.view.api.enums.SceneElementEventType;
 import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
-import oogasalad.view.database.CurrentPlayersManager;
-import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.scene_element.GameStatusManager;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 
@@ -25,7 +24,7 @@ public class SceneElementHandler {
 
   public SceneElementHandler(GameController gameController, DatabaseController databaseController,
       SceneManager sceneManager,
-      GameStatusManager gameStatusManager, CurrentPlayersManager currentPlayersManager) {
+      GameStatusManager gameStatusManager, List<String> currentPlayersManager) {
     this.changeSceneEventHandler = new ChangeSceneEventHandler(gameController, sceneManager);
     this.gameStatManagementHandler = new GameStatManagementHandler(sceneManager, gameStatusManager);
     this.languageEventHandler = new LanguageEventHandler(sceneManager);

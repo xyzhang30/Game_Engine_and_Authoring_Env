@@ -14,7 +14,6 @@ import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
-import oogasalad.view.database.CurrentPlayersManager;
 import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.element_parsers.SceneElementParser;
 import oogasalad.view.scene_management.scene_element.GameStatusManager;
@@ -40,7 +39,6 @@ public class SceneManager {
   private final SceneElementStyler sceneElementStyler;
   private CompositeElement compositeElement;
   private GameStatusManager gameStatusManager;
-  private CurrentPlayersManager currentPlayersManager;
   private Leaderboard leaderboard;
   private Pane pauseElements;
   private Pane transitionElements;
@@ -65,6 +63,8 @@ public class SceneManager {
   private final String leaderboardElementsPath =
       "data/scene_elements/leaderboardElements.xml";
 
+  private DatabaseController databaseController;
+
 
   /**
    * Constructor initializes scene, root, sceneElementParser, and sceneElementFactory which are
@@ -74,22 +74,22 @@ public class SceneManager {
    * @param screenWidth        screen width to be used for scaling ratio based elements
    * @param screenHeight       screen height to be used for scaling ratio based elements
    * @param databaseController handles database interactions
+   * @param currentPlayersManager manages players
    */
   public SceneManager(GameController gameController, DatabaseController databaseController,
-      CurrentPlayersManager currentPlayersManager,
       double screenWidth,
-      double screenHeight) {
+      double screenHeight, List<String> currentPlayersManager) {
     root = new Pane();
     scene = new Scene(root);
     selectedLanguage = SupportedLanguage.ENGLISH;
     sceneElementParser = new SceneElementParser();
     sceneElementStyler = new SceneElementStyler(root);
     gameStatusManager = new GameStatusManager();
-    this.currentPlayersManager = currentPlayersManager;
     sceneElementFactory = new SceneElementFactory(screenWidth, screenHeight, sceneElementStyler,
         new SceneElementHandler(gameController, databaseController, this, gameStatusManager,
             currentPlayersManager));
     createLanguageSelectionScene();
+    this.databaseController = databaseController;
   }
 
   /**
@@ -168,12 +168,12 @@ public class SceneManager {
    *
    * @param gameRecord represents updated state of game
    */
-  public void update(GameRecord gameRecord, Map<Integer, String> playerMap) {
+  public void update(GameRecord gameRecord, Map<Integer, String> playerMap, String gameName) {
     compositeElement.update(gameRecord.gameObjectRecords());
     gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round(),
         playerMap);
     root.requestFocus();
-    checkEndRound(gameRecord, playerMap);
+    checkEndRound(gameRecord, playerMap, gameName);
   }
 
   /**
@@ -316,8 +316,11 @@ public class SceneManager {
     root.getChildren().clear();
   }
 
-  private void checkEndRound(GameRecord gameRecord, Map<Integer, String> playerMap) {
+
+  private void checkEndRound(GameRecord gameRecord, Map<Integer,String> playerMap,
+      String gameName) {
     if (gameRecord.gameOver()) {
+      databaseController.addGameResult(playerMap, gameRecord.players(), gameName);
       createGameOverScene();
       gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round(),
           playerMap);

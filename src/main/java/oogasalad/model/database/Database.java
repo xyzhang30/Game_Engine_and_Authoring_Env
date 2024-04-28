@@ -75,12 +75,11 @@ public class Database implements DatabaseApi {
    * Retrieves the general high scores for a specific game.
    *
    * @param gameName The name of the game.
-   * @param n        The number of high scores to retrieve.
    * @return A list of GameScore objects representing the general high scores of the game.
    */
 
   @Override
-  public List<GameScore> getGeneralHighScoresForGame(String gameName, int n) {
+  public ObservableList<GameScore> getGeneralHighScoresForGame(String gameName) {
     List<GameScore> scores = new ArrayList<>();
     String query = "SELECT gr.playerusername, gr.score, gr.gameresult " +
         "FROM gameresult gr " +
@@ -101,7 +100,7 @@ public class Database implements DatabaseApi {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return scores.subList(0, Math.min(scores.size(), n));
+    return FXCollections.observableList(scores);
   }
 
   /**
@@ -176,6 +175,7 @@ public class Database implements DatabaseApi {
         stmt.executeUpdate();
 
         for (String gameName : getAllGames()) {
+          System.out.println(gameName);
           try {
             grantPermissions(username, gameName, isGamePublic(gameName) ? "Player" : "None");
           } catch (SQLException e) {
@@ -208,14 +208,14 @@ public class Database implements DatabaseApi {
 
 
   //returns true if game is publicly available, otherwise false
-  private boolean isGamePublic(String gameName) {
+  public boolean isGamePublic(String gameName) {
     String sql = "SELECT public FROM Games WHERE gamename = ?";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, gameName);
       try (ResultSet rs = pstmt.executeQuery()) {
         if (rs.next()) {
-          return true;
+          return rs.getBoolean("public");
         }
       }
     } catch (SQLException e) {
@@ -223,6 +223,20 @@ public class Database implements DatabaseApi {
     }
     return false;
   }
+
+  @Override
+  public void setGamePublic(String gameName, boolean isPublic) {
+    String sql = "UPDATE Games SET public = ? WHERE gamename = ?";
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setBoolean(1, isPublic);
+      pstmt.setString(2, gameName);
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
 
   /**
    * Registers a new game.

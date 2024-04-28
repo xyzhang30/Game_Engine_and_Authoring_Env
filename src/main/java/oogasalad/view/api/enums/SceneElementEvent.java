@@ -29,6 +29,7 @@ public enum SceneElementEvent {
   SET_ENGLISH,
   SET_SPANISH,
   SET_FRENCH,
+  SET_HEBREW,
   START_LOGIN,
   LOGIN,
   CREATE_USER,

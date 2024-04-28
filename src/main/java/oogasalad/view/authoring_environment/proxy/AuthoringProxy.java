@@ -22,7 +22,6 @@ import oogasalad.view.api.exception.MissingNonControllableTypeException;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.controller.AuthoringController;
 import oogasalad.view.api.enums.CollidableType;
-import oogasalad.view.database.CurrentPlayersManager;
 
 /**
  * AuthoringProxy acts as an intermediary between the authoring environment and the authoring
