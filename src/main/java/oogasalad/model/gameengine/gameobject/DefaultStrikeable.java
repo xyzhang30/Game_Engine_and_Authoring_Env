@@ -25,7 +25,7 @@ public class DefaultStrikeable implements Strikeable {
   /**
    * Constructs a DefaultStrikeable object with the specified GameObject.
    *
-   * @param go The GameObject to associate with this DefaultStrikeable object.
+   * @param go The GameObject to associate with this DefaultStrikeable object
    */
 
   public DefaultStrikeable(GameObject go) {

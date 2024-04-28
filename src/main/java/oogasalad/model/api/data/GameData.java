@@ -11,6 +11,8 @@ import java.util.List;
 @JsonPropertyOrder({"gameName", "game_objects", "players", "variables", "rules"})
 public class GameData {
 
+
+  private @JsonProperty("game_description") String gameDescription;
   private @JsonProperty("gameName") String gameName;
   private @JsonProperty("game_objects") List<GameObjectProperties> gameObjectProperties;
   private List<ParserPlayer> players;

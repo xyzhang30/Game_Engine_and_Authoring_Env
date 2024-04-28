@@ -234,6 +234,7 @@ public class GameEngine implements ExternalGameEngine {
     gameObjects.forEach(GameObject::addStaticStateGameObject);
     rules = loader.getRulesRecord();
 //    playerContainer.getActive().updateActiveStrikeable();
+    System.out.println(playerContainer.getActive().getId());
     playerContainer.getActive().getStrikeable().asGameObject().setVisible(true);
     playerContainer.getPlayers().forEach(Player::startRound);
     addInitialStaticStateToHistory();
@@ -301,7 +302,7 @@ public class GameEngine implements ExternalGameEngine {
     return gameObjects;
   }
 
-  public double getScoreableScoreById(int id){
+  public int getScoreableScoreById(int id){
     for (GameObject gameObject : gameObjects){
       if (gameObject.getId() == id && gameObject.getScoreable().isPresent()){
         return gameObject.getScoreable().get().getTemporaryScore();

@@ -434,14 +434,14 @@
     "gameobject_id" : 23
   } ],
   "players" : [ {
-    "score" : 0.0,
+    "score" : 1.0,
     "player_id" : 1,
     "my_strikeable" : [ 7 ],
     "my_scoreable" : [ 8, 18, 21, 23 ],
     "my_controllable" : [ ],
     "active_strikeable" : 7
   }, {
-    "score" : 0.0,
+    "score" : 1.0,
     "player_id" : 2,
     "my_strikeable" : [ 7 ],
     "my_scoreable" : [ 8, 19, 20, 22 ],
