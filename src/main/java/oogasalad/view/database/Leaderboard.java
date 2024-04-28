@@ -23,25 +23,18 @@ public class Leaderboard {
   public Leaderboard(DatabaseController databaseController) {
     this.databaseController = databaseController;
     this.leaderboardScores = FXCollections.observableArrayList();
-    this.leaderboardListView = new ListView<>(leaderboardScores);
   }
 
   /**
    * Updates the leaderboard display for a specified game by fetching formatted scores and
    * displaying them in the ListView.
-   * @param gameName The name of the game for which the leaderboard should be updated.
    */
-  public void updateLeaderboard(String gameName) {
-    List<String> scores = databaseController.getFormattedScoresForLeaderboard(gameName);
-    leaderboardScores.setAll(scores);
+  public void setLeaderboard(ListView<String> scoresListView) {
+    scoresListView.setItems(leaderboardScores);
   }
 
-  /**
-   * Provides the ListView for integration into the UI, allowing for direct inclusion in the application's layout.
-   * This ListView displays the sorted and formatted scores.
-   * @return The ListView containing the formatted scores.
-   */
-  public ListView<String> getLeaderboardListView() {
-    return leaderboardListView;
+  public void saveGameScores(List<String> score){
+
   }
+
 }

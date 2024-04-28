@@ -10,12 +10,13 @@ import javafx.scene.control.TextField;
 import javax.xml.crypto.Data;
 import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.controller.DatabaseController;
+import oogasalad.view.controller.GameController;
 import oogasalad.view.database.CurrentPlayersManager;
 import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 
 public class DatabaseHandler {
-
+private final GameController gameController;
   private final DatabaseController databaseController;
   private final CurrentPlayersManager currentPlayersManager;
   private final SceneManager sceneManager;
@@ -26,8 +27,9 @@ public class DatabaseHandler {
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
 
 
-  public DatabaseHandler(SceneManager sceneManager, DatabaseController databaseController,
+  public DatabaseHandler(GameController gameController,SceneManager sceneManager, DatabaseController databaseController,
       CurrentPlayersManager currentPlayersManager, Leaderboard leaderboard) {
+    this.gameController = gameController;
     this.sceneManager = sceneManager;
     this.databaseController = databaseController;
     this.currentPlayersManager = currentPlayersManager;
@@ -133,11 +135,15 @@ public class DatabaseHandler {
   }
 
   private void createLeaderboardHandler(Node node) {
-    leaderboard.getLeaderboardListView();
+    gameController.getGameName();
     node.setOnMouseClicked(e -> sceneManager.createLeaderboardScene());
   }
   private void setCurrentPlayers(Node node){
     currentPlayersManager.setPlayersListView((ListView<String>) node);
+  }
+
+  private void setLeaderboard(Node node){
+    leaderboard.setLeaderboard(((ListView<String>) node));
   }
 
 //  private void createCurrentPlayersHandler(Node node) {

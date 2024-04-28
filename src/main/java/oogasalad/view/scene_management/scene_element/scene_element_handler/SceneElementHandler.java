@@ -32,7 +32,7 @@ public class SceneElementHandler {
     this.gamePlayManagementHandler = new GamePlayManagementHandler(gameController, sceneManager);
     this.strikeHandler = new StrikeHandler(gameController, sceneManager);
     this.loadGameEventHandler = new LoadGameEventHandler(gameController);
-    this.databaseHandler = new DatabaseHandler(sceneManager, databaseController,
+    this.databaseHandler = new DatabaseHandler(gameController,sceneManager, databaseController,
         currentPlayersManager, leaderboard);
     createEventTypeMap();
   }

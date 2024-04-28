@@ -7,10 +7,12 @@ import javafx.collections.ObservableList;
 import oogasalad.model.database.Database;
 import oogasalad.model.database.GameScore;
 import oogasalad.view.database.CurrentPlayersManager;
+import oogasalad.view.database.Leaderboard;
 
 
 public class DatabaseController {
   private CurrentPlayersManager currentPlayersManager;
+  private Leaderboard leaderboard;
   private Database databaseView;
   public DatabaseController(){
     this.databaseView = new Database();
@@ -46,7 +48,7 @@ public class DatabaseController {
     List<GameScore> scores = databaseView.getGeneralHighScoresForGame(gameName, Integer.MAX_VALUE);
     return scores.stream()
         .sorted((s1, s2) -> Integer.compare(s2.score(), s1.score()))  //from high to low
-        .map(this::formatScoreForDisplay)
+        .map(score -> formatScoreForDisplay(score))
         .limit(5)  // only top 5 scores
         .collect(Collectors.toCollection(FXCollections::observableArrayList));
   }

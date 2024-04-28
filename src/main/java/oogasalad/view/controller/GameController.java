@@ -311,8 +311,9 @@ public class GameController {
         RESUME_GAME_DATA_FOLDER);
   }
 
-  public void giveGameName(String gameName){
+  public void getGameName(){
     databaseController.getFormattedScoresForLeaderboard(gameLoaderView.getGameName());
   }
+
 
 }
