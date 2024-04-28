@@ -83,6 +83,7 @@ public class GamePlayManagementHandler {
     comboBox.setOnAction(event -> {
       String selectedMod = comboBox.getValue();
       gameController.changeMod(selectedMod);
+      sceneManager.getRoot().requestFocus();
     });
   }
 
