@@ -75,6 +75,7 @@ public class SceneManager {
    * @param databaseController handles database interactions
    */
   public SceneManager(GameController gameController, DatabaseController databaseController,
+      CurrentPlayersManager currentPlayersManager,
       double screenWidth,
       double screenHeight) {
     root = new Pane();
@@ -83,7 +84,7 @@ public class SceneManager {
     sceneElementParser = new SceneElementParser();
     sceneElementStyler = new SceneElementStyler(root);
     gameStatusManager = new GameStatusManager();
-    currentPlayersManager = new CurrentPlayersManager();
+    this.currentPlayersManager = currentPlayersManager;
     sceneElementFactory = new SceneElementFactory(screenWidth, screenHeight, sceneElementStyler,
         new SceneElementHandler(gameController, databaseController, this, gameStatusManager,
             currentPlayersManager));
@@ -168,7 +169,8 @@ public class SceneManager {
    */
   public void update(GameRecord gameRecord, Map<Integer, String> playerMap) {
     compositeElement.update(gameRecord.gameObjectRecords());
-    gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round(), playerMap);
+    gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round(),
+        playerMap);
     root.requestFocus();
     checkEndRound(gameRecord, playerMap);
   }
@@ -308,7 +310,7 @@ public class SceneManager {
     root.getChildren().clear();
   }
 
-  private void checkEndRound(GameRecord gameRecord, Map<Integer,String> playerMap) {
+  private void checkEndRound(GameRecord gameRecord, Map<Integer, String> playerMap) {
     if (gameRecord.gameOver()) {
       createGameOverScene();
       gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round(),

@@ -77,7 +77,7 @@ public class GameController {
 
     CurrentPlayersManager currentPlayersManager = new CurrentPlayersManager();
     databaseController = new DatabaseController(new Leaderboard(), currentPlayersManager);
-    sceneManager = new SceneManager(this, databaseController, width, height);
+    sceneManager = new SceneManager(this, databaseController, currentPlayersManager, width, height);
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
     ableToStrike = true;
@@ -128,7 +128,7 @@ public class GameController {
    */
   public void openAuthorEnvironment() {
     AuthoringController newAuthoringController = new AuthoringController(SupportedLanguage.ENGLISH,
-        UITheme.DEFAULT, AuthoringImplementationType.DEFAULT);
+        UITheme.DEFAULT, AuthoringImplementationType.DEFAULT, databaseController.getPlayerNames().get(0));
     newAuthoringController.updateAuthoringScreen();
   }
 
