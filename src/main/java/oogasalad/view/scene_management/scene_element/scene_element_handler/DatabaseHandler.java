@@ -16,24 +16,24 @@ import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 
 public class DatabaseHandler {
-private final GameController gameController;
+
+  private final GameController gameController;
   private final DatabaseController databaseController;
   private final CurrentPlayersManager currentPlayersManager;
   private final SceneManager sceneManager;
-  private final Leaderboard leaderboard;
   private TextField usernameTextField;
   private TextField passwordField;
   private String avatarUrlField;
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
 
 
-  public DatabaseHandler(GameController gameController,SceneManager sceneManager, DatabaseController databaseController,
-      CurrentPlayersManager currentPlayersManager, Leaderboard leaderboard) {
+  public DatabaseHandler(GameController gameController, SceneManager sceneManager,
+      DatabaseController databaseController,
+      CurrentPlayersManager currentPlayersManager) {
     this.gameController = gameController;
     this.sceneManager = sceneManager;
     this.databaseController = databaseController;
     this.currentPlayersManager = currentPlayersManager;
-    this.leaderboard = leaderboard;
 
     createEventMap();
   }
@@ -52,14 +52,20 @@ private final GameController gameController;
 
   private void createEventMap() {
     eventMap = new HashMap<>();
-    eventMap.put(SceneElementEvent.LOGIN, this::createLoginHandler); //opens the currentplayers screen with the user that has been entered
-    eventMap.put(SceneElementEvent.CREATE_USER, this::createUserCreatorHandler); //opens the currentplayers scene with the new user and adds new user to database(sends to backend?)
+    eventMap.put(SceneElementEvent.LOGIN,
+        this::createLoginHandler); //opens the currentplayers screen with the user that has been entered
+    eventMap.put(SceneElementEvent.CREATE_USER,
+        this::createUserCreatorHandler); //opens the currentplayers scene with the new user and adds new user to database(sends to backend?)
     eventMap.put(SceneElementEvent.USER_TEXT, this::createUsernameHandler); //saves the username
     eventMap.put(SceneElementEvent.PASSWORD_TEXT, this::createPasswordHandler); //saves the password
-    eventMap.put(SceneElementEvent.START_LOGIN, this::createStartLoginHandler); //goes back to the login/createuser screen
-    eventMap.put(SceneElementEvent.LEADERBOARD, this::createLeaderboardHandler); //opens the leaderboard scene
-    eventMap.put(SceneElementEvent.UPDATE_CURRENT_PLAYERS, this::setCurrentPlayers); //current players displayed on listview
-    eventMap.put(SceneElementEvent.LEADERBOARD_SCORES, this::setLeaderboard); //make sure listview is populated w leaderboard
+    eventMap.put(SceneElementEvent.START_LOGIN,
+        this::createStartLoginHandler); //goes back to the login/createuser screen
+    eventMap.put(SceneElementEvent.LEADERBOARD,
+        this::createLeaderboardHandler); //opens the leaderboard scene
+    eventMap.put(SceneElementEvent.UPDATE_CURRENT_PLAYERS,
+        this::setCurrentPlayers); //current players displayed on listview
+    eventMap.put(SceneElementEvent.LEADERBOARD_SCORES,
+        this::setLeaderboard); //make sure listview is populated w leaderboard
 
   }
 
@@ -136,15 +142,16 @@ private final GameController gameController;
   }
 
   private void createLeaderboardHandler(Node node) {
-    gameController.getGameName();
     node.setOnMouseClicked(e -> sceneManager.createLeaderboardScene());
   }
-  private void setCurrentPlayers(Node node){
+
+  private void setCurrentPlayers(Node node) {
     currentPlayersManager.setPlayersListView((ListView<String>) node);
   }
 
-  private void setLeaderboard(Node node){
-    leaderboard.setLeaderboard(((ListView<String>) node));
+  private void setLeaderboard(Node node) {
+    gameController.getGameName();
+    //add method to data base controller to update leaderboard (contained in the controller)
   }
 
 //  private void createCurrentPlayersHandler(Node node) {

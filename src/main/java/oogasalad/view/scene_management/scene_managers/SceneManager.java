@@ -83,9 +83,8 @@ public class SceneManager {
     sceneElementStyler = new SceneElementStyler(root);
     gameStatusManager = new GameStatusManager();
     currentPlayersManager = new CurrentPlayersManager();
-    leaderboard = new Leaderboard(databaseController);
     sceneElementFactory = new SceneElementFactory(screenWidth, screenHeight, sceneElementStyler,
-        new SceneElementHandler(gameController, databaseController, this, gameStatusManager, currentPlayersManager, leaderboard));
+        new SceneElementHandler(gameController, databaseController, this, gameStatusManager, currentPlayersManager));
     createLanguageSelectionScene();
   }
 

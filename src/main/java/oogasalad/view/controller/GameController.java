@@ -23,6 +23,7 @@ import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.KeyInputType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
+import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.scene_managers.AnimationManager;
 import oogasalad.view.scene_management.element_parsers.GameTitleParser;
 import oogasalad.view.scene_management.GameWindow;
@@ -66,7 +67,7 @@ public class GameController {
    * @param height The height of the screen for the game.
    */
   public GameController(double width, double height) {
-    databaseController = new DatabaseController();
+    databaseController = new DatabaseController(new Leaderboard());
     sceneManager = new SceneManager(this, databaseController, width, height);
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();

@@ -14,8 +14,8 @@ public class DatabaseController {
   private CurrentPlayersManager currentPlayersManager;
   private Leaderboard leaderboard;
   private Database databaseView;
-  public DatabaseController(){
-    this.leaderboard = new Leaderboard(this);
+  public DatabaseController(Leaderboard leaderboard){
+    this.leaderboard = leaderboard;
     this.databaseView = new Database();
     currentPlayersManager = new CurrentPlayersManager();
   }

@@ -7,21 +7,19 @@ import javafx.scene.control.ListView;
 import oogasalad.view.controller.DatabaseController;
 
 /**
- * Manages and displays the leaderboard in the user interface, showing player scores for specific games.
- * This class is responsible for fetching and displaying the formatted scores in a ListView.
+ * Manages and displays the leaderboard in the user interface, showing player scores for specific
+ * games. This class is responsible for fetching and displaying the formatted scores in a ListView.
  *
  * @author Doga Ozmen
  */
 public class Leaderboard {
-  private DatabaseController databaseController;
   private ObservableList<String> leaderboardScores;
   private ListView<String> leaderboardListView;
 
   /**
    * Constructor that initializes the leaderboard's ObservableList and ListView.
    */
-  public Leaderboard(DatabaseController databaseController) {
-    this.databaseController = databaseController;
+  public Leaderboard() {
     this.leaderboardScores = FXCollections.observableArrayList();
   }
 
@@ -30,10 +28,12 @@ public class Leaderboard {
    * displaying them in the ListView.
    */
   public void setLeaderboard(ListView<String> scoresListView) {
+    System.out.println("jordan");
+    System.out.println(leaderboardScores);
     scoresListView.setItems(leaderboardScores);
   }
 
-  public void saveGameScores(ObservableList<String> score){
+  public void saveGameScores(ObservableList<String> score) {
     leaderboardScores = score;
     System.out.println("Leaderboard" + leaderboardScores);
 
