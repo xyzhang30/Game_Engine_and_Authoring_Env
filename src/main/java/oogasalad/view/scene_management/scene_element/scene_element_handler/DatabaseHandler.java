@@ -170,7 +170,7 @@ public class DatabaseHandler {
   private Optional<String> showAvatarSelectionDialog() {
     Dialog<String> dialog = new Dialog<>();
     dialog.setTitle("Select Avatar");
-    dialog.setHeaderText("Choose your avatar");
+    dialog.setHeaderText("Click on your avatar and then press ENTER");
 
     // Set the owner to the current window
     dialog.initOwner(sceneManager.getScene().getWindow());
