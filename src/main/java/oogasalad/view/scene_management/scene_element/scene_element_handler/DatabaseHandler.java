@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -140,18 +141,24 @@ public class DatabaseHandler {
 
     //this should be from a button the same way that we choose the controllable or background images
     node.setOnMouseClicked(e -> {
-      try {
-        boolean userCreated = databaseController.canCreateUser(usernameTextField.getText(),
-            passwordField.getText(), avatarUrlField);
-        System.out.println(userCreated);
-        if (!userCreated) {
-          LOGGER.error("User creation error - user already exists or could not be created.");
-          throw new CreateNewUserException("User already exists or could not be created.");
-        }
-      } catch (CreateNewUserException | CreatingDuplicateUserException ex) {
-        WARNING.showAlert(this.sceneManager.getScene(), AlertType.ERROR,"Creating New User Error", null, ex.getMessage());
-      }
-    });
+          Optional<String> selectedAvatar = showAvatarSelectionDialog();
+          selectedAvatar.ifPresent(avatar -> {
+            avatarUrlField = avatar;
+
+            try {
+              boolean userCreated = databaseController.canCreateUser(usernameTextField.getText(),
+                  passwordField.getText(), avatarUrlField);
+              System.out.println(userCreated);
+              if (!userCreated) {
+                LOGGER.error("User creation error - user already exists or could not be created.");
+                throw new CreateNewUserException("User already exists or could not be created.");
+              }
+            } catch (CreateNewUserException | CreatingDuplicateUserException ex) {
+              WARNING.showAlert(this.sceneManager.getScene(), AlertType.ERROR,
+                  "Creating New User Error", null, ex.getMessage());
+            }
+          });
+        });
     //add the new user to the database
     //open the currentplayers screen with this player added to it
   }
