@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
@@ -29,6 +30,7 @@ public class DatabaseHandler {
   private TextField usernameTextField;
   private TextField passwordField;
   private ListView<String> playerPermissions;
+  private ComboBox<String> publicComboBox;
   private String avatarUrlField;
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
 
@@ -73,7 +75,7 @@ public class DatabaseHandler {
         this::setLeaderboard); //make sure listview is populated w leaderboard
     eventMap.put(SceneElementEvent.PLAYER_PERMISSIONS, this::setUpPlayerPermissions);
     eventMap.put(SceneElementEvent.SUBMIT_PERMISSIONS, this::createFinishHandler);
-
+    eventMap.put(SceneElementEvent.SET_PUBLIC, this::createPublicVsPrivateHandler);
   }
 
   private void createLoginHandler(Node node) {
@@ -81,12 +83,12 @@ public class DatabaseHandler {
     System.out.println("createLoginHandler in scene element handler called");
     node.setOnMouseClicked(e ->
     {
-          boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(),
-              passwordField.getText()); //true of user logged in
-          if (userLoggedIn) {
-            currentPlayersManager.add(usernameTextField.getText());
-            sceneManager.createCurrentPlayersScene();
-          }
+      boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(),
+          passwordField.getText()); //true of user logged in
+      if (userLoggedIn) {
+        currentPlayersManager.add(usernameTextField.getText());
+        sceneManager.createCurrentPlayersScene();
+      }
     });
     //add another or continue to play (new screen) shows current players like is this good or move on
     //open the currentplayers screen with this player added to it
@@ -199,9 +201,26 @@ public class DatabaseHandler {
           }
         }
       }
+      if (publicComboBox.getSelectionModel().getSelectedItem().equals("Public")) {
+        databaseController.setPublicPrivate("Game 2", true);
+      } else {
+        databaseController.setPublicPrivate("Game 2", false);
+      }
       databaseController.writePlayerPermissions("Game 2", checkedPlayers, uncheckedPlayers);
       sceneManager.createMenuScene();
     });
+  }
+
+  private void createPublicVsPrivateHandler(Node node) {
+    publicComboBox = (ComboBox<String>) node;
+    ObservableList<String> publicPrivateList = FXCollections.observableArrayList("Public",
+        "Private");
+    publicComboBox.setItems(publicPrivateList);
+    if (databaseController.isPublic("Game 2")) {
+      publicComboBox.getSelectionModel().select("Public");
+    } else {
+      publicComboBox.getSelectionModel().select("Private");
+    }
   }
 
 //  private void createCurrentPlayersHandler(Node node) {
