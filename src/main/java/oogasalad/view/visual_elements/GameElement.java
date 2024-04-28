@@ -45,10 +45,21 @@ public class GameElement implements VisualElement {
     }
   }
 
+  public String matchShape(String shape) {
+    String JAVAFX_SHAPE_CLASS_PATH = "javafx.scene.shape.";
+    return switch (shape) {
+      case "Circle", "circle" -> JAVAFX_SHAPE_CLASS_PATH + "Ellipse";
+      case "Rectangle", "rectangle" -> JAVAFX_SHAPE_CLASS_PATH + "Rectangle";
+      default -> {
+        throw new InvalidShapeException("Shape " + shape + " is not supported");
+      }
+    };
+  }
+
   private Node makeShape(ViewGameObjectRecord data)
       throws ClassNotFoundException, NoSuchMethodException, InstantiationException,
       IllegalAccessException, InvocationTargetException {
-    String className = data.shape();
+    String className = matchShape(data.shape());
     Class<?> classObj = Class.forName(className);
     Object obj = classObj.getDeclaredConstructor(double.class, double.class)
         .newInstance(data.width(), data.height());

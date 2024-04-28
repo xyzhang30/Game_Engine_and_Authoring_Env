@@ -28,7 +28,6 @@ import org.apache.logging.log4j.Logger;
  */
 public class GameLoaderView extends GameLoader {
 
-  private static final String JAVAFX_SHAPE_CLASS_PATH = "javafx.scene.shape.";
   private static final Logger LOGGER = LogManager.getLogger(GameLoaderView.class);
   private List<ViewGameObjectRecord> viewGameObjectRecords;
   private StrikeablesView strikeablesView;
@@ -87,7 +86,7 @@ public class GameLoaderView extends GameLoader {
         strikeableIDs.add(o.collidableId());
       }
       int id = o.collidableId();
-      String shape = matchShape(o.shape());
+      String shape = o.shape();
       List<Integer> colorRgb = new ArrayList<>();
       try {
         for (int i : o.color().getOrDefault(mod, o.color().get("Default"))) {
@@ -107,19 +106,6 @@ public class GameLoaderView extends GameLoader {
       viewGameObjectRecords.add(viewCollidable);
     }
     strikeablesView = new StrikeablesView(strikeableIDs);
-  }
-
-
-  private String matchShape(String shape) throws InvalidShapeException {
-    System.out.println(shape);
-    return switch (shape) {
-      case "Circle", "circle" -> JAVAFX_SHAPE_CLASS_PATH + "Ellipse";
-      case "Rectangle", "rectangle" -> JAVAFX_SHAPE_CLASS_PATH + "Rectangle";
-      default -> {
-        LOGGER.error("Shape" + shape + " is not supported");
-        throw new InvalidShapeException("Shape " + shape + " is not supported");
-      }
-    };
   }
 
   public Map<KeyInputType, String> getInputKeys() {
