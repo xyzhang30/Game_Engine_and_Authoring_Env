@@ -19,6 +19,8 @@ import javafx.scene.control.TextField;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.view.Warning;
 import oogasalad.view.api.enums.SceneElementEvent;
+import oogasalad.view.api.exception.CreateNewUserException;
+import oogasalad.view.api.exception.CreatingDuplicateUserException;
 import oogasalad.view.api.exception.IncorrectPasswordException;
 import oogasalad.view.api.exception.UserNotFoundException;
 import oogasalad.view.controller.DatabaseController;
@@ -44,6 +46,7 @@ public class DatabaseHandler {
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
   private Map<String, Boolean> playerPermissionMap;
   private static final Logger LOGGER = LogManager.getLogger(DatabaseHandler.class);
+  private static final Warning WARNING = new Warning();
   private Map<String, Boolean> friendsMap;
 
   public DatabaseHandler(GameController gameController, SceneManager sceneManager,
@@ -138,10 +141,11 @@ public class DatabaseHandler {
             passwordField.getText(), avatarUrlField);
         System.out.println(userCreated);
         if (!userCreated) {
-          sceneManager.displayErrorMessage("User already exists or could not be created.");
+          LOGGER.error("User creation error - user already exists or could not be created.");
+          throw new CreateNewUserException("User already exists or could not be created.");
         }
-      } catch (Exception ex) {
-        sceneManager.displayErrorMessage("Error: " + ex.getMessage());
+      } catch (CreateNewUserException | CreatingDuplicateUserException ex) {
+        WARNING.showAlert(this.sceneManager.getScene(), AlertType.ERROR,"Creating New User Error", null, ex.getMessage());
       }
     });
     //add the new user to the database
