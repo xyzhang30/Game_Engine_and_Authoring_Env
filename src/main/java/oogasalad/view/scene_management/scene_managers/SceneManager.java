@@ -46,6 +46,7 @@ public class SceneManager {
   private Pane transitionElements;
   private int currentRound;
   private SupportedLanguage selectedLanguage;
+  private final String manageGamePath = "data/scene_elements/managePermissionElements.xml";
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
   private final String gameManagementElementsPath =
@@ -181,6 +182,11 @@ public class SceneManager {
   public void removeTransitionSheen() {
     root.getChildren().remove(transitionElements);
     root.requestFocus();
+  }
+
+  public void createManagePermissionsScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(manageGamePath));
   }
 
   /**
