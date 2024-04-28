@@ -7,12 +7,15 @@ import java.util.function.Consumer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import oogasalad.view.api.enums.SceneElementEvent;
+import oogasalad.view.api.exception.IncorrectPasswordException;
+import oogasalad.view.api.exception.UserNotFoundException;
 import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
@@ -72,19 +75,39 @@ public class DatabaseHandler {
   }
 
   private void createLoginHandler(Node node) {
-    //avatar should be from a button the same way that we choose the controllable or background images
     System.out.println("createLoginHandler in scene element handler called");
-    node.setOnMouseClicked(e ->
-    {
-          boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(),
-              passwordField.getText()); //true of user logged in
-          if (userLoggedIn) {
-            currentPlayersManager.add(usernameTextField.getText());
-            sceneManager.createCurrentPlayersScene();
-          }
+    node.setOnMouseClicked(e -> {
+      try {
+        boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(), passwordField.getText());
+        if (userLoggedIn) {
+          currentPlayersManager.add(usernameTextField.getText());
+          sceneManager.createCurrentPlayersScene();
+        }
+      } catch (UserNotFoundException ex) {
+        System.err.println(ex.getMessage());
+        // Show an alert or update the UI to notify the user that the username does not exist
+        showAlert("Login Error", ex.getMessage());
+      } catch (IncorrectPasswordException ex) {
+        System.err.println(ex.getMessage());
+        // Show an alert or update the UI to notify the user that the password is incorrect
+        showAlert("Login Error", ex.getMessage());
+      } catch (Exception ex) {
+        System.err.println("An unexpected error occurred during login: " + ex.getMessage());
+        // Handle other unexpected errors
+        showAlert("Login Error", "An unexpected error occurred during login.");
+      }
     });
-    //add another or continue to play (new screen) shows current players like is this good or move on
-    //open the currentplayers screen with this player added to it
+  }
+
+  /**
+   * Shows an alert dialog to the user with specified title and message.
+   */
+  private void showAlert(String title, String message) {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle(title);
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
   }
 
   private void createUserCreatorHandler(Node node) {
