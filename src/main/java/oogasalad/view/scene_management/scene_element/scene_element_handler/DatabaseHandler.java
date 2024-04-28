@@ -173,7 +173,7 @@ public class DatabaseHandler {
   private Optional<String> showAvatarSelectionDialog() {
     Dialog<String> dialog = new Dialog<>();
     dialog.setTitle("Select Avatar");
-    dialog.setHeaderText("Choose your avatar");
+    dialog.setHeaderText("Click on your desired avatar and then press ENTER");
     dialog.initOwner(sceneManager.getScene().getWindow()); // Make sure it's modal in respect to the application window
     dialog.initModality(Modality.WINDOW_MODAL); // Set modality to block user interaction with other windows
 
