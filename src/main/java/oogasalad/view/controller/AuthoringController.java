@@ -48,13 +48,19 @@ public class AuthoringController {
   private final ShapeProxy shapeProxy = new ShapeProxy();
   private final AuthoringProxy authoringProxy = new AuthoringProxy();
   private int firstActiveStrikeableId;
+  private String hostPlayer;
 
-  public AuthoringController(SupportedLanguage language, UITheme uiTheme, AuthoringImplementationType authoringFactoryType) {
+  public AuthoringController(SupportedLanguage language, UITheme uiTheme, AuthoringImplementationType authoringFactoryType, String hostPlayer) {
     stage = new Stage();
     UIElementFactory uiElementFactory = new DefaultUIElementFactory();
     AuthoringFactory authoringFactory = new DefaultAuthoringFactory(uiElementFactory, language, shapeProxy, authoringProxy);
     this.authoringScreen = new AuthoringScreen(language, authoringFactory, shapeProxy, authoringProxy);
     authoringScreen.getAuthoringProxy().setAuthoringController(this);
+    this.hostPlayer = hostPlayer;
+  }
+
+  public String getHostPlayer(){
+    return hostPlayer;
   }
 
   public void updateAuthoringScreen() {

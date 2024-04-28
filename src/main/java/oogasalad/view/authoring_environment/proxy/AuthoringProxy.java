@@ -422,7 +422,10 @@ public class AuthoringProxy {
 
   public void saveGamePermission(String value) {
     boolean permission = value.equals("Public");
-
-//    database.registerGame(gameName, ,playersMap.size(),permission);
+    System.out.println("Permission:"+permission);
+    String hostPlayer = authoringController.getHostPlayer();
+    int numPlayers = playersMap.size();
+    Database database = new Database();
+    database.registerGame(gameName,hostPlayer,numPlayers,permission);
   }
 }
