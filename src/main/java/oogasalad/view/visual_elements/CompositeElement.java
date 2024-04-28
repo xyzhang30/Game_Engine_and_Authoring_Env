@@ -23,7 +23,11 @@ public class CompositeElement {
     }
   }
 
-  public void updateMod(List<ViewGameObjectRecord> recordList){
+  public void updateMod(List<ViewGameObjectRecord> recordList) {
+    for (ViewGameObjectRecord viewRecord : recordList) {
+      GameElement element = (GameElement) elementMap.get(viewRecord.id());
+      element.changeFill(viewRecord);
+    }
 
   }
 
