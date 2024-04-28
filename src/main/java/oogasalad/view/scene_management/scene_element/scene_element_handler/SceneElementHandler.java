@@ -37,6 +37,7 @@ public class SceneElementHandler {
   }
 
   public void createElementHandler(Node node, String eventType, String event) {
+    System.out.println(eventType + " element handler created");
     BiConsumer<Node, String> handler = eventTypeMap.get(SceneElementEventType.valueOf(eventType));
     handler.accept(node, event);
   }
