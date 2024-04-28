@@ -7,6 +7,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
+import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,9 +25,14 @@ public class SceneManagerTest extends DukeApplicationTest {
   public void setUp() throws InterruptedException {
     Platform.runLater(() -> {
       testStage = new Stage();
+<<<<<<< HEAD
       sceneManager = new SceneManager(new GameController(800, 600), new DatabaseController(null),
           800,
           600, null);
+=======
+      sceneManager = new SceneManager(new GameController(800, 600), new DatabaseController(new Leaderboard()), 800,
+          600);
+>>>>>>> 143_leaderboard
       testStage.setScene(sceneManager.getScene());
       testStage.show();
     });

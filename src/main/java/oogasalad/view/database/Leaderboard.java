@@ -1,43 +1,40 @@
 package oogasalad.view.database;
 
-import javafx.scene.control.ListView;
+import java.util.List;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
 import oogasalad.view.controller.DatabaseController;
-import oogasalad.view.controller.GameController;
 
 /**
- * Manages and displays the leaderboard in the user interface, showing player scores for specific games.
+ * Manages and displays the leaderboard in the user interface, showing player scores for specific
+ * games. This class is responsible for fetching and displaying the formatted scores in a ListView.
  *
  * @author Doga Ozmen
  */
 public class Leaderboard {
-  private DatabaseController databaseController;
-  private ListView<String> leaderboardListView = new ListView<>();
+  private ObservableList<String> leaderboardScores;
+  private ListView<String> leaderboardListView;
 
   /**
-   * Constructs a Leaderboard with a reference to the GameController to fetch formatted score data.
-   * @param controller The GameController that provides access to formatted game scores.
+   * Constructor that initializes the leaderboard's ObservableList and ListView.
    */
-  public Leaderboard(DatabaseController controller) {
-    this.databaseController = controller;
-  }
+  public Leaderboard() {}
 
   /**
    * Updates the leaderboard display for a specified game by fetching formatted scores and
    * displaying them in the ListView.
-   * @param gameName The name of the game for which the leaderboard should be updated.
    */
-  public void updateLeaderboard(String gameName) {
-    ObservableList<String> formattedScores = databaseController.getFormattedScoresForLeaderboard(gameName);
-    leaderboardListView.setItems(formattedScores);
+  public void setLeaderboard(ListView<String> scoresListView) {
+    System.out.println("jordan");
+    System.out.println(leaderboardScores);
+    scoresListView.setItems(leaderboardScores);
   }
 
-  /**
-   * Provides the ListView for integration into the UI, allowing for direct inclusion in the application's layout.
-   * This ListView displays the sorted and formatted scores.
-   * @return The ListView containing the formatted scores.
-   */
-  public ListView<String> getLeaderboardListView() {
-    return leaderboardListView;
+  public void saveGameScores(ObservableList<String> score) {
+    leaderboardScores = score;
+    System.out.println("Leaderboard" + leaderboardScores);
+
   }
+
 }
