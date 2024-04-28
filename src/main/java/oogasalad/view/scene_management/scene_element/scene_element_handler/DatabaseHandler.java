@@ -22,6 +22,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.view.Warning;
 import oogasalad.view.api.enums.SceneElementEvent;
@@ -171,6 +172,10 @@ public class DatabaseHandler {
     dialog.setTitle("Select Avatar");
     dialog.setHeaderText("Choose your avatar");
 
+    // Set the owner to the current window
+    dialog.initOwner(sceneManager.getScene().getWindow());
+    dialog.initModality(Modality.WINDOW_MODAL); // This line makes it block input to other windows
+
     ButtonType selectButtonType = new ButtonType("Select", ButtonBar.ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(selectButtonType, ButtonType.CANCEL);
 
@@ -219,6 +224,7 @@ public class DatabaseHandler {
 
     return dialog.showAndWait();
   }
+
 
   public void createPasswordHandler(Node node) {
     passwordField = (TextField) node;
