@@ -8,6 +8,7 @@ import oogasalad.view.api.enums.SceneElementEventType;
 import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.database.CurrentPlayersManager;
+import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.scene_element.GameStatusManager;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 
@@ -24,7 +25,7 @@ public class SceneElementHandler {
 
   public SceneElementHandler(GameController gameController, DatabaseController databaseController,
       SceneManager sceneManager,
-      GameStatusManager gameStatusManager, CurrentPlayersManager currentPlayersManager) {
+      GameStatusManager gameStatusManager, CurrentPlayersManager currentPlayersManager, Leaderboard leaderboard) {
     this.changeSceneEventHandler = new ChangeSceneEventHandler(gameController, sceneManager);
     this.gameStatManagementHandler = new GameStatManagementHandler(sceneManager, gameStatusManager);
     this.languageEventHandler = new LanguageEventHandler(sceneManager);
@@ -32,7 +33,7 @@ public class SceneElementHandler {
     this.strikeHandler = new StrikeHandler(gameController, sceneManager);
     this.loadGameEventHandler = new LoadGameEventHandler(gameController);
     this.databaseHandler = new DatabaseHandler(sceneManager, databaseController,
-        currentPlayersManager);
+        currentPlayersManager, leaderboard);
     createEventTypeMap();
   }
 

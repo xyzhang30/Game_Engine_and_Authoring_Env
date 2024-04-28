@@ -11,6 +11,7 @@ import javax.xml.crypto.Data;
 import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.database.CurrentPlayersManager;
+import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 
 public class DatabaseHandler {
@@ -18,6 +19,7 @@ public class DatabaseHandler {
   private final DatabaseController databaseController;
   private final CurrentPlayersManager currentPlayersManager;
   private final SceneManager sceneManager;
+  private final Leaderboard leaderboard;
   private TextField usernameTextField;
   private TextField passwordField;
   private String avatarUrlField;
@@ -25,10 +27,11 @@ public class DatabaseHandler {
 
 
   public DatabaseHandler(SceneManager sceneManager, DatabaseController databaseController,
-      CurrentPlayersManager currentPlayersManager) {
+      CurrentPlayersManager currentPlayersManager, Leaderboard leaderboard) {
     this.sceneManager = sceneManager;
     this.databaseController = databaseController;
     this.currentPlayersManager = currentPlayersManager;
+    this.leaderboard = leaderboard;
 
     createEventMap();
   }
@@ -130,14 +133,14 @@ public class DatabaseHandler {
   }
 
   private void createLeaderboardHandler(Node node) {
+    leaderboard.getLeaderboardListView();
     node.setOnMouseClicked(e -> sceneManager.createLeaderboardScene());
   }
   private void setCurrentPlayers(Node node){
     currentPlayersManager.setPlayersListView((ListView<String>) node);
   }
 
-
-  private void createCurrentPlayersHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createCurrentPlayersScene());
-  }
+//  private void createCurrentPlayersHandler(Node node) {
+//    node.setOnMouseClicked(e -> sceneManager.createCurrentPlayersScene());
+//  }
 }

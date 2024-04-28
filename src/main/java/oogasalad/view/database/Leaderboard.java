@@ -1,25 +1,29 @@
 package oogasalad.view.database;
 
-import javafx.scene.control.ListView;
+import java.util.List;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
 import oogasalad.view.controller.DatabaseController;
-import oogasalad.view.controller.GameController;
 
 /**
  * Manages and displays the leaderboard in the user interface, showing player scores for specific games.
+ * This class is responsible for fetching and displaying the formatted scores in a ListView.
  *
  * @author Doga Ozmen
  */
 public class Leaderboard {
   private DatabaseController databaseController;
-  private ListView<String> leaderboardListView = new ListView<>();
+  private ObservableList<String> leaderboardScores;
+  private ListView<String> leaderboardListView;
 
   /**
-   * Constructs a Leaderboard with a reference to the GameController to fetch formatted score data.
-   * @param controller The GameController that provides access to formatted game scores.
+   * Constructor that initializes the leaderboard's ObservableList and ListView.
    */
-  public Leaderboard(DatabaseController controller) {
-    this.databaseController = controller;
+  public Leaderboard(DatabaseController databaseController) {
+    this.databaseController = databaseController;
+    this.leaderboardScores = FXCollections.observableArrayList();
+    this.leaderboardListView = new ListView<>(leaderboardScores);
   }
 
   /**
@@ -28,8 +32,8 @@ public class Leaderboard {
    * @param gameName The name of the game for which the leaderboard should be updated.
    */
   public void updateLeaderboard(String gameName) {
-    ObservableList<String> formattedScores = databaseController.getFormattedScoresForLeaderboard(gameName);
-    leaderboardListView.setItems(formattedScores);
+    List<String> scores = databaseController.getFormattedScoresForLeaderboard(gameName);
+    leaderboardScores.setAll(scores);
   }
 
   /**
