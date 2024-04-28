@@ -44,6 +44,11 @@ public class DatabaseLoginTest {
     assertThrows(IncorrectPasswordException.class, () -> databaseController.loginUser("validUser", "wrongPassword"));
   }
 
+  @Test
+  public void testLoginUserNonExistentUsernameWithAKnownPassword() {
+    when(databaseView.loginUser("nonexistentUser", "validPassword")).thenReturn(false);
+    assertThrows(UserNotFoundException.class, () -> databaseController.loginUser("nonexistentUser", "validPassword"));
+  }
 
 
 }
