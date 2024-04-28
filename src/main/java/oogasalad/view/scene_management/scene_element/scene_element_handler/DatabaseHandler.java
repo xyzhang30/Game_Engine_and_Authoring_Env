@@ -1,11 +1,14 @@
 package oogasalad.view.scene_management.scene_element.scene_element_handler;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -100,7 +103,6 @@ public class DatabaseHandler {
     eventMap.put(SceneElementEvent.PLAYER_FRIENDS, this::setUpFriendPermissions);
     eventMap.put(SceneElementEvent.SUBMIT_FRIENDS, this::confirmFriendsHandler);
     eventMap.put(SceneElementEvent.SET_PUBLIC, this::createAccessibilityHandler);
-    eventMap.put(SceneElementEvent.AVATAR_SELECTION, this::createAvatarHandler);  // Handle avatar selection
   }
 
   public void createLoginHandler(Node node) {
@@ -170,19 +172,15 @@ public class DatabaseHandler {
   private Optional<String> showAvatarSelectionDialog() {
     Dialog<String> dialog = new Dialog<>();
     dialog.setTitle("Select Avatar");
-    dialog.setHeaderText("Click on your avatar and then press ENTER");
-
-    // Set the owner to the current window
-    dialog.initOwner(sceneManager.getScene().getWindow());
-    dialog.initModality(Modality.WINDOW_MODAL); // This line makes it block input to other windows
+    dialog.setHeaderText("Click on your desired avatar and then press ENTER");
+    dialog.initOwner(sceneManager.getScene().getWindow()); // Make sure it's modal in respect to the application window
+    dialog.initModality(Modality.WINDOW_MODAL); // Set modality to block user interaction with other windows
 
     ButtonType selectButtonType = new ButtonType("Select", ButtonBar.ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(selectButtonType, ButtonType.CANCEL);
 
     ComboBox<String> avatarComboBox = new ComboBox<>();
-    ObservableList<String> avatars = FXCollections.observableArrayList(
-        "loewyhappy.png", "loewycreamed.png", "duvall.png", "moffett.png"
-    );
+    ObservableList<String> avatars = loadAvatarNamesFromDirectory(); // Use the method to load avatar names dynamically
     avatarComboBox.setItems(avatars);
     avatarComboBox.setCellFactory(lv -> new ListCell<>() {
       @Override
@@ -198,6 +196,7 @@ public class DatabaseHandler {
         }
       }
     });
+
     avatarComboBox.setButtonCell(new ListCell<>() {
       @Override
       protected void updateItem(String item, boolean empty) {
@@ -206,7 +205,7 @@ public class DatabaseHandler {
           setText(null);
           setGraphic(null);
         } else {
-          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), 100, 100, true, false);
+          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), 50, 50, true, false);
           ImageView imageView = new ImageView(img);
           setGraphic(imageView);
         }
@@ -226,6 +225,22 @@ public class DatabaseHandler {
   }
 
 
+  private ObservableList<String> loadAvatarNamesFromDirectory() {
+    try {
+      // Adjust the path if necessary when running from a different setup
+      return FXCollections.observableArrayList(
+          Files.list(Paths.get(getClass().getResource("/view/avatar_images").toURI()))
+              .filter(path -> path.toString().endsWith(".png"))
+              .map(path -> path.getFileName().toString())
+              .collect(Collectors.toList())
+      );
+    } catch (Exception e) {
+      e.printStackTrace();
+      return FXCollections.observableArrayList(); // return an empty list in case of error
+    }
+  }
+
+
   public void createPasswordHandler(Node node) {
     passwordField = (TextField) node;
     //save the password and add to database with username if not already there
@@ -237,58 +252,7 @@ public class DatabaseHandler {
     //save username and add to database if not already there
   }
 
-  private void createAvatarHandler(Node node) {
-//    avatarComboBox = (ComboBox<String>) node; // Cast the node to ComboBox assuming it's the correct type
-//    // Assuming avatar URLs or identifiers are to be loaded from a service or predefined list
-//    ObservableList<String> avatars = FXCollections.observableArrayList(
-//        "view/avatar_images/duvall.png", // These should be paths relative to src/main/resources
-//        "view/avatar_images/loewycreamed.png",
-//        "view/avatar_images/loewyhappy.png",
-//        "view/avatar_images/moffett.png"
-//    );
-//    avatarComboBox.setItems(avatars); // Set the items in the ComboBox
-//
-//    // Set a prompt text for better user guidance
-//    avatarComboBox.setPromptText("Select an avatar");
-//
-//    // Customize rendering of the combo box list to display images
-//    avatarComboBox.setCellFactory(lv -> new ListCell<String>() {
-//      @Override
-//      protected void updateItem(String item, boolean empty) {
-//        super.updateItem(item, empty);
-//        if (empty || item == null) {
-//          setText(null);
-//          setGraphic(null);
-//        } else {
-//          Image img = new Image(getClass().getResourceAsStream("/" + item), 100, 100, true, true);
-//          ImageView imageView = new ImageView(img);
-//          setGraphic(imageView);
-//        }
-//      }
-//    });
-//
-//    // Ensure selected item also shows as an image
-//    avatarComboBox.setButtonCell(new ListCell<String>() {
-//      @Override
-//      protected void updateItem(String item, boolean empty) {
-//        super.updateItem(item, empty);
-//        if (empty || item == null) {
-//          setText(null);
-//          setGraphic(null);
-//        } else {
-//          Image img = new Image(getClass().getResourceAsStream("/" + item), 50, 50, true, true);
-//          ImageView imageView = new ImageView(img);
-//          setGraphic(imageView);
-//        }
-//      }
-//    });
-//
-//    // Handle the selection of an avatar
-//    avatarComboBox.setOnAction(e -> {
-//      avatarUrlField = avatarComboBox.getValue(); // Save the selected avatar URL
-//      System.out.println("Avatar selected: " + avatarUrlField); // Optional: for debugging
-//    });
-  }
+
 
 
   private void createStartLoginHandler(Node node) {
