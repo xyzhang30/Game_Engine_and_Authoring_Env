@@ -58,6 +58,7 @@ public class LoadGameEventHandler {
     eventMap.put(SceneElementEvent.MANAGE_GAME, databaseController::getManageableGames);
   }
 
+
   private void createDirPathMap() {
     dirPathMap = new HashMap<>();
     dirPathMap.put(SceneElementEvent.START_NEW_GAME, newGameDir);

@@ -21,13 +21,7 @@ public class DatabaseTest {
 
     @Test
     public void testCheckGameExists() throws SQLException {
-      new Database().registerGame("AngryBirdsLevel1", "noah", 1, true);
-      new Database().registerGame("billiards", "noah", 2, true);
-      new Database().registerGame("BreakoutLevel1", "noah", 1, true);
-      new Database().registerGame("pinball", "noah", 1, true);
-      new Database().registerGame("singlePlayerMiniGolf", "noah", 1, true);
-      new Database().registerGame("shuffleboard", "noah", 2, true);
-      new Database().registerGame("threePlayerMiniGolf", "noah", 3, true);
+      System.out.println(new Database().getPlayerPermissionsForGames("Game 2"));
 
 
       /**

@@ -6,6 +6,7 @@ package oogasalad.model.database;
  */
 
 import java.util.List;
+import java.util.Map;
 
 public interface DatabaseApi {
 
@@ -18,6 +19,8 @@ public interface DatabaseApi {
    * @return A list of GameScore objects representing the high scores of the player.
    */
   List<GameScore> getPlayerHighScoresForGame(String gameName, String playerName, int n);
+
+  Map<String,Boolean> getPlayerPermissionsForGames(String gameName);
 
   /**
    * Retrieves the general high scores for a specific game.

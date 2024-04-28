@@ -32,6 +32,11 @@ public class CurrentPlayersManager {
     return currentPlayersList.size();
   }
 
+  public List<String> getPlayerNames() {
+    return currentPlayersList;
+  }
+
+
   public String getHost() {
     System.out.println(currentPlayersList);
     return currentPlayersList.get(0);

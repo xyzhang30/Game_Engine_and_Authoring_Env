@@ -166,11 +166,11 @@ public class SceneManager {
    *
    * @param gameRecord represents updated state of game
    */
-  public void update(GameRecord gameRecord) {
+  public void update(GameRecord gameRecord, Map<Integer, String> playerMap) {
     compositeElement.update(gameRecord.gameObjectRecords());
-    gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
+    gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round(), playerMap);
     root.requestFocus();
-    checkEndRound(gameRecord);
+    checkEndRound(gameRecord, playerMap);
   }
 
   /**
@@ -308,10 +308,11 @@ public class SceneManager {
     root.getChildren().clear();
   }
 
-  private void checkEndRound(GameRecord gameRecord) {
+  private void checkEndRound(GameRecord gameRecord, Map<Integer,String> playerMap) {
     if (gameRecord.gameOver()) {
       createGameOverScene();
-      gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round());
+      gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round(),
+          playerMap);
     } else if (gameRecord.round() != currentRound) {
       currentRound = gameRecord.round();
       createTransitionDisplay();

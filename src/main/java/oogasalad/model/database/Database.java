@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.mindrot.jbcrypt.BCrypt;
@@ -47,6 +49,24 @@ public class Database implements DatabaseApi {
       e.printStackTrace();
     }
     return scores.subList(0, Math.min(scores.size(), n));
+  }
+
+  @Override
+  public Map<String,Boolean> getPlayerPermissionsForGames(String gameName) {
+    Map<String, Boolean> scores = new TreeMap<>();
+    String query = "SELECT username, permissions " +
+        "FROM permissions WHERE gamename = ?";
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(query)) {
+      pstmt.setString(1, gameName);
+      ResultSet rs = pstmt.executeQuery();
+      while (rs.next()) {
+        scores.put(rs.getString("username"), !rs.getString("permissions").equals("None"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return scores;
   }
 
   /**
