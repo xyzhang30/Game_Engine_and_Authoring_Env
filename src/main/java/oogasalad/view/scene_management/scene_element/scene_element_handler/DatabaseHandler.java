@@ -74,7 +74,7 @@ public class DatabaseHandler {
 
   }
 
-  private void createLoginHandler(Node node) {
+  public void createLoginHandler(Node node) {
     System.out.println("createLoginHandler in scene element handler called");
     node.setOnMouseClicked(e -> {
       try {
