@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.List;
 import oogasalad.model.database.Database;
+import oogasalad.view.api.exception.IncorrectPasswordException;
 import oogasalad.view.api.exception.UserNotFoundException;
 import oogasalad.view.controller.DatabaseController;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,6 +36,12 @@ public class DatabaseLoginTest {
   public void testLoginUserNonExistentUsername() {
     when(databaseView.loginUser("nonexistentUser", "anyPassword")).thenReturn(false);
     assertThrows(UserNotFoundException.class, () -> databaseController.loginUser("nonexistentUser", "anyPassword"));
+  }
+
+  @Test
+  public void testLoginUserIncorrectPassword() {
+    when(databaseView.loginUser("validUser", "wrongPassword")).thenReturn(false);
+    assertThrows(IncorrectPasswordException.class, () -> databaseController.loginUser("validUser", "wrongPassword"));
   }
 
 
