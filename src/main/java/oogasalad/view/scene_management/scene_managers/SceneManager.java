@@ -75,7 +75,7 @@ public class SceneManager {
    * @param databaseController handles database interactions
    */
   public SceneManager(GameController gameController, DatabaseController databaseController, double screenWidth,
-      double screenHeight, CurrentPlayersManager currentPlayersManager) {
+      double screenHeight) {
     root = new Pane();
     scene = new Scene(root);
     selectedLanguage = SupportedLanguage.ENGLISH;

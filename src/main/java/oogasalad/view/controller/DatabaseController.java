@@ -12,18 +12,15 @@ import oogasalad.view.database.Leaderboard;
 
 
 public class DatabaseController {
-<<<<<<< HEAD
   private Database databaseView;
   private CurrentPlayersManager currentPlayersManager;
-  public DatabaseController(CurrentPlayersManager currentPlayersManager){
-=======
-  private CurrentPlayersManager currentPlayersManager;
+//  public DatabaseController(CurrentPlayersManager currentPlayersManager){
+//=======
   private Leaderboard leaderboard;
-  private Database databaseView;
-  public DatabaseController(Leaderboard leaderboard){
-    this.leaderboard = leaderboard;
->>>>>>> 143_leaderboard
+
+  public DatabaseController(Leaderboard leaderboard, CurrentPlayersManager currentPlayersManager){
     this.databaseView = new Database();
+    this.leaderboard = leaderboard;
     this.currentPlayersManager = currentPlayersManager;
   }
 

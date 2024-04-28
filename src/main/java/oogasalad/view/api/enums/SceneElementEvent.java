@@ -36,9 +36,6 @@ public enum SceneElementEvent {
   PASSWORD_TEXT,
   LEADERBOARD,
   UPDATE_CURRENT_PLAYERS,
-<<<<<<< HEAD
-  CHANGE_MOD
-=======
+  CHANGE_MOD,
   LEADERBOARD_SCORES
->>>>>>> 143_leaderboard
 }

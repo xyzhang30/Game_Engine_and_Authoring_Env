@@ -53,8 +53,8 @@ public class LanguageEventHandler {
   private void createLanguageHandler(Node node, SupportedLanguage language) {
     node.setOnMouseClicked(e -> {
       sceneManager.setLanguage(language);
-      //sceneManager.createLoginScene();
-      sceneManager.createMenuScene();
+      sceneManager.createLoginScene();
+      //sceneManager.createMenuScene();
     });
   }
 
