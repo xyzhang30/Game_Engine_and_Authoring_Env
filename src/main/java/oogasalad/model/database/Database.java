@@ -73,19 +73,17 @@ public class Database implements DatabaseApi {
    * Retrieves the general high scores for a specific game.
    *
    * @param gameName The name of the game.
-   * @param n        The number of high scores to retrieve.
    * @return A list of GameScore objects representing the general high scores of the game.
    */
 
   @Override
-  public List<GameScore> getGeneralHighScoresForGame(String gameName, int n) {
-    List<GameScore> scores = new ArrayList<>();
-    String query = "SELECT gr.playerusername, gr.score, gr.gameresult " +
+  public ObservableList<String> getGeneralHighScoresForGame(String gameName) {
+    List<String> scores = new ArrayList<>();
+    String query = "SELECT gr.playerusername, gr.score " +
         "FROM gameresult gr " +
         "JOIN gameinstance gi ON gr.gameinstanceid = gi.gameinstanceid " +
         "WHERE gi.gamename = ? " +
         "ORDER BY gr.score DESC";
-
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query)) {
       pstmt.setString(1, gameName);
@@ -93,13 +91,12 @@ public class Database implements DatabaseApi {
       while (rs.next()) {
         String playerusername = rs.getString("playerusername");
         int score = rs.getInt("score");
-        boolean gameResult = rs.getBoolean("gameresult");
-        scores.add(new GameScore(playerusername, gameName, score, gameResult));
+        scores.add(playerusername + ": " + score);
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return scores.subList(0, Math.min(scores.size(), n));
+    return FXCollections.observableList(scores);
   }
 
   /**
@@ -336,7 +333,6 @@ public class Database implements DatabaseApi {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-
     return -1;
   }
 

@@ -7,6 +7,7 @@ package oogasalad.model.database;
 
 import java.util.List;
 import java.util.Map;
+import javafx.collections.ObservableList;
 
 public interface DatabaseApi {
 
@@ -26,10 +27,10 @@ public interface DatabaseApi {
    * Retrieves the general high scores for a specific game.
    *
    * @param gameName The name of the game.
-   * @param n        The number of high scores to retrieve.
    * @return A list of GameScore objects representing the general high scores of the game.
    */
-  List<GameScore> getGeneralHighScoresForGame(String gameName, int n);
+  ObservableList<String> getGeneralHighScoresForGame(String gameName);
+
 
   /**
    * Verifies the login credentials of a user.

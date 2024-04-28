@@ -1,10 +1,12 @@
 package oogasalad.view.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
+import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.database.Database;
 import oogasalad.model.database.GameScore;
 import oogasalad.view.database.CurrentPlayersManager;
@@ -50,14 +52,13 @@ public class DatabaseController {
    * @param gameName The name of the game for which to update the leaderboard scores.
    */
   public void getFormattedScoresForLeaderboard(String gameName) {
-    List<GameScore> scores = databaseView.getGeneralHighScoresForGame(gameName, Integer.MAX_VALUE);
+    List<String> scores = databaseView.getGeneralHighScoresForGame(gameName);
     ObservableList<String> formattedScores = scores.stream()
-        .map(score -> formatScoreForDisplay(score))
         .limit(5)
         .collect(Collectors.toCollection(FXCollections::observableArrayList));
-
     System.out.println("scores: " + formattedScores);
-    leaderboard.saveGameScores(formattedScores);
+    System.out.println(databaseView.getGeneralHighScoresForGame(gameName));
+    leaderboard.saveGameScores(databaseView.getGeneralHighScoresForGame(gameName));
   }
 
   /**
@@ -89,4 +90,23 @@ public class DatabaseController {
     return databaseView.getPlayableGameIds(host, size);
   }
 
+  public void addGameResult(Map<Integer, String> playerMap, List<PlayerRecord> players,
+      String gameName) {
+    int id = databaseView.addGameInstance(gameName);
+    databaseView.addGameScore(id, playerMap.get(players.get(0).playerId()),
+        getScoreFromId(players, players.get(0).playerId()), true);
+    for(int i = 1; i < players.size(); i++) {
+      databaseView.addGameScore(id, playerMap.get(players.get(i).playerId()),
+          getScoreFromId(players, players.get(i).playerId()), false);
+    }
+  }
+
+  public int getScoreFromId(List<PlayerRecord> players, int id) {
+    for(PlayerRecord p : players) {
+      if(id==p.playerId()) {
+        return (int) p.score();
+      }
+    }
+    return 0;
+  }
 }

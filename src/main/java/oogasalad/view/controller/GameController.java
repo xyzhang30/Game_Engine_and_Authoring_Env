@@ -59,6 +59,7 @@ public class GameController {
   private Map<Integer, String> playerMap;
   private boolean ableToStrike;
   private final int maxVelocity;
+  private String selectedGame;
 
   /**
    * Initializes the GameController with the specified screen width and height.
@@ -77,7 +78,7 @@ public class GameController {
 
     CurrentPlayersManager currentPlayersManager = new CurrentPlayersManager();
     databaseController = new DatabaseController(new Leaderboard(), currentPlayersManager);
-    sceneManager = new SceneManager(this, databaseController, width, height);
+    sceneManager = new SceneManager(this, databaseController, width, height, currentPlayersManager);
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
     ableToStrike = true;
@@ -151,7 +152,8 @@ public class GameController {
     GameRecord gameRecord = gameEngine.restoreLastStaticGameRecord();
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScene(compositeElement, gameRecord);
-    sceneManager.update(gameRecord, playerMap);
+    this.selectedGame = selectedGame.substring(selectedGame.lastIndexOf("/")+1);
+    sceneManager.update(gameRecord, playerMap, selectedGame);
   }
 
   /**
@@ -188,7 +190,7 @@ public class GameController {
     if (staticState) {
       ableToStrike = true;
     }
-    sceneManager.update(gameRecord, playerMap);
+    sceneManager.update(gameRecord, playerMap, selectedGame);
     return staticState;
   }
 
@@ -351,8 +353,8 @@ public class GameController {
   }
 
   public void getGameName(){
-    databaseController.getFormattedScoresForLeaderboard(gameLoaderView.getGameName());
-    System.out.println("game name" + gameLoaderView.getGameName());
+    databaseController.getFormattedScoresForLeaderboard(selectedGame);
+
   }
 
 
