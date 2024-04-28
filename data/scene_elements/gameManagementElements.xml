@@ -128,12 +128,12 @@
     <class>javafx.scene.control.ComboBox</class>
     <type>COMBOBOX</type>
     <text>MOD</text>
-    <width_factor>0.15</width_factor>
-    <height_factor>0.07</height_factor>
-    <x_layout_factor>0.8</x_layout_factor>
-    <y_layout_factor>0.85</y_layout_factor>
-    <style>theme-selection-box</style>
+    <width_factor>0.07</width_factor>
+    <height_factor>0.05</height_factor>
+    <x_layout_factor>0.9</x_layout_factor>
+    <y_layout_factor>0.8</y_layout_factor>
+    <style>mod-selection-box</style>
     <event_type>CHANGE_SCENE</event_type>
-    <event>CHANGE_MOD</event>
+    <event>START_MENU</event>
   </node>
 </scene_elements>
