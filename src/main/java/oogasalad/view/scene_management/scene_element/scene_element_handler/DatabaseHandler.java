@@ -171,9 +171,10 @@ public class DatabaseHandler {
     avatarComboBox = (ComboBox<String>) node; // Cast the node to ComboBox assuming it's the correct type
     // Assuming avatar URLs or identifiers are to be loaded from a service or predefined list
     ObservableList<String> avatars = FXCollections.observableArrayList(
-        "view/avatar_images/hletgoat.png", // These should be paths relative to src/main/resources
+        "view/avatar_images/duvall.png", // These should be paths relative to src/main/resources
         "view/avatar_images/loewycreamed.png",
-        "view/avatar_images/loewyhappy.png"
+        "view/avatar_images/loewyhappy.png",
+        "view/avatar_images/moffett.png"
     );
     avatarComboBox.setItems(avatars); // Set the items in the ComboBox
 
