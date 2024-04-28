@@ -101,7 +101,7 @@ public class Database implements DatabaseApi {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return FXCollections.observableList(scores.subList(0,Math.min(10,scores.size())));
+    return FXCollections.observableList(scores.subList(0,Math.min(10,scores.size() )));
   }
 
   /**
