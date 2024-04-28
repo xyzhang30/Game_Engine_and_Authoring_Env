@@ -23,6 +23,8 @@ public interface DatabaseApi {
 
   Map<String,Boolean> getPlayerPermissionsForGames(String gameName);
 
+  boolean isGamePublic(String gameName);
+
   /**
    * Retrieves the general high scores for a specific game.
    *
