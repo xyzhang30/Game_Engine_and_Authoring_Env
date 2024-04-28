@@ -19,12 +19,13 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 2,
@@ -44,12 +45,14 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 3,
@@ -69,12 +72,14 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 4,
@@ -94,12 +99,14 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 5,
@@ -119,12 +126,12 @@
       },
       "staticFriction": 3,
       "kineticFriction": 2,
-      "color": [
+      "color": {"Default":  [
         124,
         252,
         0
-      ],
-      "image": ""
+      ]},
+      "image": {"Default": ""}
     },
     {
       "gameobject_id": 7,
@@ -145,12 +152,12 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         255,
         255,
         255
-      ],
-      "image": "data/nonstrikeable_images/cueBall.jpg"
+      ]},
+      "image": {"Default": "data/nonstrikeable_images/cueBall.jpg"}
     },
     {
       "gameobject_id": 8,
@@ -171,12 +178,12 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": "data/nonstrikeable_images/eightBall.jpg"
+      ]},
+      "image": {"Default": "data/nonstrikeable_images/eightBall.jpg"}
     },
     {
       "gameobject_id": 9,
@@ -196,12 +203,13 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 10,
@@ -221,12 +229,13 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 11,
@@ -246,12 +255,12 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+      "image": {"Default": ""}
     },
     {
       "gameobject_id": 12,
@@ -271,12 +280,13 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 13,
@@ -296,12 +306,13 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+      "image": {"Default": ""}
+
     },
 
     {
@@ -322,12 +333,12 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+      "image": {"Default": ""}
     },
 
     {
@@ -349,12 +360,12 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
-        255,
+      "color": {"Default":  [
+        0,
         0,
         0
-      ],
-      "image": "data/nonstrikeable_images/tenBall.jpg"
+      ]},
+      "image": {"Default": "data/nonstrikeable_images/tenBall.jpg"}
     },
     {
       "gameobject_id": 19,
@@ -375,12 +386,12 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
-        255
-      ],
-      "image": "data/nonstrikeable_images/twoBall.jpg"
+        0
+      ]},
+      "image": {"Default": "data/nonstrikeable_images/twoBall.jpg"}
     },
     {
       "gameobject_id": 20,
@@ -401,12 +412,12 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
-        255
-      ],
-      "image": "data/nonstrikeable_images/threeBall.jpg"
+        0
+      ]},
+      "image": {"Default": "data/nonstrikeable_images/threeBall.jpg"}
     },
     {
       "gameobject_id": 21,
@@ -427,12 +438,12 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
-        255,
+      "color": {"Default":  [
+        0,
         0,
         0
-      ],
-      "image": "data/nonstrikeable_images/nineBall.jpg"
+      ]},
+      "image": {"Default": "data/nonstrikeable_images/nineBall.jpg"}
     },
     {
       "gameobject_id": 22,
@@ -453,12 +464,12 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
-        255
-      ],
-      "image": "data/nonstrikeable_images/sixBall.jpg"
+        0
+      ]},
+      "image": {"Default": "data/nonstrikeable_images/sixBall.jpg"}
     },
     {
       "gameobject_id": 23,
@@ -479,13 +490,12 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
-        255,
+      "color": {"Default":  [
+        0,
         0,
         0
-      ],
-      "image": "data/nonstrikeable_images/elevenBall.jpg"
-    }
+      ]},
+      "image": {"Default": "data/nonstrikeable_images/elevenBall.jpg"}    }
   ],
   "players": [
     {

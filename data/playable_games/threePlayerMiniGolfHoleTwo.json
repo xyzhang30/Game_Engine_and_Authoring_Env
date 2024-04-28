@@ -19,12 +19,14 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 2,
@@ -44,12 +46,14 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 3,
@@ -69,12 +73,14 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 4,
@@ -94,12 +100,14 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 5,
@@ -119,12 +127,14 @@
       },
       "staticFriction": 3,
       "kineticFriction": 2,
-      "color": [
+ "color": {"Default":  [
         124,
         252,
         0
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 6,
@@ -144,12 +154,14 @@
       },
       "staticFriction": 3,
       "kineticFriction": 2,
-      "color": [
+ "color": {"Default":  [
         124,
         252,
         0
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 7,
@@ -169,12 +181,14 @@
       },
       "staticFriction": 3,
       "kineticFriction": 2,
-      "color": [
+ "color": {"Default":  [
         124,
         252,
         0
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
 
     {
@@ -195,12 +209,10 @@
       },
       "staticFriction": 34,
       "kineticFriction": 24,
-      "color": [
-        0,
-        100,
-        0
-      ],
-      "image": ""
+         "color" : {"Default":[ 0, 100, 0 ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 9,
@@ -218,12 +230,14 @@
         "x_dimension": 200,
         "y_dimension": 400
       },
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 10,
@@ -241,12 +255,10 @@
         "x_dimension": 220,
         "y_dimension": 230
       },
-      "color": [
-        0,
-        0,
-        255
-      ],
-      "image": ""
+         "color" : {"Default":[ 0, 0, 255 ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 11,
@@ -264,12 +276,10 @@
         "x_dimension": 220,
         "y_dimension": 230
       },
-      "color": [
-        0,
-        0,
-        255
-      ],
-      "image": ""
+         "color" : {"Default":[ 0, 0, 255 ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 12,
@@ -289,12 +299,14 @@
       },
       "staticFriction": 3,
       "kineticFriction": 2,
-      "color": [
+ "color": {"Default":  [
         124,
         252,
         0
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 13,
@@ -314,12 +326,14 @@
       },
       "staticFriction": 3,
       "kineticFriction": 2,
-      "color": [
+ "color": {"Default":  [
         124,
         252,
         0
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 14,
@@ -339,12 +353,14 @@
       },
       "staticFriction": 3,
       "kineticFriction": 2,
-      "color": [
+ "color": {"Default":  [
         124,
         252,
         0
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 15,
@@ -364,12 +380,14 @@
       },
       "staticFriction": 2,
       "kineticFriction": 3,
-      "color": [
-        255,
+      "color": {"Default":  [
+        0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 16,
@@ -389,12 +407,10 @@
       },
       "staticFriction": 2,
       "kineticFriction": 3,
-      "color": [
-        0,
-        0,
-        255
-      ],
-      "image": ""
+         "color" : {"Default":[ 0, 0, 255 ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 17,
@@ -414,12 +430,14 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         0,
         0,
         0
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 18,
@@ -441,12 +459,14 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         255,
         255,
         255
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 19,
@@ -468,12 +488,14 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         255,
         255,
         255
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     },    {
       "gameobject_id": 20,
       "properties": [
@@ -494,12 +516,14 @@
       },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
+      "color": {"Default":  [
         255,
         255,
         255
-      ],
-      "image": ""
+      ]},
+
+      "image": {"Default": ""}
+
     }
   ],
   "players": [

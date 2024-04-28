@@ -32,6 +32,18 @@ public class GameElement implements VisualElement {
     myNode.setTranslateX(viewData.startXpos());
     myNode.setTranslateY(viewData.startYpos());
   }
+  public void changeFill(ViewGameObjectRecord viewData){
+    Shape shape = ((Shape)myNode);
+    if (viewData.image().isEmpty()) {
+      List<Integer> rgb = viewData.color();
+      Color color = Color.rgb(rgb.get(0), rgb.get(1), rgb.get(2));
+      shape.setFill(color);
+    } else {
+      Path imgPath = Paths.get(viewData.image());
+      Image image = new Image(imgPath.toUri().toString());
+      shape.setFill(new ImagePattern(image));
+    }
+  }
 
   private Node makeShape(ViewGameObjectRecord data)
       throws ClassNotFoundException, NoSuchMethodException, InstantiationException,
