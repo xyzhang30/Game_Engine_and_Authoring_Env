@@ -254,56 +254,7 @@ public class DatabaseHandler {
   }
 
   private void createAvatarHandler(Node node) {
-//    avatarComboBox = (ComboBox<String>) node; // Cast the node to ComboBox assuming it's the correct type
-//    // Assuming avatar URLs or identifiers are to be loaded from a service or predefined list
-//    ObservableList<String> avatars = FXCollections.observableArrayList(
-//        "view/avatar_images/duvall.png", // These should be paths relative to src/main/resources
-//        "view/avatar_images/loewycreamed.png",
-//        "view/avatar_images/loewyhappy.png",
-//        "view/avatar_images/moffett.png"
-//    );
-//    avatarComboBox.setItems(avatars); // Set the items in the ComboBox
-//
-//    // Set a prompt text for better user guidance
-//    avatarComboBox.setPromptText("Select an avatar");
-//
-//    // Customize rendering of the combo box list to display images
-//    avatarComboBox.setCellFactory(lv -> new ListCell<String>() {
-//      @Override
-//      protected void updateItem(String item, boolean empty) {
-//        super.updateItem(item, empty);
-//        if (empty || item == null) {
-//          setText(null);
-//          setGraphic(null);
-//        } else {
-//          Image img = new Image(getClass().getResourceAsStream("/" + item), 100, 100, true, true);
-//          ImageView imageView = new ImageView(img);
-//          setGraphic(imageView);
-//        }
-//      }
-//    });
-//
-//    // Ensure selected item also shows as an image
-//    avatarComboBox.setButtonCell(new ListCell<String>() {
-//      @Override
-//      protected void updateItem(String item, boolean empty) {
-//        super.updateItem(item, empty);
-//        if (empty || item == null) {
-//          setText(null);
-//          setGraphic(null);
-//        } else {
-//          Image img = new Image(getClass().getResourceAsStream("/" + item), 50, 50, true, true);
-//          ImageView imageView = new ImageView(img);
-//          setGraphic(imageView);
-//        }
-//      }
-//    });
-//
-//    // Handle the selection of an avatar
-//    avatarComboBox.setOnAction(e -> {
-//      avatarUrlField = avatarComboBox.getValue(); // Save the selected avatar URL
-//      System.out.println("Avatar selected: " + avatarUrlField); // Optional: for debugging
-//    });
+
   }
 
 
