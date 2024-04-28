@@ -253,18 +253,19 @@ public class Database implements DatabaseApi {
 
   @Override
   public boolean registerGame(String gameName, String ownerName, int numPlayers,
-      boolean publicOrPrivate) {
-    String sql = "INSERT INTO Games (gamename, owner, numplayers, public) VALUES (?, ?, ?, ?) ON "
+      String accessibility) {
+    String sql = "INSERT INTO Games (gamename, owner, numplayers, accessibility) VALUES (?, ?, ?, "
+        + "?) ON "
         + "CONFLICT DO NOTHING";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, gameName);
       pstmt.setString(2, ownerName);
       pstmt.setInt(3, numPlayers);
-      pstmt.setBoolean(4, publicOrPrivate);
+      pstmt.setString(4, accessibility);
       int affectedRows = pstmt.executeUpdate();
-      String permission = publicOrPrivate ? "Player" : "None";
       for (String username : getAllPlayers()) {
+        String permission = accessibility.equals("public") || (accessibility.equals("friends") && areFriends(ownerName, username, conn)) ? "Player" : "None";
         grantPermissions(username, gameName, permission);
       }
       grantPermissions(ownerName, gameName, "Owner");

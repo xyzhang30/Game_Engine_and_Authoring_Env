@@ -74,8 +74,8 @@ public interface DatabaseApi {
    * @param publicOrPrivate True if the game is public, false if private.
    * @return True if the game is successfully registered, false otherwise.
    */
-  boolean registerGame(String gameName, String ownerName, int numPlayers, boolean publicOrPrivate);
-
+  boolean registerGame(String gameName, String ownerName, int numPlayers,
+      String accessibility);
   /**
    * Adds a new game instance.
    *
