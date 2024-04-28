@@ -262,10 +262,8 @@ public class SceneManager {
     try {
       // Parse the file to get a list of element parameters
       List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(filePath);
-      // Create scene elements using the factory
       return sceneElementFactory.createSceneElements(sceneElementParameters, selectedLanguage);
     } catch (ParserConfigurationException e) {
-      // Log parser configuration errors or handle them appropriately
       logError("Parser configuration error", e);
     } catch (SAXException e) {
       // Handle errors related to XML parsing
@@ -274,7 +272,6 @@ public class SceneManager {
       // Handle I/O errors
       logError("I/O error when reading the file", e);
     }
-    // Return null or alternatively, throw a custom exception to be handled by the caller
     return null;
   }
 
