@@ -12,6 +12,7 @@ import java.util.stream.IntStream;
 import java.util.Properties;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
@@ -21,9 +22,11 @@ import oogasalad.model.api.data.GlobalVariables;
 import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Variables;
+import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
+import oogasalad.view.Warning;
 import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.KeyInputType;
 import oogasalad.view.api.enums.SupportedLanguage;
@@ -140,8 +143,14 @@ public class GameController {
    * @param selectedGame the game title selected to play
    */
   public void startGamePlay(String selectedGame) {
-    gameLoaderView = new GameLoaderView(selectedGame);
-    gameEngine = new GameEngine(selectedGame);
+    try {
+      gameLoaderView = new GameLoaderView(selectedGame);
+      gameEngine = new GameEngine(selectedGame);
+    } catch (InvalidFileException e){
+      Warning warning = new Warning();
+      warning.showAlert(this.getScene(), AlertType.ERROR, "Start Game Error", null, "Can't find game file");
+      return;
+    }
     List<String> players = databaseController.getPlayerNames();
     playerMap = IntStream.range(1, players.size() + 1)
         .boxed()
