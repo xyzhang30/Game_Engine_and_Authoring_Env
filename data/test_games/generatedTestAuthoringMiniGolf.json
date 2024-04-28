@@ -45,7 +45,8 @@
       "x_dimension" : 5.0,
       "y_dimension" : 5.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : {"Default":[ 0, 0, 0 ]},
+
     "friction" : 0.0,
     "image" : "sample.img"
   } ],

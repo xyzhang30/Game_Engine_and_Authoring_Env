@@ -209,11 +209,8 @@
       },
       "staticFriction": 34,
       "kineticFriction": 24,
-      "color": [
-        0,
-        100,
-        0
-      ],
+         "color" : {"Default":[ 0, 100, 0 ]},
+
       "image": {"Default": ""}
 
     },
@@ -258,11 +255,8 @@
         "x_dimension": 220,
         "y_dimension": 230
       },
-      "color": [
-        0,
-        0,
-        255
-      ],
+         "color" : {"Default":[ 0, 0, 255 ]},
+
       "image": {"Default": ""}
 
     },
@@ -282,11 +276,8 @@
         "x_dimension": 220,
         "y_dimension": 230
       },
-      "color": [
-        0,
-        0,
-        255
-      ],
+         "color" : {"Default":[ 0, 0, 255 ]},
+
       "image": {"Default": ""}
 
     },
@@ -416,11 +407,8 @@
       },
       "staticFriction": 2,
       "kineticFriction": 3,
-      "color": [
-        0,
-        0,
-        255
-      ],
+         "color" : {"Default":[ 0, 0, 255 ]},
+
       "image": {"Default": ""}
 
     },

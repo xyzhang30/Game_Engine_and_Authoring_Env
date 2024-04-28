@@ -102,11 +102,8 @@
 ,
       "staticFriction": 0,
       "kineticFriction": 0,
-      "color": [
-        230,
-        159,
-        0
-      ]
+         "color" : {"Default":[230,159,0]}
+
     },
     {
       "gameobject_id": 5,
@@ -126,11 +123,8 @@
       },
       "staticFriction": 34,
       "kineticFriction": 24,
-      "color": [
-        0,
-        100,
-        0
-      ],
+         "color" : {"Default":[ 0, 100, 0 ]},
+
       "image": {"Default": ""}
 
     },
@@ -152,11 +146,8 @@
       },
       "staticFriction": 9,
       "kineticFriction": 7,
-      "color": [
-        0,
-        0,
-        255
-      ],
+         "color" : {"Default":[ 0, 0, 255 ]},
+
       "image": {"Default": ""}
 
     },
