@@ -33,7 +33,8 @@ public class Leaderboard {
     scoresListView.setItems(leaderboardScores);
   }
 
-  public void saveGameScores(List<String> score){
+  public void saveGameScores(ObservableList<String> score){
+    leaderboardScores = score;
 
   }
 

@@ -15,6 +15,7 @@ public class DatabaseController {
   private Leaderboard leaderboard;
   private Database databaseView;
   public DatabaseController(){
+    this.leaderboard = new Leaderboard(this);
     this.databaseView = new Database();
     currentPlayersManager = new CurrentPlayersManager();
   }
@@ -40,17 +41,20 @@ public class DatabaseController {
   }
 
   /**
-   * Retrieves formatted score strings for a specified game, suitable for leaderboard display.
-   * @param gameName The game name for which formatted scores are needed.
-   * @return ObservableList of formatted score strings.
+   * Updates the UI component directly with the top five formatted high scores for a specified game.
+   *
+   * @param gameName The name of the game for which to update the leaderboard scores.
    */
-  public ObservableList<String> getFormattedScoresForLeaderboard(String gameName) {
+  public void getFormattedScoresForLeaderboard(String gameName) {
     List<GameScore> scores = databaseView.getGeneralHighScoresForGame(gameName, Integer.MAX_VALUE);
-    return scores.stream()
-        .sorted((s1, s2) -> Integer.compare(s2.score(), s1.score()))  //from high to low
-        .map(score -> formatScoreForDisplay(score))
-        .limit(5)  // only top 5 scores
-        .collect(Collectors.toCollection(FXCollections::observableArrayList));
+    ObservableList<String> formattedScores = scores.stream()
+        .sorted((s1, s2) -> Integer.compare(s2.score(), s1.score()))  // Sort from high to low
+        .map(score -> formatScoreForDisplay(score))  // Format each score for display
+        .limit(5)  // Limit to only top 5 scores
+        .collect(Collectors.toCollection(FXCollections::observableArrayList));  // Collect into an ObservableList
+
+    // Assuming you have a ListView<String> member variable named `leaderboardListView`
+    leaderboard.saveGameScores(formattedScores);
   }
 
   /**
