@@ -31,8 +31,9 @@ public interface DatabaseApi {
    * @param gameName The name of the game.
    * @return A list of GameScore objects representing the general high scores of the game.
    */
-  ObservableList<GameScore> getGeneralHighScoresForGame(String gameName);
 
+
+  ObservableList<GameScore> getGeneralHighScoresForGame(String gameName, boolean desc);
 
   /**
    * Verifies the login credentials of a user.

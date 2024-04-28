@@ -80,14 +80,14 @@ public class Database implements DatabaseApi {
    */
 
   @Override
-  public ObservableList<GameScore> getGeneralHighScoresForGame(String gameName) {
+  public ObservableList<GameScore> getGeneralHighScoresForGame(String gameName, boolean desc) {
     List<GameScore> scores = new ArrayList<>();
     String query = "SELECT gr.playerusername, gr.score, gr.gameresult " +
         "FROM gameresult gr " +
         "JOIN gameinstance gi ON gr.gameinstanceid = gi.gameinstanceid " +
         "WHERE gi.gamename = ? " +
-        "ORDER BY gr.score DESC";
-
+        "ORDER BY gr.score ";
+    query += desc ? "DESC" : "";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query)) {
       pstmt.setString(1, gameName);
@@ -101,7 +101,7 @@ public class Database implements DatabaseApi {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return FXCollections.observableList(scores);
+    return FXCollections.observableList(scores.subList(0,Math.min(10,scores.size())));
   }
 
   /**
