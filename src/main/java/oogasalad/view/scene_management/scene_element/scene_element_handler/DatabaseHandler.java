@@ -3,8 +3,12 @@ package oogasalad.view.scene_management.scene_element.scene_element_handler;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javax.xml.crypto.Data;
@@ -66,6 +70,7 @@ public class DatabaseHandler {
         this::setCurrentPlayers); //current players displayed on listview
     eventMap.put(SceneElementEvent.LEADERBOARD_SCORES,
         this::setLeaderboard); //make sure listview is populated w leaderboard
+    eventMap.put(SceneElementEvent.PLAYER_PERMISSIONS, this::setUpPlayerPermissions);
 
   }
 
@@ -74,12 +79,12 @@ public class DatabaseHandler {
     System.out.println("createLoginHandler in scene element handler called");
     node.setOnMouseClicked(e ->
     {
-          boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(),
-              passwordField.getText()); //true of user logged in
-          if (userLoggedIn) {
-            currentPlayersManager.saveUserInfo(usernameTextField.getText());
-            sceneManager.createCurrentPlayersScene();
-          }
+      boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(),
+          passwordField.getText()); //true of user logged in
+      if (userLoggedIn) {
+        currentPlayersManager.saveUserInfo(usernameTextField.getText());
+        sceneManager.createCurrentPlayersScene();
+      }
     });
     //add another or continue to play (new screen) shows current players like is this good or move on
     //open the currentplayers screen with this player added to it
@@ -142,6 +147,36 @@ public class DatabaseHandler {
     gameController.getGameName();
     databaseController.leaderboardSet((ListView<String>) node);
     //add method to data base controller to update leaderboard (contained in the controller)
+  }
+
+  private void setUpPlayerPermissions(Node node) {
+    ListView<String> listView = (ListView<String>) node;
+    //get listview options
+    listView.setCellFactory(lv -> new ListCell<String>() {
+      private CheckBox checkBox = new CheckBox();
+
+      @Override
+      protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+          setGraphic(null);
+        } else {
+          setText(item);
+          checkBox.setSelected(false);
+
+          checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+                Boolean newValue) {
+              System.out.println("CheckBox for " + item + " changed to: " + newValue);
+            }
+          });
+
+          setGraphic(checkBox);
+        }
+      }
+    });
   }
 
 //  private void createCurrentPlayersHandler(Node node) {
