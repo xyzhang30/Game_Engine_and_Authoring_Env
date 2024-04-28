@@ -16,11 +16,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.shape.Shape;
 import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
+import oogasalad.model.database.Database;
 import oogasalad.view.api.exception.MissingInteractionException;
 import oogasalad.view.api.exception.MissingNonControllableTypeException;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.controller.AuthoringController;
 import oogasalad.view.api.enums.CollidableType;
+import oogasalad.view.database.CurrentPlayersManager;
 
 /**
  * AuthoringProxy acts as an intermediary between the authoring environment and the authoring
@@ -416,5 +418,11 @@ public class AuthoringProxy {
 
   public void updateMultiCommandCheckedIdx(String key, List<Integer> newIndices){
     multiCommandCheckedIdx.put(key, newIndices);
+  }
+
+  public void saveGamePermission(String value) {
+    boolean permission = value.equals("Public");
+
+//    database.registerGame(gameName, ,playersMap.size(),permission);
   }
 }
