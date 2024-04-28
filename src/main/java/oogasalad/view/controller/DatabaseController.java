@@ -10,18 +10,17 @@ import javafx.scene.control.ListView;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.database.Database;
 import oogasalad.model.database.GameScore;
-import oogasalad.view.database.CurrentPlayersManager;
 import oogasalad.view.database.Leaderboard;
 
 
 public class DatabaseController {
   private Database databaseView;
-  private CurrentPlayersManager currentPlayersManager;
+  private List<String> currentPlayersManager;
 //  public DatabaseController(CurrentPlayersManager currentPlayersManager){
 //=======
   private Leaderboard leaderboard;
 
-  public DatabaseController(Leaderboard leaderboard, CurrentPlayersManager currentPlayersManager){
+  public DatabaseController(Leaderboard leaderboard, List<String> currentPlayersManager){
     this.databaseView = new Database();
     this.leaderboard = leaderboard;
     this.currentPlayersManager = currentPlayersManager;
@@ -77,7 +76,7 @@ public class DatabaseController {
   }
 
   public List<String> getPlayerNames() {
-    return currentPlayersManager.getPlayerNames();
+    return currentPlayersManager;
   }
   
   public void leaderboardSet(ListView<String> scoresListView){
@@ -86,13 +85,13 @@ public class DatabaseController {
 
 
   public ObservableList<String> getManageableGames() {
-    String host = currentPlayersManager.getHost();
+    String host = currentPlayersManager.get(0);
     return databaseView.getManageableGames(host);
   }
 
   public ObservableList<String> getNewGameTitles() {
-    String host = currentPlayersManager.getHost();
-    int size = currentPlayersManager.getPartySize();
+    String host = currentPlayersManager.get(0);
+    int size = currentPlayersManager.size();
     return databaseView.getPlayableGameIds(host, size);
   }
 

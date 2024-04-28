@@ -10,12 +10,10 @@ import javafx.scene.text.Text;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
-import oogasalad.model.gameengine.rank.PlayerRecordComparator;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
-import oogasalad.view.database.CurrentPlayersManager;
 import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.element_parsers.SceneElementParser;
 import oogasalad.view.scene_management.scene_element.GameStatusManager;
@@ -41,7 +39,6 @@ public class SceneManager {
   private final SceneElementStyler sceneElementStyler;
   private CompositeElement compositeElement;
   private GameStatusManager gameStatusManager;
-  private CurrentPlayersManager currentPlayersManager;
   private Leaderboard leaderboard;
   private Pane pauseElements;
   private Pane transitionElements;
@@ -80,7 +77,7 @@ public class SceneManager {
    */
   public SceneManager(GameController gameController, DatabaseController databaseController,
       double screenWidth,
-      double screenHeight, CurrentPlayersManager currentPlayersManager) {
+      double screenHeight, List<String> currentPlayersManager) {
     root = new Pane();
     scene = new Scene(root);
     selectedLanguage = SupportedLanguage.ENGLISH;

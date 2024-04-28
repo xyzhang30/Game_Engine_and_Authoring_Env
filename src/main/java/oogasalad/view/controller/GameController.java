@@ -22,14 +22,12 @@ import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Variables;
 import oogasalad.model.api.exception.InvalidImageException;
-import oogasalad.model.database.Database;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.KeyInputType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
-import oogasalad.view.database.CurrentPlayersManager;
 import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.scene_managers.AnimationManager;
 import oogasalad.view.scene_management.element_parsers.GameTitleParser;
@@ -76,7 +74,7 @@ public class GameController {
    */
   public GameController(double width, double height) {
 
-    CurrentPlayersManager currentPlayersManager = new CurrentPlayersManager();
+    List<String> currentPlayersManager = new ArrayList<>();
     databaseController = new DatabaseController(new Leaderboard(), currentPlayersManager);
     sceneManager = new SceneManager(this, databaseController, width, height, currentPlayersManager);
     animationManager = new AnimationManager();
