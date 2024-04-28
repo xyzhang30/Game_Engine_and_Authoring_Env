@@ -310,4 +310,9 @@ public class GameController {
     builderDirector.writeGame(gameData.getGameName(), gameData.getGameDescription(), gameData,
         RESUME_GAME_DATA_FOLDER);
   }
+
+  public void giveGameName(String gameName){
+    databaseController.getFormattedScoresForLeaderboard(gameLoaderView.getGameName());
+  }
+
 }
