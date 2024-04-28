@@ -17,20 +17,20 @@ public class GameLoaderViewTest {
 
   @Test
   public void createCollidableRecordTest() {
-    GameLoaderView loaderView = new GameLoaderView("testSinglePlayerMiniGolf");
+    GameLoaderView loaderView = new GameLoaderView("data/playable_games/testSinglePlayerMiniGolf");
     List<ViewGameObjectRecord> collidableRecords = loaderView.getViewCollidableInfo();
     for (ViewGameObjectRecord record : collidableRecords) {
       if (record.id() == 2 || record.id() == 3) {
-        assertEquals(GameObjectShape.ELLIPSE, record.shape());
+        assertEquals("circle", record.shape());
       } else {
-        assertEquals(GameObjectShape.RECTANGLE, record.shape());
+        assertEquals("rectangle", record.shape());
       }
     }
   }
 
   @Test
   public void wrongRgbValueTest() {
-    GameLoaderView loaderView = new GameLoaderView("testBadRgbValue");
+    GameLoaderView loaderView = new GameLoaderView("data/playable_games/testBadRgbValue");
     List<ViewGameObjectRecord> collidableRecords = loaderView.getViewCollidableInfo();
     for (ViewGameObjectRecord record : collidableRecords) {
       if (record.id() == 5) {

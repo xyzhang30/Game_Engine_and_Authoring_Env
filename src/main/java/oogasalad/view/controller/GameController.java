@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
+import javax.swing.text.View;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.data.GameData;
@@ -51,6 +52,7 @@ import org.apache.logging.log4j.Logger;
 public class GameController {
 
   private static final String RESUME_GAME_DATA_FOLDER = "data/resume_game/";
+  private static final String INCREASING = "LowestScoreComparator";
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
   private static final Warning WARNING = new Warning();
   private final SceneManager sceneManager;
@@ -267,6 +269,8 @@ public class GameController {
   }
 
 
+
+
   /**
    * Gets the input key for the requested input type
    *
@@ -386,7 +390,7 @@ public class GameController {
 
   public void getGameName() {
     databaseController.getFormattedScoresForLeaderboard(selectedGame,
-        !gameLoaderView.getGameData().getRules().rankComparator().equals("LowestScoreComparator"));
+        !gameLoaderView.getGameData().getRules().rankComparator().equals(INCREASING));
   }
 
 
