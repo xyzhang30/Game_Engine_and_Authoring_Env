@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
 import oogasalad.model.database.Database;
 import oogasalad.model.database.GameScore;
 import oogasalad.view.database.CurrentPlayersManager;
@@ -69,6 +70,10 @@ public class DatabaseController {
    */
   private String formatScoreForDisplay(GameScore score) {
     return score.playerName() + ": " + score.score();
+  }
+
+  public void leaderboardSet(ListView<String> scoresListView){
+    leaderboard.setLeaderboard(scoresListView);
   }
 
 
