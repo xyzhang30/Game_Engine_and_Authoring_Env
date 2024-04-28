@@ -83,7 +83,7 @@ public class DatabaseHandler {
     eventMap.put(SceneElementEvent.SET_PUBLIC, this::createPublicVsPrivateHandler);
   }
 
-  private void createLoginHandler(Node node) {
+  public void createLoginHandler(Node node) {
     System.out.println("createLoginHandler in scene element handler called");
     node.setOnMouseClicked(e -> {
       try {
@@ -144,13 +144,13 @@ public class DatabaseHandler {
     //open the currentplayers screen with this player added to it
   }
 
-  private void createPasswordHandler(Node node) {
+  public void createPasswordHandler(Node node) {
     passwordField = (TextField) node;
     //save the password and add to database with username if not already there
 
   }
 
-  private void createUsernameHandler(Node node) {
+  public void createUsernameHandler(Node node) {
     usernameTextField = (TextField) node;
     //save username and add to database if not already there
   }
@@ -173,7 +173,7 @@ public class DatabaseHandler {
     node2.setItems(FXCollections.observableList(currentPlayersManager));
   }
 
-  private void setLeaderboard(Node node) {
+  public void setLeaderboard(Node node) {
     gameController.getGameName();
     databaseController.leaderboardSet((ListView<String>) node);
   }

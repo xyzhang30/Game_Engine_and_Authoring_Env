@@ -16,8 +16,8 @@ import oogasalad.view.database.Leaderboard;
 
 
 public class DatabaseController {
+  public Database databaseView;
 
-  private Database databaseView;
   private List<String> currentPlayersManager;
   private Leaderboard leaderboard;
 
