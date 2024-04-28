@@ -13,6 +13,8 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import oogasalad.view.api.enums.SceneElementEvent;
+import oogasalad.view.api.exception.IncorrectPasswordException;
+import oogasalad.view.api.exception.UserNotFoundException;
 import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
@@ -80,9 +82,20 @@ public class DatabaseHandler {
           currentPlayersManager.add(usernameTextField.getText());
           sceneManager.createCurrentPlayersScene();
         }
+      } catch (UserNotFoundException ex) {
+        System.err.println(ex.getMessage());
+        // Show an alert or update the UI to notify the user that the username does not exist
+        showAlert("Login Error", ex.getMessage());
+      } catch (IncorrectPasswordException ex) {
+        System.err.println(ex.getMessage());
+        // Show an alert or update the UI to notify the user that the password is incorrect
+        showAlert("Login Error", ex.getMessage());
+      } catch (Exception ex) {
+        System.err.println("An unexpected error occurred during login: " + ex.getMessage());
+        // Handle other unexpected errors
+        showAlert("Login Error", "An unexpected error occurred during login.");
+      }
     });
-    //add another or continue to play (new screen) shows current players like is this good or move on
-    //open the currentplayers screen with this player added to it
   }
 
   private void createUserCreatorHandler(Node node) {
