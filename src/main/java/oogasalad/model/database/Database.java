@@ -77,13 +77,14 @@ public class Database implements DatabaseApi {
    */
 
   @Override
-  public ObservableList<String> getGeneralHighScoresForGame(String gameName) {
-    List<String> scores = new ArrayList<>();
-    String query = "SELECT gr.playerusername, gr.score " +
+  public ObservableList<GameScore> getGeneralHighScoresForGame(String gameName) {
+    List<GameScore> scores = new ArrayList<>();
+    String query = "SELECT gr.playerusername, gr.score, gr.gameresult " +
         "FROM gameresult gr " +
         "JOIN gameinstance gi ON gr.gameinstanceid = gi.gameinstanceid " +
         "WHERE gi.gamename = ? " +
         "ORDER BY gr.score DESC";
+
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query)) {
       pstmt.setString(1, gameName);
@@ -91,7 +92,8 @@ public class Database implements DatabaseApi {
       while (rs.next()) {
         String playerusername = rs.getString("playerusername");
         int score = rs.getInt("score");
-        scores.add(playerusername + ": " + score);
+        boolean gameResult = rs.getBoolean("gameresult");
+        scores.add(new GameScore(playerusername, gameName, score, gameResult));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -333,6 +335,7 @@ public class Database implements DatabaseApi {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+
     return -1;
   }
 

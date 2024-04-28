@@ -1,5 +1,6 @@
 package oogasalad.view.controller;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,6 +38,18 @@ public class DatabaseController {
     return databaseView.loginUser(username, password);
   }
 
+  /**
+   * Formats a single GameScore into a string representation.
+   * @param score The GameScore to format.
+   * @return Formatted string representing the score.
+   *
+   * @author Doga
+   */
+  private String formatScoreForDisplay(GameScore score) {
+    return score.playerName() + ": " + score.score();
+  }
+
+
   public boolean canCreateUser(String username, String password, String avatarUrl) throws Exception {
     if (!databaseView.doesUserExist(username)) {
       databaseView.registerUser(username, password, avatarUrl);  // add to database
@@ -51,23 +64,16 @@ public class DatabaseController {
    *
    * @param gameName The name of the game for which to update the leaderboard scores.
    */
-  public void getFormattedScoresForLeaderboard(String gameName) {
-    List<String> scores = databaseView.getGeneralHighScoresForGame(gameName);
+  public void getFormattedScoresForLeaderboard(String gameName, boolean descending) {
+    List<GameScore> scores = databaseView.getGeneralHighScoresForGame(gameName);
     ObservableList<String> formattedScores = scores.stream()
-        .limit(5)
+        .sorted(Comparator.comparing(GameScore::score))
+        .map(this::formatScoreForDisplay)
         .collect(Collectors.toCollection(FXCollections::observableArrayList));
-    System.out.println("scores: " + formattedScores);
-    System.out.println(databaseView.getGeneralHighScoresForGame(gameName));
-    leaderboard.saveGameScores(databaseView.getGeneralHighScoresForGame(gameName));
-  }
-
-  /**
-   * Formats a single GameScore into a string representation.
-   * @param score The GameScore to format.
-   * @return Formatted string representing the score.
-   */
-  private String formatScoreForDisplay(GameScore score) {
-    return score.playerName() + ": " + score.score();
+    if (descending) {
+      formattedScores.sort(Comparator.reverseOrder());
+    }
+    leaderboard.saveGameScores(formattedScores);
   }
 
   public List<String> getPlayerNames() {

@@ -141,7 +141,6 @@ public class DatabaseHandler {
   private void setLeaderboard(Node node) {
     gameController.getGameName();
     databaseController.leaderboardSet((ListView<String>) node);
-    //add method to data base controller to update leaderboard (contained in the controller)
   }
 
 //  private void createCurrentPlayersHandler(Node node) {

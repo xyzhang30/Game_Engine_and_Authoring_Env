@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
+import oogasalad.model.gameengine.rank.PlayerRecordComparator;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.DatabaseController;

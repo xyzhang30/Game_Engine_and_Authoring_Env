@@ -29,7 +29,7 @@ public interface DatabaseApi {
    * @param gameName The name of the game.
    * @return A list of GameScore objects representing the general high scores of the game.
    */
-  ObservableList<String> getGeneralHighScoresForGame(String gameName);
+  ObservableList<GameScore> getGeneralHighScoresForGame(String gameName);
 
 
   /**
