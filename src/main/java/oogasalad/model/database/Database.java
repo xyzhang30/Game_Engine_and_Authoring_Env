@@ -120,7 +120,7 @@ public class Database implements DatabaseApi {
     List<String> gameNames = new ArrayList<>();
     String sql = "SELECT p.gamename FROM permissions p " +
         "JOIN games g ON p.gamename = g.gamename " +
-        "WHERE p.playerusername = ? AND p.permissions != 'None' AND g.numplayers = ?";
+        "WHERE p.playerusername = ? AND p.permissions != 'None' AND g.numplayers < ?";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, playerName);
