@@ -23,6 +23,10 @@ public class CompositeElement {
     }
   }
 
+  public void updateMod(List<ViewGameObjectRecord> recordList){
+
+  }
+
   /**
    * Gets the x coordinate of the left side of the game board
    *

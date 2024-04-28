@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
@@ -50,6 +51,7 @@ public class GamePlayManagementHandler {
     eventMap.put(SceneElementEvent.PAUSE, this::createPauseHandler);
     eventMap.put(SceneElementEvent.RESUME, this::createResumeHandler);
     eventMap.put(SceneElementEvent.SAVE, this::createSaveHandler);
+    eventMap.put(SceneElementEvent.CHANGE_MOD, this::createChangeModHandler);
   }
 
   private void createSaveHandler(Node node) {
@@ -72,6 +74,15 @@ public class GamePlayManagementHandler {
       sceneManager.removePauseSheen();
       sceneManager.getRoot().requestFocus();
       gameController.resumeGame();
+    });
+  }
+
+  private void createChangeModHandler(Node node) {
+    ComboBox<String> comboBox = (ComboBox<String>) node;
+    comboBox.getItems().addAll(gameController.getMods());
+    comboBox.setOnAction(event -> {
+      String selectedMod = comboBox.getValue();
+      gameController.changeMod(selectedMod);
     });
   }
 

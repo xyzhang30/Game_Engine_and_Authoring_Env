@@ -4,8 +4,10 @@ import java.lang.reflect.Field;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import oogasalad.model.api.StrikeablesView;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.data.GameObjectProperties;
@@ -37,19 +39,38 @@ public class GameLoaderView extends GameLoader {
     createKeysMap();
   }
 
+  public List<String> getMods() {
+    Set<String> mods = new HashSet<>();
+    for (GameObjectProperties go : gameData.getGameObjectProperties()) {
+      for (String s : go.image().keySet()) {
+        mods.add(s);
+      }
+      for (String s : go.color().keySet()) {
+        mods.add(s);
+      }
+    }
+    mods.remove("Default");
+    List<String> finalMods = new ArrayList<>(mods);
+    finalMods.add(0, "Default");
+    return finalMods;
+
+  }
+
   private void createKeysMap() {
     keys = new HashMap<>();
     KeyPreferences keyRecord = gameData.getKeyPreferences();
-    for (KeyInputType keyInputType : KeyInputType.values()){
+    for (KeyInputType keyInputType : KeyInputType.values()) {
       String typeName = keyInputType.toString().toLowerCase(); //enum object name string
-      System.out.println("Record Type Name String:"+typeName);
+      System.out.println("Record Type Name String:" + typeName);
       try {
-        Field field = keyRecord.getClass().getDeclaredField(typeName); //get that field in the record
-        System.out.println("Record field:"+field);
+        Field field = keyRecord.getClass()
+            .getDeclaredField(typeName); //get that field in the record
+        System.out.println("Record field:" + field);
         field.setAccessible(true);
         Object value = field.get(keyRecord);
-        System.out.println("the value:"+field.get(keyRecord));
-        keys.put(keyInputType, (String) value); //passing as a string bc can't have javafx stuff outside view
+        System.out.println("the value:" + field.get(keyRecord));
+        keys.put(keyInputType,
+            (String) value); //passing as a string bc can't have javafx stuff outside view
       } catch (NoSuchFieldException | IllegalAccessException | NullPointerException e) {
         e.printStackTrace(); // Handle the exception according to your application's logic
         throw new MissingJsonGameInfoException("Missing key preference field in game JSON file");
@@ -57,7 +78,7 @@ public class GameLoaderView extends GameLoader {
     }
   }
 
-  private void createViewRecord(String mod) throws InvalidShapeException {
+  public void createViewRecord(String mod) throws InvalidShapeException {
     List<Integer> strikeableIDs = new ArrayList<>();
     viewGameObjectRecords = new ArrayList<>();
     for (GameObjectProperties o : gameData.getGameObjectProperties()) {
@@ -95,16 +116,12 @@ public class GameLoaderView extends GameLoader {
     };
   }
 
-  public Map<KeyInputType, String> getInputKeys(){
+  public Map<KeyInputType, String> getInputKeys() {
     return keys;
   }
 
   public List<ViewGameObjectRecord> getViewCollidableInfo() {
     return viewGameObjectRecords;
-  }
-
-  public StrikeablesView getStrikeableIDs() {
-    return strikeablesView;
   }
 
   private int validateRgbValue(int colorValue) {
@@ -117,7 +134,7 @@ public class GameLoaderView extends GameLoader {
     }
   }
 
-  public String getGameDescription(){
+  public String getGameDescription() {
     return gameData.getGameDescription();
   }
 
