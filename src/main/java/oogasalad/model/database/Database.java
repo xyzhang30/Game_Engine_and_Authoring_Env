@@ -176,14 +176,9 @@ public class Database implements DatabaseApi {
         stmt.executeUpdate();
 
         for (String gameName : getAllGames()) {
-          System.out.println(gameName);
-          try {
-            grantPermissions(username, gameName, getGameAccessibility(gameName).equals("public") ?
+          grantPermissions(username, gameName, getGameAccessibility(gameName).equals("public") ?
                 "Player" :
                 "None");
-          } catch (SQLException e) {
-
-          }
         }
         return true;
       }
@@ -247,7 +242,6 @@ public class Database implements DatabaseApi {
    * @param gameName        The name of the game.
    * @param ownerName       The name of the owner of the game.
    * @param numPlayers      The number of players required for the game.
-   * @param publicOrPrivate True if the game is public, false if private.
    * @return True if the game is successfully registered, false otherwise.
    */
 
