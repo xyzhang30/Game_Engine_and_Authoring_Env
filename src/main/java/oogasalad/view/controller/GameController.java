@@ -26,6 +26,8 @@ import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.KeyInputType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
+import oogasalad.view.database.CurrentPlayersManager;
+import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.scene_managers.AnimationManager;
 import oogasalad.view.scene_management.element_parsers.GameTitleParser;
 import oogasalad.view.scene_management.GameWindow;
@@ -69,7 +71,9 @@ public class GameController {
    * @param height The height of the screen for the game.
    */
   public GameController(double width, double height) {
-    databaseController = new DatabaseController();
+
+    CurrentPlayersManager currentPlayersManager = new CurrentPlayersManager();
+    databaseController = new DatabaseController(new Leaderboard(), currentPlayersManager);
     sceneManager = new SceneManager(this, databaseController, width, height);
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
@@ -193,8 +197,10 @@ public class GameController {
    * @return a list of the playable saved game titles
    */
   public ObservableList<String> getSavedGameTitles() {
+    System.out.println(5);
     return gameTitleParser.getSavedGameTitles();
   }
+
 
   /**
    * Creates a new game window for the user to play or author a games
@@ -222,6 +228,15 @@ public class GameController {
     if (animationManager.isRunning()) {
       gameEngine.moveActiveControllableX(positive, minBound, maxBound);
     }
+  }
+
+  public List<String> getMods() {
+    return gameLoaderView.getMods();
+  }
+
+  public void changeMod(String selectedMod) {
+    gameLoaderView.createViewRecord(selectedMod);
+    sceneManager.changeMod(gameLoaderView.getViewCollidableInfo());
   }
 
 
@@ -332,4 +347,11 @@ public class GameController {
     builderDirector.writeGame(gameData.getGameName(), gameData,
         RESUME_GAME_DATA_FOLDER);
   }
+
+  public void getGameName(){
+    databaseController.getFormattedScoresForLeaderboard(gameLoaderView.getGameName());
+    System.out.println("game name" + gameLoaderView.getGameName());
+  }
+
+
 }

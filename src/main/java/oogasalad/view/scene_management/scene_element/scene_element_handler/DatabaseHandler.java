@@ -10,11 +10,14 @@ import javafx.scene.control.TextField;
 import javax.xml.crypto.Data;
 import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.controller.DatabaseController;
+import oogasalad.view.controller.GameController;
 import oogasalad.view.database.CurrentPlayersManager;
+import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 
 public class DatabaseHandler {
 
+  private final GameController gameController;
   private final DatabaseController databaseController;
   private final CurrentPlayersManager currentPlayersManager;
   private final SceneManager sceneManager;
@@ -24,8 +27,10 @@ public class DatabaseHandler {
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
 
 
-  public DatabaseHandler(SceneManager sceneManager, DatabaseController databaseController,
+  public DatabaseHandler(GameController gameController, SceneManager sceneManager,
+      DatabaseController databaseController,
       CurrentPlayersManager currentPlayersManager) {
+    this.gameController = gameController;
     this.sceneManager = sceneManager;
     this.databaseController = databaseController;
     this.currentPlayersManager = currentPlayersManager;
@@ -47,13 +52,20 @@ public class DatabaseHandler {
 
   private void createEventMap() {
     eventMap = new HashMap<>();
-    eventMap.put(SceneElementEvent.LOGIN, this::createLoginHandler); //opens the currentplayers screen with the user that has been entered
-    eventMap.put(SceneElementEvent.CREATE_USER, this::createUserCreatorHandler); //opens the currentplayers scene with the new user and adds new user to database(sends to backend?)
+    eventMap.put(SceneElementEvent.LOGIN,
+        this::createLoginHandler); //opens the currentplayers screen with the user that has been entered
+    eventMap.put(SceneElementEvent.CREATE_USER,
+        this::createUserCreatorHandler); //opens the currentplayers scene with the new user and adds new user to database(sends to backend?)
     eventMap.put(SceneElementEvent.USER_TEXT, this::createUsernameHandler); //saves the username
     eventMap.put(SceneElementEvent.PASSWORD_TEXT, this::createPasswordHandler); //saves the password
-    eventMap.put(SceneElementEvent.START_LOGIN, this::createStartLoginHandler); //goes back to the login/createuser screen
-    eventMap.put(SceneElementEvent.LEADERBOARD, this::createLeaderboardHandler); //opens the leaderboard scene
-    eventMap.put(SceneElementEvent.UPDATE_CURRENT_PLAYERS, this::setCurrentPlayers); //current players displayed on listview
+    eventMap.put(SceneElementEvent.START_LOGIN,
+        this::createStartLoginHandler); //goes back to the login/createuser screen
+    eventMap.put(SceneElementEvent.LEADERBOARD,
+        this::createLeaderboardHandler); //opens the leaderboard scene
+    eventMap.put(SceneElementEvent.UPDATE_CURRENT_PLAYERS,
+        this::setCurrentPlayers); //current players displayed on listview
+    eventMap.put(SceneElementEvent.LEADERBOARD_SCORES,
+        this::setLeaderboard); //make sure listview is populated w leaderboard
 
   }
 
@@ -62,23 +74,12 @@ public class DatabaseHandler {
     System.out.println("createLoginHandler in scene element handler called");
     node.setOnMouseClicked(e ->
     {
-      try {
-        boolean userCanLogin = databaseController.canUserLogin(usernameTextField.getText());
-        if (userCanLogin) {
-          currentPlayersManager.saveUserInfo(usernameTextField.getText());
           boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(),
               passwordField.getText()); //true of user logged in
           if (userLoggedIn) {
+            currentPlayersManager.saveUserInfo(usernameTextField.getText());
             sceneManager.createCurrentPlayersScene();
-            System.out.println("createLoginHandler: user logged in");
           }
-        } else {
-          sceneManager.displayErrorMessage("User does not exist.");
-          System.out.println("createLoginHandler printed an error message");
-        }
-      } catch (Exception ex) {
-        sceneManager.displayErrorMessage("Error: " + ex.getMessage());
-      }
     });
     //add another or continue to play (new screen) shows current players like is this good or move on
     //open the currentplayers screen with this player added to it
@@ -132,12 +133,18 @@ public class DatabaseHandler {
   private void createLeaderboardHandler(Node node) {
     node.setOnMouseClicked(e -> sceneManager.createLeaderboardScene());
   }
-  private void setCurrentPlayers(Node node){
+
+  private void setCurrentPlayers(Node node) {
     currentPlayersManager.setPlayersListView((ListView<String>) node);
   }
 
-
-  private void createCurrentPlayersHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createCurrentPlayersScene());
+  private void setLeaderboard(Node node) {
+    gameController.getGameName();
+    databaseController.leaderboardSet((ListView<String>) node);
+    //add method to data base controller to update leaderboard (contained in the controller)
   }
+
+//  private void createCurrentPlayersHandler(Node node) {
+//    node.setOnMouseClicked(e -> sceneManager.createCurrentPlayersScene());
+//  }
 }

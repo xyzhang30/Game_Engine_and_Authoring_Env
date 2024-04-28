@@ -2,6 +2,7 @@ package oogasalad.model.api.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents the JSON data for a game object.
@@ -14,11 +15,11 @@ public record GameObjectProperties(@JsonProperty("gameobject_id") int collidable
                                    Position position,
                                    String shape,
                                    Dimension dimension,
-                                   List<Integer> color,
+                                   Map<String, List<Integer>> color,
                                    double staticFriction,
                                    double kineticFriction,
                                    double inclineAngle,
-                                   String image,
+                                   Map<String, String> image,
                                    double direction,
                                    boolean inelastic,
                                    boolean phaser,

@@ -82,6 +82,21 @@
   -fx-fill: #FF851B;
 }
 
+.mod-selection-box{
+  -fx-background-color: #0074D9;
+  -fx-font-family: "Impact", "Arial", sans-serif;
+  -fx-font-size: 15px;
+  -fx-text-fill: white;
+  -fx-effect: dropshadow(three-pass-box, rgba(256, 256, 256, 0.3), 10, 0.5, 3, 3);
+}
+
+.mod-selection-box .list-cell{
+  -fx-background-color: #0074D9;
+  -fx-font-family: "Impact", "Arial", sans-serif;
+  -fx-font-size: 15px;
+  -fx-text-fill: white;
+}
+
 .theme-selection-box{
   -fx-background-color: #0074D9;
   -fx-font-family: "Impact", "Arial", sans-serif;

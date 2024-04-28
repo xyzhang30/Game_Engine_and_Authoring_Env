@@ -94,4 +94,6 @@ public interface DatabaseApi {
    * @param permission The permission to assign (Owner, Player, None).
    */
   void assignPermissionToPlayers(String game, List<String> users, String permission);
+
+  List<String> getManageableGames(String playerName);
 }

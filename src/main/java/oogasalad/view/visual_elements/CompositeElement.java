@@ -23,6 +23,14 @@ public class CompositeElement {
     }
   }
 
+  public void updateMod(List<ViewGameObjectRecord> recordList) {
+    for (ViewGameObjectRecord viewRecord : recordList) {
+      GameElement element = (GameElement) elementMap.get(viewRecord.id());
+      element.changeFill(viewRecord);
+    }
+
+  }
+
   /**
    * Gets the x coordinate of the left side of the game board
    *

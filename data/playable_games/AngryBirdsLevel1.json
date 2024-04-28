@@ -17,15 +17,15 @@
         "x_dimension": 980.0,
         "y_dimension": 980.0
       },
-      "color": [
+      "color": { "Default": [
         0,
         0,
         0
-      ],
+      ],  "Inverted":  [255, 255, 255]},
       "staticFriction": 0,
       "kineticFriction": 0,
       "inclineAngle": 90,
-      "image": "data/background_images/angryBirdsBackdrop.jpg"
+      "image": {"Default":"data/background_images/angryBirdsBackdrop.jpg", "Inverted":  "data/nonstrikeable_images/questionMark.jpg"}
     },
     {
       "gameobject_id": 1,
@@ -43,14 +43,14 @@
         "x_dimension": 20.0,
         "y_dimension": 990.0
       },
-      "color": [
+      "color": { "Default": [
         0,
         0,
         0
-      ],
+      ],  "Inverted":  [255, 255, 255]},
       "staticFriction": 7.0,
       "kineticFriction": 5.0,
-      "image": ""
+      "image": {"Default": ""}
     },
     {
       "gameobject_id": 2,
@@ -68,14 +68,14 @@
         "x_dimension": 20.0,
         "y_dimension": 990.0
       },
-      "color": [
+      "color": { "Default": [
         0,
         0,
         0
-      ],
+      ],  "Inverted":  [255, 255, 255]},
       "staticFriction": 7.0,
       "kineticFriction": 5.0,
-      "image": ""
+      "image": {"Default": ""}
     },
     {
       "gameobject_id": 3,
@@ -93,14 +93,14 @@
         "x_dimension": 985.0,
         "y_dimension": 20.0
       },
-      "color": [
+      "color": { "Default": [
         0,
         0,
         0
-      ],
+      ],  "Inverted":  [255, 255, 255]},
       "staticFriction": 7.0,
       "kineticFriction": 5.0,
-      "image": ""
+      "image": {"Default": ""}
     },
     {
       "gameobject_id": 4,
@@ -118,14 +118,14 @@
         "x_dimension": 985.0,
         "y_dimension": 20.0
       },
-      "color": [
+      "color": { "Default": [
         0,
         0,
         0
-      ],
+      ],  "Inverted":  [255, 255, 255]},
       "staticFriction": 7.0,
       "kineticFriction": 5.0,
-      "image": ""
+      "image": {"Default": ""}
     },
     {
       "gameobject_id": 5,
@@ -145,14 +145,14 @@
         "x_dimension": 50,
         "y_dimension": 50
       },
-      "color": [
+      "color": { "Default": [
         0,
         0,
         0
-      ],
+      ],  "Inverted":  [255, 255, 255]},
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": "data/nonstrikeable_images/bird.jpg",
+      "image": {"Default": "data/nonstrikeable_images/bird.jpg"},
       "phaser": true
     },
     {
@@ -172,14 +172,14 @@
         "x_dimension": 50.0,
         "y_dimension": 50.0
       },
-      "color": [
+      "color": { "Default": [
         255,
         0,
         0
-      ],
+      ],  "Inverted":  [0, 255, 255]},
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": "data/nonstrikeable_images/cardboard.jpg"
+      "image": {"Default": ""}
     },
     {
       "gameobject_id": 7,
@@ -198,14 +198,14 @@
         "x_dimension": 50,
         "y_dimension": 50
       },
-      "color": [
+      "color": { "Default": [
         0,
         0,
         255
-      ],
+      ],  "Inverted":  [255, 255, 0]},
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": "data/nonstrikeable_images/cardboard.jpg"
+      "image": {"Default": "data/nonstrikeable_images/cardboard.jpg"}
     },
     {
       "gameobject_id": 8,
@@ -224,14 +224,14 @@
         "x_dimension": 50,
         "y_dimension": 50
       },
-      "color": [
+      "color": { "Default": [
         0,
         255,
         0
-      ],
+      ],  "Inverted":  [255, 0, 255]},
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": "data/nonstrikeable_images/cardboard.jpg"
+      "image": {"Default": ""}
     },
     {
       "gameobject_id": 9,
@@ -250,14 +250,14 @@
         "x_dimension": 30,
         "y_dimension": 30
       },
-      "color": [
+      "color": { "Default": [
         0,
         255,
         0
-      ],
+      ],  "Inverted":  [255, 0, 255]},
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": "data/nonstrikeable_images/pig.jpg"
+      "image": {"Default": "data/nonstrikeable_images/pig.jpg"}
     },
     {
       "gameobject_id": 10,
@@ -275,14 +275,14 @@
         "x_dimension": 75,
         "y_dimension": 75
       },
-      "color": [
+      "color": { "Default": [
         0,
         255,
         0
-      ],
+      ],  "Inverted":  [255, 0, 255]},
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": "data/nonstrikeable_images/hardAngryBox.jpg"
+      "image": {"Default": "data/nonstrikeable_images/hardAngryBox.jpg"}
     },
     {
       "gameobject_id": 11,
@@ -301,14 +301,14 @@
         "x_dimension": 30,
         "y_dimension": 30
       },
-      "color": [
+      "color": { "Default": [
         0,
         255,
         0
-      ],
+      ],  "Inverted":  [255, 0, 255]},
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": "data/nonstrikeable_images/pig.jpg"
+      "image": {"Default": "data/nonstrikeable_images/pig.jpg"}
     },
     {
       "gameobject_id": 12,
@@ -327,14 +327,14 @@
         "x_dimension": 50,
         "y_dimension": 50
       },
-      "color": [
+      "color": { "Default": [
         0,
         255,
         0
-      ],
+      ],  "Inverted":  [255, 0, 255]},
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": "data/nonstrikeable_images/pig.jpg"
+      "image": {"Default": "data/nonstrikeable_images/pig.jpg"}
     },
 
     {
@@ -353,14 +353,14 @@
         "x_dimension": 990,
         "y_dimension": 180
       },
-      "color": [
+      "color": { "Default": [
         0,
         0,
         0
-      ],
+      ],  "Inverted":  [255, 255, 255]},
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": ""
+      "image": {"Default": ""}
     },
     {
       "gameobject_id": 14,
@@ -378,14 +378,14 @@
         "x_dimension": 40,
         "y_dimension": 400
       },
-      "color": [
+      "color": { "Default": [
         0,
         0,
         0
-      ],
+      ],  "Inverted":  [255, 255, 255]},
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": "data/nonstrikeable_images/slingshot.jpg",
+      "image": {"Default": "data/nonstrikeable_images/slingshot.jpg"},
       "inelastic": true
     }
   ],
