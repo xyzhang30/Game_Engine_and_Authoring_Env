@@ -103,7 +103,6 @@ public class DatabaseHandler {
     eventMap.put(SceneElementEvent.PLAYER_FRIENDS, this::setUpFriendPermissions);
     eventMap.put(SceneElementEvent.SUBMIT_FRIENDS, this::confirmFriendsHandler);
     eventMap.put(SceneElementEvent.SET_PUBLIC, this::createAccessibilityHandler);
-    eventMap.put(SceneElementEvent.AVATAR_SELECTION, this::createAvatarHandler);  // Handle avatar selection
   }
 
   public void createLoginHandler(Node node) {
@@ -253,9 +252,7 @@ public class DatabaseHandler {
     //save username and add to database if not already there
   }
 
-  private void createAvatarHandler(Node node) {
 
-  }
 
 
   private void createStartLoginHandler(Node node) {
