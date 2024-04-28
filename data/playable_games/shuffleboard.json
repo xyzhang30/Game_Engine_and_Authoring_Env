@@ -14,10 +14,10 @@
       "y_dimension" : 970.0
     },
       "shape": "rectangle",
-    "color" : [ 0, 0, 0 ],
+    "color" : {"Default":[ 0, 0, 0 ]},
     "staticFriction" : 7.0,
     "kineticFriction" : 5.0,
-    "image" : ""
+      "image": {"Default": ""}
   }, {
     "gameobject_id" : 2,
     "properties" : [  "visible", "collidable" ],
@@ -31,10 +31,10 @@
       "x_dimension" : 20.0,
       "y_dimension" : 1010.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : {"Default":[ 0, 0, 0 ]},
     "staticFriction" : 7.0,
     "kineticFriction" : 5.0,
-    "image" : ""
+      "image": {"Default": ""}
   }, {
     "gameobject_id" : 3,
     "properties" : [  "visible", "collidable" ],
@@ -48,10 +48,10 @@
       "x_dimension" : 1010.0,
       "y_dimension" : 20.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : {"Default":[ 0, 0, 0 ]},
     "staticFriction" : 7.0,
     "kineticFriction" : 5.0,
-    "image" : ""
+      "image": {"Default": ""}
   }, {
     "gameobject_id" : 4,
     "properties" : [  "visible", "collidable" ],
@@ -65,10 +65,10 @@
       "x_dimension" : 990.0,
       "y_dimension" : 20.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : {"Default":[ 0, 0, 0 ]},
     "staticFriction" : 7.0,
     "kineticFriction" : 5.0,
-    "image" : ""
+      "image": {"Default": ""}
   },
     {
       "gameobject_id" : 5,
@@ -83,10 +83,11 @@
         "x_dimension" : 990.0,
         "y_dimension" : 320.0
       },
-      "color" : [ 0, 0, 0 ],
+      "color" : {"Default":[ 0, 0, 0 ]},
+
       "staticFriction" : 7.0,
       "kineticFriction" : 5.0,
-      "image" : "data/background_images/wood.jpg"
+      "image" : {"Default" : "data/background_images/wood.jpg"}
     },
     {
       "gameobject_id" : 60,
@@ -101,7 +102,7 @@
         "x_dimension" : 990.0,
         "y_dimension" : 10.0
       },
-      "color" : [ 255, 255, 255 ],
+      "color" : {"Default":[ 255, 255, 255 ]},
       "staticFriction" : 7.0,
       "kineticFriction" : 5.0,
       "image": {"Default": ""}
@@ -120,7 +121,8 @@
         "x_dimension" : 990.0,
         "y_dimension" : 10.0
       },
-      "color" : [ 255, 255, 255 ],
+   "color" : {"Default":[ 255, 255, 255 ]},
+
       "staticFriction" : 7.0,
       "kineticFriction" : 5.0,
       "image": {"Default": ""}
@@ -139,7 +141,8 @@
         "x_dimension" : 990.0,
         "y_dimension" : 10.0
       },
-      "color" : [ 255, 255, 255 ],
+   "color" : {"Default":[ 255, 255, 255 ]},
+
       "staticFriction" : 7.0,
       "kineticFriction" : 5.0,
       "image": {"Default": ""}
@@ -159,10 +162,11 @@
         "x_dimension" : 990.0,
         "y_dimension" : 150.0
       },
-      "color" : [ 255, 255, 255 ],
+   "color" : {"Default":[ 255, 255, 255 ]},
+
       "staticFriction" : 7.0,
       "kineticFriction" : 5.0,
-      "image" : "data/background_images/wood.jpg"
+      "image" : {"Default":"data/background_images/wood.jpg"}
     },
      {
     "gameobject_id" : 10,
@@ -177,10 +181,10 @@
       "x_dimension" : 990,
       "y_dimension" : 200
     },
-    "color" : [ 255, 255, 0 ],
+   "color" : {"Default":[ 255, 255, 0 ]},
     "staticFriction" : 7.0,
     "kineticFriction" : 5.0,
-    "image" : "data/background_images/wood.jpg"
+    "image" : {"Default" : "data/background_images/wood.jpg"}
   }, {
     "gameobject_id" : 11,
     "properties" : [  "visible", "surface" ],
@@ -194,11 +198,11 @@
       "x_dimension" : 990,
       "y_dimension" : 300
     },
-    "color" : [ 255, 0, 0 ],
-    "staticFriction" : 0.0,
+   "color" : {"Default":[ 255, 0, 0 ]},
+      "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
-    "image" : "data/background_images/wood.jpg"
-  }, {
+    "image" : {"Default" : "data/background_images/wood.jpg"}
+    }, {
     "gameobject_id" : 12,
     "properties" : [ "collidable",  "strikeable", "scoreable", "visible" ],
     "mass" : 10.0,
@@ -211,10 +215,10 @@
       "x_dimension" : 30.0,
       "y_dimension" : 30.0
     },
-    "color" : [ 0, 0, 100 ],
+   "color" : {"Default":[ 255, 0, 0 ]},
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
-    "image" : ""
+      "image": {"Default": ""}
   }, {
     "gameobject_id" : 13,
     "properties" : [ "collidable",  "strikeable", "scoreable"],
@@ -228,10 +232,10 @@
       "x_dimension" : 30.0,
       "y_dimension" : 30.0
     },
-    "color" : [ 0, 0, 100 ],
+   "color" : {"Default":[ 255, 0, 0 ]},
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
-    "image" : ""
+      "image": {"Default": ""}
   }, {
     "gameobject_id" : 14,
     "properties" : [ "collidable",  "strikeable", "scoreable"],
@@ -245,10 +249,10 @@
       "x_dimension" : 30.0,
       "y_dimension" : 30.0
     },
-    "color" : [ 0, 100, 0 ],
+   "color" : {"Default":[ 0, 100, 0 ]},
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
-    "image" : ""
+      "image": {"Default": ""}
   },
     {
       "gameobject_id" : 15,
@@ -263,7 +267,7 @@
         "x_dimension" : 30.0,
         "y_dimension" : 30.0
       },
-      "color" : [ 0, 100, 0 ],
+     "color" : {"Default":[ 0, 100, 0 ]},
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
       "image": {"Default": ""}
@@ -283,10 +287,10 @@
         "x_dimension" : 50.0,
         "y_dimension" : 50.0
       },
-      "color" : [ 0, 100, 0 ],
+     "color" : {"Default":[ 0, 100, 0 ]},
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
-      "image" : "data/nonstrikeable_images/numberOne.jpg"
+      "image" : {"Default" : "data/nonstrikeable_images/numberOne.jpg"}
     },
     {
       "gameobject_id" : 17,
@@ -301,10 +305,10 @@
         "x_dimension" : 50.0,
         "y_dimension" : 50.0
       },
-      "color" : [ 0, 100, 0 ],
+     "color" : {"Default":[ 0, 100, 0 ]},
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
-      "image" : "data/nonstrikeable_images/numberTwo.jpg"
+      "image" : {"Default" : "data/nonstrikeable_images/numberTwo.jpg"}
     },
     {
       "gameobject_id" : 18,
@@ -319,11 +323,10 @@
         "x_dimension" : 50.0,
         "y_dimension" : 50.0
       },
-      "color" : [ 0, 100, 0 ],
+     "color" : {"Default":[ 0, 100, 0 ]},
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
-      "image" : "data/nonstrikeable_images/numberThree.jpg"
-
+      "image" : {"Default":"data/nonstrikeable_images/numberThree.jpg"}
     }
   ],
   "players" : [ {

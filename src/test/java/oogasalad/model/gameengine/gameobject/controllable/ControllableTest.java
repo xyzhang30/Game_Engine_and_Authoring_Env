@@ -1,6 +1,7 @@
 package oogasalad.model.gameengine.gameobject.controllable;
 
 import java.util.List;
+import java.util.Map;
 import oogasalad.model.api.data.Dimension;
 import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.Position;
@@ -18,7 +19,9 @@ public class ControllableTest {
   @BeforeEach
   public void setUp() {
     gameObject = new GameObject(new GameObjectProperties(1, List.of("visible", "strikeable"), 1.0
-        , new Position(1.0,1.0), "", new Dimension(1,1), List.of(), 1, 1, 1, "", 1.0, false,
+        , new Position(1.0,1.0), "", new Dimension(1,1), Map.of("Default", List.of()), 1, 1, 1,
+        Map.of("Default", ""),
+        1.0, false,
         false,0)); //
     gameObject.addControllable();
     defaultControllable = new DefaultControllable(gameObject);

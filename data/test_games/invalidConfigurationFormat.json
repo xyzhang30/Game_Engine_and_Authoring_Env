@@ -14,9 +14,9 @@
         "x_dimension": 500,
         "y_dimension": 500
       },
-      "color": [100,200,100],
+   "color" : {"Default":[100,200,100]},
       "friction": 0.5,
-      "image": "sample.img"
+   "image" : {"Default":"sample.img"},
     },
     {
       "gameobject_id": 2,
@@ -31,9 +31,9 @@
         "x_dimension": 2,
         "y_dimension": 2
       },
-      "color": [255,255,255],
+   "color" : {"Default":[255,255,255]},
       "friction": 0,
-      "image": "sample.img"
+   "image" : {"Default":"sample.img"},
     },
     {
       "gameobject_id": 3,
@@ -48,9 +48,9 @@
         "x_dimension": 5,
         "y_dimension": 5
       },
-      "color": [0,0,0],
+   "color" : {"Default":[0,0,0]},
       "friction": 0,
-      "image": "sample.img"
+   "image" : {"Default":"sample.img"},
     },
     {
       "gameobject_id": 4,
@@ -65,9 +65,9 @@
         "x_dimension": 500,
         "y_dimension": 10
       },
-      "color": [0,0,0],
+   "color" : {"Default":[0,0,0]},
       "friction": 0,
-      "image": "sample.img"
+   "image" : {"Default":"sample.img"},
     },
     {
       "gameobject_id": 5,
@@ -82,9 +82,9 @@
         "x_dimension": 10,
         "y_dimension": 500
       },
-      "color": [0,0,0],
+   "color" : {"Default":[0,0,0]},
       "friction": 0,
-      "image": "sample.img"
+   "image" : {"Default":"sample.img"},
     },
     {
       "gameobject_id": 6,
@@ -99,9 +99,9 @@
         "x_dimension": 10,
         "y_dimension": 500
       },
-      "color": [0,0,0],
+   "color" : {"Default":[0,0,0]},
       "friction": 0,
-      "image": "sample.img"
+   "image" : {"Default":"sample.img"},
     },
     {
       "gameobject_id": 7,
@@ -116,9 +116,9 @@
         "x_dimension": 500,
         "y_dimension": 10
       },
-      "color": [0,0,0],
+   "color" : {"Default":[0,0,0]},
       "friction": 0,
-      "image": "sample.img"
+   "image" : {"Default":"sample.img"},
     }
   ],
   "players": [

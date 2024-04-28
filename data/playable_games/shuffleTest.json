@@ -14,10 +14,13 @@
         "x_dimension" : 990.0,
         "y_dimension" : 990.0
       },
-      "color" : [ 0, 0, 0 ],
+      "color" : {"Default":[ 0, 0, 0 ]},
+
       "staticFriction" : 7.0,
       "kineticFriction" : 5.0,
-      "image" : "data/background_images/wood.jpg"
+      "image" : {"Default" : "data/background_images/wood.jpg"}
+
+
     }, {
       "gameobject_id" : 1,
       "properties" : [  "visible", "collidable" ],
@@ -31,7 +34,8 @@
         "x_dimension" : 20.0,
         "y_dimension" : 990.0
       },
-      "color" : [ 0, 0, 0 ],
+      "color" : {"Default":[ 0, 0, 0 ]},
+
       "staticFriction" : 7.0,
       "kineticFriction" : 5.0,
       "image": {"Default": ""}
@@ -49,7 +53,8 @@
         "x_dimension" : 20.0,
         "y_dimension" : 990.0
       },
-      "color" : [ 0, 0, 0 ],
+      "color" : {"Default":[ 0, 0, 0 ]},
+
       "staticFriction" : 7.0,
       "kineticFriction" : 5.0,
       "image": {"Default": ""}
@@ -67,7 +72,8 @@
         "x_dimension" : 970.0,
         "y_dimension" : 20.0
       },
-      "color" : [ 0, 0, 0 ],
+      "color" : {"Default":[ 0, 0, 0 ]},
+
       "staticFriction" : 7.0,
       "kineticFriction" : 5.0,
       "image": {"Default": ""}
@@ -85,7 +91,8 @@
         "x_dimension" : 990.0,
         "y_dimension" : 20.0
       },
-      "color" : [ 0, 0, 0 ],
+      "color" : {"Default":[ 0, 0, 0 ]},
+
       "staticFriction" : 7.0,
       "kineticFriction" : 5.0,
       "image": {"Default": ""}
@@ -104,7 +111,8 @@
         "x_dimension" : 990,
         "y_dimension" : 200
       },
-      "color" : [ 0, 255, 0 ],
+      "color" : {"Default":[ 0, 255, 0 ]},
+
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
       "image": {"Default": ""}
@@ -122,7 +130,8 @@
         "x_dimension" : 990,
         "y_dimension" : 200
       },
-      "color" : [ 255, 255, 0 ],
+     "color" : {"Default":[ 255, 255, 0 ]},
+
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
       "image": {"Default": ""}
@@ -140,7 +149,8 @@
         "x_dimension" : 990,
         "y_dimension" : 200
       },
-      "color" : [ 255, 0, 0 ],
+   "color" : {"Default":[ 255, 0, 0 ]},
+
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
       "image": {"Default": ""}
@@ -196,7 +206,7 @@
         "x_dimension" : 30.0,
         "y_dimension" : 30.0
       },
-      "color" : [ 0, 100, 0 ],
+     "color" : {"Default":[ 0, 100, 0 ]},
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
       "image": {"Default": ""}
@@ -215,7 +225,7 @@
         "x_dimension" : 30.0,
         "y_dimension" : 30.0
       },
-      "color" : [ 0, 100, 0 ],
+     "color" : {"Default":[ 0, 100, 0 ]},
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
       "image": {"Default": ""}
