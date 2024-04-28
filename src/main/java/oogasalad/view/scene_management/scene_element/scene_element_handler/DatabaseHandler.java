@@ -161,7 +161,23 @@ public class DatabaseHandler {
   }
 
   private void createAvatarHandler(Node node) {
-    //needs to be integrated
+    avatarComboBox = (ComboBox<String>) node; // Cast the node to ComboBox assuming it's already of this type
+    // Assuming avatar URLs or identifiers are to be loaded from a service or predefined list
+    ObservableList<String> avatars = FXCollections.observableArrayList(
+        "Avatar1.png", // These should be actual URLs or resource identifiers
+        "Avatar2.png",
+        "Avatar3.png"
+    );
+    avatarComboBox.setItems(avatars); // Set the items in the ComboBox
+
+    // Optional: Set a prompt text for better user guidance
+    avatarComboBox.setPromptText("Select an avatar");
+
+    // Handle the selection of an avatar
+    avatarComboBox.setOnAction(e -> {
+      avatarUrlField = avatarComboBox.getValue(); // Save the selected avatar URL
+      System.out.println("Avatar selected: " + avatarUrlField); // Optional: for debugging
+    });
   }
 
   private void createStartLoginHandler(Node node) {
