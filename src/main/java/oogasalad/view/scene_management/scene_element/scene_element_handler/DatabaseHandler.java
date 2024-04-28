@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,13 +12,17 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.view.Warning;
 import oogasalad.view.api.enums.SceneElementEvent;
@@ -140,21 +145,86 @@ public class DatabaseHandler {
 
     //this should be from a button the same way that we choose the controllable or background images
     node.setOnMouseClicked(e -> {
-      try {
-        boolean userCreated = databaseController.canCreateUser(usernameTextField.getText(),
-            passwordField.getText(), avatarUrlField);
-        System.out.println(userCreated);
-        if (!userCreated) {
-          LOGGER.error("User creation error - user already exists or could not be created.");
-          throw new CreateNewUserException("User already exists or could not be created.");
-        }
-      } catch (CreateNewUserException | CreatingDuplicateUserException ex) {
-        WARNING.showAlert(this.sceneManager.getScene(), AlertType.ERROR,"Creating New User Error", null, ex.getMessage());
-      }
-    });
+          Optional<String> selectedAvatar = showAvatarSelectionDialog();
+          selectedAvatar.ifPresent(avatar -> {
+            avatarUrlField = avatar;
+
+            try {
+              boolean userCreated = databaseController.canCreateUser(usernameTextField.getText(),
+                  passwordField.getText(), avatarUrlField);
+              System.out.println(userCreated);
+              if (!userCreated) {
+                LOGGER.error("User creation error - user already exists or could not be created.");
+                throw new CreateNewUserException("User already exists or could not be created.");
+              }
+            } catch (CreateNewUserException | CreatingDuplicateUserException ex) {
+              WARNING.showAlert(this.sceneManager.getScene(), AlertType.ERROR,
+                  "Creating New User Error", null, ex.getMessage());
+            }
+          });
+        });
     //add the new user to the database
     //open the currentplayers screen with this player added to it
   }
+
+  private Optional<String> showAvatarSelectionDialog() {
+    Dialog<String> dialog = new Dialog<>();
+    dialog.setTitle("Select Avatar");
+    dialog.setHeaderText("Click on your avatar and then press ENTER");
+
+    // Set the owner to the current window
+    dialog.initOwner(sceneManager.getScene().getWindow());
+    dialog.initModality(Modality.WINDOW_MODAL); // This line makes it block input to other windows
+
+    ButtonType selectButtonType = new ButtonType("Select", ButtonBar.ButtonData.OK_DONE);
+    dialog.getDialogPane().getButtonTypes().addAll(selectButtonType, ButtonType.CANCEL);
+
+    ComboBox<String> avatarComboBox = new ComboBox<>();
+    ObservableList<String> avatars = FXCollections.observableArrayList(
+        "loewyhappy.png", "loewycreamed.png", "duvall.png", "moffett.png"
+    );
+    avatarComboBox.setItems(avatars);
+    avatarComboBox.setCellFactory(lv -> new ListCell<>() {
+      @Override
+      protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+          setGraphic(null);
+        } else {
+          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), 100, 100, true, false);
+          ImageView imageView = new ImageView(img);
+          setGraphic(imageView);
+        }
+      }
+    });
+    avatarComboBox.setButtonCell(new ListCell<>() {
+      @Override
+      protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+          setGraphic(null);
+        } else {
+          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), 100, 100, true, false);
+          ImageView imageView = new ImageView(img);
+          setGraphic(imageView);
+        }
+      }
+    });
+
+    dialog.getDialogPane().setContent(avatarComboBox);
+
+    dialog.setResultConverter(dialogButton -> {
+      if (dialogButton == selectButtonType) {
+        return avatarComboBox.getSelectionModel().getSelectedItem();
+      }
+      return null;
+    });
+
+    return dialog.showAndWait();
+  }
+
 
   public void createPasswordHandler(Node node) {
     passwordField = (TextField) node;
@@ -168,55 +238,56 @@ public class DatabaseHandler {
   }
 
   private void createAvatarHandler(Node node) {
-    avatarComboBox = (ComboBox<String>) node; // Cast the node to ComboBox assuming it's the correct type
-    // Assuming avatar URLs or identifiers are to be loaded from a service or predefined list
-    ObservableList<String> avatars = FXCollections.observableArrayList(
-        "view/avatar_images/hletgoat.png", // These should be paths relative to src/main/resources
-        "view/avatar_images/loewycreamed.png",
-        "view/avatar_images/loewyhappy.png"
-    );
-    avatarComboBox.setItems(avatars); // Set the items in the ComboBox
-
-    // Set a prompt text for better user guidance
-    avatarComboBox.setPromptText("Select an avatar");
-
-    // Customize rendering of the combo box list to display images
-    avatarComboBox.setCellFactory(lv -> new ListCell<String>() {
-      @Override
-      protected void updateItem(String item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty || item == null) {
-          setText(null);
-          setGraphic(null);
-        } else {
-          Image img = new Image(getClass().getResourceAsStream("/" + item), 100, 100, true, true);
-          ImageView imageView = new ImageView(img);
-          setGraphic(imageView);
-        }
-      }
-    });
-
-    // Ensure selected item also shows as an image
-    avatarComboBox.setButtonCell(new ListCell<String>() {
-      @Override
-      protected void updateItem(String item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty || item == null) {
-          setText(null);
-          setGraphic(null);
-        } else {
-          Image img = new Image(getClass().getResourceAsStream("/" + item), 50, 50, true, true);
-          ImageView imageView = new ImageView(img);
-          setGraphic(imageView);
-        }
-      }
-    });
-
-    // Handle the selection of an avatar
-    avatarComboBox.setOnAction(e -> {
-      avatarUrlField = avatarComboBox.getValue(); // Save the selected avatar URL
-      System.out.println("Avatar selected: " + avatarUrlField); // Optional: for debugging
-    });
+//    avatarComboBox = (ComboBox<String>) node; // Cast the node to ComboBox assuming it's the correct type
+//    // Assuming avatar URLs or identifiers are to be loaded from a service or predefined list
+//    ObservableList<String> avatars = FXCollections.observableArrayList(
+//        "view/avatar_images/duvall.png", // These should be paths relative to src/main/resources
+//        "view/avatar_images/loewycreamed.png",
+//        "view/avatar_images/loewyhappy.png",
+//        "view/avatar_images/moffett.png"
+//    );
+//    avatarComboBox.setItems(avatars); // Set the items in the ComboBox
+//
+//    // Set a prompt text for better user guidance
+//    avatarComboBox.setPromptText("Select an avatar");
+//
+//    // Customize rendering of the combo box list to display images
+//    avatarComboBox.setCellFactory(lv -> new ListCell<String>() {
+//      @Override
+//      protected void updateItem(String item, boolean empty) {
+//        super.updateItem(item, empty);
+//        if (empty || item == null) {
+//          setText(null);
+//          setGraphic(null);
+//        } else {
+//          Image img = new Image(getClass().getResourceAsStream("/" + item), 100, 100, true, true);
+//          ImageView imageView = new ImageView(img);
+//          setGraphic(imageView);
+//        }
+//      }
+//    });
+//
+//    // Ensure selected item also shows as an image
+//    avatarComboBox.setButtonCell(new ListCell<String>() {
+//      @Override
+//      protected void updateItem(String item, boolean empty) {
+//        super.updateItem(item, empty);
+//        if (empty || item == null) {
+//          setText(null);
+//          setGraphic(null);
+//        } else {
+//          Image img = new Image(getClass().getResourceAsStream("/" + item), 50, 50, true, true);
+//          ImageView imageView = new ImageView(img);
+//          setGraphic(imageView);
+//        }
+//      }
+//    });
+//
+//    // Handle the selection of an avatar
+//    avatarComboBox.setOnAction(e -> {
+//      avatarUrlField = avatarComboBox.getValue(); // Save the selected avatar URL
+//      System.out.println("Avatar selected: " + avatarUrlField); // Optional: for debugging
+//    });
   }
 
 
