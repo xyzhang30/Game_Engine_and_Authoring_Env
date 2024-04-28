@@ -122,4 +122,8 @@ public class GameLoaderView extends GameLoader {
     return gameData.getGameDescription();
   }
 
+  public String getGameName(){
+    return gameData.getGameName();
+  }
+
 }
