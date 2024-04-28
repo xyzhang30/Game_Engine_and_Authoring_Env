@@ -177,8 +177,6 @@
     "power_up" : "Y",
     "power_down" : "G",
     "controllable_left" : "H",
-    "controllable_right" : "N",
-    "controllable_up" : null,
-    "controllable_down" : null
+    "controllable_right" : "N"
   }
 }

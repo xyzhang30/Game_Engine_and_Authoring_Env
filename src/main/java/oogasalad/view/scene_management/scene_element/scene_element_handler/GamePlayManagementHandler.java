@@ -14,10 +14,7 @@ import oogasalad.view.scene_management.scene_managers.SceneManager;
  * pausing, resuming, saving, and loading games. It maps scene element events to their respective
  * event handlers.
  */
-public class GamePlayManagementHandler {
-
-  private final GameController gameController;
-  private final SceneManager sceneManager;
+public class GamePlayManagementHandler extends Handler {
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
 
   /**
@@ -29,9 +26,7 @@ public class GamePlayManagementHandler {
    * @param sceneManager   The scene manager for handling scene transitions and updates.
    */
   public GamePlayManagementHandler(GameController gameController, SceneManager sceneManager) {
-    this.gameController = gameController;
-    this.sceneManager = sceneManager;
-    createEventMap();
+    super(gameController, sceneManager);
   }
 
   /**
@@ -46,7 +41,7 @@ public class GamePlayManagementHandler {
     consumer.accept(node);
   }
 
-  private void createEventMap() {
+  protected void createEventMap() {
     eventMap = new HashMap<>();
     eventMap.put(SceneElementEvent.PAUSE, this::createPauseHandler);
     eventMap.put(SceneElementEvent.RESUME, this::createResumeHandler);
@@ -56,34 +51,34 @@ public class GamePlayManagementHandler {
 
   private void createSaveHandler(Node node) {
     node.setOnMouseClicked((e -> {
-      sceneManager.getRoot().requestFocus();
-      gameController.saveGame();
+      getSceneManager().getRoot().requestFocus();
+      getGameController().saveGame();
     }));
   }
 
   private void createPauseHandler(Node node) {
     node.setOnMouseClicked((e -> {
-      sceneManager.createPauseDisplay();
-      gameController.pauseGame();
-      sceneManager.getRoot().requestFocus();
+      getSceneManager().createPauseDisplay();
+      getGameController().pauseGame();
+      getSceneManager().getRoot().requestFocus();
     }));
   }
 
   private void createResumeHandler(Node node) {
     node.setOnMouseClicked(e -> {
-      sceneManager.removePauseSheen();
-      sceneManager.getRoot().requestFocus();
-      gameController.resumeGame();
+      getSceneManager().removePauseSheen();
+      getSceneManager().getRoot().requestFocus();
+      getGameController().resumeGame();
     });
   }
 
   private void createChangeModHandler(Node node) {
     ComboBox<String> comboBox = (ComboBox<String>) node;
-    comboBox.getItems().addAll(gameController.getMods());
+    comboBox.getItems().addAll(getGameController().getMods());
     comboBox.setOnAction(event -> {
       String selectedMod = comboBox.getValue();
-      gameController.changeMod(selectedMod);
-      sceneManager.getRoot().requestFocus();
+      getGameController().changeMod(selectedMod);
+      getSceneManager().getRoot().requestFocus();
     });
   }
 
