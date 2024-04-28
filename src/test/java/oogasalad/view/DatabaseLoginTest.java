@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import oogasalad.view.database.Leaderboard;
 
-public class DatabaseControllerTest {
+public class DatabaseLoginTest {
 
   private DatabaseController databaseController;
   private Database databaseView;
@@ -22,6 +22,12 @@ public class DatabaseControllerTest {
   public void setUp() {
     databaseView = mock(Database.class);
     databaseController = new DatabaseController(leaderboard, currentPlayersManager);
+  }
+
+  @Test
+  public void testLoginUserSuccess() {
+    when(databaseView.loginUser("validUser", "validPassword")).thenReturn(true);
+    assertDoesNotThrow(() -> databaseController.loginUser("validUser", "validPassword"));
   }
 
 
