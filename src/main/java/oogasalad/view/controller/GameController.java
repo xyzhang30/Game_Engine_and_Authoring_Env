@@ -29,6 +29,7 @@ import oogasalad.view.api.enums.KeyInputType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
 import oogasalad.view.database.Leaderboard;
+import oogasalad.view.scene_management.scene_element.scene_element_handler.DatabaseHandler;
 import oogasalad.view.scene_management.scene_managers.AnimationManager;
 import oogasalad.view.scene_management.element_parsers.GameTitleParser;
 import oogasalad.view.scene_management.GameWindow;
@@ -127,7 +128,8 @@ public class GameController {
    */
   public void openAuthorEnvironment() {
     AuthoringController newAuthoringController = new AuthoringController(SupportedLanguage.ENGLISH,
-        UITheme.DEFAULT, AuthoringImplementationType.DEFAULT);
+        UITheme.DEFAULT, AuthoringImplementationType.DEFAULT,
+        databaseController.getPlayerNames().get(0));
     newAuthoringController.updateAuthoringScreen();
   }
 
@@ -141,16 +143,16 @@ public class GameController {
     gameLoaderView = new GameLoaderView(selectedGame);
     gameEngine = new GameEngine(selectedGame);
     List<String> players = databaseController.getPlayerNames();
-    playerMap = IntStream.range(1, players.size()+1)
+    playerMap = IntStream.range(1, players.size() + 1)
         .boxed()
         .collect(Collectors.toMap(
             i -> i,
-            i -> players.get(i-1)
+            i -> players.get(i - 1)
         ));
     GameRecord gameRecord = gameEngine.restoreLastStaticGameRecord();
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
     sceneManager.makeGameScene(compositeElement, gameRecord);
-    this.selectedGame = selectedGame.substring(selectedGame.lastIndexOf("/")+1);
+    this.selectedGame = selectedGame.substring(selectedGame.lastIndexOf("/") + 1);
     sceneManager.update(gameRecord, playerMap, selectedGame);
   }
 
@@ -255,22 +257,30 @@ public class GameController {
 
   /**
    * Gets the description associated with the given game
+   *
    * @param selectedGame the game to get the description for
    * @return the description for the given game
    */
-  public String getDescription(String selectedGame){
-      Properties properties = new Properties();
-      try {
-        FileInputStream inputStream = new FileInputStream("src/main/resources/view/properties"
-            + "/GameDescriptions.properties");
-        properties.load(inputStream);
-      } catch (IOException e) {
-        //TODO: Exception Handling
-      }
-      System.out.println(properties.getProperty(selectedGame, ""));
-      return properties.getProperty(selectedGame, "");
+  public String getDescription(String selectedGame) {
+    Properties properties = new Properties();
+    try {
+      FileInputStream inputStream = new FileInputStream("src/main/resources/view/properties"
+          + "/GameDescriptions.properties");
+      properties.load(inputStream);
+    } catch (IOException e) {
+      //TODO: Exception Handling
     }
+    System.out.println(properties.getProperty(selectedGame, ""));
+    return properties.getProperty(selectedGame, "");
+  }
 
+  public Map<String, Boolean> getPlayerPermissions(String gamePath) {
+    return databaseController.getPlayerPermissions(gamePath);
+  }
+
+  public void managePermissions(String gamePath) {
+    sceneManager.createManagePermissionsScene();
+  }
 
   private CompositeElement createCompositeElementFromGameLoader() {
     try {
@@ -350,10 +360,10 @@ public class GameController {
         RESUME_GAME_DATA_FOLDER);
   }
 
-  public void getGameName(){
+
+  public void getGameName() {
     databaseController.getFormattedScoresForLeaderboard(selectedGame,
         !gameLoaderView.getGameData().getRules().rankComparator().equals("LowestScoreComparator"));
-
   }
 
 
