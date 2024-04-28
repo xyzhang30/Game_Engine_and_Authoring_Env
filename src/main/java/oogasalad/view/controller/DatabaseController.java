@@ -48,17 +48,11 @@ public class DatabaseController {
    */
   public void getFormattedScoresForLeaderboard(String gameName) {
     List<GameScore> scores = databaseView.getGeneralHighScoresForGame(gameName, Integer.MAX_VALUE);
-//    ObservableList<String> formattedScores = scores.stream()
-//        .map(score -> formatScoreForDisplay(score))
-//        .limit(5)
-//        .collect(Collectors.toCollection(FXCollections::observableArrayList));
-    ObservableList<String> formattedScores = FXCollections.observableArrayList(
-        "Alpha Centauri",
-        "Beta Carotene",
-        "Gamma Rays",
-        "Delta Force",
-        "Epsilon Minus"
-    );
+    ObservableList<String> formattedScores = scores.stream()
+        .map(score -> formatScoreForDisplay(score))
+        .limit(5)
+        .collect(Collectors.toCollection(FXCollections::observableArrayList));
+
     System.out.println("scores: " + formattedScores);
     leaderboard.saveGameScores(formattedScores);
   }
