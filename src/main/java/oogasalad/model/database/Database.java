@@ -52,7 +52,7 @@ public class Database implements DatabaseApi {
   }
 
   @Override
-  public Map<String,Boolean> getPlayerPermissionsForGames(String gameName) {
+  public Map<String, Boolean> getPlayerPermissionsForGames(String gameName) {
     Map<String, Boolean> scores = new TreeMap<>();
     String query = "SELECT username, permissions " +
         "FROM permissions WHERE gamename = ?";
@@ -61,7 +61,9 @@ public class Database implements DatabaseApi {
       pstmt.setString(1, gameName);
       ResultSet rs = pstmt.executeQuery();
       while (rs.next()) {
-        scores.put(rs.getString("username"), !rs.getString("permissions").equals("None"));
+        if (!rs.getString("permissions").equals("Owner")) {
+          scores.put(rs.getString("username"), !rs.getString("permissions").equals("None"));
+        }
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -203,7 +205,6 @@ public class Database implements DatabaseApi {
       return false;  //false if user does not exist
     }
   }
-
 
 
   //returns true if game is publicly available, otherwise false

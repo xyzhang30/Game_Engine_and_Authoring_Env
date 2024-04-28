@@ -115,7 +115,7 @@ public class LoadGameEventHandler {
 
   private void handleManageGame(String dirPath, String gameTitle) {
     if (gameTitle != null) {
-      gameController.managePermissions(dirPath + gameTitle);
+      gameController.managePermissions(gameTitle);
     }
   }
 }

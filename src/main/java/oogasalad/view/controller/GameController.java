@@ -273,6 +273,10 @@ public class GameController {
     return properties.getProperty(selectedGame, "");
   }
 
+  public Map<String, Boolean> getPlayerPermissions(String gamePath){
+    return databaseController.getPlayerPermissions(gamePath);
+  }
+
   public void managePermissions(String gamePath){
     sceneManager.createManagePermissionsScene();
   }

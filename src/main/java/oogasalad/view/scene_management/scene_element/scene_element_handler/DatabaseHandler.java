@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.function.Consumer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
@@ -151,7 +153,10 @@ public class DatabaseHandler {
 
   private void setUpPlayerPermissions(Node node) {
     ListView<String> listView = (ListView<String>) node;
-    //get listview options
+    Map<String, Boolean> playerPermissions = gameController.getPlayerPermissions("Game 2");
+    ObservableList<String> playerNames = FXCollections.observableArrayList(
+        playerPermissions.keySet());
+    listView.setItems(playerNames);
     listView.setCellFactory(lv -> new ListCell<String>() {
       private CheckBox checkBox = new CheckBox();
 
@@ -163,16 +168,12 @@ public class DatabaseHandler {
           setGraphic(null);
         } else {
           setText(item);
-          checkBox.setSelected(false);
-
-          checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
-                Boolean newValue) {
-              System.out.println("CheckBox for " + item + " changed to: " + newValue);
-            }
-          });
-
+          Boolean permission = playerPermissions.get(item);
+          if (permission) {
+            checkBox.setSelected(true);
+          } else {
+            checkBox.setSelected(false);
+          }
           setGraphic(checkBox);
         }
       }

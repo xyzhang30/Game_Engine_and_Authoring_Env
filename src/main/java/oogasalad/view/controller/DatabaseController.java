@@ -1,6 +1,7 @@
 package oogasalad.view.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +23,10 @@ public class DatabaseController {
     this.databaseView = new Database();
     this.leaderboard = leaderboard;
     this.currentPlayersManager = currentPlayersManager;
+  }
+
+  public Map<String, Boolean> getPlayerPermissions(String gameName){
+    return databaseView.getPlayerPermissionsForGames(gameName);
   }
 
   public boolean canUserLogin(String username) {

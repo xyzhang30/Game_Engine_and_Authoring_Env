@@ -12,7 +12,7 @@
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>PUBLIC</text>
-    <x_layout_factor>0.25</x_layout_factor>
+    <x_layout_factor>0.4</x_layout_factor>
     <y_layout_factor>0.3</y_layout_factor>
     <style>game-text</style>
   </node>
@@ -22,7 +22,7 @@
     <type>TOGGLE</type>
     <width_factor>0.1</width_factor>
     <height_factor>0.05</height_factor>
-    <x_layout_factor>0.27</x_layout_factor>
+    <x_layout_factor>0.47</x_layout_factor>
     <y_layout_factor>0.3</y_layout_factor>
 <!--    <style>game-text</style>-->
   </node>
@@ -31,7 +31,7 @@
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>PRIVATE</text>
-    <x_layout_factor>0.35</x_layout_factor>
+    <x_layout_factor>0.6</x_layout_factor>
     <y_layout_factor>0.3</y_layout_factor>
     <style>game-text</style>
   </node>
@@ -42,7 +42,7 @@
     <width_factor>0.3</width_factor>
     <height_factor>0.45</height_factor>
     <x_layout_factor>0.35</x_layout_factor>
-    <y_layout_factor>0.3</y_layout_factor>
+    <y_layout_factor>0.45</y_layout_factor>
     <style>score-list</style>
     <event_type>DATABASE</event_type>
     <event>PLAYER_PERMISSIONS</event>
