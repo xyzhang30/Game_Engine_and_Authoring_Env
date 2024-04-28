@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
 import javafx.collections.FXCollections;
@@ -96,6 +97,17 @@ public class DatabaseHandler {
         showAlert("Login Error", "An unexpected error occurred during login.");
       }
     });
+  }
+
+  /**
+   * Shows an alert dialog to the user with specified title and message.
+   */
+  private void showAlert(String title, String message) {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle(title);
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
   }
 
   private void createUserCreatorHandler(Node node) {
