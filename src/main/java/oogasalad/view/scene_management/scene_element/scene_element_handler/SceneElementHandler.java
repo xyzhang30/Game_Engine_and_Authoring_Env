@@ -8,6 +8,7 @@ import oogasalad.view.api.enums.SceneElementEventType;
 import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.database.CurrentPlayersManager;
+import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.scene_element.GameStatusManager;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 
@@ -31,7 +32,7 @@ public class SceneElementHandler {
     this.gamePlayManagementHandler = new GamePlayManagementHandler(gameController, sceneManager);
     this.strikeHandler = new StrikeHandler(gameController, sceneManager);
     this.loadGameEventHandler = new LoadGameEventHandler(gameController, databaseController);
-    this.databaseHandler = new DatabaseHandler(sceneManager, databaseController,
+    this.databaseHandler = new DatabaseHandler(gameController,sceneManager, databaseController,
         currentPlayersManager);
     createEventTypeMap();
   }

@@ -1,6 +1,8 @@
 package oogasalad.view.gameplay;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -57,6 +59,29 @@ public class GameControllerTest extends DukeApplicationTest {
     assertNotNull(scene, "Scene should not be null after initialization.");
   }
 
+  @Test
+  public void testOpenAuthorEnvironment() {
+    runAsJFXAction(() -> gameController.openAuthorEnvironment());
+    // Verify that some authoring environment is displayed or initialized
+    // This might need checking specific components if they are available through getters or observed via changes in the scene
+  }
+
+  @Test
+  public void testGetGameTitles() {
+    // Assuming gameController.getNewGameTitles() and gameController.getSavedGameTitles() should return non-empty lists
+    assertFalse(gameController.getNewGameTitles().isEmpty(), "Should retrieve new game titles");
+    assertFalse(gameController.getSavedGameTitles().isEmpty(), "Should retrieve saved game titles");
+  }
+
+  @Test
+  public void testKeyInputHandling() {
+    // Simulate a key press event and verify the controller handles it correctly
+    runAsJFXAction(() -> {
+      gameController.moveControllableX(true, 0, 100); // Assuming true means right movement
+      // Verify that the game logic handled the movement correctly
+      // This may require access to the game state or observing changes in the UI/scene
+    });
+  }
 
 
 

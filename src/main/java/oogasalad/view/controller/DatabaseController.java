@@ -4,16 +4,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
 import oogasalad.model.database.Database;
 import oogasalad.model.database.GameScore;
 import oogasalad.view.database.CurrentPlayersManager;
+import oogasalad.view.database.Leaderboard;
 
 
 public class DatabaseController {
   private Database databaseView;
   private CurrentPlayersManager currentPlayersManager;
-  public DatabaseController(CurrentPlayersManager currentPlayersManager){
+//  public DatabaseController(CurrentPlayersManager currentPlayersManager){
+//=======
+  private Leaderboard leaderboard;
+
+  public DatabaseController(Leaderboard leaderboard, CurrentPlayersManager currentPlayersManager){
     this.databaseView = new Database();
+    this.leaderboard = leaderboard;
     this.currentPlayersManager = currentPlayersManager;
   }
 
@@ -38,17 +45,19 @@ public class DatabaseController {
   }
 
   /**
-   * Retrieves formatted score strings for a specified game, suitable for leaderboard display.
-   * @param gameName The game name for which formatted scores are needed.
-   * @return ObservableList of formatted score strings.
+   * Updates the UI component directly with the top five formatted high scores for a specified game.
+   *
+   * @param gameName The name of the game for which to update the leaderboard scores.
    */
-  public ObservableList<String> getFormattedScoresForLeaderboard(String gameName) {
+  public void getFormattedScoresForLeaderboard(String gameName) {
     List<GameScore> scores = databaseView.getGeneralHighScoresForGame(gameName, Integer.MAX_VALUE);
-    return scores.stream()
-        .sorted((s1, s2) -> Integer.compare(s2.score(), s1.score()))  //from high to low
+    ObservableList<String> formattedScores = scores.stream()
         .map(score -> formatScoreForDisplay(score))
-        .limit(5)  // only top 5 scores
+        .limit(5)
         .collect(Collectors.toCollection(FXCollections::observableArrayList));
+
+    System.out.println("scores: " + formattedScores);
+    leaderboard.saveGameScores(formattedScores);
   }
 
   /**
@@ -63,6 +72,11 @@ public class DatabaseController {
   public List<String> getPlayerNames() {
     return currentPlayersManager.getPlayerNames();
   }
+  
+  public void leaderboardSet(ListView<String> scoresListView){
+    leaderboard.setLeaderboard(scoresListView);
+  }
+
 
   public ObservableList<String> getManageableGames() {
     String host = currentPlayersManager.getHost();

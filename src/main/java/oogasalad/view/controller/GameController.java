@@ -1,5 +1,7 @@
 package oogasalad.view.controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.Properties;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -27,6 +30,7 @@ import oogasalad.view.api.enums.KeyInputType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
 import oogasalad.view.database.CurrentPlayersManager;
+import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.scene_managers.AnimationManager;
 import oogasalad.view.scene_management.element_parsers.GameTitleParser;
 import oogasalad.view.scene_management.GameWindow;
@@ -70,9 +74,10 @@ public class GameController {
    * @param height The height of the screen for the game.
    */
   public GameController(double width, double height) {
+
     CurrentPlayersManager currentPlayersManager = new CurrentPlayersManager();
-    databaseController = new DatabaseController(currentPlayersManager);
-    sceneManager = new SceneManager(this, databaseController, width, height, currentPlayersManager);
+    databaseController = new DatabaseController(new Leaderboard(), currentPlayersManager);
+    sceneManager = new SceneManager(this, databaseController, width, height);
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
     ableToStrike = true;
@@ -248,6 +253,25 @@ public class GameController {
     return KeyCode.valueOf(keyMap.get(inputType));
   }
 
+  /**
+   * Gets the description associated with the given game
+   * @param selectedGame the game to get the description for
+   * @return the description for the given game
+   */
+  public String getDescription(String selectedGame){
+      Properties properties = new Properties();
+      try {
+        FileInputStream inputStream = new FileInputStream("src/main/resources/view/properties"
+            + "/GameDescriptions.properties");
+        properties.load(inputStream);
+      } catch (IOException e) {
+        //TODO: Exception Handling
+      }
+      System.out.println(properties.getProperty(selectedGame, ""));
+      return properties.getProperty(selectedGame, "");
+    }
+
+
   private CompositeElement createCompositeElementFromGameLoader() {
     try {
       List<ViewGameObjectRecord> recordList = gameLoaderView.getViewCollidableInfo();
@@ -322,7 +346,14 @@ public class GameController {
 
     //call builderDirector to serialize gameData into JSON
     BuilderDirector builderDirector = new BuilderDirector();
-    builderDirector.writeGame(gameData.getGameName(), gameData.getGameDescription(), gameData,
+    builderDirector.writeGame(gameData.getGameName(), gameData,
         RESUME_GAME_DATA_FOLDER);
   }
+
+  public void getGameName(){
+    databaseController.getFormattedScoresForLeaderboard(gameLoaderView.getGameName());
+    System.out.println("game name" + gameLoaderView.getGameName());
+  }
+
+
 }

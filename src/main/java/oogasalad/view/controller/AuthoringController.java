@@ -41,7 +41,7 @@ import org.apache.logging.log4j.Logger;
  * @author Judy He, Jordan Haytaian, Doga Ozmen, Alisha Zhang
  */
 public class AuthoringController {
-  static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
+  static final Logger LOGGER = LogManager.getLogger(AuthoringController.class);
   private final Stage stage;
   private final AuthoringScreen authoringScreen;
   private final BuilderDirector builderDirector = new BuilderDirector();
@@ -62,9 +62,9 @@ public class AuthoringController {
     stage.show();
   }
 
-  public boolean submitGame(String gameName, String gameDescription){
+  public boolean submitGame(String gameName){
     try {
-      builderDirector.writeGame(gameName, gameDescription);
+      builderDirector.writeGame(gameName);
       return true;
     } catch (RuntimeException e) {
       LOGGER.error(e);
@@ -104,7 +104,7 @@ public class AuthoringController {
     });
 
     String turnPolicy = policies.get("turnpolicy");
-    Map<String, List<Integer>> roundCondition = commandsConditions.get("roundCondition");
+    Map<String, List<Integer>> roundCondition = commandsConditions.get("roundcondition");
     Map<String, List<Integer>> winCondition = commandsConditions.get("wincondition");
     Map<String, List<Integer>> advanceTurn = commandsConditions.get("advanceturn");
     Map<String, List<Integer>> advanceRound = commandsConditions.get("advanceround");

@@ -134,8 +134,9 @@ public class GameLoaderView extends GameLoader {
     }
   }
 
-  public String getGameDescription() {
-    return gameData.getGameDescription();
+
+  public String getGameName(){
+    return gameData.getGameName();
   }
 
 }

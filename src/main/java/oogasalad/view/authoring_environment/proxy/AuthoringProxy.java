@@ -1,10 +1,16 @@
 package oogasalad.view.authoring_environment.proxy;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -38,7 +44,6 @@ public class AuthoringProxy {
   private String currentScreenTitle;
   private AuthoringController authoringController;
   private int numPlayers = 1;
-  private String gameDescription;
 
   /**
    * Adds an interaction for a given list of shapes.
@@ -176,7 +181,7 @@ public class AuthoringProxy {
       authoringController.writeVariables();
       authoringController.writeGameObjects(gameObjectMap);
       authoringController.writeKeyPreferences(keyPreferences);
-      boolean saveGameSuccess = authoringController.submitGame(gameName, gameDescription);
+      boolean saveGameSuccess = authoringController.submitGame(gameName);
       if (saveGameSuccess) {
         showSuceessMessage("Game successfully saved!");
       } else {
@@ -230,14 +235,28 @@ public class AuthoringProxy {
   }
 
   /**
-   * Sets the game description.
+   * Writes the game description into properties file
    *
    * @param gameDescription The description of the game.
    */
-  public void setGameDescription(String gameDescription){
-    this.gameDescription = gameDescription;
-  }
+  public void saveGameDescription(String gameDescription){
+    // Load existing properties from file
+    Properties properties = new Properties();
+    try (InputStream inputStream = new FileInputStream("src/main/resources/view/properties/GameDescriptions.properties")) {
+      properties.load(inputStream);
+    } catch (IOException e) {
+      System.err.println("Error loading game description properties file: " + e.getMessage());
+    }
 
+    properties.setProperty(gameName, gameDescription);
+
+    try (OutputStream outputStream = new FileOutputStream("src/main/resources/view/properties/GameDescriptions.properties")) {
+      properties.store(outputStream, "Updated Properties");
+      System.out.println("New properties added successfully.");
+    } catch (IOException e) {
+      System.err.println("Error adding new properties: " + e.getMessage());
+    }
+  }
   /**
    * Returns the current screen title.
    *
