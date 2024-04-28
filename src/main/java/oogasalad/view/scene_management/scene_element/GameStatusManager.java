@@ -63,12 +63,12 @@ public class GameStatusManager {
   public void update(List<PlayerRecord> players, int turn, int round, Map<Integer,
       String> playerMap) {
     updateScore(players, playerMap);
-    updateTurn(turn);
+    updateTurn(turn, playerMap);
     updateRound(round);
   }
 
-  private void updateTurn(int turn) {
-    turnDisplay.setText(turnText + playerText + turn);
+  private void updateTurn(int turn, Map<Integer, String> playerMap) {
+    turnDisplay.setText(turnText + playerMap.get(turn));
   }
 
   private void updateRound(int round) {
