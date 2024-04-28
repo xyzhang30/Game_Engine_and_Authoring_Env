@@ -239,7 +239,7 @@ public class GameController {
    * @return the description for the given game
    */
   public String getDescription(String selectedGame){
-    return "hi";
+    return "description placeholder";
   }
 
   private CompositeElement createCompositeElementFromGameLoader() {
