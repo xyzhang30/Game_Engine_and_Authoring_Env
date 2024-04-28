@@ -13,7 +13,6 @@ import oogasalad.view.controller.DatabaseController;
  * @author Doga Ozmen
  */
 public class Leaderboard {
-  private DatabaseController databaseController;
   private ObservableList<String> leaderboardScores;
   private ListView<String> leaderboardListView;
 
@@ -21,7 +20,6 @@ public class Leaderboard {
    * Constructor that initializes the leaderboard's ObservableList and ListView.
    */
   public Leaderboard(DatabaseController databaseController) {
-    this.databaseController = databaseController;
     this.leaderboardScores = FXCollections.observableArrayList();
   }
 
