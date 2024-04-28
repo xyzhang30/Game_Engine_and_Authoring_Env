@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
+import java.util.Map;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.database.Database;
 import oogasalad.view.api.exception.IncorrectPasswordException;
@@ -53,6 +54,44 @@ public class DatabaseHandlerTest {
     int score3 = databaseController.getScoreFromId(players, 3);
     assertEquals(0, score3, "Score should be 0 for a non-existent player ID");
   }
+
+  @Test
+  public void testAddGameResult() {
+    // Setup
+    String gameName = "ExampleGame";
+    int gameId = 1;
+    Map<Integer, String> playerMap = Map.of(
+        1, "Alice",
+        2, "Bob"
+    );
+    PlayerRecord player1 = mock(PlayerRecord.class);
+    PlayerRecord player2 = mock(PlayerRecord.class);
+
+    // Configure player mocks
+    when(player1.playerId()).thenReturn(1);
+    when(player1.score()).thenReturn(100.0);
+    when(player2.playerId()).thenReturn(2);
+    when(player2.score()).thenReturn(150.0);
+
+    List<PlayerRecord> players = List.of(player1, player2);
+
+    // Mock Database behaviors
+    when(databaseView.addGameInstance(gameName)).thenReturn(gameId);
+
+    // Execute
+    databaseController.addGameResult(playerMap, players, gameName);
+
+    // Verify that a new game instance was added
+    verify(databaseView).addGameInstance(gameName);
+
+    // Verify that addGameScore was called correctly for the first player (winning player)
+    verify(databaseView).addGameScore(gameId, "Alice", 100, true);
+
+    // Verify that addGameScore was called correctly for the second player
+    verify(databaseView).addGameScore(gameId, "Bob", 150, false);
+  }
+
+
 
 
 
