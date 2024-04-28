@@ -163,18 +163,19 @@ public class DatabaseHandler {
   }
 
   private void createAvatarHandler(Node node) {
-    avatarComboBox = (ComboBox<String>) node; // Cast the node to ComboBox assuming it's already of this type
+    avatarComboBox = (ComboBox<String>) node; // Cast the node to ComboBox assuming it's the correct type
     // Assuming avatar URLs or identifiers are to be loaded from a service or predefined list
     ObservableList<String> avatars = FXCollections.observableArrayList(
-        "hletgoat.png",
-        "loewycreamed.png",
-        "loewyhappy.png"
+        "view/avatar_images/hletgoat.png", // These should be paths relative to src/main/resources
+        "view/avatar_images/loewycreamed.png",
+        "view/avatar_images/loewyhappy.png"
     );
-
     avatarComboBox.setItems(avatars); // Set the items in the ComboBox
+
+    // Set a prompt text for better user guidance
     avatarComboBox.setPromptText("Select an avatar");
 
-    // Set the cell factory to display images
+    // Customize rendering of the combo box list to display images
     avatarComboBox.setCellFactory(lv -> new ListCell<String>() {
       @Override
       protected void updateItem(String item, boolean empty) {
@@ -183,16 +184,14 @@ public class DatabaseHandler {
           setText(null);
           setGraphic(null);
         } else {
-          ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/data/avatar_images/" + item)));
-          imageView.setFitHeight(50); // Adjust size as needed
-          imageView.setFitWidth(50);
-          setText(item.replace(".png", "")); // Optional: Remove extension from text
+          Image img = new Image(getClass().getResourceAsStream("/" + item), 50, 50, true, true);
+          ImageView imageView = new ImageView(img);
           setGraphic(imageView);
         }
       }
     });
 
-    // Set the button cell to also display the image when selected
+    // Ensure selected item also shows as an image
     avatarComboBox.setButtonCell(new ListCell<String>() {
       @Override
       protected void updateItem(String item, boolean empty) {
@@ -201,10 +200,8 @@ public class DatabaseHandler {
           setText(null);
           setGraphic(null);
         } else {
-          ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/path/to/avatars/" + item)));
-          imageView.setFitHeight(50); // Adjust size as needed
-          imageView.setFitWidth(50);
-          setText(item.replace(".png", "")); // Optional: Remove extension from text
+          Image img = new Image(getClass().getResourceAsStream("/" + item), 50, 50, true, true);
+          ImageView imageView = new ImageView(img);
           setGraphic(imageView);
         }
       }
@@ -216,6 +213,7 @@ public class DatabaseHandler {
       System.out.println("Avatar selected: " + avatarUrlField); // Optional: for debugging
     });
   }
+
 
   private void createStartLoginHandler(Node node) {
     node.setOnMouseClicked(e -> sceneManager.createLoginScene());
