@@ -128,7 +128,8 @@ public class GameController {
    */
   public void openAuthorEnvironment() {
     AuthoringController newAuthoringController = new AuthoringController(SupportedLanguage.ENGLISH,
-        UITheme.DEFAULT, AuthoringImplementationType.DEFAULT, databaseController.getPlayerNames().get(0));
+        UITheme.DEFAULT, AuthoringImplementationType.DEFAULT,
+        databaseController.getPlayerNames().get(0));
     newAuthoringController.updateAuthoringScreen();
   }
 
@@ -142,11 +143,11 @@ public class GameController {
     gameLoaderView = new GameLoaderView(selectedGame);
     gameEngine = new GameEngine(selectedGame);
     List<String> players = databaseController.getPlayerNames();
-    playerMap = IntStream.range(1, players.size()+1)
+    playerMap = IntStream.range(1, players.size() + 1)
         .boxed()
         .collect(Collectors.toMap(
             i -> i,
-            i -> players.get(i-1)
+            i -> players.get(i - 1)
         ));
     GameRecord gameRecord = gameEngine.restoreLastStaticGameRecord();
     CompositeElement compositeElement = createCompositeElementFromGameLoader();
@@ -255,22 +256,26 @@ public class GameController {
 
   /**
    * Gets the description associated with the given game
+   *
    * @param selectedGame the game to get the description for
    * @return the description for the given game
    */
-  public String getDescription(String selectedGame){
-      Properties properties = new Properties();
-      try {
-        FileInputStream inputStream = new FileInputStream("src/main/resources/view/properties"
-            + "/GameDescriptions.properties");
-        properties.load(inputStream);
-      } catch (IOException e) {
-        //TODO: Exception Handling
-      }
-      System.out.println(properties.getProperty(selectedGame, ""));
-      return properties.getProperty(selectedGame, "");
+  public String getDescription(String selectedGame) {
+    Properties properties = new Properties();
+    try {
+      FileInputStream inputStream = new FileInputStream("src/main/resources/view/properties"
+          + "/GameDescriptions.properties");
+      properties.load(inputStream);
+    } catch (IOException e) {
+      //TODO: Exception Handling
     }
+    System.out.println(properties.getProperty(selectedGame, ""));
+    return properties.getProperty(selectedGame, "");
+  }
 
+  public void managePermissions(String gamePath){
+    sceneManager.createManagePermissionsScene();
+  }
 
   private CompositeElement createCompositeElementFromGameLoader() {
     try {
@@ -350,7 +355,7 @@ public class GameController {
         RESUME_GAME_DATA_FOLDER);
   }
 
-  public void getGameName(){
+  public void getGameName() {
     databaseController.getFormattedScoresForLeaderboard(gameLoaderView.getGameName());
     System.out.println("game name" + gameLoaderView.getGameName());
   }
