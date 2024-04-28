@@ -76,13 +76,6 @@ public class PolicyPanel implements Panel {
     this.resourceBundle = ResourceBundle.getBundle(
         RESOURCE_FOLDER_PATH + VIEW_PROPERTIES_FOLDER + UI_FILE_PREFIX + language);
     createElements();
-    System.out.println("comboboxs");
-    for (ComboBox<String> c : singleChoiceComboxBoxes.keySet()) {
-      System.out.println(c + " - policytypename: " + singleChoiceComboxBoxes.get(c));
-    }
-    for (String s : commandPackageMap.keySet()) {
-      System.out.println(s + " is using " + commandPackageMap.get(s));
-    }
     handleEvents();
   }
 
@@ -100,7 +93,6 @@ public class PolicyPanel implements Panel {
     for (Field policyType : fields) {
       String policyLabel = String.join(" ", policyType.getName().split("_")) + ": ";
       String policyNameConcat = String.join("", policyType.getName().toLowerCase().split("_"));
-      System.out.println(policyLabel);
 
       if (policyType.isAnnotationPresent(ChoiceType.class)) {
         ChoiceType choiceTypeAnnotation = policyType.getAnnotation(ChoiceType.class);
@@ -163,11 +155,8 @@ public class PolicyPanel implements Panel {
   }
 
   private List<Integer> enterParam(String commandType, String commandPackage, String newValue) {
-    System.out.println(
-        "selected:" + REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue);
     String classPath = REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue;
     try {
-      System.out.println("path: " + classPath);
       Class<?> clazz = Class.forName(classPath);
       if (!commandPackage.equals("strike") && !commandPackage.equals("turn")
           && !commandPackage.equals("rank")) {
@@ -201,9 +190,6 @@ public class PolicyPanel implements Panel {
   }
 
   private void saveSelectionNoParam(String commandType, String commandName) {
-    System.out.println("---SAVING TO PROXY | NO PARAM ---");
-    System.out.println("commandType: " + commandType);
-    System.out.println("commandName: " + commandName);
     authoringProxy.addNoParamPolicies(commandType, commandName);
   }
 
@@ -276,14 +262,11 @@ public class PolicyPanel implements Panel {
     Path path = Paths.get(GAME_ENGINE_PACKAGE_PATH + commandPackage);
     File packageDir = path.toFile();
     List<String> commands = new ArrayList<>();
-    System.out.println("packageDir.isDirectory() " + packageDir.isDirectory());
     if (packageDir.isDirectory()) {
       File[] files = packageDir.listFiles((dir, name) -> {
         if (name.endsWith(".java")) {
           try {
             String className = name.substring(0, name.length() - 5); // Remove ".java" extension
-            System.out.println("CLASS NAME: " + className);
-
             Class<?> clazz = Class.forName(
                 REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + className);
             boolean isCommand = clazz.getDeclaredAnnotation(IsCommand.class).isCommand();
@@ -292,7 +275,7 @@ public class PolicyPanel implements Panel {
             }
             return isCommand;
           } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
+            LOGGER.warn("command not found");
             return false;
           }
         }
@@ -315,10 +298,6 @@ public class PolicyPanel implements Panel {
               commandPackageMap.get(singleChoiceComboxBoxes.get(comboBox)),
               newValue); //commandPackage, newValue
           if (params != null) {
-            System.out.println("---REPLACING TO PROXY | WITH PARAM ---");
-            System.out.println("commandType: " + comboBox.getId());
-            System.out.println("commandName: " + newValue);
-            System.out.println("paramList: " + params);
             authoringProxy.replaceConditionsCommandsWithParam(comboBox.getId(), newValue, params);
           }
         }
@@ -340,7 +319,6 @@ public class PolicyPanel implements Panel {
                         selectedCommand, params);
                   }
                   authoringProxy.updateMultiCommandCheckedIdx(checkComboBox.getId(), checkComboBox.getCheckModel().getCheckedIndices());
-                  System.out.println("ADDED -- NEW CHECKEDIDX MAP: "+authoringProxy.getMultiCommandCheckedIdx());
                 }
               }
               if (c.wasRemoved()) {
