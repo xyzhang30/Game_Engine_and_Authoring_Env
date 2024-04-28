@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -79,14 +80,14 @@ public class Database implements DatabaseApi {
    */
 
   @Override
-  public ObservableList<GameScore> getGeneralHighScoresForGame(String gameName) {
+  public ObservableList<GameScore> getGeneralHighScoresForGame(String gameName, boolean desc) {
     List<GameScore> scores = new ArrayList<>();
     String query = "SELECT gr.playerusername, gr.score, gr.gameresult " +
         "FROM gameresult gr " +
         "JOIN gameinstance gi ON gr.gameinstanceid = gi.gameinstanceid " +
         "WHERE gi.gamename = ? " +
-        "ORDER BY gr.score DESC";
-
+        "ORDER BY gr.score ";
+    query += desc ? "DESC" : "";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query)) {
       pstmt.setString(1, gameName);
@@ -100,7 +101,7 @@ public class Database implements DatabaseApi {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return FXCollections.observableList(scores);
+    return FXCollections.observableList(scores.subList(0,Math.min(10,scores.size() )));
   }
 
   /**
@@ -175,12 +176,9 @@ public class Database implements DatabaseApi {
         stmt.executeUpdate();
 
         for (String gameName : getAllGames()) {
-          System.out.println(gameName);
-          try {
-            grantPermissions(username, gameName, isGamePublic(gameName) ? "Player" : "None");
-          } catch (SQLException e) {
-
-          }
+          grantPermissions(username, gameName, getGameAccessibility(gameName).equals("public") ?
+                "Player" :
+                "None");
         }
         return true;
       }
@@ -208,28 +206,28 @@ public class Database implements DatabaseApi {
 
 
   //returns true if game is publicly available, otherwise false
-  public boolean isGamePublic(String gameName) {
-    String sql = "SELECT public FROM Games WHERE gamename = ?";
+  public String getGameAccessibility(String gameName) {
+    String sql = "SELECT accessibility FROM Games WHERE gamename = ?";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, gameName);
       try (ResultSet rs = pstmt.executeQuery()) {
         if (rs.next()) {
-          return rs.getBoolean("public");
+          return rs.getString("accessibility");
         }
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return false;
+    return "public";
   }
 
   @Override
-  public void setGamePublic(String gameName, boolean isPublic) {
-    String sql = "UPDATE Games SET public = ? WHERE gamename = ?";
+  public void setGameAccessibility(String gameName, String accessibility) {
+    String sql = "UPDATE Games SET accessibility = ? WHERE gamename = ?";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setBoolean(1, isPublic);
+      pstmt.setString(1, accessibility);
       pstmt.setString(2, gameName);
       pstmt.executeUpdate();
     } catch (SQLException e) {
@@ -244,24 +242,24 @@ public class Database implements DatabaseApi {
    * @param gameName        The name of the game.
    * @param ownerName       The name of the owner of the game.
    * @param numPlayers      The number of players required for the game.
-   * @param publicOrPrivate True if the game is public, false if private.
    * @return True if the game is successfully registered, false otherwise.
    */
 
   @Override
   public boolean registerGame(String gameName, String ownerName, int numPlayers,
-      boolean publicOrPrivate) {
-    String sql = "INSERT INTO Games (gamename, owner, numplayers, public) VALUES (?, ?, ?, ?) ON "
+      String accessibility) {
+    String sql = "INSERT INTO Games (gamename, owner, numplayers, accessibility) VALUES (?, ?, ?, "
+        + "?) ON "
         + "CONFLICT DO NOTHING";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, gameName);
       pstmt.setString(2, ownerName);
       pstmt.setInt(3, numPlayers);
-      pstmt.setBoolean(4, publicOrPrivate);
+      pstmt.setString(4, accessibility);
       int affectedRows = pstmt.executeUpdate();
-      String permission = publicOrPrivate ? "Player" : "None";
       for (String username : getAllPlayers()) {
+        String permission = accessibility.equals("public") || (accessibility.equals("friends") && areFriends(ownerName, username, conn)) ? "Player" : "None";
         grantPermissions(username, gameName, permission);
       }
       grantPermissions(ownerName, gameName, "Owner");
@@ -431,5 +429,86 @@ public class Database implements DatabaseApi {
       e.printStackTrace();
     }
     return FXCollections.observableList(gameNames);
+  }
+
+  @Override
+  public void assignFriends(String player, List<String> friends, List<String> notFriends) {
+    try (Connection conn = DatabaseConfig.getConnection()) {
+      // Insert friendships for friends if they don't exist
+      for (String friend : friends) {
+        if (!areFriends(player, friend, conn)) {
+          insertFriendship(player, friend, conn);
+        }
+      }
+
+      // Remove not friendships from the database
+      for (String notFriend : notFriends) {
+        if (areFriends(player, notFriend, conn)) {
+          removeFriendship(player, notFriend, conn);
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private boolean areFriends(String player1, String player2, Connection conn) throws SQLException {
+    String sql = "SELECT EXISTS (SELECT 1 FROM friendships WHERE (player_username = ? AND friend_username = ?) OR (player_username = ? AND friend_username = ?))";
+    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, player1);
+      pstmt.setString(2, player2);
+      pstmt.setString(3, player2);
+      pstmt.setString(4, player1);
+      try (ResultSet rs = pstmt.executeQuery()) {
+        if (rs.next()) {
+          return rs.getBoolean(1);
+        }
+      }
+    }
+    return false; // Default to false if an error occurs
+  }
+
+  private void insertFriendship(String player1, String player2, Connection conn) throws SQLException {
+    String sql = "INSERT INTO friendships (player_username, friend_username) VALUES (?, ?)";
+    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, player1);
+      pstmt.setString(2, player2);
+      pstmt.executeUpdate();
+    }
+  }
+
+  private void removeFriendship(String player1, String player2, Connection conn) throws SQLException {
+    String sql = "DELETE FROM friendships WHERE (player_username = ? AND friend_username = ?) OR (player_username = ? AND friend_username = ?)";
+    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, player1);
+      pstmt.setString(2, player2);
+      pstmt.setString(3, player2);
+      pstmt.setString(4, player1);
+      pstmt.executeUpdate();
+    }
+  }
+
+  @Override
+  public Map<String, Boolean> getFriends(String player) {
+    Map<String, Boolean> friendsMap = new HashMap<>();
+    String query = "SELECT p.username, COALESCE(f.friendship_status, false) AS is_friend FROM players p LEFT JOIN ( SELECT CASE WHEN player_username = ? THEN friend_username ELSE player_username END AS friend, true AS friendship_status FROM friendships WHERE player_username = ?) f ON p.username = f.friend WHERE p.username != ?;";
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(query)) {
+      pstmt.setString(1, player);
+      pstmt.setString(2, player);
+      pstmt.setString(3, player);
+
+      try (ResultSet rs = pstmt.executeQuery()) {
+        while (rs.next()) {
+          String username = rs.getString("username");
+          boolean isFriend = rs.getBoolean("is_friend");
+          friendsMap.put(username, isFriend);
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return friendsMap;
+
   }
 }

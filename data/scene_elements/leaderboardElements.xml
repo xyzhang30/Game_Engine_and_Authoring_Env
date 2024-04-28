@@ -20,5 +20,16 @@
     <event>LEADERBOARD_SCORES</event>
   </node>
 
-
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>BACK</text>
+    <width_factor>0.05</width_factor>
+    <height_factor>0.05</height_factor>
+    <x_layout_factor>0.03</x_layout_factor>
+    <y_layout_factor>0.9</y_layout_factor>
+    <style>game-button</style>
+    <event_type>CHANGE_SCENE</event_type>
+    <event>GAME_OVER</event>
+  </node>
 </scene_elements>

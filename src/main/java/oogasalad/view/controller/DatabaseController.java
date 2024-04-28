@@ -29,6 +29,7 @@ public class DatabaseController {
 
   public void writePlayerPermissions(String gameName, List<String> playersWithAccess,
       List<String> playersWithoutAccess) {
+    System.out.println(playersWithAccess);
     databaseView.assignPermissionToPlayers(gameName, playersWithAccess, "Player");
     databaseView.assignPermissionToPlayers(gameName, playersWithoutAccess, "None");
   }
@@ -37,12 +38,12 @@ public class DatabaseController {
     return databaseView.getPlayerPermissionsForGames(gameName);
   }
 
-  public boolean isPublic(String gameName) {
-    return databaseView.isGamePublic(gameName);
+  public String getGameAccessibility(String gameName) {
+    return databaseView.getGameAccessibility(gameName);
   }
 
-  public void setPublicPrivate(String gameName, boolean isPublic) {
-    databaseView.setGamePublic(gameName, isPublic);
+  public void setPublicPrivate(String gameName, String accessibility) {
+    databaseView.setGameAccessibility(gameName, accessibility);
   }
 
 
@@ -94,7 +95,7 @@ public class DatabaseController {
    * @param gameName The name of the game for which to update the leaderboard scores.
    */
   public void getFormattedScoresForLeaderboard(String gameName, boolean descending) {
-    List<GameScore> scores = databaseView.getGeneralHighScoresForGame(gameName);
+    List<GameScore> scores = databaseView.getGeneralHighScoresForGame(gameName, descending);
     ObservableList<String> formattedScores = scores.stream()
         .sorted(Comparator.comparing(GameScore::score))
         .map(this::formatScoreForDisplay)
@@ -143,5 +144,13 @@ public class DatabaseController {
       }
     }
     return 0;
+  }
+
+  public void writeFriends(String player, List<String> friends, List<String> notFriends) {
+    databaseView.assignFriends(player, friends, notFriends);
+  }
+
+  public Map<String, Boolean> getFriends(String player) {
+    return databaseView.getFriends(player);
   }
 }

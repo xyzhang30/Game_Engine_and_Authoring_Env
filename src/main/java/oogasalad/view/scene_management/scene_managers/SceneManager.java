@@ -63,6 +63,9 @@ public class SceneManager {
   private final String leaderboardElementsPath =
       "data/scene_elements/leaderboardElements.xml";
 
+  private final String addFriendScenePath =
+      "data/scene_elements/addFriends.xml";
+
   private DatabaseController databaseController;
 
 
@@ -257,9 +260,10 @@ public class SceneManager {
     root.getChildren().add(transitionElements);
   }
 
-  public void createGameOverScene() {
+  public void createGameOverScene( ) {
     resetRoot();
     root.getChildren().add(createSceneElements(gameOverSceneElementsPath));
+    gameStatusManager.restoreLastUpdate();
   }
 
 
@@ -321,9 +325,9 @@ public class SceneManager {
       String gameName) {
     if (gameRecord.gameOver()) {
       databaseController.addGameResult(playerMap, gameRecord.players(), gameName);
-      createGameOverScene();
       gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round(),
           playerMap);
+      createGameOverScene();
     } else if (gameRecord.round() != currentRound) {
       currentRound = gameRecord.round();
       createTransitionDisplay();
@@ -357,4 +361,8 @@ public class SceneManager {
     alert.showAndWait();
   }
 
+  public void createAddFriendScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(addFriendScenePath));
+  }
 }
