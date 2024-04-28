@@ -34,7 +34,7 @@ public class DatabaseController {
     return databaseView.doesUserExist(username);  // user exists, can log in
   }
 
-  public boolean loginUser(String username, String password){
+  public boolean loginUser(String username, String password) throws UserNotFoundException, IncorrectPasswordException{
     System.out.println(databaseView.loginUser(username, password));
     if (canUserLogin(username) == false) {
       throw new UserNotFoundException("Username does not exist.");
