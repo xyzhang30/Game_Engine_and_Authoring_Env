@@ -15,6 +15,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.api.exception.IncorrectPasswordException;
 import oogasalad.view.api.exception.UserNotFoundException;
@@ -164,14 +166,49 @@ public class DatabaseHandler {
     avatarComboBox = (ComboBox<String>) node; // Cast the node to ComboBox assuming it's already of this type
     // Assuming avatar URLs or identifiers are to be loaded from a service or predefined list
     ObservableList<String> avatars = FXCollections.observableArrayList(
-        "Avatar1.png", // These should be actual URLs or resource identifiers
+        "Avatar1.png",
         "Avatar2.png",
         "Avatar3.png"
     );
-    avatarComboBox.setItems(avatars); // Set the items in the ComboBox
 
-    // Optional: Set a prompt text for better user guidance
+    avatarComboBox.setItems(avatars); // Set the items in the ComboBox
     avatarComboBox.setPromptText("Select an avatar");
+
+    // Set the cell factory to display images
+    avatarComboBox.setCellFactory(lv -> new ListCell<String>() {
+      @Override
+      protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+          setGraphic(null);
+        } else {
+          ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/path/to/avatars/" + item)));
+          imageView.setFitHeight(50); // Adjust size as needed
+          imageView.setFitWidth(50);
+          setText(item.replace(".png", "")); // Optional: Remove extension from text
+          setGraphic(imageView);
+        }
+      }
+    });
+
+    // Set the button cell to also display the image when selected
+    avatarComboBox.setButtonCell(new ListCell<String>() {
+      @Override
+      protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+          setGraphic(null);
+        } else {
+          ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/path/to/avatars/" + item)));
+          imageView.setFitHeight(50); // Adjust size as needed
+          imageView.setFitWidth(50);
+          setText(item.replace(".png", "")); // Optional: Remove extension from text
+          setGraphic(imageView);
+        }
+      }
+    });
 
     // Handle the selection of an avatar
     avatarComboBox.setOnAction(e -> {
