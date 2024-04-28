@@ -46,6 +46,8 @@ public class DatabaseController {
     databaseView.setGameAccessibility(gameName, accessibility);
   }
 
+
+
   public boolean canUserLogin(String username) {
     // if false then throw this exception throw new Exception("Login failed: User does not exist.");
     System.out.println(databaseView.doesUserExist(username));
