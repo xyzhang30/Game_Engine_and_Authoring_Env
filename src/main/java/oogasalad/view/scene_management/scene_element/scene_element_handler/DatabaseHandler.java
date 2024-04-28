@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
@@ -31,6 +32,7 @@ public class DatabaseHandler {
   private TextField passwordField;
   private ListView<String> playerPermissions;
   private ListView<String> friends;
+  private Map<String, CheckBox> playerCheckBoxMap;
   private ComboBox<String> publicComboBox;
   private String avatarUrlField;
   private String currentGame;
@@ -182,7 +184,7 @@ public class DatabaseHandler {
   private void setUpPlayerPermissions(Node node) {
     playerPermissions = (ListView<String>) node;
     playerPermissionMap = gameController.getPlayerPermissions(currentGame);
-    Map<String, CheckBox> playerCheckBoxMap = new HashMap<>(); // Map to store player names to their corresponding checkboxes
+    playerCheckBoxMap = new HashMap<>(); // Map to store player names to their corresponding checkboxes
 
     ObservableList<String> playerNames = FXCollections.observableArrayList(playerPermissionMap.keySet());
     playerPermissions.setItems(playerNames);
@@ -256,9 +258,7 @@ public class DatabaseHandler {
               uncheckedPlayers.add(item);
             }
           }
-
       databaseController.setPublicPrivate(currentGame, publicComboBox.getSelectionModel().getSelectedItem());
-
       databaseController.writePlayerPermissions(currentGame, checkedPlayers, uncheckedPlayers);
       sceneManager.createMenuScene();
     });
@@ -285,10 +285,30 @@ public class DatabaseHandler {
 
   private void createAccessibilityHandler(Node node) {
     publicComboBox = (ComboBox<String>) node;
-    ObservableList<String> publicPrivateList = FXCollections.observableArrayList("Public",
-        "Private", "Friends");
+    ObservableList<String> publicPrivateList = FXCollections.observableArrayList("public",
+        "private", "friends");
     publicComboBox.setItems(publicPrivateList);
     publicComboBox.getSelectionModel().select(databaseController.getGameAccessibility(currentGame));
+    publicComboBox.setOnAction(this::accessibilityBoxSelected);
+  }
+
+  private void accessibilityBoxSelected(ActionEvent event) {
+    String mode = publicComboBox.getValue();
+    friendsMap = databaseController.getFriends(currentPlayersManager.get(0));
+    for (String s : playerCheckBoxMap.keySet()) {
+      if (mode.equals("public")) {
+        playerCheckBoxMap.get(s).setSelected(true);
+        playerPermissionMap.put(s,true);
+      }
+      if (mode.equals("private")) {
+        playerCheckBoxMap.get(s).setSelected(false);
+        playerPermissionMap.put(s,false);
+      }
+      if (mode.equals("friends")) {
+        playerCheckBoxMap.get(s).setSelected(friendsMap.containsKey(s) && friendsMap.get(s));
+        playerPermissionMap.put(s,friendsMap.containsKey(s) && friendsMap.get(s));
+      }
+    }
   }
 
   public void setGame(String gameTitle) {

@@ -29,6 +29,7 @@ public class DatabaseController {
 
   public void writePlayerPermissions(String gameName, List<String> playersWithAccess,
       List<String> playersWithoutAccess) {
+    System.out.println(playersWithAccess);
     databaseView.assignPermissionToPlayers(gameName, playersWithAccess, "Player");
     databaseView.assignPermissionToPlayers(gameName, playersWithoutAccess, "None");
   }

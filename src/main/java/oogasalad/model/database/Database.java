@@ -218,7 +218,7 @@ public class Database implements DatabaseApi {
       pstmt.setString(1, gameName);
       try (ResultSet rs = pstmt.executeQuery()) {
         if (rs.next()) {
-          return rs.getString("public");
+          return rs.getString("accessibility");
         }
       }
     } catch (SQLException e) {
