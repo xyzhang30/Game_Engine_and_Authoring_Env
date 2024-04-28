@@ -13,6 +13,7 @@ import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.GameObjectShape;
 import oogasalad.model.api.data.KeyPreferences;
+import oogasalad.model.api.exception.InvalidColorParsingException;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.api.exception.MissingJsonGameInfoException;
@@ -33,7 +34,7 @@ public class GameLoaderView extends GameLoader {
   private StrikeablesView strikeablesView;
   private Map<KeyInputType, String> keys;
 
-  public GameLoaderView(String gameName) throws InvalidShapeException {
+  public GameLoaderView(String gameName) throws InvalidShapeException, InvalidColorParsingException{
     super(gameName);
     createViewRecord("Default");
     createKeysMap();
@@ -78,7 +79,7 @@ public class GameLoaderView extends GameLoader {
     }
   }
 
-  public void createViewRecord(String mod) throws InvalidShapeException {
+  public void createViewRecord(String mod) throws InvalidShapeException, InvalidColorParsingException {
     List<Integer> strikeableIDs = new ArrayList<>();
     viewGameObjectRecords = new ArrayList<>();
     for (GameObjectProperties o : gameData.getGameObjectProperties()) {
@@ -88,8 +89,13 @@ public class GameLoaderView extends GameLoader {
       int id = o.collidableId();
       String shape = matchShape(o.shape());
       List<Integer> colorRgb = new ArrayList<>();
-      for (int i : o.color().getOrDefault(mod, o.color().get("Default"))) {
-        colorRgb.add(validateRgbValue(i));
+      try {
+        for (int i : o.color().getOrDefault(mod, o.color().get("Default"))) {
+          colorRgb.add(validateRgbValue(i));
+        }
+      } catch (NullPointerException e){
+        LOGGER.error("Color error during parsing - " +e.getMessage());
+        throw new InvalidColorParsingException(e.getMessage());
       }
       double xdimension = o.dimension().xDimension();
       double ydimension = o.dimension().yDimension();

@@ -18,6 +18,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
+import oogasalad.model.api.exception.IncompletePlayerStrikeableAuthoringException;
 import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
 import oogasalad.view.authoring_environment.panels.KeySelectionPanel;
 import oogasalad.view.authoring_environment.util.Container;
@@ -270,7 +272,7 @@ public class AuthoringScreen {
         authoringProxy.setGameName(gameNameTextField.getText());
         authoringProxy.saveGameDescription(gameDescriptionTextField.getText());
         authoringProxy.setGamePermission(permissionSelection.getValue());
-        authoringProxy.completeAuthoring();
+        authoringProxy.completeAuthoring(scene);
       });
     }
 

@@ -19,6 +19,7 @@ import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
 import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
+import oogasalad.model.api.exception.IncompletePlayerStrikeableAuthoringException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.view.authoring_environment.AuthoringScreen;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
@@ -84,14 +85,19 @@ public class AuthoringController {
     builderDirector.constructVaraibles(List.of(variables));
   }
 
-  public void writePlayers(Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
+  public void writePlayers(Map<Integer, Map<CollidableType, List<Integer>>> playersMap) throws IncompletePlayerStrikeableAuthoringException {
     List<ParserPlayer> players = new ArrayList<>();
     playersMap.forEach((playerId, myGameObjects) -> {
       System.out.println("collidables:"+playersMap.get(playerId).get(CollidableType.STRIKABLE));
-      ParserPlayer player = new ParserPlayer(playerId,
-          playersMap.get(playerId).get(CollidableType.STRIKABLE),
-          playersMap.get(playerId).get(CollidableType.SCOREABLE),
-          playersMap.get(playerId).get(CollidableType.CONTROLLABLE),0, playersMap.get(playerId).get(CollidableType.STRIKABLE).get(0));
+      ParserPlayer player;
+      try {
+        player = new ParserPlayer(playerId,
+            playersMap.get(playerId).get(CollidableType.STRIKABLE),
+            playersMap.get(playerId).get(CollidableType.SCOREABLE),
+            playersMap.get(playerId).get(CollidableType.CONTROLLABLE),0, playersMap.get(playerId).get(CollidableType.STRIKABLE).get(0));
+      } catch (IndexOutOfBoundsException e) {
+        throw new IncompletePlayerStrikeableAuthoringException("Please assign a strikeable game object to each player.");
+      }
       players.add(player);
       if (playerId == 1){
         firstActiveStrikeableId = playersMap.get(playerId).get(CollidableType.STRIKABLE).get(0);

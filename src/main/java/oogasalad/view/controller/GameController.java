@@ -11,6 +11,7 @@ import java.util.stream.IntStream;
 import java.util.Properties;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
@@ -20,9 +21,13 @@ import oogasalad.model.api.data.GlobalVariables;
 import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Variables;
+import oogasalad.model.api.exception.InvalidColorParsingException;
+import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.api.exception.InvalidImageException;
+import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
+import oogasalad.view.Warning;
 import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.KeyInputType;
 import oogasalad.view.api.enums.SupportedLanguage;
@@ -47,6 +52,7 @@ public class GameController {
 
   private static final String RESUME_GAME_DATA_FOLDER = "data/resume_game/";
   private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
+  private static final Warning WARNING = new Warning();
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
   private final GameTitleParser gameTitleParser;
@@ -138,8 +144,19 @@ public class GameController {
    * @param selectedGame the game title selected to play
    */
   public void startGamePlay(String selectedGame) {
-    gameLoaderView = new GameLoaderView(selectedGame);
-    gameEngine = new GameEngine(selectedGame);
+    try {
+      gameLoaderView = new GameLoaderView(selectedGame);
+      gameEngine = new GameEngine(selectedGame);
+    } catch (InvalidFileException e){
+      WARNING.showAlert(this.getScene(), AlertType.ERROR, "Start Game Error", null, "Can't find game file");
+      return;
+    } catch (InvalidColorParsingException e){
+      WARNING.showAlert(this.getScene(), AlertType.ERROR, "Parsing Color Error", null, "Cannot find corresponding color or mod");
+      return;
+    } catch (InvalidShapeException e){
+      WARNING.showAlert(this.getScene(), AlertType.ERROR, "Parsing Shape Error", null, e.getMessage());
+      return;
+    }
     List<String> players = databaseController.getPlayerNames();
     playerMap = IntStream.range(1, players.size() + 1)
         .boxed()
@@ -237,7 +254,15 @@ public class GameController {
   }
 
   public void changeMod(String selectedMod) {
-    gameLoaderView.createViewRecord(selectedMod);
+    try{
+      gameLoaderView.createViewRecord(selectedMod);
+    } catch (InvalidColorParsingException e){
+      WARNING.showAlert(this.getScene(), AlertType.ERROR, "Parsing Color Error", null, "Cannot find corresponding color or mod");
+      return;
+    } catch (InvalidShapeException e){
+      WARNING.showAlert(this.getScene(), AlertType.ERROR, "Parsing Shape Error", null, e.getMessage());
+      return;
+    }
     sceneManager.changeMod(gameLoaderView.getViewCollidableInfo());
   }
 

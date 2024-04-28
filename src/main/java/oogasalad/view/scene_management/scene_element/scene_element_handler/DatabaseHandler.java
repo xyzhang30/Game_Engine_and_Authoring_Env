@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
@@ -17,12 +18,18 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import oogasalad.model.gameengine.GameEngine;
+import oogasalad.view.Warning;
 import oogasalad.view.api.enums.SceneElementEvent;
+import oogasalad.view.api.exception.CreateNewUserException;
+import oogasalad.view.api.exception.CreatingDuplicateUserException;
 import oogasalad.view.api.exception.IncorrectPasswordException;
 import oogasalad.view.api.exception.UserNotFoundException;
 import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DatabaseHandler {
 
@@ -40,9 +47,10 @@ public class DatabaseHandler {
   private String currentGame;
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
   private Map<String, Boolean> playerPermissionMap;
+  private static final Logger LOGGER = LogManager.getLogger(DatabaseHandler.class);
+  private static final Warning WARNING = new Warning();
   private Map<String, Boolean> friendsMap;
   private ComboBox<String> avatarComboBox;  // ComboBox for selecting an avatar
-
 
   public DatabaseHandler(GameController gameController, SceneManager sceneManager,
       DatabaseController databaseController,
@@ -96,21 +104,23 @@ public class DatabaseHandler {
       try {
         boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(), passwordField.getText());
         if (userLoggedIn) {
-          currentPlayersManager.add(usernameTextField.getText());
-          sceneManager.createCurrentPlayersScene();
+          if(currentPlayersManager.contains(usernameTextField.getText())) {
+            showAlert("Player Already Added to Game", "You can't play against yourself!");
+          }
+          else {
+            currentPlayersManager.add(usernameTextField.getText());
+            sceneManager.createCurrentPlayersScene();
+          }
         }
-      } catch (UserNotFoundException ex) {
-        System.err.println(ex.getMessage());
-        // Show an alert or update the UI to notify the user that the username does not exist
-        showAlert("Login Error", ex.getMessage());
-      } catch (IncorrectPasswordException ex) {
-        System.err.println(ex.getMessage());
-        // Show an alert or update the UI to notify the user that the password is incorrect
-        showAlert("Login Error", ex.getMessage());
+      } catch (UserNotFoundException | IncorrectPasswordException ex) {
+        LOGGER.error(ex.getMessage());
+        Warning warning = new Warning();
+        warning.showAlert(this.sceneManager.getScene(), AlertType.ERROR, "Login Error", null, ex.getMessage());
       } catch (Exception ex) {
-        System.err.println("An unexpected error occurred during login: " + ex.getMessage());
+        LOGGER.error("An unexpected error occurred during login: " + ex.getMessage());
         // Handle other unexpected errors
-        showAlert("Login Error", "An unexpected error occurred during login.");
+        Warning warning = new Warning();
+        warning.showAlert(this.sceneManager.getScene(), AlertType.ERROR, "Login Error", null, "An unexpected error occurred during login.");
       }
     });
   }
@@ -134,17 +144,12 @@ public class DatabaseHandler {
         boolean userCreated = databaseController.canCreateUser(usernameTextField.getText(),
             passwordField.getText(), avatarUrlField);
         System.out.println(userCreated);
-        if (userCreated) {
-          // user created
-          sceneManager.createCurrentPlayersScene();
-          currentPlayersManager.add(usernameTextField.getText());
-          System.out.println("createLoginHandler: user created");
-        } else {
-          // user already exists or can't be created
-          sceneManager.displayErrorMessage("User already exists or could not be created.");
+        if (!userCreated) {
+          LOGGER.error("User creation error - user already exists or could not be created.");
+          throw new CreateNewUserException("User already exists or could not be created.");
         }
-      } catch (Exception ex) {
-        sceneManager.displayErrorMessage("Error: " + ex.getMessage());
+      } catch (CreateNewUserException | CreatingDuplicateUserException ex) {
+        WARNING.showAlert(this.sceneManager.getScene(), AlertType.ERROR,"Creating New User Error", null, ex.getMessage());
       }
     });
     //add the new user to the database
