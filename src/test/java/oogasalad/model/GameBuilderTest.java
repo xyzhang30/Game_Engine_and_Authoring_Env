@@ -89,7 +89,7 @@ public class GameBuilderTest {
   public void testInvalidJSONData() {
     InvalidJSONDataException exception = assertThrows(InvalidJSONDataException.class, () -> {
       BuilderDirector invalidGameBuilder = new BuilderDirector();
-      invalidGameBuilder.writeGame("testAuthoringMiniGolf", "");
+      invalidGameBuilder.writeGame("testAuthoringMiniGolf");
     });
 
     String expectedMessage = "Error writing JSON game configuration file:";
@@ -100,7 +100,7 @@ public class GameBuilderTest {
 
   @Test
   public void testWriteJSON() throws IOException {
-    this.testBuilderDirector.writeGame(testFileName, "");
+    this.testBuilderDirector.writeGame(testFileName);
     ObjectMapper mapper = new ObjectMapper();
     File expected = new File(expectedFilePath);
     File tested = new File("data/playable_games/"+testFileName+".json");

@@ -258,7 +258,7 @@ public class AuthoringScreen {
       submitGameNameButton.setOnAction(e -> {
         gameNameStage.close();
         authoringProxy.setGameName(gameNameTextField.getText());
-        authoringProxy.setGameDescription(gameDescriptionTextField.getText());
+        authoringProxy.saveGameDescription(gameDescriptionTextField.getText());
         authoringProxy.completeAuthoring();
       });
     }

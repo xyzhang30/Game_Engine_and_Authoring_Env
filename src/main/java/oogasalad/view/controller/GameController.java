@@ -329,7 +329,7 @@ public class GameController {
 
     //call builderDirector to serialize gameData into JSON
     BuilderDirector builderDirector = new BuilderDirector();
-    builderDirector.writeGame(gameData.getGameName(), gameData.getGameDescription(), gameData,
+    builderDirector.writeGame(gameData.getGameName(), gameData,
         RESUME_GAME_DATA_FOLDER);
   }
 }
