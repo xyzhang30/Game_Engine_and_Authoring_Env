@@ -166,9 +166,9 @@ public class DatabaseHandler {
     avatarComboBox = (ComboBox<String>) node; // Cast the node to ComboBox assuming it's already of this type
     // Assuming avatar URLs or identifiers are to be loaded from a service or predefined list
     ObservableList<String> avatars = FXCollections.observableArrayList(
-        "Avatar1.png",
-        "Avatar2.png",
-        "Avatar3.png"
+        "hletgoat.png",
+        "loewycreamed.png",
+        "loewyhappy.png"
     );
 
     avatarComboBox.setItems(avatars); // Set the items in the ComboBox
@@ -183,7 +183,7 @@ public class DatabaseHandler {
           setText(null);
           setGraphic(null);
         } else {
-          ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/path/to/avatars/" + item)));
+          ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/data/avatar_images/" + item)));
           imageView.setFitHeight(50); // Adjust size as needed
           imageView.setFitWidth(50);
           setText(item.replace(".png", "")); // Optional: Remove extension from text
