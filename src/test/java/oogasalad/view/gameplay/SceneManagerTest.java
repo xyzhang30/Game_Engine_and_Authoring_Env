@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +24,8 @@ public class SceneManagerTest extends DukeApplicationTest {
   public void setUp() throws InterruptedException {
     Platform.runLater(() -> {
       testStage = new Stage();
-      sceneManager = new SceneManager(new GameController(800, 600), 800, 600);
+      sceneManager = new SceneManager(new GameController(800, 600), new DatabaseController(), 800,
+          600);
       testStage.setScene(sceneManager.getScene());
       testStage.show();
     });
@@ -46,7 +48,8 @@ public class SceneManagerTest extends DukeApplicationTest {
     waitForFxEvents(); // Ensure the scene changes are reflected
     Platform.runLater(() -> {
       Node languageSelector = lookup("#languageElement").query();
-      assertNotNull(languageSelector, "Language selection scene should contain a language selector");
+      assertNotNull(languageSelector,
+          "Language selection scene should contain a language selector");
     });
   }
 
