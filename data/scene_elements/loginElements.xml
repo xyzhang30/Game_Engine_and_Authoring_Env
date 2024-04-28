@@ -46,7 +46,7 @@
     <x_layout_factor>0.52</x_layout_factor>
     <y_layout_factor>0.46</y_layout_factor>
     <style>game-text</style>
-    <event>DATABASE</event>
+    <event_type>DATABASE</event_type>
     <event>PASSWORD_TEXT</event>
   </node>
 
