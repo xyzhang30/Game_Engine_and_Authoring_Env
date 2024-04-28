@@ -73,15 +73,13 @@ public class SceneManager {
    * @param databaseController handles database interactions
    */
   public SceneManager(GameController gameController, DatabaseController databaseController, double screenWidth,
-      double screenHeight) {
+      double screenHeight, CurrentPlayersManager currentPlayersManager) {
     root = new Pane();
     scene = new Scene(root);
     selectedLanguage = SupportedLanguage.ENGLISH;
-
     sceneElementParser = new SceneElementParser();
     sceneElementStyler = new SceneElementStyler(root);
     gameStatusManager = new GameStatusManager();
-    currentPlayersManager = new CurrentPlayersManager();
     sceneElementFactory = new SceneElementFactory(screenWidth, screenHeight, sceneElementStyler,
         new SceneElementHandler(gameController, databaseController, this, gameStatusManager, currentPlayersManager));
     createLanguageSelectionScene();

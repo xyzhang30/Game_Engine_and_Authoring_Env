@@ -30,7 +30,7 @@ public class SceneElementHandler {
     this.languageEventHandler = new LanguageEventHandler(sceneManager);
     this.gamePlayManagementHandler = new GamePlayManagementHandler(gameController, sceneManager);
     this.strikeHandler = new StrikeHandler(gameController, sceneManager);
-    this.loadGameEventHandler = new LoadGameEventHandler(gameController);
+    this.loadGameEventHandler = new LoadGameEventHandler(gameController, databaseController);
     this.databaseHandler = new DatabaseHandler(sceneManager, databaseController,
         currentPlayersManager);
     createEventTypeMap();

@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.mindrot.jbcrypt.BCrypt;
 import org.postgresql.util.PSQLException;
 
@@ -108,19 +110,12 @@ public class Database implements DatabaseApi {
     return false;
   }
 
-  /**
-   * Retrieves the IDs of playable games for a player with a specified number of players.
-   *
-   * @param playerName The name of the player.
-   * @param numPlayers The number of players required for the game.
-   * @return A list of game IDs that are playable by the player.
-   */
   @Override
-  public List<String> getPlayableGameIds(String playerName, int numPlayers) {
+  public ObservableList<String> getPlayableGameIds(String playerName, int numPlayers) {
     List<String> gameNames = new ArrayList<>();
     String sql = "SELECT p.gamename FROM permissions p " +
         "JOIN games g ON p.gamename = g.gamename " +
-        "WHERE p.playerusername = ? AND p.permissions != 'None' AND g.numplayers < ?";
+        "WHERE p.username = ? AND p.permissions != 'None' AND g.numplayers <= ?";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, playerName);
@@ -134,7 +129,7 @@ public class Database implements DatabaseApi {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return gameNames;
+    return FXCollections.observableList(gameNames);
   }
 
   /**
@@ -282,8 +277,8 @@ public class Database implements DatabaseApi {
   //grants permissiosn to player for game in permissions db
   private void grantPermissions(String username, String gameName,
       String permission) throws SQLException {
-    String sql = "INSERT INTO Permissions (playerusername, gamename, permissions) VALUES (?, ?, ?) "
-        + "ON CONFLICT (playerusername, gamename) DO UPDATE SET permissions = ?";
+    String sql = "INSERT INTO Permissions (username, gamename, permissions) VALUES (?, ?, ?) "
+        + "ON CONFLICT (username, gamename) DO UPDATE SET permissions = ?";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, username);
@@ -372,5 +367,33 @@ public class Database implements DatabaseApi {
         throw new RuntimeException(e);
       }
     }
+  }
+
+  /**
+   * Retrieves the IDs of playable games for a player with a specified number of players.
+   *
+   * @param playerName The name of the player.
+   * @return A list of game IDs that are playable by the player.
+   */
+  @Override
+  public ObservableList<String> getManageableGames(String playerName) {
+    System.out.println(1000);
+    List<String> gameNames = new ArrayList<>();
+    String sql = "SELECT p.gamename FROM permissions p " +
+        "JOIN games g ON p.gamename = g.gamename " +
+        "WHERE p.username = ? AND p.permissions = 'Owner'";
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, playerName);
+      try (ResultSet rs = pstmt.executeQuery()) {
+        while (rs.next()) {
+          String gameName = rs.getString("gamename");
+          gameNames.add(gameName);
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return FXCollections.observableList(gameNames);
   }
 }

@@ -62,23 +62,12 @@ public class DatabaseHandler {
     System.out.println("createLoginHandler in scene element handler called");
     node.setOnMouseClicked(e ->
     {
-      try {
-        boolean userCanLogin = databaseController.canUserLogin(usernameTextField.getText());
-        if (userCanLogin) {
-          currentPlayersManager.saveUserInfo(usernameTextField.getText());
           boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(),
               passwordField.getText()); //true of user logged in
           if (userLoggedIn) {
+            currentPlayersManager.saveUserInfo(usernameTextField.getText());
             sceneManager.createCurrentPlayersScene();
-            System.out.println("createLoginHandler: user logged in");
           }
-        } else {
-          sceneManager.displayErrorMessage("User does not exist.");
-          System.out.println("createLoginHandler printed an error message");
-        }
-      } catch (Exception ex) {
-        sceneManager.displayErrorMessage("Error: " + ex.getMessage());
-      }
     });
     //add another or continue to play (new screen) shows current players like is this good or move on
     //open the currentplayers screen with this player added to it
