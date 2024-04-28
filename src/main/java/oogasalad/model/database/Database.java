@@ -173,6 +173,7 @@ public class Database implements DatabaseApi {
         stmt.executeUpdate();
 
         for (String gameName : getAllGames()) {
+          System.out.println(gameName);
           try {
             grantPermissions(username, gameName, isGamePublic(gameName) ? "Player" : "None");
           } catch (SQLException e) {
@@ -213,7 +214,7 @@ public class Database implements DatabaseApi {
       pstmt.setString(1, gameName);
       try (ResultSet rs = pstmt.executeQuery()) {
         if (rs.next()) {
-          return true;
+          return rs.getBoolean("public");
         }
       }
     } catch (SQLException e) {

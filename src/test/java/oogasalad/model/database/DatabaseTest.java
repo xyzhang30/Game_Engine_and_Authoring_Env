@@ -21,12 +21,7 @@ public class DatabaseTest {
 
     @Test
     public void testCheckGameExists() throws SQLException {
-      new Database().assignPermissionToPlayers("JordansGame1", List.of("noah", "doga"),
-          "None");
-
-      new Database().assignPermissionToPlayers("JordansGame2", List.of("noah", "doga"),
-          "None");
-
+      new Database().registerUser("noah3", "n", "avatar1.png");
       /**
         new Database().registerUser("noah", "n", "avatar1.png");
         new Database().registerUser("jordan", "j", "avatar1.png");
