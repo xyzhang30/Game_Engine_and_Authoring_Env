@@ -16,7 +16,7 @@ import oogasalad.view.database.Leaderboard;
 
 
 public class DatabaseController {
-  private Database databaseView;
+  public Database databaseView;
   private List<String> currentPlayersManager;
 //  public DatabaseController(CurrentPlayersManager currentPlayersManager){
 //=======

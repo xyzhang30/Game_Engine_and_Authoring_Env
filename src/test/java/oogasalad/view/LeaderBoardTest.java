@@ -1,35 +1,37 @@
 package oogasalad.view;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
+import java.util.List;
+import oogasalad.model.database.Database;
+import oogasalad.view.api.exception.IncorrectPasswordException;
+import oogasalad.view.api.exception.UserNotFoundException;
 import oogasalad.view.controller.DatabaseController;
-import oogasalad.view.scene_management.scene_element.scene_element_handler.DatabaseHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import util.DukeApplicationTest;
-public class LeaderBoardTest extends DukeApplicationTest{
+import org.mockito.*;
+import oogasalad.view.database.Leaderboard;
 
-  private DatabaseHandler databaseHandler;
-  private DatabaseController mockDatabaseController;
-  private ListView<String> listView;
+public class LeaderBoardTest {
+
+  private DatabaseController databaseController;
+  private Database databaseView;
+  private List<String> currentPlayersManager;
+  private Leaderboard leaderboard;
 
   @BeforeEach
-  public void setup() {
-    // Prepare the mock controller
-    mockDatabaseController = mock(DatabaseController.class);
-    // Create a ListView to act as the leaderboard display
-    listView = new ListView<>();
-
-    // Assuming the SceneManager and GameController are also required but not used directly in this test
-    databaseHandler = new DatabaseHandler(null, null, mockDatabaseController, null);
-
-    // Prepare the listView to be used in the test as if it's part of the UI handled by DatabaseHandler
-    databaseHandler.setLeaderboard(listView);  // This is a hypothetical method for setting the ListView
+  public void setUp() {
+    databaseView = mock(Database.class);
+    databaseController = new DatabaseController(leaderboard, currentPlayersManager);
   }
+
+  @Test
+  public void testLoginUserSuccess() {
+    when(databaseView.loginUser("validUser", "validPassword")).thenReturn(true);
+    assertDoesNotThrow(() -> databaseController.loginUser("validUser", "validPassword"));
+  }
+
+
 
 }
