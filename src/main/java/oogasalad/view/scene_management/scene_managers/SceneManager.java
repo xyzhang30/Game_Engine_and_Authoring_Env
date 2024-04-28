@@ -69,12 +69,13 @@ public class SceneManager {
    * Constructor initializes scene, root, sceneElementParser, and sceneElementFactory which are
    * necessary to update scenes with new elements
    *
-   * @param gameController handles model/view interactions
-   * @param screenWidth    screen width to be used for scaling ratio based elements
-   * @param screenHeight   screen height to be used for scaling ratio based elements
+   * @param gameController     handles model/view interactions
+   * @param screenWidth        screen width to be used for scaling ratio based elements
+   * @param screenHeight       screen height to be used for scaling ratio based elements
    * @param databaseController handles database interactions
    */
-  public SceneManager(GameController gameController, DatabaseController databaseController, double screenWidth,
+  public SceneManager(GameController gameController, DatabaseController databaseController,
+      double screenWidth,
       double screenHeight) {
     root = new Pane();
     scene = new Scene(root);
@@ -82,8 +83,10 @@ public class SceneManager {
     sceneElementParser = new SceneElementParser();
     sceneElementStyler = new SceneElementStyler(root);
     gameStatusManager = new GameStatusManager();
+    currentPlayersManager = new CurrentPlayersManager();
     sceneElementFactory = new SceneElementFactory(screenWidth, screenHeight, sceneElementStyler,
-        new SceneElementHandler(gameController, databaseController, this, gameStatusManager, currentPlayersManager));
+        new SceneElementHandler(gameController, databaseController, this, gameStatusManager,
+            currentPlayersManager));
     createLanguageSelectionScene();
   }
 
@@ -238,7 +241,7 @@ public class SceneManager {
     root.requestFocus();
   }
 
-  public void changeMod(List<ViewGameObjectRecord> recordList){
+  public void changeMod(List<ViewGameObjectRecord> recordList) {
     compositeElement.updateMod(recordList);
   }
 
@@ -253,8 +256,8 @@ public class SceneManager {
 
 
   /**
-   * Creates scene elements from a specified XML file.
-   * This method parses the file and uses a factory to generate UI components based on the extracted parameters.
+   * Creates scene elements from a specified XML file. This method parses the file and uses a
+   * factory to generate UI components based on the extracted parameters.
    *
    * @param filePath the path to the XML file containing scene elements specifications.
    * @return a Pane containing the created scene elements, or null if an error occurs.
@@ -262,7 +265,8 @@ public class SceneManager {
   private Pane createSceneElements(String filePath) {
     try {
       // Parse the file to get a list of element parameters
-      List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(filePath);
+      List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(
+          filePath);
       return sceneElementFactory.createSceneElements(sceneElementParameters, selectedLanguage);
     } catch (ParserConfigurationException e) {
       logError("Parser configuration error", e);
@@ -277,11 +281,11 @@ public class SceneManager {
   }
 
   /**
-   * Logs errors to the system's error logging service or standard output.
-   * This is a simple way to centralize error handling and could be replaced with a more robust logging framework.
+   * Logs errors to the system's error logging service or standard output. This is a simple way to
+   * centralize error handling and could be replaced with a more robust logging framework.
    *
    * @param message the error message to log
-   * @param e the exception that was caught
+   * @param e       the exception that was caught
    */
   private void logError(String message, Exception e) {
     System.err.println(message + ": " + e.getMessage());
@@ -313,6 +317,7 @@ public class SceneManager {
       createTransitionDisplay();
     }
   }
+
   public void createLoginScene() {
     System.out.println("login screen initialized");
     resetRoot();
