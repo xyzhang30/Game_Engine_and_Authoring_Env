@@ -1,9 +1,9 @@
 {
   "gameName": "testPhysics",
-  "collidable_objects": [
+  "game_objects": [
     {
-      "collidable_id": 1,
-      "properties": ["visible", "movable", "controllable"],
+      "gameobject_id": 1,
+      "properties": ["visible", "collidable", "strikeable"],
       "mass": 100,
       "position": {
         "x_position": 0,
@@ -14,13 +14,13 @@
         "x_dimension": 10,
         "y_dimension": 10
       },
-      "color": [100,200,100],
+   "color" : {"Default":[100,200,100]},
       "staticFriction": 0,
       "kineticFriction": 0
     },
     {
-      "collidable_id": 2,
-      "properties": ["visible", "movable", "controllable"],
+      "gameobject_id": 2,
+      "properties": ["visible", "collidable", "strikeable"],
       "mass": 100,
       "position": {
         "x_position": 50,
@@ -31,13 +31,13 @@
         "x_dimension": 10,
         "y_dimension": 10
       },
-      "color": [100,200,100],
+   "color" : {"Default":[100,200,100]},
       "staticFriction": 0,
       "kineticFriction": 0
     },
     {
-      "collidable_id": 3,
-      "properties": ["visible", "movable"],
+      "gameobject_id": 3,
+      "properties": ["visible", "collidable"],
       "mass": 1e1000000,
       "position": {
         "x_position": 25,
@@ -48,12 +48,12 @@
         "x_dimension": 5,
         "y_dimension": 5
       },
-      "color": [100,200,100],
+   "color" : {"Default":[100,200,100]},
       "staticFriction": 0,
       "kineticFriction": 0
     },
     {
-      "collidable_id": 4,
+      "gameobject_id": 4,
       "properties": ["visible","surface"],
       "mass": 1e1000000,
       "position": {
@@ -65,7 +65,7 @@
         "x_dimension": 200,
         "y_dimension": 200
       },
-      "color": [255,255,255],
+   "color" : {"Default":[255,255,255]},
       "staticFriction": 3.03873,
       "kineticFriction": 2.03873
     }
@@ -73,18 +73,24 @@
   "players": [
     {
       "player_id": 1,
-      "my_collidable": [1]
+      "my_strikeable": [1],
+      "my_scoreable": [1],
+      "my_controllable": [],
+      "active_strikeable": 1
     },
     {
       "player_id": 2,
-      "my_collidable": [2]
+      "my_strikeable": [2],
+      "my_scoreable": [2],
+      "my_controllable": [],
+      "active_strikeable": 2
     }
   ],
   "variables": [
     {
       "global": {
-        "max_turns": 1,
-        "max_rounds": 2
+        "current_turn" : 1,
+        "current_round" : 1
       },
       "player": {
         "strokes": 0,
@@ -97,42 +103,61 @@
       {
         "first_id": 1,
         "second_id": 3,
-        "command": [
+        "command":
           {
-            "AdjustActivePointsCommand": [1.0],
-            "SetVisibleCommand": [1.0, 0.0],
-            "PlayerCompletedRoundCommand": [1.0]
+            "SetVisibleCommand": [
+              1.0,
+              0.0
+            ],
+            "PlayerCompletedRoundCommand": [
+              1.0
+            ]
           }
-        ]
       },
       {
         "first_id": 2,
         "second_id": 3,
-        "command": [
+        "command":
           {
-            "AdjustActivePointsCommand": [1.0],
-            "SetVisibleCommand": [2.0, 0.0],
-            "PlayerCompletedRoundCommand": [2.0]
+            "SetVisibleCommand": [
+              2.0,
+              0.0
+            ],
+            "PlayerCompletedRoundCommand": [
+              2.0
+            ]
           }
-        ]
       }
     ],
     "turn_policy": "StandardTurnPolicy",
-    "round_policy": {
+    "round_condition": {
       "AllPlayersCompletedRoundCondition": []
     },
     "win_condition": {
-      "NRoundsCompletedCondition": [2.0]
+      "RoundsCompletedCondition": [
+        2.0
+      ]
     },
-    "advance_turn": [
-      {
-        "AdvanceTurnCommand": []
-      }
-    ],
-    "advance_round": [
-      {
-        "AdvanceRoundCommand": []
-      }
-    ]
+    "advance_turn": {
+      "AdvanceTurnCommand": []
+    },
+    "advance_round": {
+      "AdvanceRoundCommand": []
+    },
+    "strike_policy": "IncrementPointStrikePolicy",
+    "rank_comparator": "IdComparator",
+    "static_checker": {
+      "VelocityStaticChecker": []
+    }
+  },
+  "keys" : {
+    "angle_left" : "LEFT",
+    "angle_right" : "RIGHT",
+    "power_up" : "UP",
+    "power_down" : "DOWN",
+    "controllable_left" : "A",
+    "controllable_right" : "D",
+    "controllable_up" : "W",
+    "controllable_down" : "S"
   }
 }

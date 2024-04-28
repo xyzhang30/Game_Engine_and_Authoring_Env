@@ -10,7 +10,7 @@ public class BallMovementAndCollision {
   class BallGameObject implements GameViewInternal.GameObject {
     // Position, dimensions, and sprite attributes omitted for brevity
 
-    public void update() {
+    public void  {
       // Update ball position based on physics calculations
     }
 
@@ -33,7 +33,7 @@ public class BallMovementAndCollision {
     }
 
     public void onCollision(GameEngineInternal.Collidable other) {
-      // handle collision logic, e.g., bounce off surfaces or other balls
+      // handle collision logic, e.g., inelastic off surfaces or other balls
     }
 
     // add other necessary methods like getters for position, velocity, etc.

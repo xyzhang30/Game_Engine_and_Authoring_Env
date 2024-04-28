@@ -21,7 +21,7 @@
 
 ### Obstacles:
 
-- **They all (can) have obstacles that the ball(s) can bounce off of. Balls can bounce off each
+- **They all (can) have obstacles that the ball(s) can inelastic off of. Balls can inelastic off each
   other.**
 
 ### Goals and Targets:
@@ -65,4 +65,4 @@
 
 - Online Playing
 - User Log In
-- User Stats/Leaderboard in database
+- User Stats/Leaderboard in Database

@@ -26,13 +26,7 @@ interface GameEngineExternal {
    */
   void collision(int id1, int id2);
 
-  /**
-   * Applies a velocity to the entity with the provided ID.
-   * @param magnitude The magnitude of the force to apply.
-   * @param direction The direction of the force to apply.
-   * @param id The ID of the entity to apply the force to.
-   */
-  void applyInitialVelocity(double magnitude, double direction, int id);
+
 
   /**
    * Resets the game to its initial state.

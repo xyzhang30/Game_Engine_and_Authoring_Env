@@ -12,7 +12,7 @@ interface GameEngineInternal {
   interface GameManager {
 
     /**
-     * Handles collision between two collidables.
+     * Handles collision between two gameObjectRecords.
      *
      * @param id1 The ID of the first collidable.
      * @param id2 The ID of the second collidable.
@@ -23,7 +23,7 @@ interface GameEngineInternal {
      * Applies initial velocity to a collidable object.
      *
      * @param magnitude The magnitude of the velocity.
-     * @param direction The direction of the velocity.
+     * @param direction The direction of t"8he velocity.
      * @param id        The ID of the collidable.
      */
     void applyInitialVelocity(double magnitude, double direction, int id);
@@ -69,7 +69,7 @@ interface GameEngineInternal {
      *
      * @return The current turn number.
      */
-    int getTurn();
+    int getGameRecord().turn();
 
     /**
      * Retrieves the current sub-turn number.

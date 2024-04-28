@@ -1,107 +1,59 @@
 package oogasalad.model.gameengine.player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
-import oogasalad.model.api.PlayerRecord;
+import java.util.Collection;
+
+
+/**
+ * The PlayerContainer class manages a collection of Players within the game environment, and
+ * provides efficient access to Players to be accessed/manipulated via their unique IDs, while also
+ * encapsulating the Collection of players.
+ *
+ * @author Noah Loewy
+ */
 
 public class PlayerContainer {
 
-  private final Map<Integer, Player> myPlayers;
-  private final Stack<List<PlayerRecord>> playerHistory;
-  private int active;
+  private final Collection<Player> myPlayers;
+  private Player active;
 
-  public PlayerContainer(Map<Integer, Player> players) {
+  /**
+   * Initializes player container object.
+   *
+   * @param players a map from the unique identifier of a player to the actual Player object
+   */
+
+  public PlayerContainer(Collection<Player> players) {
     myPlayers = players;
-    playerHistory = new Stack<>();
-    addPlayerHistory();
-
+    myPlayers.forEach(Player::addPlayerHistory);
+    active = players.iterator().next();
   }
 
-  public Set<Integer> getPlayerIds(){
-    return myPlayers.keySet();
+  /**
+   * Retrieves all the players in the game.
+   *
+   * @return a list of all player objects
+   */
+  public Collection<Player> getPlayers() {
+    return myPlayers;
   }
 
-  public int getNumPlayers() {
-    return myPlayers.size();
-  }
-
-  public Player getPlayer(int playerId) {
-    return myPlayers.get(playerId);
-  }
-
-  //need some sort of set active players function in here??
-  public int getActive() {
+  /**
+   * Retrieves the currently active player.
+   *
+   * @return The active player.
+   */
+  public Player getActive() {
     return active;
   }
 
-  public void setActive(int newActive) {
+  /**
+   * Sets the ID of the active player.
+   *
+   * @param newActive The ID of the player to set as active.
+   */
+
+  public void setActive(Player newActive) {
     active = newActive;
   }
 
-  public List<PlayerRecord> getPlayerRecords() {
-    List<PlayerRecord> ret = new ArrayList<>();
-    for (Player p : myPlayers.values()) {
-      ret.add(p.getPlayerRecord(active == p.getId()));
-    }
-    return ret;
-  }
-
-  public void addPlayerHistory() {
-    playerHistory.push(getPlayerRecords());
-  }
-
-
-  private void callSetFromRecord(PlayerRecord record) {
-    getPlayer(record.playerId()).setFromRecord(record);
-  }
-
-  public void toLastStaticStateVariables() {
-    for (PlayerRecord record : playerHistory.peek()) {
-      callSetFromRecord(record);
-    }
-  }
-
-  public boolean allPlayersCompletedRound() {
-    for (Player p : myPlayers.values()) {
-
-      if (!p.isRoundCompleted()) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  public String toString() {
-    StringBuilder s = new StringBuilder();
-    for (Player p : myPlayers.values()) {
-      s.append("\n" + p.toString());
-    }
-    return s.toString();
-  }
-
-  public void startRound() {
-    for (Player p : myPlayers.values()) {
-      p.startRound();
-    }
-  }
-
-  public void applyDelayedScores() {
-    for (Player p : myPlayers.values()) {
-      p.applyDelayedScore();
-    }
-
-  }
-
-  public boolean allPlayersCompletedNTurns(int turnsRequired) {
-    for (Player p : myPlayers.values()) {
-      if (!(p.getTurnsCompleted() >= turnsRequired)) {
-        return false;
-      }
-    }
-    return true;
-
-  }
 }

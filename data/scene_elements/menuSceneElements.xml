@@ -1,0 +1,87 @@
+<scene_elements>
+  <node>
+    <class>javafx.scene.control.ListView</class>
+    <type>LISTVIEW</type>
+    <width_factor>0.25</width_factor>
+    <height_factor>0.45</height_factor>
+    <x_layout_factor>0.06</x_layout_factor>
+    <y_layout_factor>0.4</y_layout_factor>
+    <style>menu-game-options</style>
+    <event_type>LOAD_GAME</event_type>
+    <event>START_NEW_GAME</event>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.ListView</class>
+    <type>LISTVIEW</type>
+    <width_factor>0.25</width_factor>
+    <height_factor>0.45</height_factor>
+    <x_layout_factor>0.36</x_layout_factor>
+    <y_layout_factor>0.4</y_layout_factor>
+    <style>menu-game-options</style>
+    <event_type>LOAD_GAME</event_type>
+    <event>MANAGE_GAME</event>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.ListView</class>
+    <type>LISTVIEW</type>
+    <width_factor>0.25</width_factor>
+    <height_factor>0.45</height_factor>
+    <x_layout_factor>0.68</x_layout_factor>
+    <y_layout_factor>0.4</y_layout_factor>
+    <style>menu-game-options</style>
+    <event_type>LOAD_GAME</event_type>
+    <event>START_SAVED_GAME</event>
+  </node>
+
+
+  <node>
+    <class>javafx.scene.text.Text</class>
+    <type>TEXT</type>
+    <text>NEW_GAME</text>
+    <x_layout_factor>0.15</x_layout_factor>
+    <y_layout_factor>0.35</y_layout_factor>
+    <style>game-text</style>
+  </node>
+
+  <node>
+    <class>javafx.scene.text.Text</class>
+    <type>TEXT</type>
+    <text>MANAGE_GAME</text>
+    <x_layout_factor>0.45</x_layout_factor>
+    <y_layout_factor>0.35</y_layout_factor>
+    <style>game-text</style>
+  </node>
+
+<node>
+    <class>javafx.scene.text.Text</class>
+    <type>TEXT</type>
+    <text>SAVED_GAME</text>
+    <x_layout_factor>0.8</x_layout_factor>
+    <y_layout_factor>0.35</y_layout_factor>
+    <style>game-text</style>
+  </node>
+
+  <node>
+    <class>javafx.scene.text.Text</class>
+    <type>TEXT</type>
+    <text>GAME_OPTIONS</text>
+    <x_layout_factor>0.32</x_layout_factor>
+    <y_layout_factor>0.2</y_layout_factor>
+    <style>title-text</style>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>BACK</text>
+    <width_factor>0.05</width_factor>
+    <height_factor>0.05</height_factor>
+    <x_layout_factor>0.03</x_layout_factor>
+    <y_layout_factor>0.9</y_layout_factor>
+    <style>game-button</style>
+    <event_type>CHANGE_SCENE</event_type>
+    <event>START_TITLE</event>
+  </node>
+</scene_elements>

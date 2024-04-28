@@ -1,0 +1,62 @@
+<scene_elements>
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>PLAY</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
+    <y_layout_factor>0.3</y_layout_factor>
+    <style>title-button</style>
+    <event_type>CHANGE_SCENE</event_type>
+    <event>START_MENU</event>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>CREATE</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
+    <y_layout_factor>0.5</y_layout_factor>
+    <style>title-button</style>
+    <event_type>CHANGE_SCENE</event_type>
+    <event>START_AUTHORING</event>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>INSTRUCTIONS_TITLE</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
+    <y_layout_factor>0.7</y_layout_factor>
+    <style>title-button</style>
+    <event_type>CHANGE_SCENE</event_type>
+    <event>HELP</event>
+  </node>
+
+  <node>
+    <class>javafx.scene.text.Text</class>
+    <type>TEXT</type>
+    <text>FYSICS_FUN</text>
+    <x_layout_factor>0.36</x_layout_factor>
+    <y_layout_factor>0.2</y_layout_factor>
+    <style>title-text</style>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>BACK</text>
+    <width_factor>0.05</width_factor>
+    <height_factor>0.05</height_factor>
+    <x_layout_factor>0.03</x_layout_factor>
+    <y_layout_factor>0.9</y_layout_factor>
+    <style>game-button</style>
+    <event_type>CHANGE_SCENE</event_type>
+    <event>START_LANGUAGE</event>
+  </node>
+</scene_elements>

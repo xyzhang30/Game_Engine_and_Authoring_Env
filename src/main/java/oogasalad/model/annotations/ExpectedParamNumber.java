@@ -6,17 +6,23 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This is an annotation used to indicate the expected size of the parameter list for each command/condition;
- * Used to validate command during game parsing
+ * This is an annotation used to indicate the expected size of the parameter list for each
+ * command/condition; Used to validate command during game parsing
+ *
  * @author Alisha Zhang
  */
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.CONSTRUCTOR)
+@Target(ElementType.TYPE)
 public @interface ExpectedParamNumber {
 
   /**
    * @return int value of the expected size of the param list
    */
   int value();
+
+  /**
+   * @return arrayList of strings, specifies what each param needs to be
+   */
+  String[] paramDescription() default {};
 }

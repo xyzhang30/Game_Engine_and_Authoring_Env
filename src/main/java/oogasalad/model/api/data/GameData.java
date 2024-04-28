@@ -8,14 +8,24 @@ import java.util.List;
  * Represents all JSON data configuring the game that gets serialized/deserialized into/from JSON
  */
 
-@JsonPropertyOrder({"gameName", "collidable_objects", "players", "variables", "rules"})
+@JsonPropertyOrder({"gameName", "game_objects", "players", "variables", "rules"})
 public class GameData {
 
   private @JsonProperty("gameName") String gameName;
-  private @JsonProperty("collidable_objects") List<CollidableObject> collidableObjects;
+  private @JsonProperty("game_objects") List<GameObjectProperties> gameObjectProperties;
   private List<ParserPlayer> players;
   private List<Variables> variables;
   private Rules rules;
+  private @JsonProperty("keys") KeyPreferences keyPreferences;
+
+
+  public KeyPreferences getKeyPreferences() {
+    return keyPreferences;
+  }
+
+  public void setKeyPreferences(KeyPreferences keys){
+    this.keyPreferences = keys;
+  }
 
   public Rules getRules() {
     return rules;
@@ -33,13 +43,14 @@ public class GameData {
     this.gameName = gameName;
   }
 
-  public @JsonProperty("collidable_objects") List<CollidableObject> getCollidableObjects() {
-    return collidableObjects;
+  public @JsonProperty("game_objects") List<GameObjectProperties> getGameObjectProperties() {
+    System.out.println(gameObjectProperties);
+    return gameObjectProperties;
   }
 
-  public void setCollidableObjects(
-      @JsonProperty("collidable_objects") List<CollidableObject> collidables) {
-    this.collidableObjects = collidables;
+  public void setGameObject(
+      @JsonProperty("game_objects") List<GameObjectProperties> gameObjectProperties) {
+    this.gameObjectProperties = gameObjectProperties;
   }
 
   public List<ParserPlayer> getPlayers() {

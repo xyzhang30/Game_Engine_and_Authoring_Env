@@ -9,6 +9,12 @@ import java.util.List;
  * @author Judy He
  */
 public record ParserPlayer(@JsonProperty("player_id") int playerId,
-                           @JsonProperty("my_collidable") List<Integer> myCollidable) {
+                           @JsonProperty("my_strikeable") List<Integer> myStrikeable,
+
+                           @JsonProperty("my_scoreable") List<Integer> myScoreable,
+
+                           @JsonProperty("my_controllable") List<Integer> myControllable,
+                           double score,
+                           @JsonProperty("active_strikeable") int activeStrikeable) {
 
 }

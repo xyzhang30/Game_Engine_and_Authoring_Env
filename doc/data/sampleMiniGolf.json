@@ -1,9 +1,9 @@
 {
   "gameName": "sampleMiniGolf",
-  "collidable_objects": [
+  "game_objects": [
 
     {
-      "collidable_id": 1,
+      "gameobject_id": 1,
       "name": "GREEN_1",
       "properties": ["visible, surface"],
       "mass": 1e1000000,
@@ -22,7 +22,7 @@
 
 
     {
-      "collidable_id": 2,
+      "gameobject_id": 2,
       "name": "GREEN_2",
       "properties": ["visible, surface"],
       "mass": 1e1000000,
@@ -40,7 +40,7 @@
     },
 
     {
-      "collidable_id": 3,
+      "gameobject_id": 3,
       "name": "GREEN_3",
       "properties": ["visible, surface"],
       "mass": 1e1000000,
@@ -58,9 +58,9 @@
     },
 
     {
-      "collidable_id": 4,
-      "name": "COLLIDABLE",
-      "properties": ["visible, moveable"],
+      "gameobject_id": 4,
+      "name":"GREEN_4",
+      "properties": ["visible, surface"],
       "mass": 1e1000000,
       "position": {
         "x_position": 333,
@@ -75,7 +75,7 @@
     },
 
     {
-      "collidable_id": 5,
+      "gameobject_id": 5,
       "name": "ROUGH",
       "properties": ["visible, surface"],
       "mass": 1e1000000,
@@ -93,7 +93,7 @@
     },
 
     {
-      "collidable_id": 6,
+      "gameobject_id": 6,
       "name": "WATER",
       "properties": ["visible","surface"],
       "mass": 1,
@@ -110,7 +110,7 @@
     },
 
     {
-      "collidable_id": 7,
+      "gameobject_id": 7,
       "name": "GREEN_4",
       "properties": ["visible, surface"],
       "mass": 1e1000000,
@@ -128,9 +128,9 @@
     },
 
     {
-      "collidable_id": 8,
+      "gameobject_id": 8,
       "name": "BALL",
-      "properties": ["visible", "movable"],
+      "properties": ["visible", "collidable"],
       "mass": 100,
       "position": {
         "x_position": 490,
@@ -146,9 +146,9 @@
 
 
     {
-      "collidable_id": 9,
+      "gameobject_id": 9,
       "name": "HOLE",
-      "properties": ["visible", "movable"],
+      "properties": ["visible", "collidable"],
       "mass": 100,
       "position": {
         "x_position": 480,
@@ -181,7 +181,7 @@
         "second_id": 6,
         "command": [
           {
-            "UndoTurnCommand": []
+            "LastStaticStateCommand": []
           },
           {
             "AdjustPointsCommand": [1,1]
@@ -191,7 +191,7 @@
     ],
     "turn_policy": "StandardTurnPolicy",
     "win_condition": {
-      "NRoundsCompletedCommand": [1]
+      "RoundsCompletedCommand": [1]
     },
     "advance": [
       {

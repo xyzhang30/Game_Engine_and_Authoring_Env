@@ -1,10 +1,24 @@
 package oogasalad.model.gameparser;
 
+import java.lang.reflect.Field;
+import java.security.Key;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import oogasalad.model.api.ControllablesView;
-import oogasalad.model.api.ViewCollidableRecord;
-import oogasalad.model.api.data.CollidableObject;
+import java.util.Map;
+import java.util.Set;
+import oogasalad.model.api.StrikeablesView;
+import oogasalad.model.api.ViewGameObjectRecord;
+import oogasalad.model.api.data.GameObjectProperties;
+import oogasalad.model.api.data.GameObjectShape;
+import oogasalad.model.api.data.KeyPreferences;
+import oogasalad.model.api.exception.InvalidImageException;
+import oogasalad.model.api.exception.InvalidShapeException;
+import oogasalad.model.api.exception.MissingJsonGameInfoException;
+import oogasalad.view.api.enums.KeyInputType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Concrete implementation of GameLoader for passing game data necessary for the View.
@@ -13,50 +27,101 @@ import oogasalad.model.api.data.CollidableObject;
  */
 public class GameLoaderView extends GameLoader {
 
-  private static final String RESOURCE_FOLDER_PATH = "src/main/resources/";
-  private static final String PROPERTIES_FILE_EXTENSION = ".properties";
-  private static final String COLLIDABLE_PROPERTIES_COMMENT = "collidable objects shape";
-  private static final String COLLIDABLE_CSS_ID_PREFIX = "collidable";
+  private static final String JAVAFX_SHAPE_CLASS_PATH = "javafx.scene.shape.";
+  private static final Logger LOGGER = LogManager.getLogger(GameLoaderView.class);
+  private List<ViewGameObjectRecord> viewGameObjectRecords;
+  private StrikeablesView strikeablesView;
+  private Map<KeyInputType, String> keys;
 
-  private List<ViewCollidableRecord> viewCollidableRecords;
-  private ControllablesView controllablesView;
-
-  public GameLoaderView(String gameName) {
+  public GameLoaderView(String gameName) throws InvalidShapeException {
     super(gameName);
-    createViewRecord();
+    createViewRecord("Default");
+    createKeysMap();
   }
 
-  private void createViewRecord() {
-    List<Integer> controllableIds = new ArrayList<>();
-    viewCollidableRecords = new ArrayList<>();
-    for (CollidableObject o : gameData.getCollidableObjects()) {
-      if (o.properties().contains("controllable")) {
-        controllableIds.add(o.collidableId());
+  public List<String> getMods() {
+    Set<String> mods = new HashSet<>();
+    for (GameObjectProperties go : gameData.getGameObjectProperties()) {
+      for (String s : go.image().keySet()) {
+        mods.add(s);
+      }
+      for (String s : go.color().keySet()) {
+        mods.add(s);
+      }
+    }
+    mods.remove("Default");
+    List<String> finalMods = new ArrayList<>(mods);
+    finalMods.add(0, "Default");
+    return finalMods;
+
+  }
+
+  private void createKeysMap() {
+    keys = new HashMap<>();
+    KeyPreferences keyRecord = gameData.getKeyPreferences();
+    for (KeyInputType keyInputType : KeyInputType.values()) {
+      String typeName = keyInputType.toString().toLowerCase(); //enum object name string
+      System.out.println("Record Type Name String:" + typeName);
+      try {
+        Field field = keyRecord.getClass()
+            .getDeclaredField(typeName); //get that field in the record
+        System.out.println("Record field:" + field);
+        field.setAccessible(true);
+        Object value = field.get(keyRecord);
+        System.out.println("the value:" + field.get(keyRecord));
+        keys.put(keyInputType,
+            (String) value); //passing as a string bc can't have javafx stuff outside view
+      } catch (NoSuchFieldException | IllegalAccessException | NullPointerException e) {
+        e.printStackTrace(); // Handle the exception according to your application's logic
+        throw new MissingJsonGameInfoException("Missing key preference field in game JSON file");
+      }
+    }
+  }
+
+  public void createViewRecord(String mod) throws InvalidShapeException {
+    List<Integer> strikeableIDs = new ArrayList<>();
+    viewGameObjectRecords = new ArrayList<>();
+    for (GameObjectProperties o : gameData.getGameObjectProperties()) {
+      if (o.properties().contains("strikeable")) {
+        strikeableIDs.add(o.collidableId());
       }
       int id = o.collidableId();
-      String shape = o.shape();
+      String shape = matchShape(o.shape());
       List<Integer> colorRgb = new ArrayList<>();
-      for (int i : o.color()) {
+      for (int i : o.color().getOrDefault(mod, o.color().get("Default"))) {
         colorRgb.add(validateRgbValue(i));
       }
       double xdimension = o.dimension().xDimension();
       double ydimension = o.dimension().yDimension();
       double startXpos = o.position().xPosition();
       double startYpos = o.position().yPosition();
-      ViewCollidableRecord viewCollidable = new ViewCollidableRecord(id, colorRgb, shape,
+      ViewGameObjectRecord viewCollidable = new ViewGameObjectRecord(id, colorRgb, shape,
           xdimension,
-          ydimension, startXpos, startYpos, o.image());
-      viewCollidableRecords.add(viewCollidable);
+          ydimension, startXpos, startYpos, o.image().getOrDefault(mod, ""), o.direction());
+      viewGameObjectRecords.add(viewCollidable);
     }
-    controllablesView = new ControllablesView(controllableIds);
+    strikeablesView = new StrikeablesView(strikeableIDs);
   }
 
-  public List<ViewCollidableRecord> getViewCollidableInfo() {
-    return viewCollidableRecords;
+
+  private String matchShape(String shape) throws InvalidShapeException {
+    System.out.println(shape);
+    return switch (shape) {
+      case "Circle", "circle" -> JAVAFX_SHAPE_CLASS_PATH + "Ellipse";
+      case "Rectangle", "rectangle" -> JAVAFX_SHAPE_CLASS_PATH + "Rectangle";
+      default -> {
+        LOGGER.error("Shape" + shape + " is not supported");
+        throw new InvalidShapeException("Shape " + shape + " is not supported");
+      }
+    };
   }
 
-  public ControllablesView getControllableIds() {
-    return controllablesView;
+  public Map<KeyInputType, String> getInputKeys() {
+    return keys;
+  }
+
+  public List<ViewGameObjectRecord> getViewCollidableInfo() {
+    return viewGameObjectRecords;
   }
 
   private int validateRgbValue(int colorValue) {
@@ -67,6 +132,11 @@ public class GameLoaderView extends GameLoader {
     } else {
       return colorValue;
     }
+  }
+
+
+  public String getGameName(){
+    return gameData.getGameName();
   }
 
 }

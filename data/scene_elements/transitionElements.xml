@@ -1,0 +1,32 @@
+<scene_elements>
+  <node>
+    <class>javafx.scene.shape.Rectangle</class>
+    <type>RECTANGLE</type>
+    <width_factor>1</width_factor>
+    <height_factor>1</height_factor>
+    <x_layout_factor>0</x_layout_factor>
+    <y_layout_factor>0</y_layout_factor>
+    <style>pause-sheen</style>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>CONTINUE</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
+    <y_layout_factor>0.4</y_layout_factor>
+    <style>title-button</style>
+    <event_type>CHANGE_SCENE</event_type>
+    <event>NEXT_ROUND</event>
+  </node>
+
+  <node>
+    <class>javafx.scene.text.Text</class>
+    <text>ROUND_OVER</text>
+    <x_layout_factor>0.38</x_layout_factor>
+    <y_layout_factor>0.3</y_layout_factor>
+    <style>title-text</style>
+  </node>
+</scene_elements>
