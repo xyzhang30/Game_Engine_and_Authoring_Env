@@ -15,7 +15,6 @@ public enum SceneElementType {
   RECTANGLE,
   ARROW,
   COMBOBOX,
-  TEXTFIELD,
-  TOGGLE
+  TEXTFIELD
 
 }

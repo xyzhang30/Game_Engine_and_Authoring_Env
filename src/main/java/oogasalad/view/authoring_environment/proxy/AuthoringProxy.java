@@ -16,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.shape.Shape;
 import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
+import oogasalad.model.database.Database;
 import oogasalad.view.api.exception.MissingInteractionException;
 import oogasalad.view.api.exception.MissingNonControllableTypeException;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
@@ -44,6 +45,7 @@ public class AuthoringProxy {
   private String currentScreenTitle;
   private AuthoringController authoringController;
   private int numPlayers = 1;
+  private boolean gamePermission;
 
   /**
    * Adds an interaction for a given list of shapes.
@@ -183,6 +185,7 @@ public class AuthoringProxy {
       authoringController.writeKeyPreferences(keyPreferences);
       boolean saveGameSuccess = authoringController.submitGame(gameName);
       if (saveGameSuccess) {
+        saveGameToDatabase();
         showSuceessMessage("Game successfully saved!");
       } else {
         showSaveGameError("Save game failed :(");
@@ -416,5 +419,17 @@ public class AuthoringProxy {
 
   public void updateMultiCommandCheckedIdx(String key, List<Integer> newIndices){
     multiCommandCheckedIdx.put(key, newIndices);
+  }
+
+  public void setGamePermission(String permission){
+    boolean publicOrPrivate = permission.equals("Public");
+    this.gamePermission = publicOrPrivate;
+  }
+
+  public void saveGameToDatabase() {
+    String hostPlayer = authoringController.getHostPlayer();
+    int numPlayers = playersMap.size();
+    Database database = new Database();
+    database.registerGame(gameName,hostPlayer,numPlayers, gamePermission);
   }
 }

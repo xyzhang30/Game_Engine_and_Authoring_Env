@@ -9,43 +9,40 @@
   </node>
 
   <node>
-    <class>javafx.scene.text.Text</class>
-    <type>TEXT</type>
-    <text>PUBLIC</text>
-    <x_layout_factor>0.25</x_layout_factor>
+    <class>javafx.scene.control.ComboBox</class>
+    <type>COMBOBOX</type>
+    <width_factor>0.15</width_factor>
+    <height_factor>0.07</height_factor>
+    <x_layout_factor>0.45</x_layout_factor>
     <y_layout_factor>0.3</y_layout_factor>
-    <style>game-text</style>
-  </node>
-
-  <node>
-    <class>javafx.scene.control.ToggleButton</class>
-    <type>TOGGLE</type>
-    <width_factor>0.1</width_factor>
-    <height_factor>0.05</height_factor>
-    <x_layout_factor>0.27</x_layout_factor>
-    <y_layout_factor>0.3</y_layout_factor>
-<!--    <style>game-text</style>-->
-  </node>
-
-  <node>
-    <class>javafx.scene.text.Text</class>
-    <type>TEXT</type>
-    <text>PRIVATE</text>
-    <x_layout_factor>0.35</x_layout_factor>
-    <y_layout_factor>0.3</y_layout_factor>
-    <style>game-text</style>
+    <style>theme-selection-box</style>
+    <event_type>DATABASE</event_type>
+    <event>SET_PUBLIC</event>
   </node>
 
   <node>
     <class>javafx.scene.control.ListView</class>
     <type>LISTVIEW</type>
     <width_factor>0.3</width_factor>
-    <height_factor>0.45</height_factor>
+    <height_factor>0.3</height_factor>
     <x_layout_factor>0.35</x_layout_factor>
-    <y_layout_factor>0.3</y_layout_factor>
+    <y_layout_factor>0.45</y_layout_factor>
     <style>score-list</style>
     <event_type>DATABASE</event_type>
     <event>PLAYER_PERMISSIONS</event>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>FINISH</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
+    <y_layout_factor>0.85</y_layout_factor>
+    <style>title-button</style>
+    <event_type>DATABASE</event_type>
+    <event>SUBMIT_PERMISSIONS</event>
   </node>
 
 </scene_elements>

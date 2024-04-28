@@ -30,14 +30,14 @@ public class SceneElementHandler {
     this.languageEventHandler = new LanguageEventHandler(sceneManager);
     this.gamePlayManagementHandler = new GamePlayManagementHandler(gameController, sceneManager);
     this.strikeHandler = new StrikeHandler(gameController, sceneManager);
-    this.loadGameEventHandler = new LoadGameEventHandler(gameController, databaseController);
     this.databaseHandler = new DatabaseHandler(gameController,sceneManager, databaseController,
         currentPlayersManager);
+    this.loadGameEventHandler = new LoadGameEventHandler(gameController, databaseController,
+        databaseHandler);
     createEventTypeMap();
   }
 
   public void createElementHandler(Node node, String eventType, String event) {
-    System.out.println(eventType + " element handler created");
     BiConsumer<Node, String> handler = eventTypeMap.get(SceneElementEventType.valueOf(eventType));
     handler.accept(node, event);
   }
