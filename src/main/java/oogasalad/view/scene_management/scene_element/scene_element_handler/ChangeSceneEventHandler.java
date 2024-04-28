@@ -2,6 +2,7 @@ package oogasalad.view.scene_management.scene_element.scene_element_handler;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 import java.util.function.Consumer;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
@@ -60,8 +61,10 @@ public class ChangeSceneEventHandler {
     eventMap.put(SceneElementEvent.PLAYER_FRIENDS, this::createAddFriendsHandler);
     eventMap.put(SceneElementEvent.NEXT_ROUND, this::createNextRoundHandler);
     eventMap.put(SceneElementEvent.NEW_GAME_WINDOW, this::createNewGameHandler);
+    eventMap.put(SceneElementEvent.UPDATE_CURRENT_PLAYERS, this::updateCurrentPlayersHandler);
     eventMap.put(SceneElementEvent.HELP, this::createHelpInstructionsHandler);
     eventMap.put(SceneElementEvent.CHANGE_THEME, this::createThemeChangeHandler);
+    eventMap.put(SceneElementEvent.GAME_OVER, this::createGameOverSceneHandler);
   }
 
   private void createStartMenuHandler(Node node) {
@@ -94,6 +97,14 @@ public class ChangeSceneEventHandler {
 
   private void createStartLanguageHandler(Node node) {
     node.setOnMouseClicked(e -> sceneManager.createLanguageSelectionScene());
+  }
+
+  private void createGameOverSceneHandler(Node node) {
+    node.setOnMouseClicked(e -> sceneManager.createGameOverScene());
+  }
+
+  private void updateCurrentPlayersHandler(Node node) {
+    node.setOnMouseClicked(e -> sceneManager.createCurrentPlayersScene());
   }
 
   private void createThemeChangeHandler(Node node) {

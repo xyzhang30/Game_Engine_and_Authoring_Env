@@ -46,6 +46,8 @@ public class DatabaseController {
     databaseView.setGameAccessibility(gameName, accessibility);
   }
 
+
+
   public boolean canUserLogin(String username) {
     // if false then throw this exception throw new Exception("Login failed: User does not exist.");
     System.out.println(databaseView.doesUserExist(username));
@@ -93,7 +95,7 @@ public class DatabaseController {
    * @param gameName The name of the game for which to update the leaderboard scores.
    */
   public void getFormattedScoresForLeaderboard(String gameName, boolean descending) {
-    List<GameScore> scores = databaseView.getGeneralHighScoresForGame(gameName);
+    List<GameScore> scores = databaseView.getGeneralHighScoresForGame(gameName, descending);
     ObservableList<String> formattedScores = scores.stream()
         .sorted(Comparator.comparing(GameScore::score))
         .map(this::formatScoreForDisplay)

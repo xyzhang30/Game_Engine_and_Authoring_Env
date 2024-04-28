@@ -260,9 +260,10 @@ public class SceneManager {
     root.getChildren().add(transitionElements);
   }
 
-  public void createGameOverScene() {
+  public void createGameOverScene( ) {
     resetRoot();
     root.getChildren().add(createSceneElements(gameOverSceneElementsPath));
+    gameStatusManager.restoreLastUpdate();
   }
 
 
@@ -324,9 +325,9 @@ public class SceneManager {
       String gameName) {
     if (gameRecord.gameOver()) {
       databaseController.addGameResult(playerMap, gameRecord.players(), gameName);
-      createGameOverScene();
       gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round(),
           playerMap);
+      createGameOverScene();
     } else if (gameRecord.round() != currentRound) {
       currentRound = gameRecord.round();
       createTransitionDisplay();
