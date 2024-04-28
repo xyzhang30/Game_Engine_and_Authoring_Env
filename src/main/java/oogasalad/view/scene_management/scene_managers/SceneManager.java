@@ -4,13 +4,16 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.ThemeType;
+import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
+import oogasalad.view.database.CurrentPlayersManager;
 import oogasalad.view.scene_management.element_parsers.SceneElementParser;
 import oogasalad.view.scene_management.scene_element.GameStatusManager;
 import oogasalad.view.scene_management.scene_element.SceneElementFactory;
@@ -35,6 +38,7 @@ public class SceneManager {
   private final SceneElementStyler sceneElementStyler;
   private CompositeElement compositeElement;
   private GameStatusManager gameStatusManager;
+  private CurrentPlayersManager currentPlayersManager;
   private Pane pauseElements;
   private Pane transitionElements;
   private int currentRound;
@@ -50,6 +54,12 @@ public class SceneManager {
       "data/scene_elements/helpInstructionElements.xml";
   private final String languageSelectionElementsPath =
       "data/scene_elements/languageSelectionElements.xml";
+  private final String loginElementsPath =
+      "data/scene_elements/loginElements.xml";
+  private final String currentPlayersElementsPath =
+      "data/scene_elements/currentPlayersElements.xml";
+  private final String leaderboardElementsPath =
+      "data/scene_elements/leaderboardElements.xml";
 
 
   /**
@@ -59,8 +69,9 @@ public class SceneManager {
    * @param gameController handles model/view interactions
    * @param screenWidth    screen width to be used for scaling ratio based elements
    * @param screenHeight   screen height to be used for scaling ratio based elements
+   * @param databaseController handles database interactions
    */
-  public SceneManager(GameController gameController, double screenWidth,
+  public SceneManager(GameController gameController, DatabaseController databaseController, double screenWidth,
       double screenHeight) {
     root = new Pane();
     scene = new Scene(root);
@@ -69,8 +80,9 @@ public class SceneManager {
     sceneElementParser = new SceneElementParser();
     sceneElementStyler = new SceneElementStyler(root);
     gameStatusManager = new GameStatusManager();
+    currentPlayersManager = new CurrentPlayersManager();
     sceneElementFactory = new SceneElementFactory(screenWidth, screenHeight, sceneElementStyler,
-        new SceneElementHandler(gameController, this, gameStatusManager));
+        new SceneElementHandler(gameController, databaseController, this, gameStatusManager, currentPlayersManager));
     createLanguageSelectionScene();
   }
 
@@ -244,7 +256,6 @@ public class SceneManager {
       List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(
           filePath);
       return sceneElementFactory.createSceneElements(sceneElementParameters, selectedLanguage);
-
     } catch (ParserConfigurationException | SAXException | IOException e) {
       //TODO: Exception Handling
       return null;
@@ -276,6 +287,28 @@ public class SceneManager {
       createTransitionDisplay();
     }
   }
+  public void createLoginScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(loginElementsPath));
+    System.out.println(((Pane) (root.getChildren().get(0))).getChildren());
+  }
 
+  public void createCurrentPlayersScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(currentPlayersElementsPath));
+  }
+
+  public void createLeaderboardScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(leaderboardElementsPath));
+  }
+
+  public void displayErrorMessage(String message) {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Error");
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
+  }
 
 }

@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -67,7 +68,6 @@ public class SceneElementFactory {
     sceneElementPane.setPrefHeight(screenHeight);
 
     for (Map<String, String> parameterMap : parameterList) {
-
       try {
         String className = parameterMap.get(XMLTags.CLASS.name().toLowerCase());
         Class<?> classObj = Class.forName(className);
@@ -78,6 +78,7 @@ public class SceneElementFactory {
       } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
                IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
         //TODO: Exception Handling
+        System.out.println(e.getMessage());
       }
     }
     return sceneElementPane;
@@ -168,6 +169,16 @@ public class SceneElementFactory {
     listView.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
   }
 
+  private void configureTextField(Node node, Map<String, String> parameters){
+    double widthFactor = parseDoubleParameter(parameters,
+        XMLTags.WIDTH_FACTOR.name().toLowerCase());
+    double heightFactor = parseDoubleParameter(parameters,
+        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
+
+    TextField textField = (TextField) node;
+    textField.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
+  }
+
 
   private void handleLayout(Node node, Map<String, String> parameters) {
     double xLayoutFactor = parseDoubleParameter(parameters,
@@ -209,6 +220,7 @@ public class SceneElementFactory {
     elementConfigurationMap.put(SceneElementType.BUTTON, this::configureButton);
     elementConfigurationMap.put(SceneElementType.LISTVIEW, this::configureListView);
     elementConfigurationMap.put(SceneElementType.COMBOBOX, this::configureComboBox);
+    elementConfigurationMap.put(SceneElementType.TEXTFIELD, this::configureTextField);
   }
 
   private void executeConfigurationMethod(Node node, Map<String, String> parameters) {

@@ -21,6 +21,7 @@ import org.xml.sax.SAXException;
  * @author Jordan Haytaian
  */
 public class SceneElementParser {
+
   private final String nodeTag = "node";
 
   /**
@@ -49,14 +50,12 @@ public class SceneElementParser {
       Element element = (Element) nodeList.item(i);
       elementParameters.add(createParameterList(element));
     }
-
     return elementParameters;
   }
 
   private Map<String, String> createParameterList(Element element) {
     Map<String, String> parameters = new HashMap<>();
     NodeList children = element.getChildNodes();
-
     for (int i = 0; i < children.getLength(); i++) {
       Node child = children.item(i);
       if (child.getNodeType() == Node.ELEMENT_NODE) {
@@ -65,7 +64,6 @@ public class SceneElementParser {
         parameters.put(parameterName, parameterValue);
       }
     }
-
     return parameters;
   }
 

@@ -6,7 +6,7 @@
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.35</x_layout_factor>
-    <y_layout_factor>0.6</y_layout_factor>
+    <y_layout_factor>0.5</y_layout_factor>
     <style>title-button</style>
     <event_type>CHANGE_SCENE</event_type>
     <event>START_MENU</event>
@@ -19,7 +19,7 @@
     <width_factor>0.3</width_factor>
     <height_factor>0.1</height_factor>
     <x_layout_factor>0.35</x_layout_factor>
-    <y_layout_factor>0.77</y_layout_factor>
+    <y_layout_factor>0.67</y_layout_factor>
     <style>title-button</style>
     <event_type>CHANGE_SCENE</event_type>
     <event>START_AUTHORING</event>
@@ -30,7 +30,7 @@
     <type>TEXT</type>
     <text>GAME_OVER</text>
     <x_layout_factor>0.38</x_layout_factor>
-    <y_layout_factor>0.25</y_layout_factor>
+    <y_layout_factor>0.15</y_layout_factor>
     <style>title-text</style>
   </node>
 
@@ -39,10 +39,24 @@
     <type>LISTVIEW</type>
     <width_factor>0.25</width_factor>
     <height_factor>0.2</height_factor>
-    <x_layout_factor>0.5</x_layout_factor>
-    <y_layout_factor>0.3</y_layout_factor>
+    <x_layout_factor>0.38</x_layout_factor>
+    <y_layout_factor>0.2</y_layout_factor>
     <style>score-list</style>
     <event_type>MANAGE_GAME_STATS</event_type>
     <event>SET_SCORE</event>
   </node>
+
+  <node>
+    <class>javafx.scene.control.Button</class>
+    <type>BUTTON</type>
+    <text>LEADERBOARD</text>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
+    <y_layout_factor>0.84</y_layout_factor>
+    <style>title-button</style>
+    <event_type>DATABASE</event_type>
+    <event>LEADERBOARD</event>
+  </node>
+
 </scene_elements>

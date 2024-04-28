@@ -16,8 +16,8 @@ import oogasalad.model.api.data.ParserPlayer;
 import oogasalad.model.api.data.Position;
 import oogasalad.model.api.data.Variables;
 import oogasalad.model.api.exception.InvalidImageException;
+import oogasalad.model.database.Database;
 import oogasalad.model.gameengine.GameEngine;
-import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.KeyInputType;
@@ -36,7 +36,7 @@ import org.apache.logging.log4j.Logger;
  * GameController class handles communications between model and view.  This class holds manager
  * class instances to delegate handling the information received from the model.
  *
- * @author Jordan Haytaian, Judy He
+ * @author Jordan Haytaian, Judy He, Doga Ozmen
  */
 public class GameController {
 
@@ -47,6 +47,8 @@ public class GameController {
   private final GameTitleParser gameTitleParser;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
+  private DatabaseController databaseController;
+  private Database databaseView;
   private boolean ableToStrike;
   private final int maxVelocity;
 
@@ -64,7 +66,8 @@ public class GameController {
    * @param height The height of the screen for the game.
    */
   public GameController(double width, double height) {
-    sceneManager = new SceneManager(this, width, height);
+    databaseController = new DatabaseController();
+    sceneManager = new SceneManager(this, databaseController, width, height);
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
     ableToStrike = true;
