@@ -48,13 +48,19 @@ public class AuthoringController {
   private final ShapeProxy shapeProxy = new ShapeProxy();
   private final AuthoringProxy authoringProxy = new AuthoringProxy();
   private int firstActiveStrikeableId;
+  private String hostPlayer;
 
-  public AuthoringController(SupportedLanguage language, UITheme uiTheme, AuthoringImplementationType authoringFactoryType) {
+  public AuthoringController(SupportedLanguage language, UITheme uiTheme, AuthoringImplementationType authoringFactoryType, String hostPlayer) {
     stage = new Stage();
     UIElementFactory uiElementFactory = new DefaultUIElementFactory();
     AuthoringFactory authoringFactory = new DefaultAuthoringFactory(uiElementFactory, language, shapeProxy, authoringProxy);
     this.authoringScreen = new AuthoringScreen(language, authoringFactory, shapeProxy, authoringProxy);
     authoringScreen.getAuthoringProxy().setAuthoringController(this);
+    this.hostPlayer = hostPlayer;
+  }
+
+  public String getHostPlayer(){
+    return hostPlayer;
   }
 
   public void updateAuthoringScreen() {
@@ -147,9 +153,9 @@ public class AuthoringController {
 
       GameObjectProperties gameObject = new GameObjectProperties(properties.getId(),
           objectProperties, properties.getMass(), objPosition, shapeName, objDimension,
-          Map.of("Default",properties.getColor()), properties.getsFriction(),
+          null, properties.getsFriction(),
           properties.getkFriction(), 0,
-          Map.of("Default", properties.getImagePath()), 0, properties.isElasticity(), false, 0);
+          null, 0, properties.isElasticity(), false, 0);
 
       gameObjects.add(gameObject);
     });

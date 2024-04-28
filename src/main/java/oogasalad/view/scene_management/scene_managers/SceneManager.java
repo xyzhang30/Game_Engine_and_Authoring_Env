@@ -44,6 +44,7 @@ public class SceneManager {
   private Pane transitionElements;
   private int currentRound;
   private SupportedLanguage selectedLanguage;
+  private final String manageGamePath = "data/scene_elements/managePermissionElements.xml";
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
   private final String gameManagementElementsPath =
@@ -61,6 +62,9 @@ public class SceneManager {
       "data/scene_elements/currentPlayersElements.xml";
   private final String leaderboardElementsPath =
       "data/scene_elements/leaderboardElements.xml";
+
+  private final String addFriendScenePath =
+      "data/scene_elements/addFriends.xml";
 
   private DatabaseController databaseController;
 
@@ -169,7 +173,8 @@ public class SceneManager {
    */
   public void update(GameRecord gameRecord, Map<Integer, String> playerMap, String gameName) {
     compositeElement.update(gameRecord.gameObjectRecords());
-    gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round(), playerMap);
+    gameStatusManager.update(gameRecord.players(), gameRecord.turn(), gameRecord.round(),
+        playerMap);
     root.requestFocus();
     checkEndRound(gameRecord, playerMap, gameName);
   }
@@ -180,6 +185,11 @@ public class SceneManager {
   public void removeTransitionSheen() {
     root.getChildren().remove(transitionElements);
     root.requestFocus();
+  }
+
+  public void createManagePermissionsScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(manageGamePath));
   }
 
   /**
@@ -309,6 +319,7 @@ public class SceneManager {
     root.getChildren().clear();
   }
 
+
   private void checkEndRound(GameRecord gameRecord, Map<Integer,String> playerMap,
       String gameName) {
     if (gameRecord.gameOver()) {
@@ -349,4 +360,8 @@ public class SceneManager {
     alert.showAndWait();
   }
 
+  public void createAddFriendScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(addFriendScenePath));
+  }
 }

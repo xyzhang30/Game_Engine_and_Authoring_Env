@@ -57,6 +57,7 @@ public class ChangeSceneEventHandler {
     eventMap.put(SceneElementEvent.START_TITLE, this::createStartTitleHandler);
     eventMap.put(SceneElementEvent.START_MENU, this::createStartMenuHandler);
     eventMap.put(SceneElementEvent.START_AUTHORING, this::createStartAuthoringHandler);
+    eventMap.put(SceneElementEvent.PLAYER_FRIENDS, this::createAddFriendsHandler);
     eventMap.put(SceneElementEvent.NEXT_ROUND, this::createNextRoundHandler);
     eventMap.put(SceneElementEvent.NEW_GAME_WINDOW, this::createNewGameHandler);
     eventMap.put(SceneElementEvent.HELP, this::createHelpInstructionsHandler);
@@ -69,6 +70,10 @@ public class ChangeSceneEventHandler {
 
   private void createStartAuthoringHandler(Node node) {
     node.setOnMouseClicked(e -> gameController.openAuthorEnvironment());
+  }
+
+  private void createAddFriendsHandler(Node node) {
+    node.setOnMouseClicked(e -> gameController.openAddFriends());
   }
 
   private void createNextRoundHandler(Node node) {

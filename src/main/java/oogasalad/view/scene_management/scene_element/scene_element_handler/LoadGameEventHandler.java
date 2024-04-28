@@ -3,6 +3,7 @@ package oogasalad.view.scene_management.scene_element.scene_element_handler;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.function.BiConsumer;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ListCell;
@@ -24,19 +25,24 @@ public class LoadGameEventHandler {
   private final String resumeGameDir = "data/resume_game/";
   private final GameController gameController;
   private final DatabaseController databaseController;
-  private Map<SceneElementEvent, Callable> eventMap;
+  private final DatabaseHandler handler;
+  private Map<SceneElementEvent, Callable<ObservableList<String>>> eventMap;
   private Map<SceneElementEvent, String> dirPathMap;
+  private Map<SceneElementEvent, BiConsumer<String, String>> handleSelectGameMap;
 
   /**
    * Constructs a LoadGameEventHandler with the specified GameController.
    *
    * @param gameController The GameController used to handle game-related events.
    */
-  public LoadGameEventHandler(GameController gameController, DatabaseController databaseController) {
+  public LoadGameEventHandler(GameController gameController,
+      DatabaseController databaseController, DatabaseHandler handler) {
     this.gameController = gameController;
     this.databaseController = databaseController;
+    this.handler = handler;
     createEventMap();
     createDirPathMap();
+    createSelectGameMap();
   }
 
   /**
@@ -46,9 +52,11 @@ public class LoadGameEventHandler {
    * @param event The event type as a string.
    */
   public void createElementHandler(Node node, String event) {
-    Callable callable = eventMap.get(SceneElementEvent.valueOf(event));
+    Callable<ObservableList<String>> callable = eventMap.get(SceneElementEvent.valueOf(event));
+    BiConsumer<String, String> biConsumer = handleSelectGameMap.get(
+        SceneElementEvent.valueOf(event));
     String dirPath = dirPathMap.get(SceneElementEvent.valueOf(event));
-    createStartGameHandler(node, callable, dirPath);
+    createStartGameHandler(node, callable, biConsumer, dirPath);
   }
 
   private void createEventMap() {
@@ -58,6 +66,13 @@ public class LoadGameEventHandler {
     eventMap.put(SceneElementEvent.MANAGE_GAME, databaseController::getManageableGames);
   }
 
+  private void createSelectGameMap() {
+    handleSelectGameMap = new HashMap<>();
+    handleSelectGameMap.put(SceneElementEvent.START_NEW_GAME, this::handleSelectGame);
+    handleSelectGameMap.put(SceneElementEvent.START_SAVED_GAME, this::handleSelectGame);
+    handleSelectGameMap.put(SceneElementEvent.MANAGE_GAME, this::handleManageGame);
+  }
+
 
   private void createDirPathMap() {
     dirPathMap = new HashMap<>();
@@ -65,11 +80,12 @@ public class LoadGameEventHandler {
     dirPathMap.put(SceneElementEvent.START_SAVED_GAME, resumeGameDir);
   }
 
-  private void createStartGameHandler(Node node, Callable<ObservableList<String >> callable,
+  private void createStartGameHandler(Node node, Callable<ObservableList<String>> getItemsCallable,
+      BiConsumer<String, String> handleSelectionBiConsumer,
       String dirPath) {
     try {
       ListView<String> gameList = (ListView<String>) node;
-      ObservableList<String> items = callable.call();
+      ObservableList<String> items = getItemsCallable.call();
       gameList.setItems(items);
       gameList.setCellFactory(lv -> new ListCell<String>() {
         @Override
@@ -84,8 +100,7 @@ public class LoadGameEventHandler {
             Tooltip tooltip = new Tooltip(gameController.getDescription(item));
             setTooltip(tooltip);
 
-
-            setOnMouseClicked(event -> handleSelectGame(dirPath, item));
+            setOnMouseClicked(event -> handleSelectionBiConsumer.accept(dirPath, item));
           }
         }
       });
@@ -96,7 +111,14 @@ public class LoadGameEventHandler {
 
   private void handleSelectGame(String dirPath, String gameTitle) {
     if (gameTitle != null) {
-      gameController.startGamePlay(gameTitle);
+      gameController.startGamePlay(dirPath + gameTitle);
+    }
+  }
+
+  private void handleManageGame(String dirPath, String gameTitle) {
+    if (gameTitle != null) {
+      handler.setGame(gameTitle);
+      gameController.managePermissions(gameTitle);
     }
   }
 }

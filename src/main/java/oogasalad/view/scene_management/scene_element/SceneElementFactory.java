@@ -181,16 +181,6 @@ public class SceneElementFactory {
     textField.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
   }
 
-  private void configureToggle(Node node, Map<String, String> parameters) {
-    double widthFactor = parseDoubleParameter(parameters,
-        XMLTags.WIDTH_FACTOR.name().toLowerCase());
-    double heightFactor = parseDoubleParameter(parameters,
-        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
-
-    ToggleButton toggleButton = (ToggleButton) node;
-    toggleButton.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
-  }
-
 
   private void handleLayout(Node node, Map<String, String> parameters) {
     double xLayoutFactor = parseDoubleParameter(parameters,
@@ -233,7 +223,6 @@ public class SceneElementFactory {
     elementConfigurationMap.put(SceneElementType.LISTVIEW, this::configureListView);
     elementConfigurationMap.put(SceneElementType.COMBOBOX, this::configureComboBox);
     elementConfigurationMap.put(SceneElementType.TEXTFIELD, this::configureTextField);
-    elementConfigurationMap.put(SceneElementType.TOGGLE, this::configureToggle);
   }
 
   private void executeConfigurationMethod(Node node, Map<String, String> parameters) {
