@@ -51,6 +51,18 @@
   </node>
 
   <node>
+    <class>javafx.scene.control.ComboBox</class>
+    <type>COMBOBOX</type>
+    <width_factor>0.15</width_factor>
+    <height_factor>0.05</height_factor>
+    <x_layout_factor>0.52</x_layout_factor>
+    <y_layout_factor>0.68</y_layout_factor>  <!-- Adjust Y layout to position it appropriately -->
+    <style>game-text</style>
+    <event_type>DATABASE</event_type>
+    <event>AVATAR_SELECTION</event>
+  </node>
+
+  <node>
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
     <text>LOGIN</text>
