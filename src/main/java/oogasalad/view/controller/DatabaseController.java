@@ -37,12 +37,12 @@ public class DatabaseController {
     return databaseView.getPlayerPermissionsForGames(gameName);
   }
 
-  public boolean isPublic(String gameName) {
-    return databaseView.isGamePublic(gameName);
+  public String getGameAccessibility(String gameName) {
+    return databaseView.getGameAccessibility(gameName);
   }
 
-  public void setPublicPrivate(String gameName, boolean isPublic) {
-    databaseView.setGamePublic(gameName, isPublic);
+  public void setPublicPrivate(String gameName, String accessibility) {
+    databaseView.setGameAccessibility(gameName, accessibility);
   }
 
   public boolean canUserLogin(String username) {
@@ -141,5 +141,13 @@ public class DatabaseController {
       }
     }
     return 0;
+  }
+
+  public void writeFriends(String player, List<String> friends, List<String> notFriends) {
+    databaseView.assignFriends(player, friends, notFriends);
+  }
+
+  public Map<String, Boolean> getFriends(String player) {
+    return databaseView.getFriends(player);
   }
 }

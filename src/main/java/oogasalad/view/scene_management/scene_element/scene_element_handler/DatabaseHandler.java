@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -14,7 +12,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
-import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import oogasalad.view.api.enums.SceneElementEvent;
@@ -33,11 +30,13 @@ public class DatabaseHandler {
   private TextField usernameTextField;
   private TextField passwordField;
   private ListView<String> playerPermissions;
+  private ListView<String> friends;
   private ComboBox<String> publicComboBox;
   private String avatarUrlField;
   private String currentGame;
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
   private Map<String, Boolean> playerPermissionMap;
+  private Map<String, Boolean> friendsMap;
 
 
   public DatabaseHandler(GameController gameController, SceneManager sceneManager,
@@ -80,7 +79,9 @@ public class DatabaseHandler {
         this::setLeaderboard); //make sure listview is populated w leaderboard
     eventMap.put(SceneElementEvent.PLAYER_PERMISSIONS, this::setUpPlayerPermissions);
     eventMap.put(SceneElementEvent.SUBMIT_PERMISSIONS, this::createFinishHandler);
-    eventMap.put(SceneElementEvent.SET_PUBLIC, this::createPublicVsPrivateHandler);
+    eventMap.put(SceneElementEvent.PLAYER_FRIENDS, this::setUpFriendPermissions);
+    eventMap.put(SceneElementEvent.SUBMIT_FRIENDS, this::confirmFriendsHandler);
+    eventMap.put(SceneElementEvent.SET_PUBLIC, this::createAccessibilityHandler);
   }
 
   private void createLoginHandler(Node node) {
@@ -214,6 +215,35 @@ public class DatabaseHandler {
   }
 
 
+  private void setUpFriendPermissions(Node node) {
+    friends = (ListView<String>) node;
+    friendsMap = databaseController.getFriends(currentPlayersManager.get(0));
+    ObservableList<String> playerNames =
+        FXCollections.observableArrayList(friendsMap.keySet());
+    friends.setItems(playerNames);
+    friends.setCellFactory(lv -> new ListCell<String>() {
+      @Override
+      protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+          setGraphic(null);
+        } else {
+          CheckBox checkBox = new CheckBox(); // Create a new checkbox for each cell
+          boolean permission = friendsMap.get(item);
+          checkBox.setSelected(permission);
+          setText(item);
+          // Update the map when the checkbox is toggled
+          checkBox.setOnAction(event -> {
+            friendsMap.put(item, checkBox.isSelected());
+          });
+          setGraphic(checkBox);
+        }
+      }
+    });
+  }
+
+
   private void createFinishHandler(Node node) {
     node.setOnMouseClicked(e -> {
       List<String> checkedPlayers = new ArrayList<>();
@@ -227,28 +257,38 @@ public class DatabaseHandler {
             }
           }
 
+      databaseController.setPublicPrivate(currentGame, publicComboBox.getSelectionModel().getSelectedItem());
 
-
-      if (publicComboBox.getSelectionModel().getSelectedItem().equals("Public")) {
-        databaseController.setPublicPrivate(currentGame, true);
-      } else {
-        databaseController.setPublicPrivate(currentGame, false);
-      }
       databaseController.writePlayerPermissions(currentGame, checkedPlayers, uncheckedPlayers);
       sceneManager.createMenuScene();
     });
   }
 
-  private void createPublicVsPrivateHandler(Node node) {
+
+  private void confirmFriendsHandler(Node node) {
+    node.setOnMouseClicked(e -> {
+      List<String> checkedPlayers = new ArrayList<>();
+      List<String> uncheckedPlayers = new ArrayList<>();
+
+      for (String item : friends.getItems()) {
+        if (friendsMap.get(item)) {
+          checkedPlayers.add(item);
+        }
+        else {
+          uncheckedPlayers.add(item);
+        }
+      }
+      databaseController.writeFriends(currentPlayersManager.get(0), checkedPlayers, uncheckedPlayers);
+      sceneManager.createMenuScene();
+    });
+  }
+
+  private void createAccessibilityHandler(Node node) {
     publicComboBox = (ComboBox<String>) node;
     ObservableList<String> publicPrivateList = FXCollections.observableArrayList("Public",
-        "Private");
+        "Private", "Friends");
     publicComboBox.setItems(publicPrivateList);
-    if (databaseController.isPublic(currentGame)) {
-      publicComboBox.getSelectionModel().select("Public");
-    } else {
-      publicComboBox.getSelectionModel().select("Private");
-    }
+    publicComboBox.getSelectionModel().select(databaseController.getGameAccessibility(currentGame));
   }
 
   public void setGame(String gameTitle) {
@@ -258,4 +298,5 @@ public class DatabaseHandler {
 //  private void createCurrentPlayersHandler(Node node) {
 //    node.setOnMouseClicked(e -> sceneManager.createCurrentPlayersScene());
 //  }
+
 }

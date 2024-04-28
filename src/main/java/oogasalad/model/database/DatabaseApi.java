@@ -23,7 +23,7 @@ public interface DatabaseApi {
 
   Map<String,Boolean> getPlayerPermissionsForGames(String gameName);
 
-  boolean isGamePublic(String gameName);
+  String getGameAccessibility(String gameName);
 
   /**
    * Retrieves the general high scores for a specific game.
@@ -62,7 +62,8 @@ public interface DatabaseApi {
    */
   boolean registerUser(String username, String password, String avatarUrl);
 
-  void setGamePublic(String gameName, boolean isPublic);
+
+  void setGameAccessibility(String gameName, String accessibility);
 
   /**
    * Registers a new game.
@@ -104,4 +105,9 @@ public interface DatabaseApi {
   void assignPermissionToPlayers(String game, List<String> users, String permission);
 
   List<String> getManageableGames(String playerName);
+
+
+  void assignFriends(String player, List<String> friends, List<String> notFriends);
+
+  Map<String, Boolean> getFriends(String player);
 }
