@@ -103,8 +103,6 @@ public class GameLoaderModel extends GameLoader {
         gameId -> gameObjects.get(gameId).getStrikeable(),
         (playerId, strikeables) -> {
           int activeStrikeableId = getParserPlayerById(playerId).activeStrikeable();
-          System.out.println("GAME OBJECTS"+gameObjects);
-          System.out.println("ACTIVE:"+activeStrikeableId);
           Optional<Strikeable> strikeable = gameObjects.get(activeStrikeableId).getStrikeable();
           strikeable.ifPresent(strikeable1 -> {
             gameObjects.get(activeStrikeableId).addStrikeable();

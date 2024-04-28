@@ -1,6 +1,7 @@
 package oogasalad.view.authoring_environment.panels;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Logger;
 import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -129,6 +130,7 @@ public class ShapePanel implements Panel {
         rootPane.getChildren().add(clonedShape);
       } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                IllegalAccessException e) {
+        LOGGER.error("cloning error");
         throw new RuntimeException(e);
       }
     });

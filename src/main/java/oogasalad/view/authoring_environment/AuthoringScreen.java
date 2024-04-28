@@ -1,9 +1,11 @@
 package oogasalad.view.authoring_environment;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -18,6 +20,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import oogasalad.model.api.exception.AuthoringException;
+import oogasalad.model.gameparser.GameLoaderModel;
+import oogasalad.view.Warning;
 import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
 import oogasalad.view.authoring_environment.panels.KeySelectionPanel;
 import oogasalad.view.authoring_environment.panels.ModPanel;
@@ -35,6 +40,8 @@ import oogasalad.view.authoring_environment.panels.PolicyPanel;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import oogasalad.view.api.enums.AuthoringScreenType;
 import oogasalad.view.api.enums.SupportedLanguage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Represents the authoring screen for the authoring environment in the application, providing the user interface for creating and managing various game elements.
@@ -63,7 +70,8 @@ public class AuthoringScreen {
   private Stage gameNameStage;
   private Button submitGameNameButton;
   private ComboBox<String> permissionSelection;
-
+  private static final Warning WARNING = new Warning();
+  private static final Logger LOGGER = LogManager.getLogger(AuthoringScreen.class);
 
   /**
    * Constructs an AuthoringScreen instance.
@@ -270,7 +278,11 @@ public class AuthoringScreen {
       submitGameNameButton.setOnAction(e -> {
         gameNameStage.close();
         authoringProxy.setGameName(gameNameTextField.getText());
-        authoringProxy.saveGameDescription(gameDescriptionTextField.getText());
+        try {
+          authoringProxy.saveGameDescription(gameDescriptionTextField.getText());
+        } catch (AuthoringException error){
+          WARNING.showAlert(scene, AlertType.ERROR, "Error Saving Game Description", null, error.getMessage());
+        }
         authoringProxy.setGamePermission(permissionSelection.getValue());
         authoringProxy.completeAuthoring(scene);
       });

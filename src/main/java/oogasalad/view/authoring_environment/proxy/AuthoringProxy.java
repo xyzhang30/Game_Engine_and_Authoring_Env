@@ -21,12 +21,15 @@ import oogasalad.model.api.exception.AuthoringException;
 import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
 import oogasalad.model.api.exception.IncompletePlayerStrikeableAuthoringException;
 import oogasalad.model.database.Database;
+import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.Warning;
 import oogasalad.view.api.exception.MissingInteractionException;
 import oogasalad.view.api.exception.MissingNonControllableTypeException;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.controller.AuthoringController;
 import oogasalad.view.api.enums.CollidableType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * AuthoringProxy acts as an intermediary between the authoring environment and the authoring
@@ -46,6 +49,8 @@ public class AuthoringProxy {
   private final Map<Integer, Map<CollidableType, List<Integer>>> playersMap
       = new HashMap<>();
   private Map<String, List<Integer>> multiCommandCheckedIdx = new HashMap<>(); //checkComboBoxId mapped to checkedIndices
+  private static final Logger LOGGER = LogManager.getLogger(AuthoringProxy.class);
+
 
   private String gameName;
   private String currentScreenTitle;
@@ -96,7 +101,6 @@ public class AuthoringProxy {
       conditionsCommands.put(type, new HashMap<>());
     }
     conditionsCommands.get(type).put(commandName, params);
-    System.out.println("ALL CONDITIONS:" + conditionsCommands);
   }
 
   /**
@@ -110,7 +114,6 @@ public class AuthoringProxy {
       List<Integer> params) {
     conditionsCommands.put(type, new HashMap<>());
     conditionsCommands.get(type).put(commandName, params);
-    System.out.println("ALL CONDITIONS:" + conditionsCommands);
   }
 
   /**
@@ -124,16 +127,13 @@ public class AuthoringProxy {
       return;
     }
     conditionsCommands.get(type).remove(commandName);
-    System.out.println("ALL CONDITIONS:" + conditionsCommands);
   }
 
   public void addKeyPreference(String keyType, String keyCode){
     keyPreferences.put(keyType, keyCode);
-    System.out.println("CURRENT KEY PREFS: "+keyPreferences);
   }
 
   public boolean keyAlreadyUsed(String key){
-    System.out.println("EXISTING KEYS: "+keyPreferences.values());
     for (String keyCode : keyPreferences.values()){
       if (key.equals(keyCode)){
         return true;
@@ -254,14 +254,14 @@ public class AuthoringProxy {
     try (InputStream inputStream = new FileInputStream("src/main/resources/view/properties/GameDescriptions.properties")) {
       properties.load(inputStream);
     } catch (IOException e) {
-      System.err.println("Error loading game description properties file: " + e.getMessage());
+      LOGGER.error("Error loading game description properties file: " + e.getMessage());
+      throw new AuthoringException("properties file not found");
     }
 
     properties.setProperty(gameName, gameDescription);
 
     try (OutputStream outputStream = new FileOutputStream("src/main/resources/view/properties/GameDescriptions.properties")) {
       properties.store(outputStream, "Updated Properties");
-      System.out.println("New properties added successfully.");
     } catch (IOException e) {
       System.err.println("Error adding new properties: " + e.getMessage());
     }
@@ -395,14 +395,10 @@ public class AuthoringProxy {
       Integer shapeId, boolean isControllable, int controllableXSpeed, int controllableYSpeed) {
     if (selectedPlayerId >= 0) {
       if (isControllable) {
-        System.out.println("IS CONTROLLABLE:");
         playersMap.get(selectedPlayerId)
             .put(collidableType, List.of(shapeId, controllableXSpeed, controllableYSpeed));
-        System.out.println("UPDATE MAP: "+playersMap);
       } else if (!playersMap.get(selectedPlayerId).get(collidableType).contains(shapeId)) {
         playersMap.get(selectedPlayerId).get(collidableType).add(shapeId);
-        System.out.println("NOT CONTROLLABLE:");
-        System.out.println("UPDATING MAP: "+playersMap);
       }
     }
   }

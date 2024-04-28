@@ -33,12 +33,22 @@ public class GameLoaderView extends GameLoader {
   private StrikeablesView strikeablesView;
   private Map<KeyInputType, String> keys;
 
+  /**
+   * constructor, creates view side game object record and key map for view upon initialization
+   * @param gameName String, name (path) of the game being parsed
+   * @throws InvalidShapeException Shape in game data file cannot be recognized
+   * @throws InvalidColorParsingException Color in game data file cannot be recognized
+   */
   public GameLoaderView(String gameName) throws InvalidShapeException, InvalidColorParsingException{
     super(gameName);
     createViewRecord("Default");
     createKeysMap();
   }
 
+  /**
+   * Gets the available mods for the game
+   * @return List, names of all available mods for the game
+   */
   public List<String> getMods() {
     Set<String> mods = new HashSet<>();
     for (GameObjectProperties go : gameData.getGameObjectProperties()) {
@@ -61,23 +71,26 @@ public class GameLoaderView extends GameLoader {
     KeyPreferences keyRecord = gameData.getKeyPreferences();
     for (KeyInputType keyInputType : KeyInputType.values()) {
       String typeName = keyInputType.toString().toLowerCase(); //enum object name string
-      System.out.println("Record Type Name String:" + typeName);
       try {
         Field field = keyRecord.getClass()
             .getDeclaredField(typeName); //get that field in the record
-        System.out.println("Record field:" + field);
         field.setAccessible(true);
         Object value = field.get(keyRecord);
-        System.out.println("the value:" + field.get(keyRecord));
         keys.put(keyInputType,
             (String) value); //passing as a string bc can't have javafx stuff outside view
       } catch (NoSuchFieldException | IllegalAccessException | NullPointerException e) {
-        e.printStackTrace(); // Handle the exception according to your application's logic
+        LOGGER.error("Missing key preference field in game JSON file");
         throw new MissingJsonGameInfoException("Missing key preference field in game JSON file");
       }
     }
   }
 
+  /**
+   * creates game object record with info of the game object the view needs
+   * @param mod String, name of the current mod
+   * @throws InvalidShapeException
+   * @throws InvalidColorParsingException
+   */
   public void createViewRecord(String mod) throws InvalidShapeException, InvalidColorParsingException {
     List<Integer> strikeableIDs = new ArrayList<>();
     viewGameObjectRecords = new ArrayList<>();

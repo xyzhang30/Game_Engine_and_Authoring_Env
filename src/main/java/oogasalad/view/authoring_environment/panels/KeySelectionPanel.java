@@ -76,7 +76,6 @@ public class KeySelectionPanel implements Panel {
         KeyCode keycode = event.getCode();
         String keyCodeString = keycode.toString();
         if (authoringProxy.keyAlreadyUsed(keyCodeString)){
-          System.out.println("---EVENT CONSUMED---");
           event.consume();
           return;
         }
