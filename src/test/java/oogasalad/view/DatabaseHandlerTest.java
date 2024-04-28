@@ -117,5 +117,21 @@ public class DatabaseHandlerTest {
     assertEquals(expectedTitles, result, "The titles should match the expected list");
   }
 
+  @Test
+  public void testGetPlayerNames() {
+    // Setup
+    List<String> expectedPlayers = List.of("Alice", "Bob", "Charlie");
+    currentPlayersManager = expectedPlayers; // Assuming this is set directly or mock it if necessary
+    databaseController = new DatabaseController(leaderboard, currentPlayersManager);
+
+    // Execute
+    List<String> result = databaseController.getPlayerNames();
+
+    // Verify
+    assertNotNull(result, "Resulting list should not be null");
+    assertEquals(expectedPlayers, result, "The returned player names should match the expected list");
+  }
+
+
 
 }
