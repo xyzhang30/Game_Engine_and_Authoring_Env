@@ -251,15 +251,43 @@ public class SceneManager {
   }
 
 
+  /**
+   * Creates scene elements from a specified XML file.
+   * This method parses the file and uses a factory to generate UI components based on the extracted parameters.
+   *
+   * @param filePath the path to the XML file containing scene elements specifications.
+   * @return a Pane containing the created scene elements, or null if an error occurs.
+   */
   private Pane createSceneElements(String filePath) {
     try {
-      List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(
-          filePath);
+      // Parse the file to get a list of element parameters
+      List<Map<String, String>> sceneElementParameters = sceneElementParser.getElementParametersFromFile(filePath);
+      // Create scene elements using the factory
       return sceneElementFactory.createSceneElements(sceneElementParameters, selectedLanguage);
-    } catch (ParserConfigurationException | SAXException | IOException e) {
-      //TODO: Exception Handling
-      return null;
+    } catch (ParserConfigurationException e) {
+      // Log parser configuration errors or handle them appropriately
+      logError("Parser configuration error", e);
+    } catch (SAXException e) {
+      // Handle errors related to XML parsing
+      logError("XML parsing error", e);
+    } catch (IOException e) {
+      // Handle I/O errors
+      logError("I/O error when reading the file", e);
     }
+    // Return null or alternatively, throw a custom exception to be handled by the caller
+    return null;
+  }
+
+  /**
+   * Logs errors to the system's error logging service or standard output.
+   * This is a simple way to centralize error handling and could be replaced with a more robust logging framework.
+   *
+   * @param message the error message to log
+   * @param e the exception that was caught
+   */
+  private void logError(String message, Exception e) {
+    System.err.println(message + ": " + e.getMessage());
+    e.printStackTrace(); // Consider logging this to a file or system log in a production environment
   }
 
   private void addGameManagementElementsToGame(GameRecord gameRecord) {
@@ -288,9 +316,11 @@ public class SceneManager {
     }
   }
   public void createLoginScene() {
-    System.out.println("login screen initializedg");
+    System.out.println("login screen initialized");
     resetRoot();
+    System.out.println("root reset");
     root.getChildren().add(createSceneElements(loginElementsPath));
+    System.out.println(loginElementsPath);
     System.out.println(((Pane) (root.getChildren().get(0))).getChildren());
   }
 
