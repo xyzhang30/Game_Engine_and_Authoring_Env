@@ -233,6 +233,15 @@ public class GameController {
     return KeyCode.valueOf(keyMap.get(inputType));
   }
 
+  /**
+   * Gets the description associated with the given game
+   * @param selectedGame the game to get the description for
+   * @return the description for the given game
+   */
+  public String getDescription(String selectedGame){
+    return "hi";
+  }
+
   private CompositeElement createCompositeElementFromGameLoader() {
     try {
       List<ViewGameObjectRecord> recordList = gameLoaderView.getViewCollidableInfo();
