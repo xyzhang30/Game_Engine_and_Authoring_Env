@@ -225,6 +225,15 @@ public class GameController {
     }
   }
 
+  public List<String> getMods() {
+    return gameLoaderView.getMods();
+  }
+
+  public void changeMod(String selectedMod) {
+    gameLoaderView.createViewRecord(selectedMod);
+    sceneManager.changeMod(gameLoaderView.getViewCollidableInfo());
+  }
+
 
   /**
    * Gets the input key for the requested input type

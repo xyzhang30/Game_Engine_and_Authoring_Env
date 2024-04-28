@@ -12,7 +12,8 @@
       "x_dimension" : 50.0,
       "y_dimension" : 1000.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : {"Default":[ 0, 0, 0 ]},
+
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
@@ -34,7 +35,8 @@
       "x_dimension" : 1000.0,
       "y_dimension" : 50.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : {"Default":[ 0, 0, 0 ]},
+
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
@@ -56,7 +58,8 @@
       "x_dimension" : 1000.0,
       "y_dimension" : 50.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : {"Default":[ 0, 0, 0 ]},
+
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
@@ -78,7 +81,8 @@
       "x_dimension" : 50.0,
       "y_dimension" : 1000.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : {"Default":[ 0, 0, 0 ]},
+
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
@@ -144,7 +148,8 @@
       "x_dimension" : 20.0,
       "y_dimension" : 20.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : {"Default":[ 0, 0, 0 ]},
+
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
@@ -166,7 +171,8 @@
       "x_dimension" : 30.0,
       "y_dimension" : 30.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : {"Default":[ 0, 0, 0 ]},
+
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
@@ -188,7 +194,8 @@
       "x_dimension" : 30.0,
       "y_dimension" : 30.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : {"Default":[ 0, 0, 0 ]},
+
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
@@ -210,7 +217,8 @@
       "x_dimension" : 30.0,
       "y_dimension" : 30.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : {"Default":[ 0, 0, 0 ]},
+
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
@@ -232,7 +240,8 @@
       "x_dimension" : 30.0,
       "y_dimension" : 30.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : {"Default":[ 0, 0, 0 ]},
+
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
@@ -254,7 +263,8 @@
       "x_dimension" : 30.0,
       "y_dimension" : 30.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : {"Default":[ 0, 0, 0 ]},
+
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
@@ -276,7 +286,8 @@
       "x_dimension" : 30.0,
       "y_dimension" : 30.0
     },
-    "color" : [ 0, 0, 0 ],
+    "color" : {"Default":[ 0, 0, 0 ]},
+
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
@@ -298,7 +309,8 @@
       "x_dimension" : 20.0,
       "y_dimension" : 20.0
     },
-    "color" : [ 255, 0, 0 ],
+   "color" : {"Default":[ 255, 0, 0 ]},
+
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
@@ -364,7 +376,8 @@
       "x_dimension" : 20.0,
       "y_dimension" : 20.0
     },
-    "color" : [ 255, 0, 0 ],
+   "color" : {"Default":[ 255, 0, 0 ]},
+
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
@@ -408,7 +421,8 @@
       "x_dimension" : 20.0,
       "y_dimension" : 20.0
     },
-    "color" : [ 255, 0, 0 ],
+   "color" : {"Default":[ 255, 0, 0 ]},
+
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,

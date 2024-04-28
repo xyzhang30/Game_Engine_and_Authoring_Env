@@ -14,10 +14,13 @@
         "x_dimension" : 990.0,
         "y_dimension" : 990.0
       },
-      "color" : [ 0, 0, 0 ],
+      "color" : {"Default":[ 0, 0, 0 ]},
+
       "staticFriction" : 7.0,
       "kineticFriction" : 5.0,
-      "image" : "data/background_images/wood.jpg"
+      "image" : {"Default" : "data/background_images/wood.jpg"}
+
+
     }, {
       "gameobject_id" : 1,
       "properties" : [  "visible", "collidable" ],
@@ -31,10 +34,12 @@
         "x_dimension" : 20.0,
         "y_dimension" : 990.0
       },
-      "color" : [ 0, 0, 0 ],
+      "color" : {"Default":[ 0, 0, 0 ]},
+
       "staticFriction" : 7.0,
       "kineticFriction" : 5.0,
-      "image" : ""
+      "image": {"Default": ""}
+
     }, {
       "gameobject_id" : 2,
       "properties" : [  "visible", "collidable" ],
@@ -48,10 +53,12 @@
         "x_dimension" : 20.0,
         "y_dimension" : 990.0
       },
-      "color" : [ 0, 0, 0 ],
+      "color" : {"Default":[ 0, 0, 0 ]},
+
       "staticFriction" : 7.0,
       "kineticFriction" : 5.0,
-      "image" : ""
+      "image": {"Default": ""}
+
     }, {
       "gameobject_id" : 3,
       "properties" : [  "visible", "collidable" ],
@@ -65,10 +72,12 @@
         "x_dimension" : 970.0,
         "y_dimension" : 20.0
       },
-      "color" : [ 0, 0, 0 ],
+      "color" : {"Default":[ 0, 0, 0 ]},
+
       "staticFriction" : 7.0,
       "kineticFriction" : 5.0,
-      "image" : ""
+      "image": {"Default": ""}
+
     }, {
       "gameobject_id" : 4,
       "properties" : [  "visible", "collidable" ],
@@ -82,10 +91,12 @@
         "x_dimension" : 990.0,
         "y_dimension" : 20.0
       },
-      "color" : [ 0, 0, 0 ],
+      "color" : {"Default":[ 0, 0, 0 ]},
+
       "staticFriction" : 7.0,
       "kineticFriction" : 5.0,
-      "image" : ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id" : 6,
@@ -100,10 +111,12 @@
         "x_dimension" : 990,
         "y_dimension" : 200
       },
-      "color" : [ 0, 255, 0 ],
+      "color" : {"Default":[ 0, 255, 0 ]},
+
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
-      "image" : ""
+      "image": {"Default": ""}
+
     },  {
       "gameobject_id" : 8,
       "properties" : [  "visible", "surface" ],
@@ -117,10 +130,12 @@
         "x_dimension" : 990,
         "y_dimension" : 200
       },
-      "color" : [ 255, 255, 0 ],
+     "color" : {"Default":[ 255, 255, 0 ]},
+
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
-      "image" : ""
+      "image": {"Default": ""}
+
     }, {
       "gameobject_id" : 9,
       "properties" : [  "visible", "surface" ],
@@ -134,10 +149,12 @@
         "x_dimension" : 990,
         "y_dimension" : 200
       },
-      "color" : [ 255, 0, 0 ],
+   "color" : {"Default":[ 255, 0, 0 ]},
+
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
-      "image" : ""
+      "image": {"Default": ""}
+
     }, {
       "gameobject_id" : 10,
       "properties" : [ "collidable",  "strikeable", "scoreable","visible" ],
@@ -151,10 +168,12 @@
         "x_dimension" : 30.0,
         "y_dimension" : 30.0
       },
-      "color" : [ 0, 0, 100 ],
+      "color" : { "Default" : [ 0, 0, 100 ] },
+
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
-      "image" : ""
+      "image": {"Default": ""}
+
     }, {
       "gameobject_id" : 11,
       "properties" : [ "collidable",  "strikeable","scoreable", "visible" ],
@@ -168,10 +187,12 @@
         "x_dimension" : 30.0,
         "y_dimension" : 30.0
       },
-      "color" : [ 0, 0, 100 ],
+      "color" : { "Default" : [ 0, 0, 100 ] },
+
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
-      "image" : ""
+      "image": {"Default": ""}
+
     }, {
       "gameobject_id" : 12,
       "properties" : [ "collidable",  "strikeable", "scoreable","visible" ],
@@ -185,10 +206,11 @@
         "x_dimension" : 30.0,
         "y_dimension" : 30.0
       },
-      "color" : [ 0, 100, 0 ],
+     "color" : {"Default":[ 0, 100, 0 ]},
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
-      "image" : ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id" : 13,
@@ -203,10 +225,11 @@
         "x_dimension" : 30.0,
         "y_dimension" : 30.0
       },
-      "color" : [ 0, 100, 0 ],
+     "color" : {"Default":[ 0, 100, 0 ]},
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
-      "image" : ""
+      "image": {"Default": ""}
+
     } ],
   "players" : [ {
     "player_id" : 1,

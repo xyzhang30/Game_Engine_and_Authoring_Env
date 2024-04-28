@@ -230,6 +230,7 @@ public class GameLoaderModel extends GameLoader {
   }
 
   private Map<Pair, List<Command>> createCommandMap() {
+
     return gameData.getRules().collisions().stream()
         .collect(Collectors.toMap(
             rule -> new Pair(gameObjects.get(rule.firstId()), gameObjects.get(rule.secondId())),

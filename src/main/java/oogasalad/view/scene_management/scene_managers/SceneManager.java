@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
+import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.DatabaseController;
@@ -235,6 +236,10 @@ public class SceneManager {
     root.requestFocus();
   }
 
+  public void changeMod(List<ViewGameObjectRecord> recordList){
+    compositeElement.updateMod(recordList);
+  }
+
   private void createTransitionDisplay() {
     root.getChildren().add(transitionElements);
   }
@@ -242,10 +247,6 @@ public class SceneManager {
   public void createGameOverScene() {
     resetRoot();
     root.getChildren().add(createSceneElements(gameOverSceneElementsPath));
-
-    Text gameOverText = new Text("GameOver");
-    gameOverText.setId("gameOverText");
-    root.getChildren().add(gameOverText);
   }
 
 

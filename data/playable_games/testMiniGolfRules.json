@@ -14,7 +14,7 @@
         "x_dimension": 10,
         "y_dimension": 10
       },
-      "color": [100,200,100],
+   "color" : {"Default":[100,200,100]},
       "staticFriction": 0,
       "kineticFriction": 0
     },
@@ -31,7 +31,7 @@
         "x_dimension": 10,
         "y_dimension": 10
       },
-      "color": [100,200,100],
+   "color" : {"Default":[100,200,100]},
       "staticFriction": 0,
       "kineticFriction": 0
     },
@@ -48,7 +48,7 @@
         "x_dimension": 5,
         "y_dimension": 5
       },
-      "color": [100,200,100],
+   "color" : {"Default":[100,200,100]},
       "staticFriction": 0,
       "kineticFriction": 0
     },
@@ -65,7 +65,7 @@
         "x_dimension": 200,
         "y_dimension": 200
       },
-      "color": [255,255,255],
+   "color" : {"Default":[255,255,255]},
       "staticFriction": 3.03873,
       "kineticFriction": 2.03873
     }

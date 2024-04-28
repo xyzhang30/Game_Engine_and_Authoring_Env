@@ -14,10 +14,10 @@
         "x_dimension": 990.0,
         "y_dimension": 990.0
       },
-      "color": [0, 0, 0],
+      "color": {"Default" : [0,0,0] },
       "staticFriction": 0,
       "kineticFriction": 0,
-      "image": "data/background_images/wood.jpg"
+      "image": {"Default" : "data/background_images/wood.jpg"}
     },
     {
       "gameobject_id": 1,
@@ -32,10 +32,12 @@
         "x_dimension": 20.0,
         "y_dimension": 990.0
       },
-      "color": [0, 0, 0],
+      "color": {"Default" : [0,0,0] },
+
       "staticFriction": 7.0,
       "kineticFriction": 5.0,
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 2,
@@ -50,10 +52,12 @@
         "x_dimension": 20.0,
         "y_dimension": 990.0
       },
-      "color": [0, 0, 0],
+      "color": {"Default" : [0,0,0] },
+
       "staticFriction": 0,
       "kineticFriction": 0,
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 3,
@@ -68,10 +72,12 @@
         "x_dimension": 985.0,
         "y_dimension": 20.0
       },
-      "color": [0, 0, 0],
+      "color": {"Default" : [0,0,0] },
+
       "staticFriction": 0,
       "kineticFriction": 0,
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 4,
@@ -86,10 +92,12 @@
         "x_dimension": 985.0,
         "y_dimension": 20.0
       },
-      "color": [0, 0, 0],
+      "color": {"Default" : [0,0,0] },
+
       "staticFriction": 0,
       "kineticFriction": 0,
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id": 5,
@@ -104,10 +112,11 @@
         "x_dimension": 300,
         "y_dimension": 20.0
       },
-      "color": [0, 250, 0],
+      "color": {"Default": [0, 250, 0]},
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
-      "image": ""
+      "image": {"Default": ""}
+
     },
     {
       "gameobject_id" : 6,
@@ -122,10 +131,10 @@
         "x_dimension" : 30.0,
         "y_dimension" : 30.0
       },
-      "color" : [ 0, 0, 100 ],
+      "color" : { "Default" : [ 0, 0, 100 ] },
       "staticFriction" : 0.0,
       "kineticFriction" : 0.0,
-      "image" : ""
+      "image": {"Default": ""}
     },
 
         {
@@ -144,14 +153,15 @@
             "x_dimension": 100,
             "y_dimension": 100
           },
-          "color": [
+          "color": {"Default" : [
             223,
             35,
             152
-          ],
+          ]},
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 10,
@@ -169,14 +179,14 @@
             "x_dimension": 100,
             "y_dimension": 100
           },
-          "color": [
+              "color": {"Default" : [
             121,
             230,
             172
-          ],
+          ]},
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": "data/nonstrikeable_images/tenpts.jpg"
+          "image": {"Default": "data/nonstrikeable_images/tenpts.jpg"}
         },
         {
           "gameobject_id": 11,
@@ -194,14 +204,15 @@
             "x_dimension": 100,
             "y_dimension": 100
           },
-          "color": [
+          "color": {"Default" : [
             12,
             84,
             208
-          ],
+          ]},
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 12,
@@ -219,14 +230,15 @@
             "x_dimension": 100,
             "y_dimension": 100
           },
-          "color": [
+          "color": {"Default" : [
             22,
             142,
             160
-          ],
+          ]},
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 13,
@@ -244,14 +256,15 @@
             "x_dimension": 100,
             "y_dimension": 100
           },
-          "color": [
+          "color": {"Default" : [
             159,
             90,
             128
-          ],
+          ]},
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 14,
@@ -269,14 +282,15 @@
             "x_dimension": 100,
             "y_dimension": 100
           },
-          "color": [
+          "color": {"Default" : [
             215,
             22,
             73
-          ],
+          ]},
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 15,
@@ -294,14 +308,15 @@
             "x_dimension": 100,
             "y_dimension": 100
           },
-          "color": [
+          "color": {"Default" : [
             92,
             253,
             97
-          ],
+          ]},
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 16,
@@ -319,14 +334,15 @@
             "x_dimension": 100,
             "y_dimension": 100
           },
-          "color": [
-            177,
+          "color": {"Default" : [
+            170,
             160,
             15
-          ],
+          ]},
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 17,
@@ -344,14 +360,14 @@
             "x_dimension": 100,
             "y_dimension": 100
           },
-          "color": [
+          "color": {"Default" : [
             8,
             78,
             184
-          ],
+          ]},
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": "data/nonstrikeable_images/slowDownBox.jpg"
+          "image": {"Default": "data/nonstrikeable_images/slowDownBox.jpg"}
         },
         {
           "gameobject_id": 18,
@@ -369,14 +385,15 @@
             "x_dimension": 100,
             "y_dimension": 100
           },
-          "color": [
+          "color": {"Default" : [
             151,
             1,
             225
-          ],
+          ]},
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 19,
@@ -394,14 +411,15 @@
             "x_dimension": 100,
             "y_dimension": 100
           },
-          "color": [
+          "color": {"Default" : [
             250,
             40,
             41
-          ],
+          ]},
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 20,
@@ -419,14 +437,11 @@
             "x_dimension": 100,
             "y_dimension": 100
           },
-          "color": [
-            191,
-            108,
-            247
-          ],
+          "color" : { "Default" : [191,108,247]},
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
+
         },
         {
           "gameobject_id": 21,
@@ -444,14 +459,10 @@
             "x_dimension": 100,
             "y_dimension": 100
           },
-          "color": [
-            122,
-            77,
-            49
-          ],
+          "color" : { "Default" : [122,77,49]},
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
         },
         {
           "gameobject_id": 22,
@@ -469,965 +480,809 @@
             "x_dimension": 100,
             "y_dimension": 100
           },
-          "color": [
-            230,
-            181,
-            108
-          ],
+          "color" : { "Default" : [230,181,108]},
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": "data/nonstrikeable_images/speedUpBox.jpg"
+          "image": {"Default":"data/nonstrikeable_images/speedUpBox.jpg"}
         },
-        {
-          "gameobject_id": 23,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 600,
-            "y_position": 200
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            6,
-            190,
-            87
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": "data/nonstrikeable_images/slowDownBox.jpg"
+      {
+        "gameobject_id": 23,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 600,
+          "y_position": 200
         },
-        {
-          "gameobject_id": 24,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 700,
-            "y_position": 200
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            24,
-            23,
-            144
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 25,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 800,
-            "y_position": 200
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            148,
-            90,
-            194
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "color": {"Default": [6, 190, 87]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": "data/nonstrikeable_images/slowDownBox.jpg"}
+      },
+      {
+        "gameobject_id": 24,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 700,
+          "y_position": 200
         },
-        {
-          "gameobject_id": 26,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 900,
-            "y_position": 200
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            199,
-            57,
-            100
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 27,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 100,
-            "y_position": 300
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            96,
-            246,
-            82
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "color": {"Default": [24, 23, 144]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 25,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 800,
+          "y_position": 200
         },
-        {
-          "gameobject_id": 28,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 200,
-            "y_position": 300
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            4,
-            112,
-            231
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 29,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 300,
-            "y_position": 300
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            130,
-            211,
-            102
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "color": {"Default": [148, 90, 194]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 26,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 900,
+          "y_position": 200
         },
-        {
-          "gameobject_id": 30,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 400,
-            "y_position": 300
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            64,
-            109,
-            31
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 31,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 500,
-            "y_position": 300
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            13,
-            239,
-            80
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": "data/nonstrikeable_images/tenpts.jpg"
+        "color": {"Default": [199, 57, 100]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 27,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 100,
+          "y_position": 300
         },
-        {
-          "gameobject_id": 32,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 600,
-            "y_position": 300
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            54,
-            175,
-            103
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 33,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 700,
-            "y_position": 300
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            6,
-            251,
-            22
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": "data/nonstrikeable_images/slowDownBox.jpg"
+        "color": {"Default": [96, 246, 82]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 28,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 200,
+          "y_position": 300
         },
-        {
-          "gameobject_id": 34,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 800,
-            "y_position": 300
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            80,
-            88,
-            237
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 35,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 900,
-            "y_position": 300
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            233,
-            25,
-            184
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": "data/nonstrikeable_images/speedUpBox.jpg"
+        "color": {"Default": [4, 112, 231]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 29,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 300,
+          "y_position": 300
         },
-        {
-          "gameobject_id": 36,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 100,
-            "y_position": 400
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            206,
-            54,
-            214
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 37,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 200,
-            "y_position": 400
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            102,
-            160,
-            149
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "color": {"Default": [130, 211, 102]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 30,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 400,
+          "y_position": 300
         },
-        {
-          "gameobject_id": 38,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 300,
-            "y_position": 400
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            44,
-            147,
-            52
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 39,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 400,
-            "y_position": 400
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            186,
-            108,
-            201
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "color": {"Default": [64, 109, 31]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 31,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 500,
+          "y_position": 300
         },
-        {
-          "gameobject_id": 40,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 500,
-            "y_position": 400
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            216,
-            211,
-            170
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": "data/nonstrikeable_images/speedUpBox.jpg"
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 41,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 600,
-            "y_position": 400
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            185,
-            208,
-            183
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "color": {"Default": [13, 239, 80]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": "data/nonstrikeable_images/tenpts.jpg"}
+      },
+      {
+        "gameobject_id": 32,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 600,
+          "y_position": 300
         },
-        {
-          "gameobject_id": 42,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 700,
-            "y_position": 400
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            92,
-            139,
-            116
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 43,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 800,
-            "y_position": 400
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            22,
-            208,
-            27
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "color": {"Default": [54, 175, 103]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 33,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 700,
+          "y_position": 300
         },
-        {
-          "gameobject_id": 44,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 900,
-            "y_position": 400
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            30,
-            34,
-            48
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 45,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 100,
-            "y_position": 500
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            169,
-            177,
-            61
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "color": {"Default": [6, 251, 22]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": "data/nonstrikeable_images/slowDownBox.jpg"}
+      },
+      {
+        "gameobject_id": 34,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 800,
+          "y_position": 300
         },
-        {
-          "gameobject_id": 46,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 200,
-            "y_position": 500
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            81,
-            50,
-            48
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 47,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 300,
-            "y_position": 500
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            75,
-            96,
-            93
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "color": {"Default": [80, 88, 237]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 35,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 900,
+          "y_position": 300
         },
-        {
-          "gameobject_id": 48,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 400,
-            "y_position": 500
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            51,
-            112,
-            149
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": "data/nonstrikeable_images/speedUpBox.jpg"
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 49,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 500,
-            "y_position": 500
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            115,
-            34,
-            66
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "color": {"Default": [233, 25, 184]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": "data/nonstrikeable_images/speedUpBox.jpg"}
+      },
+      {
+        "gameobject_id": 36,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 100,
+          "y_position": 400
         },
-        {
-          "gameobject_id": 50,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 600,
-            "y_position": 500
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            213,
-            93,
-            189
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": "data/nonstrikeable_images/slowDownBox.jpg"
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 51,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 700,
-            "y_position": 500
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            142,
-            98,
-            243
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "color": {"Default": [206, 54, 214]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 37,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 200,
+          "y_position": 400
         },
-        {
-          "gameobject_id": 52,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 800,
-            "y_position": 500
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            140,
-            55,
-            33
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": "data/nonstrikeable_images/tenpts.jpg"
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 53,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 900,
-            "y_position": 500
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            214,
-            60,
-            146
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "color": {"Default": [102, 160, 149]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 38,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 300,
+          "y_position": 400
         },
-        {
-          "gameobject_id": 54,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 100,
-            "y_position": 600
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            105,
-            102,
-            233
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 55,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 200,
-            "y_position": 600
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            62,
-            38,
-            33
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "color": {"Default": [44, 147, 52]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 39,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 400,
+          "y_position": 400
         },
-        {
-          "gameobject_id": 56,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 300,
-            "y_position": 600
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            16,
-            31,
-            190
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 57,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 400,
-            "y_position": 600
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            126,
-            74,
-            34
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "color": {"Default": [186, 108, 201]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 40,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 500,
+          "y_position": 400
         },
-        {
-          "gameobject_id": 58,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 500,
-            "y_position": 600
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            24,
-            164,
-            183
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
-        {
-          "gameobject_id": 59,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 600,
-            "y_position": 600
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            36,
-            218,
-            91
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "color": {"Default": [216, 211, 170]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": "data/nonstrikeable_images/speedUpBox.jpg"}
+      },
+      {
+        "gameobject_id": 41,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 600,
+          "y_position": 400
         },
-        {
-          "gameobject_id": 60,
-          "properties": [
-            "visible",
-            "collidable"
-          ],
-          "mass": "Infinity",
-          "position": {
-            "x_position": 700,
-            "y_position": 600
-          },
-          "shape": "Rectangle",
-          "dimension": {
-            "x_dimension": 100,
-            "y_dimension": 100
-          },
-          "color": [
-            104,
-            43,
-            173
-          ],
-          "staticFriction": 0.0,
-          "kineticFriction": 0.0,
-          "image": ""
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
         },
+        "color": {"Default": [185, 208, 183]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 42,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 700,
+          "y_position": 400
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [92, 139, 116]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 43,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 800,
+          "y_position": 400
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [22, 208, 27]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 44,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 900,
+          "y_position": 400
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [30, 34, 48]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": "data/nonstrikeable_images/speedUpBox.jpg"}
+      },
+    {
+      "gameobject_id": 45,
+      "properties": [
+        "visible",
+        "collidable"
+      ],
+      "mass": "Infinity",
+      "position": {
+        "x_position": 900,
+        "y_position": 400
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 100,
+        "y_dimension": 100
+      },
+      "color": {"Default": [30, 34, 48]},
+      "staticFriction": 0.0,
+      "kineticFriction": 0.0,
+      "image": {"Default": ""}
+    },
+      {
+        "gameobject_id": 46,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 200,
+          "y_position": 500
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [36, 156, 246]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 47,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 300,
+          "y_position": 500
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [255, 87, 51]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 48,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 400,
+          "y_position": 500
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [128, 114, 254]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 49,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 500,
+          "y_position": 500
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [98, 253, 95]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 50,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 600,
+          "y_position": 500
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [255, 215, 0]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 51,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 700,
+          "y_position": 500
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [254, 127, 156]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 52,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 800,
+          "y_position": 500
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [0, 148, 156]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 53,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 900,
+          "y_position": 500
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [0, 214, 178]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 54,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 100,
+          "y_position": 600
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [105, 102, 233]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 55,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 200,
+          "y_position": 600
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [62, 38, 33]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 56,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 300,
+          "y_position": 600
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [16, 31, 190]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 57,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 400,
+          "y_position": 600
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [126, 74, 34]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 58,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 500,
+          "y_position": 600
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [24, 164, 183]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 59,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 600,
+          "y_position": 600
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [36, 218, 91]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
+      {
+        "gameobject_id": 60,
+        "properties": [
+          "visible",
+          "collidable"
+        ],
+        "mass": "Infinity",
+        "position": {
+          "x_position": 700,
+          "y_position": 600
+        },
+        "shape": "Rectangle",
+        "dimension": {
+          "x_dimension": 100,
+          "y_dimension": 100
+        },
+        "color": {"Default": [104, 43, 173]},
+        "staticFriction": 0.0,
+        "kineticFriction": 0.0,
+        "image": {"Default": ""}
+      },
         {
           "gameobject_id": 61,
           "properties": [
@@ -1444,14 +1299,14 @@
             "x_dimension": 100,
             "y_dimension": 100
           },
-          "color": [
+          "color": {"Default" :[
             109,
             248,
-            130
-          ],
+            330
+          ]},
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": "data/nonstrikeable_images/speedUpBox.jpg"
+          "image": {"Default" : "data/nonstrikeable_images/speedUpBox.jpg"}
         },
         {
           "gameobject_id": 62,
@@ -1469,19 +1324,16 @@
             "x_dimension": 100,
             "y_dimension": 100
           },
-          "color": [
+          "color": {"Default" :[
             101,
             57,
             70
-          ],
+          ]},
           "staticFriction": 0.0,
           "kineticFriction": 0.0,
-          "image": ""
+          "image": {"Default": ""}
         }
       ],
-
-
-
   "players": [
     {
       "player_id": 1,
