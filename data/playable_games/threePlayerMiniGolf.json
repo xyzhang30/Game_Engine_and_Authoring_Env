@@ -331,7 +331,6 @@
     {
       "gameobject_id": 14,
       "properties": [
-        "visible",
         "collidable",
         "strikeable",
         "scoreable"
@@ -358,7 +357,6 @@
     {
       "gameobject_id": 15,
       "properties": [
-        "visible",
         "collidable",
         "strikeable",
         "scoreable"
