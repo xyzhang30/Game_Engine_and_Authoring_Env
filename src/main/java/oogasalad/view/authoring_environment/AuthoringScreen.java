@@ -132,7 +132,7 @@ public class AuthoringScreen {
     return List.of(
         new ColorPanel(shapeProxy, containerPane),
         new ImagePanel(authoringProxy, shapeProxy, containerPane),
-        new ShapePanel(authoringFactory, shapeProxy, authoringProxy, canvasPane, rootPane, containerPane)
+        new ShapePanel(authoringFactory, shapeProxy, authoringProxy, canvasPane, rootPane, containerPane, new DefaultUIElementFactory())
     );
   }
 
