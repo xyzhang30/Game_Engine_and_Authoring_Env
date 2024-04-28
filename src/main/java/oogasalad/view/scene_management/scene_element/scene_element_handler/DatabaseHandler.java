@@ -135,13 +135,13 @@ public class DatabaseHandler {
     //open the currentplayers screen with this player added to it
   }
 
-  private void createPasswordHandler(Node node) {
+  public void createPasswordHandler(Node node) {
     passwordField = (TextField) node;
     //save the password and add to database with username if not already there
 
   }
 
-  private void createUsernameHandler(Node node) {
+  public void createUsernameHandler(Node node) {
     usernameTextField = (TextField) node;
     //save username and add to database if not already there
   }

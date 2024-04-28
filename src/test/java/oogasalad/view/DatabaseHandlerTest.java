@@ -28,4 +28,15 @@ public class DatabaseHandlerTest {
   private TextField usernameTextField;
   private TextField passwordField;
 
+  @BeforeEach
+  public void setUp() {
+    MockitoAnnotations.openMocks(this);
+    ArrayList<String> currentPlayersList = new ArrayList<>();
+    databaseHandler = new DatabaseHandler(gameController, sceneManager, databaseController, currentPlayersList);
+    usernameTextField = new TextField("testUser");
+    passwordField = new TextField("testPass");
+    databaseHandler.createUsernameHandler(usernameTextField);
+    databaseHandler.createPasswordHandler(passwordField);
+  }
+
 }
