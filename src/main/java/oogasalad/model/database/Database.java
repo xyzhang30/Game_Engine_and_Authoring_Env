@@ -223,6 +223,20 @@ public class Database implements DatabaseApi {
     return false;
   }
 
+  @Override
+  public void setGamePublic(String gameName, boolean isPublic) {
+    String sql = "UPDATE Games SET public = ? WHERE gamename = ?";
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setBoolean(1, isPublic);
+      pstmt.setString(2, gameName);
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+
   /**
    * Registers a new game.
    *
