@@ -45,7 +45,7 @@ public class AuthoringProxy {
   private String currentScreenTitle;
   private AuthoringController authoringController;
   private int numPlayers = 1;
-  private boolean gamePermission;
+  private String gamePermission;
 
   /**
    * Adds an interaction for a given list of shapes.
@@ -422,8 +422,7 @@ public class AuthoringProxy {
   }
 
   public void setGamePermission(String permission){
-    boolean publicOrPrivate = permission.equals("Public");
-    this.gamePermission = publicOrPrivate;
+    this.gamePermission = permission;
   }
 
   public void saveGameToDatabase() {

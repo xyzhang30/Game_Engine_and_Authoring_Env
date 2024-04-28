@@ -240,7 +240,7 @@ public class AuthoringScreen {
       gameDescriptionTextField.setWrapText(true);
       Label permission = new Label("Game Permission: ");
       permissionSelection = new ComboBox<>();
-      permissionSelection.getItems().addAll("Public", "Private");
+      permissionSelection.getItems().addAll("public", "private", "friends");
       permissionSelection.setPromptText("Specify game permission");
 
       vbox.getChildren().addAll(enterName, gameNameTextField, enterDescription, gameDescriptionTextField, permission, permissionSelection, makeSubmitGameNameButton());

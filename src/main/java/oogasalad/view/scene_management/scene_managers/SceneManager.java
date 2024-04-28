@@ -63,6 +63,9 @@ public class SceneManager {
   private final String leaderboardElementsPath =
       "data/scene_elements/leaderboardElements.xml";
 
+  private final String addFriendScenePath =
+      "data/scene_elements/addFriends.xml";
+
   private DatabaseController databaseController;
 
 
@@ -357,4 +360,8 @@ public class SceneManager {
     alert.showAndWait();
   }
 
+  public void createAddFriendScene() {
+    resetRoot();
+    root.getChildren().add(createSceneElements(addFriendScenePath));
+  }
 }
