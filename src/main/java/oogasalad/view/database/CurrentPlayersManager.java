@@ -23,9 +23,19 @@ public class CurrentPlayersManager {
 
 
   public void setPlayersListView(ListView<String> playersListView){
+    System.out.println("SETTING PLAYERS");
+    System.out.println(currentPlayersList);
     playersListView.setItems(currentPlayersList);
   }
 
+  public int getPartySize() {
+    return currentPlayersList.size();
+  }
+
+  public String getHost() {
+    System.out.println(currentPlayersList);
+    return currentPlayersList.get(0);
+  }
 
   /**
    * Updates the ListView with the current players by adding a new username.
@@ -34,6 +44,7 @@ public class CurrentPlayersManager {
    * @param username the username of the player to add
    */
   public void saveUserInfo(String username) {
+    System.out.println("Adding Players");
     currentPlayersList.add(username);
   }
 

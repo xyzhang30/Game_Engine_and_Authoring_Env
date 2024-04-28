@@ -2,9 +2,9 @@
   <node>
     <class>javafx.scene.control.ListView</class>
     <type>LISTVIEW</type>
-    <width_factor>0.3</width_factor>
+    <width_factor>0.25</width_factor>
     <height_factor>0.45</height_factor>
-    <x_layout_factor>0.1</x_layout_factor>
+    <x_layout_factor>0.06</x_layout_factor>
     <y_layout_factor>0.4</y_layout_factor>
     <style>menu-game-options</style>
     <event_type>LOAD_GAME</event_type>
@@ -14,20 +14,33 @@
   <node>
     <class>javafx.scene.control.ListView</class>
     <type>LISTVIEW</type>
-    <width_factor>0.3</width_factor>
+    <width_factor>0.25</width_factor>
     <height_factor>0.45</height_factor>
-    <x_layout_factor>0.6</x_layout_factor>
+    <x_layout_factor>0.36</x_layout_factor>
+    <y_layout_factor>0.4</y_layout_factor>
+    <style>menu-game-options</style>
+    <event_type>LOAD_GAME</event_type>
+    <event>MANAGE_GAME</event>
+  </node>
+
+  <node>
+    <class>javafx.scene.control.ListView</class>
+    <type>LISTVIEW</type>
+    <width_factor>0.25</width_factor>
+    <height_factor>0.45</height_factor>
+    <x_layout_factor>0.68</x_layout_factor>
     <y_layout_factor>0.4</y_layout_factor>
     <style>menu-game-options</style>
     <event_type>LOAD_GAME</event_type>
     <event>START_SAVED_GAME</event>
   </node>
 
+
   <node>
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>NEW_GAME</text>
-    <x_layout_factor>0.2</x_layout_factor>
+    <x_layout_factor>0.15</x_layout_factor>
     <y_layout_factor>0.35</y_layout_factor>
     <style>game-text</style>
   </node>
@@ -35,8 +48,17 @@
   <node>
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
+    <text>MANAGE_GAME</text>
+    <x_layout_factor>0.45</x_layout_factor>
+    <y_layout_factor>0.35</y_layout_factor>
+    <style>game-text</style>
+  </node>
+
+<node>
+    <class>javafx.scene.text.Text</class>
+    <type>TEXT</type>
     <text>SAVED_GAME</text>
-    <x_layout_factor>0.7</x_layout_factor>
+    <x_layout_factor>0.8</x_layout_factor>
     <y_layout_factor>0.35</y_layout_factor>
     <style>game-text</style>
   </node>

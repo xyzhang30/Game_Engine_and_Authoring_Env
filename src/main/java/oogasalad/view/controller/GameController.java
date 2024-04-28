@@ -23,6 +23,7 @@ import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.KeyInputType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
+import oogasalad.view.database.CurrentPlayersManager;
 import oogasalad.view.scene_management.scene_managers.AnimationManager;
 import oogasalad.view.scene_management.element_parsers.GameTitleParser;
 import oogasalad.view.scene_management.GameWindow;
@@ -66,8 +67,9 @@ public class GameController {
    * @param height The height of the screen for the game.
    */
   public GameController(double width, double height) {
-    databaseController = new DatabaseController();
-    sceneManager = new SceneManager(this, databaseController, width, height);
+    CurrentPlayersManager currentPlayersManager = new CurrentPlayersManager();
+    databaseController = new DatabaseController(currentPlayersManager);
+    sceneManager = new SceneManager(this, databaseController, width, height, currentPlayersManager);
     animationManager = new AnimationManager();
     gameTitleParser = new GameTitleParser();
     ableToStrike = true;
@@ -190,8 +192,10 @@ public class GameController {
    * @return a list of the playable saved game titles
    */
   public ObservableList<String> getSavedGameTitles() {
+    System.out.println(5);
     return gameTitleParser.getSavedGameTitles();
   }
+
 
   /**
    * Creates a new game window for the user to play or author a games

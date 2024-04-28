@@ -9,6 +9,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tooltip;
 import oogasalad.view.api.enums.SceneElementEvent;
+import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
 
 
@@ -22,6 +23,7 @@ public class LoadGameEventHandler {
   private final String newGameDir = "data/playable_games/";
   private final String resumeGameDir = "data/resume_game/";
   private final GameController gameController;
+  private final DatabaseController databaseController;
   private Map<SceneElementEvent, Callable> eventMap;
   private Map<SceneElementEvent, String> dirPathMap;
 
@@ -30,8 +32,9 @@ public class LoadGameEventHandler {
    *
    * @param gameController The GameController used to handle game-related events.
    */
-  public LoadGameEventHandler(GameController gameController) {
+  public LoadGameEventHandler(GameController gameController, DatabaseController databaseController) {
     this.gameController = gameController;
+    this.databaseController = databaseController;
     createEventMap();
     createDirPathMap();
   }
@@ -50,8 +53,9 @@ public class LoadGameEventHandler {
 
   private void createEventMap() {
     eventMap = new HashMap<>();
-    eventMap.put(SceneElementEvent.START_NEW_GAME, gameController::getNewGameTitles);
+    eventMap.put(SceneElementEvent.START_NEW_GAME, databaseController::getNewGameTitles);
     eventMap.put(SceneElementEvent.START_SAVED_GAME, gameController::getSavedGameTitles);
+    eventMap.put(SceneElementEvent.MANAGE_GAME, databaseController::getManageableGames);
   }
 
   private void createDirPathMap() {
@@ -60,10 +64,11 @@ public class LoadGameEventHandler {
     dirPathMap.put(SceneElementEvent.START_SAVED_GAME, resumeGameDir);
   }
 
-  private void createStartGameHandler(Node node, Callable callable, String dirPath) {
+  private void createStartGameHandler(Node node, Callable<ObservableList<String >> callable,
+      String dirPath) {
     try {
       ListView<String> gameList = (ListView<String>) node;
-      ObservableList<String> items = (ObservableList<String>) callable.call();
+      ObservableList<String> items = callable.call();
       gameList.setItems(items);
       gameList.setCellFactory(lv -> new ListCell<String>() {
         @Override

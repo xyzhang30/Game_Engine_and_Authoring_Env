@@ -24,8 +24,9 @@ public class SceneManagerTest extends DukeApplicationTest {
   public void setUp() throws InterruptedException {
     Platform.runLater(() -> {
       testStage = new Stage();
-      sceneManager = new SceneManager(new GameController(800, 600), new DatabaseController(), 800,
-          600);
+      sceneManager = new SceneManager(new GameController(800, 600), new DatabaseController(null),
+          800,
+          600, null);
       testStage.setScene(sceneManager.getScene());
       testStage.show();
     });

@@ -10,11 +10,11 @@ import oogasalad.view.database.CurrentPlayersManager;
 
 
 public class DatabaseController {
-  private CurrentPlayersManager currentPlayersManager;
   private Database databaseView;
-  public DatabaseController(){
+  private CurrentPlayersManager currentPlayersManager;
+  public DatabaseController(CurrentPlayersManager currentPlayersManager){
     this.databaseView = new Database();
-    currentPlayersManager = new CurrentPlayersManager();
+    this.currentPlayersManager = currentPlayersManager;
   }
 
   public boolean canUserLogin(String username) {
@@ -60,5 +60,16 @@ public class DatabaseController {
     return score.playerName() + ": " + score.score();
   }
 
+
+  public ObservableList<String> getManageableGames() {
+    String host = currentPlayersManager.getHost();
+    return databaseView.getManageableGames(host);
+  }
+
+  public ObservableList<String> getNewGameTitles() {
+    String host = currentPlayersManager.getHost();
+    int size = currentPlayersManager.getPartySize();
+    return databaseView.getPlayableGameIds(host, size);
+  }
 
 }
