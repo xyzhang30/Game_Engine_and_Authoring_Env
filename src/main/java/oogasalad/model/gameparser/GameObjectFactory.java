@@ -3,6 +3,7 @@ package oogasalad.model.gameparser;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.gameengine.GameEngine;
