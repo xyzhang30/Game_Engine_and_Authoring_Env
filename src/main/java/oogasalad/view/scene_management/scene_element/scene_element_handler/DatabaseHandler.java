@@ -39,6 +39,7 @@ public class DatabaseHandler {
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
   private Map<String, Boolean> playerPermissionMap;
   private Map<String, Boolean> friendsMap;
+  private ComboBox<String> avatarComboBox;  // ComboBox for selecting an avatar
 
 
   public DatabaseHandler(GameController gameController, SceneManager sceneManager,
