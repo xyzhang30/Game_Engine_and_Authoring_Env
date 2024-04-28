@@ -6,6 +6,7 @@ import java.util.Optional;
 import oogasalad.model.annotations.CommandHelpInfo;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
+import oogasalad.model.api.exception.InvalidParameterNumberException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
 import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
