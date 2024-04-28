@@ -1,11 +1,14 @@
 package oogasalad.view.scene_management.scene_element.scene_element_handler;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -223,6 +226,21 @@ public class DatabaseHandler {
     });
 
     return dialog.showAndWait();
+  }
+
+  private ObservableList<String> loadAvatarNamesFromDirectory() {
+    try {
+      // Adjust the path if necessary when running from a different setup
+      return FXCollections.observableArrayList(
+          Files.list(Paths.get(getClass().getResource("/view/avatar_images").toURI()))
+              .filter(path -> path.toString().endsWith(".png"))
+              .map(path -> path.getFileName().toString())
+              .collect(Collectors.toList())
+      );
+    } catch (Exception e) {
+      e.printStackTrace();
+      return FXCollections.observableArrayList(); // return an empty list in case of error
+    }
   }
 
 
