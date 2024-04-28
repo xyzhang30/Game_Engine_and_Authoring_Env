@@ -62,6 +62,8 @@ public interface DatabaseApi {
    */
   boolean registerUser(String username, String password, String avatarUrl);
 
+  void setGamePublic(String gameName, boolean isPublic);
+
   /**
    * Registers a new game.
    *
