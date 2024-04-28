@@ -12,8 +12,11 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -161,6 +164,60 @@ public class DatabaseHandler {
         });
     //add the new user to the database
     //open the currentplayers screen with this player added to it
+  }
+
+  private Optional<String> showAvatarSelectionDialog() {
+    Dialog<String> dialog = new Dialog<>();
+    dialog.setTitle("Select Avatar");
+    dialog.setHeaderText("Choose your avatar");
+
+    ButtonType selectButtonType = new ButtonType("Select", ButtonBar.ButtonData.OK_DONE);
+    dialog.getDialogPane().getButtonTypes().addAll(selectButtonType, ButtonType.CANCEL);
+
+    ComboBox<String> avatarComboBox = new ComboBox<>();
+    ObservableList<String> avatars = FXCollections.observableArrayList(
+        "loewyhappy.png", "loewycreamed.png", "duvall.png", "moffett.png"
+    );
+    avatarComboBox.setItems(avatars);
+    avatarComboBox.setCellFactory(lv -> new ListCell<>() {
+      @Override
+      protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+          setGraphic(null);
+        } else {
+          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), 100, 100, true, false);
+          ImageView imageView = new ImageView(img);
+          setGraphic(imageView);
+        }
+      }
+    });
+    avatarComboBox.setButtonCell(new ListCell<>() {
+      @Override
+      protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+          setGraphic(null);
+        } else {
+          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), 100, 100, true, false);
+          ImageView imageView = new ImageView(img);
+          setGraphic(imageView);
+        }
+      }
+    });
+
+    dialog.getDialogPane().setContent(avatarComboBox);
+
+    dialog.setResultConverter(dialogButton -> {
+      if (dialogButton == selectButtonType) {
+        return avatarComboBox.getSelectionModel().getSelectedItem();
+      }
+      return null;
+    });
+
+    return dialog.showAndWait();
   }
 
   public void createPasswordHandler(Node node) {
