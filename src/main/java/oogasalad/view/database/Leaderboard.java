@@ -14,7 +14,6 @@ import oogasalad.view.controller.DatabaseController;
  */
 public class Leaderboard {
   private ObservableList<String> leaderboardScores;
-  private ListView<String> leaderboardListView;
 
   /**
    * Constructor that initializes the leaderboard's ObservableList and ListView.
