@@ -3,8 +3,11 @@ package oogasalad.view;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.database.Database;
 import oogasalad.view.api.exception.IncorrectPasswordException;
@@ -91,9 +94,28 @@ public class DatabaseHandlerTest {
     verify(databaseView).addGameScore(gameId, "Bob", 150, false);
   }
 
+  @Test
+  public void testGetNewGameTitles() {
+    // Setup
+    String expectedHost = "Alice";
+    int expectedSize = 3;
+    ObservableList<String> expectedTitles = FXCollections.observableArrayList("Game1", "Game2", "Game3");
 
+    // Mocking currentPlayersManager to return a list with a specific size and a specific host at index 0
+    currentPlayersManager = new ArrayList<>(List.of(expectedHost, "Bob", "Charlie"));
+    databaseController = new DatabaseController(leaderboard, currentPlayersManager);
 
+    // Setting up the mock behavior for databaseView
+    when(databaseView.getPlayableGameIds(expectedHost, expectedSize)).thenReturn(expectedTitles);
 
+    // Execute
+    ObservableList<String> result = databaseController.getNewGameTitles();
+
+    // Verify
+    verify(databaseView).getPlayableGameIds(expectedHost, expectedSize);
+    assertNotNull(result, "Result should not be null");
+    assertEquals(expectedTitles, result, "The titles should match the expected list");
+  }
 
 
 }
