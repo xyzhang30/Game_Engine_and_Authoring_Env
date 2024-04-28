@@ -46,6 +46,7 @@ public class AuthoringProxy {
   private String currentScreenTitle;
   private AuthoringController authoringController;
   private int numPlayers = 1;
+  private boolean gamePermission;
 
   /**
    * Adds an interaction for a given list of shapes.
@@ -185,6 +186,7 @@ public class AuthoringProxy {
       authoringController.writeKeyPreferences(keyPreferences);
       boolean saveGameSuccess = authoringController.submitGame(gameName);
       if (saveGameSuccess) {
+        saveGameToDatabase();
         showSuceessMessage("Game successfully saved!");
       } else {
         showSaveGameError("Save game failed :(");
@@ -420,12 +422,15 @@ public class AuthoringProxy {
     multiCommandCheckedIdx.put(key, newIndices);
   }
 
-  public void saveGamePermission(String value) {
-    boolean permission = value.equals("Public");
-    System.out.println("Permission:"+permission);
+  public void setGamePermission(String permission){
+    boolean publicOrPrivate = permission.equals("Public");
+    this.gamePermission = publicOrPrivate;
+  }
+
+  public void saveGameToDatabase() {
     String hostPlayer = authoringController.getHostPlayer();
     int numPlayers = playersMap.size();
     Database database = new Database();
-    database.registerGame(gameName,hostPlayer,numPlayers,permission);
+    database.registerGame(gameName,hostPlayer,numPlayers, gamePermission);
   }
 }

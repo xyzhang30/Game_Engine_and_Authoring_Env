@@ -269,7 +269,7 @@ public class AuthoringScreen {
         gameNameStage.close();
         authoringProxy.setGameName(gameNameTextField.getText());
         authoringProxy.saveGameDescription(gameDescriptionTextField.getText());
-        authoringProxy.saveGamePermission(permissionSelection.getValue());
+        authoringProxy.setGamePermission(permissionSelection.getValue());
         authoringProxy.completeAuthoring();
       });
     }
