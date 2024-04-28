@@ -12,6 +12,10 @@ import oogasalad.view.scene_management.scene_element.scene_element_handler.Datab
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
-public class LeaderBoardTest {
+public class LeaderBoardTest extends DukeApplicationTest{
+
+  private DatabaseHandler databaseHandler;
+  private DatabaseController mockDatabaseController;
+  private ListView<String> listView;
 
 }
