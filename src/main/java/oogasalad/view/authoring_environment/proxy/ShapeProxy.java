@@ -29,6 +29,8 @@ import org.apache.logging.log4j.Logger;
  */
 public class ShapeProxy {
 
+  private String modName = "default";
+  private List<String> mods = new ArrayList<>();
   private final Stack<Shape> shapeStack = new Stack<>();
   private final ListProperty<Integer> shapesListProperty = new SimpleListProperty<>(
       FXCollections.observableArrayList());
@@ -43,6 +45,10 @@ public class ShapeProxy {
       RESOURCE_FOLDER_PATH + VIEW_PROPERTIES_PATH + DEFAULT_VALUES_FILE);
   private int numberOfMultiSelectAllowed = Integer.parseInt(
       defaultValuesResourceBundle.getString("defaultNumShapesSelectedAllowed"));
+
+  public ShapeProxy (){
+    mods.add("Default");
+  }
 
   /**
    * Gets the most recently selected shape.
@@ -216,7 +222,7 @@ public class ShapeProxy {
    * Resets the GameObjectAttributesContainer due to new shape selection.
    */
   public void resetGameObjectAttributesContainer() {
-    gameObjectAttributesContainer = new GameObjectAttributesContainer();
+//    gameObjectAttributesContainer = new GameObjectAttributesContainer();
     if (!shapeStack.isEmpty()) {
       Shape currentShape = shapeStack.peek();
       gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));
@@ -247,4 +253,16 @@ public class ShapeProxy {
     return shapesListProperty;
   }
 
+  public void setCurrentMod(String newModName){
+    this.modName = newModName;
+    mods.add(newModName);
+  }
+
+  public String getCurrentMod(){
+    return modName;
+  }
+
+  public List<String> getAllMods(){
+    return mods;
+  }
 }

@@ -18,10 +18,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
-import oogasalad.model.api.exception.IncompletePlayerStrikeableAuthoringException;
 import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
 import oogasalad.view.authoring_environment.panels.KeySelectionPanel;
+import oogasalad.view.authoring_environment.panels.ModPanel;
 import oogasalad.view.authoring_environment.util.Container;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.api.authoring.AuthoringFactory;
@@ -135,7 +134,8 @@ public class AuthoringScreen {
     return List.of(
         new ColorPanel(shapeProxy, containerPane),
         new ImagePanel(authoringProxy, shapeProxy, containerPane),
-        new ShapePanel(authoringFactory, shapeProxy, authoringProxy, canvasPane, rootPane, containerPane)
+        new ShapePanel(authoringFactory, shapeProxy, authoringProxy, canvasPane, rootPane, containerPane, new DefaultUIElementFactory()),
+        new ModPanel(authoringProxy, shapeProxy, containerPane)
     );
   }
 

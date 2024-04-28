@@ -2,14 +2,25 @@ package oogasalad.view.authoring_environment.panels;
 
 import java.lang.reflect.InvocationTargetException;
 import javafx.geometry.Bounds;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import oogasalad.view.api.authoring.AuthoringFactory;
 import oogasalad.view.api.authoring.Panel;
+import oogasalad.view.api.authoring.UIElementFactory;
+import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
 import oogasalad.view.authoring_environment.util.Coordinate;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
@@ -33,6 +44,9 @@ public class ShapePanel implements Panel {
   private final AnchorPane containerPane;
   private Coordinate startPos;
   private Coordinate translatePos;
+  private final UIElementFactory uiElementFactory;
+  private Button mod;
+  private TextArea modName;
 
   /**
    * Constructs a ShapePanel with the specified authoring factory, shape proxy, and authoring proxy,
@@ -47,13 +61,14 @@ public class ShapePanel implements Panel {
    */
   public ShapePanel(AuthoringFactory authoringFactory, ShapeProxy shapeProxy,
       AuthoringProxy authoringProxy, StackPane canvas,
-      AnchorPane rootPane, AnchorPane containerPane) {
+      AnchorPane rootPane, AnchorPane containerPane, UIElementFactory uiElementFactory) {
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
     this.authoringFactory = authoringFactory;
     this.canvas = canvas;
     this.rootPane = rootPane;
     this.containerPane = containerPane;
+    this.uiElementFactory = uiElementFactory;
     shapeProxy.setNumberOfMultiSelectAllowed(1);
     createElements();
     handleEvents();
@@ -72,7 +87,29 @@ public class ShapePanel implements Panel {
 //    containerPane.getChildren().addAll(authoringFactory.createGameConfiguration());
     shapeProxy.createGameObjectTemplates();
     containerPane.getChildren().addAll(shapeProxy.getTemplates());
+    mod = uiElementFactory.createButton("mod", "New Mod", 200, 100);
+    mod.setId("mod");
+    mod.setOnAction(event -> {
+      enterModName();
+    });
   }
+
+  private void enterModName() {
+//    Stage gameNameStage = new Stage();
+//    gameNameStage.setTitle("Enter New Mod Name: ");
+//
+//    VBox vbox = new VBox();
+//    Label enterName = new Label("Mod Name");
+//    gameNameTextField = new TextField();
+//    gameNameTextField.setPromptText("Enter game name...");
+//
+//    vbox.getChildren().addAll(enterName, gameNameTextField, enterDescription, gameDescriptionTextField, makeSubmitGameNameButton());
+//
+//    Scene scene = new Scene(vbox, 500, 500);
+//    gameNameStage.setScene(scene);
+//    gameNameStage.showAndWait();
+  }
+
 
   /**
    * Handles events for the shapes in the authoring panel.

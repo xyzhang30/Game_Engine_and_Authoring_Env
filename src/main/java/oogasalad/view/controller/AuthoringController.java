@@ -157,11 +157,14 @@ public class AuthoringController {
 
       Position objPosition = new Position(properties.getPosition().x(), properties.getPosition().y());
 
+      System.out.println("Colors:"+properties.getAllColors());
+      System.out.println("Img:"+properties.getAllImagePaths());
+
       GameObjectProperties gameObject = new GameObjectProperties(properties.getId(),
           objectProperties, properties.getMass(), objPosition, shapeName, objDimension,
-          null, properties.getsFriction(),
+          properties.getAllColors(), properties.getsFriction(),
           properties.getkFriction(), 0,
-          null, 0, properties.isElasticity(), false, 0);
+          properties.getAllImagePaths(), 0, properties.isElasticity(), false, 0);
 
       gameObjects.add(gameObject);
     });
@@ -175,11 +178,9 @@ public class AuthoringController {
     String powerDown = keyPreferences.get("power_down");
     String controllableLeft = keyPreferences.get("controllable_left");
     String controllableRight = keyPreferences.get("controllable_right");
-    String controllableUp = keyPreferences.get("controllable_up");
-    String controllableDown = keyPreferences.get("controllable_down");
     String striking = keyPreferences.get("striking");
 
-    KeyPreferences keys = new KeyPreferences(angleLeft, angleRight, powerUp, powerDown, controllableLeft, controllableRight, controllableUp, controllableDown, striking);
+    KeyPreferences keys = new KeyPreferences(angleLeft, angleRight, powerUp, powerDown, controllableLeft, controllableRight, striking);
     builderDirector.constructKeys(List.of(keys));
   }
 

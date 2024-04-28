@@ -191,8 +191,8 @@ public class AuthoringProxy {
       authoringController.writeKeyPreferences(keyPreferences);
       boolean saveGameSuccess = authoringController.submitGame(gameName);
       if (saveGameSuccess) {
-        saveGameToDatabase();
         WARNING.showAlert(scene, AlertType.INFORMATION, "Save Game Success", null, "Game successfully saved!");
+        saveGameToDatabase();
       } else {
         throw new AuthoringException("Save game failed :(");
       }

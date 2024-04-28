@@ -16,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import oogasalad.view.api.authoring.AuthoringFactory;
+import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
 import oogasalad.view.authoring_environment.panels.ShapePanel;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
@@ -47,7 +48,7 @@ public class ShapePanelTest extends DukeApplicationTest {
         rootPane = new AnchorPane();
         containerPane = new AnchorPane();
 
-        shapePanel = new ShapePanel(testAuthoringFactory, mockShapeProxy, mockAuthoringProxy, canvas, rootPane, containerPane);
+        shapePanel = new ShapePanel(testAuthoringFactory, mockShapeProxy, mockAuthoringProxy, canvas, rootPane, containerPane, new DefaultUIElementFactory());
 
         Stage stage = new Stage();
         Scene scene = new Scene(containerPane);

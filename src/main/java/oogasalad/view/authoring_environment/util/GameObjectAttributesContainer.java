@@ -1,7 +1,9 @@
 package oogasalad.view.authoring_environment.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The GameObjectAttributesContainer class serves as a container for storing attributes and properties
@@ -12,8 +14,8 @@ import java.util.List;
 public class GameObjectAttributesContainer implements Cloneable {
 
   private int id;
-  private String imagePath;
-  private List<Integer> color;
+  private Map<String, String> imagePath = new HashMap<>();
+  private Map<String, List<Integer>> color = new HashMap<>();
   private List<String> properties = new ArrayList<>();
   private boolean elasticity;
   private double mass;
@@ -27,7 +29,11 @@ public class GameObjectAttributesContainer implements Cloneable {
    *
    * @return the image path as a string.
    */
-  public String getImagePath() {
+  public String getImagePathforMod(String mod) {
+    return imagePath.get(mod);
+  }
+
+  public Map<String, String> getAllImagePaths(){
     return imagePath;
   }
 
@@ -36,8 +42,8 @@ public class GameObjectAttributesContainer implements Cloneable {
    *
    * @param imagePath the new image path as a string.
    */
-  public void setImagePath(String imagePath) {
-    this.imagePath = imagePath;
+  public void setImagePath(String imagePath, String mod) {
+    this.imagePath.put(mod, imagePath);
   }
 
   /**
@@ -45,8 +51,12 @@ public class GameObjectAttributesContainer implements Cloneable {
    *
    * @return a list of integers representing the RGB color.
    */
-  public List<Integer> getColor() {
-    return color;
+  public List<Integer> getColorForMod(String mod) {
+    return color.get(mod);
+  }
+
+  public Map<String, List<Integer>> getAllColors(){
+    return this.color;
   }
 
   /**
@@ -54,8 +64,9 @@ public class GameObjectAttributesContainer implements Cloneable {
    *
    * @param color a list of integers representing the RGB color.
    */
-  public void setColor(List<Integer> color) {
-    this.color = color;
+  public void setColor(List<Integer> color, String mod) {
+    this.color.put(mod, color);
+    System.out.println("Setting color in properties container:"+this.color + " Container: "+this);
   }
 
   /**
