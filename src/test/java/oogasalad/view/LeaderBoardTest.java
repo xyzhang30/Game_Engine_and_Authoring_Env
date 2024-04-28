@@ -18,4 +18,18 @@ public class LeaderBoardTest extends DukeApplicationTest{
   private DatabaseController mockDatabaseController;
   private ListView<String> listView;
 
+  @BeforeEach
+  public void setup() {
+    // Prepare the mock controller
+    mockDatabaseController = mock(DatabaseController.class);
+    // Create a ListView to act as the leaderboard display
+    listView = new ListView<>();
+
+    // Assuming the SceneManager and GameController are also required but not used directly in this test
+    databaseHandler = new DatabaseHandler(null, null, mockDatabaseController, null);
+
+    // Prepare the listView to be used in the test as if it's part of the UI handled by DatabaseHandler
+    databaseHandler.setLeaderboard(listView);  // This is a hypothetical method for setting the ListView
+  }
+
 }

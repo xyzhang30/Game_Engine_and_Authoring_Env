@@ -164,7 +164,7 @@ public class DatabaseHandler {
     node2.setItems(FXCollections.observableList(currentPlayersManager));
   }
 
-  private void setLeaderboard(Node node) {
+  public void setLeaderboard(Node node) {
     gameController.getGameName();
     databaseController.leaderboardSet((ListView<String>) node);
   }
