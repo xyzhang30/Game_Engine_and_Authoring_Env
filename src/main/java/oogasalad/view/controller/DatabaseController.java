@@ -60,6 +60,9 @@ public class DatabaseController {
     return score.playerName() + ": " + score.score();
   }
 
+  public List<String> getPlayerNames() {
+    return currentPlayersManager.getPlayerNames();
+  }
 
   public ObservableList<String> getManageableGames() {
     String host = currentPlayersManager.getHost();

@@ -2,6 +2,7 @@ package oogasalad.view.scene_management.scene_element;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -16,8 +17,6 @@ import oogasalad.model.api.PlayerRecord;
  * @author Jordan Haytaian
  */
 public class GameStatusManager {
-
-  private final String playerText = "Player ";
   private final String playerScoreSeparator = ": ";
   private String turnText;
   private String roundText;
@@ -61,8 +60,9 @@ public class GameStatusManager {
    * @param turn    id of player whose turn it is
    * @param round   current round
    */
-  public void update(List<PlayerRecord> players, int turn, int round) {
-    updateScore(players);
+  public void update(List<PlayerRecord> players, int turn, int round, Map<Integer,
+      String> playerMap) {
+    updateScore(players, playerMap);
     updateTurn(turn);
     updateRound(round);
   }
@@ -75,15 +75,17 @@ public class GameStatusManager {
     roundDisplay.setText(roundText + round);
   }
 
-  private void updateScore(List<PlayerRecord> players) {
+  private void updateScore(List<PlayerRecord> players, Map<Integer,
+      String> playerMap) {
     scoreListDisplay.getItems().clear();
-    scoreListDisplay.setItems(createScoreListItems(players));
+    scoreListDisplay.setItems(createScoreListItems(players, playerMap));
   }
 
-  private ObservableList<String> createScoreListItems(List<PlayerRecord> players) {
+  private ObservableList<String> createScoreListItems(List<PlayerRecord> players, Map<Integer,
+        String> playerMap) {
     List<String> scores = new ArrayList<>();
     for (PlayerRecord player : players) {
-      scores.add(playerText + player.playerId() + playerScoreSeparator + player.score());
+      scores.add(playerMap.get(player.playerId()) + playerScoreSeparator + player.score());
     }
     return FXCollections.observableList(scores);
   }
