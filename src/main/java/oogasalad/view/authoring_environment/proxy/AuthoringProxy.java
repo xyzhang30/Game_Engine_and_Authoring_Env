@@ -12,11 +12,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.shape.Shape;
+import oogasalad.model.api.exception.AuthoringException;
 import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
+import oogasalad.model.api.exception.IncompletePlayerStrikeableAuthoringException;
 import oogasalad.model.database.Database;
+import oogasalad.view.Warning;
 import oogasalad.view.api.exception.MissingInteractionException;
 import oogasalad.view.api.exception.MissingNonControllableTypeException;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
@@ -32,6 +37,7 @@ import oogasalad.view.api.enums.CollidableType;
  */
 public class AuthoringProxy {
 
+  private static final Warning WARNING = new Warning();
   private final Map<String, String> keyPreferences = new HashMap<>();
   private final Map<String, Map<String, List<Integer>>> conditionsCommands = new HashMap<>();
   private final Map<String, String> policies = new HashMap<>();
@@ -175,7 +181,7 @@ public class AuthoringProxy {
    * @throws MissingInteractionException         If there is a missing interaction.
    * @throws MissingNonControllableTypeException If there is a missing non-controllable type.
    */
-  public void completeAuthoring()
+  public void completeAuthoring(Scene scene)
       throws MissingInteractionException, MissingNonControllableTypeException {
     try {
       authoringController.writeRules(interactionMap, conditionsCommands, policies);
@@ -186,31 +192,31 @@ public class AuthoringProxy {
       boolean saveGameSuccess = authoringController.submitGame(gameName);
       if (saveGameSuccess) {
         saveGameToDatabase();
-        showSuceessMessage("Game successfully saved!");
+        WARNING.showAlert(scene, AlertType.INFORMATION, "Save Game Success", null, "Game successfully saved!");
       } else {
-        showSaveGameError("Save game failed :(");
+        throw new AuthoringException("Save game failed :(");
       }
-    } catch (InCompleteRulesAuthoringException e) {
-      showSaveGameError(e.getMessage());
+    } catch (AuthoringException | InCompleteRulesAuthoringException | IncompletePlayerStrikeableAuthoringException e) {
+      WARNING.showAlert(scene, AlertType.ERROR, "Authoring Error", null, e.getMessage());
     }
   }
 
 
-  private void showSaveGameError(String errorMessage) {
-    Alert alert = new Alert(AlertType.ERROR);
-    alert.setTitle("Save Game Error");
-    alert.setHeaderText(null);
-    alert.setContentText(errorMessage);
-    alert.showAndWait();
-  }
+//  private void showSaveGameError(String errorMessage) {
+//    Alert alert = new Alert(AlertType.ERROR);
+//    alert.setTitle("Save Game Error");
+//    alert.setHeaderText(null);
+//    alert.setContentText(errorMessage);
+//    alert.showAndWait();
+//  }
 
-  private void showSuceessMessage(String message) {
-    Alert alert = new Alert(AlertType.INFORMATION);
-    alert.setTitle("Save Game Success");
-    alert.setHeaderText(null);
-    alert.setContentText(message);
-    alert.showAndWait();
-  }
+//  private void showSuceessMessage(String message) {
+//    Alert alert = new Alert(AlertType.INFORMATION);
+//    alert.setTitle("Save Game Success");
+//    alert.setHeaderText(null);
+//    alert.setContentText(message);
+//    alert.showAndWait();
+//  }
 
   /**
    * Updates the authoring screen.
