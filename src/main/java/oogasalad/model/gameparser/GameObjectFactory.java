@@ -32,6 +32,8 @@ public class GameObjectFactory {
       String methodName = properties.getProperty(property.toLowerCase());
       try {
         if(!methodName.isEmpty()) {
+          System.out.println(co.collidableId() + " " + co.properties());
+          System.out.println(methodName);
           Method method = GameObject.class.getMethod(methodName);
           method.invoke(gameObject);
         }

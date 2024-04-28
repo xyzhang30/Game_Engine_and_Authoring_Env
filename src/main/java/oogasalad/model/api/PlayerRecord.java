@@ -9,6 +9,6 @@ package oogasalad.model.api;
  *                         strikeable
  * @author Noah Loewy
  */
-public record PlayerRecord(int playerId, double score, int activeStrikeable) {
+public record PlayerRecord(int playerId, int score, int activeStrikeable) {
 }
 

@@ -33,7 +33,7 @@ public interface Scoreable {
    * @return The temporary score of the Scoreable object.
    */
 
-  double getTemporaryScore();
+  int getTemporaryScore();
 
   /**
    * Sets the temporary score of the Scoreable object.
@@ -41,7 +41,7 @@ public interface Scoreable {
    * @param tempScore The temporary score to set.
    */
 
-  void setTemporaryScore(double tempScore);
+  void setTemporaryScore(int tempScore);
 
   /**
    * Increments the temporary score of the Scoreable object by amt.

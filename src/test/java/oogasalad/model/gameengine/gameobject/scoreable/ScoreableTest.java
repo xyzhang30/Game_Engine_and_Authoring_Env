@@ -22,27 +22,28 @@ public class ScoreableTest {
         , new Position(1.0,1.0), "", new Dimension(1,1), Map.of("Default",List.of()), 1, 1, 1, Map.of("Default",""), 1.0, false,
         false,0)); //
     defaultScoreable = new DefaultScoreable(gameObject);
+    defaultScoreable.setTemporaryScore(0);
     gameObject.addScoreable();
   }
 
   @Test
   public void testSetAndGetTemporaryScore() {
-    defaultScoreable.setTemporaryScore(10.0);
+    defaultScoreable.setTemporaryScore(10);
     assertEquals(10.0, defaultScoreable.getTemporaryScore());
   }
 
   @Test
   public void testIncrementTemporaryScorePositive() {
-    defaultScoreable.setTemporaryScore(3.0);
+    defaultScoreable.setTemporaryScore(3);
     defaultScoreable.incrementTemporaryScore(2.0);
     assertEquals(5.0, defaultScoreable.getTemporaryScore());
-    defaultScoreable.setTemporaryScore(3.0);
+    defaultScoreable.setTemporaryScore(3);
     assertEquals(3.0, defaultScoreable.getTemporaryScore());
   }
 
   @Test
   public void testIncrementTemporaryScoreNegative() {
-    defaultScoreable.setTemporaryScore(5.0);
+    defaultScoreable.setTemporaryScore(5);
     defaultScoreable.incrementTemporaryScore(-3.0);
     assertEquals(2.0, defaultScoreable.getTemporaryScore());
   }

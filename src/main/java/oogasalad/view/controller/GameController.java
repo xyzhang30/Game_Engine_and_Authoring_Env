@@ -365,8 +365,8 @@ public class GameController {
       //get the old parser player
       ParserPlayer parserPlayer = gameLoaderView.getParserPlayerById(player.playerId());
       //create a new parserPlayer with the new score
-      double totalScore = player.score();
-      double objScores = 0;
+      int totalScore = player.score();
+      int objScores = 0;
       for (int id : parserPlayer.myScoreable()) {
         objScores += gameEngine.getScoreableScoreById(id);
       }

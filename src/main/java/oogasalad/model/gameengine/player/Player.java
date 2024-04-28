@@ -31,7 +31,7 @@ public class Player {
   private Controllable myControllable;
   private boolean roundCompleted;
   private int turnsCompleted;
-  private double score;
+  private int score;
 
   /**
    * Initializes a player object given its unique id.
@@ -39,7 +39,7 @@ public class Player {
    * @param id the player's unique identifier.
    */
 
-  public Player(int id, double score) {
+  public Player(int id, int score) {
     playerId = id;
     roundCompleted = false;
     turnsCompleted = 0;
@@ -160,6 +160,9 @@ public class Player {
    */
 
   public void applyDelayedScore() {
+    for(Scoreable s : myScoreables) {
+      System.out.println(s.asGameObject().getId() + " : " + s.getTemporaryScore());
+    }
     myScoreables.forEach(scoreable -> score += scoreable.getTemporaryScore());
   }
 
@@ -171,8 +174,8 @@ public class Player {
 
   public PlayerRecord getPlayerRecord() {
     try {
-      double tempScore = score;
-      tempScore += myScoreables.stream().mapToDouble(Scoreable::getTemporaryScore).sum();
+      int tempScore = score;
+      tempScore += myScoreables.stream().mapToInt(Scoreable::getTemporaryScore).sum();
       return new PlayerRecord(playerId, tempScore, activeStrikeable.asGameObject().getId());
     } catch (NullPointerException e) {
       LOGGER.warn("Player " + playerId + " not found");
@@ -215,7 +218,7 @@ public class Player {
     return playerId;
   }
 
-  public void setScore(double score) {
+  public void setScore(int score) {
     this.score = score;
   }
 }

@@ -23,7 +23,7 @@ public record GameObjectProperties(@JsonProperty("gameobject_id") int collidable
                                    double direction,
                                    boolean inelastic,
                                    boolean phaser,
-                                   double score
+                                   int score
 ) {
 
 }

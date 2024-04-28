@@ -18,7 +18,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 public class DefaultScoreable implements Scoreable {
 
   private final GameObject gameObject;
-  private double tempScore;
+  private int tempScore;
 
   /**
    * Constructs a DefaultScoreable object with the specified GameObject.
@@ -36,7 +36,7 @@ public class DefaultScoreable implements Scoreable {
    */
 
   @Override
-  public double getTemporaryScore() {
+  public int getTemporaryScore() {
     return tempScore;
   }
 
@@ -46,7 +46,7 @@ public class DefaultScoreable implements Scoreable {
    * @param tempScore The temporary score to set.
    */
   @Override
-  public void setTemporaryScore(double tempScore) {
+  public void setTemporaryScore(int tempScore) {
     this.tempScore = tempScore;
   }
 
