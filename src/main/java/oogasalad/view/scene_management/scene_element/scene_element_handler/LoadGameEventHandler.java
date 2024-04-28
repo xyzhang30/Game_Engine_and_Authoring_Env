@@ -25,6 +25,7 @@ public class LoadGameEventHandler {
   private final String resumeGameDir = "data/resume_game/";
   private final GameController gameController;
   private final DatabaseController databaseController;
+  private final DatabaseHandler handler;
   private Map<SceneElementEvent, Callable<ObservableList<String>>> eventMap;
   private Map<SceneElementEvent, String> dirPathMap;
   private Map<SceneElementEvent, BiConsumer<String, String>> handleSelectGameMap;
@@ -35,9 +36,10 @@ public class LoadGameEventHandler {
    * @param gameController The GameController used to handle game-related events.
    */
   public LoadGameEventHandler(GameController gameController,
-      DatabaseController databaseController) {
+      DatabaseController databaseController, DatabaseHandler handler) {
     this.gameController = gameController;
     this.databaseController = databaseController;
+    this.handler = handler;
     createEventMap();
     createDirPathMap();
     createSelectGameMap();
@@ -115,6 +117,7 @@ public class LoadGameEventHandler {
 
   private void handleManageGame(String dirPath, String gameTitle) {
     if (gameTitle != null) {
+      handler.setGame(gameTitle);
       gameController.managePermissions(gameTitle);
     }
   }

@@ -396,6 +396,7 @@ public class Database implements DatabaseApi {
   @Override
   public void assignPermissionToPlayers(String game, List<String> users, String permission) {
     for (String user : users) {
+      //System.out.println(user + " " + permission);
       try {
         grantPermissions(user, game, permission);
       } catch (SQLException e) {

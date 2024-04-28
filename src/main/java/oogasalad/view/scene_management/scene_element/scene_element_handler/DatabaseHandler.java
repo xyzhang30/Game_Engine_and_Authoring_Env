@@ -32,7 +32,9 @@ public class DatabaseHandler {
   private ListView<String> playerPermissions;
   private ComboBox<String> publicComboBox;
   private String avatarUrlField;
+  private String currentGame;
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
+  private Map<String, Boolean> playerPermissionMap;
 
 
   public DatabaseHandler(GameController gameController, SceneManager sceneManager,
@@ -155,13 +157,12 @@ public class DatabaseHandler {
 
   private void setUpPlayerPermissions(Node node) {
     playerPermissions = (ListView<String>) node;
-    Map<String, Boolean> playerPermissionMap = gameController.getPlayerPermissions("Game 2");
-    ObservableList<String> playerNames = FXCollections.observableArrayList(
-        playerPermissionMap.keySet());
+    playerPermissionMap = gameController.getPlayerPermissions(currentGame);
+    Map<String, CheckBox> playerCheckBoxMap = new HashMap<>(); // Map to store player names to their corresponding checkboxes
+
+    ObservableList<String> playerNames = FXCollections.observableArrayList(playerPermissionMap.keySet());
     playerPermissions.setItems(playerNames);
     playerPermissions.setCellFactory(lv -> new ListCell<String>() {
-      private CheckBox checkBox = new CheckBox();
-
       @Override
       protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
@@ -169,18 +170,26 @@ public class DatabaseHandler {
           setText(null);
           setGraphic(null);
         } else {
+          CheckBox checkBox = new CheckBox(); // Create a new checkbox for each cell
+          boolean permission = playerPermissionMap.get(item);
+          checkBox.setSelected(permission);
+
           setText(item);
-          Boolean permission = playerPermissionMap.get(item);
-          if (permission) {
-            checkBox.setSelected(true);
-          } else {
-            checkBox.setSelected(false);
-          }
+          // Update the map when the checkbox is toggled
+          checkBox.setOnAction(event -> {
+            playerPermissionMap.put(item, checkBox.isSelected());
+          });
+
+          // Add the checkbox to the map with player's name as the key
+          playerCheckBoxMap.put(item, checkBox);
+
+          // Set only the checkbox as the graphic, omitting the player name
           setGraphic(checkBox);
         }
       }
     });
   }
+
 
   private void createFinishHandler(Node node) {
     node.setOnMouseClicked(e -> {
@@ -188,25 +197,21 @@ public class DatabaseHandler {
       List<String> uncheckedPlayers = new ArrayList<>();
 
       for (String item : playerPermissions.getItems()) {
-        ListCell<String> cell = (ListCell<String>) playerPermissions.lookup(
-            ".cell:contains('" + item + "')");
-        if (cell != null) {
-          CheckBox checkBox = (CheckBox) cell.getGraphic();
-          if (checkBox != null) {
-            if (checkBox.isSelected()) {
+        if (playerPermissionMap.get(item)) {
               checkedPlayers.add(item);
             } else {
               uncheckedPlayers.add(item);
             }
           }
-        }
-      }
+
+
+
       if (publicComboBox.getSelectionModel().getSelectedItem().equals("Public")) {
-        databaseController.setPublicPrivate("Game 2", true);
+        databaseController.setPublicPrivate(currentGame, true);
       } else {
-        databaseController.setPublicPrivate("Game 2", false);
+        databaseController.setPublicPrivate(currentGame, false);
       }
-      databaseController.writePlayerPermissions("Game 2", checkedPlayers, uncheckedPlayers);
+      databaseController.writePlayerPermissions(currentGame, checkedPlayers, uncheckedPlayers);
       sceneManager.createMenuScene();
     });
   }
@@ -216,11 +221,15 @@ public class DatabaseHandler {
     ObservableList<String> publicPrivateList = FXCollections.observableArrayList("Public",
         "Private");
     publicComboBox.setItems(publicPrivateList);
-    if (databaseController.isPublic("Game 2")) {
+    if (databaseController.isPublic(currentGame)) {
       publicComboBox.getSelectionModel().select("Public");
     } else {
       publicComboBox.getSelectionModel().select("Private");
     }
+  }
+
+  public void setGame(String gameTitle) {
+    currentGame = gameTitle;
   }
 
 //  private void createCurrentPlayersHandler(Node node) {
