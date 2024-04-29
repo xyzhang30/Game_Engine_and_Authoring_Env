@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import oogasalad.view.api.enums.SceneElementType;
@@ -131,56 +132,33 @@ public class SceneElementFactory {
 
   }
 
-  private void configureButton(Node node, Map<String, String> parameters) {
+  private void configureUIElement(Region node, Map<String, String> parameters, BiConsumer<Node, String> textSetter) {
     String textTag = parameters.get(XMLTags.TEXT.name().toLowerCase());
-    double widthFactor = parseDoubleParameter(parameters,
-        XMLTags.WIDTH_FACTOR.name().toLowerCase());
-    double heightFactor = parseDoubleParameter(parameters,
-        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
-
-    Button button = (Button) node;
+    double widthFactor = parseDoubleParameter(parameters, XMLTags.WIDTH_FACTOR.name().toLowerCase());
+    double heightFactor = parseDoubleParameter(parameters, XMLTags.HEIGHT_FACTOR.name().toLowerCase());
     if (textTag != null) {
       String translatedText = languageManager.getText(language, textTag);
-      button.setText(translatedText);
+      textSetter.accept(node, translatedText);
     }
-    button.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
+    node.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
+  }
+
+  private void configureButton(Node node, Map<String, String> parameters) {
+    configureUIElement((Button) node, parameters, (n, text) -> ((Button) n).setText(text));
   }
 
   private void configureComboBox(Node node, Map<String, String> parameters) {
-    String textTag = parameters.get(XMLTags.TEXT.name().toLowerCase());
-    double widthFactor = parseDoubleParameter(parameters,
-        XMLTags.WIDTH_FACTOR.name().toLowerCase());
-    double heightFactor = parseDoubleParameter(parameters,
-        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
-
-    ComboBox<String> comboBox = (ComboBox<String>) node;
-    if (textTag != null) {
-      String translatedText = languageManager.getText(language, textTag);
-      comboBox.setPromptText(translatedText);
-    }
-    comboBox.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
+    configureUIElement((ComboBox<String>) node, parameters,
+        (n, text) -> ((ComboBox<String>) n).setPromptText(text));
   }
 
   private void configureListView(Node node, Map<String, String> parameters) {
-    double widthFactor = parseDoubleParameter(parameters,
-        XMLTags.WIDTH_FACTOR.name().toLowerCase());
-    double heightFactor = parseDoubleParameter(parameters,
-        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
-
-    ListView<String> listView = (ListView<String>) node;
-    listView.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
+    configureUIElement((ListView<String>) node, parameters, (n, text) -> {}); // No text setting
   }
 
   private void configureTextField(Node node, Map<String, String> parameters) {
-    double widthFactor = parseDoubleParameter(parameters,
-        XMLTags.WIDTH_FACTOR.name().toLowerCase());
-    double heightFactor = parseDoubleParameter(parameters,
-        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
-
-    TextField textField = (TextField) node;
-    textField.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
+    configureUIElement((Region) node, parameters, (n, text) -> ((TextField) n).setPromptText(text));
   }
-
 
   private void handleLayout(Node node, Map<String, String> parameters) {
     double xLayoutFactor = parseDoubleParameter(parameters,
