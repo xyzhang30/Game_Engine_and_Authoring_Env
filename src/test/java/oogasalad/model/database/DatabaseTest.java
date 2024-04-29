@@ -21,6 +21,8 @@ public class DatabaseTest {
 
     @Test
     public void testCheckGameExists() throws SQLException {
+      new Database().registerGame("Debug", "noah", 2, "friends");
+
       //new Database().registerUser("noah3", "n", "avatar1.png");
       /**
         new Database().registerUser("noah", "n", "avatar1.png");
@@ -31,7 +33,6 @@ public class DatabaseTest {
         new Database().registerUser("player2", "password1", "avatar1.png");
         new Database().registerUser("player3", "password1", "avatar1.png");
         new Database().registerUser("player4", "password1", "avatar1.png");
-        new Database().registerGame("Game 1", "player1", 2, true);
         new Database().registerGame("Game 2", "player2", 2, true);
         new Database().registerGame("Game 3", "player3", 2, true);
         new Database().registerGame("Noah's Game", "noah", 2, false);

@@ -184,9 +184,9 @@ public class AuthoringProxy {
       authoringController.writeKeyPreferences(keyPreferences);
       boolean saveGameSuccess = authoringController.submitGame(gameName);
       if (saveGameSuccess) {
+        saveGameToDatabase();
         WARNING.showAlert(scene, AlertType.INFORMATION, "Save Game Success", null,
             "Game successfully saved!");
-        saveGameToDatabase();
       } else {
         throw new AuthoringException("Save game failed :(");
       }
@@ -427,6 +427,10 @@ public class AuthoringProxy {
     String hostPlayer = authoringController.getHostPlayer();
     int numPlayers = playersMap.size();
     Database database = new Database();
+    System.out.println(gameName);
+    System.out.println(hostPlayer);
+    System.out.println(numPlayers);
+    System.out.println(gamePermission);
     database.registerGame(gameName, hostPlayer, numPlayers, gamePermission);
   }
 
