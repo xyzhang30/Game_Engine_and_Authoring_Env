@@ -19,7 +19,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import oogasalad.model.gameparser.GameLoader;
 import oogasalad.view.Warning;
 import oogasalad.view.api.authoring.UIElementFactory;
 import org.apache.logging.log4j.LogManager;
@@ -212,6 +211,7 @@ public class DefaultUIElementFactory implements UIElementFactory {
    */
   @Override
   public List<Integer> createConstantParamsPopup(int numParam, String item) {
+    System.out.println("constant param popup called");
     Stage popupStage = new Stage();
     popupStage.setTitle("Specify Command Parameters");
 

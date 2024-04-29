@@ -221,9 +221,7 @@ public class ShapeProxy {
   }
 
   public void resetGameObjectAttributesContainer() {
-//    if (!shapeSelectionDisabled){
     gameObjectAttributesContainer = new GameObjectAttributesContainer();
-//    }
     if (!shapeStack.isEmpty()) {
       resetShape();
     }

@@ -1,8 +1,11 @@
 package oogasalad.view.api.authoring;
 
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
+import oogasalad.view.api.enums.CollidableType;
+import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -53,7 +56,8 @@ public interface AuthoringFactory {
   /**
    * Resets certain UI elements to their initial state.
    */
-  void resetAuthoringElements();
+  void resetAuthoringElements( GameObjectAttributesContainer gameObj,
+      Map<Integer, Map<CollidableType, List<Integer>>> playersMap);
 
 //  List<Node> createGameConfiguration();
 }

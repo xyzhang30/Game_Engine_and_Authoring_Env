@@ -2,9 +2,12 @@ package oogasalad.view.authoringenvironment.panels;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import oogasalad.view.api.authoring.AuthoringFactory;
+import oogasalad.view.api.enums.CollidableType;
+import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 
 public class TestAuthoringFactory implements AuthoringFactory {
   @Override
@@ -29,7 +32,8 @@ public class TestAuthoringFactory implements AuthoringFactory {
   }
 
   @Override
-  public void resetAuthoringElements() {
+  public void resetAuthoringElements(GameObjectAttributesContainer gameObj,
+      Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
     // Implement as needed for testing
   }
 }
