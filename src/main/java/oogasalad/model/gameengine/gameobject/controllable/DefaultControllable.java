@@ -9,8 +9,8 @@ import oogasalad.model.gameengine.gameobject.GameObject;
  * both the x and y axis.
  *
  * <p>This class acts as an adapter between general GameObjects and GameObjects that are
- * Controllable. By holding a reference to the Controllable interface, GameObjects gain the
- * ability to have a temporary score and be treated as Controllable objects.
+ * Controllable. By holding a reference to the Controllable interface, GameObjects gain the ability
+ * to have a temporary score and be treated as Controllable objects.
  *
  * @author Noah Loewy
  */

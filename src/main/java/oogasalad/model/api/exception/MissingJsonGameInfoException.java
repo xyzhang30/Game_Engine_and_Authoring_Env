@@ -6,7 +6,6 @@ package oogasalad.model.api.exception;
 public class MissingJsonGameInfoException extends RuntimeException {
 
   /**
-   *
    * @param message, error message to be displayed by GUI
    */
   public MissingJsonGameInfoException(String message) {
@@ -14,7 +13,6 @@ public class MissingJsonGameInfoException extends RuntimeException {
   }
 
   /**
-   *
    * @param message, error message to be displayed by GUI
    * @param cause,   the exception that prompted the InvalidFileException
    */

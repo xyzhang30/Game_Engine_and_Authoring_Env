@@ -12,8 +12,9 @@ import oogasalad.view.scene_management.scene_managers.SceneManager;
 
 
 /**
- * The GameStatManagementHandler class handles events related to managing game-related scenes and status updates.
- * It maps scene element events to their respective event handlers for setting the round, turn, and scores.
+ * The GameStatManagementHandler class handles events related to managing game-related scenes and
+ * status updates. It maps scene element events to their respective event handlers for setting the
+ * round, turn, and scores.
  *
  * @author Jordan Haytaian
  */
@@ -25,9 +26,10 @@ public class GameStatManagementHandler {
 
   /**
    * Constructs a GameStatManagementHandler with the specified SceneManager and GameStatusManager.
-   * Initializes the event map by creating the mapping between SceneElementEvents and their respective handlers.
+   * Initializes the event map by creating the mapping between SceneElementEvents and their
+   * respective handlers.
    *
-   * @param sceneManager The scene manager for handling scene transitions and updates.
+   * @param sceneManager      The scene manager for handling scene transitions and updates.
    * @param gameStatusManager The game status manager for managing game status displays.
    */
   public GameStatManagementHandler(SceneManager sceneManager,
@@ -39,10 +41,10 @@ public class GameStatManagementHandler {
   }
 
   /**
-   * Creates an event handler for the specified node and event type.
-   * The handler will invoke the appropriate event function when the event occurs on the given node.
+   * Creates an event handler for the specified node and event type. The handler will invoke the
+   * appropriate event function when the event occurs on the given node.
    *
-   * @param node The node to which the event handler will be attached.
+   * @param node  The node to which the event handler will be attached.
    * @param event The event type as a string that specifies the event to handle.
    */
   public void createElementHandler(Node node, String event) {

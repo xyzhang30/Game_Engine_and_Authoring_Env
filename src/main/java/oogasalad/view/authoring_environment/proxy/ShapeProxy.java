@@ -14,11 +14,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import oogasalad.view.api.authoring.Panel;
 import oogasalad.view.authoring_environment.util.Coordinate;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * The ShapeProxy class acts as a proxy for managing and manipulating shapes within the authoring
@@ -29,14 +26,9 @@ import org.apache.logging.log4j.Logger;
  */
 public class ShapeProxy {
 
-  private String modName = "Default";
-  private List<String> mods = new ArrayList<>();
   private final Stack<Shape> shapeStack = new Stack<>();
   private final ListProperty<Integer> shapesListProperty = new SimpleListProperty<>(
       FXCollections.observableArrayList());
-  private GameObjectAttributesContainer gameObjectAttributesContainer =
-      new GameObjectAttributesContainer();
-  private int shapeCount;
   private final List<Shape> templates = new ArrayList<>();
   String RESOURCE_FOLDER_PATH = "view.";
   String VIEW_PROPERTIES_PATH = "properties.";
@@ -45,9 +37,14 @@ public class ShapeProxy {
       RESOURCE_FOLDER_PATH + VIEW_PROPERTIES_PATH + DEFAULT_VALUES_FILE);
   private int numberOfMultiSelectAllowed = Integer.parseInt(
       defaultValuesResourceBundle.getString("defaultNumShapesSelectedAllowed"));
+  private String modName = "Default";
+  private final List<String> mods = new ArrayList<>();
+  private GameObjectAttributesContainer gameObjectAttributesContainer =
+      new GameObjectAttributesContainer();
+  private int shapeCount;
   private boolean shapeSelectionDisabled = false;
 
-  public ShapeProxy (){
+  public ShapeProxy() {
     mods.add("Default");
   }
 
@@ -74,7 +71,7 @@ public class ShapeProxy {
     }
     shapeStack.push(shape);
     shapesListProperty.setAll(getSelectedShapeIds());
-    if (gameObj != null){
+    if (gameObj != null) {
       resetGameObjectAttributesContainer(gameObj);
     } else {
       resetGameObjectAttributesContainer();
@@ -229,7 +226,7 @@ public class ShapeProxy {
 //    }
     if (!shapeStack.isEmpty()) {
       Shape currentShape = shapeStack.peek();
-      System.out.println("Current Shape Stack in reset"+shapeStack);
+      System.out.println("Current Shape Stack in reset" + shapeStack);
       gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));
       gameObjectAttributesContainer.setWidth(
           currentShape.getLayoutBounds().getWidth() * currentShape.getScaleX());
@@ -245,11 +242,11 @@ public class ShapeProxy {
    */
   public void resetGameObjectAttributesContainer(GameObjectAttributesContainer gameObj) {
 //    if (!shapeSelectionDisabled){
-      gameObjectAttributesContainer = new GameObjectAttributesContainer();
+    gameObjectAttributesContainer = new GameObjectAttributesContainer();
 //    }
     if (!shapeStack.isEmpty()) {
       Shape currentShape = shapeStack.peek();
-      System.out.println("Current Shape Stack in reset"+shapeStack);
+      System.out.println("Current Shape Stack in reset" + shapeStack);
       gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));
       gameObjectAttributesContainer.setWidth(
           currentShape.getLayoutBounds().getWidth() * currentShape.getScaleX());
@@ -281,16 +278,16 @@ public class ShapeProxy {
     return shapesListProperty;
   }
 
-  public void setCurrentMod(String newModName){
+  public String getCurrentMod() {
+    return modName;
+  }
+
+  public void setCurrentMod(String newModName) {
     this.modName = newModName;
     mods.add(newModName);
   }
 
-  public String getCurrentMod(){
-    return modName;
-  }
-
-  public List<String> getAllMods(){
+  public List<String> getAllMods() {
     return mods;
   }
 

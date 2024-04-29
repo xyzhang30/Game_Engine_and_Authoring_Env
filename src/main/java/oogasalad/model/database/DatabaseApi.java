@@ -21,7 +21,7 @@ public interface DatabaseApi {
    */
   List<GameScore> getPlayerHighScoresForGame(String gameName, String playerName, int n);
 
-  Map<String,Boolean> getPlayerPermissionsForGames(String gameName);
+  Map<String, Boolean> getPlayerPermissionsForGames(String gameName);
 
   String getGameAccessibility(String gameName);
 
@@ -77,6 +77,7 @@ public interface DatabaseApi {
    */
   boolean registerGame(String gameName, String ownerName, int numPlayers,
       String accessibility);
+
   /**
    * Adds a new game instance.
    *

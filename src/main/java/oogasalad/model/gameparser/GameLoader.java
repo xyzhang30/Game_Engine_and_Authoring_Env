@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.ResourceBundle;
 import oogasalad.model.api.data.GameData;
@@ -31,8 +30,8 @@ public abstract class GameLoader {
   private final String language = "English";
   private final ResourceBundle resourceBundle;
   protected GameData gameData;
-  private Map<Integer, GameObjectProperties> idToObjMap = new HashMap<>();
-  private Map<Integer, ParserPlayer> idToPlayerMap = new HashMap<>();
+  private final Map<Integer, GameObjectProperties> idToObjMap = new HashMap<>();
+  private final Map<Integer, ParserPlayer> idToPlayerMap = new HashMap<>();
 
   /**
    * Constructs a GameLoader object with the specified file path.
@@ -44,7 +43,7 @@ public abstract class GameLoader {
         RESOURCE_FOLDER_PATH + ERROR_RESOURCE_FOLDER + ERROR_FILE_PREFIX + language);
     try {
 
-      parseJSON( gameName + JSON_EXTENSION);
+      parseJSON(gameName + JSON_EXTENSION);
 
     } catch (IOException e) {
       LOGGER.error(resourceBundle.getString("JSONParsingError"), e.getMessage());

@@ -1,7 +1,6 @@
 package oogasalad.model.api.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.List;
 
 /**
@@ -22,7 +21,7 @@ public class GameData {
     return keyPreferences;
   }
 
-  public void setKeyPreferences(KeyPreferences keys){
+  public void setKeyPreferences(KeyPreferences keys) {
     this.keyPreferences = keys;
   }
 

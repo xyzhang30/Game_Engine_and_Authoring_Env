@@ -20,7 +20,7 @@ import oogasalad.model.gameengine.turn.TurnPolicy;
  * @param collisionHandlers  Mapping of collision pairs to lists of commands to execute on
  *                           colliding.
  * @param winCondition       Condition determining when the game is won.
- * @param roundCondition        Condition determining when a round ends.
+ * @param roundCondition     Condition determining when a round ends.
  * @param advanceTurn        List of commands to execute when advancing to the next turn.
  * @param advanceRound       List of commands to execute when advancing to the next round.
  * @param physicsMap         Mapping of collision pairs to physics handlers.
@@ -34,7 +34,8 @@ import oogasalad.model.gameengine.turn.TurnPolicy;
  */
 
 public record RulesRecord(Map<Pair, List<Command>> collisionHandlers,
-                          Condition winCondition, Condition roundCondition, List<Command> advanceTurn,
+                          Condition winCondition, Condition roundCondition,
+                          List<Command> advanceTurn,
                           List<Command> advanceRound,
                           Map<Pair, PhysicsHandler> physicsMap, TurnPolicy turnPolicy,
                           StaticStateHandler staticStateHandler, StrikePolicy strikePolicy,

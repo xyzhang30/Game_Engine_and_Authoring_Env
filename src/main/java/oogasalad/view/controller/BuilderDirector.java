@@ -17,9 +17,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * BuilderDirector manages the construction of game elements and data.
- * It handles the creation of game objects, players, variables, and rules from provided data.
- * The class also writes game data to JSON files.
+ * BuilderDirector manages the construction of game elements and data. It handles the creation of
+ * game objects, players, variables, and rules from provided data. The class also writes game data
+ * to JSON files.
  *
  * @author Judy He, Alisha Zhang
  */
@@ -85,7 +85,8 @@ public class BuilderDirector {
 //    }
   }
 
-  public void writeGame(String fileName, GameData gameData, String folderPath) throws InvalidJSONDataException {
+  public void writeGame(String fileName, GameData gameData, String folderPath)
+      throws InvalidJSONDataException {
     gameData.setGameName(fileName);
     ObjectMapper mapper = new ObjectMapper();
     if (gameData.getGameObjectProperties() == null || gameData.getPlayers() == null

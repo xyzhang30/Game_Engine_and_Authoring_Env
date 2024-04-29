@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javax.xml.parsers.ParserConfigurationException;
@@ -18,8 +17,8 @@ import oogasalad.view.database.Leaderboard;
 import oogasalad.view.scene_management.element_parsers.SceneElementParser;
 import oogasalad.view.scene_management.scene_element.GameStatusManager;
 import oogasalad.view.scene_management.scene_element.SceneElementFactory;
-import oogasalad.view.scene_management.scene_element.scene_element_handler.SceneElementHandler;
 import oogasalad.view.scene_management.scene_element.SceneElementStyler;
+import oogasalad.view.scene_management.scene_element.scene_element_handler.SceneElementHandler;
 import oogasalad.view.visual_elements.CompositeElement;
 import org.xml.sax.SAXException;
 
@@ -37,13 +36,6 @@ public class SceneManager {
   private final SceneElementParser sceneElementParser;
   private final SceneElementFactory sceneElementFactory;
   private final SceneElementStyler sceneElementStyler;
-  private CompositeElement compositeElement;
-  private GameStatusManager gameStatusManager;
-  private Leaderboard leaderboard;
-  private Pane pauseElements;
-  private Pane transitionElements;
-  private int currentRound;
-  private SupportedLanguage selectedLanguage;
   private final String manageGamePath = "data/scene_elements/managePermissionElements.xml";
   private final String titleSceneElementsPath = "data/scene_elements/titleSceneElements.xml";
   private final String menuSceneElementsPath = "data/scene_elements/menuSceneElements.xml";
@@ -62,21 +54,26 @@ public class SceneManager {
       "data/scene_elements/currentPlayersElements.xml";
   private final String leaderboardElementsPath =
       "data/scene_elements/leaderboardElements.xml";
-
   private final String addFriendScenePath =
       "data/scene_elements/addFriends.xml";
-
-  private DatabaseController databaseController;
+  private CompositeElement compositeElement;
+  private final GameStatusManager gameStatusManager;
+  private Leaderboard leaderboard;
+  private Pane pauseElements;
+  private Pane transitionElements;
+  private int currentRound;
+  private SupportedLanguage selectedLanguage;
+  private final DatabaseController databaseController;
 
 
   /**
    * Constructor initializes scene, root, sceneElementParser, and sceneElementFactory which are
    * necessary to update scenes with new elements
    *
-   * @param gameController     handles model/view interactions
-   * @param screenWidth        screen width to be used for scaling ratio based elements
-   * @param screenHeight       screen height to be used for scaling ratio based elements
-   * @param databaseController handles database interactions
+   * @param gameController        handles model/view interactions
+   * @param screenWidth           screen width to be used for scaling ratio based elements
+   * @param screenHeight          screen height to be used for scaling ratio based elements
+   * @param databaseController    handles database interactions
    * @param currentPlayersManager manages players
    */
   public SceneManager(GameController gameController, DatabaseController databaseController,
@@ -260,7 +257,7 @@ public class SceneManager {
     root.getChildren().add(transitionElements);
   }
 
-  public void createGameOverScene( ) {
+  public void createGameOverScene() {
     resetRoot();
     root.getChildren().add(createSceneElements(gameOverSceneElementsPath));
     gameStatusManager.restoreLastUpdate();
@@ -321,7 +318,7 @@ public class SceneManager {
   }
 
 
-  private void checkEndRound(GameRecord gameRecord, Map<Integer,String> playerMap,
+  private void checkEndRound(GameRecord gameRecord, Map<Integer, String> playerMap,
       String gameName) {
     if (gameRecord.gameOver()) {
       databaseController.addGameResult(playerMap, gameRecord.players(), gameName);

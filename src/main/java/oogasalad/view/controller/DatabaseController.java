@@ -14,16 +14,16 @@ import oogasalad.view.api.exception.CreatingDuplicateUserException;
 import oogasalad.view.api.exception.IncorrectPasswordException;
 import oogasalad.view.api.exception.UserNotFoundException;
 import oogasalad.view.database.Leaderboard;
-import oogasalad.view.scene_management.scene_element.scene_element_handler.DatabaseHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
 public class DatabaseController {
-  public Database databaseView;
-  private List<String> currentPlayersManager;
-  private Leaderboard leaderboard;
+
   private static final Logger LOGGER = LogManager.getLogger(DatabaseController.class);
+  public Database databaseView;
+  private final List<String> currentPlayersManager;
+  private final Leaderboard leaderboard;
 
   public DatabaseController(Leaderboard leaderboard, List<String> currentPlayersManager) {
     this.databaseView = new Database();
@@ -51,21 +51,19 @@ public class DatabaseController {
   }
 
 
-
   public boolean canUserLogin(String username) {
     // if false then throw this exception throw new Exception("Login failed: User does not exist.");
     System.out.println(databaseView.doesUserExist(username));
     return databaseView.doesUserExist(username);  // user exists, can log in
   }
 
-  public boolean loginUser(String username, String password) throws UserNotFoundException, IncorrectPasswordException{
+  public boolean loginUser(String username, String password)
+      throws UserNotFoundException, IncorrectPasswordException {
     System.out.println(databaseView.loginUser(username, password));
-    if (canUserLogin(username) == false) {
+    if (!canUserLogin(username)) {
       LOGGER.error("login failed - username does not exist");
       throw new UserNotFoundException("username does not exist.");
-    }
-
-    else if (databaseView.loginUser(username, password) == false) {
+    } else if (!databaseView.loginUser(username, password)) {
       LOGGER.error("login failed - incorrect password");
       throw new IncorrectPasswordException("Password is incorrect.");
     }

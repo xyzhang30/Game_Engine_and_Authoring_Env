@@ -1,8 +1,8 @@
 package oogasalad.view.visual_elements;
 
-import javafx.scene.shape.Polygon;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.shape.Polygon;
 
 public class Arrow extends Polygon {
 

@@ -26,9 +26,9 @@ public class SetVisibleCommand implements Command {
   /**
    * Constructs an instance of the SetVisibleCommand with the provided arguments.
    *
-   * @param arguments Consists of two arguments: the ID of the GameObject whose visibility is to be
-   *                  updated, and a boolean flag representing whether visibility should be set to
-   *                  true or false.
+   * @param arguments     Consists of two arguments: the ID of the GameObject whose visibility is to
+   *                      be updated, and a boolean flag representing whether visibility should be
+   *                      set to true or false.
    * @param gameObjectMap a map from object ids to the actual GameObject
    */
 

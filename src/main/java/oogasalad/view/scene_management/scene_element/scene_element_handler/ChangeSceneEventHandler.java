@@ -2,11 +2,9 @@ package oogasalad.view.scene_management.scene_element.scene_element_handler;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 import java.util.function.Consumer;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
 import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.GameController;

@@ -23,15 +23,15 @@ import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
     "(int) number of points to add"})
 public class IncrementPointsCommand implements Command {
 
-  private int increment;
   private final GameObject gameObject;
+  private final int increment;
 
   /**
    * Constructs an instance of the SetDelayedPointsCommand with the list of arguments determined
    * from the data file.
    *
-   * @param arguments Consists of one argument: the ID of the GameObject to which the delayed points
-   *                  should be incremented
+   * @param arguments     Consists of one argument: the ID of the GameObject to which the delayed
+   *                      points should be incremented
    * @param gameObjectMap a map from object ids to the actual GameObject
    */
 

@@ -8,12 +8,9 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
-import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
 
 /**
@@ -32,8 +29,9 @@ public class GameElement implements VisualElement {
     myNode.setTranslateX(viewData.startXpos());
     myNode.setTranslateY(viewData.startYpos());
   }
-  public void changeFill(ViewGameObjectRecord viewData){
-    Shape shape = ((Shape)myNode);
+
+  public void changeFill(ViewGameObjectRecord viewData) {
+    Shape shape = ((Shape) myNode);
     getColorOrImage(viewData, shape);
   }
 
