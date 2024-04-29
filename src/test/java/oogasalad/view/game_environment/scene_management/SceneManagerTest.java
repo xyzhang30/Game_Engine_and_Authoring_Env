@@ -1,4 +1,4 @@
-package oogasalad.view.game_environment;
+package oogasalad.view.game_environment.scene_management;
 
 import java.util.List;
 import javafx.application.Platform;
@@ -17,6 +17,11 @@ import static org.testfx.util.WaitForAsyncUtils.waitForFxEvents;
 
 import java.util.ArrayList;
 
+/**
+ * Unit tests for the SceneManager class.
+ *
+ * @author Doga Ozmen
+ */
 public class SceneManagerTest extends DukeApplicationTest {
 
   private SceneManager sceneManager;
@@ -38,6 +43,9 @@ public class SceneManagerTest extends DukeApplicationTest {
     waitForFxEvents(); // Ensure the stage is shown and scene is fully loaded
   }
 
+  /**
+   * Tests creating the title scene.
+   */
   @Test
   public void testCreateTitleScene() {
     Platform.runLater(() -> sceneManager.createTitleScene());
@@ -48,6 +56,9 @@ public class SceneManagerTest extends DukeApplicationTest {
     });
   }
 
+  /**
+   * Tests creating the language selection scene.
+   */
   @Test
   public void testLanguageSelectionScene() {
     Platform.runLater(() -> sceneManager.createLanguageSelectionScene());
@@ -58,6 +69,9 @@ public class SceneManagerTest extends DukeApplicationTest {
     });
   }
 
+  /**
+   * Tests creating the help instructions scene.
+   */
   @Test
   public void testCreateHelpInstructions() {
     Platform.runLater(() -> sceneManager.createHelpInstructions());

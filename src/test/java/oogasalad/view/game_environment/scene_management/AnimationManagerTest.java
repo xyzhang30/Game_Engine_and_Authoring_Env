@@ -1,4 +1,4 @@
-package oogasalad.view.game_environment;
+package oogasalad.view.game_environment.scene_management;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,6 +10,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
+/**
+ * Unit tests for the AnimationManager class.
+ * @author Doga Ozmen
+ */
 public class AnimationManagerTest extends DukeApplicationTest {
 
   private AnimationManager animationManager;
