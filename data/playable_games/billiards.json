@@ -590,48 +590,42 @@
         "second_id": 9,
         "command":
           {
-            "EightBallCommand": [8,0]
-          }
+            "EightBallCommand": [8]          }
       },
       {
         "first_id": 8,
         "second_id": 10,
         "command":
           {
-            "EightBallCommand": [8,0]
-          }
+            "EightBallCommand": [8]          }
       },
       {
         "first_id": 8,
         "second_id": 11,
         "command":
           {
-            "EightBallCommand": [8,0]
-          }
+            "EightBallCommand": [8]          }
       },
       {
         "first_id": 8,
         "second_id": 12,
         "command":
           {
-            "EightBallCommand": [8,0]
-          }
+            "EightBallCommand": [8]          }
       },
       {
         "first_id": 8,
         "second_id": 13,
         "command":
           {
-            "EightBallCommand": [8,0]
-          }
+            "EightBallCommand": [8]          }
       },
       {
         "first_id": 8,
         "second_id": 14,
         "command":
           {
-            "EightBallCommand": [8,0]
-          }
+            "EightBallCommand": [8]          }
       },
       {
         "first_id": 18,

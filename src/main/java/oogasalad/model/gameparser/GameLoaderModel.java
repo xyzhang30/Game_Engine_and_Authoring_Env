@@ -27,6 +27,7 @@ import oogasalad.model.gameengine.gameobject.PhysicsHandler;
 import oogasalad.model.gameengine.gameobject.Strikeable;
 import oogasalad.model.gameengine.gameobject.collision.FrictionHandler;
 import oogasalad.model.gameengine.gameobject.collision.MomentumHandler;
+import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameengine.rank.PlayerRecordComparator;
@@ -101,18 +102,31 @@ public class GameLoaderModel extends GameLoader {
     createGameObjectContainer();
     addPlayerObjects(ParserPlayer::myStrikeable,
         gameId -> gameObjects.get(gameId).getStrikeable(),
-        (playerId, strikeables) -> {
-          int activeStrikeableId = getParserPlayerById(playerId).activeStrikeable();
-          Optional<Strikeable> strikeable = gameObjects.get(activeStrikeableId).getStrikeable();
+        (parserPlayer, strikeables) -> {
+          int activeStrikeableId = getParserPlayerById(parserPlayer.playerId()).activeStrikeable();          Optional<Strikeable> strikeable = gameObjects.get(activeStrikeableId).getStrikeable();
           strikeable.ifPresent(strikeable1 -> {
             gameObjects.get(activeStrikeableId).addStrikeable();
-            playerMap.get(playerId).addStrikeables(strikeables, strikeable1);
+            playerMap.get(parserPlayer.playerId()).addStrikeables(strikeables, strikeable1);
           });
 
         });
     addPlayerObjects(ParserPlayer::myScoreable,
         gameId -> gameObjects.get(gameId).getScoreable(),
-        (playerId, scoreables) -> playerMap.get(playerId).addScoreables(scoreables));
+    (parserPlayer, scoreables) -> {
+      playerMap.get(parserPlayer.playerId()).addScoreables(scoreables);
+      for(Scoreable s : scoreables) {
+        for(GameObjectProperties gop : gameData.getGameObjectProperties()) {
+          if(gop.collidableId() == s.asGameObject().getId()) {
+            s.setTemporaryScore(gop.score());
+          }
+        }
+      }
+    }
+        );
+
+    for(Player p : playerContainer.getPlayers()) {
+      p.applyDelayedScore();
+    }
     addPlayerControllables();
     return gameObjects.values();
   }
@@ -130,16 +144,15 @@ public class GameLoaderModel extends GameLoader {
   private <T> void addPlayerObjects(
       Function<? super ParserPlayer, ? extends List<Integer>> scoreableIdExtractor,
       Function<? super Integer, ? extends Optional<? extends T>> scoreableObjectExtractor,
-      BiConsumer<Integer, List<T>> playerMethod) {
+      BiConsumer<ParserPlayer, List<T>> playerMethod) {
     for (ParserPlayer parserPlayer : gameData.getPlayers()) {
-      int playerId = parserPlayer.playerId();
       List<Integer> playerScoreableIds = scoreableIdExtractor.apply(parserPlayer);
       List<T> playerScoreableObjects = new ArrayList<>();
       for (int i : playerScoreableIds) {
         Optional<? extends T> optionalScoreable = scoreableObjectExtractor.apply(i);
         optionalScoreable.ifPresent(playerScoreableObjects::add);
       }
-      playerMethod.accept(playerId, playerScoreableObjects);
+      playerMethod.accept(parserPlayer, playerScoreableObjects);
     }
   }
 

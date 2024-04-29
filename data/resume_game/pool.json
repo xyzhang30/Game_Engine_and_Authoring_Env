@@ -505,37 +505,37 @@
       "first_id" : 8,
       "second_id" : 9,
       "command" : {
-        "EightBallCommand" : [ 8, 0 ]
+        "EightBallCommand" : [ 8 ]
       }
     }, {
       "first_id" : 8,
       "second_id" : 10,
       "command" : {
-        "EightBallCommand" : [ 8, 0 ]
+        "EightBallCommand" : [ 8 ]
       }
     }, {
       "first_id" : 8,
       "second_id" : 11,
       "command" : {
-        "EightBallCommand" : [ 8, 0 ]
+        "EightBallCommand" : [ 8 ]
       }
     }, {
       "first_id" : 8,
       "second_id" : 12,
       "command" : {
-        "EightBallCommand" : [ 8, 0 ]
+        "EightBallCommand" : [ 8 ]
       }
     }, {
       "first_id" : 8,
       "second_id" : 13,
       "command" : {
-        "EightBallCommand" : [ 8, 0 ]
+        "EightBallCommand" : [ 8 ]
       }
     }, {
       "first_id" : 8,
       "second_id" : 14,
       "command" : {
-        "EightBallCommand" : [ 8, 0 ]
+        "EightBallCommand" : [ 8 ]
       }
     }, {
       "first_id" : 18,
@@ -809,7 +809,6 @@
       "VelocityStaticChecker" : [ 7, 8, 18, 19, 20, 21, 22, 23 ]
     }
   },
-  "game_description" : null,
   "keys" : {
     "striking" : "ENTER",
     "angle_left" : "LEFT",
@@ -817,7 +816,6 @@
     "power_up" : "UP",
     "power_down" : "DOWN",
     "controllable_left" : "A",
-    "controllable_right" : "D",
-
+    "controllable_right" : "D"
   }
 }
