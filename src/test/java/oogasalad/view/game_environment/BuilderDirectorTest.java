@@ -1,4 +1,4 @@
-package oogasalad.view;
+package oogasalad.view.game_environment;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;

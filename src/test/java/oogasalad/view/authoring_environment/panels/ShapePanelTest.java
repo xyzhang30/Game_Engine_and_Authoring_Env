@@ -1,23 +1,14 @@
-package oogasalad.view.authoringenvironment.panels;
+package oogasalad.view.authoring_environment.panels;
 
 import static org.mockito.Mockito.*;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.List;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import oogasalad.view.api.authoring.AuthoringFactory;
 import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
-import oogasalad.view.authoring_environment.panels.ShapePanel;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import org.junit.jupiter.api.BeforeEach;

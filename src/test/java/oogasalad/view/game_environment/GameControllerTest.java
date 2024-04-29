@@ -1,12 +1,10 @@
-package oogasalad.view.gameplay;
+package oogasalad.view.game_environment;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
-import java.io.File;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import oogasalad.view.controller.GameController;

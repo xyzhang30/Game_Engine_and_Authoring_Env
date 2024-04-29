@@ -1,4 +1,4 @@
-package oogasalad.view.gameplay;
+package oogasalad.view.game_environment;
 
 import oogasalad.view.scene_management.element_parsers.GameTitleParser;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,7 +8,6 @@ import org.mockito.Mockito;
 import java.io.File;
 import javafx.collections.ObservableList;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class GameTitleParserTest {

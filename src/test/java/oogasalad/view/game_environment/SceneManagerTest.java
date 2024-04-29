@@ -1,4 +1,4 @@
-package oogasalad.view.gameplay;
+package oogasalad.view.game_environment;
 
 import java.util.List;
 import javafx.application.Platform;

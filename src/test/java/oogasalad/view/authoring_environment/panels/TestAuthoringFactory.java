@@ -1,4 +1,4 @@
-package oogasalad.view.authoringenvironment.panels;
+package oogasalad.view.authoring_environment.panels;
 
 import java.util.Collections;
 import java.util.List;

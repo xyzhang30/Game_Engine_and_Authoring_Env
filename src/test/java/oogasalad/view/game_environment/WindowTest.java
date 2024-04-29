@@ -1,4 +1,4 @@
-package oogasalad.view;
+package oogasalad.view.game_environment;
 
 import javafx.stage.Stage;
 import oogasalad.view.scene_management.GameWindow;

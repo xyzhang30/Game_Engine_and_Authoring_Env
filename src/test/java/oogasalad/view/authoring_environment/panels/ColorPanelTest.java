@@ -1,4 +1,4 @@
-package oogasalad.view.authoringenvironment.panels;
+package oogasalad.view.authoring_environment.panels;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
