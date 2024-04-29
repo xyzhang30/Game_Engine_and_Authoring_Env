@@ -71,7 +71,7 @@ public class GameStatusManager {
   }
 
   private void updateTurn(int turn, Map<Integer, String> playerMap) {
-    turnDisplay.setText(turnText + playerMap.get(turn));
+    turnDisplay.setText(turnText + playerMap.getOrDefault(turn, "Guest"));
   }
 
   private void updateRound(int round) {
@@ -90,7 +90,7 @@ public class GameStatusManager {
       String> playerMap) {
     List<String> scores = new ArrayList<>();
     for (PlayerRecord player : players) {
-      scores.add(playerMap.get(player.playerId()) + playerScoreSeparator + player.score());
+      scores.add(playerMap.getOrDefault(player.playerId(), "Guest") + playerScoreSeparator + player.score());
     }
     return FXCollections.observableList(scores);
   }
