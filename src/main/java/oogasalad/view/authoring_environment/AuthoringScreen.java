@@ -192,8 +192,8 @@ public class AuthoringScreen {
   }
 
   private void createCanvas() {
-    int canvasWidth = 900;
-    int canvasHeight = 900;
+    double canvasWidth = 0.5 * GameWindow.SCREEN_WIDTH;
+    double canvasHeight = 0.85 * GameWindow.SCREEN_HEIGHT;
     canvasPane.setMaxSize(canvasWidth, canvasHeight);
     canvasPane.setId("canvasPane");
 
