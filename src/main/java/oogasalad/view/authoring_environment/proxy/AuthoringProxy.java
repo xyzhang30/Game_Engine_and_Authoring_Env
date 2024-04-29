@@ -42,7 +42,7 @@ public class AuthoringProxy {
   private final Map<String, String> policies = new HashMap<>();
   private final Map<List<Integer>, Map<String, List<Integer>>> interactionMap = new HashMap<>();
   private final Map<Shape, GameObjectAttributesContainer> gameObjectMap = new HashMap<>();
-  private final Map<Integer, Map<CollidableType, List<Integer>>> playersMap
+  private Map<Integer, Map<CollidableType, List<Integer>>> playersMap
       = new HashMap<>();
   private final Map<String, List<Integer>> multiCommandCheckedIdx = new HashMap<>(); //checkComboBoxId mapped to checkedIndices
   private String gameName;
@@ -429,4 +429,9 @@ public class AuthoringProxy {
     Database database = new Database();
     database.registerGame(gameName, hostPlayer, numPlayers, gamePermission);
   }
+
+  public void setPlayersMap (Map<Integer, Map<CollidableType, List<Integer>>> playersMap){
+    this.playersMap = playersMap;
+  }
+
 }
