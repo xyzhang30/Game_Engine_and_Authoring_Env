@@ -249,8 +249,6 @@ public class DefaultUIElementFactory implements UIElementFactory {
             Integer value = Integer.parseInt(text);
             params.add(value);
           } catch (NumberFormatException ex) {
-            // Handle invalid input
-            System.out.println("Invalid input: " + text);
           }
         }
       }

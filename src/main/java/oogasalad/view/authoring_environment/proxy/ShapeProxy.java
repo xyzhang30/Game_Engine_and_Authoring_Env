@@ -226,7 +226,6 @@ public class ShapeProxy {
 //    }
     if (!shapeStack.isEmpty()) {
       Shape currentShape = shapeStack.peek();
-      System.out.println("Current Shape Stack in reset" + shapeStack);
       gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));
       gameObjectAttributesContainer.setWidth(
           currentShape.getLayoutBounds().getWidth() * currentShape.getScaleX());

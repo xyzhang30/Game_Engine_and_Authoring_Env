@@ -42,7 +42,6 @@ public class GameData {
   }
 
   public @JsonProperty("game_objects") List<GameObjectProperties> getGameObjectProperties() {
-    System.out.println(gameObjectProperties);
     return gameObjectProperties;
   }
 

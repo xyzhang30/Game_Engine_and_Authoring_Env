@@ -1,16 +1,20 @@
 package oogasalad.view.authoring_environment.proxy;
 
+import static oogasalad.view.Warning.showAlert;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.shape.Shape;
 import oogasalad.model.api.exception.AuthoringException;
@@ -184,9 +188,9 @@ public class AuthoringProxy {
       authoringController.writeKeyPreferences(keyPreferences);
       boolean saveGameSuccess = authoringController.submitGame(gameName);
       if (saveGameSuccess) {
+        saveGameToDatabase();
         WARNING.showAlert(scene, AlertType.INFORMATION, "Save Game Success", null,
             "Game successfully saved!");
-        saveGameToDatabase();
       } else {
         throw new AuthoringException("Save game failed :(");
       }
@@ -259,7 +263,7 @@ public class AuthoringProxy {
         "src/main/resources/view/properties/GameDescriptions.properties")) {
       properties.store(outputStream, "Updated Properties");
     } catch (IOException e) {
-      System.err.println("Error adding new properties: " + e.getMessage());
+      LOGGER.error("Error adding new properties: " + e.getMessage());
     }
   }
 
@@ -388,7 +392,6 @@ public class AuthoringProxy {
    */
   public void addCollidableToPlayer(int selectedPlayerId, CollidableType collidableType,
       Integer shapeId, boolean isControllable, int controllableXSpeed, int controllableYSpeed) {
-    System.out.println("players:" + playersMap);
     if (selectedPlayerId >= 0) {
       if (isControllable) {
         playersMap.get(selectedPlayerId)
@@ -427,7 +430,12 @@ public class AuthoringProxy {
     String hostPlayer = authoringController.getHostPlayer();
     int numPlayers = playersMap.size();
     Database database = new Database();
-    database.registerGame(gameName, hostPlayer, numPlayers, gamePermission);
+    try {
+      database.registerGame(gameName, hostPlayer, numPlayers, gamePermission);
+    }
+    catch (SQLException e) {
+      showAlert(Alert.AlertType.ERROR, "Database Error", "Cannot Register Game", e.getMessage());
+    }
   }
 
   public void setPlayersMap (Map<Integer, Map<CollidableType, List<Integer>>> playersMap){
