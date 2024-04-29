@@ -293,15 +293,16 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
   }
 
   private HBox createSliderContainer(String id, String labelText) {
-    Slider slider = uiElementFactory.createSlider(id, 200, 0, 20, 1);
+    Slider slider;
     if (labelText.equals(resourceBundle.getString("XScaleLabel"))) {
+      slider = uiElementFactory.createSlider(id, 200, 0, 9, 1);
       this.xSlider = slider;
     } else if (labelText.equals(resourceBundle.getString("YScaleLabel"))) {
+      slider = uiElementFactory.createSlider(id, 200, 0, 18, 1);
       this.ySlider = slider;
     } else {
-      slider = uiElementFactory.createSlider(id, 200, 0, 360, 1);
+      slider = uiElementFactory.createSlider(id, 200, 0, 360, 20);
       this.angleSlider = slider;
-//      this.angleSlider = uiElementFactory.createSlider(id, 200, 0, 360, 1);
     }
     Label label = new Label(labelText);
     label.setMinWidth(80);
@@ -346,13 +347,12 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
   }
 
   private void handleRemovePlayer() {
-    if (authoringProxy.getNumPlayers() <= 1) {
-      return;
+    if (authoringProxy.getNumPlayers() > 1) {
+      authoringProxy.removeMostRecentAddedPlayer();
+      playerAssignmentListView.getItems().remove("Player " + authoringProxy.getCurrentPlayerId());
+      authoringProxy.decreaseNumPlayers();
+      updateNumPlayers();
     }
-    authoringProxy.removeMostRecentAddedPlayer();
-    playerAssignmentListView.getItems().remove("Player " + authoringProxy.getCurrentPlayerId());
-    authoringProxy.decreaseNumPlayers();
-    updateNumPlayers();
   }
 
   private void updateNumPlayers() {
