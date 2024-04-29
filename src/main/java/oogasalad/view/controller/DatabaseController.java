@@ -95,20 +95,18 @@ public class DatabaseController {
   }
 
   public boolean loginUser(String username, String password)
-      throws UserNotFoundException, IncorrectPasswordException {
+      throws UserNotFoundException, IncorrectPasswordException, SQLException {
     if (!canUserLogin(username)) {
       LOGGER.error("login failed - username does not exist");
       throw new UserNotFoundException("username does not exist.");
-    } else {
-      try {
-        return databaseView.loginUser(username, password);
-      }
-      catch (SQLException e) {
-        LOGGER.error("login failed - incorrect password");
-        throw new IncorrectPasswordException("Password is incorrect.");
-      }
+    } else if (!databaseView.loginUser(username, password)) {
+      LOGGER.error("login failed - incorrect password");
+      throw new IncorrectPasswordException("Password is incorrect.");
     }
+    return true;
   }
+
+
 
   /**
    * Formats a single GameScore into a string representation.
