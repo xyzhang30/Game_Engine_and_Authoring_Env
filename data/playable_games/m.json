@@ -1,0 +1,96 @@
+{
+  "gameName" : "m",
+  "game_objects" : [ {
+    "properties" : [ "COLLIDABLE", "STRIKABLE", "visible" ],
+    "mass" : 0.0,
+    "position" : {
+      "x_position" : 743.0,
+      "y_position" : 613.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 106.0,
+      "y_dimension" : 56.0
+    },
+    "color" : null,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : null,
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "score" : 0.0,
+    "gameobject_id" : 1
+  }, {
+    "properties" : [ "visible" ],
+    "mass" : 0.0,
+    "position" : {
+      "x_position" : 711.0,
+      "y_position" : 449.0
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 106.0,
+      "y_dimension" : 56.0
+    },
+    "color" : null,
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : null,
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "score" : 0.0,
+    "gameobject_id" : 0
+  } ],
+  "players" : [ {
+    "score" : 0.0,
+    "player_id" : 0,
+    "my_strikeable" : [ 1 ],
+    "my_scoreable" : [ ],
+    "my_controllable" : [ ],
+    "active_strikeable" : 1
+  } ],
+  "variables" : [ {
+    "global" : {
+      "current_turn" : 1,
+      "current_round" : 1
+    },
+    "player" : {
+      "strokes" : 0,
+      "finished" : 0
+    }
+  } ],
+  "rules" : {
+    "collisions" : [ ],
+    "turn_policy" : "StandardTurnPolicy",
+    "round_condition" : {
+      "ScoreThresholdCondition" : [ 9 ]
+    },
+    "win_condition" : {
+      "ScoreThresholdCondition" : [ 9 ]
+    },
+    "advance_turn" : {
+      "DivideSpeedCommand" : [ 9, 9 ]
+    },
+    "advance_round" : {
+      "EightBallCommand" : [ 9 ]
+    },
+    "strike_policy" : "IncrementPointStrikePolicy",
+    "rank_comparator" : "HighestScoreComparator",
+    "static_checker" : {
+      "VisibilityStaticChecker" : [ 9 ]
+    }
+  },
+  "keys" : {
+    "striking" : "S",
+    "angle_left" : "J",
+    "angle_right" : "K",
+    "power_up" : "H",
+    "power_down" : "G",
+    "controllable_left" : "F",
+    "controllable_right" : "D"
+  }
+}

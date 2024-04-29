@@ -57,7 +57,7 @@ public class StrikeHandler extends Handler {
     eventMap.put(SceneElementEvent.SET_ANGLE, this::setAngleArrow);
   }
 
-  private void getMaxPower(Node node) {
+  public void getMaxPower(Node node) {
     maxPower = ((Rectangle) node).getHeight();
   }
 
