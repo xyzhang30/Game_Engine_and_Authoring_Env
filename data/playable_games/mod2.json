@@ -1,7 +1,7 @@
 {
   "gameName" : "mod2",
   "game_objects" : [ {
-    "properties" : [ "visible" ],
+    "properties" : [ "visible", "STRIKEABLE" ],
     "mass" : 0.0,
     "position" : {
       "x_position" : 860.2000122070312,
@@ -14,14 +14,14 @@
     },
     "color" : {
       "a" : [ 255, 204, 128 ],
-      "default" : [ 255, 153, 102 ]
+      "Default" : [ 255, 153, 102 ]
     },
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
     "image" : {
       "a" : null,
-      "default" : null
+      "Default" : null
     },
     "direction" : 0.0,
     "inelastic" : false,
@@ -42,14 +42,14 @@
     },
     "color" : {
       "a" : [ 179, 128, 26 ],
-      "default" : [ 230, 230, 179 ]
+      "Default" : [ 230, 230, 179 ]
     },
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
     "image" : {
       "a" : null,
-      "default" : null
+      "Default" : null
     },
     "direction" : 0.0,
     "inelastic" : false,
@@ -76,13 +76,7 @@
     }
   } ],
   "rules" : {
-    "collisions" : [ {
-      "first_id" : 0,
-      "second_id" : 1,
-      "command" : {
-        "DivideSpeedCommand" : [ ]
-      }
-    } ],
+    "collisions" : [  ],
     "turn_policy" : "StandardTurnPolicy",
     "round_condition" : {
       "GameObjectsNotVisibleCondition" : [ ]

@@ -332,7 +332,7 @@ public class AuthoringProxy {
    * @param shapeId The ID of the shape to remove.
    */
   public void removeObjectFromPlayersAllLists(Integer shapeId) {
-    removeCollidableFromAllPlayers(CollidableType.STRIKABLE, shapeId);
+    removeCollidableFromAllPlayers(CollidableType.STRIKEABLE, shapeId);
     removeCollidableFromAllPlayers(CollidableType.CONTROLLABLE, shapeId);
     removeCollidableFromAllPlayers(CollidableType.SCOREABLE, shapeId);
   }
@@ -368,7 +368,7 @@ public class AuthoringProxy {
    */
   public void addNewPlayer() {
     playersMap.putIfAbsent(getCurrentPlayerId(), new HashMap<>());
-    playersMap.get(getCurrentPlayerId()).putIfAbsent(CollidableType.STRIKABLE, new ArrayList<>());
+    playersMap.get(getCurrentPlayerId()).putIfAbsent(CollidableType.STRIKEABLE, new ArrayList<>());
     playersMap.get(getCurrentPlayerId())
         .putIfAbsent(CollidableType.CONTROLLABLE, new ArrayList<>());
     playersMap.get(getCurrentPlayerId()).putIfAbsent(CollidableType.SCOREABLE, new ArrayList<>());
@@ -393,6 +393,7 @@ public class AuthoringProxy {
    */
   public void addCollidableToPlayer(int selectedPlayerId, CollidableType collidableType,
       Integer shapeId, boolean isControllable, int controllableXSpeed, int controllableYSpeed) {
+    System.out.println("players:"+playersMap);
     if (selectedPlayerId >= 0) {
       if (isControllable) {
         playersMap.get(selectedPlayerId)

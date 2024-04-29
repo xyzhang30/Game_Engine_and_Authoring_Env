@@ -1,6 +1,8 @@
 package oogasalad.view.authoring_environment.panels;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 import javafx.geometry.Bounds;
 import javafx.scene.Scene;
@@ -21,6 +23,7 @@ import javafx.stage.Stage;
 import oogasalad.view.api.authoring.AuthoringFactory;
 import oogasalad.view.api.authoring.Panel;
 import oogasalad.view.api.authoring.UIElementFactory;
+import oogasalad.view.api.enums.CollidableType;
 import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
 import oogasalad.view.authoring_environment.util.Coordinate;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;

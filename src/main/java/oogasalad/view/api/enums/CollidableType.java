@@ -6,7 +6,7 @@ package oogasalad.view.api.enums;
  * @author Judy He
  */
 public enum CollidableType {
-  STRIKABLE,
+  STRIKEABLE,
   SCOREABLE,
   CONTROLLABLE,
   NONCONTROLLABLE

@@ -222,7 +222,7 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
 
   private Node createCollidableTypeSelection() {
     this.collidableTypeDropDown = uiElementFactory.createCheckComboBox("collidableTypeDropDown",
-        List.of(CollidableType.STRIKABLE, CollidableType.SCOREABLE, CollidableType.CONTROLLABLE,
+        List.of(CollidableType.STRIKEABLE, CollidableType.SCOREABLE, CollidableType.CONTROLLABLE,
             CollidableType.NONCONTROLLABLE), 200, 50);
     AnchorPane.setRightAnchor(collidableTypeDropDown, 300.0);
     AnchorPane.setTopAnchor(collidableTypeDropDown, 200.0);

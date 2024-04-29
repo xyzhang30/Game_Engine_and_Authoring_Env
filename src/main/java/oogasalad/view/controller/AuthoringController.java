@@ -88,19 +88,20 @@ public class AuthoringController {
   public void writePlayers(Map<Integer, Map<CollidableType, List<Integer>>> playersMap) throws IncompletePlayerStrikeableAuthoringException {
     List<ParserPlayer> players = new ArrayList<>();
     playersMap.forEach((playerId, myGameObjects) -> {
-      System.out.println("collidables:"+playersMap.get(playerId).get(CollidableType.STRIKABLE));
+      System.out.println("collidables:"+playersMap.get(playerId).get(CollidableType.STRIKEABLE));
       ParserPlayer player;
       try {
         player = new ParserPlayer(playerId,
-            playersMap.get(playerId).get(CollidableType.STRIKABLE),
+            playersMap.get(playerId).get(CollidableType.STRIKEABLE),
             playersMap.get(playerId).get(CollidableType.SCOREABLE),
-            playersMap.get(playerId).get(CollidableType.CONTROLLABLE),0, playersMap.get(playerId).get(CollidableType.STRIKABLE).get(0));
+            playersMap.get(playerId).get(CollidableType.CONTROLLABLE),0, playersMap.get(playerId).get(CollidableType.STRIKEABLE).get(0));
       } catch (IndexOutOfBoundsException e) {
+        e.printStackTrace();
         throw new IncompletePlayerStrikeableAuthoringException("Please assign a strikeable game object to each player.");
       }
       players.add(player);
       if (playerId == 1){
-        firstActiveStrikeableId = playersMap.get(playerId).get(CollidableType.STRIKABLE).get(0);
+        firstActiveStrikeableId = playersMap.get(playerId).get(CollidableType.STRIKEABLE).get(0);
       }
     });
     builderDirector.constructPlayers(players);

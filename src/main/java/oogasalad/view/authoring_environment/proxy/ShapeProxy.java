@@ -29,7 +29,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class ShapeProxy {
 
-  private String modName = "default";
+  private String modName = "Default";
   private List<String> mods = new ArrayList<>();
   private final Stack<Shape> shapeStack = new Stack<>();
   private final ListProperty<Integer> shapesListProperty = new SimpleListProperty<>(
@@ -257,6 +257,7 @@ public class ShapeProxy {
           currentShape.getLayoutBounds().getHeight() * currentShape.getScaleY());
       gameObjectAttributesContainer.setAllColor(gameObj.getAllColors());
       gameObjectAttributesContainer.setAllImgPaths(gameObj.getAllImagePaths());
+      gameObjectAttributesContainer.setProperties(gameObj.getProperties());
       Bounds bounds = currentShape.localToScene(currentShape.getBoundsInLocal());
       gameObjectAttributesContainer.setPosition(new Coordinate(bounds.getMinX(), bounds.getMinY()));
     }
