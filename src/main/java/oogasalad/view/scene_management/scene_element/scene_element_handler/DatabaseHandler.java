@@ -273,46 +273,23 @@ public class DatabaseHandler extends Handler{
   private void setUpPlayerPermissions(Node node) {
     playerPermissions = (ListView<String>) node;
     playerPermissionMap = getGameController().getPlayerPermissions(currentGame);
-    playerCheckBoxMap = new HashMap<>(); // Map to store player names to their corresponding checkboxes
-
-    ObservableList<String> playerNames = FXCollections.observableArrayList(playerPermissionMap.keySet());
-    playerPermissions.setItems(playerNames);
-    playerPermissions.setCellFactory(lv -> new ListCell<String>() {
-      @Override
-      protected void updateItem(String item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty || item == null) {
-          setText(null);
-          setGraphic(null);
-        } else {
-          CheckBox checkBox = new CheckBox(); // Create a new checkbox for each cell
-          boolean permission = playerPermissionMap.get(item);
-          checkBox.setSelected(permission);
-
-          setText(item);
-          // Update the map when the checkbox is toggled
-          checkBox.setOnAction(event -> {
-            playerPermissionMap.put(item, checkBox.isSelected());
-          });
-
-          // Add the checkbox to the map with player's name as the key
-          playerCheckBoxMap.put(item, checkBox);
-
-          // Set only the checkbox as the graphic, omitting the player name
-          setGraphic(checkBox);
-        }
-      }
-    });
+    setUpPermissions(playerPermissions, playerPermissionMap);
   }
-
 
   private void setUpFriendPermissions(Node node) {
     friends = (ListView<String>) node;
     friendsMap = databaseController.getFriends(currentPlayersManager.get(0));
-    ObservableList<String> playerNames =
-        FXCollections.observableArrayList(friendsMap.keySet());
-    friends.setItems(playerNames);
-    friends.setCellFactory(lv -> new ListCell<String>() {
+    setUpPermissions(friends, friendsMap);
+  }
+
+  private void setUpPermissions(ListView<String> listView, Map<String, Boolean> permissionMap) {
+    ObservableList<String> playerNames = FXCollections.observableArrayList(permissionMap.keySet());
+    listView.setItems(playerNames);
+    listView.setCellFactory(lv -> createPermissionListCell(permissionMap));
+  }
+
+  private ListCell<String> createPermissionListCell(Map<String, Boolean> permissionMap) {
+    return new ListCell<String>() {
       @Override
       protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
@@ -320,56 +297,55 @@ public class DatabaseHandler extends Handler{
           setText(null);
           setGraphic(null);
         } else {
-          CheckBox checkBox = new CheckBox(); // Create a new checkbox for each cell
-          boolean permission = friendsMap.get(item);
+          CheckBox checkBox = new CheckBox();
+          boolean permission = permissionMap.get(item);
           checkBox.setSelected(permission);
           setText(item);
-          // Update the map when the checkbox is toggled
           checkBox.setOnAction(event -> {
-            friendsMap.put(item, checkBox.isSelected());
+            permissionMap.put(item, checkBox.isSelected());
           });
           setGraphic(checkBox);
         }
       }
-    });
+    };
   }
 
 
   private void createFinishHandler(Node node) {
     node.setOnMouseClicked(e -> {
-      List<String> checkedPlayers = new ArrayList<>();
-      List<String> uncheckedPlayers = new ArrayList<>();
-
-      for (String item : playerPermissions.getItems()) {
-        if (playerPermissionMap.get(item)) {
-              checkedPlayers.add(item);
-            } else {
-              uncheckedPlayers.add(item);
-            }
-          }
+      List<String> checkedPlayers = extractCheckedItems(playerPermissions, playerPermissionMap);
       databaseController.setPublicPrivate(currentGame, publicComboBox.getSelectionModel().getSelectedItem());
-      databaseController.writePlayerPermissions(currentGame, checkedPlayers, uncheckedPlayers);
+      databaseController.writePlayerPermissions(currentGame, checkedPlayers, extractUncheckedItems(playerPermissions, playerPermissionMap));
       getSceneManager().createMenuScene();
     });
   }
 
-
   private void confirmFriendsHandler(Node node) {
     node.setOnMouseClicked(e -> {
-      List<String> checkedPlayers = new ArrayList<>();
-      List<String> uncheckedPlayers = new ArrayList<>();
-
-      for (String item : friends.getItems()) {
-        if (friendsMap.get(item)) {
-          checkedPlayers.add(item);
-        }
-        else {
-          uncheckedPlayers.add(item);
-        }
-      }
-      databaseController.writeFriends(currentPlayersManager.get(0), checkedPlayers, uncheckedPlayers);
+      List<String> checkedPlayers = extractCheckedItems(friends, friendsMap);
+      databaseController.writeFriends(currentPlayersManager.get(0), checkedPlayers, extractUncheckedItems(friends, friendsMap));
       getSceneManager().createMenuScene();
     });
+  }
+
+  private List<String> extractCheckedItems(ListView<String> listView, Map<String, Boolean> permissionMap) {
+    List<String> checkedPlayers = new ArrayList<>();
+    for (String item : listView.getItems()) {
+      if (permissionMap.get(item)) {
+        checkedPlayers.add(item);
+      }
+    }
+    return checkedPlayers;
+  }
+
+  private List<String> extractUncheckedItems(ListView<String> listView, Map<String, Boolean> permissionMap) {
+    List<String> uncheckedPlayers = new ArrayList<>();
+    for (String item : listView.getItems()) {
+      if (!permissionMap.getOrDefault(item, false)) {
+        uncheckedPlayers.add(item);
+      }
+    }
+    return uncheckedPlayers;
   }
 
   private void createAccessibilityHandler(Node node) {
