@@ -249,6 +249,12 @@ public class DefaultUIElementFactory implements UIElementFactory {
       });
     }
 
+    return getParams(confirmSaveParam, textAreas, params, popupStage, vbox);
+  }
+
+  @Override
+  public List<Integer> getParams(Button confirmSaveParam, List<TextArea> textAreas,
+      List<Integer> params, Stage popupStage, VBox vbox) {
     confirmSaveParam.setOnAction(e -> {
       for (TextArea area : textAreas) {
         String text = area.getText();

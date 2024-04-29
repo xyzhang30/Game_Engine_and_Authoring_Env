@@ -380,7 +380,6 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
   // object display
   private void changeAngle(double angle) {
     shapeProxy.getShape().setRotate(angle);
-    // shapeProxy.getGameObjectAttributesContainer().setAngle(angle);
   }
 
   private void changeXSize(double xScale) {
