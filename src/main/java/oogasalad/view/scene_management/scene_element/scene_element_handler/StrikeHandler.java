@@ -61,7 +61,7 @@ public class StrikeHandler extends Handler {
     maxPower = ((Rectangle) node).getHeight();
   }
 
-  private void createPowerHandler(Node node) {
+  public void createPowerHandler(Node node) {
     powerMeter = (Rectangle) node;
     minPower = powerMeter.getHeight();
     Pane root = getSceneManager().getRoot();
@@ -110,13 +110,13 @@ public class StrikeHandler extends Handler {
     }
   }
 
-  private void increaseAngle() {
+  public void increaseAngle() {
     if (angleArrow.getRotate() < 180) {
       angleArrow.setRotate(angleArrow.getRotate() + angleIncrement);
     }
   }
 
-  private void increasePower() {
+  public void increasePower() {
     if (powerMeter.getHeight() < maxPower - 3 * minPower) {
       powerMeter.setLayoutY(powerMeter.getLayoutY() - 10);
       powerMeter.setHeight(powerMeter.getHeight() + 10);
@@ -136,7 +136,7 @@ public class StrikeHandler extends Handler {
     getGameController().hitPointScoringObject(fractionalVelocity, angle);
   }
 
-  private void setAngleArrow(Node node) {
+  public void setAngleArrow(Node node) {
     angleArrow = (Arrow) node;
   }
 

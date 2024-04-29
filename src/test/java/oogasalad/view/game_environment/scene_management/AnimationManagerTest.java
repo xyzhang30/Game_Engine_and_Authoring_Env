@@ -22,7 +22,7 @@ public class AnimationManagerTest extends DukeApplicationTest {
   @BeforeEach
   public void setUp() {
     gameController = new GameController(800, 600);
-    gameController.startGamePlay("data/playable_games/billiards");
+    gameController.startGamePlay("data/playable_games/billiards.json");
     animationManager = new AnimationManager();
   }
 
