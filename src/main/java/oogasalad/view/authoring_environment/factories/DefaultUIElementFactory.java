@@ -249,6 +249,12 @@ public class DefaultUIElementFactory implements UIElementFactory {
       });
     }
 
+    return getParams(confirmSaveParam, textAreas, params, popupStage, vbox);
+  }
+
+  @Override
+  public List<Integer> getParams(Button confirmSaveParam, List<TextArea> textAreas,
+      List<Integer> params, Stage popupStage, VBox vbox) {
     confirmSaveParam.setOnAction(e -> {
       for (TextArea area : textAreas) {
         String text = area.getText();
@@ -258,7 +264,8 @@ public class DefaultUIElementFactory implements UIElementFactory {
             params.add(value);
           } catch (NumberFormatException ex) {
             LOGGER.error(ex.getMessage());
-            WARNING.showAlert(AlertType.ERROR, "Number Format Error", null, "Parameters must be integers");
+            WARNING.showAlert(AlertType.ERROR, "Number Format Error", null,
+                "Parameters must be integers");
           }
         }
       }

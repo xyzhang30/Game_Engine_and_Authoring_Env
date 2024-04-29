@@ -41,8 +41,7 @@ public class DatabaseController {
     try {
       databaseView.assignPermissionToPlayers(gameName, playersWithAccess, "Player");
       databaseView.assignPermissionToPlayers(gameName, playersWithoutAccess, "None");
-    }
-    catch (SQLException e) {
+    } catch (SQLException e) {
       showAlert(Alert.AlertType.ERROR, "Database Error", "Error Assigning Permissions",
           e.getMessage());
     }
@@ -51,8 +50,7 @@ public class DatabaseController {
   public Map<String, Boolean> getPlayerPermissions(String gameName) {
     try {
       return databaseView.getPlayerPermissionsForGames(gameName);
-    }
-    catch (SQLException e) {
+    } catch (SQLException e) {
       showAlert(Alert.AlertType.ERROR, "Database Error", "Error Getting Permissions",
           e.getMessage());
       return Map.of();
@@ -62,8 +60,7 @@ public class DatabaseController {
   public String getGameAccessibility(String gameName) {
     try {
       return databaseView.getGameAccessibility(gameName);
-    }
-    catch (SQLException e) {
+    } catch (SQLException e) {
       showAlert(Alert.AlertType.ERROR, "Database Error", "Error Retreiving Accessibility Details."
               + " Assumed to be private.",
           e.getMessage());
@@ -75,8 +72,7 @@ public class DatabaseController {
   public void setPublicPrivate(String gameName, String accessibility) {
     try {
       databaseView.setGameAccessibility(gameName, accessibility);
-    }
-    catch (SQLException e) {
+    } catch (SQLException e) {
       showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to Update Accessibility.",
           e.getMessage());
     }
@@ -86,8 +82,7 @@ public class DatabaseController {
   public boolean canUserLogin(String username) {
     try {
       return databaseView.doesUserExist(username);  // user exists, can log in
-    }
-    catch (SQLException e) {
+    } catch (SQLException e) {
       showAlert(Alert.AlertType.ERROR, "Database Error", "User assumed to not exist",
           e.getMessage());
       return false;
@@ -105,7 +100,6 @@ public class DatabaseController {
     }
     return true;
   }
-
 
 
   /**
@@ -152,9 +146,9 @@ public class DatabaseController {
       }
       leaderboard.saveGameScores(formattedScores);
 
-    }
-    catch (SQLException e) {
-      showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to show Leaderboard", e.getMessage());
+    } catch (SQLException e) {
+      showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to show Leaderboard",
+          e.getMessage());
       return;
     }
   }
@@ -172,8 +166,7 @@ public class DatabaseController {
     String host = currentPlayersManager.get(0);
     try {
       return databaseView.getManageableGames(host);
-    }
-    catch (SQLException e) {
+    } catch (SQLException e) {
       showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to get friends. Assumed owner of"
           + " no games", e.getMessage());
       return FXCollections.observableList(List.of());
@@ -183,8 +176,9 @@ public class DatabaseController {
   public ObservableList<String> getNewGameTitles() {
     String host = currentPlayersManager.get(0);
     int size = currentPlayersManager.size();
-    try { return databaseView.getPlayableGameIds(host, size); }
-    catch (SQLException e) {
+    try {
+      return databaseView.getPlayableGameIds(host, size);
+    } catch (SQLException e) {
       showAlert(Alert.AlertType.ERROR, "Database Error", "No Games Available",
           e.getMessage());
       return FXCollections.observableList(List.of());
@@ -201,8 +195,7 @@ public class DatabaseController {
         databaseView.addGameScore(id, playerMap.get(players.get(i).playerId()),
             getScoreFromId(players, players.get(i).playerId()), false);
       }
-    }
-    catch(SQLException e){
+    } catch (SQLException e) {
       showAlert(Alert.AlertType.ERROR, "Database Error", "Game Result Cannot be added to database",
           e.getMessage());
     }
@@ -220,8 +213,7 @@ public class DatabaseController {
   public void writeFriends(String player, List<String> friends, List<String> notFriends) {
     try {
       databaseView.assignFriends(player, friends, notFriends);
-    }
-    catch (SQLException e) {
+    } catch (SQLException e) {
       showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to assign friends",
           e.getMessage());
     }
@@ -230,8 +222,7 @@ public class DatabaseController {
   public Map<String, Boolean> getFriends(String player) {
     try {
       return databaseView.getFriends(player);
-    }
-    catch (SQLException e) {
+    } catch (SQLException e) {
       showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to get friends. Assumed you have"
               + " no friends",
           e.getMessage());

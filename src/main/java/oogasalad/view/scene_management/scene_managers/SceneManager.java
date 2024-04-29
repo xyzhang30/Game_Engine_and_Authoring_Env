@@ -306,7 +306,7 @@ public class SceneManager {
    */
   private void logError(String message, Exception e) {
     LOGGER.error(message + e.getMessage());
-    WARNING.showAlert(scene, AlertType.ERROR, message,null, e.getMessage());
+    WARNING.showAlert(scene, AlertType.ERROR, message, null, e.getMessage());
   }
 
   private void addGameManagementElementsToGame(GameRecord gameRecord) {

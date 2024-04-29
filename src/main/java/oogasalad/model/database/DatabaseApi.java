@@ -15,7 +15,7 @@ public interface DatabaseApi {
   /**
    * Retrieves the high scores of a specific game.
    *
-   * @param gameName   The name of the game.
+   * @param gameName The name of the game.
    * @return A list of GameScore objects representing the high scores of the player.
    */
 
@@ -24,6 +24,7 @@ public interface DatabaseApi {
 
   /**
    * Gets the accessibility level of a game.
+   *
    * @param gameName the game being queried
    * @return If the game is public to all, private, or open to friends of the creator
    */
@@ -32,8 +33,9 @@ public interface DatabaseApi {
 
   /**
    * Sets accessibility of a game
-   * @param gameName        the game being updated
-   * @param accessibility   If the game is public to all, private, or open to friends of creator.
+   *
+   * @param gameName      the game being updated
+   * @param accessibility If the game is public to all, private, or open to friends of creator.
    */
 
   void setGameAccessibility(String gameName, String accessibility) throws SQLException;
@@ -82,9 +84,9 @@ public interface DatabaseApi {
   /**
    * Registers a new game.
    *
-   * @param gameName        The name of the game.
-   * @param ownerName       The name of the owner of the game.
-   * @param numPlayers      The number of players required for the game.
+   * @param gameName   The name of the game.
+   * @param ownerName  The name of the owner of the game.
+   * @param numPlayers The number of players required for the game.
    * @return True if the game is successfully registered, false otherwise.
    */
   boolean registerGame(String gameName, String ownerName, int numPlayers,
@@ -144,6 +146,7 @@ public interface DatabaseApi {
 
   /**
    * Returns whether user with given username is in the database
+   *
    * @param username of a user
    * @return if the given user is in the database
    */
@@ -153,6 +156,7 @@ public interface DatabaseApi {
 
   /**
    * Gets a list of all players that are friends with a given player
+   *
    * @param player who user wants to see their friends
    * @return map from player username to whether or not "player" is friends with them
    */

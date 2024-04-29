@@ -225,14 +225,7 @@ public class ShapeProxy {
     gameObjectAttributesContainer = new GameObjectAttributesContainer();
 //    }
     if (!shapeStack.isEmpty()) {
-      Shape currentShape = shapeStack.peek();
-      gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));
-      gameObjectAttributesContainer.setWidth(
-          currentShape.getLayoutBounds().getWidth() * currentShape.getScaleX());
-      gameObjectAttributesContainer.setHeight(
-          currentShape.getLayoutBounds().getHeight() * currentShape.getScaleY());
-      Bounds bounds = currentShape.localToScene(currentShape.getBoundsInLocal());
-      gameObjectAttributesContainer.setPosition(new Coordinate(bounds.getMinX(), bounds.getMinY()));
+      resetShape();
     }
   }
 
@@ -242,18 +235,22 @@ public class ShapeProxy {
   public void resetGameObjectAttributesContainer(GameObjectAttributesContainer gameObj) {
     gameObjectAttributesContainer = new GameObjectAttributesContainer();
     if (!shapeStack.isEmpty()) {
-      Shape currentShape = shapeStack.peek();
-      gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));
-      gameObjectAttributesContainer.setWidth(
-          currentShape.getLayoutBounds().getWidth() * currentShape.getScaleX());
-      gameObjectAttributesContainer.setHeight(
-          currentShape.getLayoutBounds().getHeight() * currentShape.getScaleY());
+      resetShape();
       gameObjectAttributesContainer.setAllColor(gameObj.getAllColors());
       gameObjectAttributesContainer.setAllImgPaths(gameObj.getAllImagePaths());
       gameObjectAttributesContainer.setProperties(gameObj.getProperties());
-      Bounds bounds = currentShape.localToScene(currentShape.getBoundsInLocal());
-      gameObjectAttributesContainer.setPosition(new Coordinate(bounds.getMinX(), bounds.getMinY()));
     }
+  }
+
+  private void resetShape() {
+    Shape currentShape = shapeStack.peek();
+    gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));
+    gameObjectAttributesContainer.setWidth(
+        currentShape.getLayoutBounds().getWidth() * currentShape.getScaleX());
+    gameObjectAttributesContainer.setHeight(
+        currentShape.getLayoutBounds().getHeight() * currentShape.getScaleY());
+    Bounds bounds = currentShape.localToScene(currentShape.getBoundsInLocal());
+    gameObjectAttributesContainer.setPosition(new Coordinate(bounds.getMinX(), bounds.getMinY()));
   }
 
   /**

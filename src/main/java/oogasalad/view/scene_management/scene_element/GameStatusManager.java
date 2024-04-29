@@ -90,7 +90,8 @@ public class GameStatusManager {
       String> playerMap) {
     List<String> scores = new ArrayList<>();
     for (PlayerRecord player : players) {
-      scores.add(playerMap.getOrDefault(player.playerId(), "Guest") + playerScoreSeparator + player.score());
+      scores.add(playerMap.getOrDefault(player.playerId(), "Guest") + playerScoreSeparator
+          + player.score());
     }
     return FXCollections.observableList(scores);
   }

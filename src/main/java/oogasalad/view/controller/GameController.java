@@ -152,7 +152,8 @@ public class GameController {
       LOGGER.error(e.getMessage());
       handleException("Start Game Error", "Can't find game file");
       return;
-    } catch (InvalidColorParsingException | InvalidShapeException |MissingJsonGameInfoException e) {
+    } catch (InvalidColorParsingException | InvalidShapeException |
+             MissingJsonGameInfoException e) {
       LOGGER.error(e.getMessage());
       handleException("Parsing Error", e.getMessage());
       return;
@@ -278,9 +279,10 @@ public class GameController {
     Map<KeyInputType, String> keyMap = gameLoaderView.getInputKeys();
     try {
       return KeyCode.valueOf(keyMap.get(inputType));
-    } catch (NullPointerException e){
+    } catch (NullPointerException e) {
       LOGGER.error(e.getMessage() + "key code is null");
-      WARNING.showAlert(getScene(), AlertType.ERROR, "Error Getting Input Keys", null, "Please specify input keys for game");
+      WARNING.showAlert(getScene(), AlertType.ERROR, "Error Getting Input Keys", null,
+          "Please specify input keys for game");
     }
     return null;
   }
@@ -299,7 +301,8 @@ public class GameController {
       properties.load(inputStream);
     } catch (IOException e) {
       LOGGER.error(e.getMessage());
-      WARNING.showAlert(getScene(), AlertType.ERROR, "Game Description Error", null, e.getMessage());
+      WARNING.showAlert(getScene(), AlertType.ERROR, "Game Description Error", null,
+          e.getMessage());
     }
     return properties.getProperty(selectedGame, "");
   }
