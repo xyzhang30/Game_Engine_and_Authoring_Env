@@ -5,6 +5,7 @@ import java.util.List;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -18,7 +19,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import oogasalad.model.gameparser.GameLoader;
+import oogasalad.view.Warning;
 import oogasalad.view.api.authoring.UIElementFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.controlsfx.control.CheckComboBox;
 
 /**
@@ -29,6 +34,9 @@ import org.controlsfx.control.CheckComboBox;
  * @author Judy He
  */
 public class DefaultUIElementFactory implements UIElementFactory {
+
+  private static final Warning WARNING = new Warning();
+  private static final Logger LOGGER = LogManager.getLogger(DefaultUIElementFactory.class);
 
   /**
    * Creates a horizontal container (HBox) with the specified spacing, width, height, and child
@@ -249,6 +257,8 @@ public class DefaultUIElementFactory implements UIElementFactory {
             Integer value = Integer.parseInt(text);
             params.add(value);
           } catch (NumberFormatException ex) {
+            LOGGER.error(ex.getMessage());
+            WARNING.showAlert(AlertType.ERROR, "Number Format Error", null, "Parameters must be integers");
           }
         }
       }

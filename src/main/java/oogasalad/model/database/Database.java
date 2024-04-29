@@ -62,7 +62,7 @@ public class Database implements DatabaseApi {
     while (rs.next()) {
       scores.add(new GameScore(rs.getString("playerusername"), gameName,
           rs.getInt("score"), rs.getBoolean("gameresult")));
-      }
+    }
     return FXCollections.observableList(scores.subList(0, Math.min(10, scores.size())));
   }
 
@@ -112,7 +112,7 @@ public class Database implements DatabaseApi {
    * @return If the game is public to all, private, or open to friends of the creator
    */
   @Override
-public String getGameAccessibility(String gameName) throws SQLException {
+  public String getGameAccessibility(String gameName) throws SQLException {
     String sql = "SELECT accessibility FROM Games WHERE gamename = ?";
     ResultSet rs = executeQuery(sql, gameName);
     return rs.next() ? rs.getString("accessibility") : "public";
@@ -139,15 +139,15 @@ public String getGameAccessibility(String gameName) throws SQLException {
       String accessibility) throws SQLException {
     String sql = "INSERT INTO Games (gamename, owner, numplayers, accessibility) VALUES (?, ?, ?, "
         + "?) ON CONFLICT DO NOTHING";
-      int affectedRows = executeUpdate(sql, gameName, ownerName, numPlayers, accessibility);
-      for (String username : getAllPlayers()) {
-        String permission =
-            accessibility.equals("public") || (accessibility.equals("friends") && areFriends(
-                ownerName, username)) ? "Player" : "None";
-        grantPermissions(username, gameName, permission);
-      }
-      grantPermissions(ownerName, gameName, "Owner");
-      return affectedRows > 0;
+    int affectedRows = executeUpdate(sql, gameName, ownerName, numPlayers, accessibility);
+    for (String username : getAllPlayers()) {
+      String permission =
+          accessibility.equals("public") || (accessibility.equals("friends") && areFriends(
+              ownerName, username)) ? "Player" : "None";
+      grantPermissions(username, gameName, permission);
+    }
+    grantPermissions(ownerName, gameName, "Owner");
+    return affectedRows > 0;
   }
 
 
@@ -165,7 +165,7 @@ public String getGameAccessibility(String gameName) throws SQLException {
     pstmt.setString(1, game);
     int affectedRows = pstmt.executeUpdate();
     return (affectedRows > 0 && pstmt.getGeneratedKeys().next()) ?
-         pstmt.getGeneratedKeys().getInt(1) : -1;
+        pstmt.getGeneratedKeys().getInt(1) : -1;
   }
 
 
@@ -198,11 +198,11 @@ public String getGameAccessibility(String gameName) throws SQLException {
 
   @Override
   public void assignPermissionToPlayers(String game, List<String> users, String permission) throws SQLException
-    {
-      for (String user : users) {
-        grantPermissions(user, game, permission);
-      }
+  {
+    for (String user : users) {
+      grantPermissions(user, game, permission);
     }
+  }
 
 
   /**
@@ -215,16 +215,16 @@ public String getGameAccessibility(String gameName) throws SQLException {
 
   @Override
   public void assignFriends(String player, List<String> friends, List<String> notFriends) throws SQLException{
-      for (String friend : friends) {
-        if (!areFriends(player, friend)) {
-          insertFriendship(player, friend);
-        }
+    for (String friend : friends) {
+      if (!areFriends(player, friend)) {
+        insertFriendship(player, friend);
       }
-      for (String notFriend : notFriends) {
-        if (areFriends(player, notFriend)) {
-          removeFriendship(player, notFriend);
-        }
+    }
+    for (String notFriend : notFriends) {
+      if (areFriends(player, notFriend)) {
+        removeFriendship(player, notFriend);
       }
+    }
 
   }
 

@@ -124,10 +124,10 @@ public class DatabaseController {
       throws CreatingDuplicateUserException {
     try {
       boolean doesExist = databaseView.doesUserExist(username);
-    if (!doesExist) {
-      databaseView.registerUser(username, password, avatarUrl);  // add to database
-      return true;  // new user created
-    }
+      if (!doesExist) {
+        databaseView.registerUser(username, password, avatarUrl);  // add to database
+        return true;  // new user created
+      }
     } catch (SQLException e) {
       throw new CreatingDuplicateUserException("User creation failed: User already exists.");
     }
@@ -175,7 +175,7 @@ public class DatabaseController {
     }
     catch (SQLException e) {
       showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to get friends. Assumed owner of"
-              + " no games", e.getMessage());
+          + " no games", e.getMessage());
       return FXCollections.observableList(List.of());
     }
   }

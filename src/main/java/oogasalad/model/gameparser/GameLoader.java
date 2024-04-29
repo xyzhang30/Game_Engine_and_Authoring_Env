@@ -42,9 +42,7 @@ public abstract class GameLoader {
     this.resourceBundle = ResourceBundle.getBundle(
         RESOURCE_FOLDER_PATH + ERROR_RESOURCE_FOLDER + ERROR_FILE_PREFIX + language);
     try {
-
       parseJSON(gameName + JSON_EXTENSION);
-
     } catch (IOException e) {
       LOGGER.error(resourceBundle.getString("JSONParsingError"), e.getMessage());
       throw new InvalidFileException(String.format(

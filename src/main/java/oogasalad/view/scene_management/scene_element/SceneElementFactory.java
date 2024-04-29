@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -15,11 +17,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import oogasalad.model.gameparser.GameLoaderModel;
+import oogasalad.view.Warning;
 import oogasalad.view.api.enums.SceneElementType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.XMLTags;
 import oogasalad.view.scene_management.scene_element.scene_element_handler.SceneElementHandler;
 import oogasalad.view.visual_elements.Arrow;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Creates elements from parameters received from sceneElementParser; outsources styling and event
@@ -36,6 +42,8 @@ public class SceneElementFactory {
   private final double screenHeight;
   private SupportedLanguage language;
   private Map<SceneElementType, BiConsumer<Node, Map<String, String>>> elementConfigurationMap;
+  private static final Logger LOGGER = LogManager.getLogger(SceneElementFactory.class);
+  private static final Warning WARNING = new Warning();
 
   /**
    * Constructor creates sceneElementParser to get parameters from xml files
@@ -78,8 +86,8 @@ public class SceneElementFactory {
         sceneElementPane.getChildren().add(node);
       } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
                IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-        //TODO: Exception Handling
-        System.out.println(e.getMessage());
+        LOGGER.error(e.getMessage());
+        WARNING.showAlert(AlertType.ERROR, "Create Scene Element Error", null, e.getMessage());
       }
     }
     return sceneElementPane;

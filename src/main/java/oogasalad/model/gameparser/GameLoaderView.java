@@ -12,6 +12,7 @@ import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.KeyPreferences;
 import oogasalad.model.api.exception.InvalidColorParsingException;
+import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.api.exception.MissingJsonGameInfoException;
 import oogasalad.view.api.enums.KeyInputType;
@@ -38,7 +39,7 @@ public class GameLoaderView extends GameLoader {
    * @throws InvalidColorParsingException Color in game data file cannot be recognized
    */
   public GameLoaderView(String gameName)
-      throws InvalidShapeException, InvalidColorParsingException {
+      throws InvalidShapeException, InvalidColorParsingException, InvalidFileException {
     super(gameName);
     createViewRecord("Default");
     createKeysMap();
