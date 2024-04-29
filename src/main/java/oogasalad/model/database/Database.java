@@ -412,7 +412,7 @@ public class Database implements DatabaseApi {
       // Remove not friendships from the database
       for (String notFriend : notFriends) {
         if (areFriends(player, notFriend, conn)) {
-          removeFriendship(player, notFriend, conn);
+          removeFriendship(player, notFriend);
         }
       }
     } catch (SQLException e) {
@@ -445,63 +445,48 @@ public class Database implements DatabaseApi {
 
   private boolean areFriends(String player1, String player2, Connection conn) throws SQLException {
     String sql = "SELECT EXISTS (SELECT 1 FROM friendships WHERE (player_username = ? AND friend_username = ?) OR (player_username = ? AND friend_username = ?))";
-    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, player1);
-      pstmt.setString(2, player2);
-      pstmt.setString(3, player2);
-      pstmt.setString(4, player1);
-      try (ResultSet rs = pstmt.executeQuery()) {
-        if (rs.next()) {
-          return rs.getBoolean(1);
-        }
-      }
-    }
-    return false; // Default to false if an error occurs
+    ResultSet rs = prepareStatement(conn, sql, player1, player2, player2, player1).executeQuery();
+    return rs.next() && rs.getBoolean(1);
   }
 
   private void insertFriendship(String player1, String player2, Connection conn)
       throws SQLException {
     String sql = "INSERT INTO friendships (player_username, friend_username) VALUES (?, ?)";
-    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, player1);
-      pstmt.setString(2, player2);
-      pstmt.executeUpdate();
-    }
+    prepareStatement(DatabaseConfig.getConnection(), sql, player1, player2).executeUpdate();
   }
 
-  private void removeFriendship(String player1, String player2, Connection conn)
+  private void removeFriendship(String player1, String player2)
       throws SQLException {
     String sql = "DELETE FROM friendships WHERE (player_username = ? AND friend_username = ?) OR (player_username = ? AND friend_username = ?)";
-    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, player1);
-      pstmt.setString(2, player2);
-      pstmt.setString(3, player2);
-      pstmt.setString(4, player1);
-      pstmt.executeUpdate();
-    }
+    prepareStatement(DatabaseConfig.getConnection(), sql, player1, player2, player2, player1).executeUpdate();
+
   }
 
   @Override
   public Map<String, Boolean> getFriends(String player) {
     Map<String, Boolean> friendsMap = new HashMap<>();
     String query = "SELECT p.username, COALESCE(f.friendship_status, false) AS is_friend FROM players p LEFT JOIN ( SELECT CASE WHEN player_username = ? THEN friend_username ELSE player_username END AS friend, true AS friendship_status FROM friendships WHERE player_username = ?) f ON p.username = f.friend WHERE p.username != ?;";
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(query)) {
-      pstmt.setString(1, player);
-      pstmt.setString(2, player);
-      pstmt.setString(3, player);
-
-      try (ResultSet rs = pstmt.executeQuery()) {
-        while (rs.next()) {
+    try (ResultSet rs = prepareStatement(DatabaseConfig.getConnection(), query, player, player, player).executeQuery()) {
+      while (rs.next()) {
           String username = rs.getString("username");
           boolean isFriend = rs.getBoolean("is_friend");
           friendsMap.put(username, isFriend);
         }
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
+      } catch (SQLException ex) {
+      throw new RuntimeException(ex);
     }
     return friendsMap;
-
   }
-}
+
+  private PreparedStatement prepareStatement(Connection conn, String query, Object... params) throws SQLException {
+    PreparedStatement pstmt = conn.prepareStatement(query);
+    for (int i = 0; i < params.length; i++) {
+      pstmt.setObject(i + 1, params[i]);
+    }
+    return pstmt;
+  }
+  }
+
+
+
+
