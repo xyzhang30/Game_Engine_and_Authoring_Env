@@ -19,6 +19,7 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 @CommandHelpInfo(description = "")
 @ExpectedParamNumber(1)
 public class MoveToStartingStateCommand implements Command {
+
   private final GameObject gameObject;
 
   /**

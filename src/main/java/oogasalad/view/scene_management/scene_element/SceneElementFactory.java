@@ -7,20 +7,25 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import oogasalad.model.gameparser.GameLoaderModel;
+import oogasalad.view.Warning;
 import oogasalad.view.api.enums.SceneElementType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.XMLTags;
 import oogasalad.view.scene_management.scene_element.scene_element_handler.SceneElementHandler;
 import oogasalad.view.visual_elements.Arrow;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Creates elements from parameters received from sceneElementParser; outsources styling and event
@@ -37,6 +42,8 @@ public class SceneElementFactory {
   private final double screenHeight;
   private SupportedLanguage language;
   private Map<SceneElementType, BiConsumer<Node, Map<String, String>>> elementConfigurationMap;
+  private static final Logger LOGGER = LogManager.getLogger(SceneElementFactory.class);
+  private static final Warning WARNING = new Warning();
 
   /**
    * Constructor creates sceneElementParser to get parameters from xml files
@@ -79,8 +86,8 @@ public class SceneElementFactory {
         sceneElementPane.getChildren().add(node);
       } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
                IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-        //TODO: Exception Handling
-        System.out.println(e.getMessage());
+        LOGGER.error(e.getMessage());
+        WARNING.showAlert(AlertType.ERROR, "Create Scene Element Error", null, e.getMessage());
       }
     }
     return sceneElementPane;
@@ -131,56 +138,37 @@ public class SceneElementFactory {
 
   }
 
-  private void configureButton(Node node, Map<String, String> parameters) {
+  private void configureUIElement(Region node, Map<String, String> parameters,
+      BiConsumer<Node, String> textSetter) {
     String textTag = parameters.get(XMLTags.TEXT.name().toLowerCase());
     double widthFactor = parseDoubleParameter(parameters,
         XMLTags.WIDTH_FACTOR.name().toLowerCase());
     double heightFactor = parseDoubleParameter(parameters,
         XMLTags.HEIGHT_FACTOR.name().toLowerCase());
-
-    Button button = (Button) node;
     if (textTag != null) {
       String translatedText = languageManager.getText(language, textTag);
-      button.setText(translatedText);
+      textSetter.accept(node, translatedText);
     }
-    button.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
+    node.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
+  }
+
+  private void configureButton(Node node, Map<String, String> parameters) {
+    configureUIElement((Button) node, parameters, (n, text) -> ((Button) n).setText(text));
   }
 
   private void configureComboBox(Node node, Map<String, String> parameters) {
-    String textTag = parameters.get(XMLTags.TEXT.name().toLowerCase());
-    double widthFactor = parseDoubleParameter(parameters,
-        XMLTags.WIDTH_FACTOR.name().toLowerCase());
-    double heightFactor = parseDoubleParameter(parameters,
-        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
-
-    ComboBox<String> comboBox = (ComboBox<String>) node;
-    if (textTag != null) {
-      String translatedText = languageManager.getText(language, textTag);
-      comboBox.setPromptText(translatedText);
-    }
-    comboBox.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
+    configureUIElement((ComboBox<String>) node, parameters,
+        (n, text) -> ((ComboBox<String>) n).setPromptText(text));
   }
 
   private void configureListView(Node node, Map<String, String> parameters) {
-    double widthFactor = parseDoubleParameter(parameters,
-        XMLTags.WIDTH_FACTOR.name().toLowerCase());
-    double heightFactor = parseDoubleParameter(parameters,
-        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
-
-    ListView<String> listView = (ListView<String>) node;
-    listView.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
+    configureUIElement((ListView<String>) node, parameters, (n, text) -> {
+    }); // No text setting
   }
 
   private void configureTextField(Node node, Map<String, String> parameters) {
-    double widthFactor = parseDoubleParameter(parameters,
-        XMLTags.WIDTH_FACTOR.name().toLowerCase());
-    double heightFactor = parseDoubleParameter(parameters,
-        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
-
-    TextField textField = (TextField) node;
-    textField.setPrefSize(widthFactor * screenWidth, heightFactor * screenHeight);
+    configureUIElement((Region) node, parameters, (n, text) -> ((TextField) n).setPromptText(text));
   }
-
 
   private void handleLayout(Node node, Map<String, String> parameters) {
     double xLayoutFactor = parseDoubleParameter(parameters,

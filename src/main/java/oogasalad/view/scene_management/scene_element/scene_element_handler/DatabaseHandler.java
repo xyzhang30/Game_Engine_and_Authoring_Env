@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
@@ -26,7 +27,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
-import oogasalad.model.gameengine.GameEngine;
 import oogasalad.view.Warning;
 import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.api.exception.CreateNewUserException;
@@ -39,12 +39,12 @@ import oogasalad.view.scene_management.scene_managers.SceneManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class DatabaseHandler {
+public class DatabaseHandler extends Handler {
 
-  private final GameController gameController;
+  private static final Logger LOGGER = LogManager.getLogger(DatabaseHandler.class);
+  private static final Warning WARNING = new Warning();
   private final DatabaseController databaseController;
   private final List<String> currentPlayersManager;
-  private final SceneManager sceneManager;
   private TextField usernameTextField;
   private TextField passwordField;
   private ListView<String> playerPermissions;
@@ -55,19 +55,15 @@ public class DatabaseHandler {
   private String currentGame;
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
   private Map<String, Boolean> playerPermissionMap;
-  private static final Logger LOGGER = LogManager.getLogger(DatabaseHandler.class);
-  private static final Warning WARNING = new Warning();
   private Map<String, Boolean> friendsMap;
   private ComboBox<String> avatarComboBox;  // ComboBox for selecting an avatar
 
   public DatabaseHandler(GameController gameController, SceneManager sceneManager,
       DatabaseController databaseController,
       List<String> currentPlayersManager) {
-    this.gameController = gameController;
-    this.sceneManager = sceneManager;
+    super(gameController, sceneManager);
     this.databaseController = databaseController;
     this.currentPlayersManager = currentPlayersManager;
-    createEventMap();
   }
 
   /**
@@ -82,7 +78,7 @@ public class DatabaseHandler {
     consumer.accept(node);
   }
 
-  private void createEventMap() {
+  protected void createEventMap() {
     eventMap = new HashMap<>();
     eventMap.put(SceneElementEvent.LOGIN,
         this::createLoginHandler); //opens the currentplayers screen with the user that has been entered
@@ -106,28 +102,30 @@ public class DatabaseHandler {
   }
 
   public void createLoginHandler(Node node) {
-    System.out.println("createLoginHandler in scene element handler called");
     node.setOnMouseClicked(e -> {
       try {
-        boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(), passwordField.getText());
+        boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(),
+            passwordField.getText());
         if (userLoggedIn) {
-          if(currentPlayersManager.contains(usernameTextField.getText())) {
+          if (currentPlayersManager.contains(usernameTextField.getText())) {
             showAlert("Player Already Added to Game", "You can't play against yourself!");
-          }
-          else {
+          } else {
             currentPlayersManager.add(usernameTextField.getText());
-            sceneManager.createCurrentPlayersScene();
+            getSceneManager().createCurrentPlayersScene();
           }
         }
       } catch (UserNotFoundException | IncorrectPasswordException ex) {
         LOGGER.error(ex.getMessage());
         Warning warning = new Warning();
-        warning.showAlert(this.sceneManager.getScene(), AlertType.ERROR, "Login Error", null, ex.getMessage());
+        warning.showAlert(getSceneManager().getScene(), AlertType.ERROR, "Login Error", null,
+            ex.getMessage());
       } catch (Exception ex) {
         LOGGER.error("An unexpected error occurred during login: " + ex.getMessage());
         // Handle other unexpected errors
         Warning warning = new Warning();
-        warning.showAlert(this.sceneManager.getScene(), AlertType.ERROR, "Login Error", null, "An unexpected error occurred during login.");
+        warning.showAlert(getSceneManager().getScene(), AlertType.ERROR, "Login Error", null,
+            "An unexpected "
+                + "error occurred during login.");
       }
     });
   }
@@ -147,81 +145,80 @@ public class DatabaseHandler {
 
     //this should be from a button the same way that we choose the controllable or background images
     node.setOnMouseClicked(e -> {
-          Optional<String> selectedAvatar = showAvatarSelectionDialog();
-          selectedAvatar.ifPresent(avatar -> {
-            avatarUrlField = avatar;
+      Optional<String> selectedAvatar = showAvatarSelectionDialog();
+      selectedAvatar.ifPresent(avatar -> {
+        avatarUrlField = avatar;
 
-            try {
-              boolean userCreated = databaseController.canCreateUser(usernameTextField.getText(),
-                  passwordField.getText(), avatarUrlField);
-              System.out.println(userCreated);
-              if (!userCreated) {
-                LOGGER.error("User creation error - user already exists or could not be created.");
-                throw new CreateNewUserException("User already exists or could not be created.");
-              }
-            } catch (CreateNewUserException | CreatingDuplicateUserException ex) {
-              WARNING.showAlert(this.sceneManager.getScene(), AlertType.ERROR,
-                  "Creating New User Error", null, ex.getMessage());
-            }
-          });
-        });
+        try {
+          boolean userCreated = databaseController.canCreateUser(usernameTextField.getText(),
+              passwordField.getText(), avatarUrlField);
+          if (!userCreated) {
+            LOGGER.error("User creation error - user already exists or could not be created.");
+            throw new CreateNewUserException("User already exists or could not be created.");
+          }
+        } catch (CreateNewUserException | CreatingDuplicateUserException ex) {
+          WARNING.showAlert(getSceneManager().getScene(), AlertType.ERROR,
+              "Creating New User Error", null, ex.getMessage());
+        }
+      });
+    });
     //add the new user to the database
     //open the currentplayers screen with this player added to it
   }
 
   private Optional<String> showAvatarSelectionDialog() {
+    Dialog<String> dialog = createAvatarSelectionDialog();
+
+    ComboBox<String> avatarComboBox = createAvatarComboBox();
+    dialog.getDialogPane().setContent(avatarComboBox);
+
+    return dialog.showAndWait();
+  }
+
+  private Dialog<String> createAvatarSelectionDialog() {
     Dialog<String> dialog = new Dialog<>();
     dialog.setTitle("Select Avatar");
     dialog.setHeaderText("Click on your desired avatar and then press ENTER");
-    dialog.initOwner(sceneManager.getScene().getWindow()); // Make sure it's modal in respect to the application window
-    dialog.initModality(Modality.WINDOW_MODAL); // Set modality to block user interaction with other windows
-
+    dialog.initOwner(getSceneManager().getScene().getWindow());
+    dialog.initModality(Modality.WINDOW_MODAL);
     ButtonType selectButtonType = new ButtonType("Select", ButtonBar.ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(selectButtonType, ButtonType.CANCEL);
-
-    ComboBox<String> avatarComboBox = new ComboBox<>();
-    ObservableList<String> avatars = loadAvatarNamesFromDirectory(); // Use the method to load avatar names dynamically
-    avatarComboBox.setItems(avatars);
-    avatarComboBox.setCellFactory(lv -> new ListCell<>() {
-      @Override
-      protected void updateItem(String item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty || item == null) {
-          setText(null);
-          setGraphic(null);
-        } else {
-          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), 100, 100, true, false);
-          ImageView imageView = new ImageView(img);
-          setGraphic(imageView);
-        }
-      }
-    });
-
-    avatarComboBox.setButtonCell(new ListCell<>() {
-      @Override
-      protected void updateItem(String item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty || item == null) {
-          setText(null);
-          setGraphic(null);
-        } else {
-          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), 50, 50, true, false);
-          ImageView imageView = new ImageView(img);
-          setGraphic(imageView);
-        }
-      }
-    });
-
-    dialog.getDialogPane().setContent(avatarComboBox);
-
     dialog.setResultConverter(dialogButton -> {
       if (dialogButton == selectButtonType) {
-        return avatarComboBox.getSelectionModel().getSelectedItem();
+        return ((ComboBox<String>) dialog.getDialogPane().getContent()).getSelectionModel()
+            .getSelectedItem();
       }
       return null;
     });
 
-    return dialog.showAndWait();
+    return dialog;
+  }
+
+  private ComboBox<String> createAvatarComboBox() {
+    ComboBox<String> avatarComboBox = new ComboBox<>();
+    ObservableList<String> avatars = loadAvatarNamesFromDirectory();
+    avatarComboBox.setItems(avatars);
+    avatarComboBox.setCellFactory(lv -> createAvatarListCell(100));
+    avatarComboBox.setButtonCell(createAvatarListCell(50));
+    return avatarComboBox;
+  }
+
+  private ListCell<String> createAvatarListCell(int size) {
+    return new ListCell<>() {
+      @Override
+      protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+          setGraphic(null);
+        } else {
+          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), size,
+              size, true, false);
+          ImageView imageView = new ImageView(img);
+          setGraphic(imageView);
+        }
+      }
+    };
   }
 
 
@@ -235,7 +232,7 @@ public class DatabaseHandler {
               .collect(Collectors.toList())
       );
     } catch (Exception e) {
-      e.printStackTrace();
+
       return FXCollections.observableArrayList(); // return an empty list in case of error
     }
   }
@@ -253,15 +250,13 @@ public class DatabaseHandler {
   }
 
 
-
-
   private void createStartLoginHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createLoginScene());
+    node.setOnMouseClicked(e -> getSceneManager().createLoginScene());
 
   }
 
   private void createLeaderboardHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createLeaderboardScene());
+    node.setOnMouseClicked(e -> getSceneManager().createLeaderboardScene());
   }
 
   private void setCurrentPlayers(Node node) {
@@ -270,53 +265,30 @@ public class DatabaseHandler {
   }
 
   public void setLeaderboard(Node node) {
-    gameController.getGameName();
+    getGameController().getGameName();
     databaseController.leaderboardSet((ListView<String>) node);
   }
 
   private void setUpPlayerPermissions(Node node) {
     playerPermissions = (ListView<String>) node;
-    playerPermissionMap = gameController.getPlayerPermissions(currentGame);
-    playerCheckBoxMap = new HashMap<>(); // Map to store player names to their corresponding checkboxes
-
-    ObservableList<String> playerNames = FXCollections.observableArrayList(playerPermissionMap.keySet());
-    playerPermissions.setItems(playerNames);
-    playerPermissions.setCellFactory(lv -> new ListCell<String>() {
-      @Override
-      protected void updateItem(String item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty || item == null) {
-          setText(null);
-          setGraphic(null);
-        } else {
-          CheckBox checkBox = new CheckBox(); // Create a new checkbox for each cell
-          boolean permission = playerPermissionMap.get(item);
-          checkBox.setSelected(permission);
-
-          setText(item);
-          // Update the map when the checkbox is toggled
-          checkBox.setOnAction(event -> {
-            playerPermissionMap.put(item, checkBox.isSelected());
-          });
-
-          // Add the checkbox to the map with player's name as the key
-          playerCheckBoxMap.put(item, checkBox);
-
-          // Set only the checkbox as the graphic, omitting the player name
-          setGraphic(checkBox);
-        }
-      }
-    });
+    playerPermissionMap = getGameController().getPlayerPermissions(currentGame);
+    setUpPermissions(playerPermissions, playerPermissionMap);
   }
-
 
   private void setUpFriendPermissions(Node node) {
     friends = (ListView<String>) node;
     friendsMap = databaseController.getFriends(currentPlayersManager.get(0));
-    ObservableList<String> playerNames =
-        FXCollections.observableArrayList(friendsMap.keySet());
-    friends.setItems(playerNames);
-    friends.setCellFactory(lv -> new ListCell<String>() {
+    setUpPermissions(friends, friendsMap);
+  }
+
+  private void setUpPermissions(ListView<String> listView, Map<String, Boolean> permissionMap) {
+    ObservableList<String> playerNames = FXCollections.observableArrayList(permissionMap.keySet());
+    listView.setItems(playerNames);
+    listView.setCellFactory(lv -> createPermissionListCell(permissionMap));
+  }
+
+  private ListCell<String> createPermissionListCell(Map<String, Boolean> permissionMap) {
+    return new ListCell<String>() {
       @Override
       protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
@@ -324,56 +296,60 @@ public class DatabaseHandler {
           setText(null);
           setGraphic(null);
         } else {
-          CheckBox checkBox = new CheckBox(); // Create a new checkbox for each cell
-          boolean permission = friendsMap.get(item);
+          CheckBox checkBox = new CheckBox();
+          boolean permission = permissionMap.get(item);
           checkBox.setSelected(permission);
           setText(item);
-          // Update the map when the checkbox is toggled
           checkBox.setOnAction(event -> {
-            friendsMap.put(item, checkBox.isSelected());
+            permissionMap.put(item, checkBox.isSelected());
           });
           setGraphic(checkBox);
         }
       }
-    });
+    };
   }
 
 
   private void createFinishHandler(Node node) {
     node.setOnMouseClicked(e -> {
-      List<String> checkedPlayers = new ArrayList<>();
-      List<String> uncheckedPlayers = new ArrayList<>();
-
-      for (String item : playerPermissions.getItems()) {
-        if (playerPermissionMap.get(item)) {
-              checkedPlayers.add(item);
-            } else {
-              uncheckedPlayers.add(item);
-            }
-          }
-      databaseController.setPublicPrivate(currentGame, publicComboBox.getSelectionModel().getSelectedItem());
-      databaseController.writePlayerPermissions(currentGame, checkedPlayers, uncheckedPlayers);
-      sceneManager.createMenuScene();
+      List<String> checkedPlayers = extractCheckedItems(playerPermissions, playerPermissionMap);
+      databaseController.setPublicPrivate(currentGame,
+          publicComboBox.getSelectionModel().getSelectedItem());
+      databaseController.writePlayerPermissions(currentGame, checkedPlayers,
+          extractUncheckedItems(playerPermissions, playerPermissionMap));
+      getSceneManager().createMenuScene();
     });
   }
 
-
   private void confirmFriendsHandler(Node node) {
     node.setOnMouseClicked(e -> {
-      List<String> checkedPlayers = new ArrayList<>();
-      List<String> uncheckedPlayers = new ArrayList<>();
-
-      for (String item : friends.getItems()) {
-        if (friendsMap.get(item)) {
-          checkedPlayers.add(item);
-        }
-        else {
-          uncheckedPlayers.add(item);
-        }
-      }
-      databaseController.writeFriends(currentPlayersManager.get(0), checkedPlayers, uncheckedPlayers);
-      sceneManager.createMenuScene();
+      List<String> checkedPlayers = extractCheckedItems(friends, friendsMap);
+      databaseController.writeFriends(currentPlayersManager.get(0), checkedPlayers,
+          extractUncheckedItems(friends, friendsMap));
+      getSceneManager().createMenuScene();
     });
+  }
+
+  private List<String> extractCheckedItems(ListView<String> listView,
+      Map<String, Boolean> permissionMap) {
+    List<String> checkedPlayers = new ArrayList<>();
+    for (String item : listView.getItems()) {
+      if (permissionMap.get(item)) {
+        checkedPlayers.add(item);
+      }
+    }
+    return checkedPlayers;
+  }
+
+  private List<String> extractUncheckedItems(ListView<String> listView,
+      Map<String, Boolean> permissionMap) {
+    List<String> uncheckedPlayers = new ArrayList<>();
+    for (String item : listView.getItems()) {
+      if (!permissionMap.getOrDefault(item, false)) {
+        uncheckedPlayers.add(item);
+      }
+    }
+    return uncheckedPlayers;
   }
 
   private void createAccessibilityHandler(Node node) {
@@ -388,21 +364,33 @@ public class DatabaseHandler {
   private void accessibilityBoxSelected(ActionEvent event) {
     String mode = publicComboBox.getValue();
     friendsMap = databaseController.getFriends(currentPlayersManager.get(0));
-    for (String s : playerCheckBoxMap.keySet()) {
-      if (mode.equals("public")) {
-        playerCheckBoxMap.get(s).setSelected(true);
-        playerPermissionMap.put(s,true);
-      }
-      if (mode.equals("private")) {
-        playerCheckBoxMap.get(s).setSelected(false);
-        playerPermissionMap.put(s,false);
-      }
-      if (mode.equals("friends")) {
-        playerCheckBoxMap.get(s).setSelected(friendsMap.containsKey(s) && friendsMap.get(s));
-        playerPermissionMap.put(s,friendsMap.containsKey(s) && friendsMap.get(s));
-      }
+    Map<String, BiConsumer<CheckBox, String>> modeBehaviors = initializeAccessibilityMap();
+    for (Map.Entry<String, CheckBox> entry : playerCheckBoxMap.entrySet()) {
+      String playerName = entry.getKey();
+      CheckBox checkBox = entry.getValue();
+      modeBehaviors.getOrDefault(mode, (c, p) -> {
+      }).accept(checkBox, playerName);
     }
   }
+
+  private Map<String, BiConsumer<CheckBox, String>> initializeAccessibilityMap() {
+    Map<String, BiConsumer<CheckBox, String>> modeBehaviors = new HashMap<>();
+    modeBehaviors.put("public", (checkBox, playerName) -> {
+      checkBox.setSelected(true);
+      playerPermissionMap.put(playerName, true);
+    });
+    modeBehaviors.put("private", (checkBox, playerName) -> {
+      checkBox.setSelected(false);
+      playerPermissionMap.put(playerName, false);
+    });
+    modeBehaviors.put("friends", (checkBox, playerName) -> {
+      boolean selected = friendsMap.containsKey(playerName) && friendsMap.get(playerName);
+      checkBox.setSelected(selected);
+      playerPermissionMap.put(playerName, selected);
+    });
+    return modeBehaviors;
+  }
+
 
   public void setGame(String gameTitle) {
     currentGame = gameTitle;

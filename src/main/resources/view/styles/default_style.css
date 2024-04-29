@@ -82,7 +82,7 @@
   -fx-fill: #FF851B;
 }
 
-.theme-selection-box{
+.theme-selection-box {
   -fx-background-color: #0074D9;
   -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 25px;
@@ -90,7 +90,7 @@
   -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
 }
 
-.mod-selection-box{
+.mod-selection-box {
   -fx-background-color: #0074D9;
   -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 15px;
@@ -98,14 +98,14 @@
   -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0.5, 3, 3);
 }
 
-.mod-selection-box .list-cell{
+.mod-selection-box .list-cell {
   -fx-background-color: #0074D9;
   -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 15px;
   -fx-text-fill: white;
 }
 
-.theme-selection-box .list-cell{
+.theme-selection-box .list-cell {
   -fx-background-color: #0074D9;
   -fx-font-family: "Impact", "Arial", sans-serif;
   -fx-font-size: 25px;

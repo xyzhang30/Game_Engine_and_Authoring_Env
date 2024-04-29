@@ -110,7 +110,6 @@
               0.0
             ],
             "PlayerCompletedRoundCommand": [
-              1.0
             ]
           }
       },
@@ -124,7 +123,6 @@
               0.0
             ],
             "PlayerCompletedRoundCommand": [
-              2.0
             ]
           }
       }
@@ -156,8 +154,7 @@
     "power_up" : "UP",
     "power_down" : "DOWN",
     "controllable_left" : "A",
-    "controllable_right" : "D",
-    "controllable_up" : "W",
-    "controllable_down" : "S"
+    "controllable_right" : "D"
+
   }
 }

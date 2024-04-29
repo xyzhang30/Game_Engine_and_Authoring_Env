@@ -7,9 +7,11 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
 
 /**
@@ -129,5 +131,8 @@ public interface UIElementFactory {
    * @return a list of integers representing the entered parameters.
    */
   List<Integer> createConstantParamsPopup(int numParam, String item);
+
+  List<Integer> getParams(Button confirmSaveParam, List<TextArea> textAreas,
+      List<Integer> params, Stage popupStage, VBox vbox);
 
 }

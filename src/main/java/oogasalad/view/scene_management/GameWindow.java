@@ -3,7 +3,6 @@ package oogasalad.view.scene_management;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import oogasalad.view.controller.GameController;
-import oogasalad.view.scene_management.scene_managers.SceneManager;
 
 /**
  * The `GameWindow` class represents the stage being shown to the user It provides functionality to
@@ -24,11 +23,7 @@ public class GameWindow {
    * initializing the game window.
    */
   public GameWindow() {
-    GameController controller = new GameController(SCREEN_WIDTH, SCREEN_HEIGHT);
-    Stage newStage = new Stage();
-    newStage.setScene(controller.getScene());
-    newStage.setFullScreen(true);
-    newStage.show();
+    this(new Stage());
   }
 
   /**

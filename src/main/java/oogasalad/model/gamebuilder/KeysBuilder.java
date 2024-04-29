@@ -1,11 +1,9 @@
 package oogasalad.model.gamebuilder;
 
-import java.security.Key;
 import java.util.List;
 import oogasalad.model.api.GameBuilder;
 import oogasalad.model.api.data.GameData;
 import oogasalad.model.api.data.KeyPreferences;
-import oogasalad.model.api.data.Rules;
 
 public class KeysBuilder implements GameBuilder {
 

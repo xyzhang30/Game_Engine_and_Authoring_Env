@@ -18,16 +18,15 @@ public class LanguageManager {
   private final Properties spanishProperties;
   private final Properties frenchProperties;
   private final Properties hebrewProperties;
-  Map<SupportedLanguage, Properties> languageMap;
   private final String englishPropertiesPath =
       "src/main/resources/view/properties/EnglishText.properties";
   private final String spanishPropertiesPath =
       "src/main/resources/view/properties/SpanishText.properties";
   private final String frenchPropertiesPath =
       "src/main/resources/view/properties/FrenchText.properties";
-
   private final String hebrewPropertiesPath =
       "src/main/resources/view/properties/HebrewText.properties";
+  Map<SupportedLanguage, Properties> languageMap;
 
   /**
    * Constructor creates properties from property file paths and maps enums to corresponding

@@ -1,6 +1,5 @@
 package oogasalad.view.scene_management.scene_element.scene_element_handler;
 
-import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.Node;
 import oogasalad.view.api.enums.SceneElementEvent;
@@ -45,9 +44,9 @@ public class LanguageEventHandler {
 
   private void createLanguageMap() {
     languageMap = Map.of(SceneElementEvent.SET_ENGLISH, SupportedLanguage.ENGLISH,
-                         SceneElementEvent.SET_SPANISH, SupportedLanguage.SPANISH,
-                         SceneElementEvent.SET_FRENCH, SupportedLanguage.FRENCH,
-                          SceneElementEvent.SET_HEBREW, SupportedLanguage.HEBREW);
+        SceneElementEvent.SET_SPANISH, SupportedLanguage.SPANISH,
+        SceneElementEvent.SET_FRENCH, SupportedLanguage.FRENCH,
+        SceneElementEvent.SET_HEBREW, SupportedLanguage.HEBREW);
   }
 
   private void createLanguageHandler(Node node, SupportedLanguage language) {

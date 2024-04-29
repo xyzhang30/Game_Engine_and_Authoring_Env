@@ -2,11 +2,9 @@ package oogasalad.view.scene_management.scene_element.scene_element_handler;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 import java.util.function.Consumer;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
 import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.GameController;
@@ -19,10 +17,8 @@ import oogasalad.view.scene_management.scene_managers.SceneManager;
  *
  * @author Jordan Haytaian
  */
-public class ChangeSceneEventHandler {
+public class ChangeSceneEventHandler extends Handler {
 
-  private final GameController gameController;
-  private final SceneManager sceneManager;
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
 
 
@@ -35,9 +31,7 @@ public class ChangeSceneEventHandler {
    * @param sceneManager   The scene manager for handling scene transitions and updates.
    */
   public ChangeSceneEventHandler(GameController gameController, SceneManager sceneManager) {
-    this.gameController = gameController;
-    this.sceneManager = sceneManager;
-    createEventMap();
+    super(gameController, sceneManager);
   }
 
   /**
@@ -48,11 +42,10 @@ public class ChangeSceneEventHandler {
    * @param event The event type as a string that specifies the event to handle.
    */
   public void createElementHandler(Node node, String event) {
-    Consumer<Node> consumer = eventMap.get(SceneElementEvent.valueOf(event));
-    consumer.accept(node);
+    eventMap.get(SceneElementEvent.valueOf(event)).accept(node);
   }
 
-  private void createEventMap() {
+  protected void createEventMap() {
     eventMap = new HashMap<>();
     eventMap.put(SceneElementEvent.START_LANGUAGE, this::createStartLanguageHandler);
     eventMap.put(SceneElementEvent.START_TITLE, this::createStartTitleHandler);
@@ -68,43 +61,43 @@ public class ChangeSceneEventHandler {
   }
 
   private void createStartMenuHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createMenuScene());
+    node.setOnMouseClicked(e -> getSceneManager().createMenuScene());
   }
 
   private void createStartAuthoringHandler(Node node) {
-    node.setOnMouseClicked(e -> gameController.openAuthorEnvironment());
+    node.setOnMouseClicked(e -> getGameController().openAuthorEnvironment());
   }
 
   private void createAddFriendsHandler(Node node) {
-    node.setOnMouseClicked(e -> gameController.openAddFriends());
+    node.setOnMouseClicked(e -> getGameController().openAddFriends());
   }
 
   private void createNextRoundHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.removeTransitionSheen());
+    node.setOnMouseClicked(e -> getSceneManager().removeTransitionSheen());
   }
 
   private void createStartTitleHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createTitleScene());
+    node.setOnMouseClicked(e -> getSceneManager().createTitleScene());
   }
 
   private void createNewGameHandler(Node node) {
-    node.setOnMouseClicked(e -> gameController.createNewWindow());
+    node.setOnMouseClicked(e -> getGameController().createNewWindow());
   }
 
   private void createHelpInstructionsHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createHelpInstructions());
+    node.setOnMouseClicked(e -> getSceneManager().createHelpInstructions());
   }
 
   private void createStartLanguageHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createLanguageSelectionScene());
+    node.setOnMouseClicked(e -> getSceneManager().createLanguageSelectionScene());
   }
 
   private void createGameOverSceneHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createGameOverScene());
+    node.setOnMouseClicked(e -> getSceneManager().createGameOverScene());
   }
 
   private void updateCurrentPlayersHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createCurrentPlayersScene());
+    node.setOnMouseClicked(e -> getSceneManager().createCurrentPlayersScene());
   }
 
   private void createThemeChangeHandler(Node node) {
@@ -112,7 +105,7 @@ public class ChangeSceneEventHandler {
     comboBox.getItems().addAll(ThemeType.values());
     comboBox.setOnAction(event -> {
       ThemeType selectedTheme = comboBox.getValue();
-      sceneManager.changeTheme(selectedTheme);
+      getSceneManager().changeTheme(selectedTheme);
     });
   }
 

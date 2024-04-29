@@ -8,8 +8,7 @@ public record KeyPreferences(@JsonProperty("angle_left") String angle_left,
                              @JsonProperty("power_down") String power_down,
                              @JsonProperty("controllable_left") String controllable_left,
                              @JsonProperty("controllable_right") String controllable_right,
-                             @JsonProperty("controllable_up") String controllable_up,
-                             @JsonProperty("controllable_down") String controllable_down,
                              String striking
-                             ) {
+) {
+
 }

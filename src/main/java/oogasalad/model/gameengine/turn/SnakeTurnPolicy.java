@@ -16,6 +16,22 @@ package oogasalad.model.gameengine.turn;
  * list, alternating whether it iterates forward or backwards with each iteration, and skipping
  * players who have already completed the round.
  * @return The id of the player whose turn is next.
+ * <p>
+ * Initializes a SnakeTurnPolicy object with the specified player container.
+ * @param playerContainer The player container containing the players in the game.
+ * <p>
+ * Retrieves the player's turn based on the snake turn policy, which iterates through the player
+ * list, alternating whether it iterates forward or backwards with each iteration, and skipping
+ * players who have already completed the round.
+ * @return The id of the player whose turn is next.
+ * <p>
+ * Initializes a SnakeTurnPolicy object with the specified player container.
+ * @param playerContainer The player container containing the players in the game.
+ * <p>
+ * Retrieves the player's turn based on the snake turn policy, which iterates through the player
+ * list, alternating whether it iterates forward or backwards with each iteration, and skipping
+ * players who have already completed the round.
+ * @return The id of the player whose turn is next.
  */
 
 //@IsCommand(isCommand = true)

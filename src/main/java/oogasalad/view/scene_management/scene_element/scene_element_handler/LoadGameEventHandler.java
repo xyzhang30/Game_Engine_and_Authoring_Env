@@ -6,12 +6,17 @@ import java.util.concurrent.Callable;
 import java.util.function.BiConsumer;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tooltip;
+import oogasalad.model.gameparser.GameLoader;
+import oogasalad.view.Warning;
 import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.controller.DatabaseController;
 import oogasalad.view.controller.GameController;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -29,6 +34,8 @@ public class LoadGameEventHandler {
   private Map<SceneElementEvent, Callable<ObservableList<String>>> eventMap;
   private Map<SceneElementEvent, String> dirPathMap;
   private Map<SceneElementEvent, BiConsumer<String, String>> handleSelectGameMap;
+  private static final Logger LOGGER = LogManager.getLogger(LoadGameEventHandler.class);
+  private static final Warning WARNING = new Warning();
 
   /**
    * Constructs a LoadGameEventHandler with the specified GameController.
@@ -105,7 +112,8 @@ public class LoadGameEventHandler {
         }
       });
     } catch (Exception e) {
-      //TODO: error handling
+      LOGGER.error(e.getMessage());
+      WARNING.showAlert(AlertType.ERROR, "Start Game Error", null, e.getMessage());
     }
   }
 

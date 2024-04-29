@@ -1,6 +1,5 @@
 package oogasalad.view.controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,19 +19,18 @@ import oogasalad.model.api.data.Rules;
 import oogasalad.model.api.data.Variables;
 import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
 import oogasalad.model.api.exception.IncompletePlayerStrikeableAuthoringException;
-import oogasalad.model.gameengine.GameEngine;
-import oogasalad.view.authoring_environment.AuthoringScreen;
-import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.api.authoring.AuthoringFactory;
-import oogasalad.view.authoring_environment.factories.DefaultAuthoringFactory;
-import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
 import oogasalad.view.api.authoring.UIElementFactory;
-import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
-import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import oogasalad.view.api.enums.AuthoringImplementationType;
 import oogasalad.view.api.enums.CollidableType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
+import oogasalad.view.authoring_environment.AuthoringScreen;
+import oogasalad.view.authoring_environment.factories.DefaultAuthoringFactory;
+import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
+import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
+import oogasalad.view.authoring_environment.proxy.ShapeProxy;
+import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -42,6 +40,7 @@ import org.apache.logging.log4j.Logger;
  * @author Judy He, Jordan Haytaian, Doga Ozmen, Alisha Zhang
  */
 public class AuthoringController {
+
   static final Logger LOGGER = LogManager.getLogger(AuthoringController.class);
   private final Stage stage;
   private final AuthoringScreen authoringScreen;
@@ -49,18 +48,21 @@ public class AuthoringController {
   private final ShapeProxy shapeProxy = new ShapeProxy();
   private final AuthoringProxy authoringProxy = new AuthoringProxy();
   private int firstActiveStrikeableId;
-  private String hostPlayer;
+  private final String hostPlayer;
 
-  public AuthoringController(SupportedLanguage language, UITheme uiTheme, AuthoringImplementationType authoringFactoryType, String hostPlayer) {
+  public AuthoringController(SupportedLanguage language, UITheme uiTheme,
+      AuthoringImplementationType authoringFactoryType, String hostPlayer) {
     stage = new Stage();
     UIElementFactory uiElementFactory = new DefaultUIElementFactory();
-    AuthoringFactory authoringFactory = new DefaultAuthoringFactory(uiElementFactory, language, shapeProxy, authoringProxy);
-    this.authoringScreen = new AuthoringScreen(language, authoringFactory, shapeProxy, authoringProxy);
+    AuthoringFactory authoringFactory = new DefaultAuthoringFactory(uiElementFactory, language,
+        shapeProxy, authoringProxy);
+    this.authoringScreen = new AuthoringScreen(language, authoringFactory, shapeProxy,
+        authoringProxy);
     authoringScreen.getAuthoringProxy().setAuthoringController(this);
     this.hostPlayer = hostPlayer;
   }
 
-  public String getHostPlayer(){
+  public String getHostPlayer() {
     return hostPlayer;
   }
 
@@ -69,7 +71,7 @@ public class AuthoringController {
     stage.show();
   }
 
-  public boolean submitGame(String gameName){
+  public boolean submitGame(String gameName) {
     try {
       builderDirector.writeGame(gameName);
       return true;
@@ -85,33 +87,38 @@ public class AuthoringController {
     builderDirector.constructVaraibles(List.of(variables));
   }
 
-  public void writePlayers(Map<Integer, Map<CollidableType, List<Integer>>> playersMap) throws IncompletePlayerStrikeableAuthoringException {
+  public void writePlayers(Map<Integer, Map<CollidableType, List<Integer>>> playersMap)
+      throws IncompletePlayerStrikeableAuthoringException {
     List<ParserPlayer> players = new ArrayList<>();
     playersMap.forEach((playerId, myGameObjects) -> {
-      System.out.println("collidables:"+playersMap.get(playerId).get(CollidableType.STRIKABLE));
       ParserPlayer player;
       try {
         player = new ParserPlayer(playerId,
-            playersMap.get(playerId).get(CollidableType.STRIKABLE),
+            playersMap.get(playerId).get(CollidableType.STRIKEABLE),
             playersMap.get(playerId).get(CollidableType.SCOREABLE),
-            playersMap.get(playerId).get(CollidableType.CONTROLLABLE),0, playersMap.get(playerId).get(CollidableType.STRIKABLE).get(0));
+            playersMap.get(playerId).get(CollidableType.CONTROLLABLE), 0,
+            playersMap.get(playerId).get(CollidableType.STRIKEABLE).get(0));
       } catch (IndexOutOfBoundsException e) {
-        throw new IncompletePlayerStrikeableAuthoringException("Please assign a strikeable game object to each player.");
+        LOGGER.error(e.getMessage());
+        throw new IncompletePlayerStrikeableAuthoringException(
+            "Please assign a strikeable game object to each player.");
       }
       players.add(player);
-      if (playerId == 1){
-        firstActiveStrikeableId = playersMap.get(playerId).get(CollidableType.STRIKABLE).get(0);
+      if (playerId == 1) {
+        firstActiveStrikeableId = playersMap.get(playerId).get(CollidableType.STRIKEABLE).get(0);
       }
     });
     builderDirector.constructPlayers(players);
   }
 
-  public void writeRules(Map<List<Integer>, Map<String, List<Integer>>> interactions, Map<String, Map<String, List<Integer>>> commandsConditions, Map<String,
-      String> policies) throws InCompleteRulesAuthoringException{
+  public void writeRules(Map<List<Integer>, Map<String, List<Integer>>> interactions,
+      Map<String, Map<String, List<Integer>>> commandsConditions, Map<String,
+      String> policies) throws InCompleteRulesAuthoringException {
     List<CollisionRule> collisions = new ArrayList<>();
 
     interactions.forEach((gameObjects, commands) -> {
-      CollisionRule collisionRule = new CollisionRule(gameObjects.get(0), gameObjects.get(1), commands);
+      CollisionRule collisionRule = new CollisionRule(gameObjects.get(0), gameObjects.get(1),
+          commands);
       collisions.add(collisionRule);
     });
 
@@ -127,41 +134,45 @@ public class AuthoringController {
       commandsConditions.get("staticchecker").forEach((commandName, params) -> {
         staticChecker.put(commandName, new ArrayList<>());
         params.forEach(argumentDouble -> {
-          staticChecker.get(commandName).add((int)Math.round(argumentDouble));
+          staticChecker.get(commandName).add(Math.round(argumentDouble));
         });
       });
-    } catch (NullPointerException e){
+    } catch (NullPointerException e) {
       LOGGER.error(e);
       throw new InCompleteRulesAuthoringException("Please make a selection for all rule types");
     }
 
-    if (turnPolicy == null || roundCondition == null || winCondition == null || advanceTurn == null || advanceRound == null || strikePolicy == null || rankComparator == null) {
+    if (turnPolicy == null || roundCondition == null || winCondition == null || advanceTurn == null
+        || advanceRound == null || strikePolicy == null || rankComparator == null) {
       LOGGER.error("InCompleteRulesAuthoringException: Please make a selection for all rule types");
       throw new InCompleteRulesAuthoringException("Please make a selection for all rule types");
     }
 
-    Rules rules = new Rules(collisions, turnPolicy, roundCondition, winCondition, advanceTurn, advanceRound, strikePolicy, rankComparator, staticChecker);
+    Rules rules = new Rules(collisions, turnPolicy, roundCondition, winCondition, advanceTurn,
+        advanceRound, strikePolicy, rankComparator, staticChecker);
     builderDirector.constructRules(List.of(rules));
   }
 
-  public void writeGameObjects(Map<Shape, GameObjectAttributesContainer> gameObjectMap){
+  public void writeGameObjects(Map<Shape, GameObjectAttributesContainer> gameObjectMap) {
     List<GameObjectProperties> gameObjects = new ArrayList<>();
     gameObjectMap.forEach((gameObjectShape, properties) -> {
       List<String> objectProperties = properties.getProperties();
-      if (!properties.getProperties().contains("strikeable") || properties.getId() == firstActiveStrikeableId){
+      if (!properties.getProperties().contains("strikeable")
+          || properties.getId() == firstActiveStrikeableId) {
         objectProperties.add("visible");
       }
       String shapeName = (gameObjectShape instanceof Ellipse) ? "Circle" : "Rectangle";
 
       Dimension objDimension = new Dimension(properties.getWidth(), properties.getHeight());
 
-      Position objPosition = new Position(properties.getPosition().x(), properties.getPosition().y());
+      Position objPosition = new Position(properties.getPosition().x(),
+          properties.getPosition().y());
 
       GameObjectProperties gameObject = new GameObjectProperties(properties.getId(),
           objectProperties, properties.getMass(), objPosition, shapeName, objDimension,
-          null, properties.getsFriction(),
+          properties.getAllColors(), properties.getsFriction(),
           properties.getkFriction(), 0,
-          null, 0, properties.isElasticity(), false, 0);
+          properties.getAllImagePaths(), 0, properties.isElasticity(), false, 0);
 
       gameObjects.add(gameObject);
     });
@@ -175,11 +186,10 @@ public class AuthoringController {
     String powerDown = keyPreferences.get("power_down");
     String controllableLeft = keyPreferences.get("controllable_left");
     String controllableRight = keyPreferences.get("controllable_right");
-    String controllableUp = keyPreferences.get("controllable_up");
-    String controllableDown = keyPreferences.get("controllable_down");
     String striking = keyPreferences.get("striking");
 
-    KeyPreferences keys = new KeyPreferences(angleLeft, angleRight, powerUp, powerDown, controllableLeft, controllableRight, controllableUp, controllableDown, striking);
+    KeyPreferences keys = new KeyPreferences(angleLeft, angleRight, powerUp, powerDown,
+        controllableLeft, controllableRight, striking);
     builderDirector.constructKeys(List.of(keys));
   }
 

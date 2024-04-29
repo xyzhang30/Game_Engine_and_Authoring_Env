@@ -25,7 +25,7 @@ public class EightBallCommand implements Command {
   /**
    * Constructs an instance of the EightBallCommand with the provided arguments.
    *
-   * @param arguments One element, 8 ball GameObject id.
+   * @param arguments     One element, 8 ball GameObject id.
    * @param gameObjectMap a map from object ids to the actual GameObject
    */
 

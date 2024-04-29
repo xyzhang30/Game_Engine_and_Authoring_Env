@@ -30,7 +30,7 @@ public class ConditionalAdvanceTurnCommand implements Command {
    * constructor does not actually do anything, and exists for the sake of consistency across
    * commands.
    *
-   * @param arguments an empty list
+   * @param arguments     an empty list
    * @param gameObjectMap a map from object ids to the actual GameObject
    */
 

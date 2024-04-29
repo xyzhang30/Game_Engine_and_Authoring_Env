@@ -14,11 +14,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import oogasalad.view.api.authoring.Panel;
 import oogasalad.view.authoring_environment.util.Coordinate;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * The ShapeProxy class acts as a proxy for managing and manipulating shapes within the authoring
@@ -32,9 +29,6 @@ public class ShapeProxy {
   private final Stack<Shape> shapeStack = new Stack<>();
   private final ListProperty<Integer> shapesListProperty = new SimpleListProperty<>(
       FXCollections.observableArrayList());
-  private GameObjectAttributesContainer gameObjectAttributesContainer =
-      new GameObjectAttributesContainer();
-  private int shapeCount;
   private final List<Shape> templates = new ArrayList<>();
   String RESOURCE_FOLDER_PATH = "view.";
   String VIEW_PROPERTIES_PATH = "properties.";
@@ -43,6 +37,16 @@ public class ShapeProxy {
       RESOURCE_FOLDER_PATH + VIEW_PROPERTIES_PATH + DEFAULT_VALUES_FILE);
   private int numberOfMultiSelectAllowed = Integer.parseInt(
       defaultValuesResourceBundle.getString("defaultNumShapesSelectedAllowed"));
+  private String modName = "Default";
+  private final List<String> mods = new ArrayList<>();
+  private GameObjectAttributesContainer gameObjectAttributesContainer =
+      new GameObjectAttributesContainer();
+  private int shapeCount;
+  private boolean shapeSelectionDisabled = false;
+
+  public ShapeProxy() {
+    mods.add("Default");
+  }
 
   /**
    * Gets the most recently selected shape.
@@ -61,13 +65,17 @@ public class ShapeProxy {
    *
    * @param shape The shape to be selected.
    */
-  public void selectShape(Shape shape) {
+  public void selectShape(Shape shape, GameObjectAttributesContainer gameObj) {
     if (shape != null && !shapeStack.isEmpty() && shapeStack.contains(shape)) {
       deselectShape(shape);
     }
     shapeStack.push(shape);
     shapesListProperty.setAll(getSelectedShapeIds());
-    resetGameObjectAttributesContainer();
+    if (gameObj != null) {
+      resetGameObjectAttributesContainer(gameObj);
+    } else {
+      resetGameObjectAttributesContainer();
+    }
   }
 
   /**
@@ -136,7 +144,7 @@ public class ShapeProxy {
     AnchorPane.setBottomAnchor(clonedShape, 200.0);
 
     if (this.shapeStack.isEmpty()) {
-      selectShape(clonedShape);
+      selectShape(clonedShape, null);
     }
 
     return clonedShape;
@@ -212,21 +220,37 @@ public class ShapeProxy {
     return selectedShapesIds;
   }
 
+  public void resetGameObjectAttributesContainer() {
+//    if (!shapeSelectionDisabled){
+    gameObjectAttributesContainer = new GameObjectAttributesContainer();
+//    }
+    if (!shapeStack.isEmpty()) {
+      resetShape();
+    }
+  }
+
   /**
    * Resets the GameObjectAttributesContainer due to new shape selection.
    */
-  public void resetGameObjectAttributesContainer() {
+  public void resetGameObjectAttributesContainer(GameObjectAttributesContainer gameObj) {
     gameObjectAttributesContainer = new GameObjectAttributesContainer();
     if (!shapeStack.isEmpty()) {
-      Shape currentShape = shapeStack.peek();
-      gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));
-      gameObjectAttributesContainer.setWidth(
-          currentShape.getLayoutBounds().getWidth() * currentShape.getScaleX());
-      gameObjectAttributesContainer.setHeight(
-          currentShape.getLayoutBounds().getHeight() * currentShape.getScaleY());
-      Bounds bounds = currentShape.localToScene(currentShape.getBoundsInLocal());
-      gameObjectAttributesContainer.setPosition(new Coordinate(bounds.getMinX(), bounds.getMinY()));
+      resetShape();
+      gameObjectAttributesContainer.setAllColor(gameObj.getAllColors());
+      gameObjectAttributesContainer.setAllImgPaths(gameObj.getAllImagePaths());
+      gameObjectAttributesContainer.setProperties(gameObj.getProperties());
     }
+  }
+
+  private void resetShape() {
+    Shape currentShape = shapeStack.peek();
+    gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));
+    gameObjectAttributesContainer.setWidth(
+        currentShape.getLayoutBounds().getWidth() * currentShape.getScaleX());
+    gameObjectAttributesContainer.setHeight(
+        currentShape.getLayoutBounds().getHeight() * currentShape.getScaleY());
+    Bounds bounds = currentShape.localToScene(currentShape.getBoundsInLocal());
+    gameObjectAttributesContainer.setPosition(new Coordinate(bounds.getMinX(), bounds.getMinY()));
   }
 
   /**
@@ -247,4 +271,20 @@ public class ShapeProxy {
     return shapesListProperty;
   }
 
+  public String getCurrentMod() {
+    return modName;
+  }
+
+  public void setCurrentMod(String newModName) {
+    this.modName = newModName;
+    mods.add(newModName);
+  }
+
+  public List<String> getAllMods() {
+    return mods;
+  }
+
+  public void disableShapeSelection() {
+    this.shapeSelectionDisabled = true;
+  }
 }

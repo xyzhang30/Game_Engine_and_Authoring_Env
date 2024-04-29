@@ -27,7 +27,6 @@ import oogasalad.model.annotations.ChoiceType;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.annotations.VariableParamNumber;
-import oogasalad.model.gameengine.GameEngine;
 import oogasalad.view.api.authoring.Panel;
 import oogasalad.view.api.authoring.UIElementFactory;
 import oogasalad.view.api.enums.PolicyType;
@@ -43,20 +42,21 @@ import org.controlsfx.control.CheckComboBox;
  */
 public class PolicyPanel implements Panel {
 
-  private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
+  private static final Logger LOGGER = LogManager.getLogger(PolicyPanel.class);
+  private static final String GAME_ENGINE_PACKAGE_PATH = "src/main/java/oogasalad/model"
+      + "/gameengine/";
+  private static final String REFLECTION_ENGINE_PACKAGE_PATH = "oogasalad.model.gameengine.";
   private final AuthoringProxy authoringProxy;
   private final StackPane canvas;
   private final AnchorPane rootPane;
   private final AnchorPane containerPane;
-  private Map<String, String> commandPackageMap = new HashMap<>();
-  private Map<ComboBox<String>, String> singleChoiceComboxBoxes = new HashMap<>();
-  private Map<CheckComboBox<String>, String> multiChoiceCheckBoxes = new HashMap<>();
-  private static final String GAME_ENGINE_PACKAGE_PATH = "src/main/java/oogasalad/model"
-      + "/gameengine/";
-  private static final String REFLECTION_ENGINE_PACKAGE_PATH = "oogasalad.model.gameengine.";
   private final String language = "English"; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
   private final UIElementFactory uiElementFactory;
+  private final Map<String, String> commandPackageMap = new HashMap<>();
+  private final Map<ComboBox<String>, String> singleChoiceComboxBoxes = new HashMap<>();
+  private final Map<CheckComboBox<String>, String> multiChoiceCheckBoxes = new HashMap<>();
+
   /**
    * Constructor for PolicyPanel.
    *
@@ -76,13 +76,6 @@ public class PolicyPanel implements Panel {
     this.resourceBundle = ResourceBundle.getBundle(
         RESOURCE_FOLDER_PATH + VIEW_PROPERTIES_FOLDER + UI_FILE_PREFIX + language);
     createElements();
-    System.out.println("comboboxs");
-    for (ComboBox<String> c : singleChoiceComboxBoxes.keySet()) {
-      System.out.println(c + " - policytypename: " + singleChoiceComboxBoxes.get(c));
-    }
-    for (String s : commandPackageMap.keySet()) {
-      System.out.println(s + " is using " + commandPackageMap.get(s));
-    }
     handleEvents();
   }
 
@@ -100,7 +93,6 @@ public class PolicyPanel implements Panel {
     for (Field policyType : fields) {
       String policyLabel = String.join(" ", policyType.getName().split("_")) + ": ";
       String policyNameConcat = String.join("", policyType.getName().toLowerCase().split("_"));
-      System.out.println(policyLabel);
 
       if (policyType.isAnnotationPresent(ChoiceType.class)) {
         ChoiceType choiceTypeAnnotation = policyType.getAnnotation(ChoiceType.class);
@@ -129,7 +121,7 @@ public class PolicyPanel implements Panel {
       comboBox.getItems().addAll(availableCommands);
       comboBox.setId(ruleTypeName);
 
-      if (authoringProxy.ruleAlreadySelected(ruleTypeName)){
+      if (authoringProxy.ruleAlreadySelected(ruleTypeName)) {
         comboBox.setValue(authoringProxy.getSelectedSingleChoiceCommands(ruleTypeName));
       } else {
         comboBox.setPromptText(resourceBundle.getString("policyPromptText"));
@@ -152,7 +144,7 @@ public class PolicyPanel implements Panel {
       AnchorPane.setTopAnchor(checkComboBox, 50.0 * heightIdx);
       checkComboBox.setId(ruleTypeName);
 
-      if (authoringProxy.getMultiCommandCheckedIdx().containsKey(checkComboBox.getId())){
+      if (authoringProxy.getMultiCommandCheckedIdx().containsKey(checkComboBox.getId())) {
         authoringProxy.getMultiCommandCheckedIdx().get(checkComboBox.getId()).forEach(idx -> {
           checkComboBox.getCheckModel().checkIndices(idx);
         });
@@ -163,11 +155,8 @@ public class PolicyPanel implements Panel {
   }
 
   private List<Integer> enterParam(String commandType, String commandPackage, String newValue) {
-    System.out.println(
-        "selected:" + REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue);
     String classPath = REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue;
     try {
-      System.out.println("path: " + classPath);
       Class<?> clazz = Class.forName(classPath);
       if (!commandPackage.equals("strike") && !commandPackage.equals("turn")
           && !commandPackage.equals("rank")) {
@@ -195,15 +184,12 @@ public class PolicyPanel implements Panel {
         return null;
       }
     } catch (ClassNotFoundException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
       return null;
     }
   }
 
   private void saveSelectionNoParam(String commandType, String commandName) {
-    System.out.println("---SAVING TO PROXY | NO PARAM ---");
-    System.out.println("commandType: " + commandType);
-    System.out.println("commandName: " + commandName);
     authoringProxy.addNoParamPolicies(commandType, commandName);
   }
 
@@ -244,31 +230,7 @@ public class PolicyPanel implements Panel {
       });
     });
 
-    confirmSaveParam.setOnAction(e -> {
-      for (TextArea area : textAreas) {
-        String text = area.getText();
-        if (!text.isEmpty()) {
-          try {
-            Integer value = Integer.parseInt(text);
-            params.add(value);
-          } catch (NumberFormatException ex) {
-            // Handle invalid input
-            LOGGER.error("Invalid input: " + text);
-          }
-        }
-      }
-      popupStage.close();
-    });
-
-    vbox.getChildren().add(confirmSaveParam);
-
-    Scene scene = new Scene(vbox, 500, 300);
-    popupStage.setScene(scene);
-
-    popupStage.setResizable(false);
-    popupStage.showAndWait();
-
-    return params;
+    return uiElementFactory.getParams(confirmSaveParam, textAreas, params, popupStage, vbox);
 
   }
 
@@ -276,14 +238,11 @@ public class PolicyPanel implements Panel {
     Path path = Paths.get(GAME_ENGINE_PACKAGE_PATH + commandPackage);
     File packageDir = path.toFile();
     List<String> commands = new ArrayList<>();
-    System.out.println("packageDir.isDirectory() " + packageDir.isDirectory());
     if (packageDir.isDirectory()) {
       File[] files = packageDir.listFiles((dir, name) -> {
         if (name.endsWith(".java")) {
           try {
             String className = name.substring(0, name.length() - 5); // Remove ".java" extension
-            System.out.println("CLASS NAME: " + className);
-
             Class<?> clazz = Class.forName(
                 REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + className);
             boolean isCommand = clazz.getDeclaredAnnotation(IsCommand.class).isCommand();
@@ -292,7 +251,7 @@ public class PolicyPanel implements Panel {
             }
             return isCommand;
           } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
+            LOGGER.warn("command not found");
             return false;
           }
         }
@@ -315,10 +274,6 @@ public class PolicyPanel implements Panel {
               commandPackageMap.get(singleChoiceComboxBoxes.get(comboBox)),
               newValue); //commandPackage, newValue
           if (params != null) {
-            System.out.println("---REPLACING TO PROXY | WITH PARAM ---");
-            System.out.println("commandType: " + comboBox.getId());
-            System.out.println("commandName: " + newValue);
-            System.out.println("paramList: " + params);
             authoringProxy.replaceConditionsCommandsWithParam(comboBox.getId(), newValue, params);
           }
         }
@@ -339,15 +294,16 @@ public class PolicyPanel implements Panel {
                     authoringProxy.addConditionsCommandsWithParam(checkComboBox.getId(),
                         selectedCommand, params);
                   }
-                  authoringProxy.updateMultiCommandCheckedIdx(checkComboBox.getId(), checkComboBox.getCheckModel().getCheckedIndices());
-                  System.out.println("ADDED -- NEW CHECKEDIDX MAP: "+authoringProxy.getMultiCommandCheckedIdx());
+                  authoringProxy.updateMultiCommandCheckedIdx(checkComboBox.getId(),
+                      checkComboBox.getCheckModel().getCheckedIndices());
                 }
               }
               if (c.wasRemoved()) {
                 for (String removedCommand : c.getRemoved()) {
                   authoringProxy.removeConditionsCommandsWithParam(checkComboBox.getId(),
                       removedCommand);
-                  authoringProxy.updateMultiCommandCheckedIdx(checkComboBox.getId(), checkComboBox.getCheckModel().getCheckedIndices());
+                  authoringProxy.updateMultiCommandCheckedIdx(checkComboBox.getId(),
+                      checkComboBox.getCheckModel().getCheckedIndices());
                 }
               }
             }

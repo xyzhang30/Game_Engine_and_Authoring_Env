@@ -3,7 +3,6 @@ package oogasalad.view.authoring_environment.factories;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.binding.Bindings;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -19,14 +18,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import oogasalad.view.api.authoring.AuthoringFactory;
-import oogasalad.view.api.authoring.Panel;
-import oogasalad.view.authoring_environment.util.TextFieldListener;
 import oogasalad.view.api.authoring.UIElementFactory;
-import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
-import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import oogasalad.view.api.enums.CollidableType;
 import oogasalad.view.api.enums.GameObjectType;
 import oogasalad.view.api.enums.SupportedLanguage;
+import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
+import oogasalad.view.authoring_environment.proxy.ShapeProxy;
+import oogasalad.view.authoring_environment.util.TextFieldListener;
 import org.controlsfx.control.CheckComboBox;
 
 /**
@@ -42,13 +40,14 @@ import org.controlsfx.control.CheckComboBox;
  */
 public class DefaultAuthoringFactory implements AuthoringFactory {
 
-  private final UIElementFactory uiElementFactory;
-  ResourceBundle resourceBundle;
   protected final ShapeProxy shapeProxy;
   protected final AuthoringProxy authoringProxy;
+  private final UIElementFactory uiElementFactory;
+  private final List<TextField> textFields = new ArrayList<>();
+  private final String VIEW_PROPERTIES_FOLDER = "properties.";
+  ResourceBundle resourceBundle;
   private ComboBox<GameObjectType> gameObjectTypeDropdown = new ComboBox<>();
   private CheckComboBox<CollidableType> collidableTypeDropDown = new CheckComboBox<>();
-  private final List<TextField> textFields = new ArrayList<>();
   private VBox surfaceParameters = new VBox();
   private VBox collidableParameters = new VBox();
   private Slider xSlider, ySlider, angleSlider;
@@ -56,7 +55,6 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
   private ListView<String> playerAssignmentListView = new ListView<>();
   private Button addPlayerButton, removePlayerButton;
   private Text numPlayers;
-  private final String VIEW_PROPERTIES_FOLDER = "properties.";
 
   /**
    * Constructor for default AuthoringFactory
@@ -222,7 +220,7 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
 
   private Node createCollidableTypeSelection() {
     this.collidableTypeDropDown = uiElementFactory.createCheckComboBox("collidableTypeDropDown",
-        List.of(CollidableType.STRIKABLE, CollidableType.SCOREABLE, CollidableType.CONTROLLABLE,
+        List.of(CollidableType.STRIKEABLE, CollidableType.SCOREABLE, CollidableType.CONTROLLABLE,
             CollidableType.NONCONTROLLABLE), 200, 50);
     AnchorPane.setRightAnchor(collidableTypeDropDown, 300.0);
     AnchorPane.setTopAnchor(collidableTypeDropDown, 200.0);
@@ -382,7 +380,6 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
   // object display
   private void changeAngle(double angle) {
     shapeProxy.getShape().setRotate(angle);
-    // shapeProxy.getGameObjectAttributesContainer().setAngle(angle);
   }
 
   private void changeXSize(double xScale) {
@@ -502,10 +499,7 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
   }
 
   private void removeCollidableType(CollidableType removedType) {
-    if (shapeProxy.getGameObjectAttributesContainer().getProperties()
-        .contains(removedType.toString())) {
-      shapeProxy.getGameObjectAttributesContainer().getProperties().remove(removedType.toString());
-    }
+    shapeProxy.getGameObjectAttributesContainer().getProperties().remove(removedType.toString());
 
     if (!removedType.equals(CollidableType.NONCONTROLLABLE)) {
       authoringProxy.removeCollidableFromPlayer(

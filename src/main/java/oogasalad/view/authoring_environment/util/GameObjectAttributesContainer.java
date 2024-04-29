@@ -1,19 +1,21 @@
 package oogasalad.view.authoring_environment.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * The GameObjectAttributesContainer class serves as a container for storing attributes and properties
- * associated with a game object in the authoring environment. It includes fields such as ID, image path,
- * color, elasticity, mass, position, friction, dimensions, and controllable speeds. These attributes define
- * the behavior and appearance of the game object.
+ * The GameObjectAttributesContainer class serves as a container for storing attributes and
+ * properties associated with a game object in the authoring environment. It includes fields such as
+ * ID, image path, color, elasticity, mass, position, friction, dimensions, and controllable speeds.
+ * These attributes define the behavior and appearance of the game object.
  */
 public class GameObjectAttributesContainer implements Cloneable {
 
   private int id;
-  private String imagePath;
-  private List<Integer> color;
+  private Map<String, String> imagePath = new HashMap<>();
+  private Map<String, List<Integer>> color = new HashMap<>();
   private List<String> properties = new ArrayList<>();
   private boolean elasticity;
   private double mass;
@@ -27,7 +29,11 @@ public class GameObjectAttributesContainer implements Cloneable {
    *
    * @return the image path as a string.
    */
-  public String getImagePath() {
+  public String getImagePathforMod(String mod) {
+    return imagePath.get(mod);
+  }
+
+  public Map<String, String> getAllImagePaths() {
     return imagePath;
   }
 
@@ -36,8 +42,8 @@ public class GameObjectAttributesContainer implements Cloneable {
    *
    * @param imagePath the new image path as a string.
    */
-  public void setImagePath(String imagePath) {
-    this.imagePath = imagePath;
+  public void setImagePath(String imagePath, String mod) {
+    this.imagePath.put(mod, imagePath);
   }
 
   /**
@@ -45,8 +51,12 @@ public class GameObjectAttributesContainer implements Cloneable {
    *
    * @return a list of integers representing the RGB color.
    */
-  public List<Integer> getColor() {
-    return color;
+  public List<Integer> getColorForMod(String mod) {
+    return color.get(mod);
+  }
+
+  public Map<String, List<Integer>> getAllColors() {
+    return this.color;
   }
 
   /**
@@ -54,8 +64,16 @@ public class GameObjectAttributesContainer implements Cloneable {
    *
    * @param color a list of integers representing the RGB color.
    */
-  public void setColor(List<Integer> color) {
-    this.color = color;
+  public void setColor(List<Integer> color, String mod) {
+    this.color.put(mod, color);
+  }
+
+  public void setAllColor(Map<String, List<Integer>> allColors) {
+    this.color = allColors;
+  }
+
+  public void setAllImgPaths(Map<String, String> allImgs) {
+    this.imagePath = allImgs;
   }
 
   /**
@@ -74,15 +92,6 @@ public class GameObjectAttributesContainer implements Cloneable {
    */
   public void setProperties(List<String> properties) {
     this.properties = properties;
-  }
-
-  /**
-   * Sets the elasticity of the game object.
-   *
-   * @param elasticity true if the game object is elastic, false otherwise.
-   */
-  public void setElasticity(boolean elasticity) {
-    this.elasticity = elasticity;
   }
 
   /**
@@ -221,6 +230,15 @@ public class GameObjectAttributesContainer implements Cloneable {
   }
 
   /**
+   * Sets the elasticity of the game object.
+   *
+   * @param elasticity true if the game object is elastic, false otherwise.
+   */
+  public void setElasticity(boolean elasticity) {
+    this.elasticity = elasticity;
+  }
+
+  /**
    * Gets the controllable speed of the game object along the x-axis.
    *
    * @return the controllable x-axis speed as an integer.
@@ -260,7 +278,8 @@ public class GameObjectAttributesContainer implements Cloneable {
    * Creates a clone of the GameObjectAttributesContainer instance.
    *
    * @return a cloned instance of GameObjectAttributesContainer.
-   * @throws CloneNotSupportedException if the object's class does not support the Cloneable interface.
+   * @throws CloneNotSupportedException if the object's class does not support the Cloneable
+   *                                    interface.
    */
   @Override
   public Object clone() throws CloneNotSupportedException {

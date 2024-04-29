@@ -84,7 +84,6 @@ public class GameObject {
 
   /**
    * Associates a Strikeable behavior with the GameObject.
-   *
    */
   public void addStrikeable() {
     this.strikeable = new DefaultStrikeable(this);
@@ -92,7 +91,6 @@ public class GameObject {
 
   /**
    * Associates a Scoreable behavior with the GameObject.
-   *
    */
   public void addScoreable() {
     this.scoreable = new DefaultScoreable(this);
@@ -100,7 +98,6 @@ public class GameObject {
 
   /**
    * Associates a Controllable behavior with the GameObject.
-   *
    */
   public void addControllable() {
     this.controllable = new DefaultControllable(this);
@@ -340,7 +337,7 @@ public class GameObject {
   public void moveControllableX(boolean positive, double boundMin, double boundMax) {
     Optional<Controllable> controllable = getControllable();
     controllable.ifPresent(value -> myX += value.moveX(positive));
-    myX = Math.min(boundMax-myWidth, Math.max(myX, boundMin));
+    myX = Math.min(boundMax - myWidth, Math.max(myX, boundMin));
   }
 
   //Sets the next velocity of the GameObject.

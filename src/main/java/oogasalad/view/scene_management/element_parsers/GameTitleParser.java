@@ -44,18 +44,18 @@ public class GameTitleParser {
   /**
    * Retrieves a list of saved game titles from a predefined directory.
    * <p>
-   * This method scans the directory specified for saved games and collects all files that are
-   * not directories. It then adds the file names, excluding their extensions, to a list of game
-   * titles. The method returns an observable list containing these game titles.
+   * This method scans the directory specified for saved games and collects all files that are not
+   * directories. It then adds the file names, excluding their extensions, to a list of game titles.
+   * The method returns an observable list containing these game titles.
    *
-   * @return An observable list of strings, where each string is the title of a saved game file in the
-   * predefined directory, excluding the file extension.
+   * @return An observable list of strings, where each string is the title of a saved game file in
+   * the predefined directory, excluding the file extension.
    */
   public ObservableList<String> getSavedGameTitles() {
     return getTitles(resumeGameDir);
   }
 
-  private ObservableList<String> getTitles(String dirPath){
+  private ObservableList<String> getTitles(String dirPath) {
     Set<String> games = Stream.of(new File(dirPath).listFiles())
         .filter(file -> !file.isDirectory())
         .map(File::getName)

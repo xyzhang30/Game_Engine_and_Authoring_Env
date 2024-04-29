@@ -11,7 +11,7 @@ import oogasalad.model.api.ViewGameObjectRecord;
 public class CompositeElement {
 
   private final Map<Integer, VisualElement> elementMap;
-  private Pane gameBoard;
+  private final Pane gameBoard;
 
   public CompositeElement(List<ViewGameObjectRecord> recordList)
       throws ClassNotFoundException, NoSuchMethodException, InstantiationException,

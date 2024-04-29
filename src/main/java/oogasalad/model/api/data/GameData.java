@@ -1,14 +1,12 @@
 package oogasalad.model.api.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.List;
 
 /**
  * Represents all JSON data configuring the game that gets serialized/deserialized into/from JSON
  */
 
-@JsonPropertyOrder({"gameName", "game_objects", "players", "variables", "rules"})
 public class GameData {
 
   private @JsonProperty("gameName") String gameName;
@@ -23,7 +21,7 @@ public class GameData {
     return keyPreferences;
   }
 
-  public void setKeyPreferences(KeyPreferences keys){
+  public void setKeyPreferences(KeyPreferences keys) {
     this.keyPreferences = keys;
   }
 
@@ -44,7 +42,6 @@ public class GameData {
   }
 
   public @JsonProperty("game_objects") List<GameObjectProperties> getGameObjectProperties() {
-    System.out.println(gameObjectProperties);
     return gameObjectProperties;
   }
 

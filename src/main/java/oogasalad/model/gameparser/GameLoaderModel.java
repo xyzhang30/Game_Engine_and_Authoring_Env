@@ -12,7 +12,6 @@ import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import net.bytebuddy.agent.builder.AgentBuilder.CircularityLock.Global;
 import oogasalad.model.Pair;
 import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.api.data.ParserPlayer;
@@ -28,6 +27,7 @@ import oogasalad.model.gameengine.gameobject.PhysicsHandler;
 import oogasalad.model.gameengine.gameobject.Strikeable;
 import oogasalad.model.gameengine.gameobject.collision.FrictionHandler;
 import oogasalad.model.gameengine.gameobject.collision.MomentumHandler;
+import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameengine.rank.PlayerRecordComparator;
@@ -50,9 +50,9 @@ public class GameLoaderModel extends GameLoader {
   private final Map<Pair, PhysicsHandler> physicsMap;
   private final List<Integer> collidables;
   private final StaticStateHandler staticHandler;
-  private PlayerContainer playerContainer;
+  private final PlayerContainer playerContainer;
   private RulesRecord rulesRecord;
-  private Map<Integer, Player> playerMap;
+  private final Map<Integer, Player> playerMap;
   private Map<Integer, GameObject> gameObjects;
   private List<Entry<BiPredicate<Integer, GameObjectProperties>,
       BiFunction<Integer, GameObjectProperties, PhysicsHandler>>> conditionsList;
@@ -67,7 +67,8 @@ public class GameLoaderModel extends GameLoader {
     collidables = new ArrayList<>();
     physicsMap = new HashMap<>();
     playerMap = new HashMap<>();
-    gameData.getPlayers().forEach(p -> playerMap.put(p.playerId(), new Player(p.playerId(), p.score())));
+    gameData.getPlayers()
+        .forEach(p -> playerMap.put(p.playerId(), new Player(p.playerId(), p.score())));
     playerContainer = new PlayerContainer(playerMap.values());
     staticHandler = StaticStateHandlerLinkedListFactory.buildLinkedList(List.of(
         "GameOverStaticStateHandler",
@@ -75,11 +76,11 @@ public class GameLoaderModel extends GameLoader {
     createCollisionTypeMap();
   }
 
-  public int getCurrTurn(){
+  public int getCurrTurn() {
     return gameData.getVariables().get(0).global().currentTurn();
   }
 
-  public int getCurrRound(){
+  public int getCurrRound() {
     return gameData.getVariables().get(0).global().currentRound();
   }
 
@@ -101,20 +102,31 @@ public class GameLoaderModel extends GameLoader {
     createGameObjectContainer();
     addPlayerObjects(ParserPlayer::myStrikeable,
         gameId -> gameObjects.get(gameId).getStrikeable(),
-        (playerId, strikeables) -> {
-          int activeStrikeableId = getParserPlayerById(playerId).activeStrikeable();
-          System.out.println("GAME OBJECTS"+gameObjects);
-          System.out.println("ACTIVE:"+activeStrikeableId);
-          Optional<Strikeable> strikeable = gameObjects.get(activeStrikeableId).getStrikeable();
+        (parserPlayer, strikeables) -> {
+          int activeStrikeableId = getParserPlayerById(parserPlayer.playerId()).activeStrikeable();          Optional<Strikeable> strikeable = gameObjects.get(activeStrikeableId).getStrikeable();
           strikeable.ifPresent(strikeable1 -> {
             gameObjects.get(activeStrikeableId).addStrikeable();
-            playerMap.get(playerId).addStrikeables(strikeables, strikeable1);
+            playerMap.get(parserPlayer.playerId()).addStrikeables(strikeables, strikeable1);
           });
 
         });
     addPlayerObjects(ParserPlayer::myScoreable,
         gameId -> gameObjects.get(gameId).getScoreable(),
-        (playerId, scoreables) -> playerMap.get(playerId).addScoreables(scoreables));
+    (parserPlayer, scoreables) -> {
+      playerMap.get(parserPlayer.playerId()).addScoreables(scoreables);
+      for(Scoreable s : scoreables) {
+        for(GameObjectProperties gop : gameData.getGameObjectProperties()) {
+          if(gop.collidableId() == s.asGameObject().getId()) {
+            s.setTemporaryScore(gop.score());
+          }
+        }
+      }
+    }
+        );
+
+    for(Player p : playerContainer.getPlayers()) {
+      p.applyDelayedScore();
+    }
     addPlayerControllables();
     return gameObjects.values();
   }
@@ -129,18 +141,18 @@ public class GameLoaderModel extends GameLoader {
     return rulesRecord;
   }
 
-  private <T> void addPlayerObjects(Function<? super ParserPlayer, ? extends List<Integer>> scoreableIdExtractor,
+  private <T> void addPlayerObjects(
+      Function<? super ParserPlayer, ? extends List<Integer>> scoreableIdExtractor,
       Function<? super Integer, ? extends Optional<? extends T>> scoreableObjectExtractor,
-      BiConsumer<Integer, List<T>> playerMethod) {
+      BiConsumer<ParserPlayer, List<T>> playerMethod) {
     for (ParserPlayer parserPlayer : gameData.getPlayers()) {
-      int playerId = parserPlayer.playerId();
       List<Integer> playerScoreableIds = scoreableIdExtractor.apply(parserPlayer);
       List<T> playerScoreableObjects = new ArrayList<>();
       for (int i : playerScoreableIds) {
         Optional<? extends T> optionalScoreable = scoreableObjectExtractor.apply(i);
         optionalScoreable.ifPresent(playerScoreableObjects::add);
       }
-      playerMethod.accept(playerId, playerScoreableObjects);
+      playerMethod.accept(parserPlayer, playerScoreableObjects);
     }
   }
 
@@ -155,8 +167,9 @@ public class GameLoaderModel extends GameLoader {
               .filter(Optional::isPresent)
               .map(Optional::get)
               .findFirst()
-              .ifPresent(controllable -> playerMap.get(parserPlayer.playerId()).setControllable(controllable,
-                  parserPlayer.myControllable().get(1)));
+              .ifPresent(controllable -> playerMap.get(parserPlayer.playerId())
+                  .setControllable(controllable,
+                      parserPlayer.myControllable().get(1)));
         });
   }
 
@@ -182,7 +195,8 @@ public class GameLoaderModel extends GameLoader {
     conditionsList.stream()
         .filter(entry -> entry.getKey().test(id, co) && id != co.collidableId())
         .findFirst()
-        .ifPresent(entry -> physicsMap.put(new Pair(gameObjects.get(id), gameObjects.get(co.collidableId())),
+        .ifPresent(entry -> physicsMap.put(
+            new Pair(gameObjects.get(id), gameObjects.get(co.collidableId())),
             entry.getValue().apply(id, co)));
   }
 
@@ -190,11 +204,13 @@ public class GameLoaderModel extends GameLoader {
     conditionsList = List.of(
         Map.entry(
             (key, co) -> collidables.contains(key) && co.properties().contains("collidable"),
-            (key, co) -> new MomentumHandler(gameObjects.get(key), gameObjects.get(co.collidableId()))
+            (key, co) -> new MomentumHandler(gameObjects.get(key),
+                gameObjects.get(co.collidableId()))
         ),
         Map.entry(
             (key, co) -> collidables.contains(key) || co.properties().contains("collidable"),
-            (key, co) -> new FrictionHandler(gameObjects.get(key), gameObjects.get(co.collidableId()))
+            (key, co) -> new FrictionHandler(gameObjects.get(key),
+                gameObjects.get(co.collidableId()))
         )
     );
   }
@@ -210,7 +226,7 @@ public class GameLoaderModel extends GameLoader {
     TurnPolicy turnPolicy = PolicyFactory.createTurnPolicy(rules.turnPolicy(), playerContainer);
     StrikePolicy strikePolicy = PolicyFactory.createStrikePolicy(rules.strikePolicy());
     PlayerRecordComparator comp = PolicyFactory.createRankComparator(rules.rankComparator());
-    List<StaticChecker> checkers =  StaticCheckerFactory.createStaticChecker(rules.staticChecker());
+    List<StaticChecker> checkers = StaticCheckerFactory.createStaticChecker(rules.staticChecker());
     rulesRecord = new RulesRecord(commandMap,
         winCondition, roundCondition, advanceTurnCmds, advanceRoundCmds, physicsMap, turnPolicy,
         staticHandler, strikePolicy, comp, checkers);
@@ -235,7 +251,8 @@ public class GameLoaderModel extends GameLoader {
         .collect(Collectors.toMap(
             rule -> new Pair(gameObjects.get(rule.firstId()), gameObjects.get(rule.secondId())),
             rule -> rule.command().entrySet().stream()
-                .map(entry -> ExecutableFactory.createCommand(entry.getKey(), entry.getValue(), gameObjects))
+                .map(entry -> ExecutableFactory.createCommand(entry.getKey(), entry.getValue(),
+                    gameObjects))
                 .collect(Collectors.toList())));
   }
 

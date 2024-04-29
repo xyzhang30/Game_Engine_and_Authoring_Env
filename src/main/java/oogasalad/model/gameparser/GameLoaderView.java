@@ -1,7 +1,6 @@
 package oogasalad.model.gameparser;
 
 import java.lang.reflect.Field;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,10 +10,9 @@ import java.util.Set;
 import oogasalad.model.api.StrikeablesView;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.data.GameObjectProperties;
-import oogasalad.model.api.data.GameObjectShape;
 import oogasalad.model.api.data.KeyPreferences;
 import oogasalad.model.api.exception.InvalidColorParsingException;
-import oogasalad.model.api.exception.InvalidImageException;
+import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.api.exception.MissingJsonGameInfoException;
 import oogasalad.view.api.enums.KeyInputType;
@@ -28,18 +26,30 @@ import org.apache.logging.log4j.Logger;
  */
 public class GameLoaderView extends GameLoader {
 
-  private static final String JAVAFX_SHAPE_CLASS_PATH = "javafx.scene.shape.";
   private static final Logger LOGGER = LogManager.getLogger(GameLoaderView.class);
   private List<ViewGameObjectRecord> viewGameObjectRecords;
   private StrikeablesView strikeablesView;
   private Map<KeyInputType, String> keys;
 
-  public GameLoaderView(String gameName) throws InvalidShapeException, InvalidColorParsingException{
+  /**
+   * constructor, creates view side game object record and key map for view upon initialization
+   *
+   * @param gameName String, name (path) of the game being parsed
+   * @throws InvalidShapeException        Shape in game data file cannot be recognized
+   * @throws InvalidColorParsingException Color in game data file cannot be recognized
+   */
+  public GameLoaderView(String gameName)
+      throws InvalidShapeException, InvalidColorParsingException, InvalidFileException {
     super(gameName);
     createViewRecord("Default");
     createKeysMap();
   }
 
+  /**
+   * Gets the available mods for the game
+   *
+   * @return List, names of all available mods for the game
+   */
   public List<String> getMods() {
     Set<String> mods = new HashSet<>();
     for (GameObjectProperties go : gameData.getGameObjectProperties()) {
@@ -62,24 +72,29 @@ public class GameLoaderView extends GameLoader {
     KeyPreferences keyRecord = gameData.getKeyPreferences();
     for (KeyInputType keyInputType : KeyInputType.values()) {
       String typeName = keyInputType.toString().toLowerCase(); //enum object name string
-      System.out.println("Record Type Name String:" + typeName);
       try {
         Field field = keyRecord.getClass()
             .getDeclaredField(typeName); //get that field in the record
-        System.out.println("Record field:" + field);
         field.setAccessible(true);
         Object value = field.get(keyRecord);
-        System.out.println("the value:" + field.get(keyRecord));
         keys.put(keyInputType,
             (String) value); //passing as a string bc can't have javafx stuff outside view
       } catch (NoSuchFieldException | IllegalAccessException | NullPointerException e) {
-        e.printStackTrace(); // Handle the exception according to your application's logic
+        LOGGER.error("Missing key preference field in game JSON file");
         throw new MissingJsonGameInfoException("Missing key preference field in game JSON file");
       }
     }
   }
 
-  public void createViewRecord(String mod) throws InvalidShapeException, InvalidColorParsingException {
+  /**
+   * creates game object record with info of the game object the view needs
+   *
+   * @param mod String, name of the current mod
+   * @throws InvalidShapeException
+   * @throws InvalidColorParsingException
+   */
+  public void createViewRecord(String mod)
+      throws InvalidShapeException, InvalidColorParsingException {
     List<Integer> strikeableIDs = new ArrayList<>();
     viewGameObjectRecords = new ArrayList<>();
     for (GameObjectProperties o : gameData.getGameObjectProperties()) {
@@ -87,14 +102,14 @@ public class GameLoaderView extends GameLoader {
         strikeableIDs.add(o.collidableId());
       }
       int id = o.collidableId();
-      String shape = matchShape(o.shape());
+      String shape = o.shape();
       List<Integer> colorRgb = new ArrayList<>();
       try {
-        for (int i : o.color().getOrDefault(mod, o.color().get("Default"))) {
+        for (int i : o.color().getOrDefault(mod, List.of(0, 0, 0))) {
           colorRgb.add(validateRgbValue(i));
         }
-      } catch (NullPointerException e){
-        LOGGER.error("Color error during parsing - " +e.getMessage());
+      } catch (NullPointerException e) {
+        LOGGER.error("Color error during parsing - " + e.getMessage());
         throw new InvalidColorParsingException(e.getMessage());
       }
       double xdimension = o.dimension().xDimension();
@@ -107,19 +122,6 @@ public class GameLoaderView extends GameLoader {
       viewGameObjectRecords.add(viewCollidable);
     }
     strikeablesView = new StrikeablesView(strikeableIDs);
-  }
-
-
-  private String matchShape(String shape) throws InvalidShapeException {
-    System.out.println(shape);
-    return switch (shape) {
-      case "Circle", "circle" -> JAVAFX_SHAPE_CLASS_PATH + "Ellipse";
-      case "Rectangle", "rectangle" -> JAVAFX_SHAPE_CLASS_PATH + "Rectangle";
-      default -> {
-        LOGGER.error("Shape" + shape + " is not supported");
-        throw new InvalidShapeException("Shape " + shape + " is not supported");
-      }
-    };
   }
 
   public Map<KeyInputType, String> getInputKeys() {
@@ -141,7 +143,7 @@ public class GameLoaderView extends GameLoader {
   }
 
 
-  public String getGameName(){
+  public String getGameName() {
     return gameData.getGameName();
   }
 

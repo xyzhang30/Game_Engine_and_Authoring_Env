@@ -25,9 +25,9 @@ public class ImagePanel implements Panel {
   private final ShapeProxy shapeProxy;
   private final AuthoringProxy authoringProxy;
   private final AnchorPane containerPane;
-  private Button imageButton;
   private final String language = "English"; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
+  private Button imageButton;
 
 
   /**
@@ -71,13 +71,14 @@ public class ImagePanel implements Panel {
   public void handleEvents() {
     imageButton.setOnAction(event -> {
       File imgFile = chooseImage();
-      if (imgFile == null){
+      if (imgFile == null) {
         return;
       }
       String relativePath = imgFile.getPath();
       if (shapeProxy.getShape() != null) {
-        shapeProxy.getGameObjectAttributesContainer().setColor(null);
-        shapeProxy.getGameObjectAttributesContainer().setImagePath(relativePath);
+        shapeProxy.getGameObjectAttributesContainer().setColor(null, shapeProxy.getCurrentMod());
+        shapeProxy.getGameObjectAttributesContainer().setImagePath(relativePath,
+            shapeProxy.getCurrentMod());
         String imgPath = Paths.get(relativePath).toUri().toString();
         shapeProxy.getShape().setFill(new ImagePattern(new Image(imgPath)));
       }
