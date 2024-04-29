@@ -37,11 +37,8 @@ public class ShapePanel implements Panel {
   private final StackPane canvas;
   private final AnchorPane rootPane;
   private final AnchorPane containerPane;
-  private final UIElementFactory uiElementFactory;
   private Coordinate startPos;
   private Coordinate translatePos;
-  private Button mod;
-  private TextArea modName;
 
   /**
    * Constructs a ShapePanel with the specified authoring factory, shape proxy, and authoring proxy,
@@ -56,14 +53,13 @@ public class ShapePanel implements Panel {
    */
   public ShapePanel(AuthoringFactory authoringFactory, ShapeProxy shapeProxy,
       AuthoringProxy authoringProxy, StackPane canvas,
-      AnchorPane rootPane, AnchorPane containerPane, UIElementFactory uiElementFactory) {
+      AnchorPane rootPane, AnchorPane containerPane) {
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
     this.authoringFactory = authoringFactory;
     this.canvas = canvas;
     this.rootPane = rootPane;
     this.containerPane = containerPane;
-    this.uiElementFactory = uiElementFactory;
     shapeProxy.setNumberOfMultiSelectAllowed(1);
     createElements();
     handleEvents();
@@ -79,30 +75,8 @@ public class ShapePanel implements Panel {
     containerPane.getChildren().addAll(authoringFactory.createSurfacesConfiguration());
     containerPane.getChildren().addAll(authoringFactory.createCollidablesConfiguration());
     containerPane.getChildren().addAll(authoringFactory.createPlayersConfiguration());
-//    containerPane.getChildren().addAll(authoringFactory.createGameConfiguration());
     shapeProxy.createGameObjectTemplates();
     containerPane.getChildren().addAll(shapeProxy.getTemplates());
-    mod = uiElementFactory.createButton("mod", "New Mod", 200, 100);
-    mod.setId("mod");
-    mod.setOnAction(event -> {
-      enterModName();
-    });
-  }
-
-  private void enterModName() {
-//    Stage gameNameStage = new Stage();
-//    gameNameStage.setTitle("Enter New Mod Name: ");
-//
-//    VBox vbox = new VBox();
-//    Label enterName = new Label("Mod Name");
-//    gameNameTextField = new TextField();
-//    gameNameTextField.setPromptText("Enter game name...");
-//
-//    vbox.getChildren().addAll(enterName, gameNameTextField, enterDescription, gameDescriptionTextField, makeSubmitGameNameButton());
-//
-//    Scene scene = new Scene(vbox, 500, 500);
-//    gameNameStage.setScene(scene);
-//    gameNameStage.showAndWait();
   }
 
 

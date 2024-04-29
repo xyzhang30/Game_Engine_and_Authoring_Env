@@ -323,8 +323,9 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
   private HBox createTextFieldContainer(String id, String labelText) {
     TextField textField = uiElementFactory.createTextField(id, 100, 20);
     textField.textProperty().addListener(new TextFieldListener(textField.getId(), shapeProxy));
+    textField.setMinWidth(50);
     Label label = new Label(labelText);
-    label.setMinWidth(100);
+    label.setMinWidth(150);
     textFields.add(textField);
     return uiElementFactory.createHContainer(10, 100, 20, label, textField);
   }

@@ -143,7 +143,7 @@ public class AuthoringScreen {
         new ColorPanel(shapeProxy, containerPane),
         new ImagePanel(authoringProxy, shapeProxy, containerPane),
         new ShapePanel(authoringFactory, shapeProxy, authoringProxy, canvasPane, rootPane,
-            containerPane, new DefaultUIElementFactory()),
+            containerPane),
         new ModPanel(authoringProxy, shapeProxy, containerPane)
     );
   }
