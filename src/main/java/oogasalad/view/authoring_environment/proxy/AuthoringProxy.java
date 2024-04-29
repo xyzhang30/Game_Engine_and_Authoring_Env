@@ -196,22 +196,6 @@ public class AuthoringProxy {
     }
   }
 
-//  private void showSaveGameError(String errorMessage) {
-//    Alert alert = new Alert(AlertType.ERROR);
-//    alert.setTitle("Save Game Error");
-//    alert.setHeaderText(null);
-//    alert.setContentText(errorMessage);
-//    alert.showAndWait();
-//  }
-
-//  private void showSuceessMessage(String message) {
-//    Alert alert = new Alert(AlertType.INFORMATION);
-//    alert.setTitle("Save Game Success");
-//    alert.setHeaderText(null);
-//    alert.setContentText(message);
-//    alert.showAndWait();
-//  }
-
   /**
    * Updates the authoring screen.
    */
