@@ -308,7 +308,7 @@ public class AuthoringProxy {
    * @return The current player ID.
    */
   public int getCurrentPlayerId() {
-    return numPlayers - 1;
+    return numPlayers;
   }
 
   /**
@@ -343,7 +343,9 @@ public class AuthoringProxy {
    */
   public void removeCollidableFromPlayer(int playerId, CollidableType collidableType,
       Integer shapeId) {
-    playersMap.get(playerId).get(collidableType).remove(shapeId);
+    if (playerId >= 1) {
+      playersMap.get(playerId).get(collidableType).remove(shapeId);
+    }
   }
 
   /**
@@ -376,11 +378,14 @@ public class AuthoringProxy {
    */
   public void addCollidableToPlayer(int selectedPlayerId, CollidableType collidableType,
       Integer shapeId, boolean isControllable, int controllableXSpeed, int controllableYSpeed) {
-    if (selectedPlayerId >= 0) {
+    System.out.println("playerid:"+selectedPlayerId);
+    if (selectedPlayerId >= 1) { //only add it if, it's a valid player
+      System.out.println("is controllable");
       if (isControllable) {
         playersMap.get(selectedPlayerId)
             .put(collidableType, List.of(shapeId, controllableXSpeed, controllableYSpeed));
       } else if (!playersMap.get(selectedPlayerId).get(collidableType).contains(shapeId)) {
+        System.out.println("added other objs");
         playersMap.get(selectedPlayerId).get(collidableType).add(shapeId);
       }
     }
