@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
@@ -167,59 +168,56 @@ public class DatabaseHandler extends Handler{
   }
 
   private Optional<String> showAvatarSelectionDialog() {
+    Dialog<String> dialog = createAvatarSelectionDialog();
+
+    ComboBox<String> avatarComboBox = createAvatarComboBox();
+    dialog.getDialogPane().setContent(avatarComboBox);
+
+    return dialog.showAndWait();
+  }
+
+  private Dialog<String> createAvatarSelectionDialog() {
     Dialog<String> dialog = new Dialog<>();
     dialog.setTitle("Select Avatar");
     dialog.setHeaderText("Click on your desired avatar and then press ENTER");
-    dialog.initOwner(getSceneManager().getScene().getWindow()); // Make sure it's modal in respect to the
-    // application window
-    dialog.initModality(Modality.WINDOW_MODAL); // Set modality to block user interaction with other windows
-
+    dialog.initOwner(getSceneManager().getScene().getWindow());
+    dialog.initModality(Modality.WINDOW_MODAL);
     ButtonType selectButtonType = new ButtonType("Select", ButtonBar.ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(selectButtonType, ButtonType.CANCEL);
-
-    ComboBox<String> avatarComboBox = new ComboBox<>();
-    ObservableList<String> avatars = loadAvatarNamesFromDirectory(); // Use the method to load avatar names dynamically
-    avatarComboBox.setItems(avatars);
-    avatarComboBox.setCellFactory(lv -> new ListCell<>() {
-      @Override
-      protected void updateItem(String item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty || item == null) {
-          setText(null);
-          setGraphic(null);
-        } else {
-          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), 100, 100, true, false);
-          ImageView imageView = new ImageView(img);
-          setGraphic(imageView);
-        }
-      }
-    });
-
-    avatarComboBox.setButtonCell(new ListCell<>() {
-      @Override
-      protected void updateItem(String item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty || item == null) {
-          setText(null);
-          setGraphic(null);
-        } else {
-          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), 50, 50, true, false);
-          ImageView imageView = new ImageView(img);
-          setGraphic(imageView);
-        }
-      }
-    });
-
-    dialog.getDialogPane().setContent(avatarComboBox);
-
     dialog.setResultConverter(dialogButton -> {
       if (dialogButton == selectButtonType) {
-        return avatarComboBox.getSelectionModel().getSelectedItem();
+        return ((ComboBox<String>) dialog.getDialogPane().getContent()).getSelectionModel().getSelectedItem();
       }
       return null;
     });
 
-    return dialog.showAndWait();
+    return dialog;
+  }
+
+  private ComboBox<String> createAvatarComboBox() {
+    ComboBox<String> avatarComboBox = new ComboBox<>();
+    ObservableList<String> avatars = loadAvatarNamesFromDirectory();
+    avatarComboBox.setItems(avatars);
+    avatarComboBox.setCellFactory(lv -> createAvatarListCell(100));
+    avatarComboBox.setButtonCell(createAvatarListCell(50));
+    return avatarComboBox;
+  }
+
+  private ListCell<String> createAvatarListCell(int size) {
+    return new ListCell<>() {
+      @Override
+      protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+          setGraphic(null);
+        } else {
+          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), size, size, true, false);
+          ImageView imageView = new ImageView(img);
+          setGraphic(imageView);
+        }
+      }
+    };
   }
 
 
@@ -275,46 +273,23 @@ public class DatabaseHandler extends Handler{
   private void setUpPlayerPermissions(Node node) {
     playerPermissions = (ListView<String>) node;
     playerPermissionMap = getGameController().getPlayerPermissions(currentGame);
-    playerCheckBoxMap = new HashMap<>(); // Map to store player names to their corresponding checkboxes
-
-    ObservableList<String> playerNames = FXCollections.observableArrayList(playerPermissionMap.keySet());
-    playerPermissions.setItems(playerNames);
-    playerPermissions.setCellFactory(lv -> new ListCell<String>() {
-      @Override
-      protected void updateItem(String item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty || item == null) {
-          setText(null);
-          setGraphic(null);
-        } else {
-          CheckBox checkBox = new CheckBox(); // Create a new checkbox for each cell
-          boolean permission = playerPermissionMap.get(item);
-          checkBox.setSelected(permission);
-
-          setText(item);
-          // Update the map when the checkbox is toggled
-          checkBox.setOnAction(event -> {
-            playerPermissionMap.put(item, checkBox.isSelected());
-          });
-
-          // Add the checkbox to the map with player's name as the key
-          playerCheckBoxMap.put(item, checkBox);
-
-          // Set only the checkbox as the graphic, omitting the player name
-          setGraphic(checkBox);
-        }
-      }
-    });
+    setUpPermissions(playerPermissions, playerPermissionMap);
   }
-
 
   private void setUpFriendPermissions(Node node) {
     friends = (ListView<String>) node;
     friendsMap = databaseController.getFriends(currentPlayersManager.get(0));
-    ObservableList<String> playerNames =
-        FXCollections.observableArrayList(friendsMap.keySet());
-    friends.setItems(playerNames);
-    friends.setCellFactory(lv -> new ListCell<String>() {
+    setUpPermissions(friends, friendsMap);
+  }
+
+  private void setUpPermissions(ListView<String> listView, Map<String, Boolean> permissionMap) {
+    ObservableList<String> playerNames = FXCollections.observableArrayList(permissionMap.keySet());
+    listView.setItems(playerNames);
+    listView.setCellFactory(lv -> createPermissionListCell(permissionMap));
+  }
+
+  private ListCell<String> createPermissionListCell(Map<String, Boolean> permissionMap) {
+    return new ListCell<String>() {
       @Override
       protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
@@ -322,56 +297,55 @@ public class DatabaseHandler extends Handler{
           setText(null);
           setGraphic(null);
         } else {
-          CheckBox checkBox = new CheckBox(); // Create a new checkbox for each cell
-          boolean permission = friendsMap.get(item);
+          CheckBox checkBox = new CheckBox();
+          boolean permission = permissionMap.get(item);
           checkBox.setSelected(permission);
           setText(item);
-          // Update the map when the checkbox is toggled
           checkBox.setOnAction(event -> {
-            friendsMap.put(item, checkBox.isSelected());
+            permissionMap.put(item, checkBox.isSelected());
           });
           setGraphic(checkBox);
         }
       }
-    });
+    };
   }
 
 
   private void createFinishHandler(Node node) {
     node.setOnMouseClicked(e -> {
-      List<String> checkedPlayers = new ArrayList<>();
-      List<String> uncheckedPlayers = new ArrayList<>();
-
-      for (String item : playerPermissions.getItems()) {
-        if (playerPermissionMap.get(item)) {
-              checkedPlayers.add(item);
-            } else {
-              uncheckedPlayers.add(item);
-            }
-          }
+      List<String> checkedPlayers = extractCheckedItems(playerPermissions, playerPermissionMap);
       databaseController.setPublicPrivate(currentGame, publicComboBox.getSelectionModel().getSelectedItem());
-      databaseController.writePlayerPermissions(currentGame, checkedPlayers, uncheckedPlayers);
+      databaseController.writePlayerPermissions(currentGame, checkedPlayers, extractUncheckedItems(playerPermissions, playerPermissionMap));
       getSceneManager().createMenuScene();
     });
   }
 
-
   private void confirmFriendsHandler(Node node) {
     node.setOnMouseClicked(e -> {
-      List<String> checkedPlayers = new ArrayList<>();
-      List<String> uncheckedPlayers = new ArrayList<>();
-
-      for (String item : friends.getItems()) {
-        if (friendsMap.get(item)) {
-          checkedPlayers.add(item);
-        }
-        else {
-          uncheckedPlayers.add(item);
-        }
-      }
-      databaseController.writeFriends(currentPlayersManager.get(0), checkedPlayers, uncheckedPlayers);
+      List<String> checkedPlayers = extractCheckedItems(friends, friendsMap);
+      databaseController.writeFriends(currentPlayersManager.get(0), checkedPlayers, extractUncheckedItems(friends, friendsMap));
       getSceneManager().createMenuScene();
     });
+  }
+
+  private List<String> extractCheckedItems(ListView<String> listView, Map<String, Boolean> permissionMap) {
+    List<String> checkedPlayers = new ArrayList<>();
+    for (String item : listView.getItems()) {
+      if (permissionMap.get(item)) {
+        checkedPlayers.add(item);
+      }
+    }
+    return checkedPlayers;
+  }
+
+  private List<String> extractUncheckedItems(ListView<String> listView, Map<String, Boolean> permissionMap) {
+    List<String> uncheckedPlayers = new ArrayList<>();
+    for (String item : listView.getItems()) {
+      if (!permissionMap.getOrDefault(item, false)) {
+        uncheckedPlayers.add(item);
+      }
+    }
+    return uncheckedPlayers;
   }
 
   private void createAccessibilityHandler(Node node) {
@@ -386,21 +360,32 @@ public class DatabaseHandler extends Handler{
   private void accessibilityBoxSelected(ActionEvent event) {
     String mode = publicComboBox.getValue();
     friendsMap = databaseController.getFriends(currentPlayersManager.get(0));
-    for (String s : playerCheckBoxMap.keySet()) {
-      if (mode.equals("public")) {
-        playerCheckBoxMap.get(s).setSelected(true);
-        playerPermissionMap.put(s,true);
-      }
-      if (mode.equals("private")) {
-        playerCheckBoxMap.get(s).setSelected(false);
-        playerPermissionMap.put(s,false);
-      }
-      if (mode.equals("friends")) {
-        playerCheckBoxMap.get(s).setSelected(friendsMap.containsKey(s) && friendsMap.get(s));
-        playerPermissionMap.put(s,friendsMap.containsKey(s) && friendsMap.get(s));
-      }
+    Map<String, BiConsumer<CheckBox, String>> modeBehaviors = initializeAccessibilityMap();
+    for (Map.Entry<String, CheckBox> entry : playerCheckBoxMap.entrySet()) {
+      String playerName = entry.getKey();
+      CheckBox checkBox = entry.getValue();
+      modeBehaviors.getOrDefault(mode, (c, p) -> {}).accept(checkBox, playerName);
     }
   }
+
+  private Map<String, BiConsumer<CheckBox, String>> initializeAccessibilityMap() {
+    Map<String, BiConsumer<CheckBox, String>> modeBehaviors = new HashMap<>();
+    modeBehaviors.put("public", (checkBox, playerName) -> {
+      checkBox.setSelected(true);
+      playerPermissionMap.put(playerName, true);
+    });
+    modeBehaviors.put("private", (checkBox, playerName) -> {
+      checkBox.setSelected(false);
+      playerPermissionMap.put(playerName, false);
+    });
+    modeBehaviors.put("friends", (checkBox, playerName) -> {
+      boolean selected = friendsMap.containsKey(playerName) && friendsMap.get(playerName);
+      checkBox.setSelected(selected);
+      playerPermissionMap.put(playerName, selected);
+    });
+    return modeBehaviors;
+  }
+
 
   public void setGame(String gameTitle) {
     currentGame = gameTitle;

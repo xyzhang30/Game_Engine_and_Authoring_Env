@@ -146,19 +146,17 @@ public class GameController {
    * @param selectedGame the game title selected to play
    */
   public void startGamePlay(String selectedGame) {
-    try {
-      gameLoaderView = new GameLoaderView(selectedGame);
-      gameEngine = new GameEngine(selectedGame);
-    } catch (InvalidFileException e){
-      WARNING.showAlert(this.getScene(), AlertType.ERROR, "Start Game Error", null, "Can't find game file");
-      return;
-    } catch (InvalidColorParsingException e){
-      WARNING.showAlert(this.getScene(), AlertType.ERROR, "Parsing Color Error", null, "Cannot find corresponding color or mod");
-      return;
-    } catch (InvalidShapeException e){
-      WARNING.showAlert(this.getScene(), AlertType.ERROR, "Parsing Shape Error", null, e.getMessage());
-      return;
-    }
+      try {
+        gameLoaderView = new GameLoaderView(selectedGame);
+        gameEngine = new GameEngine(selectedGame);
+      } catch (InvalidFileException e) {
+        handleException("Start Game Error", "Can't find game file");
+        return;
+      } catch (InvalidColorParsingException | InvalidShapeException e) {
+        handleException("Parsing Error", e.getMessage());
+        return;
+      }
+
     List<String> players = databaseController.getPlayerNames();
     playerMap = IntStream.range(1, players.size() + 1)
         .boxed()
@@ -255,21 +253,21 @@ public class GameController {
     return gameLoaderView.getMods();
   }
 
+
   public void changeMod(String selectedMod) {
-    try{
+    try {
       gameLoaderView.createViewRecord(selectedMod);
-    } catch (InvalidColorParsingException e){
-      WARNING.showAlert(this.getScene(), AlertType.ERROR, "Parsing Color Error", null, "Cannot find corresponding color or mod");
-      return;
-    } catch (InvalidShapeException e){
-      WARNING.showAlert(this.getScene(), AlertType.ERROR, "Parsing Shape Error", null, e.getMessage());
-      return;
+      sceneManager.changeMod(gameLoaderView.getViewCollidableInfo());
+    } catch (InvalidColorParsingException | InvalidShapeException e) {
+      handleException("Parsing Error", "Cannot find corresponding color or mod");
     }
-    sceneManager.changeMod(gameLoaderView.getViewCollidableInfo());
   }
 
 
 
+  private void handleException(String title, String message) {
+    WARNING.showAlert(this.getScene(), AlertType.ERROR, title, null, message);
+  }
 
   /**
    * Gets the input key for the requested input type
