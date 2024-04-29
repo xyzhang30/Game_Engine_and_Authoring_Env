@@ -17,77 +17,26 @@ import org.postgresql.util.PSQLException;
 
 public class Database implements DatabaseApi {
 
-  private static ObservableList<String> getGames(String playerName, int numPlayers, String sql) {
-    List<String> gameNames = new ArrayList<>();
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, playerName);
-      if (numPlayers != -1) {
-        pstmt.setInt(2, numPlayers);
-      }
-      try (ResultSet rs = pstmt.executeQuery()) {
-        while (rs.next()) {
-          String gameName = rs.getString("gamename");
-          gameNames.add(gameName);
-        }
-      }
+  private static final Connection conn;
+
+  static {
+    try {
+      conn = DatabaseConfig.getConnection();
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
-    return FXCollections.observableList(gameNames);
   }
 
-  /**
-   * Retrieves the high scores of a player for a specific game.
-   *
-   * @param gameName   The name of the game.
-   * @param playerName The name of the player.
-   * @param n          The number of high scores to retrieve.
-   * @return A list of GameScore objects representing the high scores of the player.
-   */
 
   @Override
-  public List<GameScore> getPlayerHighScoresForGame(String gameName, String playerName, int n) {
-    List<GameScore> scores = new ArrayList<>();
-    String query = "SELECT gr.playerusername, gr.score, gr.gameresult " +
-        "FROM gameresult gr " +
-        "JOIN gameinstance gi ON gr.gameinstanceid = gi.gameinstanceid " +
-        "WHERE gi.gamename = ? AND gr.playerusername = ?" +
-        "ORDER BY gr.score DESC";
-
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(query)) {
-      pstmt.setString(1, gameName);
-      pstmt.setString(2, playerName);
-      ResultSet rs = pstmt.executeQuery();
-      while (rs.next()) {
-
-        int score = rs.getInt("score");
-        boolean gameResult = rs.getBoolean("gameresult");
-        scores.add(new GameScore(playerName, gameName, score, gameResult));
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return scores.subList(0, Math.min(scores.size(), n));
-  }
-
-  @Override
-  public Map<String, Boolean> getPlayerPermissionsForGames(String gameName) {
+  public Map<String, Boolean> getPlayerPermissionsForGames(String gameName) throws SQLException {
     Map<String, Boolean> scores = new TreeMap<>();
-    String query = "SELECT username, permissions " +
-        "FROM permissions WHERE gamename = ?";
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(query)) {
-      pstmt.setString(1, gameName);
-      ResultSet rs = pstmt.executeQuery();
-      while (rs.next()) {
-        if (!rs.getString("permissions").equals("Owner")) {
-          scores.put(rs.getString("username"), !rs.getString("permissions").equals("None"));
-        }
+    String query = "SELECT username, permissions FROM permissions WHERE gamename = ?";
+    ResultSet rs = executeQuery(query, gameName);
+    while (rs.next()) {
+      if (!rs.getString("permissions").equals("Owner")) {
+        scores.put(rs.getString("username"), !rs.getString("permissions").equals("None"));
       }
-    } catch (SQLException e) {
-      e.printStackTrace();
     }
     return scores;
   }
@@ -100,7 +49,8 @@ public class Database implements DatabaseApi {
    */
 
   @Override
-  public ObservableList<GameScore> getGeneralHighScoresForGame(String gameName, boolean desc) {
+  public ObservableList<GameScore> getGeneralHighScoresForGame(String gameName, boolean desc)
+      throws SQLException {
     List<GameScore> scores = new ArrayList<>();
     String query = "SELECT gr.playerusername, gr.score, gr.gameresult " +
         "FROM gameresult gr " +
@@ -108,19 +58,11 @@ public class Database implements DatabaseApi {
         "WHERE gi.gamename = ? " +
         "ORDER BY gr.score ";
     query += desc ? "DESC" : "";
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(query)) {
-      pstmt.setString(1, gameName);
-      ResultSet rs = pstmt.executeQuery();
-      while (rs.next()) {
-        String playerusername = rs.getString("playerusername");
-        int score = rs.getInt("score");
-        boolean gameResult = rs.getBoolean("gameresult");
-        scores.add(new GameScore(playerusername, gameName, score, gameResult));
+    ResultSet rs = executeQuery(query, gameName);
+    while (rs.next()) {
+      scores.add(new GameScore(rs.getString("playerusername"), gameName,
+          rs.getInt("score"), rs.getBoolean("gameresult")));
       }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
     return FXCollections.observableList(scores.subList(0, Math.min(10, scores.size())));
   }
 
@@ -132,25 +74,12 @@ public class Database implements DatabaseApi {
    * @return True if the login credentials are valid, false otherwise.
    */
   @Override
-  public boolean loginUser(String username, String password) {
+  public boolean loginUser(String username, String password) throws SQLException {
     String query = "SELECT password FROM Players WHERE username = ?";
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(query)) {
-      pstmt.setString(1, username);
-      try (ResultSet rs = pstmt.executeQuery()) {
-        if (rs.next()) {
-          System.out.println(password);
-          String storedPassword = rs.getString("password");
-          System.out.println(storedPassword);
-          // Use BCrypt to check if the entered password matches the stored hashed password
-          return BCrypt.checkpw(password, storedPassword);
-        }
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return false;
+    ResultSet rs = executeQuery(query, username);
+    return  (rs.next() && BCrypt.checkpw(password, rs.getString("password")));
   }
+
 
   /**
    * Registers a new user.
@@ -162,75 +91,34 @@ public class Database implements DatabaseApi {
    */
 
   @Override
-  public boolean registerUser(String username, String password, String avatarUrl) {
-    try (Connection conn = DatabaseConfig.getConnection()) {
+  public boolean registerUser(String username, String password, String avatarUrl)
+      throws SQLException {
+    try {
       String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
       String sql = "INSERT INTO Players (username, password, avatarurl) VALUES (?, ?, ?) ON "
           + "CONFLICT DO NOTHING";
-      try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setString(1, username);
-        stmt.setString(2, hashedPassword);
-        stmt.setString(3, avatarUrl);
-        stmt.executeUpdate();
-
-        for (String gameName : getAllGames()) {
-          grantPermissions(username, gameName, getGameAccessibility(gameName).equals("public") ?
-              "Player" :
-              "None");
-        }
-        return true;
+      executeUpdate(sql, username, hashedPassword, avatarUrl);
+      for (String gameName : getAllGames()) {
+        grantPermissions(username, gameName, getGameAccessibility(gameName).equals("public") ?
+            "Player" : "None");
       }
-    } catch (PSQLException uniqueViolation) {
-      uniqueViolation.printStackTrace();
-      return true;
-    } catch (SQLException e) {
-      return false;
-    }
+    } catch (PSQLException ignored) {}
+    return true;
   }
 
-  //checking whether user exists or not
-  public boolean doesUserExist(String username) {
-    String query = "SELECT 1 FROM Players WHERE username = ?";
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(query)) {
-      pstmt.setString(1, username);
-      ResultSet rs = pstmt.executeQuery();
-      return rs.next();  //true if user exists (bc at least one row exists)
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return false;  //false if user does not exist
-    }
-  }
-
-  //returns true if game is publicly available, otherwise false
-  public String getGameAccessibility(String gameName) {
+@Override
+public String getGameAccessibility(String gameName) throws SQLException {
     String sql = "SELECT accessibility FROM Games WHERE gamename = ?";
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, gameName);
-      try (ResultSet rs = pstmt.executeQuery()) {
-        if (rs.next()) {
-          return rs.getString("accessibility");
-        }
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return "public";
+    ResultSet rs = executeQuery(sql, gameName);
+    return rs.next() ? rs.getString("accessibility") : "public";
   }
 
   @Override
-  public void setGameAccessibility(String gameName, String accessibility) {
+  public void setGameAccessibility(String gameName, String accessibility) throws SQLException {
     String sql = "UPDATE Games SET accessibility = ? WHERE gamename = ?";
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, accessibility);
-      pstmt.setString(2, gameName);
-      pstmt.executeUpdate();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
+    executeUpdate(sql, accessibility, gameName);
   }
+
 
   /**
    * Registers a new game.
@@ -243,82 +131,20 @@ public class Database implements DatabaseApi {
 
   @Override
   public boolean registerGame(String gameName, String ownerName, int numPlayers,
-      String accessibility) {
+      String accessibility) throws SQLException {
     String sql = "INSERT INTO Games (gamename, owner, numplayers, accessibility) VALUES (?, ?, ?, "
-        + "?) ON "
-        + "CONFLICT DO NOTHING";
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, gameName);
-      pstmt.setString(2, ownerName);
-      pstmt.setInt(3, numPlayers);
-      pstmt.setString(4, accessibility);
-      int affectedRows = pstmt.executeUpdate();
+        + "?) ON CONFLICT DO NOTHING";
+      int affectedRows = executeUpdate(sql, gameName, ownerName, numPlayers, accessibility);
       for (String username : getAllPlayers()) {
         String permission =
             accessibility.equals("public") || (accessibility.equals("friends") && areFriends(
-                ownerName, username, conn)) ? "Player" : "None";
+                ownerName, username)) ? "Player" : "None";
         grantPermissions(username, gameName, permission);
       }
       grantPermissions(ownerName, gameName, "Owner");
       return affectedRows > 0;
-    } catch (PSQLException e) {
-      e.printStackTrace();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return false;
   }
 
-  //retrieves list of all usernames
-  private List<String> getAllPlayers() {
-    List<String> usernames = new ArrayList<>();
-    String sql = "SELECT username FROM Players";
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        ResultSet rs = pstmt.executeQuery()) {
-      while (rs.next()) {
-        String username = rs.getString("username");
-        usernames.add(username);
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return usernames;
-  }
-
-  //retireves list of all game names
-  private List<String> getAllGames() {
-    List<String> gamenames = new ArrayList<>();
-    String sql = "SELECT gamename FROM Games";
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        ResultSet rs = pstmt.executeQuery()) {
-      while (rs.next()) {
-        String game = rs.getString("gamename");
-        gamenames.add(game);
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return gamenames;
-  }
-
-  //grants permissiosn to player for game in permissions db
-  private void grantPermissions(String username, String gameName,
-      String permission) throws SQLException {
-    String sql = "INSERT INTO Permissions (username, gamename, permissions) VALUES (?, ?, ?) "
-        + "ON CONFLICT (username, gamename) DO UPDATE SET permissions = ?";
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, username);
-      pstmt.setString(2, gameName);
-      pstmt.setString(3, permission);
-      pstmt.setString(4, permission);
-      pstmt.executeUpdate();
-    } catch (SQLException e) {
-    }
-  }
 
   /**
    * Adds a new game instance.
@@ -328,27 +154,15 @@ public class Database implements DatabaseApi {
    */
 
   @Override
-  public int addGameInstance(String game) {
+  public int addGameInstance(String game) throws SQLException {
     String sql = "INSERT INTO gameinstance (gamename) VALUES (?)";
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-      pstmt.setString(1, game);
-      int affectedRows = pstmt.executeUpdate();
-      if (affectedRows > 0) {
-        try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
-          if (generatedKeys.next()) {
-            return generatedKeys.getInt(1);
-          }
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
-    return -1;
+    PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+    pstmt.setString(1, game);
+    int affectedRows = pstmt.executeUpdate();
+    return (affectedRows > 0 && pstmt.getGeneratedKeys().next()) ?
+         pstmt.getGeneratedKeys().getInt(1) : -1;
   }
+
 
   /**
    * Adds a game score for a specific game instance and player.
@@ -361,22 +175,12 @@ public class Database implements DatabaseApi {
    */
 
   @Override
-  public boolean addGameScore(int gameInstanceId, String user, int score, boolean result) {
+  public boolean addGameScore(int gameInstanceId, String user, int score, boolean result)
+      throws SQLException {
     String sql = "INSERT INTO GameResult (gameinstanceid, playerusername, score, gameresult) "
         + "VALUES (?, ?, ?, ?)";
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setInt(1, gameInstanceId);
-      pstmt.setString(2, user);
-      pstmt.setInt(3, score);
-      pstmt.setBoolean(4, result);
-      int affectedRows = pstmt.executeUpdate();
-      return affectedRows > 0;
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return false;
-  }
+    return executeUpdate(sql, gameInstanceId, user, score, result) > 0;}
+
 
   /**
    * Assigns a permission to a list of players for a specific game.
@@ -388,40 +192,31 @@ public class Database implements DatabaseApi {
 
 
   @Override
-  public void assignPermissionToPlayers(String game, List<String> users, String permission) {
-    for (String user : users) {
-      //System.out.println(user + " " + permission);
-      try {
+  public void assignPermissionToPlayers(String game, List<String> users, String permission) throws SQLException
+    {
+      for (String user : users) {
         grantPermissions(user, game, permission);
-      } catch (SQLException e) {
-        throw new RuntimeException(e);
       }
     }
-  }
+
 
   @Override
-  public void assignFriends(String player, List<String> friends, List<String> notFriends) {
-    try (Connection conn = DatabaseConfig.getConnection()) {
-      // Insert friendships for friends if they don't exist
+  public void assignFriends(String player, List<String> friends, List<String> notFriends) throws SQLException{
       for (String friend : friends) {
-        if (!areFriends(player, friend, conn)) {
-          insertFriendship(player, friend, conn);
+        if (!areFriends(player, friend)) {
+          insertFriendship(player, friend);
         }
       }
-
-      // Remove not friendships from the database
       for (String notFriend : notFriends) {
-        if (areFriends(player, notFriend, conn)) {
+        if (areFriends(player, notFriend)) {
           removeFriendship(player, notFriend);
         }
       }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
+
   }
 
   @Override
-  public ObservableList<String> getPlayableGameIds(String playerName, int numPlayers) {
+  public ObservableList<String> getPlayableGameIds(String playerName, int numPlayers) throws SQLException{
     String sql = "SELECT p.gamename FROM permissions p " +
         "JOIN games g ON p.gamename = g.gamename " +
         "WHERE p.username = ? AND p.permissions != 'None' AND g.numplayers <= ?";
@@ -435,57 +230,119 @@ public class Database implements DatabaseApi {
    * @return A list of game IDs that are playable by the player.
    */
   @Override
-  public ObservableList<String> getManageableGames(String playerName) {
+  public ObservableList<String> getManageableGames(String playerName) throws SQLException {
     String sql = "SELECT p.gamename FROM permissions p " +
         "JOIN games g ON p.gamename = g.gamename " +
         "WHERE p.username = ? AND p.permissions = 'Owner'";
     return getGames(playerName, -1, sql);
   }
 
+  @Override
+  public boolean doesUserExist(String username) throws SQLException {
+    String query = "SELECT 1 FROM Players WHERE username = ?";
+    return executeQuery(query, username).next();
+  }
 
-  private boolean areFriends(String player1, String player2, Connection conn) throws SQLException {
+
+  @Override
+  public Map<String, Boolean> getFriends(String player) throws SQLException {
+    Map<String, Boolean> friendsMap = new HashMap<>();
+    String query = "SELECT p.username, COALESCE(f.friendship_status, false) AS is_friend FROM players p LEFT JOIN ( SELECT CASE WHEN player_username = ? THEN friend_username ELSE player_username END AS friend, true AS friendship_status FROM friendships WHERE player_username = ?) f ON p.username = f.friend WHERE p.username != ?;";
+    ResultSet rs = executeQuery(query, player, player, player);
+    while (rs.next()) {
+      friendsMap.put(rs.getString("username"), rs.getBoolean("is_friend"));
+    }
+    return friendsMap;
+  }
+
+  private ResultSet executeQuery(String query, Object... params) throws SQLException {
+    PreparedStatement pstmt = conn.prepareStatement(query);
+    for (int i = 0; i < params.length; i++) {
+      pstmt.setObject(i + 1, params[i]);
+    }
+    return pstmt.executeQuery();
+  }
+
+  private int executeUpdate(String query, Object... params) throws SQLException {
+    PreparedStatement pstmt = conn.prepareStatement(query);
+    for (int i = 0; i < params.length; i++) {
+      pstmt.setObject(i + 1, params[i]);
+    }
+    return pstmt.executeUpdate();
+  }
+
+  private ObservableList<String> getGames(String playerName, int numPlayers, String sql)
+      throws SQLException {
+    List<String> gameNames = new ArrayList<>();
+    PreparedStatement pstmt = conn.prepareStatement(sql);
+    pstmt.setString(1, playerName);
+    if (numPlayers != -1) {
+      pstmt.setInt(2, numPlayers);
+    }
+    try (ResultSet rs = pstmt.executeQuery()) {
+      while (rs.next()) {
+        String gameName = rs.getString("gamename");
+        gameNames.add(gameName);
+      }
+    }
+    return FXCollections.observableList(gameNames);
+  }
+
+
+  private boolean areFriends(String player1, String player2) throws SQLException {
     String sql = "SELECT EXISTS (SELECT 1 FROM friendships WHERE (player_username = ? AND friend_username = ?) OR (player_username = ? AND friend_username = ?))";
-    ResultSet rs = prepareStatement(conn, sql, player1, player2, player2, player1).executeQuery();
+    ResultSet rs = executeQuery(sql, player1, player2, player2, player1);
     return rs.next() && rs.getBoolean(1);
   }
 
-  private void insertFriendship(String player1, String player2, Connection conn)
+  private void insertFriendship(String player1, String player2)
       throws SQLException {
     String sql = "INSERT INTO friendships (player_username, friend_username) VALUES (?, ?)";
-    prepareStatement(DatabaseConfig.getConnection(), sql, player1, player2).executeUpdate();
+    executeUpdate(sql, player1, player2);
   }
 
   private void removeFriendship(String player1, String player2)
       throws SQLException {
     String sql = "DELETE FROM friendships WHERE (player_username = ? AND friend_username = ?) OR (player_username = ? AND friend_username = ?)";
-    prepareStatement(DatabaseConfig.getConnection(), sql, player1, player2, player2, player1).executeUpdate();
-
+    executeUpdate(sql, player1, player2, player2, player1);
   }
 
-  @Override
-  public Map<String, Boolean> getFriends(String player) {
-    Map<String, Boolean> friendsMap = new HashMap<>();
-    String query = "SELECT p.username, COALESCE(f.friendship_status, false) AS is_friend FROM players p LEFT JOIN ( SELECT CASE WHEN player_username = ? THEN friend_username ELSE player_username END AS friend, true AS friendship_status FROM friendships WHERE player_username = ?) f ON p.username = f.friend WHERE p.username != ?;";
-    try (ResultSet rs = prepareStatement(DatabaseConfig.getConnection(), query, player, player, player).executeQuery()) {
-      while (rs.next()) {
-          String username = rs.getString("username");
-          boolean isFriend = rs.getBoolean("is_friend");
-          friendsMap.put(username, isFriend);
-        }
-      } catch (SQLException ex) {
-      throw new RuntimeException(ex);
+
+  //retrieves list of all usernames
+  private List<String> getAllPlayers() throws SQLException {
+    List<String> usernames = new ArrayList<>();
+    String sql = "SELECT username FROM Players";
+    ResultSet rs = executeQuery(sql);
+    while (rs.next()) {
+      String username = rs.getString("username");
+      usernames.add(username);
     }
-    return friendsMap;
+    return usernames;
   }
 
-  private PreparedStatement prepareStatement(Connection conn, String query, Object... params) throws SQLException {
-    PreparedStatement pstmt = conn.prepareStatement(query);
-    for (int i = 0; i < params.length; i++) {
-      pstmt.setObject(i + 1, params[i]);
+  //retireves list of all game names
+  private List<String> getAllGames() throws SQLException{
+    List<String> gamenames = new ArrayList<>();
+    String sql = "SELECT gamename FROM Games";
+    Connection conn = DatabaseConfig.getConnection();
+    PreparedStatement pstmt = conn.prepareStatement(sql);
+    ResultSet rs = pstmt.executeQuery();
+    while (rs.next()) {
+      String game = rs.getString("gamename");
+      gamenames.add(game);
     }
-    return pstmt;
+    return gamenames;
   }
+
+  //grants permissiosn to player for game in permissions db
+  private void grantPermissions(String username, String gameName,
+      String permission) throws SQLException {
+    String sql = "INSERT INTO Permissions (username, gamename, permissions) VALUES (?, ?, ?) "
+        + "ON CONFLICT (username, gamename) DO UPDATE SET permissions = ?";
+    executeUpdate(sql, username, gameName, permission, permission);
   }
+}
+
 
 
 

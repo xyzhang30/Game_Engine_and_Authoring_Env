@@ -1,16 +1,20 @@
 package oogasalad.view.authoring_environment.proxy;
 
+import static oogasalad.view.Warning.showAlert;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.shape.Shape;
 import oogasalad.model.api.exception.AuthoringException;
@@ -427,11 +431,12 @@ public class AuthoringProxy {
     String hostPlayer = authoringController.getHostPlayer();
     int numPlayers = playersMap.size();
     Database database = new Database();
-    System.out.println(gameName);
-    System.out.println(hostPlayer);
-    System.out.println(numPlayers);
-    System.out.println(gamePermission);
-    database.registerGame(gameName, hostPlayer, numPlayers, gamePermission);
+    try {
+      database.registerGame(gameName, hostPlayer, numPlayers, gamePermission);
+    }
+    catch (SQLException e) {
+      showAlert(Alert.AlertType.ERROR, "Database Error", "Cannot Register Game", e.getMessage());
+    }
   }
 
   public void setPlayersMap (Map<Integer, Map<CollidableType, List<Integer>>> playersMap){
