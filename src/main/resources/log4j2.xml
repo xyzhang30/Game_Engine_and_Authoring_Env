@@ -4,6 +4,7 @@
   <Appenders>
     <Console name="console" target="SYSTEM_OUT">
       <!-- for details about these options: https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout -->
+      <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
       <PatternLayout>
         <Pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</Pattern>
       </PatternLayout>
@@ -21,10 +22,6 @@
       filePattern="${LOG_DIR}/app.%i.log.gz"
       ignoreExceptions="false"
       name="rollingFile">
-      <!--    <RollingFile name="RollingFile" fileName="logs/appRolling.log" immediateFlush="true" append="true" filePattern="logs/app-%d{MM-dd-yyyy}.log.gz"-->
-      <!--      ignoreExceptions="false">-->
-      <!--      <RollingFile name="Rolling-${mdc:UserId}" fileName="log/${mdc:UserId}.log" filePattern="log/${mdc:UserId}.%i.log.gz">-->
-      <!--    <RollingFile name="file" fileName="logs/appRolling.log" append="true">-->
       <DefaultRolloverStrategy max="5">
         <Delete basePath="${LOG_DIR}" maxDepth="2">
           <IfFileName glob="*/app-*.log.gz"/>
@@ -32,11 +29,9 @@
         </Delete>
       </DefaultRolloverStrategy>
       <PatternLayout>
-        <!--        <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>-->
         <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n</Pattern>
       </PatternLayout>
       <Policies>
-        <!--        <TimeBasedTriggeringPolicy interval="1 hour" modulate="true"/>-->
         <SizeBasedTriggeringPolicy size="250 MB"/>
       </Policies>
     </RollingFile>
@@ -44,7 +39,7 @@
 
   <Loggers>
     <Root level="all">
-      <AppenderRef level="debug" ref="console"/>
+      <AppenderRef level="warn" ref="console"/>
       <AppenderRef level="all" ref="file"/>
       <AppenderRef level="all" ref="rollingFile"/>
     </Root>

@@ -66,8 +66,6 @@ public class GameObjectAttributesContainer implements Cloneable {
    */
   public void setColor(List<Integer> color, String mod) {
     this.color.put(mod, color);
-    System.out.println(
-        "Setting color in properties container:" + this.color + " Container: " + this);
   }
 
   public void setAllColor(Map<String, List<Integer>> allColors) {

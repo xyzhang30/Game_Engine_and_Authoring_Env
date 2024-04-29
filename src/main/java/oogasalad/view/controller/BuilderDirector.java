@@ -25,7 +25,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class BuilderDirector {
 
-  private static final Logger LOGGER = LogManager.getLogger(GameBuilder.class);
+  private static final Logger LOGGER = LogManager.getLogger(BuilderDirector.class);
   private static final String RESOURCE_FOLDER_PATH = "model.";
   private static final String ERROR_RESOURCE_FOLDER = "error.";
   private static final String ERROR_FILE_PREFIX = "Error";

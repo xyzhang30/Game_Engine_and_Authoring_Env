@@ -332,12 +332,8 @@ public class SceneManager {
   }
 
   public void createLoginScene() {
-    System.out.println("login screen initialized");
     resetRoot();
-    System.out.println("root reset");
     root.getChildren().add(createSceneElements(loginElementsPath));
-    System.out.println(loginElementsPath);
-    System.out.println(((Pane) (root.getChildren().get(0))).getChildren());
   }
 
   public void createCurrentPlayersScene() {

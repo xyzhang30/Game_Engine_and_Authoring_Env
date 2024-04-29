@@ -139,9 +139,7 @@ public class Database implements DatabaseApi {
       pstmt.setString(1, username);
       try (ResultSet rs = pstmt.executeQuery()) {
         if (rs.next()) {
-          System.out.println(password);
           String storedPassword = rs.getString("password");
-          System.out.println(storedPassword);
           // Use BCrypt to check if the entered password matches the stored hashed password
           return BCrypt.checkpw(password, storedPassword);
         }
@@ -390,7 +388,6 @@ public class Database implements DatabaseApi {
   @Override
   public void assignPermissionToPlayers(String game, List<String> users, String permission) {
     for (String user : users) {
-      //System.out.println(user + " " + permission);
       try {
         grantPermissions(user, game, permission);
       } catch (SQLException e) {

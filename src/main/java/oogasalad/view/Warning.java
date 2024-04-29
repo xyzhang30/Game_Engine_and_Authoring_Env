@@ -1,5 +1,6 @@
 package oogasalad.view;
 
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -14,5 +15,10 @@ public class Warning {
     alert.setHeaderText(headerText);
     alert.setContentText(message);
     alert.showAndWait();
+  }
+
+  public void showAlert(AlertType alertType, String title, String headerText,
+      String message){
+    showAlert(new Scene(new Group()), alertType, title, headerText, message);
   }
 }

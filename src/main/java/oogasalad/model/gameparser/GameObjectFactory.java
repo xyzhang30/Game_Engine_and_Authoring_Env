@@ -19,7 +19,7 @@ public class GameObjectFactory {
 
   private static final String filePath = "src/main/resources/model/gameObjects.properties";
   private static final Properties properties = new Properties();
-  private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
+  private static final Logger LOGGER = LogManager.getLogger(GameObjectFactory.class);
 
   private static void loadProperties() {
     try {

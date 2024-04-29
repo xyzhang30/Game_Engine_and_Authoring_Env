@@ -43,7 +43,7 @@ import org.controlsfx.control.CheckComboBox;
  */
 public class PolicyPanel implements Panel {
 
-  private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
+  private static final Logger LOGGER = LogManager.getLogger(PolicyPanel.class);
   private static final String GAME_ENGINE_PACKAGE_PATH = "src/main/java/oogasalad/model"
       + "/gameengine/";
   private static final String REFLECTION_ENGINE_PACKAGE_PATH = "oogasalad.model.gameengine.";

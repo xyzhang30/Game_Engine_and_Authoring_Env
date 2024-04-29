@@ -91,7 +91,6 @@ public class AuthoringController {
       throws IncompletePlayerStrikeableAuthoringException {
     List<ParserPlayer> players = new ArrayList<>();
     playersMap.forEach((playerId, myGameObjects) -> {
-      System.out.println("collidables:" + playersMap.get(playerId).get(CollidableType.STRIKEABLE));
       ParserPlayer player;
       try {
         player = new ParserPlayer(playerId,
@@ -168,9 +167,6 @@ public class AuthoringController {
 
       Position objPosition = new Position(properties.getPosition().x(),
           properties.getPosition().y());
-
-      System.out.println("Colors:" + properties.getAllColors());
-      System.out.println("Img:" + properties.getAllImagePaths());
 
       GameObjectProperties gameObject = new GameObjectProperties(properties.getId(),
           objectProperties, properties.getMass(), objPosition, shapeName, objDimension,

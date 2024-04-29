@@ -33,7 +33,6 @@ public class DatabaseController {
 
   public void writePlayerPermissions(String gameName, List<String> playersWithAccess,
       List<String> playersWithoutAccess) {
-    System.out.println(playersWithAccess);
     databaseView.assignPermissionToPlayers(gameName, playersWithAccess, "Player");
     databaseView.assignPermissionToPlayers(gameName, playersWithoutAccess, "None");
   }
@@ -53,13 +52,11 @@ public class DatabaseController {
 
   public boolean canUserLogin(String username) {
     // if false then throw this exception throw new Exception("Login failed: User does not exist.");
-    System.out.println(databaseView.doesUserExist(username));
     return databaseView.doesUserExist(username);  // user exists, can log in
   }
 
   public boolean loginUser(String username, String password)
       throws UserNotFoundException, IncorrectPasswordException {
-    System.out.println(databaseView.loginUser(username, password));
     if (!canUserLogin(username)) {
       LOGGER.error("login failed - username does not exist");
       throw new UserNotFoundException("username does not exist.");

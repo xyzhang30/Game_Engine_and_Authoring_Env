@@ -41,7 +41,6 @@ public class ExecutableFactory {
       if (annotation != null) {
         int expectedParamNumber = annotation.value();
         if (params.size() != expectedParamNumber) {
-          System.out.println(params);
           LOGGER.error("missing parameters for command/condition " + name);
           throw new InvalidParameterNumberException("Expected " + expectedParamNumber +
               " parameters for command/condition " + name + " but found " + params.size());

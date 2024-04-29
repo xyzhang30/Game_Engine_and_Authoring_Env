@@ -102,7 +102,6 @@ public class DatabaseHandler extends Handler {
   }
 
   public void createLoginHandler(Node node) {
-    System.out.println("createLoginHandler in scene element handler called");
     node.setOnMouseClicked(e -> {
       try {
         boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(),
@@ -153,7 +152,6 @@ public class DatabaseHandler extends Handler {
         try {
           boolean userCreated = databaseController.canCreateUser(usernameTextField.getText(),
               passwordField.getText(), avatarUrlField);
-          System.out.println(userCreated);
           if (!userCreated) {
             LOGGER.error("User creation error - user already exists or could not be created.");
             throw new CreateNewUserException("User already exists or could not be created.");
