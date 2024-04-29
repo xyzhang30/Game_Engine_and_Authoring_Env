@@ -8,7 +8,6 @@ import java.util.List;
  * Represents all JSON data configuring the game that gets serialized/deserialized into/from JSON
  */
 
-@JsonPropertyOrder({"gameName", "game_objects", "players", "variables", "rules"})
 public class GameData {
 
   private @JsonProperty("gameName") String gameName;

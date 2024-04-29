@@ -21,7 +21,6 @@ import oogasalad.model.gameengine.gameobject.GameObject;
 @IsCommand(isCommand = true)
 @CommandHelpInfo(description = "")
 @VariableParamNumber(isVariable = true)
-@ExpectedParamNumber(0)
 public class GameObjectsNotVisibleCondition implements Condition {
 
   private final List<Integer> arguments;

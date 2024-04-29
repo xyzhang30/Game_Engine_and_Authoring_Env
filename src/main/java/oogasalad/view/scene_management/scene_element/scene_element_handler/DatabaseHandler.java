@@ -39,12 +39,10 @@ import oogasalad.view.scene_management.scene_managers.SceneManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class DatabaseHandler {
+public class DatabaseHandler extends Handler{
 
-  private final GameController gameController;
   private final DatabaseController databaseController;
   private final List<String> currentPlayersManager;
-  private final SceneManager sceneManager;
   private TextField usernameTextField;
   private TextField passwordField;
   private ListView<String> playerPermissions;
@@ -63,11 +61,9 @@ public class DatabaseHandler {
   public DatabaseHandler(GameController gameController, SceneManager sceneManager,
       DatabaseController databaseController,
       List<String> currentPlayersManager) {
-    this.gameController = gameController;
-    this.sceneManager = sceneManager;
+    super(gameController, sceneManager);
     this.databaseController = databaseController;
     this.currentPlayersManager = currentPlayersManager;
-    createEventMap();
   }
 
   /**
@@ -82,7 +78,7 @@ public class DatabaseHandler {
     consumer.accept(node);
   }
 
-  private void createEventMap() {
+  protected void createEventMap() {
     eventMap = new HashMap<>();
     eventMap.put(SceneElementEvent.LOGIN,
         this::createLoginHandler); //opens the currentplayers screen with the user that has been entered
@@ -116,18 +112,19 @@ public class DatabaseHandler {
           }
           else {
             currentPlayersManager.add(usernameTextField.getText());
-            sceneManager.createCurrentPlayersScene();
+            getSceneManager().createCurrentPlayersScene();
           }
         }
       } catch (UserNotFoundException | IncorrectPasswordException ex) {
         LOGGER.error(ex.getMessage());
         Warning warning = new Warning();
-        warning.showAlert(this.sceneManager.getScene(), AlertType.ERROR, "Login Error", null, ex.getMessage());
+        warning.showAlert(getSceneManager().getScene(), AlertType.ERROR, "Login Error", null, ex.getMessage());
       } catch (Exception ex) {
         LOGGER.error("An unexpected error occurred during login: " + ex.getMessage());
         // Handle other unexpected errors
         Warning warning = new Warning();
-        warning.showAlert(this.sceneManager.getScene(), AlertType.ERROR, "Login Error", null, "An unexpected error occurred during login.");
+        warning.showAlert(getSceneManager().getScene(), AlertType.ERROR, "Login Error", null, "An unexpected "
+            + "error occurred during login.");
       }
     });
   }
@@ -160,7 +157,7 @@ public class DatabaseHandler {
                 throw new CreateNewUserException("User already exists or could not be created.");
               }
             } catch (CreateNewUserException | CreatingDuplicateUserException ex) {
-              WARNING.showAlert(this.sceneManager.getScene(), AlertType.ERROR,
+              WARNING.showAlert(getSceneManager().getScene(), AlertType.ERROR,
                   "Creating New User Error", null, ex.getMessage());
             }
           });
@@ -173,7 +170,8 @@ public class DatabaseHandler {
     Dialog<String> dialog = new Dialog<>();
     dialog.setTitle("Select Avatar");
     dialog.setHeaderText("Click on your desired avatar and then press ENTER");
-    dialog.initOwner(sceneManager.getScene().getWindow()); // Make sure it's modal in respect to the application window
+    dialog.initOwner(getSceneManager().getScene().getWindow()); // Make sure it's modal in respect to the
+    // application window
     dialog.initModality(Modality.WINDOW_MODAL); // Set modality to block user interaction with other windows
 
     ButtonType selectButtonType = new ButtonType("Select", ButtonBar.ButtonData.OK_DONE);
@@ -256,12 +254,12 @@ public class DatabaseHandler {
 
 
   private void createStartLoginHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createLoginScene());
+    node.setOnMouseClicked(e -> getSceneManager().createLoginScene());
 
   }
 
   private void createLeaderboardHandler(Node node) {
-    node.setOnMouseClicked(e -> sceneManager.createLeaderboardScene());
+    node.setOnMouseClicked(e -> getSceneManager().createLeaderboardScene());
   }
 
   private void setCurrentPlayers(Node node) {
@@ -270,13 +268,13 @@ public class DatabaseHandler {
   }
 
   public void setLeaderboard(Node node) {
-    gameController.getGameName();
+    getGameController().getGameName();
     databaseController.leaderboardSet((ListView<String>) node);
   }
 
   private void setUpPlayerPermissions(Node node) {
     playerPermissions = (ListView<String>) node;
-    playerPermissionMap = gameController.getPlayerPermissions(currentGame);
+    playerPermissionMap = getGameController().getPlayerPermissions(currentGame);
     playerCheckBoxMap = new HashMap<>(); // Map to store player names to their corresponding checkboxes
 
     ObservableList<String> playerNames = FXCollections.observableArrayList(playerPermissionMap.keySet());
@@ -353,7 +351,7 @@ public class DatabaseHandler {
           }
       databaseController.setPublicPrivate(currentGame, publicComboBox.getSelectionModel().getSelectedItem());
       databaseController.writePlayerPermissions(currentGame, checkedPlayers, uncheckedPlayers);
-      sceneManager.createMenuScene();
+      getSceneManager().createMenuScene();
     });
   }
 
@@ -372,7 +370,7 @@ public class DatabaseHandler {
         }
       }
       databaseController.writeFriends(currentPlayersManager.get(0), checkedPlayers, uncheckedPlayers);
-      sceneManager.createMenuScene();
+      getSceneManager().createMenuScene();
     });
   }
 
