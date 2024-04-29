@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
@@ -167,59 +168,56 @@ public class DatabaseHandler extends Handler{
   }
 
   private Optional<String> showAvatarSelectionDialog() {
+    Dialog<String> dialog = createAvatarSelectionDialog();
+
+    ComboBox<String> avatarComboBox = createAvatarComboBox();
+    dialog.getDialogPane().setContent(avatarComboBox);
+
+    return dialog.showAndWait();
+  }
+
+  private Dialog<String> createAvatarSelectionDialog() {
     Dialog<String> dialog = new Dialog<>();
     dialog.setTitle("Select Avatar");
     dialog.setHeaderText("Click on your desired avatar and then press ENTER");
-    dialog.initOwner(getSceneManager().getScene().getWindow()); // Make sure it's modal in respect to the
-    // application window
-    dialog.initModality(Modality.WINDOW_MODAL); // Set modality to block user interaction with other windows
-
+    dialog.initOwner(getSceneManager().getScene().getWindow());
+    dialog.initModality(Modality.WINDOW_MODAL);
     ButtonType selectButtonType = new ButtonType("Select", ButtonBar.ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(selectButtonType, ButtonType.CANCEL);
-
-    ComboBox<String> avatarComboBox = new ComboBox<>();
-    ObservableList<String> avatars = loadAvatarNamesFromDirectory(); // Use the method to load avatar names dynamically
-    avatarComboBox.setItems(avatars);
-    avatarComboBox.setCellFactory(lv -> new ListCell<>() {
-      @Override
-      protected void updateItem(String item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty || item == null) {
-          setText(null);
-          setGraphic(null);
-        } else {
-          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), 100, 100, true, false);
-          ImageView imageView = new ImageView(img);
-          setGraphic(imageView);
-        }
-      }
-    });
-
-    avatarComboBox.setButtonCell(new ListCell<>() {
-      @Override
-      protected void updateItem(String item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty || item == null) {
-          setText(null);
-          setGraphic(null);
-        } else {
-          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), 50, 50, true, false);
-          ImageView imageView = new ImageView(img);
-          setGraphic(imageView);
-        }
-      }
-    });
-
-    dialog.getDialogPane().setContent(avatarComboBox);
-
     dialog.setResultConverter(dialogButton -> {
       if (dialogButton == selectButtonType) {
-        return avatarComboBox.getSelectionModel().getSelectedItem();
+        return ((ComboBox<String>) dialog.getDialogPane().getContent()).getSelectionModel().getSelectedItem();
       }
       return null;
     });
 
-    return dialog.showAndWait();
+    return dialog;
+  }
+
+  private ComboBox<String> createAvatarComboBox() {
+    ComboBox<String> avatarComboBox = new ComboBox<>();
+    ObservableList<String> avatars = loadAvatarNamesFromDirectory();
+    avatarComboBox.setItems(avatars);
+    avatarComboBox.setCellFactory(lv -> createAvatarListCell(100));
+    avatarComboBox.setButtonCell(createAvatarListCell(50));
+    return avatarComboBox;
+  }
+
+  private ListCell<String> createAvatarListCell(int size) {
+    return new ListCell<>() {
+      @Override
+      protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+          setGraphic(null);
+        } else {
+          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), size, size, true, false);
+          ImageView imageView = new ImageView(img);
+          setGraphic(imageView);
+        }
+      }
+    };
   }
 
 
@@ -386,21 +384,32 @@ public class DatabaseHandler extends Handler{
   private void accessibilityBoxSelected(ActionEvent event) {
     String mode = publicComboBox.getValue();
     friendsMap = databaseController.getFriends(currentPlayersManager.get(0));
-    for (String s : playerCheckBoxMap.keySet()) {
-      if (mode.equals("public")) {
-        playerCheckBoxMap.get(s).setSelected(true);
-        playerPermissionMap.put(s,true);
-      }
-      if (mode.equals("private")) {
-        playerCheckBoxMap.get(s).setSelected(false);
-        playerPermissionMap.put(s,false);
-      }
-      if (mode.equals("friends")) {
-        playerCheckBoxMap.get(s).setSelected(friendsMap.containsKey(s) && friendsMap.get(s));
-        playerPermissionMap.put(s,friendsMap.containsKey(s) && friendsMap.get(s));
-      }
+    Map<String, BiConsumer<CheckBox, String>> modeBehaviors = initializeAccessibilityMap();
+    for (Map.Entry<String, CheckBox> entry : playerCheckBoxMap.entrySet()) {
+      String playerName = entry.getKey();
+      CheckBox checkBox = entry.getValue();
+      modeBehaviors.getOrDefault(mode, (c, p) -> {}).accept(checkBox, playerName);
     }
   }
+
+  private Map<String, BiConsumer<CheckBox, String>> initializeAccessibilityMap() {
+    Map<String, BiConsumer<CheckBox, String>> modeBehaviors = new HashMap<>();
+    modeBehaviors.put("public", (checkBox, playerName) -> {
+      checkBox.setSelected(true);
+      playerPermissionMap.put(playerName, true);
+    });
+    modeBehaviors.put("private", (checkBox, playerName) -> {
+      checkBox.setSelected(false);
+      playerPermissionMap.put(playerName, false);
+    });
+    modeBehaviors.put("friends", (checkBox, playerName) -> {
+      boolean selected = friendsMap.containsKey(playerName) && friendsMap.get(playerName);
+      checkBox.setSelected(selected);
+      playerPermissionMap.put(playerName, selected);
+    });
+    return modeBehaviors;
+  }
+
 
   public void setGame(String gameTitle) {
     currentGame = gameTitle;
