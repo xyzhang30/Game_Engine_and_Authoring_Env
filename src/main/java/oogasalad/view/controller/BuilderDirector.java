@@ -67,22 +67,6 @@ public class BuilderDirector {
 
   public void writeGame(String fileName) throws InvalidJSONDataException {
     writeGame(fileName, this.gameData, NEW_GAME_DATA_FOLDER_PATH);
-//    this.gameData.setGameName(fileName);
-//    ObjectMapper mapper = new ObjectMapper();
-//    if (gameData.getGameObjects() == null || gameData.getPlayers() == null
-//        || gameData.getVariables() == null || gameData.getRules() == null) {
-//      LOGGER.error(resourceBundle.getString("NullJSONFieldError"));
-//      throw new InvalidJSONDataException(String.format(
-//          String.format(resourceBundle.getString("NullJSONFieldError"))));
-//    }
-//    try {
-//      mapper.writerWithDefaultPrettyPrinter()
-//          .writeValue(new File(DATA_FOLDER_PATH + fileName + JSON_EXTENSION), gameData);
-//    } catch (IOException e) {
-//      LOGGER.error(resourceBundle.getString("JSONWritingError"), e.getMessage());
-//      throw new InvalidJSONDataException(String.format(
-//          String.format(resourceBundle.getString("JSONWritingError"), e.getMessage())), e);
-//    }
   }
 
   public void writeGame(String fileName, GameData gameData, String folderPath)
