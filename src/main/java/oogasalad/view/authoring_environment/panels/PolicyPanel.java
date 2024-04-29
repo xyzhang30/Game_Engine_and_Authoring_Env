@@ -43,20 +43,21 @@ import org.controlsfx.control.CheckComboBox;
  */
 public class PolicyPanel implements Panel {
 
-  private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
+  private static final Logger LOGGER = LogManager.getLogger(PolicyPanel.class);
+  private static final String GAME_ENGINE_PACKAGE_PATH = "src/main/java/oogasalad/model"
+      + "/gameengine/";
+  private static final String REFLECTION_ENGINE_PACKAGE_PATH = "oogasalad.model.gameengine.";
   private final AuthoringProxy authoringProxy;
   private final StackPane canvas;
   private final AnchorPane rootPane;
   private final AnchorPane containerPane;
-  private Map<String, String> commandPackageMap = new HashMap<>();
-  private Map<ComboBox<String>, String> singleChoiceComboxBoxes = new HashMap<>();
-  private Map<CheckComboBox<String>, String> multiChoiceCheckBoxes = new HashMap<>();
-  private static final String GAME_ENGINE_PACKAGE_PATH = "src/main/java/oogasalad/model"
-      + "/gameengine/";
-  private static final String REFLECTION_ENGINE_PACKAGE_PATH = "oogasalad.model.gameengine.";
   private final String language = "English"; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
   private final UIElementFactory uiElementFactory;
+  private final Map<String, String> commandPackageMap = new HashMap<>();
+  private final Map<ComboBox<String>, String> singleChoiceComboxBoxes = new HashMap<>();
+  private final Map<CheckComboBox<String>, String> multiChoiceCheckBoxes = new HashMap<>();
+
   /**
    * Constructor for PolicyPanel.
    *
@@ -121,7 +122,7 @@ public class PolicyPanel implements Panel {
       comboBox.getItems().addAll(availableCommands);
       comboBox.setId(ruleTypeName);
 
-      if (authoringProxy.ruleAlreadySelected(ruleTypeName)){
+      if (authoringProxy.ruleAlreadySelected(ruleTypeName)) {
         comboBox.setValue(authoringProxy.getSelectedSingleChoiceCommands(ruleTypeName));
       } else {
         comboBox.setPromptText(resourceBundle.getString("policyPromptText"));
@@ -144,7 +145,7 @@ public class PolicyPanel implements Panel {
       AnchorPane.setTopAnchor(checkComboBox, 50.0 * heightIdx);
       checkComboBox.setId(ruleTypeName);
 
-      if (authoringProxy.getMultiCommandCheckedIdx().containsKey(checkComboBox.getId())){
+      if (authoringProxy.getMultiCommandCheckedIdx().containsKey(checkComboBox.getId())) {
         authoringProxy.getMultiCommandCheckedIdx().get(checkComboBox.getId()).forEach(idx -> {
           checkComboBox.getCheckModel().checkIndices(idx);
         });
@@ -184,7 +185,7 @@ public class PolicyPanel implements Panel {
         return null;
       }
     } catch (ClassNotFoundException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
       return null;
     }
   }
@@ -318,14 +319,16 @@ public class PolicyPanel implements Panel {
                     authoringProxy.addConditionsCommandsWithParam(checkComboBox.getId(),
                         selectedCommand, params);
                   }
-                  authoringProxy.updateMultiCommandCheckedIdx(checkComboBox.getId(), checkComboBox.getCheckModel().getCheckedIndices());
+                  authoringProxy.updateMultiCommandCheckedIdx(checkComboBox.getId(),
+                      checkComboBox.getCheckModel().getCheckedIndices());
                 }
               }
               if (c.wasRemoved()) {
                 for (String removedCommand : c.getRemoved()) {
                   authoringProxy.removeConditionsCommandsWithParam(checkComboBox.getId(),
                       removedCommand);
-                  authoringProxy.updateMultiCommandCheckedIdx(checkComboBox.getId(), checkComboBox.getCheckModel().getCheckedIndices());
+                  authoringProxy.updateMultiCommandCheckedIdx(checkComboBox.getId(),
+                      checkComboBox.getCheckModel().getCheckedIndices());
                 }
               }
             }

@@ -18,7 +18,7 @@ import oogasalad.view.visual_elements.Arrow;
  * for adjusting power and angle when preparing to strike.
  */
 public class StrikeHandler extends Handler {
-  
+
   private final int angleIncrement = 5;
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
   private double maxPower;
@@ -27,8 +27,9 @@ public class StrikeHandler extends Handler {
   private Arrow angleArrow;
 
   /**
-   * Constructs a StrikeHandler with the specified getGameController() and SceneManager. Initializes the
-   * event map by creating the mapping between SceneElementEvents and their respective handlers.
+   * Constructs a StrikeHandler with the specified getGameController() and SceneManager. Initializes
+   * the event map by creating the mapping between SceneElementEvents and their respective
+   * handlers.
    *
    * @param gameController The game controller for managing game state and behavior.
    * @param sceneManager   The scene manager for handling scene transitions and updates.

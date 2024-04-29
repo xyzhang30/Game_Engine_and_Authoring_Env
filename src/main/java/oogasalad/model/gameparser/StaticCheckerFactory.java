@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import oogasalad.model.api.exception.InvalidCommandException;
 import oogasalad.model.gameengine.checkstatic.StaticChecker;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class StaticCheckerFactory {
 

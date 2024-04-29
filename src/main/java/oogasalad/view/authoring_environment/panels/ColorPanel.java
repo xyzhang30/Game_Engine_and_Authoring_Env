@@ -56,11 +56,12 @@ public class ColorPanel implements Panel {
       if (shapeProxy.getShape() != null) {
         Color color = ((ColorPicker) event.getSource()).getValue();
         shapeProxy.getShape().setFill(color);
-        System.out.println("picking color:" + color.getRed() + " " + color.getBlue() + " "+ color.getGreen());
         shapeProxy.getGameObjectAttributesContainer().setColor(
-            List.of((int) Math.round(color.getRed() * 255), (int) Math.round(color.getGreen() * 255),
+            List.of((int) Math.round(color.getRed() * 255),
+                (int) Math.round(color.getGreen() * 255),
                 (int) Math.round(color.getBlue() * 255)), shapeProxy.getCurrentMod());
-        shapeProxy.getGameObjectAttributesContainer().setImagePath(null, shapeProxy.getCurrentMod());
+        shapeProxy.getGameObjectAttributesContainer()
+            .setImagePath(null, shapeProxy.getCurrentMod());
       }
     });
   }

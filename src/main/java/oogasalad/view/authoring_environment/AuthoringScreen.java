@@ -1,6 +1,5 @@
 package oogasalad.view.authoring_environment;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.geometry.Pos;
@@ -21,35 +20,40 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import oogasalad.model.api.exception.AuthoringException;
-import oogasalad.model.gameparser.GameLoaderModel;
 import oogasalad.view.Warning;
-import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
-import oogasalad.view.authoring_environment.panels.KeySelectionPanel;
-import oogasalad.view.authoring_environment.panels.ModPanel;
-import oogasalad.view.authoring_environment.util.Container;
-import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.api.authoring.AuthoringFactory;
-import oogasalad.view.authoring_environment.panels.ShapePanel;
-import oogasalad.view.scene_management.GameWindow;
-import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
+import oogasalad.view.api.authoring.Panel;
+import oogasalad.view.api.enums.AuthoringScreenType;
+import oogasalad.view.api.enums.SupportedLanguage;
+import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
 import oogasalad.view.authoring_environment.panels.ColorPanel;
 import oogasalad.view.authoring_environment.panels.ImagePanel;
 import oogasalad.view.authoring_environment.panels.InteractionPanel;
-import oogasalad.view.api.authoring.Panel;
+import oogasalad.view.authoring_environment.panels.KeySelectionPanel;
+import oogasalad.view.authoring_environment.panels.ModPanel;
 import oogasalad.view.authoring_environment.panels.PolicyPanel;
+import oogasalad.view.authoring_environment.panels.ShapePanel;
+import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
-import oogasalad.view.api.enums.AuthoringScreenType;
-import oogasalad.view.api.enums.SupportedLanguage;
+import oogasalad.view.authoring_environment.util.Container;
+import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
+import oogasalad.view.scene_management.GameWindow;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Represents the authoring screen for the authoring environment in the application, providing the user interface for creating and managing various game elements.
+ * Represents the authoring screen for the authoring environment in the application, providing the
+ * user interface for creating and managing various game elements.
  *
  * @author Judy He
  */
 public class AuthoringScreen {
 
+  private static final String RESOURCE_FOLDER_PATH = "view.";
+  private static final String VIEW_PROPERTIES_FOLDER = "properties.";
+  private static final String UI_FILE_PREFIX = "UIElements";
+  private static final Warning WARNING = new Warning();
+  private static final Logger LOGGER = LogManager.getLogger(AuthoringScreen.class);
   private final AnchorPane rootPane = new AnchorPane();
   private final AnchorPane containerPane = new AnchorPane(); // PASSED TO PANELS
   private final StackPane canvasPane = new StackPane();
@@ -57,31 +61,27 @@ public class AuthoringScreen {
   private final AuthoringProxy authoringProxy;
   private final Scene scene;
   private final Container container = new Container();
-  ComboBox<AuthoringScreenType> screensDropDown = new ComboBox<>();
-  Text titleText = new Text();
-  private static final String RESOURCE_FOLDER_PATH = "view.";
-  private static final String VIEW_PROPERTIES_FOLDER = "properties.";
-  private static final String UI_FILE_PREFIX = "UIElements";
-  private SupportedLanguage language; // PASS IN LANGUAGE
   private final ResourceBundle resourceBundle;
   private final AuthoringFactory authoringFactory;
+  ComboBox<AuthoringScreenType> screensDropDown = new ComboBox<>();
+  Text titleText = new Text();
+  private SupportedLanguage language; // PASS IN LANGUAGE
   private TextField gameNameTextField;
   private TextArea gameDescriptionTextField;
   private Stage gameNameStage;
   private Button submitGameNameButton;
   private ComboBox<String> permissionSelection;
-  private static final Warning WARNING = new Warning();
-  private static final Logger LOGGER = LogManager.getLogger(AuthoringScreen.class);
 
   /**
    * Constructs an AuthoringScreen instance.
    *
-   * @param language        The language to use for resource bundle localization.
+   * @param language         The language to use for resource bundle localization.
    * @param authoringFactory The factory used to create authoring components.
    * @param shapeProxy       The ShapeProxy instance associated with the game objects.
    * @param authoringProxy   The AuthoringProxy instance for managing authoring operations.
    */
-  public AuthoringScreen(SupportedLanguage language, AuthoringFactory authoringFactory, ShapeProxy shapeProxy, AuthoringProxy authoringProxy) {
+  public AuthoringScreen(SupportedLanguage language, AuthoringFactory authoringFactory,
+      ShapeProxy shapeProxy, AuthoringProxy authoringProxy) {
     this.language = language;
     this.resourceBundle = ResourceBundle.getBundle(
         RESOURCE_FOLDER_PATH + VIEW_PROPERTIES_FOLDER + UI_FILE_PREFIX + language);
@@ -90,8 +90,9 @@ public class AuthoringScreen {
     this.authoringProxy = authoringProxy;
     createCanvas();
     createContainerPane();
-    createScreenSelectionDropDown(List.of(AuthoringScreenType.GAMEOBJECTS, AuthoringScreenType.INTERACTIONS,
-        AuthoringScreenType.POLICIES, AuthoringScreenType.KEY_PREFERENCES));
+    createScreenSelectionDropDown(
+        List.of(AuthoringScreenType.GAMEOBJECTS, AuthoringScreenType.INTERACTIONS,
+            AuthoringScreenType.POLICIES, AuthoringScreenType.KEY_PREFERENCES));
     handleScreenSelectionDropDown();
     createFinishButton();
     containerPane.getChildren().add(titleText);
@@ -135,28 +136,31 @@ public class AuthoringScreen {
         container.setPanels(createKeySelectionPanel());
         break;
     }
-    System.out.println();
   }
 
   private List<Panel> createGameObjectsPanel() {
     return List.of(
         new ColorPanel(shapeProxy, containerPane),
         new ImagePanel(authoringProxy, shapeProxy, containerPane),
-        new ShapePanel(authoringFactory, shapeProxy, authoringProxy, canvasPane, rootPane, containerPane, new DefaultUIElementFactory()),
+        new ShapePanel(authoringFactory, shapeProxy, authoringProxy, canvasPane, rootPane,
+            containerPane, new DefaultUIElementFactory()),
         new ModPanel(authoringProxy, shapeProxy, containerPane)
     );
   }
 
   private List<Panel> createInteractionsPanel() {
-    return List.of(new InteractionPanel(authoringProxy, shapeProxy, containerPane, new DefaultUIElementFactory()));
+    return List.of(new InteractionPanel(authoringProxy, shapeProxy, containerPane,
+        new DefaultUIElementFactory()));
   }
 
   private List<Panel> createPoliciesPanel() {
-    return List.of(new PolicyPanel(authoringProxy, rootPane, containerPane, canvasPane, new DefaultUIElementFactory()));
+    return List.of(new PolicyPanel(authoringProxy, rootPane, containerPane, canvasPane,
+        new DefaultUIElementFactory()));
   }
 
-  private List<Panel> createKeySelectionPanel(){
-    return List.of(new KeySelectionPanel(authoringProxy, rootPane, containerPane, canvasPane, new DefaultUIElementFactory()));
+  private List<Panel> createKeySelectionPanel() {
+    return List.of(new KeySelectionPanel(authoringProxy, rootPane, containerPane, canvasPane,
+        new DefaultUIElementFactory()));
   }
 
   private void setTitle(String title) {
@@ -212,10 +216,12 @@ public class AuthoringScreen {
     finishButton.setId("finishButton");
     finishButton.setPrefSize(100, 50);
     finishButton.setOnMouseClicked(event -> {
-      if (screensDropDown.getSelectionModel().getSelectedItem().equals(AuthoringScreenType.GAMEOBJECTS)) {
+      if (screensDropDown.getSelectionModel().getSelectedItem()
+          .equals(AuthoringScreenType.GAMEOBJECTS)) {
         shapeProxy.setFinalShapeDisplay();
         try {
-          GameObjectAttributesContainer copy = (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer().clone();
+          GameObjectAttributesContainer copy = (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer()
+              .clone();
           authoringProxy.setGameObject(shapeProxy.getShape(), copy);
         } catch (CloneNotSupportedException e) {
           throw new RuntimeException(e);
@@ -253,7 +259,9 @@ public class AuthoringScreen {
       permissionSelection.getItems().addAll("public", "private", "friends");
       permissionSelection.setPromptText("Specify game permission");
 
-      vbox.getChildren().addAll(enterName, gameNameTextField, enterDescription, gameDescriptionTextField, permission, permissionSelection, makeSubmitGameNameButton());
+      vbox.getChildren()
+          .addAll(enterName, gameNameTextField, enterDescription, gameDescriptionTextField,
+              permission, permissionSelection, makeSubmitGameNameButton());
 
       Scene scene = new Scene(vbox, 500, 500);
       gameNameStage.setScene(scene);
@@ -274,14 +282,14 @@ public class AuthoringScreen {
         updateSubmitButtonState(gameNameTextField.getText().trim());
       });
 
-
       submitGameNameButton.setOnAction(e -> {
         gameNameStage.close();
         authoringProxy.setGameName(gameNameTextField.getText());
         try {
           authoringProxy.saveGameDescription(gameDescriptionTextField.getText());
-        } catch (AuthoringException error){
-          WARNING.showAlert(scene, AlertType.ERROR, "Error Saving Game Description", null, error.getMessage());
+        } catch (AuthoringException error) {
+          WARNING.showAlert(scene, AlertType.ERROR, "Error Saving Game Description", null,
+              error.getMessage());
         }
         authoringProxy.setGamePermission(permissionSelection.getValue());
         authoringProxy.completeAuthoring(scene);
@@ -311,7 +319,8 @@ public class AuthoringScreen {
         if (oldVal.equals(AuthoringScreenType.GAMEOBJECTS)) {
           shapeProxy.setFinalShapeDisplay();
           try {
-            GameObjectAttributesContainer copy = (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer().clone();
+            GameObjectAttributesContainer copy = (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer()
+                .clone();
             authoringProxy.setGameObject(shapeProxy.getShape(), copy);
             shapeProxy.resetGameObjectAttributesContainer();
           } catch (CloneNotSupportedException e) {

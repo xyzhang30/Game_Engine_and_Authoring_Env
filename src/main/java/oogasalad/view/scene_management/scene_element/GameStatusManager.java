@@ -17,6 +17,7 @@ import oogasalad.model.api.PlayerRecord;
  * @author Jordan Haytaian
  */
 public class GameStatusManager {
+
   private final String playerScoreSeparator = ": ";
   private String turnText;
   private String roundText;
@@ -70,7 +71,7 @@ public class GameStatusManager {
   }
 
   private void updateTurn(int turn, Map<Integer, String> playerMap) {
-    turnDisplay.setText(turnText + playerMap.get(turn));
+    turnDisplay.setText(turnText + playerMap.getOrDefault(turn, "Guest"));
   }
 
   private void updateRound(int round) {
@@ -86,10 +87,10 @@ public class GameStatusManager {
   }
 
   private ObservableList<String> createScoreListItems(List<PlayerRecord> players, Map<Integer,
-        String> playerMap) {
+      String> playerMap) {
     List<String> scores = new ArrayList<>();
     for (PlayerRecord player : players) {
-      scores.add(playerMap.get(player.playerId()) + playerScoreSeparator + player.score());
+      scores.add(playerMap.getOrDefault(player.playerId(), "Guest") + playerScoreSeparator + player.score());
     }
     return FXCollections.observableList(scores);
   }

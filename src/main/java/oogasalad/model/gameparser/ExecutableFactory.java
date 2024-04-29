@@ -20,17 +20,20 @@ public class ExecutableFactory {
   private static final String CONDITION_PATH = "condition.";
   private static final String COMMAND_PATH = "command.";
 
-  public static Condition createCondition(String conditionName, List<Integer> params, Map<Integer, GameObject> gameObjectMap)
+  public static Condition createCondition(String conditionName, List<Integer> params,
+      Map<Integer, GameObject> gameObjectMap)
       throws InvalidCommandException {
     return createInstance(BASE_PATH + CONDITION_PATH, conditionName, params, gameObjectMap);
   }
 
-  public static Command createCommand(String commandName, List<Integer> params, Map<Integer, GameObject> gameObjectMap)
+  public static Command createCommand(String commandName, List<Integer> params,
+      Map<Integer, GameObject> gameObjectMap)
       throws InvalidCommandException {
     return createInstance(BASE_PATH + COMMAND_PATH, commandName, params, gameObjectMap);
   }
 
-  private static <T> T createInstance(String path, String name, List<Integer> params, Map<Integer, GameObject> gameObjectMap)
+  private static <T> T createInstance(String path, String name, List<Integer> params,
+      Map<Integer, GameObject> gameObjectMap)
       throws InvalidCommandException {
     try {
       Class<?> clazz = Class.forName(path + name);
@@ -38,7 +41,6 @@ public class ExecutableFactory {
       if (annotation != null) {
         int expectedParamNumber = annotation.value();
         if (params.size() != expectedParamNumber) {
-          System.out.println(params);
           LOGGER.error("missing parameters for command/condition " + name);
           throw new InvalidParameterNumberException("Expected " + expectedParamNumber +
               " parameters for command/condition " + name + " but found " + params.size());

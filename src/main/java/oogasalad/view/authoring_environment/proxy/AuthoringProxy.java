@@ -1,18 +1,18 @@
 package oogasalad.view.authoring_environment.proxy;
 
+import static oogasalad.view.Warning.showAlert;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -21,13 +21,12 @@ import oogasalad.model.api.exception.AuthoringException;
 import oogasalad.model.api.exception.InCompleteRulesAuthoringException;
 import oogasalad.model.api.exception.IncompletePlayerStrikeableAuthoringException;
 import oogasalad.model.database.Database;
-import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.Warning;
+import oogasalad.view.api.enums.CollidableType;
 import oogasalad.view.api.exception.MissingInteractionException;
 import oogasalad.view.api.exception.MissingNonControllableTypeException;
 import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.controller.AuthoringController;
-import oogasalad.view.api.enums.CollidableType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,17 +40,15 @@ import org.apache.logging.log4j.Logger;
 public class AuthoringProxy {
 
   private static final Warning WARNING = new Warning();
+  private static final Logger LOGGER = LogManager.getLogger(AuthoringProxy.class);
   private final Map<String, String> keyPreferences = new HashMap<>();
   private final Map<String, Map<String, List<Integer>>> conditionsCommands = new HashMap<>();
   private final Map<String, String> policies = new HashMap<>();
   private final Map<List<Integer>, Map<String, List<Integer>>> interactionMap = new HashMap<>();
   private final Map<Shape, GameObjectAttributesContainer> gameObjectMap = new HashMap<>();
-  private final Map<Integer, Map<CollidableType, List<Integer>>> playersMap
+  private Map<Integer, Map<CollidableType, List<Integer>>> playersMap
       = new HashMap<>();
-  private Map<String, List<Integer>> multiCommandCheckedIdx = new HashMap<>(); //checkComboBoxId mapped to checkedIndices
-  private static final Logger LOGGER = LogManager.getLogger(AuthoringProxy.class);
-
-
+  private final Map<String, List<Integer>> multiCommandCheckedIdx = new HashMap<>(); //checkComboBoxId mapped to checkedIndices
   private String gameName;
   private String currentScreenTitle;
   private AuthoringController authoringController;
@@ -129,28 +126,28 @@ public class AuthoringProxy {
     conditionsCommands.get(type).remove(commandName);
   }
 
-  public void addKeyPreference(String keyType, String keyCode){
+  public void addKeyPreference(String keyType, String keyCode) {
     keyPreferences.put(keyType, keyCode);
   }
 
-  public boolean keyAlreadyUsed(String key){
-    for (String keyCode : keyPreferences.values()){
-      if (key.equals(keyCode)){
+  public boolean keyAlreadyUsed(String key) {
+    for (String keyCode : keyPreferences.values()) {
+      if (key.equals(keyCode)) {
         return true;
       }
     }
     return false;
   }
 
-  public boolean keyTypeAlreadySelected(String keyType){
+  public boolean keyTypeAlreadySelected(String keyType) {
     return (this.keyPreferences.containsKey(keyType));
   }
 
-  public String getSelectedKey(String keyType){
+  public String getSelectedKey(String keyType) {
     return this.keyPreferences.get(keyType);
   }
 
-  public boolean ruleAlreadySelected(String ruleType){
+  public boolean ruleAlreadySelected(String ruleType) {
     return (this.policies.containsKey(ruleType) || this.conditionsCommands.containsKey(ruleType));
   }
 
@@ -191,32 +188,17 @@ public class AuthoringProxy {
       authoringController.writeKeyPreferences(keyPreferences);
       boolean saveGameSuccess = authoringController.submitGame(gameName);
       if (saveGameSuccess) {
-        WARNING.showAlert(scene, AlertType.INFORMATION, "Save Game Success", null, "Game successfully saved!");
         saveGameToDatabase();
+        WARNING.showAlert(scene, AlertType.INFORMATION, "Save Game Success", null,
+            "Game successfully saved!");
       } else {
         throw new AuthoringException("Save game failed :(");
       }
-    } catch (AuthoringException | InCompleteRulesAuthoringException | IncompletePlayerStrikeableAuthoringException e) {
+    } catch (AuthoringException | InCompleteRulesAuthoringException |
+             IncompletePlayerStrikeableAuthoringException e) {
       WARNING.showAlert(scene, AlertType.ERROR, "Authoring Error", null, e.getMessage());
     }
   }
-
-
-//  private void showSaveGameError(String errorMessage) {
-//    Alert alert = new Alert(AlertType.ERROR);
-//    alert.setTitle("Save Game Error");
-//    alert.setHeaderText(null);
-//    alert.setContentText(errorMessage);
-//    alert.showAndWait();
-//  }
-
-//  private void showSuceessMessage(String message) {
-//    Alert alert = new Alert(AlertType.INFORMATION);
-//    alert.setTitle("Save Game Success");
-//    alert.setHeaderText(null);
-//    alert.setContentText(message);
-//    alert.showAndWait();
-//  }
 
   /**
    * Updates the authoring screen.
@@ -248,10 +230,11 @@ public class AuthoringProxy {
    *
    * @param gameDescription The description of the game.
    */
-  public void saveGameDescription(String gameDescription){
+  public void saveGameDescription(String gameDescription) {
     // Load existing properties from file
     Properties properties = new Properties();
-    try (InputStream inputStream = new FileInputStream("src/main/resources/view/properties/GameDescriptions.properties")) {
+    try (InputStream inputStream = new FileInputStream(
+        "src/main/resources/view/properties/GameDescriptions.properties")) {
       properties.load(inputStream);
     } catch (IOException e) {
       LOGGER.error("Error loading game description properties file: " + e.getMessage());
@@ -260,12 +243,14 @@ public class AuthoringProxy {
 
     properties.setProperty(gameName, gameDescription);
 
-    try (OutputStream outputStream = new FileOutputStream("src/main/resources/view/properties/GameDescriptions.properties")) {
+    try (OutputStream outputStream = new FileOutputStream(
+        "src/main/resources/view/properties/GameDescriptions.properties")) {
       properties.store(outputStream, "Updated Properties");
     } catch (IOException e) {
-      System.err.println("Error adding new properties: " + e.getMessage());
+      LOGGER.error("Error adding new properties: " + e.getMessage());
     }
   }
+
   /**
    * Returns the current screen title.
    *
@@ -332,7 +317,7 @@ public class AuthoringProxy {
    * @param shapeId The ID of the shape to remove.
    */
   public void removeObjectFromPlayersAllLists(Integer shapeId) {
-    removeCollidableFromAllPlayers(CollidableType.STRIKABLE, shapeId);
+    removeCollidableFromAllPlayers(CollidableType.STRIKEABLE, shapeId);
     removeCollidableFromAllPlayers(CollidableType.CONTROLLABLE, shapeId);
     removeCollidableFromAllPlayers(CollidableType.SCOREABLE, shapeId);
   }
@@ -358,9 +343,7 @@ public class AuthoringProxy {
    */
   public void removeCollidableFromPlayer(int playerId, CollidableType collidableType,
       Integer shapeId) {
-    if (playersMap.get(playerId).get(collidableType).contains(shapeId)) {
-      playersMap.get(playerId).get(collidableType).remove(shapeId);
-    }
+    playersMap.get(playerId).get(collidableType).remove(shapeId);
   }
 
   /**
@@ -368,7 +351,7 @@ public class AuthoringProxy {
    */
   public void addNewPlayer() {
     playersMap.putIfAbsent(getCurrentPlayerId(), new HashMap<>());
-    playersMap.get(getCurrentPlayerId()).putIfAbsent(CollidableType.STRIKABLE, new ArrayList<>());
+    playersMap.get(getCurrentPlayerId()).putIfAbsent(CollidableType.STRIKEABLE, new ArrayList<>());
     playersMap.get(getCurrentPlayerId())
         .putIfAbsent(CollidableType.CONTROLLABLE, new ArrayList<>());
     playersMap.get(getCurrentPlayerId()).putIfAbsent(CollidableType.SCOREABLE, new ArrayList<>());
@@ -404,26 +387,26 @@ public class AuthoringProxy {
   }
 
   public String getSelectedSingleChoiceCommands(String ruleType) {
-    if (policies.containsKey(ruleType)){
+    if (policies.containsKey(ruleType)) {
       return policies.get(ruleType);
     } else {
       String cmd = "";
-      for (String s : conditionsCommands.get(ruleType).keySet()){
+      for (String s : conditionsCommands.get(ruleType).keySet()) {
         cmd = s;
       }
       return cmd;
     }
   }
 
-  public Map<String,List<Integer>> getMultiCommandCheckedIdx(){
+  public Map<String, List<Integer>> getMultiCommandCheckedIdx() {
     return multiCommandCheckedIdx;
   }
 
-  public void updateMultiCommandCheckedIdx(String key, List<Integer> newIndices){
+  public void updateMultiCommandCheckedIdx(String key, List<Integer> newIndices) {
     multiCommandCheckedIdx.put(key, newIndices);
   }
 
-  public void setGamePermission(String permission){
+  public void setGamePermission(String permission) {
     this.gamePermission = permission;
   }
 
@@ -431,6 +414,16 @@ public class AuthoringProxy {
     String hostPlayer = authoringController.getHostPlayer();
     int numPlayers = playersMap.size();
     Database database = new Database();
-    database.registerGame(gameName,hostPlayer,numPlayers, gamePermission);
+    try {
+      database.registerGame(gameName, hostPlayer, numPlayers, gamePermission);
+    }
+    catch (SQLException e) {
+      showAlert(Alert.AlertType.ERROR, "Database Error", "Cannot Register Game", e.getMessage());
+    }
   }
+
+  public void setPlayersMap (Map<Integer, Map<CollidableType, List<Integer>>> playersMap){
+    this.playersMap = playersMap;
+  }
+
 }

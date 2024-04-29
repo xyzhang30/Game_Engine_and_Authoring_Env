@@ -23,7 +23,7 @@ public class LastStaticStateCommand implements Command {
    * Constructs an instance of the LastStaticStateCommand. This constructor does not actually do
    * anything, and exists for the sake of consistency across commands.
    *
-   * @param arguments An empty list.
+   * @param arguments     An empty list.
    * @param gameObjectMap a map from object ids to the actual GameObject
    */
 

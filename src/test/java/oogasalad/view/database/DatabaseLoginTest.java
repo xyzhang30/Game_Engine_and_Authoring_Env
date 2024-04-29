@@ -3,6 +3,7 @@ package oogasalad.view.database;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.sql.SQLException;
 import java.util.List;
 import oogasalad.model.database.Database;
 import oogasalad.view.api.exception.IncorrectPasswordException;
@@ -27,25 +28,25 @@ public class DatabaseLoginTest {
   }
 
   @Test
-  public void testLoginUserSuccess() {
+  public void testLoginUserSuccess() throws SQLException {
     when(databaseView.loginUser("validUser", "validPassword")).thenReturn(true);
     assertDoesNotThrow(() -> databaseController.loginUser("validUser", "validPassword"));
   }
 
   @Test
-  public void testLoginUserNonExistentUsername() {
+  public void testLoginUserNonExistentUsername() throws SQLException {
     when(databaseView.loginUser("nonexistentUser", "anyPassword")).thenReturn(false);
     assertThrows(UserNotFoundException.class, () -> databaseController.loginUser("nonexistentUser", "anyPassword"));
   }
 
   @Test
-  public void testLoginUserIncorrectPassword() {
+  public void testLoginUserIncorrectPassword() throws SQLException {
     when(databaseView.loginUser("validUser", "wrongPassword")).thenReturn(false);
     assertThrows(IncorrectPasswordException.class, () -> databaseController.loginUser("validUser", "wrongPassword"));
   }
 
   @Test
-  public void testLoginUserNonExistentUsernameWithAKnownPassword() {
+  public void testLoginUserNonExistentUsernameWithAKnownPassword() throws SQLException {
     when(databaseView.loginUser("nonexistentUser", "validPassword")).thenReturn(false);
     assertThrows(UserNotFoundException.class, () -> databaseController.loginUser("nonexistentUser", "validPassword"));
   }

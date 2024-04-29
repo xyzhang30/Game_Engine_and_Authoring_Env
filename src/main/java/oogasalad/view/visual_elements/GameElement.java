@@ -8,12 +8,9 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
-import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
 
 /**
@@ -32,9 +29,14 @@ public class GameElement implements VisualElement {
     myNode.setTranslateX(viewData.startXpos());
     myNode.setTranslateY(viewData.startYpos());
   }
-  public void changeFill(ViewGameObjectRecord viewData){
-    Shape shape = ((Shape)myNode);
-    if (viewData.image().isEmpty()) {
+
+  public void changeFill(ViewGameObjectRecord viewData) {
+    Shape shape = ((Shape) myNode);
+    getColorOrImage(viewData, shape);
+  }
+
+  private void getColorOrImage(ViewGameObjectRecord viewData, Shape shape) {
+    if (viewData.image() == null || viewData.image().isEmpty()) {
       List<Integer> rgb = viewData.color();
       Color color = Color.rgb(rgb.get(0), rgb.get(1), rgb.get(2));
       shape.setFill(color);
@@ -65,15 +67,7 @@ public class GameElement implements VisualElement {
         .newInstance(data.width(), data.height());
     Shape shape = (Shape) obj;
 
-    if (data.image().isEmpty()) {
-      List<Integer> rgb = data.color();
-      Color color = Color.rgb(rgb.get(0), rgb.get(1), rgb.get(2));
-      shape.setFill(color);
-    } else {
-      Path imgPath = Paths.get(data.image());
-      Image image = new Image(imgPath.toUri().toString());
-      shape.setFill(new ImagePattern(image));
-    }
+    getColorOrImage(data, shape);
 
     return shape;
   }

@@ -1,32 +1,26 @@
 package oogasalad.view.authoring_environment.panels;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Logger;
+import java.util.List;
+import java.util.Map;
 import javafx.geometry.Bounds;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import oogasalad.view.api.authoring.AuthoringFactory;
 import oogasalad.view.api.authoring.Panel;
 import oogasalad.view.api.authoring.UIElementFactory;
-import oogasalad.view.authoring_environment.factories.DefaultUIElementFactory;
-import oogasalad.view.authoring_environment.util.Coordinate;
-import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
+import oogasalad.view.api.enums.AuthoringScreenType;
+import oogasalad.view.api.enums.CollidableType;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
-import oogasalad.view.api.enums.AuthoringScreenType;
+import oogasalad.view.authoring_environment.util.Coordinate;
+import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 
 /**
  * ShapePanel is responsible for handling shape-related events in the authoring environment,
@@ -43,9 +37,9 @@ public class ShapePanel implements Panel {
   private final StackPane canvas;
   private final AnchorPane rootPane;
   private final AnchorPane containerPane;
+  private final UIElementFactory uiElementFactory;
   private Coordinate startPos;
   private Coordinate translatePos;
-  private final UIElementFactory uiElementFactory;
   private Button mod;
   private TextArea modName;
 
@@ -137,7 +131,8 @@ public class ShapePanel implements Panel {
   }
 
   private void handleGameObjectEvents(Shape shape) {
-    shape.setOnMouseClicked(event -> setShapeOnClick((Shape) event.getSource()));
+    shape.setOnMouseClicked(event -> setShapeOnClick((Shape) event.getSource(),
+        authoringProxy.getGameObjectMap().get(shape), authoringProxy.getPlayers()));
     shape.setOnMousePressed(this::handleMousePressed);
     shape.setOnMouseDragged(event -> setShapeOnCompleteDrag((Shape) event.getSource(), event));
     shape.setOnMouseReleased(event -> setShapeOnRelease((Shape) event.getSource()));
@@ -192,7 +187,7 @@ public class ShapePanel implements Panel {
     }
   }
 
-  private void setShapeOnClick(Shape shape) {
+  private void setShapeOnClick(Shape shape, GameObjectAttributesContainer gameObj,Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
     if (shapeProxy.getShape() == null) {
       return;
     }
@@ -202,16 +197,17 @@ public class ShapePanel implements Panel {
       try {
         GameObjectAttributesContainer copy =
             (GameObjectAttributesContainer) shapeProxy.getGameObjectAttributesContainer()
-            .clone();
+                .clone();
         authoringProxy.setGameObject(shapeProxy.getShape(), copy);
       } catch (CloneNotSupportedException e) {
         throw new RuntimeException(e);
       }
     }
-    shapeProxy.selectShape(shape);
+    shapeProxy.selectShape(shape, gameObj);
     shape.setStroke(Color.YELLOW);
     shapeProxy.updateShapeSelectionDisplay();
     authoringFactory.resetAuthoringElements();
+    authoringProxy.setPlayersMap(playersMap);
   }
 
   private boolean isInAuthoringBox(Shape shape) {

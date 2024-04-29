@@ -1,39 +1,11 @@
 {
-  "gameName" : "a",
+  "gameName" : "mod2",
   "game_objects" : [ {
-    "properties" : [ "COLLIDABLE", "visible" ],
+    "properties" : [ "visible", "STRIKEABLE" ],
     "mass" : 0.0,
     "position" : {
-      "x_position" : 672.2000122070312,
-      "y_position" : 651.4000244140625
-    },
-    "shape" : "Circle",
-    "dimension" : {
-      "x_dimension" : 66.0,
-      "y_dimension" : 66.0
-    },
-    "color" : {
-      "default" : [ 255, 255, 153 ],
-      "d" : null
-    },
-    "staticFriction" : 0.0,
-    "kineticFriction" : 0.0,
-    "inclineAngle" : 0.0,
-    "image" : {
-      "default" : null,
-      "d" : "C:\\Users\\alish\\cs308\\oogasalad_team01\\data\\nonstrikeable_images\\bird.jpg"
-    },
-    "direction" : 0.0,
-    "inelastic" : false,
-    "phaser" : false,
-    "score" : 0.0,
-    "gameobject_id" : 1
-  }, {
-    "properties" : [ "COLLIDABLE", "visible" ],
-    "mass" : 0.0,
-    "position" : {
-      "x_position" : 838.5999755859375,
-      "y_position" : 522.4000091552734
+      "x_position" : 860.2000122070312,
+      "y_position" : 564.7999877929688
     },
     "shape" : "Rectangle",
     "dimension" : {
@@ -41,21 +13,49 @@
       "y_dimension" : 56.0
     },
     "color" : {
-      "default" : [ 255, 255, 153 ],
-      "d" : null
+      "a" : [ 255, 204, 128 ],
+      "Default" : [ 255, 153, 102 ]
     },
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
     "image" : {
-      "default" : null,
-      "d" : "C:\\Users\\alish\\cs308\\oogasalad_team01\\data\\nonstrikeable_images\\bird.jpg"
+      "a" : null,
+      "Default" : null
     },
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
     "score" : 0.0,
     "gameobject_id" : 0
+  }, {
+    "properties" : [ "visible" ],
+    "mass" : 0.0,
+    "position" : {
+      "x_position" : 819.4000244140625,
+      "y_position" : 749.7999877929688
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 66.0,
+      "y_dimension" : 66.0
+    },
+    "color" : {
+      "a" : [ 179, 128, 26 ],
+      "Default" : [ 230, 230, 179 ]
+    },
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : {
+      "a" : null,
+      "Default" : null
+    },
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "score" : 0.0,
+    "gameobject_id" : 1
   } ],
   "players" : [ {
     "score" : 0.0,
@@ -76,25 +76,19 @@
     }
   } ],
   "rules" : {
-    "collisions" : [ {
-      "first_id" : 1,
-      "second_id" : 0,
-      "command" : {
-        "AdvanceTurnCommand" : [ ]
-      }
-    } ],
+    "collisions" : [  ],
     "turn_policy" : "StandardTurnPolicy",
     "round_condition" : {
-      "AllPlayersCompletedRoundCondition" : [ ]
+      "GameObjectsNotVisibleCondition" : [ ]
     },
     "win_condition" : {
-      "AllPlayersCompletedRoundCondition" : [ ]
+      "GameObjectsNotVisibleCondition" : [ 1 ]
     },
     "advance_turn" : {
-      "AdvanceTurnCommand" : [ ]
+      "AdvanceRoundCommand" : [ ]
     },
     "advance_round" : {
-      "AdvanceRoundCommand" : [ ]
+      "AdvanceTurnCommand" : [ ]
     },
     "strike_policy" : "DoNothingStrikePolicy",
     "rank_comparator" : "HighestScoreComparator",
@@ -103,12 +97,12 @@
     }
   },
   "keys" : {
-    "striking" : "J",
-    "angle_left" : "A",
-    "angle_right" : "S",
-    "power_up" : "D",
-    "power_down" : "F",
-    "controllable_left" : "G",
-    "controllable_right" : "H"
+    "striking" : "V",
+    "angle_left" : "DIGIT1",
+    "angle_right" : "DIGIT2",
+    "power_up" : "DIGIT3",
+    "power_down" : "T",
+    "controllable_left" : "R",
+    "controllable_right" : "F"
   }
 }

@@ -3,7 +3,6 @@ package oogasalad.view.scene_management;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import oogasalad.view.controller.GameController;
-import oogasalad.view.scene_management.scene_managers.SceneManager;
 
 /**
  * The `GameWindow` class represents the stage being shown to the user It provides functionality to
