@@ -150,9 +150,11 @@ public class GameController {
         gameLoaderView = new GameLoaderView(selectedGame);
         gameEngine = new GameEngine(selectedGame);
       } catch (InvalidFileException e) {
+        e.printStackTrace();
         handleException("Start Game Error", "Can't find game file");
         return;
       } catch (InvalidColorParsingException | InvalidShapeException e) {
+        e.printStackTrace();
         handleException("Parsing Error", e.getMessage());
         return;
       }
