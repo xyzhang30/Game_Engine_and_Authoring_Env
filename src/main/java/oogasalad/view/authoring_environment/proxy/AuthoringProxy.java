@@ -343,7 +343,9 @@ public class AuthoringProxy {
    */
   public void removeCollidableFromPlayer(int playerId, CollidableType collidableType,
       Integer shapeId) {
-    playersMap.get(playerId).get(collidableType).remove(shapeId);
+    if (playerId >= 1) {
+      playersMap.get(playerId).get(collidableType).remove(shapeId);
+    }
   }
 
   /**
