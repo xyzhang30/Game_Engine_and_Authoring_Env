@@ -99,7 +99,7 @@ public class AuthoringController {
             playersMap.get(playerId).get(CollidableType.CONTROLLABLE), 0,
             playersMap.get(playerId).get(CollidableType.STRIKEABLE).get(0));
       } catch (IndexOutOfBoundsException e) {
-        e.printStackTrace();
+        LOGGER.error(e.getMessage());
         throw new IncompletePlayerStrikeableAuthoringException(
             "Please assign a strikeable game object to each player.");
       }

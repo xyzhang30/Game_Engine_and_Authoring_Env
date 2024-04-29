@@ -12,12 +12,21 @@ import java.util.Map;
 import java.util.TreeMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javax.xml.crypto.Data;
+import net.bytebuddy.implementation.bytecode.Throw;
+import oogasalad.model.api.exception.GetGamesFromDbException;
+import oogasalad.model.api.exception.UserLogInException;
+import oogasalad.model.gameparser.GameLoader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 import org.postgresql.util.PSQLException;
 
 public class Database implements DatabaseApi {
 
-  private static ObservableList<String> getGames(String playerName, int numPlayers, String sql) {
+  private static final Logger LOGGER = LogManager.getLogger(Database.class);
+
+  private static ObservableList<String> getGames(String playerName, int numPlayers, String sql) throws GetGamesFromDbException {
     List<String> gameNames = new ArrayList<>();
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -32,7 +41,7 @@ public class Database implements DatabaseApi {
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new GetGamesFromDbException(e.getMessage());
     }
     return FXCollections.observableList(gameNames);
   }
@@ -67,7 +76,8 @@ public class Database implements DatabaseApi {
         scores.add(new GameScore(playerName, gameName, score, gameResult));
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
+      throw new GetGamesFromDbException("Error getting game player number - "+e.getMessage());
     }
     return scores.subList(0, Math.min(scores.size(), n));
   }
@@ -87,7 +97,8 @@ public class Database implements DatabaseApi {
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
+      throw new GetGamesFromDbException("Error getting permission - " + e.getMessage());
     }
     return scores;
   }
@@ -100,7 +111,7 @@ public class Database implements DatabaseApi {
    */
 
   @Override
-  public ObservableList<GameScore> getGeneralHighScoresForGame(String gameName, boolean desc) {
+  public ObservableList<GameScore> getGeneralHighScoresForGame(String gameName, boolean desc) throws GetGamesFromDbException{
     List<GameScore> scores = new ArrayList<>();
     String query = "SELECT gr.playerusername, gr.score, gr.gameresult " +
         "FROM gameresult gr " +
@@ -119,7 +130,8 @@ public class Database implements DatabaseApi {
         scores.add(new GameScore(playerusername, gameName, score, gameResult));
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
+      throw new GetGamesFromDbException("Error getting highest score - "+e.getMessage());
     }
     return FXCollections.observableList(scores.subList(0, Math.min(10, scores.size())));
   }
@@ -132,7 +144,7 @@ public class Database implements DatabaseApi {
    * @return True if the login credentials are valid, false otherwise.
    */
   @Override
-  public boolean loginUser(String username, String password) {
+  public boolean loginUser(String username, String password) throws UserLogInException{
     String query = "SELECT password FROM Players WHERE username = ?";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -145,7 +157,8 @@ public class Database implements DatabaseApi {
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
+      throw new UserLogInException(e.getMessage());
     }
     return false;
   }
@@ -179,7 +192,7 @@ public class Database implements DatabaseApi {
         return true;
       }
     } catch (PSQLException uniqueViolation) {
-      uniqueViolation.printStackTrace();
+      LOGGER.error(uniqueViolation.getMessage());
       return true;
     } catch (SQLException e) {
       return false;
@@ -195,7 +208,7 @@ public class Database implements DatabaseApi {
       ResultSet rs = pstmt.executeQuery();
       return rs.next();  //true if user exists (bc at least one row exists)
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
       return false;  //false if user does not exist
     }
   }
@@ -212,7 +225,7 @@ public class Database implements DatabaseApi {
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
     }
     return "public";
   }
@@ -226,7 +239,7 @@ public class Database implements DatabaseApi {
       pstmt.setString(2, gameName);
       pstmt.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
     }
   }
 
@@ -261,9 +274,9 @@ public class Database implements DatabaseApi {
       grantPermissions(ownerName, gameName, "Owner");
       return affectedRows > 0;
     } catch (PSQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
     }
     return false;
   }
@@ -280,7 +293,7 @@ public class Database implements DatabaseApi {
         usernames.add(username);
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
     }
     return usernames;
   }
@@ -297,7 +310,7 @@ public class Database implements DatabaseApi {
         gamenames.add(game);
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
     }
     return gamenames;
   }
@@ -338,11 +351,11 @@ public class Database implements DatabaseApi {
             return generatedKeys.getInt(1);
           }
         } catch (Exception e) {
-          e.printStackTrace();
+          LOGGER.error(e.getMessage());
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
     }
 
     return -1;
@@ -371,7 +384,7 @@ public class Database implements DatabaseApi {
       int affectedRows = pstmt.executeUpdate();
       return affectedRows > 0;
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error("Can't add game score - "+e.getMessage());
     }
     return false;
   }
@@ -413,7 +426,7 @@ public class Database implements DatabaseApi {
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
     }
   }
 
@@ -432,7 +445,7 @@ public class Database implements DatabaseApi {
    * @return A list of game IDs that are playable by the player.
    */
   @Override
-  public ObservableList<String> getManageableGames(String playerName) {
+  public ObservableList<String> getManageableGames(String playerName) throws GetGamesFromDbException {
     String sql = "SELECT p.gamename FROM permissions p " +
         "JOIN games g ON p.gamename = g.gamename " +
         "WHERE p.username = ? AND p.permissions = 'Owner'";
@@ -496,7 +509,7 @@ public class Database implements DatabaseApi {
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
     }
     return friendsMap;
 

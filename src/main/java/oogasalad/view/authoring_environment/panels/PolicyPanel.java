@@ -185,7 +185,7 @@ public class PolicyPanel implements Panel {
         return null;
       }
     } catch (ClassNotFoundException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
       return null;
     }
   }

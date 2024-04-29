@@ -232,7 +232,7 @@ public class DatabaseHandler extends Handler {
               .collect(Collectors.toList())
       );
     } catch (Exception e) {
-      e.printStackTrace();
+
       return FXCollections.observableArrayList(); // return an empty list in case of error
     }
   }

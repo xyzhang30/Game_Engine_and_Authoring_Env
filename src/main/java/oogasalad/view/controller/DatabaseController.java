@@ -1,15 +1,20 @@
 package oogasalad.view.controller;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
 import oogasalad.model.api.PlayerRecord;
+import oogasalad.model.api.exception.GetGamesFromDbException;
 import oogasalad.model.database.Database;
 import oogasalad.model.database.GameScore;
+import oogasalad.view.Warning;
+import oogasalad.view.api.authoring.Panel;
 import oogasalad.view.api.exception.CreatingDuplicateUserException;
 import oogasalad.view.api.exception.IncorrectPasswordException;
 import oogasalad.view.api.exception.UserNotFoundException;
@@ -21,6 +26,7 @@ import org.apache.logging.log4j.Logger;
 public class DatabaseController {
 
   private static final Logger LOGGER = LogManager.getLogger(DatabaseController.class);
+  private static final Warning WARNING = new Warning();
   public Database databaseView;
   private final List<String> currentPlayersManager;
   private final Leaderboard leaderboard;
@@ -38,7 +44,12 @@ public class DatabaseController {
   }
 
   public Map<String, Boolean> getPlayerPermissions(String gameName) {
-    return databaseView.getPlayerPermissionsForGames(gameName);
+    try{
+      return databaseView.getPlayerPermissionsForGames(gameName);
+    } catch (GetGamesFromDbException e){
+      WARNING.showAlert(AlertType.ERROR, "Database Error", null, e.getMessage());
+      return null;
+    }
   }
 
   public String getGameAccessibility(String gameName) {
@@ -97,7 +108,13 @@ public class DatabaseController {
    * @param gameName The name of the game for which to update the leaderboard scores.
    */
   public void getFormattedScoresForLeaderboard(String gameName, boolean descending) {
-    List<GameScore> scores = databaseView.getGeneralHighScoresForGame(gameName, descending);
+    List<GameScore> scores;
+    try {
+      scores = databaseView.getGeneralHighScoresForGame(gameName, descending);
+    } catch (GetGamesFromDbException e) {
+      WARNING.showAlert(AlertType.ERROR, "Database Error", null, e.getMessage());
+      return;
+    }
     ObservableList<String> formattedScores = scores.stream()
         .sorted(Comparator.comparing(GameScore::score))
         .map(this::formatScoreForDisplay)
@@ -118,8 +135,13 @@ public class DatabaseController {
 
 
   public ObservableList<String> getManageableGames() {
-    String host = currentPlayersManager.get(0);
-    return databaseView.getManageableGames(host);
+    try {
+      String host = currentPlayersManager.get(0);
+      return databaseView.getManageableGames(host);
+    } catch (GetGamesFromDbException e){
+      WARNING.showAlert(AlertType.ERROR, "Get Games Error", null, e.getMessage());
+      return null;
+    }
   }
 
   public ObservableList<String> getNewGameTitles() {

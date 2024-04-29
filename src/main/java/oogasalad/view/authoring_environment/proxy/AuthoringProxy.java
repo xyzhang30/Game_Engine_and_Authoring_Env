@@ -259,7 +259,7 @@ public class AuthoringProxy {
         "src/main/resources/view/properties/GameDescriptions.properties")) {
       properties.store(outputStream, "Updated Properties");
     } catch (IOException e) {
-      System.err.println("Error adding new properties: " + e.getMessage());
+      LOGGER.error("Error adding new properties: " + e.getMessage());
     }
   }
 
