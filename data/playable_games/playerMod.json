@@ -1,0 +1,107 @@
+{
+  "players" : [ {
+    "score" : 0.0,
+    "player_id" : 0,
+    "my_strikeable" : [ 0 ],
+    "my_scoreable" : [ 1 ],
+    "my_controllable" : [ ],
+    "active_strikeable" : 0
+  } ],
+  "variables" : [ {
+    "global" : {
+      "current_turn" : 1,
+      "current_round" : 1
+    },
+    "player" : {
+      "strokes" : 0,
+      "finished" : 0
+    }
+  } ],
+  "rules" : {
+    "collisions" : [ ],
+    "turn_policy" : "StandardTurnPolicy",
+    "round_condition" : {
+      "GameObjectsNotVisibleCondition" : [ ]
+    },
+    "win_condition" : {
+      "AllPlayersCompletedRoundCondition" : [ ]
+    },
+    "advance_turn" : {
+      "AdvanceRoundCommand" : [ ],
+      "AdvanceTurnCommand" : [ ]
+    },
+    "advance_round" : {
+      "AdvanceTurnCommand" : [ ]
+    },
+    "strike_policy" : "DoNothingStrikePolicy",
+    "rank_comparator" : "HighestScoreComparator",
+    "static_checker" : {
+      "VelocityStaticChecker" : [ ]
+    }
+  },
+  "gameName" : "playerMod",
+  "game_objects" : [ {
+    "properties" : [ "COLLIDABLE", "STRIKEABLE", "visible" ],
+    "mass" : 0.0,
+    "position" : {
+      "x_position" : 753.7999877929688,
+      "y_position" : 455.20001220703125
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 106.0,
+      "y_dimension" : 56.0
+    },
+    "color" : {
+      "a" : [ 77, 26, 77 ],
+      "Default" : [ 102, 51, 102 ]
+    },
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : {
+      "a" : null,
+      "Default" : null
+    },
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "score" : 0.0,
+    "gameobject_id" : 0
+  }, {
+    "properties" : [ "visible" ],
+    "mass" : 0.0,
+    "position" : {
+      "x_position" : 801.0,
+      "y_position" : 666.5999755859375
+    },
+    "shape" : "Circle",
+    "dimension" : {
+      "x_dimension" : 66.0,
+      "y_dimension" : 66.0
+    },
+    "color" : {
+      "a" : [ 204, 128, 153 ]
+    },
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : {
+      "a" : null
+    },
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "score" : 0.0,
+    "gameobject_id" : 1
+  } ],
+  "keys" : {
+    "striking" : "J",
+    "angle_left" : "A",
+    "angle_right" : "S",
+    "power_up" : "D",
+    "power_down" : "F",
+    "controllable_left" : "G",
+    "controllable_right" : "H"
+  }
+}

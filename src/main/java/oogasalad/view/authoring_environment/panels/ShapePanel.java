@@ -1,6 +1,8 @@
 package oogasalad.view.authoring_environment.panels;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+import java.util.Map;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -14,6 +16,7 @@ import oogasalad.view.api.authoring.AuthoringFactory;
 import oogasalad.view.api.authoring.Panel;
 import oogasalad.view.api.authoring.UIElementFactory;
 import oogasalad.view.api.enums.AuthoringScreenType;
+import oogasalad.view.api.enums.CollidableType;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 import oogasalad.view.authoring_environment.util.Coordinate;
@@ -129,7 +132,7 @@ public class ShapePanel implements Panel {
 
   private void handleGameObjectEvents(Shape shape) {
     shape.setOnMouseClicked(event -> setShapeOnClick((Shape) event.getSource(),
-        authoringProxy.getGameObjectMap().get(shape)));
+        authoringProxy.getGameObjectMap().get(shape), authoringProxy.getPlayers()));
     shape.setOnMousePressed(this::handleMousePressed);
     shape.setOnMouseDragged(event -> setShapeOnCompleteDrag((Shape) event.getSource(), event));
     shape.setOnMouseReleased(event -> setShapeOnRelease((Shape) event.getSource()));
@@ -184,7 +187,7 @@ public class ShapePanel implements Panel {
     }
   }
 
-  private void setShapeOnClick(Shape shape, GameObjectAttributesContainer gameObj) {
+  private void setShapeOnClick(Shape shape, GameObjectAttributesContainer gameObj,Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
     if (shapeProxy.getShape() == null) {
       return;
     }
@@ -204,6 +207,7 @@ public class ShapePanel implements Panel {
     shape.setStroke(Color.YELLOW);
     shapeProxy.updateShapeSelectionDisplay();
     authoringFactory.resetAuthoringElements();
+    authoringProxy.setPlayersMap(playersMap);
   }
 
   private boolean isInAuthoringBox(Shape shape) {

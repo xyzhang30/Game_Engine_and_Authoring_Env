@@ -241,12 +241,9 @@ public class ShapeProxy {
    * Resets the GameObjectAttributesContainer due to new shape selection.
    */
   public void resetGameObjectAttributesContainer(GameObjectAttributesContainer gameObj) {
-//    if (!shapeSelectionDisabled){
     gameObjectAttributesContainer = new GameObjectAttributesContainer();
-//    }
     if (!shapeStack.isEmpty()) {
       Shape currentShape = shapeStack.peek();
-      System.out.println("Current Shape Stack in reset" + shapeStack);
       gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));
       gameObjectAttributesContainer.setWidth(
           currentShape.getLayoutBounds().getWidth() * currentShape.getScaleX());
