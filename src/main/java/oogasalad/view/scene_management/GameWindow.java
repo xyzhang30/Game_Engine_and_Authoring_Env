@@ -24,11 +24,7 @@ public class GameWindow {
    * initializing the game window.
    */
   public GameWindow() {
-    GameController controller = new GameController(SCREEN_WIDTH, SCREEN_HEIGHT);
-    Stage newStage = new Stage();
-    newStage.setScene(controller.getScene());
-    newStage.setFullScreen(true);
-    newStage.show();
+    this(new Stage());
   }
 
   /**
