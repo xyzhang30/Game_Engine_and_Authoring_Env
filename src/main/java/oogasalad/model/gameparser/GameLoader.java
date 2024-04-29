@@ -53,17 +53,11 @@ public abstract class GameLoader {
   }
 
   private void parseJSON(String filePath) throws IOException {
-    System.out.println(filePath);
     ObjectMapper objectMapper = new ObjectMapper();
-    System.out.println(filePath);
     File f = new File(filePath);
-    System.out.println(filePath);
     this.gameData = objectMapper.readValue(f, GameData.class);
-    System.out.println(filePath);
     createIdToObjectMap();
-    System.out.println(filePath);
     createIdtoPlayerMap();
-    System.out.println(filePath);
   }
 
   private void createIdToObjectMap() {

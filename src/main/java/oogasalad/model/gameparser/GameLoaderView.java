@@ -104,9 +104,6 @@ public class GameLoaderView extends GameLoader {
       String shape = o.shape();
       List<Integer> colorRgb = new ArrayList<>();
       try {
-        System.out.println(mod);
-        System.out.println(o.color());
-
         for (int i : o.color().getOrDefault(mod, List.of(0, 0, 0))) {
           colorRgb.add(validateRgbValue(i));
         }

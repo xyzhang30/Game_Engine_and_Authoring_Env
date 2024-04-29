@@ -263,7 +263,7 @@ public class AuthoringProxy {
         "src/main/resources/view/properties/GameDescriptions.properties")) {
       properties.store(outputStream, "Updated Properties");
     } catch (IOException e) {
-      System.err.println("Error adding new properties: " + e.getMessage());
+      LOGGER.error("Error adding new properties: " + e.getMessage());
     }
   }
 
@@ -392,7 +392,6 @@ public class AuthoringProxy {
    */
   public void addCollidableToPlayer(int selectedPlayerId, CollidableType collidableType,
       Integer shapeId, boolean isControllable, int controllableXSpeed, int controllableYSpeed) {
-    System.out.println("players:" + playersMap);
     if (selectedPlayerId >= 0) {
       if (isControllable) {
         playersMap.get(selectedPlayerId)

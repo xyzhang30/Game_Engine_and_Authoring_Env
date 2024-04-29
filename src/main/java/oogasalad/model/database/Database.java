@@ -106,7 +106,12 @@ public class Database implements DatabaseApi {
     return true;
   }
 
-@Override
+  /**
+   * Gets the accessibility level of a game.
+   * @param gameName the game being queried
+   * @return If the game is public to all, private, or open to friends of the creator
+   */
+  @Override
 public String getGameAccessibility(String gameName) throws SQLException {
     String sql = "SELECT accessibility FROM Games WHERE gamename = ?";
     ResultSet rs = executeQuery(sql, gameName);
@@ -200,6 +205,14 @@ public String getGameAccessibility(String gameName) throws SQLException {
     }
 
 
+  /**
+   * Assigns a friend list for a specific player.
+   *
+   * @param player     The player whose friends are being updated.
+   * @param friends    All users that are friends of player.
+   * @param notFriends All users that are not friends of player
+   */
+
   @Override
   public void assignFriends(String player, List<String> friends, List<String> notFriends) throws SQLException{
       for (String friend : friends) {
@@ -215,6 +228,12 @@ public String getGameAccessibility(String gameName) throws SQLException {
 
   }
 
+  /**
+   * Returns a list of the games a given group of players can play
+   * @param playerName The name of the player.
+   * @param numPlayers The number of players available to play.
+   * @return all games that the given player can play with the specified number of players
+   */
   @Override
   public ObservableList<String> getPlayableGameIds(String playerName, int numPlayers) throws SQLException{
     String sql = "SELECT p.gamename FROM permissions p " +
@@ -237,6 +256,11 @@ public String getGameAccessibility(String gameName) throws SQLException {
     return getGames(playerName, -1, sql);
   }
 
+  /**
+   * Returns whether user with given username is in the database
+   * @param username of a user
+   * @return if the given user is in the database
+   */
   @Override
   public boolean doesUserExist(String username) throws SQLException {
     String query = "SELECT 1 FROM Players WHERE username = ?";
@@ -244,6 +268,11 @@ public String getGameAccessibility(String gameName) throws SQLException {
   }
 
 
+  /**
+   * Gets a list of all players that are friends with a given player
+   * @param player who user wants to see their friends
+   * @return map from player username to whether or not "player" is friends with them
+   */
   @Override
   public Map<String, Boolean> getFriends(String player) throws SQLException {
     Map<String, Boolean> friendsMap = new HashMap<>();
@@ -255,6 +284,7 @@ public String getGameAccessibility(String gameName) throws SQLException {
     return friendsMap;
   }
 
+  //querys the database given a query and params
   private ResultSet executeQuery(String query, Object... params) throws SQLException {
     PreparedStatement pstmt = conn.prepareStatement(query);
     for (int i = 0; i < params.length; i++) {
@@ -263,6 +293,7 @@ public String getGameAccessibility(String gameName) throws SQLException {
     return pstmt.executeQuery();
   }
 
+  // updates the database given a query and params
   private int executeUpdate(String query, Object... params) throws SQLException {
     PreparedStatement pstmt = conn.prepareStatement(query);
     for (int i = 0; i < params.length; i++) {
@@ -271,6 +302,7 @@ public String getGameAccessibility(String gameName) throws SQLException {
     return pstmt.executeUpdate();
   }
 
+  //returns all games that playerName has access to, which requires no more than numPlayers
   private ObservableList<String> getGames(String playerName, int numPlayers, String sql)
       throws SQLException {
     List<String> gameNames = new ArrayList<>();
@@ -289,11 +321,14 @@ public String getGameAccessibility(String gameName) throws SQLException {
   }
 
 
+  //returns true iff player 1 is friends with player 2 in database
   private boolean areFriends(String player1, String player2) throws SQLException {
     String sql = "SELECT EXISTS (SELECT 1 FROM friendships WHERE (player_username = ? AND friend_username = ?) OR (player_username = ? AND friend_username = ?))";
     ResultSet rs = executeQuery(sql, player1, player2, player2, player1);
     return rs.next() && rs.getBoolean(1);
   }
+
+  //player1 friends player 2 in database
 
   private void insertFriendship(String player1, String player2)
       throws SQLException {
@@ -301,6 +336,7 @@ public String getGameAccessibility(String gameName) throws SQLException {
     executeUpdate(sql, player1, player2);
   }
 
+  //player1 defriends player 2 in database
   private void removeFriendship(String player1, String player2)
       throws SQLException {
     String sql = "DELETE FROM friendships WHERE (player_username = ? AND friend_username = ?) OR (player_username = ? AND friend_username = ?)";
