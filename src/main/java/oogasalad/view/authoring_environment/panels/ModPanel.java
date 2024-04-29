@@ -74,7 +74,7 @@ public class ModPanel implements Panel {
     TextArea gameNameTextField = new TextArea();
     gameNameTextField.setPromptText("Enter mod name...");
 
-    Button submit = new Button();
+    Button submit = new Button("Save");
     submit.setOnAction(event -> {
       shapeProxy.setCurrentMod(gameNameTextField.getText());
       allMods.getItems().setAll(shapeProxy.getAllMods());

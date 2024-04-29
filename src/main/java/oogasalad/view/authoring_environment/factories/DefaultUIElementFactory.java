@@ -19,7 +19,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import oogasalad.model.gameparser.GameLoader;
 import oogasalad.view.Warning;
 import oogasalad.view.api.authoring.UIElementFactory;
 import org.apache.logging.log4j.LogManager;
