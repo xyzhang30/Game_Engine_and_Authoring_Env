@@ -2,6 +2,7 @@ package oogasalad.view.authoring_environment.factories;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Pos;
@@ -24,6 +25,7 @@ import oogasalad.view.api.enums.GameObjectType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
+import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.authoring_environment.util.TextFieldListener;
 import org.controlsfx.control.CheckComboBox;
 
@@ -131,9 +133,12 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
    * updating the sliders based on the shape proxy's shape properties.
    */
   @Override
-  public void resetAuthoringElements() {
+  public void resetAuthoringElements(GameObjectAttributesContainer gameObj,
+      Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
     gameObjectTypeDropdown.valueProperty().setValue(null);
+    System.out.println("BEFORE CLEAR" + playersMap);
     clearFields();
+
     updateSlider(shapeProxy.getShape().getScaleX(), shapeProxy.getShape().getScaleY(),
         shapeProxy.getShape().getRotate());
   }
@@ -366,14 +371,18 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
               .getCheckedItems();
           for (CollidableType type : collidableTypes) {
             if ((Integer) oldPlayerId >= 0) {
-              authoringProxy.removeCollidableFromPlayer((Integer) oldPlayerId, type,
+              System.out.println("REMOVING: " + authoringProxy.getPlayers());
+              authoringProxy.removeCollidableFromPlayer(((Integer) oldPlayerId + 1), type,
                   Integer.parseInt(shapeProxy.getShape().getId()));
+              System.out.println("REMOVED: " + authoringProxy.getPlayers());
             }
             int xSpeed = shapeProxy.getGameObjectAttributesContainer().getControllableXSpeed();
             int ySpeed = shapeProxy.getGameObjectAttributesContainer().getControllableYSpeed();
-            authoringProxy.addCollidableToPlayer((Integer) newPlayerId, type,
+            System.out.println("ADDING: " + authoringProxy.getPlayers());
+            authoringProxy.addCollidableToPlayer(((Integer) newPlayerId) + 1, type,
                 Integer.parseInt(shapeProxy.getShape().getId()),
                 type.equals(CollidableType.CONTROLLABLE), xSpeed, ySpeed);
+            System.out.println("ADDED: " + authoringProxy.getPlayers());
           }
         }));
   }

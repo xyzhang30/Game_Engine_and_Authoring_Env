@@ -94,7 +94,7 @@ public class ShapePanel implements Panel {
     shape.setOnMouseClicked(event -> {
       try {
         Shape clonedShape = shapeProxy.setTemplateOnClick((Shape) event.getSource());
-        handleGameObjectEvents(clonedShape);
+        handleGameObjectEvents(clonedShape, authoringProxy.getPlayers());
         rootPane.getChildren().add(clonedShape);
       } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                IllegalAccessException e) {
@@ -104,9 +104,9 @@ public class ShapePanel implements Panel {
     });
   }
 
-  private void handleGameObjectEvents(Shape shape) {
+  private void handleGameObjectEvents(Shape shape, Map<Integer, Map<CollidableType, List<Integer>>> oldPlayers) {
     shape.setOnMouseClicked(event -> setShapeOnClick((Shape) event.getSource(),
-        authoringProxy.getGameObjectMap().get(shape), authoringProxy.getPlayers()));
+        authoringProxy.getGameObjectMap().get(shape),oldPlayers));
     shape.setOnMousePressed(this::handleMousePressed);
     shape.setOnMouseDragged(event -> setShapeOnCompleteDrag((Shape) event.getSource(), event));
     shape.setOnMouseReleased(event -> setShapeOnRelease((Shape) event.getSource()));
@@ -163,6 +163,7 @@ public class ShapePanel implements Panel {
 
   private void setShapeOnClick(Shape shape, GameObjectAttributesContainer gameObj,
       Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
+    System.out.println("on click:" + playersMap);
     if (shapeProxy.getShape() == null) {
       return;
     }
@@ -181,8 +182,8 @@ public class ShapePanel implements Panel {
     shapeProxy.selectShape(shape, gameObj);
     shape.setStroke(Color.YELLOW);
     shapeProxy.updateShapeSelectionDisplay();
-    authoringFactory.resetAuthoringElements();
-    authoringProxy.setPlayersMap(playersMap);
+    authoringFactory.resetAuthoringElements(gameObj, playersMap);
+//    authoringProxy.setPlayersMap(playersMap);
   }
 
   private boolean isInAuthoringBox(Shape shape) {
