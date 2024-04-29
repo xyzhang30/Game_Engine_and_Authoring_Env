@@ -42,9 +42,7 @@ public abstract class GameLoader {
     this.resourceBundle = ResourceBundle.getBundle(
         RESOURCE_FOLDER_PATH + ERROR_RESOURCE_FOLDER + ERROR_FILE_PREFIX + language);
     try {
-
       parseJSON(gameName + JSON_EXTENSION);
-
     } catch (IOException e) {
       LOGGER.error(resourceBundle.getString("JSONParsingError"), e.getMessage());
       throw new InvalidFileException(String.format(
@@ -53,17 +51,11 @@ public abstract class GameLoader {
   }
 
   private void parseJSON(String filePath) throws IOException {
-    System.out.println(filePath);
     ObjectMapper objectMapper = new ObjectMapper();
-    System.out.println(filePath);
     File f = new File(filePath);
-    System.out.println(filePath);
     this.gameData = objectMapper.readValue(f, GameData.class);
-    System.out.println(filePath);
     createIdToObjectMap();
-    System.out.println(filePath);
     createIdtoPlayerMap();
-    System.out.println(filePath);
   }
 
   private void createIdToObjectMap() {

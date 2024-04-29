@@ -27,29 +27,29 @@
       "AllPlayersCompletedRoundCondition" : [ ]
     },
     "advance_turn" : {
-      "AdvanceTurnCommand" : [ ]
+      "AdvanceRoundCommand" : [ ]
     },
     "advance_round" : {
       "AdvanceRoundCommand" : [ ]
     },
-    "strike_policy" : "DoNothingStrikePolicy",
+    "strike_policy" : "IncrementPointStrikePolicy",
     "rank_comparator" : "HighestScoreComparator",
     "static_checker" : {
-      "VelocityStaticChecker" : [ ]
+      "VisibilityStaticChecker" : [ ]
     }
   },
-  "gameName" : "a",
+  "gameName" : "meeeee",
   "game_objects" : [ {
-    "properties" : [ "visible" ],
+    "properties" : [ "COLLIDABLE", "STRIKEABLE", "SCOREABLE", "visible" ],
     "mass" : 0.0,
     "position" : {
-      "x_position" : 705.7999877929688,
-      "y_position" : 622.5999755859375
+      "x_position" : 471.0,
+      "y_position" : 563.0
     },
-    "shape" : "Circle",
+    "shape" : "Rectangle",
     "dimension" : {
-      "x_dimension" : 66.0,
-      "y_dimension" : 66.0
+      "x_dimension" : 106.0,
+      "y_dimension" : 56.0
     },
     "color" : { },
     "staticFriction" : 0.0,
@@ -60,41 +60,15 @@
     "inelastic" : false,
     "phaser" : false,
     "score" : 0.0,
-    "gameobject_id" : 1
-  }, {
-    "properties" : [ "COLLIDABLE", "SCOREABLE", "STRIKEABLE", "visible" ],
-    "mass" : 0.0,
-    "position" : {
-      "x_position" : 715.4000244140625,
-      "y_position" : 503.20001220703125
-    },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 106.0,
-      "y_dimension" : 56.0
-    },
-    "color" : {
-      "Default" : [ 179, 102, 128 ]
-    },
-    "staticFriction" : 0.0,
-    "kineticFriction" : 0.0,
-    "inclineAngle" : 0.0,
-    "image" : {
-      "Default" : null
-    },
-    "direction" : 0.0,
-    "inelastic" : true,
-    "phaser" : false,
-    "score" : 0.0,
     "gameobject_id" : 0
   } ],
   "keys" : {
-    "striking" : "J",
+    "striking" : "K",
     "angle_left" : "A",
     "angle_right" : "S",
-    "power_up" : "D",
-    "power_down" : "F",
-    "controllable_left" : "G",
-    "controllable_right" : "H"
+    "power_up" : "F",
+    "power_down" : "G",
+    "controllable_left" : "H",
+    "controllable_right" : "J"
   }
 }

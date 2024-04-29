@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javax.xml.parsers.ParserConfigurationException;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
+import oogasalad.model.gameparser.GameLoaderView;
+import oogasalad.view.Warning;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.ThemeType;
 import oogasalad.view.controller.DatabaseController;
@@ -20,6 +23,8 @@ import oogasalad.view.scene_management.scene_element.SceneElementFactory;
 import oogasalad.view.scene_management.scene_element.SceneElementStyler;
 import oogasalad.view.scene_management.scene_element.scene_element_handler.SceneElementHandler;
 import oogasalad.view.visual_elements.CompositeElement;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
 /**
@@ -64,6 +69,9 @@ public class SceneManager {
   private int currentRound;
   private SupportedLanguage selectedLanguage;
   private final DatabaseController databaseController;
+
+  private static final Logger LOGGER = LogManager.getLogger(SceneManager.class);
+  private static final Warning WARNING = new Warning();
 
 
   /**
@@ -297,8 +305,8 @@ public class SceneManager {
    * @param e       the exception that was caught
    */
   private void logError(String message, Exception e) {
-    System.err.println(message + ": " + e.getMessage());
-    e.printStackTrace(); // Consider logging this to a file or system log in a production environment
+    LOGGER.error(message + e.getMessage());
+    WARNING.showAlert(scene, AlertType.ERROR, message, null, e.getMessage());
   }
 
   private void addGameManagementElementsToGame(GameRecord gameRecord) {
@@ -332,12 +340,8 @@ public class SceneManager {
   }
 
   public void createLoginScene() {
-    System.out.println("login screen initialized");
     resetRoot();
-    System.out.println("root reset");
     root.getChildren().add(createSceneElements(loginElementsPath));
-    System.out.println(loginElementsPath);
-    System.out.println(((Pane) (root.getChildren().get(0))).getChildren());
   }
 
   public void createCurrentPlayersScene() {

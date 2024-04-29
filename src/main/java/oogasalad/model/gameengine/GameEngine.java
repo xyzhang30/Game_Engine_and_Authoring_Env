@@ -1,5 +1,6 @@
 package oogasalad.model.gameengine;
 
+import java.io.FileNotFoundException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,8 @@ import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameObjectRecord;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.PlayerRecord;
+import oogasalad.model.api.exception.InvalidFileException;
+import oogasalad.model.api.exception.MissingJsonGameInfoException;
 import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import oogasalad.model.gameengine.gameobject.CollisionDetector;
 import oogasalad.model.gameengine.gameobject.GameObject;
@@ -53,7 +56,7 @@ public class GameEngine implements ExternalGameEngine {
    * @param gameTitle The title of the game.
    */
 
-  public GameEngine(String gameTitle) {
+  public GameEngine(String gameTitle) throws InvalidFileException, MissingJsonGameInfoException {
     loader = new GameLoaderModel(gameTitle);
     playerContainer = loader.getPlayerContainer();
     round = loader.getCurrRound();
@@ -133,7 +136,7 @@ public class GameEngine implements ExternalGameEngine {
    * Advances the game to the next round by incrementing the round number, applying delayed scores
    * to players, and starting a new round.
    */
-  public void advanceRound() {
+  public void advanceRound() throws MissingJsonGameInfoException {
     round++;
     playerContainer.getPlayers().forEach(Player::applyDelayedScore);
     startRound(loader);
@@ -225,15 +228,19 @@ public class GameEngine implements ExternalGameEngine {
 
   //starts the current round, by requesting the necessary information for that round from the
   // loader.
-  private void startRound(GameLoaderModel loader) {
+  private void startRound(GameLoaderModel loader) throws MissingJsonGameInfoException {
     gameOver = false;
     turn = loader.getCurrTurn();
     staticState = true;
     gameObjects = loader.getGameObjects();
     gameObjects.forEach(GameObject::addStaticStateGameObject);
     rules = loader.getRulesRecord();
-//    playerContainer.getActive().updateActiveStrikeable();
-    playerContainer.getActive().getStrikeable().asGameObject().setVisible(true);
+    try {
+      playerContainer.getActive().getStrikeable().asGameObject().setVisible(true);
+    } catch (NullPointerException e) {
+      LOGGER.error(e.getMessage());
+      throw new MissingJsonGameInfoException("Each player must have one strikeable game object");
+    }
     playerContainer.getPlayers().forEach(Player::startRound);
     addInitialStaticStateToHistory();
   }

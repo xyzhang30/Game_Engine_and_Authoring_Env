@@ -6,7 +6,7 @@ import javafx.scene.control.Alert.AlertType;
 
 public class Warning {
 
-  public void showAlert(Scene scene, AlertType alertType, String title, String headerText,
+  public static void showAlert(Scene scene, AlertType alertType, String title, String headerText,
       String message) {
     Alert alert = new Alert(alertType);
     alert.initOwner(scene.getWindow());
@@ -15,4 +15,14 @@ public class Warning {
     alert.setContentText(message);
     alert.showAndWait();
   }
+
+  public static void showAlert(Alert.AlertType alertType, String title, String headerText,
+      String contentText) {
+    Alert alert = new Alert(alertType);
+    alert.setTitle(title);
+    alert.setHeaderText(headerText);
+    alert.setContentText(contentText);
+    alert.showAndWait();
+  }
+
 }

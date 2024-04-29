@@ -98,11 +98,8 @@ public class PhysicsIntegrationTest {
     // Ensure the game starts without errors
     gameEngine.applyInitialVelocity(15, Math.PI / 2);
     GameRecord r = gameEngine.update(1.0 / 4);
-    System.out.println(r.gameObjectRecords().get(0));
     while (!isStatic(r)) {
       r = gameEngine.update(1.0 / 4);
-      System.out.println(r.gameObjectRecords().get(0));
-
     }
     assertEquals(7.5, getRecord(1).y(), DELTA);
     assertEquals(0, getRecord(1).velocityY(), DELTA);

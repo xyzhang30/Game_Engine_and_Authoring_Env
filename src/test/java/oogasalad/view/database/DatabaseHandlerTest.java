@@ -3,6 +3,7 @@ package oogasalad.view.database;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +60,7 @@ public class DatabaseHandlerTest {
   }
 
   @Test
-  public void testAddGameResult() {
+  public void testAddGameResult() throws SQLException {
     // Setup
     String gameName = "ExampleGame";
     int gameId = 1;
@@ -95,7 +96,7 @@ public class DatabaseHandlerTest {
   }
 
   @Test
-  public void testGetNewGameTitles() {
+  public void testGetNewGameTitles() throws SQLException {
     // Setup
     String expectedHost = "Alice";
     int expectedSize = 3;

@@ -136,7 +136,6 @@ public class AuthoringScreen {
         container.setPanels(createKeySelectionPanel());
         break;
     }
-    System.out.println();
   }
 
   private List<Panel> createGameObjectsPanel() {

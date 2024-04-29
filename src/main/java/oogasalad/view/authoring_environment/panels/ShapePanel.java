@@ -187,7 +187,8 @@ public class ShapePanel implements Panel {
     }
   }
 
-  private void setShapeOnClick(Shape shape, GameObjectAttributesContainer gameObj,Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
+  private void setShapeOnClick(Shape shape, GameObjectAttributesContainer gameObj,
+      Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
     if (shapeProxy.getShape() == null) {
       return;
     }

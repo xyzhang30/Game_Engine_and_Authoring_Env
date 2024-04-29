@@ -25,6 +25,7 @@ import oogasalad.model.api.exception.InvalidColorParsingException;
 import oogasalad.model.api.exception.InvalidFileException;
 import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
+import oogasalad.model.api.exception.MissingJsonGameInfoException;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameparser.GameLoaderView;
 import oogasalad.view.Warning;
@@ -51,7 +52,7 @@ public class GameController {
 
   private static final String RESUME_GAME_DATA_FOLDER = "data/resume_game/";
   private static final String INCREASING = "LowestScoreComparator";
-  private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
+  private static final Logger LOGGER = LogManager.getLogger(GameController.class);
   private static final Warning WARNING = new Warning();
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
@@ -148,11 +149,12 @@ public class GameController {
       gameLoaderView = new GameLoaderView(selectedGame);
       gameEngine = new GameEngine(selectedGame);
     } catch (InvalidFileException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
       handleException("Start Game Error", "Can't find game file");
       return;
-    } catch (InvalidColorParsingException | InvalidShapeException e) {
-      e.printStackTrace();
+    } catch (InvalidColorParsingException | InvalidShapeException |
+             MissingJsonGameInfoException e) {
+      LOGGER.error(e.getMessage());
       handleException("Parsing Error", e.getMessage());
       return;
     }
@@ -216,7 +218,6 @@ public class GameController {
    * @return a list of the playable saved game titles
    */
   public ObservableList<String> getSavedGameTitles() {
-    System.out.println(5);
     return gameTitleParser.getSavedGameTitles();
   }
 
@@ -276,7 +277,14 @@ public class GameController {
    */
   public KeyCode getKey(KeyInputType inputType) {
     Map<KeyInputType, String> keyMap = gameLoaderView.getInputKeys();
-    return KeyCode.valueOf(keyMap.get(inputType));
+    try {
+      return KeyCode.valueOf(keyMap.get(inputType));
+    } catch (NullPointerException e) {
+      LOGGER.error(e.getMessage() + "key code is null");
+      WARNING.showAlert(getScene(), AlertType.ERROR, "Error Getting Input Keys", null,
+          "Please specify input keys for game");
+    }
+    return null;
   }
 
   /**
@@ -292,9 +300,10 @@ public class GameController {
           + "/GameDescriptions.properties");
       properties.load(inputStream);
     } catch (IOException e) {
-      //TODO: Exception Handling
+      LOGGER.error(e.getMessage());
+      WARNING.showAlert(getScene(), AlertType.ERROR, "Game Description Error", null,
+          e.getMessage());
     }
-    System.out.println(properties.getProperty(selectedGame, ""));
     return properties.getProperty(selectedGame, "");
   }
 

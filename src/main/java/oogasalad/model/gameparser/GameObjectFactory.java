@@ -4,9 +4,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Properties;
+import javafx.scene.control.Alert.AlertType;
 import oogasalad.model.api.data.GameObjectProperties;
 import oogasalad.model.gameengine.GameEngine;
 import oogasalad.model.gameengine.gameobject.GameObject;
+import oogasalad.view.Warning;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,12 +21,15 @@ public class GameObjectFactory {
 
   private static final String filePath = "src/main/resources/model/gameObjects.properties";
   private static final Properties properties = new Properties();
-  private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
+  private static final Logger LOGGER = LogManager.getLogger(GameObjectFactory.class);
+  private static final Warning WARNING = new Warning();
 
   private static void loadProperties() {
     try {
       properties.load(new FileInputStream(filePath));
     } catch (IOException e) {
+      LOGGER.error("loading properties file error - " + e.getMessage());
+      WARNING.showAlert(AlertType.ERROR, "loading properties file error", null, e.getMessage());
     }
   }
 

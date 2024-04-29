@@ -27,7 +27,6 @@ import oogasalad.model.annotations.ChoiceType;
 import oogasalad.model.annotations.ExpectedParamNumber;
 import oogasalad.model.annotations.IsCommand;
 import oogasalad.model.annotations.VariableParamNumber;
-import oogasalad.model.gameengine.GameEngine;
 import oogasalad.view.api.authoring.Panel;
 import oogasalad.view.api.authoring.UIElementFactory;
 import oogasalad.view.api.enums.PolicyType;
@@ -43,7 +42,7 @@ import org.controlsfx.control.CheckComboBox;
  */
 public class PolicyPanel implements Panel {
 
-  private static final Logger LOGGER = LogManager.getLogger(GameEngine.class);
+  private static final Logger LOGGER = LogManager.getLogger(PolicyPanel.class);
   private static final String GAME_ENGINE_PACKAGE_PATH = "src/main/java/oogasalad/model"
       + "/gameengine/";
   private static final String REFLECTION_ENGINE_PACKAGE_PATH = "oogasalad.model.gameengine.";
@@ -185,7 +184,7 @@ public class PolicyPanel implements Panel {
         return null;
       }
     } catch (ClassNotFoundException e) {
-      e.printStackTrace();
+      LOGGER.error(e.getMessage());
       return null;
     }
   }
@@ -231,31 +230,7 @@ public class PolicyPanel implements Panel {
       });
     });
 
-    confirmSaveParam.setOnAction(e -> {
-      for (TextArea area : textAreas) {
-        String text = area.getText();
-        if (!text.isEmpty()) {
-          try {
-            Integer value = Integer.parseInt(text);
-            params.add(value);
-          } catch (NumberFormatException ex) {
-            // Handle invalid input
-            LOGGER.error("Invalid input: " + text);
-          }
-        }
-      }
-      popupStage.close();
-    });
-
-    vbox.getChildren().add(confirmSaveParam);
-
-    Scene scene = new Scene(vbox, 500, 300);
-    popupStage.setScene(scene);
-
-    popupStage.setResizable(false);
-    popupStage.showAndWait();
-
-    return params;
+    return uiElementFactory.getParams(confirmSaveParam, textAreas, params, popupStage, vbox);
 
   }
 
