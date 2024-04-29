@@ -308,7 +308,7 @@ public class AuthoringProxy {
    * @return The current player ID.
    */
   public int getCurrentPlayerId() {
-    return numPlayers - 1;
+    return numPlayers;
   }
 
   /**

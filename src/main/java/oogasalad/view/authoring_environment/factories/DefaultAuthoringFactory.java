@@ -346,13 +346,12 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
   }
 
   private void handleRemovePlayer() {
-    if (authoringProxy.getNumPlayers() <= 1) {
-      return;
+    if (authoringProxy.getNumPlayers() > 1) {
+      authoringProxy.removeMostRecentAddedPlayer();
+      playerAssignmentListView.getItems().remove("Player " + authoringProxy.getCurrentPlayerId());
+      authoringProxy.decreaseNumPlayers();
+      updateNumPlayers();
     }
-    authoringProxy.removeMostRecentAddedPlayer();
-    playerAssignmentListView.getItems().remove("Player " + authoringProxy.getCurrentPlayerId());
-    authoringProxy.decreaseNumPlayers();
-    updateNumPlayers();
   }
 
   private void updateNumPlayers() {
