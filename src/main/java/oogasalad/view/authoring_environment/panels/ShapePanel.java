@@ -183,6 +183,7 @@ public class ShapePanel implements Panel {
     shape.setStroke(Color.YELLOW);
     shapeProxy.updateShapeSelectionDisplay();
     authoringFactory.resetAuthoringElements(gameObj, playersMap);
+    System.out.println("AFTER EVERYTHING:"+authoringProxy.getPlayers());
 //    authoringProxy.setPlayersMap(playersMap);
   }
 

@@ -211,6 +211,7 @@ public class DefaultUIElementFactory implements UIElementFactory {
    */
   @Override
   public List<Integer> createConstantParamsPopup(int numParam, String item) {
+    System.out.println("constant param popup called");
     Stage popupStage = new Stage();
     popupStage.setTitle("Specify Command Parameters");
 

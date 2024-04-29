@@ -138,20 +138,13 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
     gameObjectTypeDropdown.valueProperty().setValue(null);
     System.out.println("BEFORE CLEAR" + playersMap);
     clearFields();
-
+    System.out.println("AFTER CLEAR" + playersMap);
+    authoringProxy.setPlayersMap(playersMap);
+    System.out.println("BEFORE CLEAR IN AUTH" + authoringProxy.getPlayers());
     updateSlider(shapeProxy.getShape().getScaleX(), shapeProxy.getShape().getScaleY(),
         shapeProxy.getShape().getRotate());
   }
 
-//  @Override
-//  public List<Node> createGameConfiguration() {
-//    List<Node> nodes = List.of(//createGameNameLabel(),
-//         createGameNameText(),
-//       // createGameDescriptionLabel(),
-//        createGameDescriptionText());//,
-//      //  createGameImage());
-//    return nodes;
-//  }
 
   private Node createGameDescriptionText() {
     TextField gameDescriptionTextField = uiElementFactory.createTextField(
@@ -164,25 +157,6 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
     AnchorPane.setTopAnchor(gameDescriptionTextField, 700.0);
     return gameDescriptionTextField;
   }
-
-//  private Node createGameDescriptionLabel() {
-//return null;
-//  }
-
-//  private Node createGameNameText() {
-//    Label gameNameLabel = new Label("Select Game Name");
-//
-//
-//    TextField gameDescriptionTextField = uiElementFactory.createTextField(
-//        "Provide Game Name", 200,
-//        50);
-//    gameDescriptionTextField.setEditable(
-//        true); //ids are populated automatically after user clicks on object, user can't edit it
-//    gameDescriptionTextField.setFocusTraversable(false);
-//    AnchorPane.setLeftAnchor(gameDescriptionTextField, 450.0);
-//    AnchorPane.setTopAnchor(gameDescriptionTextField, 800.0);
-//    return gameDescriptionTextField;
-//  }
 
   private Node createGameObjectTypeSelection() {
     this.gameObjectTypeDropdown = uiElementFactory.createComboBox("gameObjectTypeDropdown",
@@ -331,7 +305,7 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
     textField.textProperty().addListener(new TextFieldListener(textField.getId(), shapeProxy));
     textField.setMinWidth(50);
     Label label = new Label(labelText);
-    label.setMinWidth(150);
+    label.setMinWidth(120);
     textFields.add(textField);
     return uiElementFactory.createHContainer(10, 100, 20, label, textField);
   }

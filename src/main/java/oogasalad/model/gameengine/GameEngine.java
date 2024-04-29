@@ -236,8 +236,11 @@ public class GameEngine implements ExternalGameEngine {
     gameObjects.forEach(GameObject::addStaticStateGameObject);
     rules = loader.getRulesRecord();
     try {
+      System.out.println("ACTIVE:"+playerContainer.getActive());
+      System.out.println("STRIKEABLE:"+playerContainer.getActive().getStrikeable());
       playerContainer.getActive().getStrikeable().asGameObject().setVisible(true);
     } catch (NullPointerException e) {
+      e.printStackTrace();
       LOGGER.error(e.getMessage());
       throw new MissingJsonGameInfoException("Each player must have one strikeable game object");
     }
