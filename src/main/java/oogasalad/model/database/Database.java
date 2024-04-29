@@ -132,27 +132,6 @@ public class Database implements DatabaseApi {
     return false;
   }
 
-  @Override
-  public ObservableList<String> getPlayableGameIds(String playerName, int numPlayers) {
-    List<String> gameNames = new ArrayList<>();
-    String sql = "SELECT p.gamename FROM permissions p " +
-        "JOIN games g ON p.gamename = g.gamename " +
-        "WHERE p.username = ? AND p.permissions != 'None' AND g.numplayers <= ?";
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, playerName);
-      pstmt.setInt(2, numPlayers);
-      try (ResultSet rs = pstmt.executeQuery()) {
-        while (rs.next()) {
-          String gameName = rs.getString("gamename");
-          gameNames.add(gameName);
-        }
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return FXCollections.observableList(gameNames);
-  }
 
   /**
    * Registers a new user.
@@ -403,33 +382,6 @@ public class Database implements DatabaseApi {
     }
   }
 
-  /**
-   * Retrieves the IDs of playable games for a player with a specified number of players.
-   *
-   * @param playerName The name of the player.
-   * @return A list of game IDs that are playable by the player.
-   */
-  @Override
-  public ObservableList<String> getManageableGames(String playerName) {
-    System.out.println(1000);
-    List<String> gameNames = new ArrayList<>();
-    String sql = "SELECT p.gamename FROM permissions p " +
-        "JOIN games g ON p.gamename = g.gamename " +
-        "WHERE p.username = ? AND p.permissions = 'Owner'";
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, playerName);
-      try (ResultSet rs = pstmt.executeQuery()) {
-        while (rs.next()) {
-          String gameName = rs.getString("gamename");
-          gameNames.add(gameName);
-        }
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return FXCollections.observableList(gameNames);
-  }
 
   @Override
   public void assignFriends(String player, List<String> friends, List<String> notFriends) {
@@ -451,6 +403,49 @@ public class Database implements DatabaseApi {
       e.printStackTrace();
     }
   }
+
+  @Override
+  public ObservableList<String> getPlayableGameIds(String playerName, int numPlayers) {
+    String sql = "SELECT p.gamename FROM permissions p " +
+        "JOIN games g ON p.gamename = g.gamename " +
+        "WHERE p.username = ? AND p.permissions != 'None' AND g.numplayers <= ?";
+    return getGames(playerName, numPlayers, sql);
+  }
+
+  private static ObservableList<String> getGames(String playerName, int numPlayers, String sql) {
+    List<String> gameNames = new ArrayList<>();
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, playerName);
+      if(numPlayers!=-1) {
+        pstmt.setInt(2, numPlayers);
+      }
+      try (ResultSet rs = pstmt.executeQuery()) {
+        while (rs.next()) {
+          String gameName = rs.getString("gamename");
+          gameNames.add(gameName);
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return FXCollections.observableList(gameNames);
+  }
+
+  /**
+   * Retrieves the IDs of playable games for a player with a specified number of players.
+   *
+   * @param playerName The name of the player.
+   * @return A list of game IDs that are playable by the player.
+   */
+  @Override
+  public ObservableList<String> getManageableGames(String playerName) {
+    String sql = "SELECT p.gamename FROM permissions p " +
+        "JOIN games g ON p.gamename = g.gamename " +
+        "WHERE p.username = ? AND p.permissions = 'Owner'";
+    return getGames(playerName, -1, sql);
+  }
+
 
   private boolean areFriends(String player1, String player2, Connection conn) throws SQLException {
     String sql = "SELECT EXISTS (SELECT 1 FROM friendships WHERE (player_username = ? AND friend_username = ?) OR (player_username = ? AND friend_username = ?))";
