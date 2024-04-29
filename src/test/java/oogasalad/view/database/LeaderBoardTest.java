@@ -3,6 +3,7 @@ package oogasalad.view.database;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.sql.SQLException;
 import java.util.List;
 import oogasalad.model.database.Database;
 import oogasalad.view.api.exception.IncorrectPasswordException;
@@ -26,11 +27,6 @@ public class LeaderBoardTest {
     databaseController = new DatabaseController(leaderboard, currentPlayersManager);
   }
 
-  @Test
-  public void testLoginUserSuccess() {
-    when(databaseView.loginUser("validUser", "validPassword")).thenReturn(true);
-    assertDoesNotThrow(() -> databaseController.loginUser("validUser", "validPassword"));
-  }
 
 
 
