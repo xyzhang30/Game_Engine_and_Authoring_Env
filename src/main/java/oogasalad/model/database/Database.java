@@ -17,6 +17,7 @@ import org.postgresql.util.PSQLException;
 
 public class Database implements DatabaseApi {
 
+
   /**
    * Retrieves the high scores of a player for a specific game.
    *
@@ -37,8 +38,7 @@ public class Database implements DatabaseApi {
 
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query)) {
-      pstmt.setString(1, gameName);
-      pstmt.setString(2, playerName);
+      setParameters(pstmt, gameName, playerName);
       ResultSet rs = pstmt.executeQuery();
       while (rs.next()) {
 
@@ -59,7 +59,7 @@ public class Database implements DatabaseApi {
         "FROM permissions WHERE gamename = ?";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query)) {
-      pstmt.setString(1, gameName);
+      setParameters(pstmt, gameName);
       ResultSet rs = pstmt.executeQuery();
       while (rs.next()) {
         if (!rs.getString("permissions").equals("Owner")) {
@@ -90,7 +90,7 @@ public class Database implements DatabaseApi {
     query += desc ? "DESC" : "";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query)) {
-      pstmt.setString(1, gameName);
+      setParameters(pstmt, gameName);
       ResultSet rs = pstmt.executeQuery();
       while (rs.next()) {
         String playerusername = rs.getString("playerusername");
@@ -116,13 +116,10 @@ public class Database implements DatabaseApi {
     String query = "SELECT password FROM Players WHERE username = ?";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query)) {
-      pstmt.setString(1, username);
+      setParameters(pstmt, username);
       try (ResultSet rs = pstmt.executeQuery()) {
         if (rs.next()) {
-          System.out.println(password);
           String storedPassword = rs.getString("password");
-          System.out.println(storedPassword);
-          // Use BCrypt to check if the entered password matches the stored hashed password
           return BCrypt.checkpw(password, storedPassword);
         }
       }
@@ -149,11 +146,8 @@ public class Database implements DatabaseApi {
       String sql = "INSERT INTO Players (username, password, avatarurl) VALUES (?, ?, ?) ON "
           + "CONFLICT DO NOTHING";
       try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setString(1, username);
-        stmt.setString(2, hashedPassword);
-        stmt.setString(3, avatarUrl);
+        setParameters(stmt, username, hashedPassword, avatarUrl);
         stmt.executeUpdate();
-
         for (String gameName : getAllGames()) {
           grantPermissions(username, gameName, getGameAccessibility(gameName).equals("public") ?
                 "Player" :
@@ -174,7 +168,7 @@ public class Database implements DatabaseApi {
     String query = "SELECT 1 FROM Players WHERE username = ?";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query)) {
-      pstmt.setString(1, username);
+      setParameters(pstmt, username);
       ResultSet rs = pstmt.executeQuery();
       return rs.next();  //true if user exists (bc at least one row exists)
     } catch (SQLException e) {
@@ -189,7 +183,7 @@ public class Database implements DatabaseApi {
     String sql = "SELECT accessibility FROM Games WHERE gamename = ?";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, gameName);
+      setParameters(pstmt, gameName);
       try (ResultSet rs = pstmt.executeQuery()) {
         if (rs.next()) {
           return rs.getString("accessibility");
@@ -206,8 +200,7 @@ public class Database implements DatabaseApi {
     String sql = "UPDATE Games SET accessibility = ? WHERE gamename = ?";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, accessibility);
-      pstmt.setString(2, gameName);
+      setParameters(pstmt, accessibility, gameName);
       pstmt.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -232,10 +225,7 @@ public class Database implements DatabaseApi {
         + "CONFLICT DO NOTHING";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, gameName);
-      pstmt.setString(2, ownerName);
-      pstmt.setInt(3, numPlayers);
-      pstmt.setString(4, accessibility);
+      setParameters(pstmt, gameName, ownerName, numPlayers, accessibility);
       int affectedRows = pstmt.executeUpdate();
       for (String username : getAllPlayers()) {
         String permission = accessibility.equals("public") || (accessibility.equals("friends") && areFriends(ownerName, username, conn)) ? "Player" : "None";
@@ -293,10 +283,7 @@ public class Database implements DatabaseApi {
         + "ON CONFLICT (username, gamename) DO UPDATE SET permissions = ?";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, username);
-      pstmt.setString(2, gameName);
-      pstmt.setString(3, permission);
-      pstmt.setString(4, permission);
+      setParameters(pstmt, username, gameName, permission, permission);
       pstmt.executeUpdate();
     } catch (SQLException e) {
     }
@@ -314,7 +301,7 @@ public class Database implements DatabaseApi {
     String sql = "INSERT INTO gameinstance (gamename) VALUES (?)";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-      pstmt.setString(1, game);
+      setParameters(pstmt, game);
       int affectedRows = pstmt.executeUpdate();
       if (affectedRows > 0) {
         try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
@@ -349,16 +336,11 @@ public class Database implements DatabaseApi {
         + "VALUES (?, ?, ?, ?)";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setInt(1, gameInstanceId);
-      pstmt.setString(2, user);
-      pstmt.setInt(3, score);
-      pstmt.setBoolean(4, result);
-      int affectedRows = pstmt.executeUpdate();
-      return affectedRows > 0;
+      setParameters(pstmt, gameInstanceId, user, score, result);
+      return pstmt.executeUpdate() > 0;
     } catch (SQLException e) {
-      e.printStackTrace();
+      return false;
     }
-    return false;
   }
 
   /**
@@ -373,7 +355,6 @@ public class Database implements DatabaseApi {
   @Override
   public void assignPermissionToPlayers(String game, List<String> users, String permission) {
     for (String user : users) {
-      //System.out.println(user + " " + permission);
       try {
         grantPermissions(user, game, permission);
       } catch (SQLException e) {
@@ -386,7 +367,6 @@ public class Database implements DatabaseApi {
   @Override
   public void assignFriends(String player, List<String> friends, List<String> notFriends) {
     try (Connection conn = DatabaseConfig.getConnection()) {
-      // Insert friendships for friends if they don't exist
       for (String friend : friends) {
         if (!areFriends(player, friend, conn)) {
           insertFriendship(player, friend, conn);
@@ -426,6 +406,7 @@ public class Database implements DatabaseApi {
           gameNames.add(gameName);
         }
       }
+
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -450,24 +431,16 @@ public class Database implements DatabaseApi {
   private boolean areFriends(String player1, String player2, Connection conn) throws SQLException {
     String sql = "SELECT EXISTS (SELECT 1 FROM friendships WHERE (player_username = ? AND friend_username = ?) OR (player_username = ? AND friend_username = ?))";
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, player1);
-      pstmt.setString(2, player2);
-      pstmt.setString(3, player2);
-      pstmt.setString(4, player1);
-      try (ResultSet rs = pstmt.executeQuery()) {
-        if (rs.next()) {
-          return rs.getBoolean(1);
-        }
-      }
+      setParameters(pstmt, player1, player2, player2, player1);
+      ResultSet rs = pstmt.executeQuery();
+      return rs.next() && rs.getBoolean(1);
     }
-    return false; // Default to false if an error occurs
   }
 
   private void insertFriendship(String player1, String player2, Connection conn) throws SQLException {
     String sql = "INSERT INTO friendships (player_username, friend_username) VALUES (?, ?)";
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, player1);
-      pstmt.setString(2, player2);
+      setParameters(pstmt, player1, player2);
       pstmt.executeUpdate();
     }
   }
@@ -475,10 +448,7 @@ public class Database implements DatabaseApi {
   private void removeFriendship(String player1, String player2, Connection conn) throws SQLException {
     String sql = "DELETE FROM friendships WHERE (player_username = ? AND friend_username = ?) OR (player_username = ? AND friend_username = ?)";
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, player1);
-      pstmt.setString(2, player2);
-      pstmt.setString(3, player2);
-      pstmt.setString(4, player1);
+      setParameters(pstmt, player1, player2, player2, player1);
       pstmt.executeUpdate();
     }
   }
@@ -489,10 +459,7 @@ public class Database implements DatabaseApi {
     String query = "SELECT p.username, COALESCE(f.friendship_status, false) AS is_friend FROM players p LEFT JOIN ( SELECT CASE WHEN player_username = ? THEN friend_username ELSE player_username END AS friend, true AS friendship_status FROM friendships WHERE player_username = ?) f ON p.username = f.friend WHERE p.username != ?;";
     try (Connection conn = DatabaseConfig.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(query)) {
-      pstmt.setString(1, player);
-      pstmt.setString(2, player);
-      pstmt.setString(3, player);
-
+      setParameters(pstmt, player, player, player);
       try (ResultSet rs = pstmt.executeQuery()) {
         while (rs.next()) {
           String username = rs.getString("username");
@@ -504,6 +471,12 @@ public class Database implements DatabaseApi {
       e.printStackTrace();
     }
     return friendsMap;
+  }
 
+
+  private void setParameters(PreparedStatement pstmt, Object... values) throws SQLException {
+    for (int i = 0; i < values.length; i++) {
+      pstmt.setObject(i + 1, values[i]);
+    }
   }
 }
