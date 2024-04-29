@@ -276,7 +276,13 @@ public class GameController {
    */
   public KeyCode getKey(KeyInputType inputType) {
     Map<KeyInputType, String> keyMap = gameLoaderView.getInputKeys();
-    return KeyCode.valueOf(keyMap.get(inputType));
+    try {
+      return KeyCode.valueOf(keyMap.get(inputType));
+    } catch (NullPointerException e){
+      LOGGER.error(e.getMessage() + "key code is null");
+      WARNING.showAlert(getScene(), AlertType.ERROR, "Error Getting Input Keys", null, "Please specify input keys for game");
+    }
+    return null;
   }
 
   /**
