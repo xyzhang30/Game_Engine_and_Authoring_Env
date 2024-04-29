@@ -25,8 +25,8 @@ public class MultiplySpeedCommand implements Command {
   /**
    * Constructs an instance of the MultiplySpeedCommand with the provided arguments.
    *
-   * @param arguments Consists of two arguments: the ID of the GameObject whose speed is to be
-   *                  multiplied and the factor by which the speed should be multiplied.
+   * @param arguments     Consists of two arguments: the ID of the GameObject whose speed is to be
+   *                      multiplied and the factor by which the speed should be multiplied.
    * @param gameObjectMap a map from object ids to the actual GameObject
    */
   public MultiplySpeedCommand(List<Integer> arguments, Map<Integer, GameObject> gameObjectMap) {

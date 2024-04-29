@@ -20,7 +20,7 @@ public class KeySelectionPanel implements Panel {
   private final StackPane canvas;
   private final UIElementFactory uiElementFactory;
 
-  private List<TextField> keyInputFields = new ArrayList<>();
+  private final List<TextField> keyInputFields = new ArrayList<>();
 
   public KeySelectionPanel(AuthoringProxy authoringProxy, AnchorPane rootPane,
       AnchorPane containerPane, StackPane canvas, UIElementFactory uiElementFactory) {
@@ -44,7 +44,7 @@ public class KeySelectionPanel implements Panel {
     for (KeyInputType keyInputType : KeyInputType.values()) {
       String keyTypeLabel = String.join(" ", keyInputType.toString().split("_"));
       createInput(keyTypeLabel, heightIdx);
-      heightIdx ++;
+      heightIdx++;
     }
   }
 
@@ -58,9 +58,9 @@ public class KeySelectionPanel implements Panel {
     inputField.setEditable(false);
     AnchorPane.setLeftAnchor(inputField, 500.0);
     AnchorPane.setTopAnchor(inputField, 50.0 * heightIdx);
-    String jsonKeyTypeLabel = String.join("_",label.split(" ")).toLowerCase();
+    String jsonKeyTypeLabel = String.join("_", label.split(" ")).toLowerCase();
     inputField.setId(jsonKeyTypeLabel);
-    if (authoringProxy.keyTypeAlreadySelected(jsonKeyTypeLabel)){
+    if (authoringProxy.keyTypeAlreadySelected(jsonKeyTypeLabel)) {
       inputField.setText(authoringProxy.getSelectedKey(jsonKeyTypeLabel));
     }
 
@@ -75,7 +75,7 @@ public class KeySelectionPanel implements Panel {
       inputField.setOnKeyPressed(event -> {
         KeyCode keycode = event.getCode();
         String keyCodeString = keycode.toString();
-        if (authoringProxy.keyAlreadyUsed(keyCodeString)){
+        if (authoringProxy.keyAlreadyUsed(keyCodeString)) {
           event.consume();
           return;
         }

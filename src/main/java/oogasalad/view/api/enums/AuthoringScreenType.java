@@ -1,8 +1,8 @@
 package oogasalad.view.api.enums;
 
 /**
- * Enumeration representing different types of authoring screens in the authoring environment.
- * Each enum constant has an associated string representation.
+ * Enumeration representing different types of authoring screens in the authoring environment. Each
+ * enum constant has an associated string representation.
  *
  * @author Judy He
  */
@@ -29,7 +29,9 @@ public enum AuthoringScreenType {
    *
    * @param name the string representation of the enum constant.
    */
-  AuthoringScreenType(String name){string = name;}
+  AuthoringScreenType(String name) {
+    string = name;
+  }
 
   /**
    * Returns the string representation of the enum constant.

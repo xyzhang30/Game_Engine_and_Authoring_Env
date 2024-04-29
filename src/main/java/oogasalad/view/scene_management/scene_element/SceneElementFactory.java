@@ -6,12 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -132,10 +130,13 @@ public class SceneElementFactory {
 
   }
 
-  private void configureUIElement(Region node, Map<String, String> parameters, BiConsumer<Node, String> textSetter) {
+  private void configureUIElement(Region node, Map<String, String> parameters,
+      BiConsumer<Node, String> textSetter) {
     String textTag = parameters.get(XMLTags.TEXT.name().toLowerCase());
-    double widthFactor = parseDoubleParameter(parameters, XMLTags.WIDTH_FACTOR.name().toLowerCase());
-    double heightFactor = parseDoubleParameter(parameters, XMLTags.HEIGHT_FACTOR.name().toLowerCase());
+    double widthFactor = parseDoubleParameter(parameters,
+        XMLTags.WIDTH_FACTOR.name().toLowerCase());
+    double heightFactor = parseDoubleParameter(parameters,
+        XMLTags.HEIGHT_FACTOR.name().toLowerCase());
     if (textTag != null) {
       String translatedText = languageManager.getText(language, textTag);
       textSetter.accept(node, translatedText);
@@ -153,7 +154,8 @@ public class SceneElementFactory {
   }
 
   private void configureListView(Node node, Map<String, String> parameters) {
-    configureUIElement((ListView<String>) node, parameters, (n, text) -> {}); // No text setting
+    configureUIElement((ListView<String>) node, parameters, (n, text) -> {
+    }); // No text setting
   }
 
   private void configureTextField(Node node, Map<String, String> parameters) {

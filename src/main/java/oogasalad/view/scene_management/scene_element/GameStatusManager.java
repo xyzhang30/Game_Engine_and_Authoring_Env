@@ -17,6 +17,7 @@ import oogasalad.model.api.PlayerRecord;
  * @author Jordan Haytaian
  */
 public class GameStatusManager {
+
   private final String playerScoreSeparator = ": ";
   private String turnText;
   private String roundText;
@@ -86,7 +87,7 @@ public class GameStatusManager {
   }
 
   private ObservableList<String> createScoreListItems(List<PlayerRecord> players, Map<Integer,
-        String> playerMap) {
+      String> playerMap) {
     List<String> scores = new ArrayList<>();
     for (PlayerRecord player : players) {
       scores.add(playerMap.get(player.playerId()) + playerScoreSeparator + player.score());

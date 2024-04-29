@@ -27,7 +27,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
-import oogasalad.model.gameengine.GameEngine;
 import oogasalad.view.Warning;
 import oogasalad.view.api.enums.SceneElementEvent;
 import oogasalad.view.api.exception.CreateNewUserException;
@@ -40,8 +39,10 @@ import oogasalad.view.scene_management.scene_managers.SceneManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class DatabaseHandler extends Handler{
+public class DatabaseHandler extends Handler {
 
+  private static final Logger LOGGER = LogManager.getLogger(DatabaseHandler.class);
+  private static final Warning WARNING = new Warning();
   private final DatabaseController databaseController;
   private final List<String> currentPlayersManager;
   private TextField usernameTextField;
@@ -54,8 +55,6 @@ public class DatabaseHandler extends Handler{
   private String currentGame;
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
   private Map<String, Boolean> playerPermissionMap;
-  private static final Logger LOGGER = LogManager.getLogger(DatabaseHandler.class);
-  private static final Warning WARNING = new Warning();
   private Map<String, Boolean> friendsMap;
   private ComboBox<String> avatarComboBox;  // ComboBox for selecting an avatar
 
@@ -106,12 +105,12 @@ public class DatabaseHandler extends Handler{
     System.out.println("createLoginHandler in scene element handler called");
     node.setOnMouseClicked(e -> {
       try {
-        boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(), passwordField.getText());
+        boolean userLoggedIn = databaseController.loginUser(usernameTextField.getText(),
+            passwordField.getText());
         if (userLoggedIn) {
-          if(currentPlayersManager.contains(usernameTextField.getText())) {
+          if (currentPlayersManager.contains(usernameTextField.getText())) {
             showAlert("Player Already Added to Game", "You can't play against yourself!");
-          }
-          else {
+          } else {
             currentPlayersManager.add(usernameTextField.getText());
             getSceneManager().createCurrentPlayersScene();
           }
@@ -119,13 +118,15 @@ public class DatabaseHandler extends Handler{
       } catch (UserNotFoundException | IncorrectPasswordException ex) {
         LOGGER.error(ex.getMessage());
         Warning warning = new Warning();
-        warning.showAlert(getSceneManager().getScene(), AlertType.ERROR, "Login Error", null, ex.getMessage());
+        warning.showAlert(getSceneManager().getScene(), AlertType.ERROR, "Login Error", null,
+            ex.getMessage());
       } catch (Exception ex) {
         LOGGER.error("An unexpected error occurred during login: " + ex.getMessage());
         // Handle other unexpected errors
         Warning warning = new Warning();
-        warning.showAlert(getSceneManager().getScene(), AlertType.ERROR, "Login Error", null, "An unexpected "
-            + "error occurred during login.");
+        warning.showAlert(getSceneManager().getScene(), AlertType.ERROR, "Login Error", null,
+            "An unexpected "
+                + "error occurred during login.");
       }
     });
   }
@@ -145,24 +146,24 @@ public class DatabaseHandler extends Handler{
 
     //this should be from a button the same way that we choose the controllable or background images
     node.setOnMouseClicked(e -> {
-          Optional<String> selectedAvatar = showAvatarSelectionDialog();
-          selectedAvatar.ifPresent(avatar -> {
-            avatarUrlField = avatar;
+      Optional<String> selectedAvatar = showAvatarSelectionDialog();
+      selectedAvatar.ifPresent(avatar -> {
+        avatarUrlField = avatar;
 
-            try {
-              boolean userCreated = databaseController.canCreateUser(usernameTextField.getText(),
-                  passwordField.getText(), avatarUrlField);
-              System.out.println(userCreated);
-              if (!userCreated) {
-                LOGGER.error("User creation error - user already exists or could not be created.");
-                throw new CreateNewUserException("User already exists or could not be created.");
-              }
-            } catch (CreateNewUserException | CreatingDuplicateUserException ex) {
-              WARNING.showAlert(getSceneManager().getScene(), AlertType.ERROR,
-                  "Creating New User Error", null, ex.getMessage());
-            }
-          });
-        });
+        try {
+          boolean userCreated = databaseController.canCreateUser(usernameTextField.getText(),
+              passwordField.getText(), avatarUrlField);
+          System.out.println(userCreated);
+          if (!userCreated) {
+            LOGGER.error("User creation error - user already exists or could not be created.");
+            throw new CreateNewUserException("User already exists or could not be created.");
+          }
+        } catch (CreateNewUserException | CreatingDuplicateUserException ex) {
+          WARNING.showAlert(getSceneManager().getScene(), AlertType.ERROR,
+              "Creating New User Error", null, ex.getMessage());
+        }
+      });
+    });
     //add the new user to the database
     //open the currentplayers screen with this player added to it
   }
@@ -186,7 +187,8 @@ public class DatabaseHandler extends Handler{
     dialog.getDialogPane().getButtonTypes().addAll(selectButtonType, ButtonType.CANCEL);
     dialog.setResultConverter(dialogButton -> {
       if (dialogButton == selectButtonType) {
-        return ((ComboBox<String>) dialog.getDialogPane().getContent()).getSelectionModel().getSelectedItem();
+        return ((ComboBox<String>) dialog.getDialogPane().getContent()).getSelectionModel()
+            .getSelectedItem();
       }
       return null;
     });
@@ -212,7 +214,8 @@ public class DatabaseHandler extends Handler{
           setText(null);
           setGraphic(null);
         } else {
-          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), size, size, true, false);
+          Image img = new Image(getClass().getResourceAsStream("/view/avatar_images/" + item), size,
+              size, true, false);
           ImageView imageView = new ImageView(img);
           setGraphic(imageView);
         }
@@ -247,8 +250,6 @@ public class DatabaseHandler extends Handler{
     usernameTextField = (TextField) node;
     //save username and add to database if not already there
   }
-
-
 
 
   private void createStartLoginHandler(Node node) {
@@ -314,8 +315,10 @@ public class DatabaseHandler extends Handler{
   private void createFinishHandler(Node node) {
     node.setOnMouseClicked(e -> {
       List<String> checkedPlayers = extractCheckedItems(playerPermissions, playerPermissionMap);
-      databaseController.setPublicPrivate(currentGame, publicComboBox.getSelectionModel().getSelectedItem());
-      databaseController.writePlayerPermissions(currentGame, checkedPlayers, extractUncheckedItems(playerPermissions, playerPermissionMap));
+      databaseController.setPublicPrivate(currentGame,
+          publicComboBox.getSelectionModel().getSelectedItem());
+      databaseController.writePlayerPermissions(currentGame, checkedPlayers,
+          extractUncheckedItems(playerPermissions, playerPermissionMap));
       getSceneManager().createMenuScene();
     });
   }
@@ -323,12 +326,14 @@ public class DatabaseHandler extends Handler{
   private void confirmFriendsHandler(Node node) {
     node.setOnMouseClicked(e -> {
       List<String> checkedPlayers = extractCheckedItems(friends, friendsMap);
-      databaseController.writeFriends(currentPlayersManager.get(0), checkedPlayers, extractUncheckedItems(friends, friendsMap));
+      databaseController.writeFriends(currentPlayersManager.get(0), checkedPlayers,
+          extractUncheckedItems(friends, friendsMap));
       getSceneManager().createMenuScene();
     });
   }
 
-  private List<String> extractCheckedItems(ListView<String> listView, Map<String, Boolean> permissionMap) {
+  private List<String> extractCheckedItems(ListView<String> listView,
+      Map<String, Boolean> permissionMap) {
     List<String> checkedPlayers = new ArrayList<>();
     for (String item : listView.getItems()) {
       if (permissionMap.get(item)) {
@@ -338,7 +343,8 @@ public class DatabaseHandler extends Handler{
     return checkedPlayers;
   }
 
-  private List<String> extractUncheckedItems(ListView<String> listView, Map<String, Boolean> permissionMap) {
+  private List<String> extractUncheckedItems(ListView<String> listView,
+      Map<String, Boolean> permissionMap) {
     List<String> uncheckedPlayers = new ArrayList<>();
     for (String item : listView.getItems()) {
       if (!permissionMap.getOrDefault(item, false)) {
@@ -364,7 +370,8 @@ public class DatabaseHandler extends Handler{
     for (Map.Entry<String, CheckBox> entry : playerCheckBoxMap.entrySet()) {
       String playerName = entry.getKey();
       CheckBox checkBox = entry.getValue();
-      modeBehaviors.getOrDefault(mode, (c, p) -> {}).accept(checkBox, playerName);
+      modeBehaviors.getOrDefault(mode, (c, p) -> {
+      }).accept(checkBox, playerName);
     }
   }
 

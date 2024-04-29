@@ -1,7 +1,6 @@
 package oogasalad.model.gameparser;
 
 import java.lang.reflect.Field;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,10 +10,8 @@ import java.util.Set;
 import oogasalad.model.api.StrikeablesView;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.data.GameObjectProperties;
-import oogasalad.model.api.data.GameObjectShape;
 import oogasalad.model.api.data.KeyPreferences;
 import oogasalad.model.api.exception.InvalidColorParsingException;
-import oogasalad.model.api.exception.InvalidImageException;
 import oogasalad.model.api.exception.InvalidShapeException;
 import oogasalad.model.api.exception.MissingJsonGameInfoException;
 import oogasalad.view.api.enums.KeyInputType;
@@ -35,11 +32,13 @@ public class GameLoaderView extends GameLoader {
 
   /**
    * constructor, creates view side game object record and key map for view upon initialization
+   *
    * @param gameName String, name (path) of the game being parsed
-   * @throws InvalidShapeException Shape in game data file cannot be recognized
+   * @throws InvalidShapeException        Shape in game data file cannot be recognized
    * @throws InvalidColorParsingException Color in game data file cannot be recognized
    */
-  public GameLoaderView(String gameName) throws InvalidShapeException, InvalidColorParsingException{
+  public GameLoaderView(String gameName)
+      throws InvalidShapeException, InvalidColorParsingException {
     super(gameName);
     createViewRecord("Default");
     createKeysMap();
@@ -47,6 +46,7 @@ public class GameLoaderView extends GameLoader {
 
   /**
    * Gets the available mods for the game
+   *
    * @return List, names of all available mods for the game
    */
   public List<String> getMods() {
@@ -87,11 +87,13 @@ public class GameLoaderView extends GameLoader {
 
   /**
    * creates game object record with info of the game object the view needs
+   *
    * @param mod String, name of the current mod
    * @throws InvalidShapeException
    * @throws InvalidColorParsingException
    */
-  public void createViewRecord(String mod) throws InvalidShapeException, InvalidColorParsingException {
+  public void createViewRecord(String mod)
+      throws InvalidShapeException, InvalidColorParsingException {
     List<Integer> strikeableIDs = new ArrayList<>();
     viewGameObjectRecords = new ArrayList<>();
     for (GameObjectProperties o : gameData.getGameObjectProperties()) {
@@ -105,11 +107,11 @@ public class GameLoaderView extends GameLoader {
         System.out.println(mod);
         System.out.println(o.color());
 
-        for (int i : o.color().getOrDefault(mod, List.of(0,0,0))) {
+        for (int i : o.color().getOrDefault(mod, List.of(0, 0, 0))) {
           colorRgb.add(validateRgbValue(i));
         }
-      } catch (NullPointerException e){
-        LOGGER.error("Color error during parsing - " +e.getMessage());
+      } catch (NullPointerException e) {
+        LOGGER.error("Color error during parsing - " + e.getMessage());
         throw new InvalidColorParsingException(e.getMessage());
       }
       double xdimension = o.dimension().xDimension();
@@ -143,7 +145,7 @@ public class GameLoaderView extends GameLoader {
   }
 
 
-  public String getGameName(){
+  public String getGameName() {
     return gameData.getGameName();
   }
 

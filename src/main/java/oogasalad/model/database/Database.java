@@ -17,6 +17,26 @@ import org.postgresql.util.PSQLException;
 
 public class Database implements DatabaseApi {
 
+  private static ObservableList<String> getGames(String playerName, int numPlayers, String sql) {
+    List<String> gameNames = new ArrayList<>();
+    try (Connection conn = DatabaseConfig.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, playerName);
+      if (numPlayers != -1) {
+        pstmt.setInt(2, numPlayers);
+      }
+      try (ResultSet rs = pstmt.executeQuery()) {
+        while (rs.next()) {
+          String gameName = rs.getString("gamename");
+          gameNames.add(gameName);
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return FXCollections.observableList(gameNames);
+  }
+
   /**
    * Retrieves the high scores of a player for a specific game.
    *
@@ -101,7 +121,7 @@ public class Database implements DatabaseApi {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return FXCollections.observableList(scores.subList(0,Math.min(10,scores.size() )));
+    return FXCollections.observableList(scores.subList(0, Math.min(10, scores.size())));
   }
 
   /**
@@ -132,7 +152,6 @@ public class Database implements DatabaseApi {
     return false;
   }
 
-
   /**
    * Registers a new user.
    *
@@ -156,8 +175,8 @@ public class Database implements DatabaseApi {
 
         for (String gameName : getAllGames()) {
           grantPermissions(username, gameName, getGameAccessibility(gameName).equals("public") ?
-                "Player" :
-                "None");
+              "Player" :
+              "None");
         }
         return true;
       }
@@ -182,7 +201,6 @@ public class Database implements DatabaseApi {
       return false;  //false if user does not exist
     }
   }
-
 
   //returns true if game is publicly available, otherwise false
   public String getGameAccessibility(String gameName) {
@@ -214,13 +232,12 @@ public class Database implements DatabaseApi {
     }
   }
 
-
   /**
    * Registers a new game.
    *
-   * @param gameName        The name of the game.
-   * @param ownerName       The name of the owner of the game.
-   * @param numPlayers      The number of players required for the game.
+   * @param gameName   The name of the game.
+   * @param ownerName  The name of the owner of the game.
+   * @param numPlayers The number of players required for the game.
    * @return True if the game is successfully registered, false otherwise.
    */
 
@@ -238,7 +255,9 @@ public class Database implements DatabaseApi {
       pstmt.setString(4, accessibility);
       int affectedRows = pstmt.executeUpdate();
       for (String username : getAllPlayers()) {
-        String permission = accessibility.equals("public") || (accessibility.equals("friends") && areFriends(ownerName, username, conn)) ? "Player" : "None";
+        String permission =
+            accessibility.equals("public") || (accessibility.equals("friends") && areFriends(
+                ownerName, username, conn)) ? "Player" : "None";
         grantPermissions(username, gameName, permission);
       }
       grantPermissions(ownerName, gameName, "Owner");
@@ -285,7 +304,6 @@ public class Database implements DatabaseApi {
     return gamenames;
   }
 
-
   //grants permissiosn to player for game in permissions db
   private void grantPermissions(String username, String gameName,
       String permission) throws SQLException {
@@ -331,7 +349,6 @@ public class Database implements DatabaseApi {
 
     return -1;
   }
-
 
   /**
    * Adds a game score for a specific game instance and player.
@@ -382,7 +399,6 @@ public class Database implements DatabaseApi {
     }
   }
 
-
   @Override
   public void assignFriends(String player, List<String> friends, List<String> notFriends) {
     try (Connection conn = DatabaseConfig.getConnection()) {
@@ -410,26 +426,6 @@ public class Database implements DatabaseApi {
         "JOIN games g ON p.gamename = g.gamename " +
         "WHERE p.username = ? AND p.permissions != 'None' AND g.numplayers <= ?";
     return getGames(playerName, numPlayers, sql);
-  }
-
-  private static ObservableList<String> getGames(String playerName, int numPlayers, String sql) {
-    List<String> gameNames = new ArrayList<>();
-    try (Connection conn = DatabaseConfig.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setString(1, playerName);
-      if(numPlayers!=-1) {
-        pstmt.setInt(2, numPlayers);
-      }
-      try (ResultSet rs = pstmt.executeQuery()) {
-        while (rs.next()) {
-          String gameName = rs.getString("gamename");
-          gameNames.add(gameName);
-        }
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return FXCollections.observableList(gameNames);
   }
 
   /**
@@ -463,7 +459,8 @@ public class Database implements DatabaseApi {
     return false; // Default to false if an error occurs
   }
 
-  private void insertFriendship(String player1, String player2, Connection conn) throws SQLException {
+  private void insertFriendship(String player1, String player2, Connection conn)
+      throws SQLException {
     String sql = "INSERT INTO friendships (player_username, friend_username) VALUES (?, ?)";
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, player1);
@@ -472,7 +469,8 @@ public class Database implements DatabaseApi {
     }
   }
 
-  private void removeFriendship(String player1, String player2, Connection conn) throws SQLException {
+  private void removeFriendship(String player1, String player2, Connection conn)
+      throws SQLException {
     String sql = "DELETE FROM friendships WHERE (player_username = ? AND friend_username = ?) OR (player_username = ? AND friend_username = ?)";
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, player1);

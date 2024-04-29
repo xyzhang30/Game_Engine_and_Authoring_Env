@@ -14,7 +14,6 @@ import oogasalad.model.api.PlayerRecord;
 import oogasalad.model.gameengine.checkstatic.StaticChecker;
 import oogasalad.model.gameengine.gameobject.CollisionDetector;
 import oogasalad.model.gameengine.gameobject.GameObject;
-import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 import oogasalad.model.gameengine.player.Player;
 import oogasalad.model.gameengine.player.PlayerContainer;
 import oogasalad.model.gameparser.GameLoaderModel;
@@ -301,9 +300,9 @@ public class GameEngine implements ExternalGameEngine {
     return gameObjects;
   }
 
-  public double getScoreableScoreById(int id){
-    for (GameObject gameObject : gameObjects){
-      if (gameObject.getId() == id && gameObject.getScoreable().isPresent()){
+  public double getScoreableScoreById(int id) {
+    for (GameObject gameObject : gameObjects) {
+      if (gameObject.getId() == id && gameObject.getScoreable().isPresent()) {
         return gameObject.getScoreable().get().getTemporaryScore();
       }
     }

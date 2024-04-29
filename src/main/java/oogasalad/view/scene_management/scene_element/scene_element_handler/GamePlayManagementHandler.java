@@ -15,6 +15,7 @@ import oogasalad.view.scene_management.scene_managers.SceneManager;
  * event handlers.
  */
 public class GamePlayManagementHandler extends Handler {
+
   private Map<SceneElementEvent, Consumer<Node>> eventMap;
 
   /**

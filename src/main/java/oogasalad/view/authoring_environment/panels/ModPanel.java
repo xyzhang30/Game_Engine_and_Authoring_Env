@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -18,17 +17,16 @@ import oogasalad.view.authoring_environment.proxy.ShapeProxy;
 public class ModPanel implements Panel {
 
   private final AnchorPane containerPane;
-  private AuthoringProxy authoringProxy;
-  private ShapeProxy shapeProxy;
-  private ResourceBundle resourceBundle;
   private final String language = "English"; // PASS IN LANGUAGE
-
+  private final AuthoringProxy authoringProxy;
+  private final ShapeProxy shapeProxy;
+  private final ResourceBundle resourceBundle;
   private Button save;
   private Button newMod;
   private ComboBox<String> allMods; //later
 
   public ModPanel(AuthoringProxy authoringProxy, ShapeProxy shapeProxy,
-      AnchorPane containerPane){
+      AnchorPane containerPane) {
     this.containerPane = containerPane;
     this.authoringProxy = authoringProxy;
     this.shapeProxy = shapeProxy;

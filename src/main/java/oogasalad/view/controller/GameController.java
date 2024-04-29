@@ -6,14 +6,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.Properties;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
-import javax.swing.text.View;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.data.GameData;
@@ -34,10 +33,9 @@ import oogasalad.view.api.enums.KeyInputType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.api.enums.UITheme;
 import oogasalad.view.database.Leaderboard;
-import oogasalad.view.scene_management.scene_managers.AnimationManager;
-import oogasalad.view.scene_management.element_parsers.GameTitleParser;
 import oogasalad.view.scene_management.GameWindow;
-
+import oogasalad.view.scene_management.element_parsers.GameTitleParser;
+import oogasalad.view.scene_management.scene_managers.AnimationManager;
 import oogasalad.view.scene_management.scene_managers.SceneManager;
 import oogasalad.view.visual_elements.CompositeElement;
 import org.apache.logging.log4j.LogManager;
@@ -58,12 +56,12 @@ public class GameController {
   private final SceneManager sceneManager;
   private final AnimationManager animationManager;
   private final GameTitleParser gameTitleParser;
+  private final int maxVelocity;
   private GameEngine gameEngine;
   private GameLoaderView gameLoaderView;
-  private DatabaseController databaseController;
+  private final DatabaseController databaseController;
   private Map<Integer, String> playerMap;
   private boolean ableToStrike;
-  private final int maxVelocity;
   private String selectedGame;
 
   /**
@@ -146,18 +144,18 @@ public class GameController {
    * @param selectedGame the game title selected to play
    */
   public void startGamePlay(String selectedGame) {
-      try {
-        gameLoaderView = new GameLoaderView(selectedGame);
-        gameEngine = new GameEngine(selectedGame);
-      } catch (InvalidFileException e) {
-        e.printStackTrace();
-        handleException("Start Game Error", "Can't find game file");
-        return;
-      } catch (InvalidColorParsingException | InvalidShapeException e) {
-        e.printStackTrace();
-        handleException("Parsing Error", e.getMessage());
-        return;
-      }
+    try {
+      gameLoaderView = new GameLoaderView(selectedGame);
+      gameEngine = new GameEngine(selectedGame);
+    } catch (InvalidFileException e) {
+      e.printStackTrace();
+      handleException("Start Game Error", "Can't find game file");
+      return;
+    } catch (InvalidColorParsingException | InvalidShapeException e) {
+      e.printStackTrace();
+      handleException("Parsing Error", e.getMessage());
+      return;
+    }
 
     List<String> players = databaseController.getPlayerNames();
     playerMap = IntStream.range(1, players.size() + 1)
@@ -264,7 +262,6 @@ public class GameController {
       handleException("Parsing Error", "Cannot find corresponding color or mod");
     }
   }
-
 
 
   private void handleException(String title, String message) {
