@@ -56,7 +56,7 @@ public class GameEngine implements ExternalGameEngine {
    * @param gameTitle The title of the game.
    */
 
-  public GameEngine(String gameTitle) throws InvalidFileException, MissingJsonGameInfoException{
+  public GameEngine(String gameTitle) throws InvalidFileException, MissingJsonGameInfoException {
     loader = new GameLoaderModel(gameTitle);
     playerContainer = loader.getPlayerContainer();
     round = loader.getCurrRound();
@@ -136,7 +136,7 @@ public class GameEngine implements ExternalGameEngine {
    * Advances the game to the next round by incrementing the round number, applying delayed scores
    * to players, and starting a new round.
    */
-  public void advanceRound() throws MissingJsonGameInfoException{
+  public void advanceRound() throws MissingJsonGameInfoException {
     round++;
     playerContainer.getPlayers().forEach(Player::applyDelayedScore);
     startRound(loader);
@@ -228,7 +228,7 @@ public class GameEngine implements ExternalGameEngine {
 
   //starts the current round, by requesting the necessary information for that round from the
   // loader.
-  private void startRound(GameLoaderModel loader) throws MissingJsonGameInfoException{
+  private void startRound(GameLoaderModel loader) throws MissingJsonGameInfoException {
     gameOver = false;
     turn = loader.getCurrTurn();
     staticState = true;

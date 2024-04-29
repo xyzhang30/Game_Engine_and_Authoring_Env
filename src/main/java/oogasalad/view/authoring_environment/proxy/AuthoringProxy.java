@@ -416,13 +416,12 @@ public class AuthoringProxy {
     Database database = new Database();
     try {
       database.registerGame(gameName, hostPlayer, numPlayers, gamePermission);
-    }
-    catch (SQLException e) {
+    } catch (SQLException e) {
       showAlert(Alert.AlertType.ERROR, "Database Error", "Cannot Register Game", e.getMessage());
     }
   }
 
-  public void setPlayersMap (Map<Integer, Map<CollidableType, List<Integer>>> playersMap){
+  public void setPlayersMap(Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
     this.playersMap = playersMap;
   }
 

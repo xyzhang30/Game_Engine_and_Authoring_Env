@@ -77,7 +77,7 @@ public class Database implements DatabaseApi {
   public boolean loginUser(String username, String password) throws SQLException {
     String query = "SELECT password FROM Players WHERE username = ?";
     ResultSet rs = executeQuery(query, username);
-    return  (rs.next() && BCrypt.checkpw(password, rs.getString("password")));
+    return (rs.next() && BCrypt.checkpw(password, rs.getString("password")));
   }
 
 
@@ -102,12 +102,14 @@ public class Database implements DatabaseApi {
         grantPermissions(username, gameName, getGameAccessibility(gameName).equals("public") ?
             "Player" : "None");
       }
-    } catch (PSQLException ignored) {}
+    } catch (PSQLException ignored) {
+    }
     return true;
   }
 
   /**
    * Gets the accessibility level of a game.
+   *
    * @param gameName the game being queried
    * @return If the game is public to all, private, or open to friends of the creator
    */
@@ -184,7 +186,8 @@ public class Database implements DatabaseApi {
       throws SQLException {
     String sql = "INSERT INTO GameResult (gameinstanceid, playerusername, score, gameresult) "
         + "VALUES (?, ?, ?, ?)";
-    return executeUpdate(sql, gameInstanceId, user, score, result) > 0;}
+    return executeUpdate(sql, gameInstanceId, user, score, result) > 0;
+  }
 
 
   /**
@@ -197,8 +200,8 @@ public class Database implements DatabaseApi {
 
 
   @Override
-  public void assignPermissionToPlayers(String game, List<String> users, String permission) throws SQLException
-  {
+  public void assignPermissionToPlayers(String game, List<String> users, String permission)
+      throws SQLException {
     for (String user : users) {
       grantPermissions(user, game, permission);
     }
@@ -214,7 +217,8 @@ public class Database implements DatabaseApi {
    */
 
   @Override
-  public void assignFriends(String player, List<String> friends, List<String> notFriends) throws SQLException{
+  public void assignFriends(String player, List<String> friends, List<String> notFriends)
+      throws SQLException {
     for (String friend : friends) {
       if (!areFriends(player, friend)) {
         insertFriendship(player, friend);
@@ -230,12 +234,14 @@ public class Database implements DatabaseApi {
 
   /**
    * Returns a list of the games a given group of players can play
+   *
    * @param playerName The name of the player.
    * @param numPlayers The number of players available to play.
    * @return all games that the given player can play with the specified number of players
    */
   @Override
-  public ObservableList<String> getPlayableGameIds(String playerName, int numPlayers) throws SQLException{
+  public ObservableList<String> getPlayableGameIds(String playerName, int numPlayers)
+      throws SQLException {
     String sql = "SELECT p.gamename FROM permissions p " +
         "JOIN games g ON p.gamename = g.gamename " +
         "WHERE p.username = ? AND p.permissions != 'None' AND g.numplayers <= ?";
@@ -258,6 +264,7 @@ public class Database implements DatabaseApi {
 
   /**
    * Returns whether user with given username is in the database
+   *
    * @param username of a user
    * @return if the given user is in the database
    */
@@ -270,6 +277,7 @@ public class Database implements DatabaseApi {
 
   /**
    * Gets a list of all players that are friends with a given player
+   *
    * @param player who user wants to see their friends
    * @return map from player username to whether or not "player" is friends with them
    */
@@ -357,7 +365,7 @@ public class Database implements DatabaseApi {
   }
 
   //retireves list of all game names
-  private List<String> getAllGames() throws SQLException{
+  private List<String> getAllGames() throws SQLException {
     List<String> gamenames = new ArrayList<>();
     String sql = "SELECT gamename FROM Games";
     Connection conn = DatabaseConfig.getConnection();

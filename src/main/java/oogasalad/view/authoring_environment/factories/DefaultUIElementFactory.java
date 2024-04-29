@@ -264,7 +264,8 @@ public class DefaultUIElementFactory implements UIElementFactory {
             params.add(value);
           } catch (NumberFormatException ex) {
             LOGGER.error(ex.getMessage());
-            WARNING.showAlert(AlertType.ERROR, "Number Format Error", null, "Parameters must be integers");
+            WARNING.showAlert(AlertType.ERROR, "Number Format Error", null,
+                "Parameters must be integers");
           }
         }
       }
