@@ -69,6 +69,14 @@ public class GameObjectAttributesContainer implements Cloneable {
     System.out.println("Setting color in properties container:"+this.color + " Container: "+this);
   }
 
+  public void setAllColor(Map<String, List<Integer>> allColors){
+    this.color = allColors;
+  }
+
+  public void setAllImgPaths(Map<String, String> allImgs){
+    this.imagePath = allImgs;
+  }
+
   /**
    * Gets the list of properties associated with the game object.
    *

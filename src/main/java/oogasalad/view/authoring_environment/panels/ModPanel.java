@@ -82,6 +82,7 @@ public class ModPanel implements Panel {
       allMods.getItems().setAll(shapeProxy.getAllMods());
       allMods.setValue(shapeProxy.getCurrentMod());
       newMod.setDisable(true);
+      shapeProxy.disableShapeSelection();
       newModPopup.close();
     });
 

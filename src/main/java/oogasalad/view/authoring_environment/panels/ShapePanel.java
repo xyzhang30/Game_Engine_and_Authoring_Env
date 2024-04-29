@@ -137,7 +137,7 @@ public class ShapePanel implements Panel {
   }
 
   private void handleGameObjectEvents(Shape shape) {
-    shape.setOnMouseClicked(event -> setShapeOnClick((Shape) event.getSource()));
+    shape.setOnMouseClicked(event -> setShapeOnClick((Shape) event.getSource(), authoringProxy.getGameObjectMap().get(shape)));
     shape.setOnMousePressed(this::handleMousePressed);
     shape.setOnMouseDragged(event -> setShapeOnCompleteDrag((Shape) event.getSource(), event));
     shape.setOnMouseReleased(event -> setShapeOnRelease((Shape) event.getSource()));
@@ -192,7 +192,7 @@ public class ShapePanel implements Panel {
     }
   }
 
-  private void setShapeOnClick(Shape shape) {
+  private void setShapeOnClick(Shape shape, GameObjectAttributesContainer gameObj) {
     if (shapeProxy.getShape() == null) {
       return;
     }
@@ -208,7 +208,7 @@ public class ShapePanel implements Panel {
         throw new RuntimeException(e);
       }
     }
-    shapeProxy.selectShape(shape);
+    shapeProxy.selectShape(shape, gameObj);
     shape.setStroke(Color.YELLOW);
     shapeProxy.updateShapeSelectionDisplay();
     authoringFactory.resetAuthoringElements();

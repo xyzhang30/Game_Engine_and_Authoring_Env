@@ -45,6 +45,7 @@ public class ShapeProxy {
       RESOURCE_FOLDER_PATH + VIEW_PROPERTIES_PATH + DEFAULT_VALUES_FILE);
   private int numberOfMultiSelectAllowed = Integer.parseInt(
       defaultValuesResourceBundle.getString("defaultNumShapesSelectedAllowed"));
+  private boolean shapeSelectionDisabled = false;
 
   public ShapeProxy (){
     mods.add("Default");
@@ -67,13 +68,17 @@ public class ShapeProxy {
    *
    * @param shape The shape to be selected.
    */
-  public void selectShape(Shape shape) {
+  public void selectShape(Shape shape, GameObjectAttributesContainer gameObj) {
     if (shape != null && !shapeStack.isEmpty() && shapeStack.contains(shape)) {
       deselectShape(shape);
     }
     shapeStack.push(shape);
     shapesListProperty.setAll(getSelectedShapeIds());
-    resetGameObjectAttributesContainer();
+    if (gameObj != null){
+      resetGameObjectAttributesContainer(gameObj);
+    } else {
+      resetGameObjectAttributesContainer();
+    }
   }
 
   /**
@@ -142,7 +147,7 @@ public class ShapeProxy {
     AnchorPane.setBottomAnchor(clonedShape, 200.0);
 
     if (this.shapeStack.isEmpty()) {
-      selectShape(clonedShape);
+      selectShape(clonedShape, null);
     }
 
     return clonedShape;
@@ -218,18 +223,40 @@ public class ShapeProxy {
     return selectedShapesIds;
   }
 
-  /**
-   * Resets the GameObjectAttributesContainer due to new shape selection.
-   */
   public void resetGameObjectAttributesContainer() {
-//    gameObjectAttributesContainer = new GameObjectAttributesContainer();
+//    if (!shapeSelectionDisabled){
+    gameObjectAttributesContainer = new GameObjectAttributesContainer();
+//    }
     if (!shapeStack.isEmpty()) {
       Shape currentShape = shapeStack.peek();
+      System.out.println("Current Shape Stack in reset"+shapeStack);
       gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));
       gameObjectAttributesContainer.setWidth(
           currentShape.getLayoutBounds().getWidth() * currentShape.getScaleX());
       gameObjectAttributesContainer.setHeight(
           currentShape.getLayoutBounds().getHeight() * currentShape.getScaleY());
+      Bounds bounds = currentShape.localToScene(currentShape.getBoundsInLocal());
+      gameObjectAttributesContainer.setPosition(new Coordinate(bounds.getMinX(), bounds.getMinY()));
+    }
+  }
+
+  /**
+   * Resets the GameObjectAttributesContainer due to new shape selection.
+   */
+  public void resetGameObjectAttributesContainer(GameObjectAttributesContainer gameObj) {
+//    if (!shapeSelectionDisabled){
+      gameObjectAttributesContainer = new GameObjectAttributesContainer();
+//    }
+    if (!shapeStack.isEmpty()) {
+      Shape currentShape = shapeStack.peek();
+      System.out.println("Current Shape Stack in reset"+shapeStack);
+      gameObjectAttributesContainer.setId(Integer.parseInt(currentShape.getId()));
+      gameObjectAttributesContainer.setWidth(
+          currentShape.getLayoutBounds().getWidth() * currentShape.getScaleX());
+      gameObjectAttributesContainer.setHeight(
+          currentShape.getLayoutBounds().getHeight() * currentShape.getScaleY());
+      gameObjectAttributesContainer.setAllColor(gameObj.getAllColors());
+      gameObjectAttributesContainer.setAllImgPaths(gameObj.getAllImagePaths());
       Bounds bounds = currentShape.localToScene(currentShape.getBoundsInLocal());
       gameObjectAttributesContainer.setPosition(new Coordinate(bounds.getMinX(), bounds.getMinY()));
     }
@@ -264,5 +291,9 @@ public class ShapeProxy {
 
   public List<String> getAllMods(){
     return mods;
+  }
+
+  public void disableShapeSelection() {
+    this.shapeSelectionDisabled = true;
   }
 }
