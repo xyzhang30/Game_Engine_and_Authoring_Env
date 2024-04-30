@@ -38,13 +38,10 @@ public class TestVisibleBalls {
   @Test
   public void testMiniGolf() {
 
-     List<GameObject> go =  gameEngine.getGameObjects().stream().toList();
-     for(GameObject g : go) {
-      g.setVisible(true);
-    }
-for (GameObject g : go)
+for (GameObject g : gameEngine.getGameObjects())
   {
-      assertTrue((g.getId()!=14 && g.getId()!=15) == gameEngine.getGameObjects().iterator().next().getVisible());
+    System.out.println(g.getId() + " " + g.getVisible());
+      assertTrue((g.getId()!=19 && g.getId()!=20) == g.getVisible());
     }
   }
 
