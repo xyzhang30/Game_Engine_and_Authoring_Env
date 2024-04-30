@@ -133,6 +133,18 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   /**
+   * Updates the X Position of the active controllable by an amount preset in game rules
+   *
+   * @param positive true if x position is increasing, false if decreasing
+   */
+
+  public void moveActiveControllableY( double boundMin, double boundMax) {
+    playerContainer.getActive().getControllable().asGameObject().moveControllableY(
+        boundMin, boundMax);
+
+  }
+
+  /**
    * Advances the game to the next round by incrementing the round number, applying delayed scores
    * to players, and starting a new round.
    */

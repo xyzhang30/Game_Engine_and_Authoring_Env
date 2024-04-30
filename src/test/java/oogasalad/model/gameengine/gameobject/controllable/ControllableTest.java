@@ -29,14 +29,14 @@ public class ControllableTest {
 
   @Test
   public void testMoveXPositive() {
-    defaultControllable.setMovement(2);
+    defaultControllable.setMovement(2,0);
     double result = defaultControllable.moveX(true);
     assertEquals(2.0, result);
   }
 
   @Test
   public void testMoveXNegative() {
-    defaultControllable.setMovement(3);
+    defaultControllable.setMovement(3,0);
     double result = defaultControllable.moveX(false);
     assertEquals(-3.0, result);
   }
@@ -48,7 +48,7 @@ public class ControllableTest {
 
   @Test
   public void testSetMovement() {
-    defaultControllable.setMovement(2);
+    defaultControllable.setMovement(2,0);
     assertEquals(2, defaultControllable.moveX(true));
   }
 }

@@ -101,6 +101,10 @@ public class StrikeHandler extends Handler {
     keyMap.put(getGameController().getKey(KeyInputType.CONTROLLABLE_RIGHT),
         c -> getGameController().moveControllableX(true, getSceneManager().getGameBoardLeftBound(),
             getSceneManager().getGameBoardRightBound()));
+
+    keyMap.put(getGameController().getKey(KeyInputType.CONTROLLABLE_UP),
+        c -> getGameController().moveControllableY(getSceneManager().getGameBoardUpBound(),
+            getSceneManager().getGameBoardDownBound()));
     return keyMap;
   }
 

@@ -340,6 +340,16 @@ public class GameObject {
     myX = Math.min(boundMax - myWidth, Math.max(myX, boundMin));
   }
 
+  public void moveControllableY(double boundMin, double boundMax) {
+    Optional<Controllable> controllable = getControllable();
+    controllable.ifPresent(value ->
+        {
+          myY -= value.moveY();
+          myVelocityY = -20;
+        });
+    myY = Math.min(boundMax - myHeight, Math.max(myY, boundMin));
+  }
+
   //Sets the next velocity of the GameObject.
   private void setNextSpeed(double speedX, double speedY) {
     myNextVelocityX = speedX;
