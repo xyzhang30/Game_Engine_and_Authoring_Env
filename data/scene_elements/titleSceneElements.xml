@@ -55,7 +55,7 @@
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>FYSICS_FUN</text>
-    <x_layout_factor>0.36</x_layout_factor>
+    <x_layout_factor>0.38</x_layout_factor>
     <y_layout_factor>0.2</y_layout_factor>
     <style>title-text</style>
   </node>
