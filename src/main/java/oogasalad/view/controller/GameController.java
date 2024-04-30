@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
+import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.data.GameData;
@@ -58,7 +59,7 @@ public class GameController {
   private final AnimationManager animationManager;
   private final GameTitleParser gameTitleParser;
   private final int maxVelocity;
-  private GameEngine gameEngine;
+  private ExternalGameEngine gameEngine;
   private GameLoaderView gameLoaderView;
   private final DatabaseController databaseController;
   private Map<Integer, String> playerMap;

@@ -1,6 +1,5 @@
 package oogasalad.model.gameengine;
 
-import java.io.FileNotFoundException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -133,11 +132,11 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   /**
-   * Updates the X Position of the active controllable by an amount preset in game rules
+   * Updates the Y Position of the active controllable by an amount preset in game rules
    *
-   * @param positive true if x position is increasing, false if decreasing
    */
 
+  @Override
   public void moveActiveControllableY( double boundMin, double boundMax) {
     playerContainer.getActive().getControllable().asGameObject().moveControllableY(
         boundMin, boundMax);
@@ -205,6 +204,7 @@ public class GameEngine implements ExternalGameEngine {
    *
    * @return The last recorded GameRecord representing the static game state.
    */
+  @Override
   public GameRecord restoreLastStaticGameRecord() {
     return staticStateStack.peek();
   }
@@ -323,6 +323,7 @@ public class GameEngine implements ExternalGameEngine {
     return gameObjects;
   }
 
+  @Override
   public double getScoreableScoreById(int id) {
     for (GameObject gameObject : gameObjects) {
       if (gameObject.getId() == id && gameObject.getScoreable().isPresent()) {
