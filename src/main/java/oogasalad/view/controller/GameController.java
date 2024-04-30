@@ -250,6 +250,12 @@ public class GameController {
     }
   }
 
+  public void moveControllableY( double minBound, double maxBound) {
+    if (animationManager.isRunning()) {
+      gameEngine.moveActiveControllableY(minBound, maxBound);
+    }
+  }
+
   public List<String> getMods() {
     return gameLoaderView.getMods();
   }
