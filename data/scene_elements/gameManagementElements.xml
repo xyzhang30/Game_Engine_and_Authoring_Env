@@ -3,7 +3,7 @@
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>ROUND</text>
-    <x_layout_factor>0.89</x_layout_factor>
+    <x_layout_factor>0.9</x_layout_factor>
     <y_layout_factor>0.12</y_layout_factor>
     <style>game-text</style>
     <event_type>MANAGE_GAME_STATS</event_type>
@@ -14,7 +14,7 @@
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>TURN</text>
-    <x_layout_factor>0.87</x_layout_factor>
+    <x_layout_factor>0.88</x_layout_factor>
     <y_layout_factor>0.17</y_layout_factor>
     <style>game-text</style>
     <event_type>MANAGE_GAME_STATS</event_type>
@@ -90,8 +90,8 @@
     <type>RECTANGLE</type>
     <width_factor>0.07</width_factor>
     <height_factor>0.7</height_factor>
-    <x_layout_factor>0.75</x_layout_factor>
-    <y_layout_factor>0.05</y_layout_factor>
+    <x_layout_factor>0.78</x_layout_factor>
+    <y_layout_factor>0.4</y_layout_factor>
     <style>power-outline</style>
     <event_type>STRIKE</event_type>
     <event>POWER_HEIGHT</event>
@@ -102,7 +102,7 @@
     <type>RECTANGLE</type>
     <width_factor>0.05</width_factor>
     <height_factor>0.01</height_factor>
-    <x_layout_factor>0.76</x_layout_factor>
+    <x_layout_factor>0.78</x_layout_factor>
     <y_layout_factor>0.735</y_layout_factor>
     <style>power-bar</style>
     <event_type>STRIKE</event_type>

@@ -37,11 +37,8 @@ public class ShapePanel implements Panel {
   private final StackPane canvas;
   private final AnchorPane rootPane;
   private final AnchorPane containerPane;
-  private final UIElementFactory uiElementFactory;
   private Coordinate startPos;
   private Coordinate translatePos;
-  private Button mod;
-  private TextArea modName;
 
   /**
    * Constructs a ShapePanel with the specified authoring factory, shape proxy, and authoring proxy,
@@ -56,14 +53,13 @@ public class ShapePanel implements Panel {
    */
   public ShapePanel(AuthoringFactory authoringFactory, ShapeProxy shapeProxy,
       AuthoringProxy authoringProxy, StackPane canvas,
-      AnchorPane rootPane, AnchorPane containerPane, UIElementFactory uiElementFactory) {
+      AnchorPane rootPane, AnchorPane containerPane) {
     this.shapeProxy = shapeProxy;
     this.authoringProxy = authoringProxy;
     this.authoringFactory = authoringFactory;
     this.canvas = canvas;
     this.rootPane = rootPane;
     this.containerPane = containerPane;
-    this.uiElementFactory = uiElementFactory;
     shapeProxy.setNumberOfMultiSelectAllowed(1);
     createElements();
     handleEvents();
@@ -79,30 +75,8 @@ public class ShapePanel implements Panel {
     containerPane.getChildren().addAll(authoringFactory.createSurfacesConfiguration());
     containerPane.getChildren().addAll(authoringFactory.createCollidablesConfiguration());
     containerPane.getChildren().addAll(authoringFactory.createPlayersConfiguration());
-//    containerPane.getChildren().addAll(authoringFactory.createGameConfiguration());
     shapeProxy.createGameObjectTemplates();
     containerPane.getChildren().addAll(shapeProxy.getTemplates());
-    mod = uiElementFactory.createButton("mod", "New Mod", 200, 100);
-    mod.setId("mod");
-    mod.setOnAction(event -> {
-      enterModName();
-    });
-  }
-
-  private void enterModName() {
-//    Stage gameNameStage = new Stage();
-//    gameNameStage.setTitle("Enter New Mod Name: ");
-//
-//    VBox vbox = new VBox();
-//    Label enterName = new Label("Mod Name");
-//    gameNameTextField = new TextField();
-//    gameNameTextField.setPromptText("Enter game name...");
-//
-//    vbox.getChildren().addAll(enterName, gameNameTextField, enterDescription, gameDescriptionTextField, makeSubmitGameNameButton());
-//
-//    Scene scene = new Scene(vbox, 500, 500);
-//    gameNameStage.setScene(scene);
-//    gameNameStage.showAndWait();
   }
 
 
@@ -120,7 +94,7 @@ public class ShapePanel implements Panel {
     shape.setOnMouseClicked(event -> {
       try {
         Shape clonedShape = shapeProxy.setTemplateOnClick((Shape) event.getSource());
-        handleGameObjectEvents(clonedShape);
+        handleGameObjectEvents(clonedShape, authoringProxy.getPlayers());
         rootPane.getChildren().add(clonedShape);
       } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                IllegalAccessException e) {
@@ -130,9 +104,9 @@ public class ShapePanel implements Panel {
     });
   }
 
-  private void handleGameObjectEvents(Shape shape) {
+  private void handleGameObjectEvents(Shape shape, Map<Integer, Map<CollidableType, List<Integer>>> oldPlayers) {
     shape.setOnMouseClicked(event -> setShapeOnClick((Shape) event.getSource(),
-        authoringProxy.getGameObjectMap().get(shape), authoringProxy.getPlayers()));
+        authoringProxy.getGameObjectMap().get(shape),oldPlayers));
     shape.setOnMousePressed(this::handleMousePressed);
     shape.setOnMouseDragged(event -> setShapeOnCompleteDrag((Shape) event.getSource(), event));
     shape.setOnMouseReleased(event -> setShapeOnRelease((Shape) event.getSource()));
@@ -189,6 +163,7 @@ public class ShapePanel implements Panel {
 
   private void setShapeOnClick(Shape shape, GameObjectAttributesContainer gameObj,
       Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
+    System.out.println("on click:" + playersMap);
     if (shapeProxy.getShape() == null) {
       return;
     }
@@ -207,8 +182,9 @@ public class ShapePanel implements Panel {
     shapeProxy.selectShape(shape, gameObj);
     shape.setStroke(Color.YELLOW);
     shapeProxy.updateShapeSelectionDisplay();
-    authoringFactory.resetAuthoringElements();
-    authoringProxy.setPlayersMap(playersMap);
+    authoringFactory.resetAuthoringElements(gameObj, playersMap);
+    System.out.println("AFTER EVERYTHING:"+authoringProxy.getPlayers());
+//    authoringProxy.setPlayersMap(playersMap);
   }
 
   private boolean isInAuthoringBox(Shape shape) {

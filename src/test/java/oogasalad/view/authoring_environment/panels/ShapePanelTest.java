@@ -39,7 +39,7 @@ public class ShapePanelTest extends DukeApplicationTest {
         rootPane = new AnchorPane();
         containerPane = new AnchorPane();
 
-        shapePanel = new ShapePanel(testAuthoringFactory, mockShapeProxy, mockAuthoringProxy, canvas, rootPane, containerPane, new DefaultUIElementFactory());
+        shapePanel = new ShapePanel(testAuthoringFactory, mockShapeProxy, mockAuthoringProxy, canvas, rootPane, containerPane);
 
         Stage stage = new Stage();
         Scene scene = new Scene(containerPane);

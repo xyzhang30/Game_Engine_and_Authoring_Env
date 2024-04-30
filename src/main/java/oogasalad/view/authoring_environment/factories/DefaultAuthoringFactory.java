@@ -2,6 +2,7 @@ package oogasalad.view.authoring_environment.factories;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Pos;
@@ -24,6 +25,7 @@ import oogasalad.view.api.enums.GameObjectType;
 import oogasalad.view.api.enums.SupportedLanguage;
 import oogasalad.view.authoring_environment.proxy.AuthoringProxy;
 import oogasalad.view.authoring_environment.proxy.ShapeProxy;
+import oogasalad.view.authoring_environment.util.GameObjectAttributesContainer;
 import oogasalad.view.authoring_environment.util.TextFieldListener;
 import org.controlsfx.control.CheckComboBox;
 
@@ -131,22 +133,18 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
    * updating the sliders based on the shape proxy's shape properties.
    */
   @Override
-  public void resetAuthoringElements() {
+  public void resetAuthoringElements(GameObjectAttributesContainer gameObj,
+      Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
     gameObjectTypeDropdown.valueProperty().setValue(null);
+    System.out.println("BEFORE CLEAR" + playersMap);
     clearFields();
+    System.out.println("AFTER CLEAR" + playersMap);
+    authoringProxy.setPlayersMap(playersMap);
+    System.out.println("BEFORE CLEAR IN AUTH" + authoringProxy.getPlayers());
     updateSlider(shapeProxy.getShape().getScaleX(), shapeProxy.getShape().getScaleY(),
         shapeProxy.getShape().getRotate());
   }
 
-//  @Override
-//  public List<Node> createGameConfiguration() {
-//    List<Node> nodes = List.of(//createGameNameLabel(),
-//         createGameNameText(),
-//       // createGameDescriptionLabel(),
-//        createGameDescriptionText());//,
-//      //  createGameImage());
-//    return nodes;
-//  }
 
   private Node createGameDescriptionText() {
     TextField gameDescriptionTextField = uiElementFactory.createTextField(
@@ -159,25 +157,6 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
     AnchorPane.setTopAnchor(gameDescriptionTextField, 700.0);
     return gameDescriptionTextField;
   }
-
-//  private Node createGameDescriptionLabel() {
-//return null;
-//  }
-
-//  private Node createGameNameText() {
-//    Label gameNameLabel = new Label("Select Game Name");
-//
-//
-//    TextField gameDescriptionTextField = uiElementFactory.createTextField(
-//        "Provide Game Name", 200,
-//        50);
-//    gameDescriptionTextField.setEditable(
-//        true); //ids are populated automatically after user clicks on object, user can't edit it
-//    gameDescriptionTextField.setFocusTraversable(false);
-//    AnchorPane.setLeftAnchor(gameDescriptionTextField, 450.0);
-//    AnchorPane.setTopAnchor(gameDescriptionTextField, 800.0);
-//    return gameDescriptionTextField;
-//  }
 
   private Node createGameObjectTypeSelection() {
     this.gameObjectTypeDropdown = uiElementFactory.createComboBox("gameObjectTypeDropdown",
@@ -293,15 +272,16 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
   }
 
   private HBox createSliderContainer(String id, String labelText) {
-    Slider slider = uiElementFactory.createSlider(id, 200, 0, 20, 1);
+    Slider slider;
     if (labelText.equals(resourceBundle.getString("XScaleLabel"))) {
+      slider = uiElementFactory.createSlider(id, 200, 0, 9, 1);
       this.xSlider = slider;
     } else if (labelText.equals(resourceBundle.getString("YScaleLabel"))) {
+      slider = uiElementFactory.createSlider(id, 200, 0, 18, 1);
       this.ySlider = slider;
     } else {
-      slider = uiElementFactory.createSlider(id, 200, 0, 360, 1);
+      slider = uiElementFactory.createSlider(id, 200, 0, 360, 20);
       this.angleSlider = slider;
-//      this.angleSlider = uiElementFactory.createSlider(id, 200, 0, 360, 1);
     }
     Label label = new Label(labelText);
     label.setMinWidth(80);
@@ -323,8 +303,9 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
   private HBox createTextFieldContainer(String id, String labelText) {
     TextField textField = uiElementFactory.createTextField(id, 100, 20);
     textField.textProperty().addListener(new TextFieldListener(textField.getId(), shapeProxy));
+    textField.setMinWidth(50);
     Label label = new Label(labelText);
-    label.setMinWidth(100);
+    label.setMinWidth(120);
     textFields.add(textField);
     return uiElementFactory.createHContainer(10, 100, 20, label, textField);
   }
@@ -345,13 +326,12 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
   }
 
   private void handleRemovePlayer() {
-    if (authoringProxy.getNumPlayers() <= 1) {
-      return;
+    if (authoringProxy.getNumPlayers() > 1) {
+      authoringProxy.removeMostRecentAddedPlayer();
+      playerAssignmentListView.getItems().remove("Player " + authoringProxy.getCurrentPlayerId());
+      authoringProxy.decreaseNumPlayers();
+      updateNumPlayers();
     }
-    authoringProxy.removeMostRecentAddedPlayer();
-    playerAssignmentListView.getItems().remove("Player " + authoringProxy.getCurrentPlayerId());
-    authoringProxy.decreaseNumPlayers();
-    updateNumPlayers();
   }
 
   private void updateNumPlayers() {
@@ -365,14 +345,18 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
               .getCheckedItems();
           for (CollidableType type : collidableTypes) {
             if ((Integer) oldPlayerId >= 0) {
-              authoringProxy.removeCollidableFromPlayer((Integer) oldPlayerId, type,
+              System.out.println("REMOVING: " + authoringProxy.getPlayers());
+              authoringProxy.removeCollidableFromPlayer(((Integer) oldPlayerId + 1), type,
                   Integer.parseInt(shapeProxy.getShape().getId()));
+              System.out.println("REMOVED: " + authoringProxy.getPlayers());
             }
             int xSpeed = shapeProxy.getGameObjectAttributesContainer().getControllableXSpeed();
             int ySpeed = shapeProxy.getGameObjectAttributesContainer().getControllableYSpeed();
-            authoringProxy.addCollidableToPlayer((Integer) newPlayerId, type,
+            System.out.println("ADDING: " + authoringProxy.getPlayers());
+            authoringProxy.addCollidableToPlayer(((Integer) newPlayerId) + 1, type,
                 Integer.parseInt(shapeProxy.getShape().getId()),
                 type.equals(CollidableType.CONTROLLABLE), xSpeed, ySpeed);
+            System.out.println("ADDED: " + authoringProxy.getPlayers());
           }
         }));
   }

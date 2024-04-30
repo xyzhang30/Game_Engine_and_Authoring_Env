@@ -1,11 +1,11 @@
 {
   "players" : [ {
     "score" : 0.0,
-    "player_id" : 0,
-    "my_strikeable" : [ 1 ],
+    "player_id" : 1,
+    "my_strikeable" : [ 0 ],
     "my_scoreable" : [ 1 ],
     "my_controllable" : [ ],
-    "active_strikeable" : 1
+    "active_strikeable" : 0
   } ],
   "variables" : [ {
     "global" : {
@@ -18,79 +18,94 @@
     }
   } ],
   "rules" : {
-    "collisions" : [ ],
+    "collisions" : [ {
+      "first_id" : 1,
+      "second_id" : 0,
+      "command" : {
+        "AdvanceTurnCommand" : [ ]
+      }
+    } ],
     "turn_policy" : "StandardTurnPolicy",
     "round_condition" : {
-      "RoundsCompletedCondition" : [ 2 ]
+      "AllPlayersCompletedRoundCondition" : [ ]
     },
     "win_condition" : {
-      "ScoreThresholdCondition" : [ 2 ]
+      "AllPlayersCompletedRoundCondition" : [ ]
     },
     "advance_turn" : {
+      "AdvanceRoundCommand" : [ ],
       "AdvanceTurnCommand" : [ ]
     },
     "advance_round" : {
-      "AdvanceTurnCommand" : [ ]
+      "AdvanceRoundCommand" : [ ]
     },
-    "strike_policy" : "IncrementPointStrikePolicy",
+    "strike_policy" : "DoNothingStrikePolicy",
     "rank_comparator" : "HighestScoreComparator",
     "static_checker" : {
-      "VisibilityStaticChecker" : [ ]
+      "VelocityStaticChecker" : [ ]
     }
   },
-  "gameName" : "k",
+  "gameName" : "playerAssignmentTest",
   "game_objects" : [ {
-    "properties" : [ "COLLIDABLE", "STRIKEABLE", "SCOREABLE", "visible" ],
+    "properties" : [ "COLLIDABLE", "visible" ],
     "mass" : 0.0,
     "position" : {
-      "x_position" : 783.0,
-      "y_position" : 454.0
+      "x_position" : 687.4000244140625,
+      "y_position" : 441.6000061035156
     },
     "shape" : "Rectangle",
     "dimension" : {
       "x_dimension" : 106.0,
       "y_dimension" : 56.0
     },
-    "color" : { },
+    "color" : {
+      "testMOD" : [ 255, 204, 128 ]
+    },
     "staticFriction" : 0.0,
     "kineticFriction" : 0.0,
     "inclineAngle" : 0.0,
-    "image" : { },
-    "direction" : 0.0,
-    "inelastic" : false,
-    "phaser" : false,
-    "score" : 0.0,
-    "gameobject_id" : 1
-  }, {
-    "properties" : [ "visible" ],
-    "mass" : 0.0,
-    "position" : {
-      "x_position" : 1639.0,
-      "y_position" : 892.0
+    "image" : {
+      "testMOD" : null
     },
-    "shape" : "Rectangle",
-    "dimension" : {
-      "x_dimension" : 106.0,
-      "y_dimension" : 56.0
-    },
-    "color" : { },
-    "staticFriction" : 0.0,
-    "kineticFriction" : 0.0,
-    "inclineAngle" : 0.0,
-    "image" : { },
     "direction" : 0.0,
     "inelastic" : false,
     "phaser" : false,
     "score" : 0.0,
     "gameobject_id" : 0
+  }, {
+    "properties" : [ "COLLIDABLE", "SCOREABLE", "visible" ],
+    "mass" : 0.0,
+    "position" : {
+      "x_position" : 714.5999755859375,
+      "y_position" : 592.7999877929688
+    },
+    "shape" : "Rectangle",
+    "dimension" : {
+      "x_dimension" : 106.0,
+      "y_dimension" : 56.0
+    },
+    "color" : {
+      "testMOD" : [ 128, 77, 128 ]
+    },
+    "staticFriction" : 0.0,
+    "kineticFriction" : 0.0,
+    "inclineAngle" : 0.0,
+    "image" : {
+      "testMOD" : null
+    },
+    "direction" : 0.0,
+    "inelastic" : false,
+    "phaser" : false,
+    "score" : 0.0,
+    "gameobject_id" : 1
   } ],
   "keys" : {
-    "striking" : "M",
-    "angle_left" : "O",
-    "angle_right" : "U",
-    "power_up" : "Y",
-    "power_down" : "H",
-    "controllable_left" : "B",
-    "controllable_right" : "N"
+    "striking" : "X",
+    "angle_left" : "S",
+    "angle_right" : "D",
+    "power_up" : "F",
+    "power_down" : "A",
+    "controllable_left" : "E",
+    "controllable_right" : "V"
   }
 }

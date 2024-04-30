@@ -339,7 +339,7 @@ public class DatabaseHandler extends Handler {
       List<String> checkedPlayers = extractCheckedItems(friends, friendsMap);
       databaseController.writeFriends(currentPlayersManager.get(0), checkedPlayers,
           extractUncheckedItems(friends, friendsMap));
-      getSceneManager().createMenuScene();
+      getSceneManager().createTitleScene();
     });
   }
 
