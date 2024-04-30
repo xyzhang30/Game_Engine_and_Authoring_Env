@@ -171,7 +171,7 @@ public class GameLoaderModel extends GameLoader {
               .findFirst()
               .ifPresent(controllable -> playerMap.get(parserPlayer.playerId())
                   .setControllable(controllable,
-                      parserPlayer.myControllable().get(1)));
+                      parserPlayer.myControllable().get(1), parserPlayer.myControllable().get(2)));
         });
   }
 

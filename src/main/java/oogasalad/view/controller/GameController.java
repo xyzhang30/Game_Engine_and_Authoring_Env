@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
+import oogasalad.model.api.ExternalGameEngine;
 import oogasalad.model.api.GameRecord;
 import oogasalad.model.api.ViewGameObjectRecord;
 import oogasalad.model.api.data.GameData;
@@ -58,7 +59,7 @@ public class GameController {
   private final AnimationManager animationManager;
   private final GameTitleParser gameTitleParser;
   private final int maxVelocity;
-  private GameEngine gameEngine;
+  private ExternalGameEngine gameEngine;
   private GameLoaderView gameLoaderView;
   private final DatabaseController databaseController;
   private Map<Integer, String> playerMap;
@@ -149,11 +150,13 @@ public class GameController {
       gameLoaderView = new GameLoaderView(selectedGame);
       gameEngine = new GameEngine(selectedGame);
     } catch (InvalidFileException e) {
+      e.printStackTrace();
       LOGGER.error(e.getMessage());
       handleException("Start Game Error", "Can't find game file");
       return;
     } catch (InvalidColorParsingException | InvalidShapeException |
              MissingJsonGameInfoException e) {
+      e.printStackTrace();
       LOGGER.error(e.getMessage());
       handleException("Parsing Error", e.getMessage());
       return;
@@ -250,6 +253,12 @@ public class GameController {
     }
   }
 
+  public void moveControllableY( double minBound, double maxBound) {
+    if (animationManager.isRunning()) {
+      gameEngine.moveActiveControllableY(minBound, maxBound);
+    }
+  }
+
   public List<String> getMods() {
     return gameLoaderView.getMods();
   }
@@ -277,12 +286,10 @@ public class GameController {
    */
   public KeyCode getKey(KeyInputType inputType) {
     Map<KeyInputType, String> keyMap = gameLoaderView.getInputKeys();
+    System.out.println(keyMap);
     try {
-      return KeyCode.valueOf(keyMap.get(inputType));
-    } catch (NullPointerException e) {
-      LOGGER.error(e.getMessage() + "key code is null");
-      WARNING.showAlert(getScene(), AlertType.ERROR, "Error Getting Input Keys", null,
-          "Please specify input keys for game");
+      return KeyCode.valueOf(keyMap.getOrDefault(inputType, ""));
+    } catch (NullPointerException ignored) {
     }
     return null;
   }
@@ -300,6 +307,7 @@ public class GameController {
           + "/GameDescriptions.properties");
       properties.load(inputStream);
     } catch (IOException e) {
+      e.printStackTrace();
       LOGGER.error(e.getMessage());
       WARNING.showAlert(getScene(), AlertType.ERROR, "Game Description Error", null,
           e.getMessage());
@@ -322,6 +330,7 @@ public class GameController {
     } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
              IllegalAccessException | InvocationTargetException | InvalidImageException e) {
       LOGGER.error(e.getMessage());
+      e.printStackTrace();
       return null;
     }
   }

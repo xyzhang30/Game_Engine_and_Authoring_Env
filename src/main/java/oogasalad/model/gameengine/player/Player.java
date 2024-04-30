@@ -82,9 +82,9 @@ public class Player {
     }
   }
 
-  public void setControllable(Controllable controllable, int movementXdir) {
+  public void setControllable(Controllable controllable, int movementXdir, int movementYdir) {
     myControllable = controllable;
-    myControllable.setMovement(movementXdir);
+    myControllable.setMovement(movementXdir, movementYdir);
   }
 
   public boolean areAllScoreablesInvisible() {

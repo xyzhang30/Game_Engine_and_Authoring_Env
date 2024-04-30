@@ -22,20 +22,13 @@
           0,
           0,
           0
-        ],
-        "Inverted": [
-          255,
-          255,
-          255
         ]
       },
       "staticFriction": 0,
       "kineticFriction": 0,
       "inclineAngle": 90,
       "image": {
-        "Default": "data/background_images/angryBirdsBackdrop.jpg",
-        "Inverted": "data/nonstrikeable_images/questionMark.jpg",
-        "Duke": "data/background_images/chapel.jpg"
+        "Default": "data/nonstrikeable_images/flappyBackground.jpg"
       }
     },
     {
@@ -69,9 +62,7 @@
       "staticFriction": 7.0,
       "kineticFriction": 5.0,
       "image": {
-        "Default": "",
-        "Inverted": "",
-        "Duke": "data/background_images/wood.jpg"
+        "Default": ""
       }
     },
     {
@@ -105,9 +96,7 @@
       "staticFriction": 7.0,
       "kineticFriction": 5.0,
       "image": {
-        "Default": "",
-        "Inverted": "",
-        "Duke": "data/background_images/wood.jpg"
+        "Default": ""
       }
     },
     {
@@ -141,10 +130,9 @@
       "staticFriction": 7.0,
       "kineticFriction": 5.0,
       "image": {
-        "Default": "",
-        "Inverted": "",
-        "Duke": "data/background_images/wood.jpg"
-      }
+        "Default": ""
+      },
+      "inelastic": true
     },
     {
       "gameobject_id": 4,
@@ -177,9 +165,7 @@
       "staticFriction": 7.0,
       "kineticFriction": 5.0,
       "image": {
-        "Default": "",
-        "Inverted": "",
-        "Duke": "data/background_images/grass.jpg"
+        "Default": ""
       }
     },
     {
@@ -188,38 +174,32 @@
         "visible",
         "collidable",
         "scoreable",
-        "strikeable"
+        "strikeable",
+        "controllable"
       ],
       "mass": 10,
       "position": {
-        "x_position": 240,
-        "y_position": 595
+        "x_position": 70,
+        "y_position": 500
       },
       "shape": "Rectangle",
       "dimension": {
-        "x_dimension": 50,
-        "y_dimension": 50
+        "x_dimension": 10,
+        "y_dimension": 10
       },
       "color": {
         "Default": [
           0,
           0,
           0
-        ],
-        "Inverted": [
-          255,
-          255,
-          255
         ]
       },
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
       "image": {
-        "Default": "data/nonstrikeable_images/bird.jpg",
-        "Inverted": "",
-        "Duke": "data/strikeable_images/duvall.jpg"
+        "Default": "data/nonstrikeable_images/bird.jpg"
       },
-      "phaser": true
+      "phaser": false
     },
     {
       "gameobject_id": 6,
@@ -227,16 +207,16 @@
         "visible",
         "collidable"
       ],
-      "mass": 1,
+      "mass": "Infinity",
       "position": {
         "x_position": 650.0,
-        "y_position": 700.0
+        "y_position": 50.0
       },
       "inelastic": true,
       "shape": "Rectangle",
       "dimension": {
-        "x_dimension": 50.0,
-        "y_dimension": 50.0
+        "x_dimension": 20.0,
+        "y_dimension": 500.0
       },
       "color": {
         "Default": [
@@ -253,9 +233,7 @@
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
       "image": {
-        "Default": "",
-        "Inverted": "",
-        "Duke": "data/nonstrikeable_images/cardboard.jpg"
+        "Default": "data/nonstrikeable_images/flappy_down.jpg"
       }
     },
     {
@@ -264,34 +242,33 @@
         "visible",
         "collidable"
       ],
-      "mass": 1,
+      "mass": "Infinity",
       "position": {
-        "x_position": 650,
-        "y_position": 750
+        "x_position": 200.0,
+        "y_position": 50.0
       },
       "inelastic": true,
       "shape": "Rectangle",
       "dimension": {
-        "x_dimension": 50,
-        "y_dimension": 50
+        "x_dimension": 20.0,
+        "y_dimension": 300.0
       },
       "color": {
         "Default": [
+          255,
           0,
-          0,
-          255
+          0
         ],
         "Inverted": [
+          0,
           255,
-          255,
-          0
+          255
         ]
       },
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
       "image": {
-        "Default": "data/nonstrikeable_images/cardboard.jpg",
-        "Duke": "data/nonstrikeable_images/cardboard.jpg"
+        "Default": "data/nonstrikeable_images/flappy_down.jpg"
       }
     },
     {
@@ -300,35 +277,33 @@
         "visible",
         "collidable"
       ],
-      "mass": 1,
+      "mass": "Infinity",
       "position": {
-        "x_position": 650,
-        "y_position": 800
+        "x_position": 425.0,
+        "y_position": 50.0
       },
       "inelastic": true,
       "shape": "Rectangle",
       "dimension": {
-        "x_dimension": 50,
-        "y_dimension": 50
+        "x_dimension": 20.0,
+        "y_dimension": 600.0
       },
       "color": {
         "Default": [
-          0,
           255,
+          0,
           0
         ],
         "Inverted": [
-          255,
           0,
+          255,
           255
         ]
       },
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
       "image": {
-        "Default": "",
-        "Inverted": "",
-        "Duke": "data/nonstrikeable_images/cardboard.jpg"
+        "Default": "data/nonstrikeable_images/flappy_down.jpg"
       }
     },
     {
@@ -337,35 +312,33 @@
         "visible",
         "collidable"
       ],
-      "mass": 1,
+      "mass": "Infinity",
       "position": {
-        "x_position": 660,
-        "y_position": 670
+        "x_position": 875.0,
+        "y_position": 50.0
       },
       "inelastic": true,
       "shape": "Rectangle",
       "dimension": {
-        "x_dimension": 30,
-        "y_dimension": 30
+        "x_dimension": 20.0,
+        "y_dimension": 400.0
       },
       "color": {
         "Default": [
-          0,
           255,
+          0,
           0
         ],
         "Inverted": [
-          255,
           0,
+          255,
           255
         ]
       },
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
       "image": {
-        "Default": "data/nonstrikeable_images/pig.jpg",
-        "Inverted": "",
-        "Duke": "data/nonstrikeable_images/panda.jpg"
+        "Default": "data/nonstrikeable_images/flappy_down.jpg"
       }
     },
     {
@@ -376,32 +349,31 @@
       ],
       "mass": "Infinity",
       "position": {
-        "x_position": 725,
-        "y_position": 775
+        "x_position": 650.0,
+        "y_position": 600.0
       },
+      "inelastic": true,
       "shape": "Rectangle",
       "dimension": {
-        "x_dimension": 75,
-        "y_dimension": 75
+        "x_dimension": 20.0,
+        "y_dimension": 400.0
       },
       "color": {
         "Default": [
-          0,
           255,
+          0,
           0
         ],
         "Inverted": [
-          255,
           0,
+          255,
           255
         ]
       },
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
       "image": {
-        "Default": "data/nonstrikeable_images/hardAngryBox.jpg",
-        "Inverted": "",
-        "Duke": "data/nonstrikeable_images/hardAngryBox.jpg"
+        "Default": "data/nonstrikeable_images/flappy_tube_up.jpg"
       }
     },
     {
@@ -410,35 +382,33 @@
         "visible",
         "collidable"
       ],
-      "mass": 1,
+      "mass": "Infinity",
       "position": {
-        "x_position": 745,
-        "y_position": 745
+        "x_position": 200.0,
+        "y_position": 450.0
       },
       "inelastic": true,
       "shape": "Rectangle",
       "dimension": {
-        "x_dimension": 30,
-        "y_dimension": 30
+        "x_dimension": 20.0,
+        "y_dimension": 550.0
       },
       "color": {
         "Default": [
-          0,
           255,
+          0,
           0
         ],
         "Inverted": [
-          255,
           0,
+          255,
           255
         ]
       },
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
       "image": {
-        "Default": "data/nonstrikeable_images/pig.jpg",
-        "Inverted": "",
-        "Duke": "data/nonstrikeable_images/lamb.jpg"
+        "Default": "data/nonstrikeable_images/flappy_tube_up.jpg"
       }
     },
     {
@@ -447,35 +417,33 @@
         "visible",
         "collidable"
       ],
-      "mass": 1,
+      "mass": "Infinity",
       "position": {
-        "x_position": 850,
-        "y_position": 800
+        "x_position": 425.0,
+        "y_position": 750.0
       },
       "inelastic": true,
       "shape": "Rectangle",
       "dimension": {
-        "x_dimension": 50,
-        "y_dimension": 50
+        "x_dimension": 20.0,
+        "y_dimension": 250.0
       },
       "color": {
         "Default": [
-          0,
           255,
+          0,
           0
         ],
         "Inverted": [
-          255,
           0,
+          255,
           255
         ]
       },
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
       "image": {
-        "Default": "data/nonstrikeable_images/pig.jpg",
-        "Inverted": "",
-        "Duke": "data/nonstrikeable_images/panda.jpg"
+        "Default": "data/nonstrikeable_images/flappy_tube_up.jpg"
       }
     },
     {
@@ -486,22 +454,23 @@
       ],
       "mass": "Infinity",
       "position": {
-        "x_position": 50,
-        "y_position": 850
+        "x_position": 875.0,
+        "y_position": 500.0
       },
+      "inelastic": true,
       "shape": "Rectangle",
       "dimension": {
-        "x_dimension": 990,
-        "y_dimension": 180
+        "x_dimension": 20.0,
+        "y_dimension": 500.0
       },
       "color": {
         "Default": [
-          0,
+          255,
           0,
           0
         ],
         "Inverted": [
-          255,
+          0,
           255,
           255
         ]
@@ -509,9 +478,7 @@
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
       "image": {
-        "Default": "",
-        "Inverted": "",
-        "Duke": "data/background_images/wood.jpg"
+        "Default": "data/nonstrikeable_images/flappy_tube_up.jpg"
       }
     },
     {
@@ -522,13 +489,13 @@
       ],
       "mass": "Infinity",
       "position": {
-        "x_position": 180,
-        "y_position": 645
+        "x_position": 50,
+        "y_position": 980
       },
       "shape": "Rectangle",
       "dimension": {
-        "x_dimension": 40,
-        "y_dimension": 400
+        "x_dimension": 990,
+        "y_dimension": 20
       },
       "color": {
         "Default": [
@@ -545,11 +512,43 @@
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
       "image": {
-        "Default": "data/nonstrikeable_images/slingshot.jpg",
-        "Inverted": "",
-        "Duke": "data/nonstrikeable_images/slingshot.jpg"
+        "Default": ""
       },
       "inelastic": true
+    },
+    {
+      "gameobject_id": 15,
+      "properties": [
+        "visible",
+        "collidable"
+      ],
+      "mass": "Infinity",
+      "position": {
+        "x_position": 70.0,
+        "y_position": 500.0
+      },
+      "shape": "Rectangle",
+      "dimension": {
+        "x_dimension": 0.01,
+        "y_dimension": 0.01
+      },
+      "color": {
+        "Default": [
+          0,
+          0,
+          0
+        ],
+        "Inverted": [
+          255,
+          255,
+          255
+        ]
+      },
+      "staticFriction": 7.0,
+      "kineticFriction": 5.0,
+      "image": {
+        "Default": ""
+      }
     }
   ],
   "players": [
@@ -561,7 +560,11 @@
       "my_scoreable": [
         5
       ],
-      "my_controllable": [],
+      "my_controllable": [
+        5,
+        0,
+        5
+      ],
       "active_strikeable": 5
     }
   ],
@@ -580,38 +583,19 @@
   "rules": {
     "collisions": [
       {
-        "first_id": 1,
-        "second_id": 5,
-        "command": {
-          "MoveToStartingStateCommand": [
-            5
-          ],
-          "SetVisibleCommand": [
-            5,
-            0
-          ]
-        }
-      },
-      {
         "first_id": 2,
         "second_id": 5,
         "command": {
-          "MoveToStartingStateCommand": [
-            5
+          "TeleportCommand": [
+            5, 15
           ],
-          "SetVisibleCommand": [
-            5,
-            0
-          ]
+          "IncrementPointsCommand": [5, 1]
         }
       },
       {
         "first_id": 3,
         "second_id": 5,
         "command": {
-          "MoveToStartingStateCommand": [
-            5
-          ],
           "SetVisibleCommand": [
             5,
             0
@@ -633,7 +617,7 @@
         "second_id": 5,
         "command": {
           "SetVisibleCommand": [
-            6,
+            5,
             0
           ]
         }
@@ -643,7 +627,7 @@
         "second_id": 5,
         "command": {
           "SetVisibleCommand": [
-            7,
+            5,
             0
           ]
         }
@@ -653,7 +637,7 @@
         "second_id": 5,
         "command": {
           "SetVisibleCommand": [
-            8,
+            5,
             0
           ]
         }
@@ -663,7 +647,17 @@
         "second_id": 5,
         "command": {
           "SetVisibleCommand": [
-            9,
+            5,
+            0
+          ]
+        }
+      },
+      {
+        "first_id": 10,
+        "second_id": 5,
+        "command": {
+          "SetVisibleCommand": [
+            5,
             0
           ]
         }
@@ -673,17 +667,16 @@
         "second_id": 5,
         "command": {
           "SetVisibleCommand": [
-            11,
+            5,
             0
           ]
         }
-      },
-      {
+      },  {
         "first_id": 12,
         "second_id": 5,
         "command": {
           "SetVisibleCommand": [
-            12,
+            5,
             0
           ]
         }
@@ -695,24 +688,28 @@
           "SetVisibleCommand": [
             5,
             0
-          ],
-          "MoveToStartingStateCommand": [
-            5
+          ]
+        }
+      },
+      {
+        "first_id": 14,
+        "second_id": 5,
+        "command": {
+          "SetVisibleCommand": [
+            5,
+            0
           ]
         }
       }
     ],
     "turn_policy": "StandardTurnPolicy",
     "round_condition": {
-      "GameObjectsNotVisibleCondition": [
-        9,
-        11,
-        12
+      "GameObjectsNotVisibleCondition": [ 5
       ]
     },
     "win_condition": {
       "RoundsCompletedCondition": [
-        3.0
+        1.0
       ]
     },
     "advance_turn": {
@@ -723,18 +720,11 @@
     "advance_round": {
       "AdvanceRoundCommand": []
     },
-    "strike_policy": "IncrementPointStrikePolicy",
-    "rank_comparator": "LowestScoreComparator",
+    "strike_policy": "DoNothingStrikePolicy",
+    "rank_comparator": "HighestScoreComparator",
     "static_checker": {
-      "VelocityStaticChecker": [
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12
+      "VisibilityStaticChecker": [
+        5
       ]
     }
   },
@@ -745,7 +735,7 @@
     "power_down": "DOWN",
     "controllable_left": "A",
     "controllable_right": "D",
-    "striking": "ENTER",
-    "controllable_up" : null  }
+    "controllable_up": "K",
+    "striking": "ENTER"
+  }
 }
-

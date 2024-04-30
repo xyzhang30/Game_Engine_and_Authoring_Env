@@ -121,6 +121,24 @@ public class SceneManager {
   }
 
   /**
+   * Gets the x coordinate of the right side of the game board by querying composite element
+   *
+   * @return double representing the x coordinate of the right side of the game board
+   */
+  public double getGameBoardUpBound() {
+    return compositeElement.getGameBoardUpBound();
+  }
+
+  /**
+   * Gets the x coordinate of the right side of the game board by querying composite element
+   *
+   * @return double representing the x coordinate of the right side of the game board
+   */
+  public double getGameBoardDownBound() {
+    return compositeElement.getGameBoardDownBound();
+  }
+
+  /**
    * Getter for the scene
    *
    * @return scene displaying game visuals

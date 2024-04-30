@@ -522,15 +522,14 @@
     {
       "gameobject_id": 19,
       "properties": [
-        "visible",
         "collidable",
         "strikeable",
         "scoreable"
       ],
       "mass": 0.04,
       "position": {
-        "x_position": 500,
-        "y_position": 950
+        "x_position": 520,
+        "y_position": 970
       },
       "shape": "Circle",
       "dimension": {
@@ -553,15 +552,14 @@
     {
       "gameobject_id": 20,
       "properties": [
-        "visible",
         "collidable",
         "strikeable",
         "scoreable"
       ],
       "mass": 0.04,
       "position": {
-        "x_position": 500,
-        "y_position": 950
+        "x_position": 480,
+        "y_position": 930
       },
       "shape": "Circle",
       "dimension": {
@@ -789,7 +787,7 @@
     "power_down": "DOWN",
     "controllable_left": "A",
     "controllable_right": "D",
-    "striking": "ENTER"
-  }
+    "striking": "ENTER",
+    "controllable_up" : null  }
 }
 
