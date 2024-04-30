@@ -131,7 +131,7 @@
         252,
         0
       ]},
-      "image": {"Default": ""}
+      "image": {"Default": "data/nonstrikeable_images/felt.jpg"}
     },
     {
       "gameobject_id": 7,
@@ -157,7 +157,7 @@
         255,
         255
       ]},
-      "image": {"Default": "data/nonstrikeable_images/cueBall.jpg"}
+      "image": {"Default": ""}
     },
     {
       "gameobject_id": 8,
