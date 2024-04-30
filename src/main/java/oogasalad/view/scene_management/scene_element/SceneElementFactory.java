@@ -175,8 +175,8 @@ public class SceneElementFactory {
         XMLTags.X_LAYOUT_FACTOR.name().toLowerCase());
     double yLayoutFactor = parseDoubleParameter(parameters,
         XMLTags.Y_LAYOUT_FACTOR.name().toLowerCase());
-    node.setLayoutX(xLayoutFactor * screenWidth);
-    node.setLayoutY(yLayoutFactor * screenHeight);
+    node.setLayoutX(xLayoutFactor * screenWidth - node.getLayoutBounds().getWidth() / 2);
+    node.setLayoutY(yLayoutFactor * screenHeight - node.getLayoutBounds().getHeight() / 2);
   }
 
   private void handleStyle(Node node, Map<String, String> parameters) {

@@ -58,7 +58,7 @@
     <class>javafx.scene.text.Text</class>
     <type>TEXT</type>
     <text>SAVED_GAME</text>
-    <x_layout_factor>0.8</x_layout_factor>
+    <x_layout_factor>0.77</x_layout_factor>
     <y_layout_factor>0.35</y_layout_factor>
     <style>game-text</style>
   </node>

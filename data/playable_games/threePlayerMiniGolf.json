@@ -232,7 +232,7 @@
         ]
       },
       "image": {
-        "Default": "data/strikeable_images/golf ball.jpg"
+        "Default": "data/strikeable_images/pink golf ball.jpg"
       }
     },
     {
@@ -408,7 +408,7 @@
         ]
       },
       "image": {
-        "Default": "data/strikeable_images/golf ball.jpg"
+        "Default": "data/strikeable_images/blue golf ball.jpg"
       }
     },
     {
@@ -439,7 +439,7 @@
         ]
       },
       "image": {
-        "Default": "data/strikeable_images/golf ball.jpg"
+        "Default": "data/strikeable_images/yellow golf ball.jpg"
       }
     }
   ],
