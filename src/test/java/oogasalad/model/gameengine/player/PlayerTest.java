@@ -113,7 +113,7 @@ public class PlayerTest {
     Controllable controllable = mock(Controllable.class);
     int xMovement = 1;
     int yMovement = -1;
-    player.setControllable(controllable, xMovement);
+    player.setControllable(controllable, xMovement, yMovement);
     assertEquals(controllable, player.getControllable());
   }
 
