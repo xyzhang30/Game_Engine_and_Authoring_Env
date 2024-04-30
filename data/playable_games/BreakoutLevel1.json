@@ -2219,6 +2219,6 @@
     "controllable_left" : "A",
     "controllable_right" : "D"
 ,
-    "striking": "ENTER"
-  }
+    "striking": "ENTER",
+    "controllable_up" : null  }
 }

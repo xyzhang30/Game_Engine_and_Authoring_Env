@@ -207,7 +207,7 @@
     "properties" : [ "collidable",  "strikeable", "scoreable", "visible" ],
     "mass" : 10.0,
     "position" : {
-      "x_position" : 557.0,
+      "x_position" : 590.0,
       "y_position" : 932.0
     },
     "shape" : "Circle",
@@ -224,7 +224,7 @@
     "properties" : [ "collidable",  "strikeable", "scoreable"],
     "mass" : 10.0,
     "position" : {
-      "x_position" : 555.0,
+      "x_position" : 590.0,
       "y_position" : 935.0
     },
     "shape" : "Circle",
@@ -241,7 +241,7 @@
     "properties" : [ "collidable",  "strikeable", "scoreable"],
     "mass" : 10.0,
     "position" : {
-      "x_position" : 552.0,
+      "x_position" : 510.0,
       "y_position" : 939.0
     },
     "shape" : "Circle",
@@ -259,7 +259,7 @@
       "properties" : [ "collidable",  "strikeable", "scoreable"],
       "mass" : 10.0,
       "position" : {
-        "x_position" : 552.0,
+        "x_position" : 510.0,
         "y_position" : 939.0
       },
       "shape" : "Circle",
@@ -701,6 +701,6 @@
     "controllable_left" : "A",
     "controllable_right" : "D"
 ,
-    "striking": "ENTER"
-  }
+    "striking": "ENTER",
+    "controllable_up" : null  }
 }

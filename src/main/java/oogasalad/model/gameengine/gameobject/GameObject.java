@@ -57,6 +57,7 @@ public class GameObject {
   private Strikeable strikeable;
   private Scoreable scoreable;
   private Controllable controllable;
+  private static final int MOVED_UPWARD_VELOCITY = 20;
 
   /**
    * Initiates the GameObject.
@@ -346,7 +347,7 @@ public class GameObject {
     controllable.ifPresent(value ->
         {
           myY -= value.moveY();
-          myVelocityY = -20;
+          myVelocityY = -MOVED_UPWARD_VELOCITY;
         });
     myY = Math.min(boundMax - myHeight, Math.max(myY, boundMin));
   }
