@@ -1,17 +1,43 @@
 # DESIGN Document for PROJECT_NAME
-### Team
-### Names
+### Team: 01
+### Names: Alisha Zhang, Doga Ozmen, Jordan Haytaian, Judy He, Kevin Deng, Konur Nordberg, Noah Loewy
 
 
 ## Team Roles and Responsibilities
 
-* Team Member #1
+* Team Member #1: Alisha Zhang
+  * Parsing
+  * Authoring Environment (post-refactor) bug fixes
 
-* Team Member #2
+* Team Member #2: Doga Ozmen
+  * Frontend Game Environment 
+  * Authoring Environment (pre-refactor)
+  * View Database Implementation
+  * View Tests
 
-* Team Member #3
+* Team Member #3: Jordan Haytaian
+  * Frontend Game Environment
+  * Authoring Environment (pre-refactor)
+  * Bug Fixes
+  * Game Environment Refactor
 
-* Team Member #4
+* Team Member #4: Judy He
+  * Parsing
+  * Authoring Environment Refactor
+
+* Team Member #5: Kevin Deng
+  * Transformable node
+
+* Team Member #6: Konur Nordberg
+  * Tests
+  * Physics Engine
+  * Database (SQL)
+
+* Team Member #7: Noah Loewy
+  * Backend Database Integration
+  * Game Engine
+  * Model Tests
+  * Frontend Bug Fixes
 
 
 ## Design Goals
