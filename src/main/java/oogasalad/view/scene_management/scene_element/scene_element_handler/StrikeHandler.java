@@ -104,7 +104,7 @@ public class StrikeHandler extends Handler {
     return keyMap;
   }
 
-  private void decreaseAngle() {
+  public void decreaseAngle() {
     if (angleArrow.getRotate() > -180) {
       angleArrow.setRotate(angleArrow.getRotate() - angleIncrement);
     }

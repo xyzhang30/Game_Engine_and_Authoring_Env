@@ -65,4 +65,12 @@ public class StrikeHandlerTest extends ApplicationTest {
     strikeHandler.increaseAngle();
     assertTrue(angleArrow.getRotate() > initialRotation);
   }
+
+  @Test
+  public void testDecreaseAngle() {
+    double initialRotation = angleArrow.getRotate();
+    strikeHandler.decreaseAngle();
+    assertTrue(angleArrow.getRotate() < initialRotation);
+  }
+
 }
