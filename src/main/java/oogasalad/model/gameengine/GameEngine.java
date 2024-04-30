@@ -250,6 +250,7 @@ public class GameEngine implements ExternalGameEngine {
     try {
       System.out.println("ACTIVE:"+playerContainer.getActive());
       System.out.println("STRIKEABLE:"+playerContainer.getActive().getStrikeable());
+      gameObjects.forEach((g) -> g.setVisible(g.getStrikeable().isEmpty()));
       playerContainer.getActive().getStrikeable().asGameObject().setVisible(true);
     } catch (NullPointerException e) {
       e.printStackTrace();
