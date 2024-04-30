@@ -49,6 +49,14 @@ public class CompositeElement {
     return gameBoard.getBoundsInLocal().getMaxX();
   }
 
+  public double getGameBoardUpBound() {
+    return gameBoard.getBoundsInLocal().getMinY();
+  }
+
+  public double getGameBoardDownBound() {
+    return gameBoard.getBoundsInLocal().getMaxY();
+  }
+
   /**
    * Syncs the map of ID to ViewElements according to the provided list of model data.
    *

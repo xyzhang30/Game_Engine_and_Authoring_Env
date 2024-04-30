@@ -33,6 +33,7 @@ import oogasalad.model.gameengine.gameobject.scoreable.Scoreable;
 
 public class GameObject {
 
+  private static final double VELOCITY_Y = -20;
   private final double myMass;
   private final int myId;
   private final double myWidth;
@@ -338,6 +339,16 @@ public class GameObject {
     Optional<Controllable> controllable = getControllable();
     controllable.ifPresent(value -> myX += value.moveX(positive));
     myX = Math.min(boundMax - myWidth, Math.max(myX, boundMin));
+  }
+
+  public void moveControllableY(double boundMin, double boundMax) {
+    Optional<Controllable> controllable = getControllable();
+    controllable.ifPresent(value ->
+        {
+          myY -= value.moveY();
+          myVelocityY = -20;
+        });
+    myY = Math.min(boundMax - myHeight, Math.max(myY, boundMin));
   }
 
   //Sets the next velocity of the GameObject.

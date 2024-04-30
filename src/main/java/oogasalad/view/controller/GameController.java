@@ -149,11 +149,13 @@ public class GameController {
       gameLoaderView = new GameLoaderView(selectedGame);
       gameEngine = new GameEngine(selectedGame);
     } catch (InvalidFileException e) {
+      e.printStackTrace();
       LOGGER.error(e.getMessage());
       handleException("Start Game Error", "Can't find game file");
       return;
     } catch (InvalidColorParsingException | InvalidShapeException |
              MissingJsonGameInfoException e) {
+      e.printStackTrace();
       LOGGER.error(e.getMessage());
       handleException("Parsing Error", e.getMessage());
       return;
@@ -250,6 +252,12 @@ public class GameController {
     }
   }
 
+  public void moveControllableY( double minBound, double maxBound) {
+    if (animationManager.isRunning()) {
+      gameEngine.moveActiveControllableY(minBound, maxBound);
+    }
+  }
+
   public List<String> getMods() {
     return gameLoaderView.getMods();
   }
@@ -280,6 +288,7 @@ public class GameController {
     try {
       return KeyCode.valueOf(keyMap.get(inputType));
     } catch (NullPointerException e) {
+      e.printStackTrace();
       LOGGER.error(e.getMessage() + "key code is null");
       WARNING.showAlert(getScene(), AlertType.ERROR, "Error Getting Input Keys", null,
           "Please specify input keys for game");
@@ -300,6 +309,7 @@ public class GameController {
           + "/GameDescriptions.properties");
       properties.load(inputStream);
     } catch (IOException e) {
+      e.printStackTrace();
       LOGGER.error(e.getMessage());
       WARNING.showAlert(getScene(), AlertType.ERROR, "Game Description Error", null,
           e.getMessage());
@@ -322,6 +332,7 @@ public class GameController {
     } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
              IllegalAccessException | InvocationTargetException | InvalidImageException e) {
       LOGGER.error(e.getMessage());
+      e.printStackTrace();
       return null;
     }
   }
