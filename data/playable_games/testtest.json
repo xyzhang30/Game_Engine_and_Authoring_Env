@@ -73,6 +73,7 @@
     "power_up" : "E",
     "power_down" : "F",
     "controllable_left" : "D",
-    "controllable_right" : "B"
+    "controllable_right" : "B",
+    "controllable_up": "W"
   }
 }

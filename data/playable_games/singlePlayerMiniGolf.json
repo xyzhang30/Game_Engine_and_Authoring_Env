@@ -469,6 +469,7 @@
     "power_down": "DOWN",
     "controllable_left": "A",
     "controllable_right": "D",
-    "striking": "ENTER"
+    "striking": "ENTER",
+    "controllable_up": "W"
   }
 }

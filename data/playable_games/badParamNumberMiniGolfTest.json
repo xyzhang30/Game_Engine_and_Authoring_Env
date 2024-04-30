@@ -330,7 +330,7 @@
     "power_up" : "UP",
     "power_down" : "DOWN",
     "controllable_left" : "A",
-    "controllable_right" : "D"
-
+    "controllable_right" : "D",
+    "controllable_up": "W"
   }
 }

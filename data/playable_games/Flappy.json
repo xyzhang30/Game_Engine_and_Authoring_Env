@@ -620,8 +620,7 @@
     "power_down" : "DOWN",
     "controllable_left" : "A",
     "controllable_right" : "D",
-    "controllable_up" : "K"
-  ,
+    "controllable_up" : "K",
     "striking": "ENTER"
   }
 }
