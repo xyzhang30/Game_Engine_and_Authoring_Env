@@ -118,10 +118,8 @@ public class SceneElementFactory {
     if (widthFactor != 0) {
       text.setWrappingWidth(widthFactor * screenWidth);
     }
-    System.out.println(textTag);
     if (textTag != null) {
       String translatedText = languageManager.getText(language, textTag);
-      System.out.println(translatedText);
       text.setText(translatedText);
     }
   }

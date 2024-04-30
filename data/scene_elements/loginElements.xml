@@ -55,9 +55,9 @@
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
     <text>LOGIN</text>
-    <width_factor>0.2</width_factor>
-    <height_factor>0.08</height_factor>
-    <x_layout_factor>0.4</x_layout_factor>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.6</y_layout_factor>
     <style>title-button</style>
     <event_type>DATABASE</event_type>
@@ -68,9 +68,9 @@
     <class>javafx.scene.control.Button</class>
     <type>BUTTON</type>
     <text>CREATE_USER</text>
-    <width_factor>0.2</width_factor>
-    <height_factor>0.08</height_factor>
-    <x_layout_factor>0.4</x_layout_factor>
+    <width_factor>0.3</width_factor>
+    <height_factor>0.1</height_factor>
+    <x_layout_factor>0.35</x_layout_factor>
     <y_layout_factor>0.8</y_layout_factor>
     <style>title-button</style>
     <event_type>DATABASE</event_type>
