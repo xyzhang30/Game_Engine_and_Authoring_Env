@@ -426,6 +426,7 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
     collidableTypeDropDown.getCheckModel().getCheckedItems()
         .addListener((ListChangeListener<CollidableType>) change -> {
           while (change.next()) {
+            System.out.println("PROPERTIES:"+shapeProxy.getGameObjectAttributesContainer());
             handleAddedCollidableTypes(change);
             handleRemovedCollidableTypes(change);
           }
