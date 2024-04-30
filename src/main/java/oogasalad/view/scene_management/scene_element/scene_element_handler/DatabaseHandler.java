@@ -58,6 +58,13 @@ public class DatabaseHandler extends Handler {
   private Map<String, Boolean> friendsMap;
   private ComboBox<String> avatarComboBox;  // ComboBox for selecting an avatar
 
+
+  /**
+   * Handles scene elements related to database operations, such as user login, creation, and permissions.
+   *
+   * @author Doga Ozmen
+   */
+
   public DatabaseHandler(GameController gameController, SceneManager sceneManager,
       DatabaseController databaseController,
       List<String> currentPlayersManager) {
@@ -100,7 +107,11 @@ public class DatabaseHandler extends Handler {
     eventMap.put(SceneElementEvent.SUBMIT_FRIENDS, this::confirmFriendsHandler);
     eventMap.put(SceneElementEvent.SET_PUBLIC, this::createAccessibilityHandler);
   }
-
+  /**
+   * Handles the login event.
+   *
+   * @param node The node associated with the event.
+   */
   public void createLoginHandler(Node node) {
     node.setOnMouseClicked(e -> {
       try {
@@ -132,6 +143,9 @@ public class DatabaseHandler extends Handler {
 
   /**
    * Shows an alert dialog to the user with specified title and message.
+   *
+   * @param title   The title of the alert.
+   * @param message The message of the alert.
    */
   private void showAlert(String title, String message) {
     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -140,7 +154,6 @@ public class DatabaseHandler extends Handler {
     alert.setContentText(message);
     alert.showAndWait();
   }
-
   private void createUserCreatorHandler(Node node) {
 
     //this should be from a button the same way that we choose the controllable or background images

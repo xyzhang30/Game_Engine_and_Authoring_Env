@@ -3,6 +3,7 @@ package oogasalad.view.scene_management.scene_managers;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
@@ -366,4 +367,6 @@ public class SceneManager {
     resetRoot();
     root.getChildren().add(createSceneElements(addFriendScenePath));
   }
+
+
 }
