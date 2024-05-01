@@ -1,4 +1,4 @@
-# DESIGN Document for PROJECT_NAME
+# DESIGN Document for Fysics Fun
 
 ### Team: 01
 
