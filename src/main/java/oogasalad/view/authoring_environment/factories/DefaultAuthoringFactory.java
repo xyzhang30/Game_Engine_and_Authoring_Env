@@ -136,11 +136,8 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
   public void resetAuthoringElements(GameObjectAttributesContainer gameObj,
       Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
     gameObjectTypeDropdown.valueProperty().setValue(null);
-    System.out.println("BEFORE CLEAR" + playersMap);
     clearFields();
-    System.out.println("AFTER CLEAR" + playersMap);
     authoringProxy.setPlayersMap(playersMap);
-    System.out.println("BEFORE CLEAR IN AUTH" + authoringProxy.getPlayers());
     updateSlider(shapeProxy.getShape().getScaleX(), shapeProxy.getShape().getScaleY(),
         shapeProxy.getShape().getRotate());
   }
@@ -345,18 +342,14 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
               .getCheckedItems();
           for (CollidableType type : collidableTypes) {
             if ((Integer) oldPlayerId >= 0) {
-              System.out.println("REMOVING: " + authoringProxy.getPlayers());
               authoringProxy.removeCollidableFromPlayer(((Integer) oldPlayerId + 1), type,
                   Integer.parseInt(shapeProxy.getShape().getId()));
-              System.out.println("REMOVED: " + authoringProxy.getPlayers());
             }
             int xSpeed = shapeProxy.getGameObjectAttributesContainer().getControllableXSpeed();
             int ySpeed = shapeProxy.getGameObjectAttributesContainer().getControllableYSpeed();
-            System.out.println("ADDING: " + authoringProxy.getPlayers());
             authoringProxy.addCollidableToPlayer(((Integer) newPlayerId) + 1, type,
                 Integer.parseInt(shapeProxy.getShape().getId()),
                 type.equals(CollidableType.CONTROLLABLE), xSpeed, ySpeed);
-            System.out.println("ADDED: " + authoringProxy.getPlayers());
           }
         }));
   }
@@ -426,7 +419,6 @@ public class DefaultAuthoringFactory implements AuthoringFactory {
     collidableTypeDropDown.getCheckModel().getCheckedItems()
         .addListener((ListChangeListener<CollidableType>) change -> {
           while (change.next()) {
-            System.out.println("PROPERTIES:"+shapeProxy.getGameObjectAttributesContainer());
             handleAddedCollidableTypes(change);
             handleRemovedCollidableTypes(change);
           }

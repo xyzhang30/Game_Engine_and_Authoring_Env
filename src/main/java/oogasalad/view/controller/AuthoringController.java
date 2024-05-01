@@ -165,8 +165,9 @@ public class AuthoringController {
 
       Dimension objDimension = new Dimension(properties.getWidth(), properties.getHeight());
 
-      Position objPosition = new Position(properties.getPosition().x(),
-          properties.getPosition().y());
+      Position objPosition = new Position(properties.getPosition().x() -
+          properties.getWidth() / 2, properties.getPosition().y() -
+          properties.getHeight() / 2);
 
       GameObjectProperties gameObject = new GameObjectProperties(properties.getId(),
           objectProperties, properties.getMass(), objPosition, shapeName, objDimension,

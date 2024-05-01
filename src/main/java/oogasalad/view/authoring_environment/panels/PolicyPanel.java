@@ -157,7 +157,6 @@ public class PolicyPanel implements Panel {
   private List<Integer> enterParam(String commandType, String commandPackage, String newValue) {
     String classPath = REFLECTION_ENGINE_PACKAGE_PATH + commandPackage + "." + newValue;
     try {
-      System.out.println("command:"+newValue);
       Class<?> clazz = Class.forName(classPath);
       if (!commandPackage.equals("strike") && !commandPackage.equals("turn")
           && !commandPackage.equals("rank")) {
@@ -167,7 +166,6 @@ public class PolicyPanel implements Panel {
           //prompt user to enter param
           int numParam = clazz.getDeclaredAnnotation(ExpectedParamNumber.class).value();
           //get and return the params from popup
-          System.out.println("calling popup for const");
           return uiElementFactory.createConstantParamsPopup(numParam, newValue);
         } else if (clazz.getDeclaredAnnotation(VariableParamNumber.class) != null
             && clazz.getDeclaredAnnotation(
@@ -286,8 +284,6 @@ public class PolicyPanel implements Panel {
     for (CheckComboBox<String> checkComboBox : multiChoiceCheckBoxes.keySet()) {
       checkComboBox.getCheckModel().getCheckedItems()
           .addListener((ListChangeListener<String>) c -> {
-            System.out.println("new value: "+c);
-            System.out.println("getting param");
             while (c.next()) {
               if (c.wasAdded()) {
                 for (String selectedCommand : c.getAddedSubList()) {

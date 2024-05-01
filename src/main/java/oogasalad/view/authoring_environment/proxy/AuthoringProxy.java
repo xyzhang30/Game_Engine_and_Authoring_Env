@@ -378,14 +378,11 @@ public class AuthoringProxy {
    */
   public void addCollidableToPlayer(int selectedPlayerId, CollidableType collidableType,
       Integer shapeId, boolean isControllable, int controllableXSpeed, int controllableYSpeed) {
-    System.out.println("playerid:"+selectedPlayerId);
     if (selectedPlayerId >= 1) { //only add it if, it's a valid player
-      System.out.println("is controllable");
       if (isControllable) {
         playersMap.get(selectedPlayerId)
             .put(collidableType, List.of(shapeId, controllableXSpeed, controllableYSpeed));
       } else if (!playersMap.get(selectedPlayerId).get(collidableType).contains(shapeId)) {
-        System.out.println("added other objs");
         playersMap.get(selectedPlayerId).get(collidableType).add(shapeId);
       }
     }

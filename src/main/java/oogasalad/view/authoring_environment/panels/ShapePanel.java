@@ -163,7 +163,6 @@ public class ShapePanel implements Panel {
 
   private void setShapeOnClick(Shape shape, GameObjectAttributesContainer gameObj,
       Map<Integer, Map<CollidableType, List<Integer>>> playersMap) {
-    System.out.println("on click:" + playersMap);
     if (shapeProxy.getShape() == null) {
       return;
     }
@@ -183,7 +182,6 @@ public class ShapePanel implements Panel {
     shape.setStroke(Color.YELLOW);
     shapeProxy.updateShapeSelectionDisplay();
     authoringFactory.resetAuthoringElements(gameObj, playersMap);
-    System.out.println("AFTER EVERYTHING:"+authoringProxy.getPlayers());
 //    authoringProxy.setPlayersMap(playersMap);
   }
 

@@ -286,7 +286,6 @@ public class GameController {
    */
   public KeyCode getKey(KeyInputType inputType) {
     Map<KeyInputType, String> keyMap = gameLoaderView.getInputKeys();
-    System.out.println(keyMap);
     try {
       return KeyCode.valueOf(keyMap.getOrDefault(inputType, ""));
     } catch (NullPointerException ignored) {
