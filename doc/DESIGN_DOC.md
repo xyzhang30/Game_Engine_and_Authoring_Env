@@ -1,44 +1,44 @@
 # DESIGN Document for PROJECT_NAME
-### Team: 01
-### Names: Alisha Zhang, Doga Ozmen, Jordan Haytaian, Judy He, Kevin Deng, Konur Nordberg, Noah Loewy
 
+### Team: 01
+
+### Names: Alisha Zhang, Doga Ozmen, Jordan Haytaian, Judy He, Kevin Deng, Konur Nordberg, Noah Loewy
 
 ## Team Roles and Responsibilities
 
 * Team Member #1: Alisha Zhang
-  * Parsing
-  * Authoring Environment (post-refactor) bug fixes
+    * Parsing
+    * Authoring Environment (post-refactor) bug fixes
 
 * Team Member #2: Doga Ozmen
-  * Frontend Game Environment 
-  * Authoring Environment (pre-refactor)
-  * View Database Implementation
-  * View Tests
+    * Frontend Game Environment
+    * Authoring Environment (pre-refactor)
+    * View Database Implementation
+    * View Tests
 
 * Team Member #3: Jordan Haytaian
-  * Frontend Game Environment
-  * Authoring Environment (pre-refactor)
-  * Bug Fixes
-  * Game Environment Refactor
+    * Frontend Game Environment
+    * Authoring Environment (pre-refactor)
+    * Bug Fixes
+    * Game Environment Refactor
 
 * Team Member #4: Judy He
-  * Parsing
-  * Authoring Environment Refactor
+    * Parsing
+    * Authoring Environment Refactor
 
 * Team Member #5: Kevin Deng
-  * Transformable node
+    * Transformable node
 
 * Team Member #6: Konur Nordberg
-  * Tests
-  * Physics Engine
-  * Database (SQL)
+    * Tests
+    * Physics Engine
+    * Database (SQL)
 
 * Team Member #7: Noah Loewy
-  * Backend Database Integration
-  * Game Engine
-  * Model Tests
-  * Frontend Bug Fixes
-
+    * Backend Database Integration
+    * Game Engine
+    * Model Tests
+    * Frontend Bug Fixes
 
 ## Design Goals
 
@@ -48,7 +48,6 @@
 
 * Goal #3
 
-
 #### How were Specific Features Made Easy to Add
 
 * Feature #1
@@ -56,7 +55,6 @@
 * Feature #2
 
 * Feature #3
-
 
 ## High-level Design
 
@@ -70,8 +68,6 @@
 
 * Class #4
 
-
-
 ## Assumptions or Simplifications
 
 * Decision #1
@@ -82,8 +78,6 @@
 
 * Decision #4
 
-
-
 ## Changes from the Original Plan
 
 * Change #1
@@ -93,7 +87,6 @@
 * Change #3
 
 * Change #4
-
 
 ## How to Add New Features
 
@@ -107,14 +100,19 @@
 
 * Feature #4
 
-
 #### Features Not Yet Done
 
-* Feature #1
+* Feature #1: Allowing user to specify surface incline in authoring environment  
+  The current authoring environment does not allow users to select the incline of their chosen
+  surfaces. There is backend support for surfaces of various angles, which is evident by the
+  successful implementation of games like breakout and flappy bird that appear to have downwards
+  gravity in relation to the screen.
 
-* Feature #2
+* Feature #2: Leaderboards with varying stats  
+  Currently, the leaderboards displayed show the top scores for the game that was last completed.
+  This could be extended to show top scores within friend circles or most frequently played games.
 
-* Feature #3
+* Feature #3: Consistent UI Theme
 
 * Feature #4
  
