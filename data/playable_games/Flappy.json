@@ -22,13 +22,19 @@
           0,
           0,
           0
+        ],
+        "CS308": [
+          0,
+          0,
+          0
         ]
       },
       "staticFriction": 0,
       "kineticFriction": 0,
       "inclineAngle": 90,
       "image": {
-        "Default": "data/nonstrikeable_images/flappyBackground.jpg"
+        "Default": "data/nonstrikeable_images/flappyBackground.jpg",
+        "CS308" : "data/background_images/Chapel.jpg"
       }
     },
     {
@@ -53,7 +59,7 @@
           0,
           0
         ],
-        "Inverted": [
+        "CS308": [
           255,
           255,
           255
@@ -87,7 +93,7 @@
           0,
           0
         ],
-        "Inverted": [
+        "CS308": [
           255,
           255,
           255
@@ -121,7 +127,7 @@
           0,
           0
         ],
-        "Inverted": [
+        "CS308": [
           255,
           255,
           255
@@ -156,7 +162,7 @@
           0,
           0
         ],
-        "Inverted": [
+        "CS308": [
           255,
           255,
           255
@@ -197,7 +203,8 @@
       "staticFriction": 0.0,
       "kineticFriction": 0.0,
       "image": {
-        "Default": "data/nonstrikeable_images/bird.jpg"
+        "Default": "data/nonstrikeable_images/bird.jpg",
+        "CS308": "src/main/resources/view/avatar_images/duvall.png"
       },
       "phaser": false
     },
@@ -224,7 +231,7 @@
           0,
           0
         ],
-        "Inverted": [
+        "CS308": [
           0,
           255,
           255
@@ -259,7 +266,7 @@
           0,
           0
         ],
-        "Inverted": [
+        "CS308": [
           0,
           255,
           255
@@ -294,7 +301,7 @@
           0,
           0
         ],
-        "Inverted": [
+        "CS308": [
           0,
           255,
           255
@@ -329,7 +336,7 @@
           0,
           0
         ],
-        "Inverted": [
+        "CS308": [
           0,
           255,
           255
@@ -364,7 +371,7 @@
           0,
           0
         ],
-        "Inverted": [
+        "CS308": [
           0,
           255,
           255
@@ -399,7 +406,7 @@
           0,
           0
         ],
-        "Inverted": [
+        "CS308": [
           0,
           255,
           255
@@ -434,7 +441,7 @@
           0,
           0
         ],
-        "Inverted": [
+        "CS308": [
           0,
           255,
           255
@@ -469,7 +476,7 @@
           0,
           0
         ],
-        "Inverted": [
+        "CS308": [
           0,
           255,
           255
@@ -503,7 +510,7 @@
           0,
           0
         ],
-        "Inverted": [
+        "CS308": [
           255,
           255,
           255
@@ -538,7 +545,7 @@
           0,
           0
         ],
-        "Inverted": [
+        "CS308": [
           255,
           255,
           255

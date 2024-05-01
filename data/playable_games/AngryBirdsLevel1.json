@@ -190,7 +190,7 @@
         "scoreable",
         "strikeable"
       ],
-      "mass": 10,
+      "mass": 10000,
       "position": {
         "x_position": 240,
         "y_position": 595
