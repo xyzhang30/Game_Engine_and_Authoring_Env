@@ -44,6 +44,26 @@ public interface ExternalGameEngine {
   void moveActiveControllableX(boolean positive, double minBound, double maxBound);
 
   /**
+   * Updates the Y Position of the active controllable by an amount preset in game rules
+   *
+   */
+  void moveActiveControllableY(double boundMin, double boundMax);
+
+  /**
+   * Retrieves the last recorded static game record.
+   *
+   * @return The last recorded GameRecord representing the static game state.
+   */
+  GameRecord restoreLastStaticGameRecord();
+
+  /**
+   * Gets score of scoreable
+   * @param id the game object
+   * @return the score for scoreable associated with game object
+   */
+  double getScoreableScoreById(int id);
+
+  /**
    * Updates the Y Position of the active controllable by an amount preset in game rules.
    *
    * @param positive true if y position is increasing, false if decreasing

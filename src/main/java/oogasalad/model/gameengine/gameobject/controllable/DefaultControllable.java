@@ -19,6 +19,7 @@ public class DefaultControllable implements Controllable {
 
   private final GameObject go;
   private int movementXaxis;
+  private int movementYaxis;
 
   /**
    * Constructs a DefaultControllable object with the specified GameObject.
@@ -29,6 +30,7 @@ public class DefaultControllable implements Controllable {
   public DefaultControllable(GameObject go) {
     this.go = go;
     movementXaxis = 0;
+    movementYaxis = 0;
   }
 
   /**
@@ -41,6 +43,11 @@ public class DefaultControllable implements Controllable {
   @Override
   public double moveX(boolean positive) {
     return movementXaxis * (positive ? 1 : -1);
+  }
+
+  @Override
+  public double moveY() {
+    return movementYaxis;
   }
 
   /**
@@ -61,8 +68,9 @@ public class DefaultControllable implements Controllable {
    */
 
   @Override
-  public void setMovement(int movementXaxis) {
+  public void setMovement(int movementXaxis, int movementYaxis) {
     this.movementXaxis = movementXaxis;
+    this.movementYaxis = movementYaxis;
   }
 }
 

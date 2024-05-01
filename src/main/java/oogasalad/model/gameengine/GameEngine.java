@@ -1,6 +1,5 @@
 package oogasalad.model.gameengine;
 
-import java.io.FileNotFoundException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -133,6 +132,18 @@ public class GameEngine implements ExternalGameEngine {
   }
 
   /**
+   * Updates the Y Position of the active controllable by an amount preset in game rules
+   *
+   */
+
+  @Override
+  public void moveActiveControllableY( double boundMin, double boundMax) {
+    playerContainer.getActive().getControllable().asGameObject().moveControllableY(
+        boundMin, boundMax);
+
+  }
+
+  /**
    * Advances the game to the next round by incrementing the round number, applying delayed scores
    * to players, and starting a new round.
    */
@@ -193,6 +204,7 @@ public class GameEngine implements ExternalGameEngine {
    *
    * @return The last recorded GameRecord representing the static game state.
    */
+  @Override
   public GameRecord restoreLastStaticGameRecord() {
     return staticStateStack.peek();
   }
@@ -238,6 +250,7 @@ public class GameEngine implements ExternalGameEngine {
     try {
       System.out.println("ACTIVE:"+playerContainer.getActive());
       System.out.println("STRIKEABLE:"+playerContainer.getActive().getStrikeable());
+      gameObjects.forEach((g) -> g.setVisible(g.getStrikeable().isEmpty()));
       playerContainer.getActive().getStrikeable().asGameObject().setVisible(true);
     } catch (NullPointerException e) {
       e.printStackTrace();
@@ -310,6 +323,7 @@ public class GameEngine implements ExternalGameEngine {
     return gameObjects;
   }
 
+  @Override
   public double getScoreableScoreById(int id) {
     for (GameObject gameObject : gameObjects) {
       if (gameObject.getId() == id && gameObject.getScoreable().isPresent()) {
