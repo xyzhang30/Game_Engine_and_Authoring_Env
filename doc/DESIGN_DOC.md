@@ -24,7 +24,8 @@
 
 * Team Member #4: Judy He
     * Parsing
-    * Authoring Environment Refactor
+    * Authoring Environment (support most updated Game Engine and refactor) 
+    * Parsing Tests
 
 * Team Member #5: Kevin Deng
     * Transformable node
