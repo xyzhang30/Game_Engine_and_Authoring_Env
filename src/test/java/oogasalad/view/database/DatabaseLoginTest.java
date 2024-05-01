@@ -29,8 +29,8 @@ public class DatabaseLoginTest {
 
   @Test
   public void testLoginUserSuccess() throws SQLException {
-    when(databaseView.loginUser("validUser", "validPassword")).thenReturn(true);
-    assertDoesNotThrow(() -> databaseController.loginUser("validUser", "validPassword"));
+    when(databaseView.registerUser("validUser", "validPassword", "data/nonstrikable_images/flappyBackground")).thenReturn(true);
+    assertDoesNotThrow(() -> databaseController.canCreateUser("validUser", "validPassword", "data/nonstrikable_images/flappyBackground"));
   }
 
   @Test

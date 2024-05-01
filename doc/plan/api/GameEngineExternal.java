@@ -1,7 +1,7 @@
 /**
  * @author Noah Loewy
  */
-interface GameEngineExternal {
+interface ternal {
 
   /**
    * Initiates the game.
