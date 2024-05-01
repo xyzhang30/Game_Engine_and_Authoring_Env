@@ -43,7 +43,7 @@ public class AuthoringController {
 
   static final Logger LOGGER = LogManager.getLogger(AuthoringController.class);
   private final Stage stage;
-  private final AuthoringScreen authoringScreen;
+  public final AuthoringScreen authoringScreen;
   private final BuilderDirector builderDirector = new BuilderDirector();
   private final ShapeProxy shapeProxy = new ShapeProxy();
   private final AuthoringProxy authoringProxy = new AuthoringProxy();
