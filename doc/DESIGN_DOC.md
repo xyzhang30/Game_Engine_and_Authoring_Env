@@ -1,4 +1,4 @@
-# DESIGN Document for PROJECT_NAME
+# DESIGN Document for Fysics Fun
 
 ### Team: 01
 
@@ -24,7 +24,9 @@
 
 * Team Member #4: Judy He
     * Parsing
-    * Authoring Environment Refactor
+    * Authoring Environment (version supporting most updated Game Engine and refactor)
+    * Bug fixes (authoring environment, parsing)
+    * Parsing Tests
 
 * Team Member #5: Kevin Deng
     * Transformable node

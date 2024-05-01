@@ -23,7 +23,6 @@ public class PlayerContainer {
    */
 
   public PlayerContainer(Collection<Player> players) {
-    System.out.println("PLAYERS:"+players.iterator().next().getPlayerRecord());
     myPlayers = players;
     myPlayers.forEach(Player::addPlayerHistory);
     active = players.iterator().next();
